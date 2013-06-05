@@ -1,9 +1,10 @@
 #West Wind Globalization
-###A Data Driven .NET Localization Provider###
+###Datadriven resource localization for .NET applications###
 This library provides a SQL Server driven localization engine that can be
 plugged into any application. The application uses standard .NET ResourceSets
-and can plug directly into the .NET ResourcePipeline, or be accessed directly
-using the raw data engine that retrieves cached ResourceSets from a database.
+and ResourceManagers with a generic data backend to feed resource sets and
+provide edit and update capabilities to localization resources stored in a
+database. 
 
 Requirements:
 * .NET 4.5
