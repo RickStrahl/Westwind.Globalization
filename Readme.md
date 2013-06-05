@@ -21,4 +21,8 @@ documentation are not in place. This realease is primarily a preview
 for those that have provided feedback and were looking for the specific
 improvements and enhancements provided by the new version.
 
+Related Links:
 
+* [Original Article for Database Driven Resource Provider](http://www.west-wind.com/presentations/wwdbresourceprovider/)
+* [Original Documentation (still works with new implementation)](http://west-wind.com/WestwindWebToolkit/docs/?page=_2kv0y33ee.htm)
+* [Original Class Reference (still works with new implementation)](http://west-wind.com/WestwindWebToolkit/docs/?page=_3o20xc28e.htm)
