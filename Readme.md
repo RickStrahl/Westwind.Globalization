@@ -1,0 +1,24 @@
+#West Wind Globalization
+###A Data Driven .NET Localization Provider###
+This library provides a SQL Server driven localization engine that can be
+plugged into any application. The application uses standard .NET ResourceSets
+and can plug directly into the .NET ResourcePipeline, or be accessed directly
+using the raw data engine that retrieves cached ResourceSets from a database.
+
+Requirements:
+* .NET 4.5
+* Sql Server, Sql Express or SQL CE 4 or later
+
+###Under Construction###
+This is is an update to the original Westwind.Globalization library that
+was focused primarily on Web Forms. The new library is more generic and 
+provides better support for direct access in ASP.NET MVC, Web API and 
+any other type of .NET application.
+
+The current version is pre-release and still in Flux. The code is
+fully functional and production ready, but currently samples and 
+documentation are not in place. This realease is primarily a preview
+for those that have provided feedback and were looking for the specific
+improvements and enhancements provided by the new version.
+
+

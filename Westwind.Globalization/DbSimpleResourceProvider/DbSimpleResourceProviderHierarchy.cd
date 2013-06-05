@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Westwind.Globalization.DbResourceDataManager">
+    <Position X="3.75" Y="0.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Westwind.Globalization.DbResourceDataManager.FileFormatTypes" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DbResourceDataManager.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Class Name="Westwind.Globalization.DbResourceDataManager.FileInfoFormat" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DbResourceDataManager.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>wQDEgAAooAAAIAgABoAAAAAAAAAEApgAAQAIgYQAABA=</HashCode>
+      <FileName>DbResourceDataManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Westwind.Globalization.DbResourceConfiguration">
+    <Position X="6.75" Y="0.5" Width="3" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>QABgCACQBAQAAAAAAALAAACyAAAgAAABICAAlAAAAMA=</HashCode>
+      <FileName>DbResourceConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Westwind.Globalization.DbResourceControl">
+    <Position X="10.25" Y="0.5" Width="3" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAQhAhAAAACAAQACAEAAACAQABAEAQEAgAA=</HashCode>
+      <FileName>DbResourceControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Westwind.Globalization.DbDesignTimeResourceProviderFactory">
+    <Position X="10.25" Y="5.25" Width="3" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="Westwind.Globalization.DbDesignTimeResourceProviderFactory.DesignTimeGlobalResourceProvider" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Designer\DbDesignTimeResourceProviderFactory.cs</NewMemberFileName>
+        </TypeIdentifier>
+        <Lollipop Position="0.2" />
+      </Class>
+      <Class Name="Westwind.Globalization.DbDesignTimeResourceProviderFactory.DbDesignTimeLocalResourceProvider" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Designer\DbDesignTimeResourceProviderFactory.cs</NewMemberFileName>
+        </TypeIdentifier>
+        <Lollipop Position="0.2" />
+      </Class>
+      <Class Name="Westwind.Globalization.DbDesignTimeResourceProviderFactory.DictionaryResourceReader" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Designer\DbDesignTimeResourceProviderFactory.cs</NewMemberFileName>
+        </TypeIdentifier>
+        <Lollipop Position="0.2" />
+      </Class>
+      <Interface Name="Westwind.Globalization.DbDesignTimeResourceProviderFactory.IResourceDictionary" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Designer\DbDesignTimeResourceProviderFactory.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Interface>
+      <Class Name="Westwind.Globalization.DbDesignTimeResourceProviderFactory.ResourceDictionary" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Designer\DbDesignTimeResourceProviderFactory.cs</NewMemberFileName>
+        </TypeIdentifier>
+        <Lollipop Position="0.2" />
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAQAAFAAAAAAAA=</HashCode>
+      <FileName>Designer\DbDesignTimeResourceProviderFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Westwind.Globalization.DbResourceProviderFactory">
+    <Position X="0.5" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>DbResourceManagerResourceProvider\DbResourceProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Westwind.Globalization.DbSimpleResourceProvider" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="2.5" Width="2.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAJEAAAAAEAAgAAABBAAAAAABAAAAAA=</HashCode>
+      <FileName>DbSimpleResourceProvider\DbSimpleResourceProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Westwind.Globalization.DbSimpleResourceReader" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="5.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAgAAAAAAAAAAAAAAAAAAAAAEAAABAAAAAgA=</HashCode>
+      <FileName>DbSimpleResourceProvider\DbSimpleResourceReader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Westwind.Globalization.DbResourceProviderSection">
+    <Position X="6.75" Y="5.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AABgAACABAAAAAAAAAAAAACiAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>DbResourceProviderSection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
