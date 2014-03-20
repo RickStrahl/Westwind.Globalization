@@ -1,0 +1,1071 @@
+﻿/* BROWSER RESET (based on Eric Meyer's Reset) */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, 
+img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var,
+b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td, 
+article, aside, canvas, details, figcaption, figure, footer, header, 
+hgroup, menu, nav, section, summary, time, mark, audio, video {
+
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+	outline: 0px;		
+	line-height: inherit;
+	vertical-align: baseline;
+	font-family: inherit;
+	font-size: 100%;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+:focus {
+	outline: 0;
+}
+html, body {
+    height: 100%; 
+}
+body 
+{
+    background: white;
+	color: black;
+	line-height: 1.2;	
+}
+ol, ul {
+	list-style: disc;
+	margin: 20px;
+	}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	}
+caption, th, td {
+	font-weight: normal;
+	/* text-align: inherit; */
+	padding: 4px;
+	}
+blockquote, q {
+    quotes: none;
+    margin: 15px;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+	content: '';	
+}
+
+input,select,textarea
+{
+	font-size: inherit;
+	font-weight: inherit;
+	font-style: inherit;
+}	
+p
+{
+	margin: 10px 0;
+}
+/* END BROWSER RESET */
+
+
+/* BUILT-IN ELEMENT CUSTOMIZATION */
+body,table,td,th,input,textarea,select
+{
+    font-family: Verdana, Geneva, 'DejaVu Sans', arial, sans-serif;
+    font-size: 10pt;
+}
+pre
+{
+    color: black;
+    font-family: monospace,courier new;
+    font-weight: normal;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+img
+{
+    border: none;
+    margin: 0;    
+}
+h1
+{
+    background-color: #eeeeee;
+    color: navy;
+    font-size: 160%;
+    font-weight: bold;
+    padding: 5px;
+    text-align: center;    
+}
+h2
+{
+    color: maroon;
+    font-size: 140%;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 20px;    
+}
+h3
+{
+    color: steelblue;
+    font-size: 110%;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 6px;    
+}
+td
+{
+    vertical-align: top;
+    padding: 4px;
+}
+table.blackborder>tbody>tr>td
+{
+	border: solid 1px lightgrey;	
+}
+th
+{
+	border-collapse: collapse;
+	font-weight: bold;
+	text-align: center;
+}
+a 
+{ color:#003399; }
+a:visited
+{
+	color: maroon;
+}
+a:hover 
+{ color:maroon;}
+small, .smalltext,.small
+{
+    font-size: 8.25pt;
+    font-weight: normal;
+}
+hr 
+{ color: navy; background: navy; border: 0; height:1px;}
+	
+ul 
+{
+    margin-bottom: 10px;
+    margin-top: 10px;    
+    margin-left: 30px;
+}	
+li
+{
+	margin-top: 3px;	
+}
+fieldset
+{
+	border: solid 1px darkgrey;	   
+	margin-bottom: 15px;
+	margin-top: 15px;
+	padding: 10px;
+	border-radius: 5px;
+}
+legend
+{
+	font-weight: bold;
+	background: #DE8079;
+	color: White;
+	padding: 2px 5px;
+	margin: 3px;
+	border: solid 1px maroon;
+	text-align: left;
+}
+   
+input[type=text], input[type=password], select, textarea,
+input[type=url],input[type=email],input[type=date],input[type=datetime]
+{    	    	
+	background-color: #F5F7FA;    	
+	border: solid 1px lightsteelblue;
+	border-style:solid;
+	padding: 3px;
+	border-radius: 3px;
+}
+input[type=text]:focus, input[type=password]:focus,textarea:focus, 
+select:focus,input[type=url]:focus, input[type=email]:focus,input[type=date]:focus,
+input[type=datetime]:focus
+{
+    border-color: orange !important;
+    border-width: 1px !important;
+    background: cornsilk;        
+}
+input[type=button], input[type=submit]
+{
+	font-size: 8.25pt;	
+}
+.clearfix,.clear
+{
+    clear: both;
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+}
+.hidden
+{
+    display: none;
+}
+.rightalign
+{
+	float: right;
+	text-align: right;	
+}
+.leftalign
+{
+    float: left;
+    text-align: left;
+}
+.number
+{
+    text-align: right;
+}
+.date
+{
+    width: 75px;
+}
+.datetime 
+{
+    width: 100px;
+}
+.label, label , .label-left
+{
+    font-weight: bold;
+}
+.label-left
+{
+    float: left;
+    width: 150px;
+}
+
+.disabled
+{
+    cursor: default !important;
+    opacity: 0.7;
+}
+.disabled:hover
+{
+    cursor: transparent !important;
+    color: inherit !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+}
+.blackborder
+{
+	border-style: solid;
+	border-width: 2px;
+	border-color: #003399;
+	background: white;
+	text-align: left;
+}
+.bigtext
+{
+	font-size: 18pt;
+	font-weight: bold;
+	color: Navy;
+}
+.boxshadow 
+{
+  -moz-box-shadow: 3px 3px 5px #535353;
+  -webkit-box-shadow: 3px 3px 5px #535353;       
+  box-shadow: 3px 3px 5px #535353;
+}
+.roundbox
+{  
+  -moz-border-radius: 6px 6px 6px 6px;
+  -webkit-border-radius: 6px;  
+  border-radius: 6px 6px 6px 6px;
+}
+.roundbox-top
+{    
+    -moz-border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;    
+    border-radius: 4px 4px 0 0;
+}
+.roundbox-bottom
+{    
+    -moz-border-radius: 0 0 4px 4px;
+    -webkit-border-radius: 0 0 4px 4px;
+    border-radius: 0 0 4px 4px;
+}
+
+/* block backgrounds for headers etc. */
+.menuband, .gridheader, .gridheaderbig, .gridpager, .buttonlinks, .blockheader
+{
+	color: cornsilk;
+	background-color: #003399;
+	padding: 0px;
+}
+/* alternate background color color to offset the background
+   used for the category list and banner strips for color
+   variety. should be a companion color to the block background
+   colors (previous tag
+*/
+.alternatebackground
+{
+	color: white;
+	background-color: #0066cc;
+}
+/* Use for label/textbox blocks stacked ontop of each other */
+.recordcontainer
+{
+    border: 1px solid steelblue
+}
+.recordcontainer input, .recordcontainer textarea
+{
+    width: 400px;
+}
+.recordheader
+{
+    background-color: steelblue;
+    color: white;
+    text-align: right;   
+    padding-right: 10px;
+    font-weight: bold;
+    width: 140px;     
+}
+
+/* used for any block tags like headers on tables etc. */
+.blockheader
+{
+	font-weight:bold;
+}
+/* used on the category list as a standard link */
+.menuband, .menuband-bottom
+{	
+	font-weight: bold;
+	height: 20px;
+	padding-top: 5px;
+	text-align: center;
+	background-image: url(images/headergradient.png);
+	background-repeat: repeat-x;
+}
+.menuband-bottom
+{
+    height: 7px;
+    background-position: 0% 20%;	
+
+}
+.menulinkcontainer
+{
+	padding: 5px;
+}
+.menurow 
+{ 
+	padding:5px;
+	border-bottom: solid 1px white ;
+}
+.menulink
+{
+    color: white;
+    font-size: 8pt;
+    font-weight: normal;
+    text-decoration: none ;
+    display:block;
+    text-align:left;
+    padding-top:4px;
+    padding-bottom: 4px;
+    padding-left: 5px;
+    border: solid 1px transparent;
+}
+.menulink:visited { color: #eeeeee; } 
+.menulink:hover 
+{ 
+	color:#003399; 
+	text-decoration:none; 
+	font-weight:normal; 
+	background: white url('images/menuhighlight.png') repeat-x;
+}
+.footer
+{
+    margin: 10px 0px;
+    border-top: solid 1px navy; 
+    font-size: 8pt;   
+    padding: 5px 10px;
+}
+
+.sortable, .sortable a
+{
+    color: khaki;
+}
+.imagelink
+{
+	text-decoration: none;
+	display: inline-block;
+	padding-left:4px;
+	padding-right: 4px;
+	padding-top: 2px;
+	cursor: pointer;
+}
+.imagelink:hover { background: lightsteelblue; color:black; text-decoration:none; } 
+
+.submitbutton
+{
+	border-style: none;
+	border-color: inherit;
+	border-width: 0px;
+	font-weight: bold;
+	height: 35px !important;
+	font-size: 1.3em !important;
+	min-width: 200px;
+	text-align: center;
+	border: 1px solid navy;
+	background: url(images/headergradient.png) !important;
+	border-radius: 4px 4px 4px 4px;
+	box-shadow: 2px 2px 4px #0E0D0D;  		
+	color: lemonchiffon;
+}
+.submitbutton:hover, .submitbutton:active
+{
+    background-position: 0 -5px !important;    
+    box-shadow: 1px 1px 2px #0E0D0D;  		
+    cursor: pointer;
+    opacity: 0.90;
+} 
+.smallbutton
+{
+	border: 1px solid orange;
+	height: 22px;
+	min-width: 90px;
+	font-size: 8pt;
+	color: navy;
+	background: url(images/dialogselection.png) !important;
+        border-radius: 4px 4px 4px 4px;
+	box-shadow: 1px 1px 3px #0E0D0D; 
+}
+.smallbutton:hover, .smallbutton:active
+ {
+     background-position: 0 -6px !important; 
+     box-shadow: 1px 1px 2px #0E0D0D; 
+     opacity: 0.90;
+ }
+
+
+.gridheader, .gridheaderbig, .gridheaderleft, .gridheaderright, .gridpager
+{	
+	padding: 4px;
+	color: cornsilk;
+	background:  #003399 url(images/headergradient.png) repeat-x;
+	text-align: center;
+	font-weight: bold;
+	text-decoration: none;	
+}
+.gridheader a, .gridheaderbig a
+{
+	color: cornsilk;
+	text-decoration: none;
+}
+.gridheaderleft
+{
+	text-align: left;
+}
+.gridheaderright
+{
+	text-align: right;
+}
+.gridheaderbig
+{	
+	font-size: 135%;
+	background-image: url(images/headergradient.png);
+	background-repeat: repeat-x;
+}
+.gridnormal
+{
+	background-color: #eeeeee;
+}
+.gridalternate
+{
+	background-color:#b5c7d6;
+}
+.gridhighlight
+{
+	background-image: url(images/LightOrangeGradient.png);
+	background-repeat: repeat-x;
+	background-color: White;	
+	cursor:pointer;
+}
+
+
+
+.pagercontainer
+{
+    margin: 20px 0;
+    background: whitesmoke;    
+    padding: 5px;    
+}
+.pager
+{
+    float: right;
+    font-size: 10pt;
+    text-align: left;
+}
+.pagerbutton,.pagerbutton-selected,.pagertext
+{
+    display: block;        
+    float: left;    
+    text-align: center;
+    border: solid 2px maroon;        
+    min-width: 18px;      
+    margin-left: 3px;    
+    text-decoration: none;        
+    padding: 4px;
+}
+.pagerbutton-selected
+{
+    font-size: 130%;
+    font-weight: bold;        
+    color: maroon;
+    border-width: 0px;
+    background: khaki;
+}
+.pagerbutton-first
+{
+    margin-right: 12px;        
+}
+.pagerbutton-last,.pagerbutton-prev
+{
+    margin-left: 12px;        
+}
+.pagertext
+{
+    border: none;
+    margin-left: 30px;
+    font-weight: bold;
+}
+.pagerbutton a
+{
+    text-decoration: none;
+}
+.pagerbutton:hover
+{
+    background-color: maroon;
+    color: cornsilk;
+}
+.pagerbutton-prev
+{
+    background-image: url(images/prev.png);
+    background-position: 2px center;
+    background-repeat: no-repeat;
+    width: 35px;
+    padding-left: 20px;
+}
+.pagerbutton-next
+{
+    background-image: url(images/next.png);
+    background-position: 40px center;
+    background-repeat: no-repeat;
+    width: 35px;
+    padding-right: 20px;
+    margin-right: 0px;
+}
+.gridpagercontainer
+{        
+    background-image: url(images/headergradient.png);
+    background-repeat: repeat-x;	
+    padding: 4px;
+}
+.gridpager
+{
+    color: White;        
+    float: right;
+    font-size: 10pt;    
+    font-weight: normal;    
+}
+.gridpagerbutton,.gridpagerbutton-selected,.gridpagertext
+{
+    display: block;
+    color: White;
+    float: left;    
+    text-align: center;
+    border: solid 1px darkgray;        
+    min-width: 16px;      
+    margin-left: 3px;    
+    text-decoration: none;        
+    padding: 2px 4px;
+}
+.gridpagertext
+{
+    border: none;
+    margin-left: 30px;
+    font-weight: bold;
+}
+.gridpagerbutton a
+{
+    text-decoration: none;
+}
+.gridpagerbutton:visited
+{
+    color: white;
+}
+.gridpagerbutton:hover, .gridpagerbutton:visited:hover
+{
+    color: black;
+	background-color: lightgray;
+}
+.gridpagerbutton-selected
+{
+    font-size: 130%;
+    font-weight: bold;        
+    color: Maroon;
+    border-width: 0px;
+    background: lightsteelblue;
+}
+.gridpagerbutton-first
+{
+    margin-right: 15px;                  
+}
+.gridpagerbutton-last, .gridpagerbutton-last:visited, .gridpagerbutton-prev,.gridpagerbutton-prev:visited
+{
+    margin-left: 15px;                
+}
+/* GridView Pager */
+.gridpagercontainer table,.gridpagercontainer table tbody tr td
+{		
+	padding: 0px 2px;
+	color: cornsilk;	
+	font-size: 11pt;
+	font-weight: bold;			
+	border: solid 1px transparent;		
+}
+.gridpagercontainer table { float: right; }
+.gridpagercontainer a, .gridpagercontainer a:visited
+{	
+	font-weight: normal;
+	text-decoration: none;
+	color: white;	
+	font-size: 10pt;
+}
+
+.grouping
+{
+	padding: 10px;
+	background-color: whitesmoke;   
+	position: relative; 	
+}
+.groupheader  
+{
+	background: SteelBlue; 
+	color: White; 
+	padding: 4px; 
+	margin-top: 10px; 
+	margin-bottom: 5px; 
+	font-weight: bold !important;
+}    
+.groupheader a
+{
+    color: White;
+    text-decoration: none;
+}
+.errormessage
+{
+	font-weight: bold !important;
+	color: maroon !important;
+}
+.errordisplay
+{	
+	font-weight: normal;
+	color: maroon !important;
+	background-color:khaki !important;
+	border: solid 2px maroon !important;	
+	margin: 7px 0;
+	padding: 10px;
+	box-shadow: 3px 3px 5px #535353;
+	border-radius: 3px 3px 3px 3px;
+}
+.errordisplay td
+{
+    padding: 5px;
+    text-align: left;    
+    vertical-align: top;
+}
+.errordisplay td:first-child
+{
+    width: 16px;
+    padding-top: 7px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.errordisplay hr
+{
+	background: maroon;
+}
+.errorhighlight
+{
+    background-color: #FCEBF2 !important;
+    border-color: Red !important;
+    border-width: 2px !important;  
+}
+.center
+{
+    margin-left: auto;
+    margin-right: auto;
+}
+.scrollbox
+{
+    height: 200px;    
+    overflow-y: scroll;
+}
+.containercontent
+{
+	padding: 20px;	
+}
+.contentcontainer
+{
+  margin: 15px;
+  padding: 20px;
+  background: white;       
+  border-top: solid 1px silver;
+  border-left: solid 1px silver;
+  border-right: solid 2px #535353 ;
+  border-bottom: solid 2px #535353;
+  
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -opera-border-radius: 10px;
+  border-radius: 10px;
+  
+  -moz-box-shadow: #535353  2px 2px 3px;
+  -webkit-box-shadow: #535353 2px 2px 3px;     
+  box-shadow: 3px 3px 5px #535353  ;
+}
+.dialog
+{
+  background: White;
+  overflow: hidden;
+  border: solid 1px steelblue;    
+  -moz-border-radius: 6px 6px 4px 4px;
+  -webkit-border-radius: 6px 6px 4px 4px;
+  border-radius: 6px 6px 4px 4px;    
+}
+.dialog-header
+{	
+	background-image: url(images/headergradient.png);    
+	background-repeat: repeat-x;
+	text-align: left;
+	color: cornsilk;
+	padding: 5px;	
+	padding-left: 10px;
+	font-size: 1.02em;
+	font-weight: bold;	
+	position: relative;
+    -moz-border-radius: 4px 4px 0px 0px;   
+    -webkit-border-radius: 4px 4px 0px 0px;       
+    border-radius: 5px 5px 0px 0px;       
+}
+.dialog-top
+{
+    -moz-border-radius: 4px 4px 0px 0px;   
+    -webkit-border-radius: 4px 4px 0px 0px;       
+    border-radius: 5px 5px 0px 0px;       
+}
+.dialog-bottom
+{
+    -moz-border-radius: 0 0 3px 3px;   
+    -webkit-border-radius: 0 0 3px 3px;   
+    border-radius: 0 0 3px 3px;   
+}
+.dialog-content
+{
+	padding: 15px;
+	text-align: left;
+}
+.dialog-statusbar, .dialog-toolbar
+{
+	background: #eeeeee;
+	background-image: url(images/dialogstrip.png);
+	background-repeat: repeat-x;
+	padding: 5px;
+	padding-left: 10px;
+	border-top: solid 1px silver;
+	border-bottom: solid 1px silver;
+	font-size: 0.8em;
+}
+.dialog-statusbar
+{
+    -moz-border-radius: 0 0 3px 3px;   
+    -webkit-border-radius: 0 0 3px 3px;   
+    border-radius: 0 0 3px 3px;   
+	padding-right: 10px;
+}
+
+
+.toolbarcontainer  
+{
+	background:#eeeeee;
+	background-image: url(images/dialogstrip.png);
+	background-repeat: repeat-x;
+	border: solid 1px silver;	
+	font-size: 80%;
+	padding: 5px; 
+}
+.statusbar
+{
+	position: fixed;
+	bottom: 0px;
+	left: 10px;
+	right: 10px;
+	height: 16px;	
+	padding: 8px 2px 8px 10px;	
+	font-weight: bold;
+	background: black;
+	color: white;	
+	opacity: .85;	
+	filter: alpha(opacity="85");
+	z-index: 200;
+	overflow: hidden;	
+	border-radius: 8px 8px 0 0;            
+    box-shadow: -1px -1px 6px 2px #535353;
+}
+.statusbarhighlight
+{
+	font-weight: bold;
+	color: yellow;	
+}
+.statusbarclose
+{
+	position: absolute;
+	right: 20px; 
+	top: 2px;
+	color:red;
+	font-size: 8pt;
+	font-weight: bold;
+	cursor: pointer;
+}
+.hoverbutton  
+{
+	text-decoration:none;		
+	padding: 4px; 	
+	font-size: 8pt; 		
+	border: solid 1px transparent; 			
+	cursor: pointer;	
+	border-radius: 4px;
+}
+.hoverbutton img
+{
+    vertical-align: text-bottom;
+}
+.hoverbutton:hover
+{	
+	background: white url('images/dialoghighlight.png'); 
+	border:  outset 1px silver; 	
+	cursor: pointer;    
+}     
+.hoverbutton a
+{
+	text-decoration: none;
+}
+.closebox
+{
+	position: absolute;    	
+	right: 2px;
+	top: 2px;
+	background-image: url(images/close.gif);
+	background-repeat: no-repeat;
+	width: 14px;
+	height: 14px;
+	cursor: pointer;    	
+	opacity: 0.60;
+	filter: alpha(opacity="80");
+} 
+.closebox:hover 
+{	
+	opacity: 1;
+	filter: alpha(opacity="95");
+}
+.tabbutton, .tabbutton-selected, .tabbutton-disabled, .tabbutton, .selectedtabbutton
+{
+    float: left;
+    background: #D3D3D3;
+    color: Black;
+    border-radius: 6px 6px 0 0;
+    min-width: 100px;
+    padding: 4px;
+    border: solid 1px #535353;
+    margin-right: 3px;
+    box-shadow: 2px 0px 3px #535353;
+}
+.tabbutton-selected
+{
+    font-weight: bold;
+    background: #4062A7;
+    color: White;
+}
+.tabbutton:hover
+{
+    background: #4682B4;
+    color: White;
+    font-weight: normal;
+}
+.tabbutton-disabled
+{
+    cursor: auto;    
+    color: #535353;
+    opacity: 0.70;
+    filter: alpha(opacity="70");
+}
+.tabstripseparator
+{
+    cursor: auto;    
+    color: #535353;
+    opacity: 0.70;
+    filter: alpha(opacity="70");
+}
+.dragwindow
+{
+	background: white;
+	border: solid 2px steelblue;
+	position: absolute;					
+}
+
+.logindisplay
+{
+    background-color: khaki;
+    color: Maroon;
+    border: 2px solid maroon;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 3px 3px 4px #535353;    
+}
+.loginheader
+{
+    background-color: Maroon;
+    color: White;
+    font-weight: bold;
+    text-align: center;
+    padding: 4px;
+}
+.smallprogress,.smallprogressright
+{
+	width: 16px;
+	height: 16px;
+	background-image: url(images/loading_small.gif);
+	background-repeat: no-repeat;			
+	display: none;	
+}
+.smallprogressright { float: right }
+.notebox
+{
+	background: lightsteelblue;
+	padding: 10px;
+	border: solid 1px navy;
+	margin: 5px 40px 15px 30px;
+	font-size: 8pt;
+	box-shadow: 2px 2px 3px #535353;
+	border-radius: 5px;
+}
+
+/* custom styles - app specific */
+.descriptionheader
+{
+	background: khaki;
+	color: black;
+	font-size: 8pt;
+	text-align: left;
+	padding: 10px;
+	border-top: solid 1px silver;
+}
+.highlight
+{
+    background-image: url(images/lightorangegradient.png);
+    background-repeat: repeat-x;
+}
+.menucontainer
+{
+	margin: 3px;
+	margin-left: 10px;
+}
+.banner
+{
+	color: cornsilk;
+	font-weight:bold;
+	background: #003399 url('images/floralbackground_sm.gif') ;
+	height: 16px;
+	padding: 5px;
+	white-space:nowrap;
+}
+.bannertext
+{
+	color: White;
+	text-decoration: none;
+	padding: 1px 0;
+}
+.bannertext:visited
+{
+	color: white;
+}
+.bannertext:hover
+{
+	color: #003399;
+	background: white url('images/menuhighlight.png');	
+}
+.bannersubtitle
+{
+	color: khaki;
+	float:left;
+	padding-left:8px;
+}
+.samplebox
+{
+	padding: 10px 20px 15px 20px;
+	border-bottom: 1px dashed steelblue;		
+}
+
+/* Overrides for jQuery UI controls */
+#ui-datepicker-div
+{
+    display: none;
+}
+.ui-autocomplete 
+{
+	max-height: 250px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 20px;
+	width: 500px;
+	font-size: 1pt;
+	-moz-box-shadow: 3px 3px 5px #535353;
+    -webkit-box-shadow: 3px 3px 5px #535353;       
+    -box-shadow: 3px 3px 5px #535353;
+}
+
+
+
+#paneltranslate input { font-size: 8pt; }
+#paneltranslate textarea { font-size: 8pt; }
+
+#toolbar a { padding:4px; border: solid 1px whitesmoke; text-decoration:none; }
+#toolbar a:hover { background: #eeeeee url(images/menuhighlight.png);  border: solid 1px silver; } 
+
+
+.dialogcontent { padding: 15px; }
+
+input[type="button"],input[type="submit"],input[type="file"]
+{
+	height: 23px;
+}
+
+.resourcestringitem
+{
+	padding:5px;
+	border-bottom:solid 1px steelblue;
+}
+.resourcestringheader
+{
+	border-bottom:solid 1px navy;
+	color: Maroon;
+	font-weight: bold;
+	font-size: 1.2em;
+	padding-bottom: 4px;
+}
+.statusbarhighlight
+{
+	margin: 0px;
+}
+#divValues 
+{
+	padding:5px;
+	width: 97%;
+	border:solid 2px steelblue;
+	height:140px;
+	overflow-y:scroll;
+}

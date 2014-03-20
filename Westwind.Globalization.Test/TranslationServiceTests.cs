@@ -1,5 +1,4 @@
 ﻿using System;
-using Westwind.Utilities;
 using NUnit.Framework;
 
 namespace Westwind.Globalization.Test
@@ -60,13 +59,13 @@ namespace Westwind.Globalization.Test
 
 
 
-        [Test]
-        public void JsonEncodeDecode()
-        {
-            string orig = "Hier sind einige Text in \"Anführungszeichen\", die ordnungsgemäß";
-            string encoded = WebUtils.EncodeJsString(orig);
-            Console.WriteLine(encoded);
-            Console.WriteLine(WebUtils.DecodeJsString(encoded));
-        }
+        //[Test]
+        //public void JsonEncodeDecode()
+        //{
+        //    string orig = "Hier sind einige Text in \"Anführungszeichen\", die ordnungsgemäß";
+        //    string encoded = WebUtils.EncodeJsString(orig);
+        //    Console.WriteLine(encoded);
+        //    Console.WriteLine(WebUtils.DecodeJsString(encoded));
+        //}
     }
 }

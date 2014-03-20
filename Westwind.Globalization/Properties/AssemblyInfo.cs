@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Web.UI;
 
-[assembly: TagPrefix("Westwind.Globalization", "ww")]
+[assembly: TagPrefix("Westwind.Globalization", "loc")]
 //[assembly: System.Security.AllowPartiallyTrustedCallers()]
 
 // General Information about an assembly is controlled through the following 
@@ -14,7 +14,7 @@ using System.Web.UI;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("West Wind Technologies")]
 [assembly: AssemblyProduct("Westwind.Globalization")]
-[assembly: AssemblyCopyright("Copyright West Wind Technologies, 2006 - 2013")]
+[assembly: AssemblyCopyright("Copyright West Wind Technologies, 2006 - 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -37,5 +37,5 @@ using System.Web.UI;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.9.99.0")]
-[assembly: AssemblyFileVersion("1.9.99.0")]
+[assembly: AssemblyVersion("1.99.0.0")]
+[assembly: AssemblyFileVersion("1.99.0.0")]

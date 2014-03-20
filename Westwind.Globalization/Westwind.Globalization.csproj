@@ -88,16 +88,17 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.XML" />
-    <Reference Include="Westwind.Utilities, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Westwind.Utilities, Version=2.50.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libs\Westwind.Utilities.dll</HintPath>
+      <HintPath>..\packages\Westwind.Utilities.2.50.0\lib\net40\Westwind.Utilities.dll</HintPath>
     </Reference>
-    <Reference Include="Westwind.Web, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Westwind.Web, Version=2.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libs\Westwind.Web.dll</HintPath>
+      <HintPath>..\packages\Westwind.Web.2.50.0\lib\net45\Westwind.Web.dll</HintPath>
     </Reference>
-    <Reference Include="Westwind.Web.WebForms">
-      <HintPath>..\Libs\Westwind.Web.WebForms.dll</HintPath>
+    <Reference Include="Westwind.Web.WebForms, Version=2.50.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Westwind.Web.WebForms.2.50.0\lib\net45\Westwind.Web.WebForms.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -154,7 +155,10 @@
   <ItemGroup>
     <None Include="DbSimpleResourceProvider\BasicResourceProvider.cd" />
     <None Include="DbSimpleResourceProvider\DbSimpleResourceProviderHierarchy.cd" />
-    <None Include="Web.Sample.config">
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web.Sample.Xconfig">
       <SubType>Designer</SubType>
     </None>
     <None Include="DbResourceManagerResourceProvider\DbResourceProviderHierarchy.cd" />
@@ -190,7 +194,11 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="scripts\ww.jquery.js" />
+    <Content Include="scripts\ww.jquery.min.js" />
+    <Content Include="_readme.Westwind.Globalization.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

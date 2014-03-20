@@ -154,12 +154,11 @@ namespace Westwind.Globalization
             cache.VaryByParams["IncludeControls"] = true;
             cache.VaryByParams["VarName"] = true;
             cache.VaryByParams["ResourceMode"] = true;           
-            cache.SetOmitVaryStar(true);
+            //cache.SetOmitVaryStar(true);
 
             DateTime now = DateTime.Now;
             cache.SetCacheability(HttpCacheability.Public);
-
-            cache.SetExpires(now + TimeSpan.FromDays(365.0));
+            cache.SetExpires(now + TimeSpan.FromDays(10));
             cache.SetValidUntilExpires(true);
             cache.SetLastModified(now);
 
@@ -177,7 +176,7 @@ namespace Westwind.Globalization
         {
             StringBuilder sb = new StringBuilder(2048);
 
-            sb.Append("var " + varname + " = {\r\n");
+            sb.Append(varname + " = {\r\n");
 
             int anonymousIdCounter = 0;
             foreach (KeyValuePair<string, object> item in resxDict)
@@ -194,7 +193,7 @@ namespace Westwind.Globalization
                 if (key.Contains(" "))
                     key = StringUtils.ToCamelCase(key);
 
-                sb.Append("\t" + key + ": ");
+                sb.Append("\t\"" + key + "\": ");
                 sb.Append(WebUtils.EncodeJsString(value));
                 sb.Append(",\r\n");
             }
@@ -333,14 +332,15 @@ namespace Westwind.Globalization
         /// <param name="localeId"></param>
         /// <param name="resourceType"></param>
         /// <returns></returns>
-        public static string GetJavaScriptGlobalResourcesUrl(string varName, string resourceSet, string localeId,
-                                                           ResourceProviderTypes resourceType)
+        public static string GetJavaScriptGlobalResourcesUrl(string varName, string resourceSet, string localeId = null,
+                                                           ResourceProviderTypes resourceType = ResourceProviderTypes.AutoDetect)
         {
             if (resourceType == ResourceProviderTypes.AutoDetect)
             {
                 if (DbSimpleResourceProvider.ProviderLoaded || DbResourceProvider.ProviderLoaded)
                     resourceType = ResourceProviderTypes.DbResourceProvider;
             }
+            
 
             StringBuilder sb = new StringBuilder(512);
             sb.Append(WebUtils.ResolveUrl("~/") + "JavaScriptResourceHandler.axd?");
@@ -421,41 +421,6 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Returns a standard Resx resource based on it's . delimited resourceset name
-        /// this version defaults to automatic detection of type (ResX or Db) based
-        /// on configuration settings in provider section and the currently active
-        /// locale on the machine.
-        /// </summary>
-        /// <param name="varName">The name of the JavaScript variable to create</param>
-        /// <param name="resourceSet">The name of the resource set
-        /// Example:
-        /// CodePasteMvc.Resources.Resources  (~/Resources/Resources.resx in CodePasteMvc project)
-        /// </param>        
-        /// <returns></returns>
-        public static string GetJavaScriptResourcesUrl(string varName, string resourceSet)
-        {
-            string localeId = CultureInfo.CurrentUICulture.IetfLanguageTag;
-            return GetJavaScriptResourcesUrl(varName, resourceSet, localeId, ResourceProviderTypes.AutoDetect);
-        }
-
-        /// <summary>
-        /// Returns a standard Resx resource based on it's . delimited resourceset name
-        /// this version defaults to automatic detection of type (ResX or Db) based
-        /// on configuration settings in provider section.
-        /// </summary>
-        /// <param name="varName">The name of the JavaScript variable to create</param>
-        /// <param name="resourceSet">The name of the resource set
-        /// Example:
-        /// CodePasteMvc.Resources.Resources  (~/Resources/Resources.resx in CodePasteMvc project)
-        /// </param>
-        /// <param name="localeId">IETF locale id (2 or 4 en or en-US)</param>
-        /// <returns></returns>
-        public static string GetJavaScriptResourcesUrl(string varName, string resourceSet, string localeId)
-        {
-            return GetJavaScriptResourcesUrl(varName, resourceSet, localeId, ResourceProviderTypes.AutoDetect);
-        }
-
-        /// <summary>
-        /// Returns a standard Resx resource based on it's . delimited resourceset name
         /// </summary>
         /// <param name="varName">The name of the JavaScript variable to create</param>
         /// <param name="resourceSet">The name of the resource set
@@ -463,12 +428,16 @@ namespace Westwind.Globalization
         /// Example:
         /// CodePasteMvc.Resources.Resources  (~/Resources/Resources.resx in CodePasteMvc project)
         /// </param>
-        /// <param name="localeId">IETF locale id (2 or 4 en or en-US)</param>
+        /// <param name="localeId">IETF locale id (2 or 4 en or en-US or empty)</param>
         /// <param name="resourceType">ResDb or ResX</param>
         /// <returns></returns>
-        public static string GetJavaScriptResourcesUrl(string varName, string resourceSet, string localeId,
-                                                      ResourceProviderTypes resourceType)
+        public static string GetJavaScriptResourcesUrl(string varName, string resourceSet,
+                                                      string localeId = null,
+                                                      ResourceProviderTypes resourceType = ResourceProviderTypes.AutoDetect)
         {
+            if (localeId == null)
+                localeId = CultureInfo.CurrentUICulture.IetfLanguageTag;
+            
             if (resourceType == ResourceProviderTypes.AutoDetect)
             {
                 if (DbSimpleResourceProvider.ProviderLoaded || DbResourceProvider.ProviderLoaded)
@@ -480,7 +449,7 @@ namespace Westwind.Globalization
             sb.AppendFormat("ResourceSet={0}&LocaleId={1}&VarName={2}&ResourceType={3}",
                              resourceSet, localeId, varName,
                              resourceType == ResourceProviderTypes.DbResourceProvider ? "resdb" : "resx");
-            sb.Append("&ResourceMode=2");
+            sb.Append("&ResourceMode=1");
 
             return sb.ToString();
         }

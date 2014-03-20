@@ -211,25 +211,32 @@ namespace Westwind.Globalization
             object value = base.GetObject(name, culture);
 
             if (AutoAddMissingEntries && value == null)
-                AddMissingResource(name, name);
-            
+            {     
+                AddMissingResource(name, name, null);
+            }
+
             return value;
         }
 
         /// <summary>
-        /// 
+        /// Add a new resource to the base resource set
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        public void AddMissingResource(string name, string value)
+        public void AddMissingResource(string name, string value, CultureInfo culture = null)
         {
             DbResourceDataManager man = new DbResourceDataManager();
-            
-            // double check if it exists
-            if (man.GetResourceObject(name, this.BaseName, string.Empty) != null)
+
+            string cultureName = string.Empty;
+            if (culture != null)
+                cultureName = culture.IetfLanguageTag;
+
+            // double check if culture neutral version exists
+            string item = man.GetResourceObject(name, BaseName, cultureName) as string;
+            if (item != null)
                 return;
             
-            man.AddResource(name, value, string.Empty, this.BaseName, null);
+            man.AddResource(name, value, cultureName, BaseName, null);
         }
 
     } 

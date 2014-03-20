@@ -39,8 +39,11 @@ public class DbRes
         if (resourceSet == null)
             resourceSet = string.Empty;
 
+        // check if the res manager exists
         DbResourceManager manager = null;
         ResourceManagers.TryGetValue(resourceSet, out manager);
+        
+        // if not we have to create it and add it to static collection
         if (manager == null)
         {
             lock (ResourceManagers)
@@ -50,13 +53,14 @@ public class DbRes
                 {
                     manager = new DbResourceManager(resourceSet);
                     if (manager != null)
-                    {
+                    {                                              
                         ResourceManagers.Add(resourceSet, manager);
                     }
                 }
             }
         }
 
+        // no manager no resources
         if (manager == null)
             return resId;
 
