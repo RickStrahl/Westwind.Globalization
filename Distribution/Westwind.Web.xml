@@ -1,0 +1,3327 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Westwind.Web</name>
+    </assembly>
+    <members>
+        <member name="F:Westwind.Web.PostBackModes.None">
+            No Form data is posted (but there may still be some post state)
+        </member>
+        <member name="F:Westwind.Web.PostBackModes.Get">
+            <summary>
+            No POST data is posted back to the server
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.PostBackModes.Post">
+            <summary>
+            Only standard POST data is posted back - ASP.NET Post stuff left out
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.PostBackModes.PostNoViewstate">
+            <summary>
+            Posts back POST data but skips ViewState and EventTargets
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.PostBackModes.PostMethodParametersOnly">
+            <summary>
+            Posts only the method parameters and nothing else
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.JavaScriptCodeLocationTypes.EmbeddedInPage">
+            <summary>
+            Causes the Javascript code to be embedded into the page on every 
+            generation. Fully self-contained.
+            <seealso>Enumeration JavaScriptCodeLocationTypes</seealso>
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.JavaScriptCodeLocationTypes.ExternalFile">
+            <summary>
+            Keeps the .js file as an external file in the Web application. If this is 
+            set you should set the &lt;&lt;%= TopicLink([ScriptLocation],[_1Q01F9K4D]) 
+            %&gt;&gt; Property to point at the location of the file.
+            
+            This option requires that you deploy the .js file with your application.
+            <seealso>Enumeration JavaScriptCodeLocationTypes</seealso>
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.JavaScriptCodeLocationTypes.WebResource">
+            <summary>
+            ASP.NET 2.0 option to generate a WebResource.axd call that feeds the .js 
+            file to the client.
+            <seealso>Enumeration JavaScriptCodeLocationTypes</seealso>
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.JavaScriptCodeLocationTypes.None">
+            <summary>
+            Don't include any script - assume the page owner will handle it all
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ProxyClassGenerationModes.Inline">
+            <summary>
+            The proxy is generated inline of the page.
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ProxyClassGenerationModes.None">
+            <summary>
+            No proxy is generated at all
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ProxyClassGenerationModes.jsdebug">
+            <summary>
+            Works only with CallbackHandler implementations
+            that run as handlers at a distinct URL.
+            JsonCallbacks.ashx/jsdebug
+            </summary>
+        </member>
+        <member name="T:Westwind.Web.CallbackException">
+            <summary>
+            Special return type used to indicate that an exception was
+            fired on the server. This object is JSON serialized and the
+            client can check for Result.IsCallbackError to see if a 
+            a failure occured on the server.
+            </summary>    
+        </member>
+        <member name="T:Westwind.Web.CallbackMessage">
+            <summary>
+            Special return type that can be used to return messages to the
+            </summary>    
+        </member>
+        <member name="T:Westwind.Web.CallbackHandler">
+            <summary>
+            CallbackHandler is an Http Handler base class that allows you to create a
+             class with methods marked up with a [CallbackMethod] attribute which are 
+            then exposed for remote execution. The handler routes the to the methods 
+            and executes the call and returns the results - or any errors - as JSON 
+            strings.
+            
+            To use this service you need to create an HttpHandler (either .ASHX or a 
+            class registered in web.config's httpHandler section) and then add methods 
+            with the [CallbackMethod] attribute and that's it. The service accepts 
+            inputs via query string and POST data.
+            
+            If you use the AjaxMethodCallbackControl the process of calling service
+            methods is fully automated including automatic client proxy creation and
+            you can call methods with individual parameters mapped from client to server.
+            
+            Alternately you can also use plain REST calls that pass either no parameters
+            and purely access POST data, or pass a single JSON object that can act as 
+            a single input parameter.
+            
+            The service can be accessed with:
+            
+            MyHandler.ashx?CallbackMethod=MethodToCall
+            
+            POST data can then be passed in to act as parameters:
+            
+            &lt;&lt;ul&gt;&gt;
+            &lt;&lt;li&gt;&gt; &lt;&lt;b&gt;&gt;Raw Post Buffer&lt;&lt;/b&gt;&gt;
+            You simply pass raw POST data that you can access with Request.Form in the 
+            handler
+            
+            &lt;&lt;li&gt;&gt; &lt;&lt;b&gt;&gt;JSON value or object 
+            string&lt;&lt;/b&gt;&gt;
+            Alternately you can set the content type to application/json and pass a 
+            JSON string of a value or object which calls the server method with a 
+            single parameter of matching type.
+            &lt;&lt;/ul&gt;&gt;
+            
+            For more information on how to call these handlers see 
+            <see cref="!:_24I0VDWUR">Using CallbackHandler with REST Calls</see>.
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.CallbackHandler.ProcessRequest(System.Web.HttpContext)">
+            <summary>
+            Handle the actual callback by deferring to JsonCallbackMethodProcessor()
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="P:Westwind.Web.CallbackHandler.Response">
+            <summary>
+            Shortcut to the ASP.NET Response object.
+            
+            Allows easy access to the ASP.NET Response object to allow formatting of 
+            the response. Note that CallbackHandler will set default content types and 
+            encoding for a request which can be overridden in your code if necessary.
+            
+            &lt;&lt;code lang="C#"&gt;&gt;[CallbackMethod(RouteUrl="stocks/{symbol}")]
+            public StockQuote GetStockQuote(string symbol)
+            {
+                Response.Cache.SetExpires(DateTime.UtcNow.Add(new TimeSpan(0, 2, 0)));
+            
+                StockServer server = new StockServer();
+                return server.GetStockQuote(symbol);
+            }&lt;&lt;/code&gt;&gt;
+            <seealso>Class CallbackHandler</seealso>
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.CallbackHandler.Request">
+            <summary>
+            Shortcut reference to active ASP.NET Request object
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.CallbackHandler.Context">
+            <summary>
+            Shortcut to the current HttpContext instance
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.CallbackHandler.IsReusable">
+            <summary>
+            This handler is not thread-safe
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.CallbackHandler.RouteData">
+            <summary>
+            Optionally store RouteData on this handler
+            so we can access it internally
+            </summary>
+        </member>
+        <member name="T:Westwind.Web.CallbackHandlerRouteHandler">
+            <summary>
+            Route handler that can create instances of CallbackHandler derived
+            callback classes. The route handler tracks the method name and
+            creates an instance of the service in a predictable manner
+            </summary>
+            <typeparam name="TCallbackHandler">CallbackHandler type</typeparam>
+        </member>
+        <member name="M:Westwind.Web.CallbackHandlerRouteHandler.#ctor(System.String,System.Type)">
+            <summary>
+            Constructor to pass in the two required components we
+            need to create an instance of our handler. 
+            </summary>
+            <param name="methodName"></param>
+            <param name="callbackHandlerType"></param>
+        </member>
+        <member name="M:Westwind.Web.CallbackHandlerRouteHandler.System#Web#Routing#IRouteHandler#GetHttpHandler(System.Web.Routing.RequestContext)">
+            <summary>
+            Retrieves an Http Handler based on the type specified in the constructor
+            </summary>
+            <param name="requestContext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.CallbackHandlerRouteHandler.RegisterRoutes``1(System.Web.Routing.RouteCollection)">
+            <summary>
+            Generic method to register all routes from a CallbackHandler
+            that have RouteUrls defined on the [CallbackMethod] attribute
+            </summary>
+            <typeparam name="TCallbackHandler"></typeparam>
+            <param name="routes"></param>
+        </member>
+        <member name="P:Westwind.Web.CallbackHandlerRouteHandler.MethodName">
+            <summary>
+            Method name that is to be called on this route.
+            Set by the automatically generated RegisterRoutes 
+            invokatio.n
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.CallbackHandlerRouteHandler.CallbackHandlerType">
+            <summary>
+            The type of the handler we're going to instantiate.
+            Needed so we can semi-generically instantiate the
+            handler and call the method on it.
+            </summary>
+        </member>
+        <member name="T:Westwind.Web.CallbackMethodAttribute">
+            <summary>
+            Marker Attribute to be used on Callback methods. Signals
+            parser that the method is allowed to be executed remotely
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.CallbackMethodAttribute.#ctor">
+            <summary>
+            Default Constructor for CallbackMethodAttribute. No functionality added
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.CallbackMethodAttribute.RouteUrl">
+            <summary>
+            Allows specification of an ASP.NET style route URL to
+            a Service Method.        
+            
+            Parameterized route fragments ( {parameter} ) should match
+            parameter names. 
+            <example>        
+            products/{id}
+            products/add
+            products/add/{sku}
+            service/helloworld/{name}/{company}
+            </example>
+            <remarks>
+            Applies only to CallbackHandler based handlers. 
+            Doesn't have any effect on Page methods called with AjaxMethodCallback
+            
+            Routes need to *uniquely* identify a method in a CallbackHandler.
+            Make sure you don't have the same route or same partially parameterized
+            route pointing at multiple methods - in which case you may end up with
+            routing mismatches. 
+            stocks/{symbol}
+            stocks/{symbollist}
+            </remarks>
+            </summary>        
+        </member>
+        <member name="P:Westwind.Web.CallbackMethodAttribute.ContentType">
+            <summary>
+            Content Type used for results that are returned as Stream
+            or raw string values. Same as setting Response.ContentType
+            but more clear in the attribute
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.CallbackMethodAttribute.AllowedHttpVerbs">
+            <summary>
+            Allows specifying of the HTTP Verb that is accepted for the called method.
+            
+            The default is HttpVerbs.All.
+            
+            <remarks>
+            Requests that fail to access the endpoint with the right HTTP Verb will not
+            get called and return a 405 error along with an error object (JSON/XML) that 
+            details the error in the body.
+            </remarks>
+            <seealso>Class CallbackMethodAttribute</seealso>
+            </summary>
+            <example>
+            &lt;&lt;code lang=&quot;C#&quot;&gt;&gt;// Allow both GET and POST 
+            operations
+            [CallbackMethod(AllowedHttpVerbs=HttpVerbs.GET | HttpVerbs.POST),
+                            RouteUrl=&quot;stocks/{symbol}&quot;]
+            public StockQuote GetStockQuote(string symbol)
+            { ... }&lt;&lt;/code&gt;&gt;
+            </example>
+        </member>
+        <member name="P:Westwind.Web.CallbackMethodAttribute.ReturnAsRawString">
+            <summary>
+            When set to true indicates that a string result returned to the
+            client should not be encoded in anw way. This can be more efficient for 
+            large string results passed back to the client when returning
+            HTML or other plain text and avoids extra encoding and decoding.
+            
+            The client can also specify format=string on the querystring to
+            return string values as raw strings.
+            </summary>
+        </member>
+        <member name="T:Westwind.Web.CallbackMethodProcessorHelper">
+            <summary>
+            This class provides helper services to the CallbackProcessor classes with 
+            the generic services that deal with method execution and parsing POST 
+            parameters which should be independent of the specific implementation 
+            (JSON, XML etc.).
+            
+            Extracted here so other Callback Processors can be created more easily 
+            later on, using other request formats (Xml etc.)
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.CallbackMethodProcessorHelper.ExecuteMethod(System.String,System.Object,System.String[],Westwind.Web.CallbackMethodParameterType,Westwind.Web.CallbackMethodAttribute@)">
+            <summary>
+            Executes the requested method. 
+            to the proper types for execution.
+            </summary>
+            <param name="Method"></param>
+            <param name="methodParameters">An array of the string json parameters to </param>
+            <param name="target">The object to call the method on</param>
+            <param name="parameters">An array of json Strings that make up the parameters for the method call. This value can be null in which case parms are parsed out of GET QueryString or POST values</param>
+            <param name="callbackMethodAttribute">An optional instance of an CallbackAttribute that is set by this method</param>
+            <returns>the result of the method execution</returns>
+        </member>
+        <member name="T:Westwind.Web.ICallbackMethodProcessor">
+            <summary>
+            Inteface that defines the Callback operations for handling method callbacks
+            on the server.
+            
+            This interface serves as an abstraction for potentially different implementations
+            that use XML instead of JSON.
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.ICallbackMethodProcessor.ProcessCallbackMethodCall(System.Object)">
+            <summary>
+            Generic method that handles processing a Callback request by routing to
+            a method in a provided target object.
+            
+            </summary>
+            <param name="target">The target object that is to be called. If null this is used</param>
+        </member>
+        <member name="M:Westwind.Web.ICallbackMethodProcessor.WriteErrorResponse(System.String,System.String)">
+            <summary>
+            Returns an error response to the client from a callback. Code
+            should exit after this call.
+            </summary>
+            <param name="ErrorMessage"></param>
+        </member>
+        <member name="T:Westwind.Web.JsonCallbackMethodProcessor">
+            <summary>
+            This is the core implementation of the JSON callback method handler that 
+            picks up POST data from the request and uses it to call the actual callback
+             method on the specified object and return the results back as JSON.
+            
+            This processor is generic and can be used easily from anywhere that needs 
+            to feed back JSON data from a method callback, simply calling the 
+            ProcessCallbackMethod() with an object that contains methods that are 
+            marked up with the [CallbackMethod] attribute.
+            
+            For example, wwCallbackHandler simply forwards all processing like this:
+            
+            &lt;&lt;code lang="C#"&gt;&gt;public void ProcessRequest(HttpContext 
+            context)
+            {
+                // Pass off to the worker Callback Processor
+                ICallbackMethodProcessor processor = new JsonCallbackMethodProcessor();
+            
+                // Process the inbound request and execute it on this
+                // Http Handler's methods
+                processor.ProcessCallbackMethodCall(this);
+            }&lt;&lt;/code&gt;&gt;
+            
+            This processor is expected to execute in an environment where 
+            HttpContext.Current is available and where POST data is available to 
+            describe the incoming parameter data and method to call.
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.JsonCallbackMethodProcessor.ProcessCallbackMethodCall(System.Object,System.String)">
+            <summary>
+            Generic method that handles processing a Callback request by routing to
+            a method in a provided target object.
+            
+            </summary>
+            <param name="target">The target object that is to be called. If null this is used</param>
+        </member>
+        <member name="M:Westwind.Web.JsonCallbackMethodProcessor.HandleSpecialReturnTypes(System.Object,Westwind.Web.CallbackMethodAttribute,System.Web.HttpRequest,System.Web.HttpResponse)">
+            <summary>
+            This method handles special return types from callback methods
+            by examining the return type or the ResultFormat query string.
+            
+            Checks are performed for:
+            Stream, Bitmap, byte[] and raw string output
+            </summary>
+            <param name="Result"></param>
+            <param name="callbackAttribute"></param>
+            <param name="Request"></param>
+            <param name="Response"></param>
+        </member>
+        <member name="M:Westwind.Web.JsonCallbackMethodProcessor.ProcessCallbackMethodCall(System.Object)">
+            <summary>
+            Generic method that handles processing a Callback request by routing to
+            a method in a provided target object.
+            
+            This version doesn't pass in the method name but retrieves it from the
+            POST data or query string.
+            </summary>
+            <param name="target"></param>
+        </member>
+        <member name="M:Westwind.Web.JsonCallbackMethodProcessor.WriteErrorResponse(System.String,System.String)">
+            <summary>
+            Returns an error response to the client from a callback. Code
+            should exit after this call.
+            </summary>
+            <param name="ErrorMessage"></param>
+        </member>
+        <member name="P:Westwind.Web.JsonCallbackMethodProcessor.JsonPMethod">
+            <summary>
+            JSONP method parameter value if provided
+            </summary>
+        </member>
+        <member name="T:Westwind.Web.XmlCallbackMethodProcessor">
+            <summary>
+            This is the core implementation of the JSON callback method handler that 
+            picks up POST data from the request and uses it to call the actual callback
+             method on the specified object and return the results back as JSON.
+            
+            This processor is generic and can be used easily from anywhere that needs 
+            to feed back JSON data from a method callback, simply calling the 
+            ProcessCallbackMethod() with an object that contains methods that are 
+            marked up with the [CallbackMethod] attribute.
+            
+            For example, wwCallbackHandler simply forwards all processing like this:
+            
+            &lt;&lt;code lang="C#"&gt;&gt;public void ProcessRequest(HttpContext 
+            context)
+            {
+                // Pass off to the worker Callback Processor
+                ICallbackMethodProcessor processor = new JsonCallbackMethodProcessor();
+            
+                // Process the inbound request and execute it on this
+                // Http Handler's methods
+                processor.ProcessCallbackMethodCall(this);
+            }&lt;&lt;/code&gt;&gt;
+            
+            This processor is expected to execute in an environment where 
+            HttpContext.Current is available and where POST data is available to 
+            describe the incoming parameter data and method to call.
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.XmlCallbackMethodProcessor.ProcessCallbackMethodCall(System.Object,System.String)">
+            <summary>
+            Generic method that handles processing a Callback request by routing to
+            a method in a provided target object.
+            
+            </summary>
+            <param name="target">The target object that is to be called. If null this is used</param>
+        </member>
+        <member name="M:Westwind.Web.XmlCallbackMethodProcessor.HandleSpecialReturnTypes(System.Object,Westwind.Web.CallbackMethodAttribute,System.Web.HttpRequest,System.Web.HttpResponse)">
+            <summary>
+            This method handles special return types from callback methods
+            by examining the return type or the ResultFormat query string.
+            
+            Checks are performed for:
+            Stream, Bitmap, byte[] and raw string output
+            </summary>
+            <param name="Result"></param>
+            <param name="callbackAttribute"></param>
+            <param name="Request"></param>
+            <param name="Response"></param>
+        </member>
+        <member name="M:Westwind.Web.XmlCallbackMethodProcessor.ProcessCallbackMethodCall(System.Object)">
+            <summary>
+            Generic method that handles processing a Callback request by routing to
+            a method in a provided target object.
+            
+            This version doesn't pass in the method name but retrieves it from the
+            POST data or query string.
+            </summary>
+            <param name="target"></param>
+        </member>
+        <member name="M:Westwind.Web.XmlCallbackMethodProcessor.WriteErrorResponse(System.String,System.String)">
+            <summary>
+            Returns an error response to the client from a callback. Code
+            should exit after this call.
+            </summary>
+            <param name="ErrorMessage"></param>
+        </member>
+        <member name="P:Westwind.Web.XmlCallbackMethodProcessor.JsonDateEncoding">
+            <summary>
+            Implemented only for compatibility
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.JsonSerializers.JSONSerializerBase.masterSerializer">
+            <summary>
+            Master instance of the JSONSerializer that the user interacts with
+            Used to read option properties
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.JsonSerializers.JSONSerializerBase.#ctor(Westwind.Web.JsonSerializers.JSONSerializer)">
+            <summary>
+             Force a master Serializer to be passed for settings
+            </summary>
+            <param name="serializer"></param>
+        </member>
+        <member name="P:Westwind.Web.JsonSerializers.JSONSerializerBase.DateSerializationMode">
+            <summary>
+            Encodes Dates as a JSON string value that is compatible
+            with MS AJAX and is safe for JSON validators. If false
+            serializes dates as new Date() expression instead.
+            
+            The default is true.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.JsonSerializers.JSONSerializerBase.FormatJsonOutput">
+            <summary>
+            Determines if there are line breaks inserted into the 
+            JSON to make it more easily human readable.
+            </summary>
+        </member>
+        <member name="T:Westwind.Web.JsonSerializers.JsonNetJsonSerializer">
+            <summary>
+            More text is a basic JSON serializer and deserializer that 
+            deals with standard .NET types. Unlike the MS Ajax JSONSerializer
+            parser this parser support serialization and deserialization without 
+            explicit type markup in the JSON resulting in a simpler two-way model.
+            
+            The inbound model for complex types is based on Reflection parsing
+            of properties.
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.JsonSerializers.JsonNetJsonSerializer.masterSerializer">
+            <summary>
+            Master instance of the JSONSerializer that the user interacts with
+            Used to read option properties
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.JsonSerializers.JsonNetJsonSerializer.#ctor(Westwind.Web.JsonSerializers.JSONSerializer)">
+            <summary>
+             Force a master Serializer to be passed for settings
+            </summary>
+            <param name="serializer"></param>
+        </member>
+        <member name="M:Westwind.Web.JsonSerializers.JsonNetJsonSerializer.Serialize(System.Object)">
+            <summary>
+            Serializes a .NET object reference into a JSON string.
+            
+            The serializer supports:
+            &lt;&lt;ul&gt;&gt;
+            &lt;&lt;li&gt;&gt; All simple types
+            &lt;&lt;li&gt;&gt; POCO objects and hierarchical POCO objects
+            &lt;&lt;li&gt;&gt; Arrays
+            &lt;&lt;li&gt;&gt; IList based collections
+            &lt;&lt;li&gt;&gt; DataSet
+            &lt;&lt;li&gt;&gt; DataTable
+            &lt;&lt;li&gt;&gt; DataRow
+            &lt;&lt;/ul&gt;&gt;
+            
+            The serializer works off any .NET type - types don't have to be explicitly 
+            serializable.
+            
+            DataSet/DataTable/DataRow parse into a special format that is essentially 
+            array based of just the data. These objects can be serialized but cannot be
+             passed back in via deserialization.
+            <seealso>Class JSONSerializer</seealso>
+            </summary>
+            <param name="value">
+            The strongly typed value to parse
+            </param>
+        </member>
+        <member name="M:Westwind.Web.JsonSerializers.JsonNetJsonSerializer.Deserialize(System.String,System.Type)">
+            <summary>
+            Takes a JSON string and attempts to create a .NET object from this  
+            structure. An input type is required and any type that is serialized to  
+            must support a parameterless constructor.
+            
+            The de-serializer instantiates each object and runs through the properties
+            
+            The deserializer supports &lt;&lt;ul&gt;&gt; &lt;&lt;li&gt;&gt; All simple 
+            types &lt;&lt;li&gt;&gt; Most POCO objects and Hierarchical POCO objects 
+            &lt;&lt;li&gt;&gt; Arrays and Object Arrays &lt;&lt;li&gt;&gt; IList based 
+            collections &lt;&lt;/ul&gt;&gt;
+            
+            Note that the deserializer doesn't support DataSets/Tables/Rows like the  
+            serializer as there's no type information available from the client to  
+            create these objects on the fly.
+            <seealso>Class JSONSerializer</seealso>
+            </summary>
+            <param name="JSONText">
+            A string of JSON text passed from the client.
+            </param>
+            <param name="valueType">
+            The type of the object that is to be created from the JSON text.
+            </param>
+        </member>
+        <member name="P:Westwind.Web.JsonSerializers.JsonNetJsonSerializer.DateSerializationMode">
+            <summary>
+            Encodes Dates as a JSON string value that is compatible
+            with MS AJAX and is safe for JSON validators. If false
+            serializes dates as new Date() expression instead.
+            
+            The default is true.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.JsonSerializers.JsonNetJsonSerializer.FormatJsonOutput">
+            <summary>
+            Determines if there are line breaks inserted into the 
+            JSON to make it more easily human readable.
+            </summary>
+        </member>
+        <member name="T:Westwind.Web.JsonSerializers.JSONSerializer">
+            <summary>
+            The high level JSON Serializer wrapper that provides 
+            serialization and deserialization services to the application. 
+            
+            This class merely defers operation to the specified JSON parsing implementation
+            to allow for pluggable JSON serializers to be used.
+            
+            Supported parsers include:
+            
+            * West Wind Native that's built-in (no dependencies)   (This is the default)
+            * JavaScriptSerializer (ASP.NET JavaScript Serializer)
+            * JSON.NET   (requires JSON.NET assembly to be included and JSONNET_REFERENCE global Define    
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.JsonSerializers.JSONSerializer.DefaultJsonParserType">
+            <summary>
+            This property determines the default parser that is created when
+            using the default constructor. This is also the default serializer
+            used when using the AjaxMethodCallback control.
+            
+            This property should be set only once at application startup typically
+            in Application_Start of a Web app.
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.JsonSerializers.JSONSerializer.SerializeFields">
+            <summary>
+            Determines whether fields are serialized. Supported only for the West Wind JSON Serializer        
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.JsonSerializers.JSONSerializer.#ctor">
+            <summary>
+            Default Constructor - assigns default 
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.JsonSerializers.JSONSerializer.DateSerializationMode">
+            <summary>
+            Determines the date serialization mode supported 
+            for the Westwind and Json.NET parsers (not the JavaScript JSON Serializer)
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.JsonSerializers.JSONSerializer.FormatJsonOutput">
+            <summary>
+            Determines if there are line breaks inserted into the 
+            JSON to make it more easily human readable.
+            
+            By default if running in DebugMode this flag will be set to true
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.JsonSerializers.SupportedJsonParserTypes.WestWindJsonSerializer">
+            <summary>
+            Default - West Wind JSON parser.
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.JsonSerializers.SupportedJsonParserTypes.JsonNet">
+            <summary>
+            NewtonSoft JSON.NET JSON Parser
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.JsonSerializers.SupportedJsonParserTypes.JavaScriptSerializer">
+            <summary>
+            The ASP.NET JavaScript Serializer
+            </summary>
+        </member>
+        <member name="T:Westwind.Web.JsonSerializers.JsonDateEncodingModes">
+            <summary>
+            Enumeration that determines how JavaScript dates are
+            generated in JSON output
+            </summary>
+        </member>
+        <member name="T:Westwind.Web.JsonSerializers.WebExtensionsJavaScriptSerializer">
+            <summary>
+            More text is a basic JSON serializer and deserializer that 
+            deals with standard .NET types. Unlike the MS Ajax JSONSerializer
+            parser this parser support serialization and deserialization without 
+            explicit type markup in the JSON resulting in a simpler two-way model.
+            
+            The inbound model for complex types is based on Reflection parsing
+            of properties.
+            </summary>
+        </member>
+        <member name="T:Westwind.Web.JsonSerializers.WestwindJsonSerializer">
+            <summary>
+            More text is a basic JSON serializer and deserializer that 
+            deals with standard .NET types. Unlike the MS Ajax JSONSerializer
+            parser this parser support serialization and deserialization without 
+            explicit type markup in the JSON resulting in a simpler two-way model.
+            
+            The inbound model for complex types is based on Reflection parsing
+            of properties.
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.JsonSerializers.WestwindJsonSerializer.STR_WHITESPACE">
+            <summary>
+            White space checking for char values
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.JsonSerializers.WestwindJsonSerializer.DAT_JAVASCRIPT_BASEDATE">
+            <summary>
+            The JavaScript base date on which all date time values
+            in JavaScript are based. Offsets are given in milliseconds
+            (ie. new Date(99990123) where the number is the offset in ms
+            from the base date)
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.JsonSerializers.WestwindJsonSerializer.masterSerializer">
+            <summary>
+            Master instance of the JSONSerializer that the user interacts with
+            Used to read option properties
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.JsonSerializers.WestwindJsonSerializer._traversedTypes">
+            <summary>
+            Internally held set of types traversed. Circular references are
+            not serialized and return null
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.JsonSerializers.WestwindJsonSerializer.SerializeFields">
+            <summary>
+            Determines whether fields are serialized
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.JsonSerializers.WestwindJsonSerializer.#ctor(Westwind.Web.JsonSerializers.JSONSerializer)">
+            <summary>
+             Force a master Serializer to be passed for settings
+            </summary>
+            <param name="serializer"></param>
+        </member>
+        <member name="M:Westwind.Web.JsonSerializers.WestwindJsonSerializer.#ctor">
+            <summary>
+            Master Serializer contructor is preferred
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.JsonSerializers.WestwindJsonSerializer.Serialize(System.Object)">
+            <summary>
+            Serializes a .NET object reference into a JSON string.
+            
+            The serializer supports:
+            &lt;&lt;ul&gt;&gt;
+            &lt;&lt;li&gt;&gt; All simple types
+            &lt;&lt;li&gt;&gt; POCO objects and hierarchical POCO objects
+            &lt;&lt;li&gt;&gt; Arrays
+            &lt;&lt;li&gt;&gt; IList based collections
+            &lt;&lt;li&gt;&gt; DataSet
+            &lt;&lt;li&gt;&gt; DataTable
+            &lt;&lt;li&gt;&gt; DataRow
+            &lt;&lt;/ul&gt;&gt;
+            
+            The serializer works off any .NET type - types don't have to be explicitly 
+            serializable.
+            
+            DataSet/DataTable/DataRow parse into a special format that is essentially 
+            array based of just the data. These objects can be serialized but cannot be
+             passed back in via deserialization.
+            <seealso>Class JSONSerializer</seealso>
+            </summary>
+            <param name="value">
+            The strongly typed value to parse
+            </param>
+        </member>
+        <member name="M:Westwind.Web.JsonSerializers.WestwindJsonSerializer.Deserialize(System.String,System.Type)">
+            <summary>
+            Takes a JSON string and attempts to create a .NET object from this  
+            structure. An input type is required and any type that is serialized to  
+            must support a parameterless constructor.
+            
+            The de-serializer instantiates each object and runs through the properties
+            
+            The deserializer supports &lt;&lt;ul&gt;&gt; &lt;&lt;li&gt;&gt; All simple 
+            types &lt;&lt;li&gt;&gt; Most POCO objects and Hierarchical POCO objects 
+            &lt;&lt;li&gt;&gt; Arrays and Object Arrays &lt;&lt;li&gt;&gt; IList based 
+            collections &lt;&lt;/ul&gt;&gt;
+            
+            Note that the deserializer doesn't support DataSets/Tables/Rows like the  
+            serializer as there's no type information available from the client to  
+            create these objects on the fly.
+            <seealso>Class JSONSerializer</seealso>
+            </summary>
+            <param name="JSONText">
+            A string of JSON text passed from the client.
+            </param>
+            <param name="valueType">
+            The type of the object that is to be created from the JSON text.
+            </param>
+        </member>
+        <member name="M:Westwind.Web.JsonSerializers.WestwindJsonSerializer.Deserialize``1(System.String)">
+            <summary>
+            Deserializes JSON string into a specified type value.
+            </summary>
+            <typeparam name="TType"></typeparam>
+            <param name="jsonText"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.JsonSerializers.WestwindJsonSerializer.WriteValue(System.Text.StringBuilder,System.Object)">
+             <summary>
+             Serialization routine that takes any value and serializes
+             it into JSON. 
+             
+             Date formatting follows Microsoft ASP.NET AJAX format which
+             represents dates as strings in the format of: "\/Date(231231231)\/"
+            
+             This code is based originally on Jason Diamond's JSON code
+             in Anthem.NET although heavy modifications have been made.
+             </summary>
+             <param name="sb"></param>
+             <param name="val"></param>
+        </member>
+        <member name="M:Westwind.Web.JsonSerializers.WestwindJsonSerializer.WriteString(System.Text.StringBuilder,System.String)">
+            <summary>
+            Writes a string as a JSON string
+            </summary>
+            <param name="sb"></param>
+            <param name="s"></param>
+        </member>
+        <member name="M:Westwind.Web.JsonSerializers.WestwindJsonSerializer.WriteDate(System.Text.StringBuilder,System.DateTime)">
+            <summary>
+            Writes a date out as a JSON string into the string builder.
+            
+            Data format is set based serialized based on the DateSerializationMode.         
+            </summary>
+            <param name="sb"></param>
+            <param name="universalDate"></param>
+        </member>
+        <member name="M:Westwind.Web.JsonSerializers.WestwindJsonSerializer.WriteDictionary(System.Text.StringBuilder,System.Collections.IDictionary)">
+            <summary>
+            Outputs any dictionary type that has a string key.
+            Non string keys will cause an exception.
+            </summary>
+            <param name="sb"></param>
+            <param name="dict"></param>
+        </member>
+        <member name="M:Westwind.Web.JsonSerializers.WestwindJsonSerializer.UnicodeEscapeMatchEvaluator(System.Text.RegularExpressions.Match)">
+            <summary>
+            Unescapes string encoded Unicode character in the format of \u03AF
+            </summary>
+            <param name="match"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.JsonSerializers.WestwindJsonSerializer.ParseValueString(System.String,System.Type)">
+            <summary>
+            High level parsing method that takes a JSON string and tries to
+            convert it to the appropriate type. 
+            </summary>
+            <param name="value"></param>
+            <param name="valueType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.JsonSerializers.WestwindJsonSerializer.ParseString(System.String)">
+            <summary>
+            Parses a JSON string into a string value
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.JsonSerializers.WestwindJsonSerializer.ParseDate(System.String)">
+            <summary>
+            Parses Date Time values. Supports parsing values in various formats:
+            
+            new Date()
+            MS Ajax Date Form (\/Date(xxxx)\/)
+            ISO Date Format
+            </summary>
+            <param name="jsonDate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.JsonSerializers.WestwindJsonSerializer.ParseObject(System.IO.StringReader,System.Type,System.Boolean)">
+            <summary>
+            Parsing routine specific to parsing an object. Note the recursive flag which 
+            allows skipping over prefix information.
+            </summary>
+            <param name="Reader"></param>
+            <param name="ValueType"></param>
+            <param name="RecursiveCall"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Westwind.Web.JsonSerializers.WestwindJsonSerializer.arrayTerminatorChar">
+            <summary>
+            Parses a array and IList subtype 
+            
+            Supports only Objects as array items
+            </summary>
+            <param name="Reader"></param>
+            <param name="ArrayType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.JsonSerializers.WestwindJsonSerializer.ParseArray(System.IO.StringReader,System.Type)">
+            <summary>
+            Parses a JSON array string to its underlying array type.
+            Requires:
+            - Array must be of a single element type (ie. an object, or string or decimal)
+            </summary>
+            <remarks>
+            Re-written by Joe McLain with modifications by Rick Strahl
+            06/01/2008
+            </remarks>
+            <param name="reader"></param>
+            <param name="arrayType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.JsonSerializers.WestwindJsonSerializer.GetArrayType(System.Type)">
+            <summary>
+            Returns the type of item type of the array/collection
+            </summary>
+            <param name="arrayType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.JsonSerializers.WestwindJsonSerializer.StripComma(System.Text.StringBuilder)">
+            <summary>
+            Strips a comma off a string builder. In Format mode
+            ,\r\n are stripped
+            </summary>
+            <param name="sb"></param>
+        </member>
+        <member name="P:Westwind.Web.JsonSerializers.WestwindJsonSerializer.DateSerializationMode">
+            <summary>
+            Encodes Dates as a JSON string value that is compatible
+            with MS AJAX and is safe for JSON validators. If false
+            serializes dates as new Date() expression instead.
+            
+            The default is true.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.JsonSerializers.WestwindJsonSerializer.FormatJsonOutput">
+            <summary>
+            Determines if there are line breaks inserted into the 
+            JSON to make it more easily human readable.
+            </summary>
+        </member>
+        <member name="T:Westwind.Web.ScriptVariables">
+             <summary>
+             ScriptVariables allows you to easily push server side values into JavaScript
+             code. It allows you add properties to a collection which can then be rendered
+             into a JavaScript object using the ToString() or ToHtmlString(). Output is
+             rendered as a single JavaScript object literal with properties for each 
+             item/value added. Any type of value or object can be added including nested
+             objects and collections. It's an easy way to serialize complex data into 
+             a JavaScript code from the server.
+             
+             The component also supports posting back of updated values from the client
+             and a generic Items[] collection that allows page data to update generic
+             values and post them back to the server. The items are available
+            
+             This component produces either straight string or HtmlString output when used directly
+             using the ToString() or HtmlString() methods for use in ASP.NET MVC or Web Pages,
+             or can be used as WebForms control that automatically handles embedding of
+             the script and deserialization of return values on the server.
+             
+             This component supports:&lt;&lt;ul&gt;&gt;
+             &lt;&lt;li&gt;&gt; Creating individual client side variables
+             &lt;&lt;li&gt;&gt; Dynamic values that are 'evaluated' in OnPreRender to 
+             pick up a value
+             &lt;&lt;li&gt;&gt; Creating properties of ClientIDs for a given container
+             &lt;&lt;li&gt;&gt; Changing the object values and POSTing them back on 
+             Postback
+             &lt;&lt;/ul&gt;&gt;
+             
+             You create a script variables instance and add new keys to it:
+             &lt;&lt;code lang="C#"&gt;&gt;
+             ScriptVariables scriptVars = new ScriptVariables(this,"scriptVars");
+             
+             // Simple value
+             scriptVars.Add("userToken", UserToken);
+             
+             AmazonBook tbook = new AmazonBook();
+             tbook.Entered = DateTime.Now;
+             
+             // Complex value marshalled
+             scriptVars.Add("emptyBook", tbook);
+             
+             scriptVars.AddDynamic("author", txtAuthor,"Text");
+             
+             // Cause all client ids to be rendered as scriptVars.formFieldId vars (Id 
+             postfix)
+             scriptVars.AddClientIds(Form,true);
+             &lt;&lt;/code&gt;&gt;
+             
+             In client code you can then access these variables:
+             &lt;&lt;code lang="JavaScript"&gt;&gt;$( function() {
+             	alert(scriptVars.book.Author);
+             	alert(scriptVars.author);
+             	alert( $("#" + scriptVars.txtAmazonUrlId).val() );
+             });&lt;&lt;/code&gt;&gt;
+             </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptVariables.ScriptVars">
+            <summary>Edit
+            Internally holds all script variables declared
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptVariables.Page">
+            <summary>
+            Internally tracked reference to the Page object
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptVariables.JsonSerializer">
+            <summary>
+            Internal instance of the Json Serializer used to serialize
+            the object and deserialize the updateable fields
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptVariables.sbPrefixScriptCode">
+            <summary>
+            Internally tracked prefix code
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptVariables.sbPostFixScriptCode">
+            <summary>
+            Internally tracked postfix code
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptVariables.SubmitCounter">
+            <summary>
+            Internal counter for submit script embedded
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.#ctor(System.String)">
+            <summary>
+            Constructor that optionally accepts the name of the
+            variable that is to be created
+            </summary>
+            <param name="clientObjectName">Name of the JavaScript variable to create</param>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.#ctor(System.Web.UI.Control)">
+            <summary>
+            This constructor only takes an instance of a Control. The name of the
+            client object generated will be serverVars.
+            </summary>
+            <param name="control"></param>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.#ctor(System.Web.UI.Control,System.String)">
+            <summary>
+            Full constructor that receives an instance of any control object
+            and the client name of the generated script object that contains
+            the specified properties.
+            </summary>
+            <param name="control"></param>
+            <param name="clientObjectName"></param>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.Page_PreRenderComplete(System.Object,System.EventArgs)">
+            <summary>
+            Implemented after Page's OnPreRender() has fired to ensure all
+            page code has a chance to write script variables.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.Add(System.String,System.Object)">
+            <summary>
+            Adds a property and value to the client side object to be rendered into 
+            JavaScript code. VariableName becomes a property on the object and the 
+            value will be properly converted into JavaScript Compatible JSON text.
+            <seealso>Class ScriptVariables</seealso>
+            </summary>
+            <param name="variableName">
+            The name of the property created on the client object.
+            </param>
+            <param name="value">
+            The value that is to be assigned. Can be any simple type and most complex 
+            objects that can be serialized into JSON.
+            </param>
+            <example>
+            &amp;lt;&amp;lt;code 
+            lang=&amp;quot;C#&amp;quot;&amp;gt;&amp;gt;ScriptVariables scriptVars = new
+             ScriptVariables(this,&amp;quot;serverVars&amp;quot;);
+            
+            // Add simple values
+            scriptVars.Add(&amp;quot;name&amp;quot;,&amp;quot;Rick&amp;quot;);
+            scriptVars.Add(&amp;quot;pageLoadTime&amp;quot;,DateTime.Now);
+            
+            // Add objects
+            AmazonBook amazon = new AmazonBook();
+            bookEntity book = amazon.New();
+            
+            scripVars.Add(&amp;quot;book&amp;quot;,book);
+            &amp;lt;&amp;lt;/code&amp;gt;&amp;gt;
+            </example>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.Add(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Adds an entire dictionary of values
+            </summary>
+            <param name="values"></param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Westwind.Web.ScriptVariables.AddDynamicValue(System.String,System.Object,System.String)" -->
+        <member name="M:Westwind.Web.ScriptVariables.AddClientIds(System.Web.UI.Control,System.Boolean)">
+            <summary>
+            Adds all the client ids for a container as properties of the client object.
+             The name of the property is the ID + "Id" Example: txtNameId
+            
+            Note that there's no attempt made to  resolve naming conflicts in different
+             naming containers. If there's a naming conflict last one wins.
+            <seealso>Class ScriptVariables</seealso>
+            </summary>
+            <param name="container">
+            The container from which to retrieve Client IDs. You can use Form or 
+            this for the top level.
+            </param>
+            <param name="recursive">
+            Determines whether ClientIDs are retrieved recursively by drilling into 
+            containers. Use with care - large pages with many controls may take a long 
+            time to find and serialize all control Ids. It's best to focus on the 
+            controls you are interested and if necesary use multiple AddClientIds() 
+            calls.
+            </param>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.AddClientIds(System.Web.UI.Control)">
+            <summary>
+            Adds all the client ids for a container as properties of the client object.
+             The name of the property is the ID + "Id" Example: txtNameId This version 
+            only retrieves ids for the specified container level - no hierarchical 
+            recursion of controls is performed.
+            <seealso>Class ScriptVariables</seealso>
+            </summary>
+            <param name="container">
+            The container for which to retrieve client IDs.
+            </param>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.AddScriptBefore(System.String)">
+            <summary>
+            Any custom JavaScript code that is to immediately preceed the
+            client object declaration. This allows setting up of namespaces
+            if necesary for scoping.
+            </summary>
+            <param name="scriptCode"></param>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.AddScriptAfter(System.String)">
+            <summary>
+            Any custom JavaScript code that is to immediately follow the
+            client object declaration. This allows setting up of namespaces
+            if necesary for scoping.
+            </summary>
+            <param name="scriptCode"></param>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.GetValue``1(System.String)">
+            <summary>
+            Returns a value that has been updated on the client 
+            
+            Note this method will throw if it is not called
+            during PostBack or if AllowUpdates is false.
+            </summary>
+            <typeparam name="TType"></typeparam>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.GetItemValue``1(System.String)">
+            <summary>
+            Returns a value from the client Items collection
+            </summary>
+            <typeparam name="TType"></typeparam>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.ToString">
+            <summary>
+            Returns the rendered JavaScript as a string
+            </summary>
+            <returns>string</returns>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.ToString(System.Boolean)">
+            <summary>
+            Returns the rendered JavaScript for the generated object and name. 
+            Note this method returns only the generated object, not the 
+            related code to save updates.
+            
+            You can use this method with MVC Views to embedd generated JavaScript
+            into the the View page.
+            <param name="addScriptTags">If provided wraps the script text with script tags</param>
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.ToHtmlString(System.Boolean)">
+            <summary>
+            Returns the script as an HTML string. Use this version
+            with AsP.NET MVC to force raw unencoded output in Razor:
+            
+            @scriptVars.ToHtmlString()
+            </summary>
+            <param name="addScriptTags"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.RenderClientScript">
+            <summary>
+            Explicitly forces the client script to be rendered into the page.
+            This code is called automatically by the configured event handler that
+            is hooked to Page_PreRenderComplete
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.ScriptVariables.ClientObjectName">
+            <summary>
+            The name of the object generated in client script code
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.ScriptVariables.AutoRenderClientScript">
+            <summary>
+            Determines whether the output object script is rendered
+            automatically as part of Page PreRenderComplete. If false
+            you can manually call the GetClientScript() method to
+            retrieve the script as a string and embed it yourself.
+            </summary>        
+        </member>
+        <member name="P:Westwind.Web.ScriptVariables.UpdateMode">
+            <summary>
+            Determines how updates to the server from the client are performed.
+            If enabled changes to the client side properties post back to the
+            server on a full Postback. 
+            
+            Options allow for none, updating the properties only or updating
+            only the Items collection (use .add() on the client to add new items)
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.ScriptVariables.PostBackValue">
+            <summary>
+            Internal string of the postback value for the field values
+            if AllowUpdates is true
+            </summary>
+        </member>
+        <member name="T:Westwind.Web.ClientScriptProxy">
+            <summary>
+            This is a proxy object for the Page.ClientScript and MS Ajax ScriptManager 
+            object that can operate when MS Ajax when present otherwise falling back to
+             Page.ClientScript. Because MS Ajax may not be available accessing the 
+            methods directly is not possible and we are required to indirectly 
+            reference client script methods through this class.
+            
+            This class should be invoked at the Control's start up and be used to 
+            replace all calls Page.ClientScript. Scriptmanager calls are made through 
+            Reflection indirectly so there's no dependency on the script manager.
+            
+            This class also provides a few additional page injection helpers like the 
+            abillity to load scripts in the page header (rather than in the body) and 
+            to use script compression using wwScriptCompressionModule without using MS 
+            Ajax.
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ClientScriptProxy.DefaultScriptRenderMode">
+            <summary>
+            Determines the default script rendering mode that is uses if no script rendering mode
+            is explicitly provided on the control.
+            
+            This setting is global and should be set only once in Appplication_Start or
+            a static constructor.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:Westwind.Web.ClientScriptProxy.ScriptResourceAliases" -->
+        <member name="F:Westwind.Web.ClientScriptProxy._IsMsAjax">
+            <summary>
+            Internal global static that gets set when IsMsAjax() is
+            called. The result is cached once per application so 
+            we don't have keep making reflection calls for each access
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ClientScriptProxy._CheckedForMsAjax">
+            <summary>
+            Flag that determines whether check was previously done
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ClientScriptProxy._IsScriptManagerOnPage">
+            <summary>
+            Cached value to see whether the script manager is
+            on the page. This value caches here once per page.
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.ClientScriptProxy.#ctor">
+            <summary>
+            No public constructor - use ClientScriptProxy.Current to
+            get an instance to ensure you once have one instance per
+            page active.
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.ClientScriptProxy.ClearContextItemsOnTransfer">
+            <summary>
+            Clears all the request specific context items which are script references
+            and the script placement index.
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.ClientScriptProxy.IsMsAjax">
+            <summary>
+            Checks to see if MS Ajax is registered with the current
+            Web application.
+            
+            Note: Method is static so it can be directly accessed from
+            anywhere. If you use the IsMsAjax property to check the
+            value this method fires only once per application.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.ClientScriptProxy.IsScriptManagerOnPage(System.Web.UI.Page)">
+            <summary>
+            Checks to see if a script manager is on the page
+            </summary>
+            <param name="control"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.ClientScriptProxy.LoadControlScript(System.Web.UI.Control,System.String,System.String,Westwind.Web.ScriptRenderModes)">
+            <summary>
+            High level helper function  that is used to load script resources for various AJAX controls
+            Loads a script resource based on the following scriptLocation values:
+            
+            * WebResource
+              Loads the Web Resource specified out of ControlResources. Specify the resource
+              that applied in the resourceName parameter
+              
+            * Url/RelativeUrl
+              loads the url with ResolveUrl applied
+              
+            * empty string (no value) 
+              No action is taken and nothing is embedded into the page. Use this if you manually
+              want to load resources
+            </summary>
+            <param name="control">The control instance for which the resource is to be loaded</param>
+            <param name="scriptLocation">WebResource, a virtual path or a full Url. Empty to not embed any script refs (ie. user loads script herself)</param>
+            <param name="resourceName">The name of the resource when WebResource is used for scriptLocation null otherwise</param>
+            <param name="topOfHeader">Determines if scripts are loaded into the header whether they load at the top or bottom</param>
+        </member>
+        <member name="M:Westwind.Web.ClientScriptProxy.RegisterClientScriptResource(System.Web.UI.Control,System.Type,System.String,Westwind.Web.ScriptRenderModes)">
+            <summary>
+            Returns a WebResource or ScriptResource URL for script resources that are to be
+            embedded as script includes.
+            </summary>
+            <param name="control">Any control</param>
+            <param name="type">A type in assembly where resources are located</param>
+            <param name="resourceName">Name of the resource to load</param>
+            <param name="renderMode">Determines where in the document the link is rendered</param>
+        </member>
+        <member name="M:Westwind.Web.ClientScriptProxy.RegisterClientScriptInclude(System.Web.UI.Control,System.Type,System.String,System.String)">
+            <summary>
+            Registers a script include tag into the page for an external script url.
+            
+            This version embeds only in the body of the HTML document - ie. underneath the form tag      
+            </summary>
+            <param name="control"></param>
+            <param name="type"></param>
+            <param name="key"></param>
+            <param name="url"></param>
+        </member>
+        <member name="M:Westwind.Web.ClientScriptProxy.RegisterClientScriptInclude(System.Web.UI.Control,System.Type,System.String,Westwind.Web.ScriptRenderModes)">
+            <summary>
+            Registers a client script reference into the page with the option to specify
+            the script location in the page
+            </summary>
+            <param name="control">Any control instance - typically page</param>
+            <param name="type">Type that acts as qualifier (uniqueness)</param>
+            <param name="url">the Url to the script resource</param>
+            <param name="ScriptRenderModes">Determines where the script is rendered</param>
+        </member>
+        <member name="M:Westwind.Web.ClientScriptProxy.RegisterCssResource(System.Web.UI.Control,System.Type,System.String)">
+            <summary>
+            Registers a CSS Web Resource in the page
+            </summary>
+            <param name="control"></param>
+            <param name="type"></param>
+            <param name="resourceName"></param>
+        </member>
+        <member name="F:Westwind.Web.ClientScriptProxy.cssLinks">
+            <summary>
+            Keep track of keys that were written
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.ClientScriptProxy.RegisterCssLink(System.Web.UI.Control,System.Type,System.String,System.String)">
+            <summary>
+            Registers a CSS stylesheet in the page header and if that's not accessible inside of the form tag.
+            </summary>
+            <param name="control"></param>
+            <param name="type"></param>
+            <param name="key"></param>
+            <param name="url"></param>
+        </member>
+        <member name="M:Westwind.Web.ClientScriptProxy.RegisterClientScriptBlock(System.Web.UI.Control,System.Type,System.String,System.String,System.Boolean)">
+            <summary>
+            Registers a client script block in the page.
+            </summary>
+            <param name="control"></param>
+            <param name="type"></param>
+            <param name="key"></param>
+            <param name="script"></param>
+            <param name="addScriptTags"></param>
+        </member>
+        <member name="M:Westwind.Web.ClientScriptProxy.RegisterClientScriptBlock(System.Web.UI.Control,System.Type,System.String,System.String,System.Boolean,Westwind.Web.ScriptRenderModes)">
+            <summary>
+            Renders client script block with the option of rendering the script block in
+            the Html header
+            
+            For this to work Header must be defined as runat="server"
+            </summary>
+            <param name="control">any control that instance typically page</param>
+            <param name="type">Type that identifies this rendering</param>
+            <param name="key">unique script block id</param>
+            <param name="script">The script code to render</param>
+            <param name="addScriptTags">Ignored for header rendering used for all other insertions</param>
+            <param name="renderMode">Where the block is rendered</param>
+        </member>
+        <member name="M:Westwind.Web.ClientScriptProxy.RegisterStartupScript(System.Web.UI.Control,System.Type,System.String,System.String,System.Boolean)">
+            <summary>
+            Registers a startup code snippet that gets placed at the bottom of the page
+            </summary>
+            <param name="control"></param>
+            <param name="type"></param>
+            <param name="key"></param>
+            <param name="script"></param>
+            <param name="addStartupTags"></param>
+        </member>
+        <member name="M:Westwind.Web.ClientScriptProxy.GetWebResourceUrl(System.Web.UI.Control,System.Type,System.String)">
+            <summary>
+            Returns a WebResource URL for non script resources
+            </summary>
+            <param name="control"></param>
+            <param name="type"></param>
+            <param name="resourceName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.ClientScriptProxy.GetWebResourceUrl(System.Type,System.String)">
+            <summary>
+            Returns a WebResource URL for non script resources
+            </summary>
+            <param name="control"></param>
+            <param name="type"></param>
+            <param name="resourceName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.ClientScriptProxy.GetClientScriptResourceUrl(System.Web.UI.Control,System.Type,System.String)">
+            <summary>
+            Works like GetWebResourceUrl but can be used with javascript resources
+            to allow using of resource compression (if the Script Compression Module is loaded).
+            </summary>
+            <param name="control"></param>
+            <param name="type"></param>
+            <param name="resourceName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.ClientScriptProxy.GetClientScriptResourceUrl(System.Type,System.String)">
+            <summary>
+            Works like GetWebResourceUrl but can be used with javascript resources
+            to allow using of resource compression (if the module is loaded).
+            </summary>
+            <param name="type"></param>
+            <param name="resourceName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.ClientScriptProxy.RegisterHiddenField(System.Web.UI.Control,System.String,System.String)">
+            <summary>
+            Injects a hidden field into the page
+            </summary>
+            <param name="control"></param>
+            <param name="hiddenFieldName"></param>
+            <param name="hiddenFieldInitialValue"></param>
+        </member>
+        <member name="P:Westwind.Web.ClientScriptProxy.Current">
+            <summary>
+            Current instance of this class which should always be used to 
+            access this object. There are no public constructors to
+            ensure the reference is used as a Singleton to further
+            ensure that all scripts are written to the same clientscript
+            manager.
+            </summary>        
+        </member>
+        <member name="T:Westwind.Web.ScriptRenderModes">
+            <summary>
+            Determines how scripts are included into the page
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptRenderModes.Inherit">
+            <summary>
+            Inherits the setting from the control or from the ClientScript.DefaultScriptRenderMode
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:Westwind.Web.ScriptRenderModes.Inline" -->
+        <member name="F:Westwind.Web.ScriptRenderModes.Header">
+            <summary>
+            Renders the script include into the bottom of the header of the page
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptRenderModes.HeaderTop">
+            <summary>
+            Renders the script include into the top of the header of the page
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptRenderModes.Script">
+            <summary>
+            Uses ClientScript or ScriptManager to embed the script include to
+            provide standard ASP.NET style rendering in the HTML body.
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptRenderModes.BottomOfPage">
+            <summary>
+            Renders script at the bottom of the page before the last Page.Controls
+            literal control. Note this may result in unexpected behavior 
+            if /body and /html are not the last thing in the markup page.
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptResourceAlias.Alias">
+            <summary>
+            An alias/shortcut resource name
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptResourceAlias.FileId">
+            <summary>
+            The name of the script file that this resource maps to. Should be just
+            the filename (ie. jquery.js or ww.jquery.js) as well as min.js versions
+            if those files are loaded as well
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptResourceAlias.Resource">
+            <summary>
+            The full resource name to the resourceToFileItem
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptResourceAlias.ControlType">
+            <summary>
+            Any type in the assembly that contains the script resource
+            If null looks in the current executing assembly.
+            </summary>
+        </member>
+        <member name="T:Westwind.Web.JavaScriptMinifier">
+            <summary>
+            JavaScript minifier strips white space and comments from JavaScript 
+            code. Based on Douglas Crockford's JavaScript Minifier with some modification
+            to support string and StreamReader conversions.
+            
+            This class can minify strings in memory or files and entire directories of
+            disk files.
+            
+            The MinifyDirectory() method can be used in the build process for VS or 
+            can easily be used at application startup to automatically create minified
+            script files for an application.
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.JavaScriptMinifier.Minify(System.String,System.String)">
+            <summary>
+            Minifies a source file into a target file.
+            </summary>
+            <param name="sourceFile">Source file that is to be compressed</param>
+            <param name="targetFile">Target file that is to contain the compressed output</param>
+        </member>
+        <member name="M:Westwind.Web.JavaScriptMinifier.MinifyString(System.String)">
+            <summary>
+            Minifies a JavaScript code string into a minified string.
+            </summary>
+            <param name="sourceJavaScriptString">Input Javascript string to be minified</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.JavaScriptMinifier.MinifyDirectory(System.String,System.String,System.Boolean)">
+            <summary>
+            Minifies all JavaScript files in a given directory and writes out the 
+            minified files to a new file extensions (.min.js for example).
+            
+            This method can be integrated into the build process, or as part of an 
+            application's startup to always create new minified scripts as needed. 
+            Scripts are only minified if the minified files don't already exist and are
+             older than the corresponding JavaScript file.
+            
+            A common usage scenario is to call this static method from 
+            Application_Start:
+            
+            &lt;&lt;code lang="C#"&gt;&gt;void Application_Start(object sender, 
+            EventArgs e)
+            {
+                // creates minify scripts if don't exist or are changed
+                // NOTE: REQUIRES that IIS/ASP.NET Account has writes to write 
+            here!
+                
+            Westwind.Web.Controls.JavaScriptMinifier.MinifyDirectory(Server.MapPath("~/
+            scripts"), ".min.js", true);
+            }&lt;&lt;/code&gt;&gt;
+            
+            to always ensure minified files are in sync with corresponding JavaScript 
+            files.
+            <seealso>Class JavaScriptMinifier                                                        </seealso>
+            </summary>
+            <param name="path">
+            The path where files are to be minfied
+            </param>
+            <param name="minExtension">
+            The extension for the minified files (ie. .min.js). Include leading dot!
+            </param>
+            <param name="recursive">
+            Determines whether nested directories are also included
+            </param>
+            <remarks>
+            Note that if you use this script from within an ASP.NET application it's 
+            best to hook it to a Application_Start or a static constructor so it only 
+            fires once.
+            
+            When called from ASP.NET this routine REQUIRES that the server account that
+             ASP.NET/IIS AppPool runs under (NETWORK SERVICE by default) has rights to 
+            write out the file to the folder specified. Otherwise an exception occurs.
+            </remarks>
+        </member>
+        <member name="T:Westwind.Web.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Properties.Resources.AnErrorOccurredInYourApplication">
+            <summary>
+              Looks up a localized string similar to An error occurred in your Application.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Properties.Resources.BitmapOutputReturnedMustSpecifyAContentType">
+            <summary>
+              Looks up a localized string similar to Bitmap output returned must specify a Content type. For example: [CallbackMethod(ContentType=&quot;image/png&quot;)].
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Properties.Resources.CanTGetValuesIfAllowUpdatesIsNotSetToTrue">
+            <summary>
+              Looks up a localized string similar to Can&apos;t get values if AllowUpdates is not set to true.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Properties.Resources.CanTRetrieveItemsInUpdateMode">
+            <summary>
+              Looks up a localized string similar to Can&apos;t retrieve items in update mode .
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Properties.Resources.ERROR_CLASSWRAPPER_FORWCFASMX_REQUIRES_CLIENTPROXYTYPE">
+            <summary>
+              Looks up a localized string similar to In order to call a Wcf or ASMX service you have to specify ClientProxyTargetType of the Web Service instance..
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Properties.Resources.ERROR_INVALID_JSON_STRING">
+            <summary>
+              Looks up a localized string similar to Invalid JSON string input..
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Properties.Resources.ERROR_ONLYONE_SCRIPTCONTAINER_PER_PAGE_ALLOWED">
+            <summary>
+              Looks up a localized string similar to Only one ScriptContainer is allowed per page..
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Properties.Resources.ERROR_ScriptContainer_OnlyWorks_With_PageBasedHandlers">
+            <summary>
+              Looks up a localized string similar to ScriptContainer.Current only works with Page based handlers..
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Properties.Resources.ERROR_UnableToConvertContentTypeToImageFormat">
+            <summary>
+              Looks up a localized string similar to Unable to convert content type {0} to ImageFormat.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Properties.Resources.ERROR_UnableToConvertImageFormatToContentType">
+            <summary>
+              Looks up a localized string similar to Unable to convert ImageFormat {0} to ContentType.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Properties.Resources.InvalidBindingSource">
+            <summary>
+              Looks up a localized string similar to Invalid BindingSource.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Properties.Resources.InvalidControl">
+            <summary>
+              Looks up a localized string similar to Invalid Control.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Properties.Resources.InvalidControlId">
+            <summary>
+              Looks up a localized string similar to Invalid Control Id.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Properties.Resources.InvalidServerMethod">
+            <summary>
+              Looks up a localized string similar to Invalid Server Method..
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Properties.Resources.InvalidURLRelativeURLNotAllowed">
+            <summary>
+              Looks up a localized string similar to Invalid URL: Virtual path relative URL (~) not allowed when HttpContext not available..
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Properties.Resources.NotAllowedMethodExpectsVerb">
+            <summary>
+              Looks up a localized string similar to Not allowed. Method expects {0}..
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Properties.Resources.ServerMethodIsNotAccessibleDueToMissing">
+            <summary>
+              Looks up a localized string similar to Server method is not accessible due to missing CallbackMethod attribute.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Properties.Resources.UnsupportedJSONSerializerSpecified">
+            <summary>
+              Looks up a localized string similar to Unsupported JSON Serializer specified. Json.Net and System.Web.Extensions must be explicitly compiled in..
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Properties.Resources.WebResourceNotAvailableForJQueryUI">
+            <summary>
+              Looks up a localized string similar to WebResource not available for jQuery UI.
+            </summary>
+        </member>
+        <member name="T:Westwind.Web.WebResources">
+            <summary>
+            Class is used as to consolidate access to resources
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.WebResources.GetStringResource(System.Reflection.Assembly,System.String)">
+            <summary>
+            Returns a string resource from a given assembly.
+            </summary>
+            <param name="assembly">Assembly reference (ie. typeof(ControlResources).Assembly) </param>
+            <param name="ResourceName">Name of the resource to retrieve</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.WebResources.GetStringResource(System.String)">
+            <summary>
+            Returns a string resource from the from the ControlResources Assembly
+            </summary>
+            <param name="ResourceName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Westwind.Web.ScriptLoader">
+            <summary>
+            Class that handles embedding of common script files like jQuery into 
+            a page or return complete script tags for insertion into a ViewPage as a string.
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptLoader.jQueryLoadMode">
+            <summary>
+            Determines what location jQuery is loaded from
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptLoader.jQueryCdnUrl">
+            <summary>
+            jQuery CDN Url on Google
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptLoader.jQueryCdnFallbackUrl">
+            <summary>
+            Fallback Url if CDN can't be reached.
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptLoader.jQueryUiCdnUrl">
+            <summary>
+            jQuery CDN Url on Google
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptLoader.jQueryUiLocalFallbackUrl">
+            <summary>
+            jQuery UI fallback Url if CDN is unavailable or WebResource is used
+            Note: The file needs to exist and hold the minimized version of jQuery ui
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptLoader.jQueryUiCssBaseUrl">
+            <summary>
+            The url the jQuery UI *base* CSS theme. Used in jQueryUiCssLink. Should point
+            at the jQuery UI base theme - the theme is replaced either explicitly or from
+            the jQueryUiTheme property value.soap
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptLoader.jQueryUiTheme">
+            <summary>
+            The theme that is applied to the jQueryUiCssBaseUrl
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.ScriptLoader.LoadjQuery(System.Web.UI.Control,System.String)">
+            <summary>
+            Loads jQuery depending on configuration settings (CDN, WebResource or site url) 
+            and injects the full script link into the page.
+            </summary>
+            <param name="control"></param>
+            <param name="jQueryUrl">Optional url to jQuery as a virtual or absolute server path</param>
+        </member>
+        <member name="M:Westwind.Web.ScriptLoader.jQueryLink(Westwind.Web.jQueryLoadModes,System.String)">
+            <summary>
+            Inserts a script link to load jQuery into the page based on the jQueryLoadModes settings
+            of this class. Default load is by CDN plus WebResource fallback
+            </summary>
+            <param name="url">
+            An optional explicit URL to load jQuery from. Url is resolved. 
+            When specified no fallback is applied
+            </param>        
+            <returns>full script tag and fallback script for jQuery to load</returns>
+        </member>
+        <member name="M:Westwind.Web.ScriptLoader.jQueryUiLink(Westwind.Web.jQueryLoadModes,System.String)">
+            <summary>
+            Inserts a script link to load jQuery into the page based on the jQueryLoadModes settings
+            of this class. Default load is by CDN plus WebResource fallback
+            </summary>
+            <param name="url">
+            An optional explicit URL to load jQuery from. Url is resolved. 
+            When specified no fallback is applied
+            </param>        
+            <returns>full script tag and fallback script for jQuery to load</returns>
+        </member>
+        <member name="M:Westwind.Web.ScriptLoader.jQueryUiCssLink(System.String)">
+            <summary>
+            Returns the global jQuery UI Url and theme set on this class
+            </summary>
+            <param name="theme"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.ScriptLoader.wwJqueryLink(Westwind.Web.jQueryLoadModes,System.String)">
+            <summary>
+            Returns a fully qualified script tag for loading ww.jquery.js
+            </summary>
+            <param name="jQueryLoadMode"></param>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.ScriptLoader.LoadjQuery(System.Web.UI.Control)">
+            <summary>
+            Loads the jQuery component uniquely into the page
+            </summary>
+            <param name="control"></param>
+            <param name="jQueryUrl">Optional Url to the jQuery Library. NOTE: Should also have a .min version in place</param>
+        </member>
+        <member name="M:Westwind.Web.ScriptLoader.LoadwwjQuery(System.Web.UI.Control,System.Boolean)">
+            <summary>
+            Loads the ww.jquery.js library from Resources at the end of the Html Header (if available)
+            </summary>        
+            <param name="control"></param>
+            <param name="loadjQuery"></param>
+        </member>
+        <member name="M:Westwind.Web.ScriptLoader.LoadjQueryUi(System.Web.UI.Control,System.String)">
+            <summary>
+            Loads the appropriate jScript library out of the scripts directory and 
+            injects into a WebForms page.
+            </summary>
+            <param name="control"></param>
+            <param name="jQueryUiUrl">Optional url to jQuery as a virtual or absolute server path</param>
+        </member>
+        <member name="P:Westwind.Web.ScriptLoader.CachedPage">
+            <summary>
+            Internally used Page instance so we can get access to
+            a Page instance when no Page might be available. To Access ClientScript etc.
+            </summary>
+        </member>
+        <member name="T:Westwind.Web.jQueryLoadModes">
+            <summary>
+            The location from which jQuery and jQuery UI are loaded
+            in Release mode.
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ErrorHandlingModes.Default">
+            <summary>
+            Default error display mode uses ASP.NET default
+            behavior: Yellow screen of death or ASP.NET 
+            error display configured.
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ErrorHandlingModes.ApplicationErrorMessage">
+            <summary>
+            An application specific error message meant to 
+            be seen by end users. Typically this mode display
+            only a fixed error message and no or limited
+            error details.
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ErrorHandlingModes.DeveloperErrorMessage">
+            <summary>
+            Display the application specific error message
+            but also adds additional developer information 
+            that provides debugging information to a developer
+            while the app is running in production.
+            </summary>
+        </member>
+        <member name="T:Westwind.Web.UserState">
+            <summary>
+            User information container that can easily 'serialize'
+            to a string and back. Meant to hold basic logon information
+            to avoid trips to the database for common information required
+            by an app to validate and display user info.
+            
+            I use this class a lot to attach as Forms Authentication
+            Ticket data to keep basic user data without having to
+            hit the database
+            </summary>    
+        </member>
+        <member name="M:Westwind.Web.UserState.ToString">
+            <summary>
+            Exports a short string list of Id, Email, Name separated by |
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.UserState.FromString(System.String)">
+            <summary>
+            Imports Id, Email and Name from a | separated string
+            </summary>
+            <param name="itemString"></param>
+        </member>
+        <member name="M:Westwind.Web.UserState.CreateFromString(System.String)">
+            <summary>
+            Creates an instance of a userstate object from serialized
+            data.
+            
+            IsEmpty() will return true if data was not loaded. A 
+            UserData object is always returned.
+            </summary>
+            <param name="userData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.UserState.CreateFromString``1(System.String)">
+            <summary>
+            Creates an instance of a userstate object from serialized
+            data.
+            
+            IsEmpty() will return true if data was not loaded. A 
+            UserData object is always returned.
+            </summary>
+            <param name="userData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.UserState.CreateFromFormsAuthTicket">
+            <summary>
+            Creates a UserState object from authentication information in the 
+            Forms Authentication ticket.
+            
+            IsEmpty() will return false if no data was loaded but
+            a Userdata object is always returned
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.UserState.CreateFromFormsAuthTicket``1">
+            <summary>
+            Creates a UserState object from authentication information in the 
+            Forms Authentication ticket.
+            
+            IsEmpty() will return false if no data was loaded but
+            a Userdata object is always returned
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.UserState.IsEmpty">
+            <summary>
+            Determines whether UserState instance
+            holds user information.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Westwind.Web.UserState.Name">
+            <summary>
+            The display name for the userId
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.UserState.Email">
+            <summary>
+            The user's email address or login acount
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.UserState.UserId">
+            <summary>
+            The user's user Id as a string
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.UserState.IsAdmin">
+            <summary>
+            The users admin status
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.UserState.UserIdInt">
+            <summary>
+            Returns the User Id as an int if convertiable
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.UserState.SecurityToken">
+            <summary>
+            A unique id created for this entry that can be used to
+            identify the user outside of the UserState context
+            </summary>
+        </member>
+        <member name="T:Westwind.Web.ScriptCompressionModule">
+            <summary>
+            Module that handles compression of JavaScript resources using GZip and
+            script optimization that strips comments and extra whitespace.
+            
+            This module should be used in conjunction with
+            ClientScriptProxy.RegisterClientScriptResource which sets up the proper URL
+            formatting required for this module to handle requests. Format is:
+            
+            wwSc.axd?r=ResourceName&amp;t=FullAssemblyName
+            
+            The type parameter can be omitted if the resource lives in this assembly.
+            
+            To configure the module in web.config (for pre-IIS7):
+            &lt;&lt;code lang="XML"&gt;&gt;&lt;system.web&gt;
+            	&lt;httpModules&gt;
+            		&lt;add name="ScriptCompressionModule"
+            type="Westwind.Web.ScriptCompressionModule,Westwind.Web"/&gt;
+            	&lt;/httpModules&gt;
+            &lt;/system.web&gt;&lt;&lt;/code&gt;&gt;
+            
+            For IIS 7 Integrated mode:
+            &lt;&lt;code lang="XML"&gt;&gt;&lt;system.webServer&gt;
+              &lt;validation validateIntegratedModeConfiguration="false"/&gt;
+              &lt;modules&gt;
+                &lt;add name="ScriptCompressionModule"
+            type="Westwind.Web.ScriptCompressionModule,Westwind.Web"/&gt;
+                &lt;/modules&gt;
+            &lt;/system.webServer&gt;&lt;&lt;/code&gt;&gt;
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptCompressionModule.WebResourceContentTypeCache">
+            <summary>
+            Stores resource names and their associated content types for lookup
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptCompressionModule.ScriptCompressionModuleActive">
+            <summary>
+            Global flag that is set when the module is first loaded by ASP.NET and 
+            allows code to check whether the module is loaded.
+            
+            Used by ClientScriptProxy to determine if the module is active and 
+            available in the ASP.NET Pipeline.
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.ScriptCompressionModule.PostResolveRequestCache(System.Object,System.EventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Westwind.Web.ScriptCompressionModule.SendErrorResponse(System.String)">
+            <summary>
+            Returns an error response to the client. Generates a 404 error
+            </summary>
+            <param name="Message"></param>
+        </member>
+        <member name="M:Westwind.Web.ScriptCompressionModule.SendOutput(System.Byte[],System.Boolean)">
+            <summary>
+            Sends the output to the client using appropriate cache settings.
+            Content should be already encoded and ready to be sent as binary.
+            </summary>
+            <param name="output"></param>
+            <param name="useGZip"></param>
+        </member>
+        <member name="M:Westwind.Web.ScriptCompressionModule.OptimizeScript(System.String)">
+            <summary>
+            Very basic script optimization to reduce size:
+            Remove any leading white space and any lines starting
+            with //. 
+            </summary>
+            <param name="script"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.ScriptCompressionModule.FindAssembly(System.String)">
+            <summary>
+            Finds an assembly in the current loaded assembly list
+            </summary>
+            <param name="typeName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.ScriptCompressionModule.GZipMemory(System.Byte[])">
+            <summary>
+            Takes a binary input buffer and GZip encodes the input
+            </summary>
+            <param name="buffer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.ScriptCompressionModule.GZipMemory(System.String)">
+            <summary>
+            Takes a string input and GZip encodes the input
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.ScriptCompressionModule.RegisterClientScriptResource(System.Type,System.String)">
+            <summary>
+            Embeds a link to a script resource into the page including the
+            script tags. Uses Page.ClientScript so the link is embedded into
+            the page content rather than the header.
+            
+            Preferrably use ClientScriptProxy.RegisterClientScriptInclude instead
+            as it provides more options (including placement in header)
+            </summary>
+            <param name="control"></param>
+            <param name="type"></param>
+            <param name="resourceName"></param>        
+        </member>
+        <member name="M:Westwind.Web.ScriptCompressionModule.GetClientScriptResourceUrl(System.Type,System.String)">
+            <summary>
+            Works like GetWebResourceUrl but can be used with javascript resources
+            to allow using of resource compression (if the module is loaded).
+            </summary>
+            <param name="control"></param>
+            <param name="type"></param>
+            <param name="resourceName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Westwind.Web.WebResourceCacheItem">
+            <summary>
+            Item stored in the cache
+            </summary>
+        </member>
+        <member name="T:Westwind.Web.Services.Gravatar">
+            <summary>
+            Implements the Gravatar API for retrieving a Gravatar image to display
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.Services.Gravatar.GetGravatarLink(System.String,System.Int32,System.String,System.String)">
+            <summary>
+            Returns a Gravatar image url for an email address
+            </summary>
+            <param name="Email">Email address to display Gravatar for</param>
+            <param name="Size">Size in pixels (square image) (80)</param>
+            <param name="Rating">Parental Guidance rating of image (PG)</param>
+            <param name="DefaultImageUrl">Url to image if no match is found. 
+             If not passed gravatar provides default image</param>
+        </member>
+        <member name="M:Westwind.Web.Services.Gravatar.GetGravatarImage(System.String,System.Int32,System.String,System.String,System.String)">
+            <summary>
+            Returns a Gravatar Image Tag that can be directly embedded into
+            an HTML document.
+            </summary>
+            <param name="Email">Email address to display Gravatar for</param>
+            <param name="Size">Size in pixels (square image) (80)</param>
+            <param name="Rating">Parental Guidance rating of image (PG)</param>
+            <param name="ExtraImageAttributes">Any extra attributes to stick on the img tag</param>
+            <param name="DefaultImageUrl">Url to image if no match is found. 
+             If not passed gravatar provides default image</param>
+            <returns></returns>
+        </member>
+        <member name="T:Westwind.Web.Services.ShareButtons">
+            <summary>
+            Class that holds a few static string definitions for
+            embedding Share on Google+ and Twitter
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.Services.ShareButtons.GooglePlusPlusOneButton(System.String,System.String,System.Int32)">
+            <summary>
+            Places a Google+  +1 and Share button in the page
+            </summary>
+            <param name="url">The Url to share. If not provided the current page is used</param>
+            <param name="buttonSize">small,medium,standard,tall</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.Services.ShareButtons.ShareOnTwitter(System.String,System.String,System.String,System.String)">
+            <summary>
+            Inserts a Tweet button to share tweet on Twitter with an image link
+            </summary>
+            <param name="text">The text to present</param>
+            <param name="twitterShareAccount"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Westwind.Web.Controls.BindingErrors">
+            <summary>
+            This class provides a holding container for BindingErrors. BindingErrors 
+            occur during binding and unbinding of controls and any errors are stored in
+             this collection. This class is used extensively for checking for 
+            validation errors and then displaying them with the ToString() or ToHtml() 
+            methods.
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.Controls.BindingErrors.ToHtml">
+            <summary>
+            Formats all the BindingErrors into a rich list of error messages. The error
+             messages are marked up with links to the appropriate controls. Format of 
+            the list is a &lt;ul&gt; style list ready to display in an HTML page.
+            <seealso>Class BindingErrors</seealso>
+            </summary>
+            <returns>an Html string of the errors</returns>
+        </member>
+        <member name="M:Westwind.Web.Controls.BindingErrors.LinkedErrorMessage(System.String,System.String)">
+            <summary>
+            Renders a link with the error message that attempts to find the control on the 
+            page and highlights it.
+            </summary>
+            <param name="clientId"></param>
+            <param name="?"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.Controls.BindingErrors.ToString">
+            <summary>
+            Formats an Binding Errors collection as a string with carriage returns
+            </summary>
+            <param name="Errors"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Westwind.Web.Controls.BindingError">
+            <summary>
+            Error object used to return error information during databinding.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Controls.BindingError.ClientID">
+            <summary>
+            The ClientID of the control the error occurred on. This value is used to 
+            provide the hot linking to the control.
+            <seealso>Class BindingError</seealso>
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Controls.BindingError.Message">
+            <summary>
+            The error message that is displayed for the Binding error.
+            <seealso>Class BindingError</seealso>
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.Controls.BindingError.ErrorMessage">
+            <summary>
+            The raw Exception error message. Not used at the moment.
+            <seealso>Class BindingError</seealso>
+            </summary>
+        </member>
+        <member name="T:Westwind.Web.StaticCookieManager">
+            <summary>
+            A generic Web Cookie handler class that can be used for a single 'UserId' in an
+            application. This class manages all aspects of retrieving and setting of a cookie
+            consistently. Typically all you'll need to do is call the GetId() method which 
+            both returns existing cookies and ensures that the cookie gets set.
+            
+            All methods of this class are static which is the reason why only a single Cookie
+            can be managed at a time. The idea is that you can use this single cookie as an
+            application global Cookie to track a user and then retrieve additional storage 
+            information from other locations (like a database or session).
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.StaticCookieManager.WriteCookie(System.String,System.Boolean)">
+            <summary>
+            Writes the cookie into the response stream with the value passed. The value
+             is always the UserId.
+            <seealso>Class WebStoreCookie</seealso>
+            </summary>
+            <param name="String Value">
+            Writes a value into the specified cookie.
+            </param>
+            <returns>Void</returns>
+        </member>
+        <member name="M:Westwind.Web.StaticCookieManager.WriteCookie(System.String)">
+            <summary>
+            Writes the cookie into the response stream with the value passed. The value
+             is always the UserId.
+            <seealso>Class WebStoreCookie</seealso>
+            </summary>
+            <param name="String Value">
+            Writes a value into the specified cookie.
+            </param>
+            <returns>Void</returns>
+        </member>
+        <member name="M:Westwind.Web.StaticCookieManager.Remove">
+            <summary>
+            Removes the cookie by clearing it out and expiring it immediately.
+            <seealso>Class WebStoreCookie</seealso>
+            </summary>
+            <returns>Void</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Westwind.Web.StaticCookieManager.GetId" -->
+        <member name="M:Westwind.Web.StaticCookieManager.CookieExist">
+            <summary>
+            Determines whether the cookie exists
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.StaticCookieManager.SetCookiePath(System.Web.HttpCookie,System.String)">
+            <summary>
+            Sets the Cookie Path
+            </summary>
+            <param name="Cookie"></param>
+        </member>
+        <member name="T:Westwind.Web.CookieManager">
+            <summary>
+            A generic Cookie class that manages an individual Cookie by localizing the
+            cookie management into a single class. This means the Cookie's name and
+            and timing is abstracted.
+            
+            The GetId() method is the key method here which retrieves a Cookie Id.
+            If the cookie exists it returns the value, otherwise it generates a new
+            Id and creates the cookie with the specs of the class and
+            
+            It's recommended you store this class as a static member off another
+            object to have
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.CookieManager.CookieName">
+            <summary>
+            The name of the Cookie that is used. This value should always be set or 
+            overridden via the constructor.
+            <seealso>Class wwCookie</seealso>
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.CookieManager.CookieTimeoutInMonths">
+            <summary>
+            The timeout of a persistent cookie.
+            <seealso>Class wwCookie</seealso>
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.CookieManager.WriteCookie(System.String,System.Boolean)">
+            <summary>
+            Writes the cookie into the response stream with the value passed. The value
+            is always the UserId.
+            <seealso>Class WebStoreCookie</seealso>
+            </summary>
+            <param name="Value"></param>
+            <param name="NonPersistent"></param>
+            <returns>Void</returns>
+        </member>
+        <member name="M:Westwind.Web.CookieManager.WriteCookie(System.String)">
+            <summary>
+            Writes the cookie into the response stream with the value passed. The value
+            is always the UserId.
+            <seealso>Class WebStoreCookie</seealso>
+            </summary>
+            <param name="Value"></param>
+            <returns>Void</returns>
+        </member>
+        <member name="M:Westwind.Web.CookieManager.Remove">
+            <summary>
+            Removes the cookie by clearing it out and expiring it immediately.
+            <seealso>Class WebStoreCookie</seealso>
+            </summary>
+            <param name=""></param>
+            <returns>Void</returns>
+        </member>
+        <member name="M:Westwind.Web.CookieManager.GetId">
+            <summary>
+            This is the key method of this class that retrieves the value of the 
+            cookie. This method is meant as retrieving an ID value. If the value 
+            doesn't exist it is created and the cookie set and the value returned. If 
+            the Cookie exists the value is retrieved and returned.
+            <seealso>Class wwCookie</seealso>
+            </summary>
+            <param name=""></param>
+            <returns>String</returns>
+        </member>
+        <member name="M:Westwind.Web.CookieManager.GenerateId">
+            <summary>
+            Method that generates the ID stored in the cookie. You can override
+            this method in a subclass to handle custom or specific Id creation.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.CookieManager.CookieExist">
+            <summary>
+            Determines whether the cookie exists
+            <seealso>Class wwCookie</seealso>
+            </summary>
+            <param name=""></param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:Westwind.Web.CookieManager.CreateCookie(System.String,System.String,System.Boolean)">
+            <summary>
+            Generic routine to create a cookie consistently and with the
+            proper HTTP settings applied
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+            <param name="secure"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.CookieManager.SetCookiePath(System.Web.HttpCookie,System.String)">
+            <summary>
+            Sets the Cookie Path
+            </summary>
+            <param name="Cookie"></param>
+        </member>
+        <member name="T:System.Web.HttpRequestBaseExtensions">
+            <summary>
+            HttpRequest Extension methods to facilitate various input retrieval tasks tasks
+            </summary>
+        </member>
+        <member name="M:System.Web.HttpRequestBaseExtensions.IsFormVar(System.Web.HttpRequestBase,System.String)">
+            <summary>
+            Determines whether a form variable exists
+            </summary>
+            <param name="request"></param>
+            <param name="formVarName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.Web.HttpRequestBaseExtensions.ParamsInt(System.Web.HttpRequestBase,System.String,System.Int32)">
+            <summary>
+            Returns a value via Params[] and attempts
+            to convert it to an integer.
+            </summary>
+            <param name="request"></param>
+            <param name="FormVarName"></param>
+            <param name="defaultValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.Web.HttpRequestBaseExtensions.ParamsDecimal(System.Web.HttpRequestBase,System.String,System.Decimal)">
+            <summary>
+            Returns a value via Params[] and attempts
+            to convert it to a decimal value.
+            </summary>
+            <param name="request"></param>
+            <param name="FormVarName"></param>
+            <param name="defaultValue"></param>
+            <returns></returns>
+        </member>
+        <member name="T:System.Web.HttpResponseExtensions">
+            <summary>
+            HttpResponse Extension methods to facilitate various output tasks
+            </summary>
+        </member>
+        <member name="M:System.Web.HttpResponseExtensions.WriteLine(System.Web.HttpResponse,System.Object)">
+            <summary>
+            Writes output as an HTML 'line' by appending a &lt;br /&gt; and linefeed at the end
+            </summary>
+            <param name="response"></param>
+            <param name="output">String to output</param>
+        </member>
+        <member name="M:System.Web.HttpResponseExtensions.WriteLine(System.Web.HttpResponse,System.String,System.Object[])">
+            <summary>
+            Writes formatted output as an HTML 'line' by appending a &lt;br /&gt; and linefeed at the end
+            </summary>
+            <param name="response">HttpResponse object</param>
+            <param name="format">format string</param>
+            <param name="args">format string arguments</param>
+        </member>
+        <member name="M:System.Web.HttpResponseExtensions.Write(System.Web.HttpResponse,System.String,System.Object[])">
+            <summary>
+            Writes formatted output into the Response
+            </summary>
+            <param name="response">HttpResponse object</param>
+            <param name="format">format string</param>
+            <param name="args">format string arguments</param>
+        </member>
+        <member name="T:Westwind.Web.FormVariableBinder">
+            <summary>
+            The class that provides FormVariable to Model binding by matching
+            FormVariable names to the model's properties including child
+            properties. You can specify a 
+            
+            The base behavior is similar to ASP.NET MVC's ModelBinder's
+            binding operation minus the validation features.
+            </summary>
+            <remarks>
+            Note on Child Property Separators:
+            WebForms doesn't support '.' characters in ID= values so
+            you will need to specify a FormVarPropertySeparator. A good
+            value to use is '__' (two underscores) to allow for underscores
+            in actual properties. If you know your properties don't have underscores
+            then a single '_' will also work. The separator is converted to . when
+            parsing for child property names.
+            </remarks>
+        </member>
+        <member name="M:Westwind.Web.FormVariableBinder.#ctor(System.Object,System.String)">
+            <summary>        
+            </summary>
+            <param name="model">The object to unbind to</param>
+            <param name="exceptions">Comma seperated list of properties to exclude</param>
+        </member>
+        <member name="M:Westwind.Web.FormVariableBinder.Unbind">
+            <summary>
+            Unbinds form variables into the specified target object 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.FormVariableBinder.Unbind(System.Object,System.String,System.String)">
+            <summary>
+            Unbinds form variable data into a model object.
+            </summary>
+            <param name="model">Object to unbind to</param>
+            <param name="propertyExceptions">Properties to skip</param>
+            <param name="formvarPrefixes">Form Variable prefixes to include. Prefix is stripped. (txtName maps to Name)</param>
+            <returns></returns>
+        </member>
+        <member name="P:Westwind.Web.FormVariableBinder.Model">
+            <summary>
+            An object to bind to
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.FormVariableBinder.FormVarPropertySeparator">
+            <summary>
+            The character used as a separator in the HTML form for child properties
+            (ie. Address.Street or Address.Phone.Home)
+            Default value is a .
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.FormVariableBinder.Prefixes">
+            <summary>
+            An optional prefix on form variables to unbind. 
+            Can also specify multiple prefixes separated by commas.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.FormVariableBinder.PropertyExceptionList">
+            <summary>
+            List of exceptions that aren't to be bound. Uses the Form variable name.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.FormVariableBinder.BindingErrors">
+            <summary>
+            Binding Errors that occur on unbining into the model
+            </summary>
+        </member>
+        <member name="T:Westwind.Web.ResponseFilterStream">
+            <summary>
+            A semi-generic Stream implementation to use with Response.Filter.
+            Uses an event based interface for handling Content capture and 
+            transformations with several variations of events that can 
+            capture the entire output and transform it or work on actual
+            Response Write() chunks individually.
+            
+            The key operational interface to this class is via exposed via Events  
+            
+            More information on how this class works:
+            http://www.west-wind.com/weblog/posts/72596.aspx
+            </summary>    
+            <example>
+            ResponseFilterStream filter = new ResponseFilterStream(Response.Filter);
+            filter.TransformStream += filter_TransformStream;
+            Response.Filter = filter;  
+            </example>
+        </member>
+        <member name="F:Westwind.Web.ResponseFilterStream._stream">
+            <summary>
+            The original stream
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ResponseFilterStream._position">
+            <summary>
+            Current position in the original stream
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ResponseFilterStream._cacheStream">
+            <summary>
+            Stream that original content is read into
+            and then passed to TransformStream function
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ResponseFilterStream._cachePointer">
+            <summary>
+            Internal pointer that that keeps track of the size
+            of the cacheStream
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.ResponseFilterStream.#ctor(System.IO.Stream)">
+            <summary>
+            
+            </summary>
+            <param name="responseStream"></param>
+        </member>
+        <member name="M:Westwind.Web.ResponseFilterStream.OnTransformCompleteString(System.String)">
+            <summary>
+            Allows transforming of strings
+            
+            Note this handler is internal and not meant to be overridden
+            as the TransformString Event has to be hooked up in order
+            for this handler to even fire to avoid the overhead of string
+            conversion on every pass through.
+            </summary>
+            <param name="responseText"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.ResponseFilterStream.OnTransformCompleteStringInternal(System.IO.MemoryStream)">
+            <summary>
+            Wrapper method form OnTransformString that handles
+            stream to string and vice versa conversions
+            </summary>
+            <param name="ms"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.ResponseFilterStream.Seek(System.Int64,System.IO.SeekOrigin)">
+            <summary>
+            
+            </summary>
+            <param name="offset"></param>
+            <param name="direction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.ResponseFilterStream.SetLength(System.Int64)">
+            <summary>
+            
+            </summary>
+            <param name="length"></param>
+        </member>
+        <member name="M:Westwind.Web.ResponseFilterStream.Close">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.ResponseFilterStream.Flush">
+            <summary>
+            Override flush by writing out the cached stream data
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.ResponseFilterStream.Read(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="buffer"></param>
+            <param name="offset"></param>
+            <param name="count"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.ResponseFilterStream.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Overriden to capture output written by ASP.NET and captured
+            into a cached stream that is written out later when Flush()
+            is called.
+            </summary>
+            <param name="buffer"></param>
+            <param name="offset"></param>
+            <param name="count"></param>
+        </member>
+        <member name="P:Westwind.Web.ResponseFilterStream.IsCaptured">
+            <summary>
+            Determines whether the stream is captured
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.ResponseFilterStream.IsOutputDelayed">
+            <summary>
+            Determines whether the Write method is outputting data immediately
+            or delaying output until Flush() is fired.
+            </summary>
+        </member>
+        <member name="E:Westwind.Web.ResponseFilterStream.CaptureStream">
+            <summary>
+            Event that captures Response output and makes it available
+            as a MemoryStream instance. Output is captured but won't 
+            affect Response output.
+            
+            This routine captures Response output in a MemoryStream.
+            Use with care on large content.
+            </summary>
+        </member>
+        <member name="E:Westwind.Web.ResponseFilterStream.CaptureString">
+            <summary>
+            Event that captures Response output and makes it available
+            as a string. Output is captured but won't affect Response output.
+            
+            This routine captures Response output in a MemoryStream.
+            Use with care on large content.
+            </summary>
+        </member>
+        <member name="E:Westwind.Web.ResponseFilterStream.TransformWrite">
+            <summary>
+            Event that allows you transform the stream as each chunk of
+            the output is written in the Write() operation of the stream.
+            This means that that it's possible/likely that the input 
+            buffer will not contain the full response output but only
+            one of potentially many chunks.
+            
+            This event is called as part of the filter stream's Write() 
+            operation. It does not cache output.
+            </summary>
+        </member>
+        <member name="E:Westwind.Web.ResponseFilterStream.TransformWriteString">
+            <summary>
+            Event that allows you to transform the response stream as
+            each chunk of bytep[] output is written during the stream's write
+            operation. This means it's possibly/likely that the string
+            passed to the handler only contains a portion of the full
+            output. Typical buffer chunks are around 16k a piece.
+            
+            This event is called as part of the stream's Write operation.
+            It does not cache output.
+            </summary>
+        </member>
+        <member name="E:Westwind.Web.ResponseFilterStream.TransformStream">
+            <summary>
+            This event allows capturing and transformation of the entire 
+            output stream by caching all write operations and delaying final
+            response output until Flush() is called on the stream.
+            
+            This routine captures Response output in a MemoryStream.
+            Use with care on large content.
+            </summary>
+        </member>
+        <member name="E:Westwind.Web.ResponseFilterStream.TransformString">
+            <summary>
+            Event that can be hooked up to handle Response.Filter
+            Transformation. Passed a string that you can modify and
+            return back as a return value. The modified content
+            will become the final output.
+            
+            This routine captures Response output in a MemoryStream.
+            Use with care on large content.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.ResponseFilterStream.CanRead">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.ResponseFilterStream.CanWrite">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.ResponseFilterStream.Length">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.ResponseFilterStream.Position">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Westwind.Web.ApplicationErrorModule">
+            <summary>
+            Application Error Module that can be used to handle
+            errors.
+            
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.ApplicationErrorModule.OnInitializeErrorHandlingMode">
+            <summary>
+             Override this method to set the error handling mode
+            which is configured when the appplication starts.
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.ApplicationErrorModule.OnDisplayError(Westwind.Web.WebErrorHandler,Westwind.Web.ErrorViewModel)">
+            <summary>
+            Override this method to handle displaying of error information.
+            You can write to the HTTP output stream. If using MVC you can
+            use the Westwind.Web.ViewRenderer class to easily display an
+            MVC view.
+            </summary>
+            <param name="errorHandler"></param>
+            <param name="model"></param>
+        </member>
+        <member name="M:Westwind.Web.ApplicationErrorModule.OnLogError(Westwind.Web.WebErrorHandler,System.Exception)">
+            <summary>
+            Override this method to handle logging of errors. Gets passed
+            the WebErrorHandler instance that is fully parsed and filled
+            with the error and Http request data.
+            </summary>
+            <param name="errorHandler"></param>
+            <param name="ex"></param>
+        </member>
+        <member name="P:Westwind.Web.ApplicationErrorModule.ErrorHandlingMode">
+            <summary>
+            Determines the error handling mode - 
+            if you want to customize this value override it
+            in your application's startup code or from a configuration
+            value by overriding the Init().
+            </summary>
+        </member>
+        <member name="T:Westwind.Web.WebErrorHandler">
+            <summary>
+            Class that can be used to parse ASP.NET and exception error information
+            into an object. This class is ideal for capturing information for logging,
+            notification and display of detailed error information.
+            
+            Also supports complete Application_Error handling with the HandleError
+            method which works off an exception and provides a complete handler for
+            processing error information with hooks for logging and displaying
+            of an error page. 
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.WebErrorHandler.#ctor(System.Exception)">
+            <summary>
+            Public constructor requires that an exception is passed in. Generally you'll want to do this is in Application_Error
+            and pass in in the InnerException of the error:
+            
+            WebErrorHandler Handler = new WebErrorHandler(Server.GetLastError().InnerException);
+            </summary>
+            <param name="lastException">The Exception to log</param>
+        </member>
+        <member name="M:Westwind.Web.WebErrorHandler.Parse">
+            <summary>
+            Parses the Exception into properties of this object. Called internally 
+            by LogError, but can also be called externally to get easier information
+            about the error through the property interface.
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.WebErrorHandler.ParseServerVariables">
+            <summary>
+            Parses all ServerVariables into a string
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.WebErrorHandler.ParseSourceCode">
+            <summary>
+            Parses source code related properties
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Westwind.Web.WebErrorHandler.ToString" -->
+        <member name="M:Westwind.Web.WebErrorHandler.HandleError(Westwind.Web.ErrorHandlingModes)">
+            <summary>
+            Semi generic Application_Error handler method that can be used
+            to handle errors without additional code. You should implement
+            the DisplayError event and LogError Event methods to display
+            a message when ErrorHandlingModes is not Default
+            </summary>
+            <param name="errorHandlingMode"></param>
+        </member>
+        <member name="M:Westwind.Web.WebErrorHandler.OnLogError(Westwind.Web.WebErrorHandler,System.Exception)">
+            <summary>
+            Allows overriding for logging error information in a subclass
+            </summary>
+            <param name="error"></param>
+            <param name="ex"></param>
+        </member>
+        <member name="M:Westwind.Web.WebErrorHandler.OnDisplayError(Westwind.Web.WebErrorHandler,Westwind.Web.ErrorViewModel)">
+            <summary>
+            Allows overriding of DisplayError
+            </summary>
+            <param name="error"></param>
+            <param name="model"></param>
+        </member>
+        <member name="P:Westwind.Web.WebErrorHandler.LastException">
+            <summary>
+            The last exception that the error parsing uses
+            for creating the error properties when calling
+            Parse().
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.WebErrorHandler.CompactFormat">
+            <summary>
+            If true returns only the error message and URL.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.WebErrorHandler.RetrieveSourceLines">
+            <summary>
+            Determines whether the routines attempt to retrieve Source Code lines.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.WebErrorHandler.ErrorMessage">
+            <summary>
+            The runtime error message thrown by the application.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.WebErrorHandler.RawUrl">
+            <summary>
+            The raw Web relative URL that caused this exception to occur. 
+            Example: /WebStore/Item.aspx?sku=WWHELP
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.WebErrorHandler.FullUrl">
+            <summary>
+            The completely qualified Url to this request.
+            Example: http://www.west-wind.com/webstore/item.aspx?sku=WWSTOREDOTNET
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.WebErrorHandler.StackTrace">
+            <summary>
+            Stack trace listing as available from the runtime compiler
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.WebErrorHandler.SourceCode">
+            <summary>
+            The source code if available for the error that occurred. The code will include the 5 surrounding lines before and after.
+            
+            Source code is available only in Debug mode and if the source files are available on the server. Some errors that occur
+            inside of the .Net runtime itself or in ASP.Net pages also do not show the error.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.WebErrorHandler.SourceFile">
+            <summary>
+            Retrieves the source file if available
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.WebErrorHandler.SourceMethod">
+            <summary>
+            Method where the error occurred
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.WebErrorHandler.SourceLineNumber">
+            <summary>
+            Line Number if available
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.WebErrorHandler.IPAddress">
+            <summary>
+            The client's IP address
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.WebErrorHandler.Login">
+            <summary>
+            The username of the user attached if the user is authenticated. 
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.WebErrorHandler.Browser">
+            <summary>
+            The client's browser string.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.WebErrorHandler.Referer">
+            <summary>
+            The referring Url that was used to access the current page that caused the error. 
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.WebErrorHandler.PostBuffer">
+            <summary>
+            Content of the POST buffer if the page was posted. The size is limited to 2k. Larger buffers are stripped.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.WebErrorHandler.ContentSize">
+            <summary>
+            The size of the POST buffer if data was posted.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.WebErrorHandler.QueryString">
+            <summary>
+            The complete querystring.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.WebErrorHandler.Locale">
+            <summary>
+            The Locale string returned by the browser
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.WebErrorHandler.Time">
+            <summary>
+            The time the error was logged.
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.WebErrorHandler.ServerVariables">
+            <summary>
+            List of all server variables
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.WebErrorHandler.OriginalHttpStatusCode">
+            <summary>
+            Gets the HTTP Status Code
+            </summary>
+        </member>
+        <member name="E:Westwind.Web.WebErrorHandler.LogError">
+            <summary>
+            Fired when all error information has been collected and 
+            the information is ready for logging.
+            </summary>
+        </member>
+        <member name="E:Westwind.Web.WebErrorHandler.DisplayError">
+            <summary>
+            Fired when at the end of the error handling process when an error page 
+            needs to be displayed
+            </summary>
+        </member>
+        <member name="T:Westwind.Utilities.WebUtils">
+            <summary>
+            Summary description for wwWebUtils.
+            </summary>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.ResolveUrl(System.String)">
+            <summary>
+            Returns a site relative HTTP path from a partial path starting out with a ~.
+            Same syntax that ASP.Net internally supports but this method can be used
+            outside of the Page framework.
+            
+            Works like Control.ResolveUrl including support for ~ syntax
+            but returns an absolute URL.
+            </summary>
+            <param name="originalUrl">Any Url including those starting with ~ for virtual base path replacement</param>
+            <returns>relative url</returns>
+            <remarks>
+            Returns the path as relative of current location (ie. ./link.htm) if 
+            HttpContext is not available. Note that this may result in some scenarios where
+            an invalid URL is returned if HttpContext is not present, but it allows for test
+            scenarios.
+            </remarks>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.ResolveServerUrl(System.String,System.Boolean)">
+            <summary>
+            This method returns a fully qualified absolute server Url which includes
+            the protocol, server, port in addition to the server relative Url.
+            
+            Works like Control.ResolveUrl including support for ~ syntax
+            but returns an absolute URL.
+            </summary>
+            <param name="ServerUrl">Any Url, either App relative (~/default.aspx) 
+            or fully qualified</param>
+            <param name="forceHttps">if true forces the url to use https</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.ResolveServerUrl(System.String)">
+            <summary>
+            This method returns a fully qualified absolute server Url which includes
+            the protocol, server, port in addition to the server relative Url.
+            
+            It work like Page.ResolveUrl, but adds these to the beginning.
+            This method is useful for generating Urls for AJAX methods
+            </summary>
+            <param name="ServerUrl">Any Url, either App relative or fully qualified</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.GetFullApplicationPath">
+            <summary>
+            Returns the Application Path as a full Url with scheme 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.GetControlAppRelativePath(System.Web.UI.Control)">
+            <summary>
+            Returns the executing ASPX, ASCX, MASTER page for a control instance.
+            Path is returned app relative without a leading slash
+            </summary>
+            <param name="Ctl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.ScriptLink(System.String)">
+            <summary>
+            Inserts a &lt;script&gt; source link into the page.
+            Includes carriage return at end.
+            </summary>
+            <param name="url">The url to the script to load. Url is resolved</param>
+            <returns>full script tag</returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.CssLink(System.String)">
+            <summary>
+            Inserts a CSS &lt;link&gt; tag into the page.
+            Includes carriage return at end.
+            </summary>
+            <param name="url">The url to the CSS file to load. Url is resolved</param>
+            <returns>full CSS link tag</returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.ImageFormatToContentType(System.Drawing.Imaging.ImageFormat)">
+            <summary>
+            Converts an ImageFormat value to a Web Content Type
+            </summary>
+            <param name="formatGuid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.ImageFormatFromContentType(System.String)">
+            <summary>
+            Returns an image format from an HTTP content type string
+            </summary>
+            <param name="contentType">Content Type like image/jpeg</param>
+            <returns>Corresponding image format</returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.SetUserLocale(System.String,System.Boolean)">
+            <summary>
+            Sets a user's Locale based on the browser's Locale setting. If no setting
+            is provided the default Locale is used.
+            </summary>
+            <param name="currencySymbol">If not null overrides the currency symbol for the culture. 
+            Use to force a specify currency when multiple currencies are not supported by the application
+            </param>
+            <param name="setUiCulture">if true sets the UI culture in addition to core culture</param>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.SetUserLocale(System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Sets the culture and UI culture to a specific culture. Allows overriding of currency
+            and optionally disallows setting the UI culture.
+            </summary>
+            <param name="culture"></param>
+            <param name="uiCulture"></param>
+            <param name="currencySymbol"></param>
+            <param name="setUiCulture"></param>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.FindControlRecursive(System.Web.UI.Control,System.String,System.Boolean)">
+            <summary>
+            Finds a Control recursively. Note finds the first match and exits
+            </summary>
+            <param name="ContainerCtl">The top level container to start searching from</param>
+            <param name="IdToFind">The ID of the control to find</param>
+            <param name="alwaysUseFindControl">If true uses FindControl to check for hte primary Id which is slower, but finds dynamically generated control ids inside of INamingContainers</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.RestartWebApplication">
+            <summary>
+            Attempts to restart the active Web Application               
+            </summary>
+            <remarks>
+            Requires either Full Trust (HttpRuntime.UnloadAppDomain) or
+            or Write access to web.config otherwise the operation
+            will fail and return false.
+            </remarks>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.IsFormVar(System.String)">
+            <summary>
+            Checks to see if a form variable exists in the 
+            HttpContext. Only works in System.Web based applications
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Westwind.Utilities.WebUtils.FormVarsToObject(System.Object,System.String,System.Collections.Generic.Dictionary{System.String,System.String})" -->
+        <!-- Badly formed XML comment ignored for member "M:Westwind.Utilities.WebUtils.FormVarsToDataRow(System.Data.DataRow,System.String,System.Collections.Generic.Dictionary{System.String,System.String})" -->
+        <member name="M:Westwind.Utilities.WebUtils.ForceReload">
+            <summary>
+            Creates the headers required to force the current request to not go into 
+            the client side cache, forcing a reload of the page.
+            
+            This method can be called anywhere as part of the Response processing to 
+            modify the headers. Use this for any non POST pages that should never be 
+            cached.
+            <seealso>Class WebUtils</seealso>
+            </summary>
+            <param name="Response"></param>
+            <returns>Void</returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.AspTextMerge(System.String,System.String@)">
+            <summary>
+            Returns the result from an ASPX 'template' page in the /templates directory of this application.
+            This method uses an HTTP client to call into the Web server and retrieve the result as a string.
+            </summary>
+            <param name="templatePageAndQueryString">The name of a page (ASPX, HTM etc.)  to retrieve plus the querystring
+            Examples: webform1.aspx, subfolder/WebForm1.aspx, ~/WebForm1.aspx,/myVirtual/WebForm1.aspx
+            </param>
+            <param name="errorMessage">If this method returns null this message will contain the error info</param>
+            <returns>Merged Text or null if an HTTP error occurs - note: could also return an Error page HTML result if the template page has an error.</returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.RenderControl(System.Web.UI.Control)">
+            <summary>
+            Renders a control to a string - useful for AJAX return values
+            </summary>
+            <param name="control"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.RenderControl(System.Web.UI.Control,System.Boolean)">
+            <summary>
+            Renders a control dynamically by creating a new Page and Form
+            control and then adding the control to be rendered to it.        
+            </summary>
+            <remarks>
+            This routine works to render most Postback controls but it
+            has a bit of overhead as it creates a separate Page instance        
+            </remarks>
+            <param name="control">The control that is to be rendered</param>
+            <param name="useDynamicPage">if true forces a Page to be created</param>
+            <returns>Html or empty</returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.RenderUserControl(System.String,System.Boolean,System.Object)">
+            <summary>
+            Renders a user control into a string into a string.
+            </summary>
+            <param name="page">Instance of the page that is hosting the control</param>
+            <param name="userControlVirtualPath"></param>
+            <param name="includePostbackControls">If false renders using RenderControl, otherwise uses Server.Execute() constructing a new form.</param>
+            <param name="data">Optional Data parameter that can be passed to the User Control IF the user control has a Data property.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.RenderUserControl(System.String,System.Boolean)">
+            <summary>
+            Renders a user control into a string into a string.
+            </summary>
+            <param name="userControlVirtualPath">virtual path for the user control</param>
+            <param name="includePostbackControls">If false renders using RenderControl, otherwise uses Server.Execute() constructing a new form.</param>
+            <param name="data">Optional Data parameter that can be passed to the User Control IF the user control has a Data property.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.GetUrlPath(System.String)">
+            <summary>
+            Returns just the Path of a full Url. Strips off the filename and querystring
+            </summary>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.GetAppRelativePath(System.String)">
+            <summary>
+            Translates an ASP.NET path like /myapp/subdir/page.aspx 
+            into an application relative path: subdir/page.aspx. The
+            path returned is based of the application base and 
+            starts either with a subdirectory or page name (ie. no ~)
+            
+            The path is turned into all lower case.
+            </summary>
+            <param name="logicalPath">A logical, server root relative path (ie. /myapp/subdir/page.aspx)</param>
+            <returns>Application relative path (ie. subdir/page.aspx)</returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.GetAppRelativePath">
+            <summary>
+            Translates the current ASP.NET path  
+            into an application relative path: subdir/page.aspx. The
+            path returned is based of the application base and 
+            starts either with a subdirectory or page name (ie. no ~)
+            
+            This version uses the current ASP.NET path of the request
+            that is active and internally uses AppRelativeCurrentExecutionFilePath
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.IsGZipSupported">
+            <summary>
+            Determines if GZip is supported
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.GZipEncodePage">
+            <summary>
+            Sets up the current page or handler to use GZip through a Response.Filter
+            IMPORTANT:  
+            You have to call this method before any output is generated!
+            </summary>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.GetUrlEncodedKey(System.String,System.String)">
+            <summary>
+            Retrieves a value by key from a UrlEncoded string.
+            </summary>
+            <param name="urlEncodedString">UrlEncoded String</param>
+            <param name="key">Key to retrieve value for</param>
+            <returns>returns the value or "" if the key is not found or the value is blank</returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.GetParamsInt(System.String)">
+            <summary>
+            Returns a request value parsed into an integer. If the value is not found
+            or not a number null is returned.
+            </summary>
+            <param name="paramsKey">The request key to retrieve</param>        
+            <returns>parsed integer or null on failure</returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.GetParamsInt(System.String,System.Int32)">
+            <summary>
+            Returns a request value parsed into an integer with an optional 
+            default value set if the conversion fails.
+            </summary>
+            <param name="paramsKey"></param>
+            <param name="defaultValue">defaults to -1</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.FormBufferToString">
+            <summary>
+            Returns the content of the POST buffer as string
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.TextListToHtmlList(System.String)">
+            <summary>
+            Parses a Carriage Return based into a &lt;ul&gt; style HTML list by 
+            splitting each carriage return separated line.
+            <seealso>Class WebUtils</seealso>
+            </summary>
+            <param name="text">
+            The carriage return separated text list
+            </param>
+            <returns>string</returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.MachineKeySeedValue(System.Byte[])">
+            <summary>
+            Returns an encrypted string based on the local machine key of the local machine.
+            Can be used to create machine specific seed values that cannot be tracked via code        
+            </summary>
+            <param name="keyData">Optional - If no data is passed in a default seed value is used.</param>
+            <returns>Encoded string</returns>
+            <remarks>Applies only to ASP.NET Web applications</remarks>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.EncodeJsString(System.String)">
+            <summary>
+            Encodes a string to be represented as a string literal. The format
+            is essentially a JSON string that is returned in double quotes.
+            
+            The string returned includes outer quotes: 
+            "Hello \"Rick\"!\r\nRock on"
+            </summary>
+            <param name="s"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.DecodeJsString(System.String)">
+            <summary>
+            Parses a JSON string into a string value
+            </summary>
+            <param name="encodedString">JSON string</param>
+            <returns>unencoded string</returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.EncodeJsDate(System.DateTime,Westwind.Web.JsonSerializers.JsonDateEncodingModes)">
+            <summary>
+            Converts a .NET date to a JavaScript JSON date value.
+            </summary>
+            <param name="date">.Net Date</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.UnicodeEscapeMatchEvaluator(System.Text.RegularExpressions.Match)">
+            <summary>
+            Matchevaluated to unescape string encoded Unicode character in the format of \u03AF
+            </summary>
+            <param name="match"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.GRes(System.String,System.String)">
+            <summary>
+            Returns a resource string. Shortcut for HttpContext.GetGlobalResourceObject.
+            </summary>
+            <param name="resourceSet">Resource Set Id (ie. name of the file or 'resource set')</param>
+            <param name="resourceId">The key in the resource set</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.GRes(System.String)">
+            <summary>
+            Returns a resource string. Shortcut for HttpContext.GetGlobalResourceObject.
+            
+            This version defaults to Resources as the resource set it.
+            Defaults to "Resources" as the ResourceSet (ie. Resources.xx.resx)
+            </summary>
+            <param name="resourceId">Key in the Resources resource set</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.GResJs(System.String,System.String)">
+            <summary>
+            Returns a JavaScript Encoded string from a Global Resource
+            </summary>
+            <param name="classKey"></param>
+            <param name="resourceId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.LRes(System.String)">
+            <summary>
+            Returns a local resource from the resource set of the current active request
+            local resource.
+            </summary>       
+            <param name="resourceId">The resourceId of the item in the local resourceSet file to retrieve</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.LRes(System.String,System.String)">
+            <summary>
+            Returns a local resource for the given resource set that you specify explicitly.
+            
+            Use this method only if you need to retrieve resources from a local resource not
+            specific to the current request.
+            </summary>
+            <param name="resourceSet">The resourceset specified as: subdir/page.aspx or page.aspx or as a virtual path (~/subdir/page.aspx)</param>
+            <param name="resourceKey">The resource ID to retrieve from the resourceset</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.LResJs(System.String)">
+            <summary>
+            Returns a local resource properly encoded as a JavaScript string 
+            including the quote characters.
+            </summary>
+            <param name="resourceId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.GResJs(System.String)">
+            <summary>
+            Returns a JavaScript Encoded string from a Global Resource
+            Defaults to the "Resources" resource set.
+            </summary>
+            <param name="resourceKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.WebUtils.GetIisVersion">
+            <summary>
+            Returns the IIS version for the given Operating System.
+            Note this routine doesn't check to see if IIS is installed
+            it just returns the version of IIS that should run on the OS.
+            
+            Returns the value from Request.ServerVariables["Server_Software"]
+            if available. Otherwise uses OS sniffing to determine OS version
+            and returns IIS version instead.
+            </summary>
+            <returns>version number or -1 </returns>
+        </member>
+    </members>
+</doc>
