@@ -114,7 +114,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SupportClasses\JavaScriptResourceHandler.cs" />
-    <Compile Include="SupportClasses\LocalizationUtils.cs" />
     <Compile Include="SupportClasses\StronglyTypedWebResources.cs" />
     <Compile Include="SupportClasses\TranslationService.cs" />
     <Compile Include="Designer\DbDesignTimeResourceProviderFactory.cs" />

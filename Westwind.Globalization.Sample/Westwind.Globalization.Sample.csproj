@@ -179,10 +179,9 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="LocalizationAdmin\Web.config" />
+    <Content Include="ResourceTest.aspx" />
     <Content Include="Scripts\ww.jquery.js" />
     <Content Include="Scripts\ww.jquery.min.js" />
-    <Content Include="ResourceTest.aspx" />
-    <Content Include="_readme.Westwind.Globalization.txt" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

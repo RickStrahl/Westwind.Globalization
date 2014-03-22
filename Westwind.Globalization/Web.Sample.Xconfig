@@ -34,7 +34,7 @@
 		<!--<globalization resourceProviderFactoryType="Westwind.Globalization.DbResourceProviderFactory,Westwind.Globalization"  />-->
 		
     <!-- Medium trust works fine. Note you'll need WRITE access in folders to write out resources -->
-		<trust level="Medium" originUrl="(http://www.google.com/translate_t)|(http://babelfish.yahoo.com/translate_txt)"/>
+		<!--<trust level="Medium" originUrl="(http://www.google.com/translate_t)|(http://babelfish.yahoo.com/translate_txt)"/>-->
 		<!-- 
              Set compilation debug="true" to insert debugging   
             symbols into the compiled page. Because thi
@@ -43,20 +43,17 @@
     -->
 		<compilation debug="true">
 		</compilation>
-    <customErrors mode="RemoteOnly" />
-		<httpModules>
-		</httpModules>
-		<!-- 
-            The <authentication> section enables configuration 
-            of the security authentication mode used by 
-            ASP.NET to identify an incoming user.  
-        -->
-		<authentication mode="Windows">
-		</authentication>
-		<identity impersonate="false" />
 		<authorization>
 			<!--<deny users="?"/>-->
 		</authorization>
 	</system.web>
+  <system.webServer>
+    <handlers>
+      <add name="JavaScriptResourceHandler"
+           verb="GET"
+           path="JavascriptResourceHandler.axd"
+           type="Westwind.Globalization.JavaScriptResourceHandler,Westwind.Globalization"/>
+    </handlers>
+  </system.webServer>
 </configuration>
 

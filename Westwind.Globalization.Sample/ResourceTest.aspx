@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ResourceTest.aspx.cs" Inherits="Westwind.Globalization.Sample.WebForm1" %>
+﻿<%@ Page Language="C#" %>
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">

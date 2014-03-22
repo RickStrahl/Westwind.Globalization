@@ -71,6 +71,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Web" />
     <Reference Include="System.XML" />
+    <Reference Include="Westwind.Globalization, Version=1.99.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Westwind.Globalization.1.992\lib\net45\Westwind.Globalization.dll</HintPath>
+    </Reference>
     <Reference Include="Westwind.Utilities, Version=2.50.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Westwind.Utilities.2.50.0\lib\net40\Westwind.Utilities.dll</HintPath>
@@ -79,9 +83,21 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Westwind.Web.2.50.0\lib\net45\Westwind.Web.dll</HintPath>
     </Reference>
+    <Reference Include="Westwind.Web.WebForms, Version=2.50.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Westwind.Web.WebForms.2.50.0\lib\net45\Westwind.Web.WebForms.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbResXConverterTests.cs" />
+    <Compile Include="LocalizationAdmin\LocalizationAdmin.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LocalizationAdmin\LocalizationAdmin.aspx.designer.cs" />
+    <Compile Include="LocalizationAdmin\StronglyTypedGlobalResources.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LocalizationAdmin\StronglyTypedGlobalResources.aspx.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TranslationServiceTests.cs" />
     <Compile Include="DbResTests.cs" />
@@ -113,14 +129,45 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Westwind.Globalization\Westwind.Globalization.csproj">
-      <Project>{51dece39-764c-4c32-a57a-d93a5fd9bd6a}</Project>
-      <Name>Westwind.Globalization</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="LocalizationAdmin\Default.aspx" />
+    <Content Include="LocalizationAdmin\images\calendar.png" />
+    <Content Include="LocalizationAdmin\images\close.png" />
+    <Content Include="LocalizationAdmin\images\closeX.png" />
+    <Content Include="LocalizationAdmin\images\codegen.png" />
+    <Content Include="LocalizationAdmin\images\DialogHeader.png" />
+    <Content Include="LocalizationAdmin\images\DialogHighlight.png" />
+    <Content Include="LocalizationAdmin\images\DialogSelection.png" />
+    <Content Include="LocalizationAdmin\images\DialogStrip.png" />
+    <Content Include="LocalizationAdmin\images\edit.png" />
+    <Content Include="LocalizationAdmin\images\HeaderGradient.png" />
+    <Content Include="LocalizationAdmin\images\help.png" />
+    <Content Include="LocalizationAdmin\images\home.png" />
+    <Content Include="LocalizationAdmin\images\info.png" />
+    <Content Include="LocalizationAdmin\images\LightBlueGradient.png" />
+    <Content Include="LocalizationAdmin\images\LightOrangeGradient.png" />
+    <Content Include="LocalizationAdmin\images\list.png" />
+    <Content Include="LocalizationAdmin\images\loading_black.gif" />
+    <Content Include="LocalizationAdmin\images\loading_small.gif" />
+    <Content Include="LocalizationAdmin\images\new.png" />
+    <Content Include="LocalizationAdmin\images\refresh.png" />
+    <Content Include="LocalizationAdmin\images\remove.png" />
+    <Content Include="LocalizationAdmin\images\sort.png" />
+    <Content Include="LocalizationAdmin\images\toolbar.gif" />
+    <Content Include="LocalizationAdmin\images\users.png" />
+    <Content Include="LocalizationAdmin\images\warning.png" />
+    <Content Include="LocalizationAdmin\LocalizationAdmin.aspx" />
+    <Content Include="LocalizationAdmin\LocalizeAdminForm.css" />
+    <Content Include="LocalizationAdmin\LocalizeAdminForm.js" />
+    <Content Include="LocalizationAdmin\StronglyTypedGlobalResources.aspx" />
     <Content Include="scripts\ww.jquery.js" />
     <Content Include="scripts\ww.jquery.min.js" />
+    <Content Include="_readme.Westwind.Globalization.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="LocalizationAdmin\App_LocalResources\LocalizationAdmin.aspx.de.resx" />
+    <EmbeddedResource Include="LocalizationAdmin\App_LocalResources\LocalizationAdmin.aspx.resx" />
+    <EmbeddedResource Include="LocalizationAdmin\localizationadmin.aspx.de.resx" />
+    <EmbeddedResource Include="LocalizationAdmin\localizationadmin.aspx.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
