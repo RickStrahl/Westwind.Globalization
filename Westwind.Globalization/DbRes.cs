@@ -6,7 +6,9 @@ namespace Westwind.Globalization
 
 /// <summary>
 /// Helper class that handles access to the dbResourceManager
-/// more easily with single method access.
+/// more easily with single method access. Allows for resource
+/// reading, writing (new and updates transparently), deleting
+/// and clearing of resources from memory.
 /// 
 /// This class uses the DbResourceManager class to access
 /// resources and still uses the standard ResourceManager 
@@ -28,14 +30,27 @@ public class DbRes
     public static bool AutoAddResources { get; set; }
 
     /// <summary>
-    /// Localization function
+    /// Localization helper function that Translates a resource
+    /// Id to a resource value. Easy access that allows full
+    /// control over the resource to retrieve or default UiCulture
+    /// locale retrieval.
     /// </summary>
-    /// <param name="resId"></param>
-    /// <param name="resourceSet"></param>
+    /// <param name="resId">The Resource Id to retrieve
+    /// Note resource Ids can be *any* string and if no
+    /// matching resource is found the id is returned.
+    /// </param>
+    /// <param name="resourceSet">Name of the ResourceSet that houses this resource</param>
     /// <param name="lang">Language as ieetf code: en-US, de-DE etc.</param>
-    /// <returns></returns>
+    /// <returns>
+    /// Localized resource or the resource Id if no match is found. 
+    /// 
+    /// This value always returns a string unless you pass in null.
+    /// </returns>
     public static string T(string resId, string resourceSet = null, string lang = null, bool autoAdd = false)
     {
+        if (string.IsNullOrEmpty(resId))
+            return resId;
+
         if (resourceSet == null)
             resourceSet = string.Empty;
 
@@ -52,10 +67,7 @@ public class DbRes
                 if (manager == null)
                 {
                     manager = new DbResourceManager(resourceSet);
-                    if (manager != null)
-                    {                                              
-                        ResourceManagers.Add(resourceSet, manager);
-                    }
+                    ResourceManagers.Add(resourceSet, manager);
                 }
             }
         }
@@ -82,11 +94,14 @@ public class DbRes
     /// <summary>
     /// Writes a resource either creating or updating an existing resource 
     /// </summary>
-    /// <param name="resourceId"></param>
-    /// <param name="value"></param>
-    /// <param name="lang"></param>
-    /// <param name="resourceSet"></param>
-    /// <returns></returns>
+    /// <param name="resourceId">Resource Id to write. Resource Ids can be any string up to 1024 bytes in length</param>
+    /// <param name="value">Value to set the resource to</param>
+    /// <param name="lang">Language as ieetf code: en-US, de-DE etc. 
+    /// Value can be left blank for Invariant/Default culture to set.
+    /// </param>
+    /// <param name="resourceSet">The resourceSet to store the resource on. 
+    /// If no resource set name is provided a default empty resource set is used.</param>
+    /// <returns>true or false</returns>
     public static bool WriteResource(string resourceId, string value = null, string lang = null, string resourceSet = null)
     {
         if (lang == null)
@@ -104,9 +119,9 @@ public class DbRes
     /// Deletes a resource entry
     /// </summary>
     /// <param name="resourceId">The resource to delete</param>
-    /// <param name="lang">The language Id - if empty or null deletes all languages</param>
+    /// <param name="lang">The language Id - Be careful:  If empty or null deletes matching keys for all languages</param>
     /// <param name="resourceSet">The resource set to apply</param>
-    /// <returns></returns>
+    /// <returns>true or false</returns>
     public static bool DeleteResource(string resourceId,  string resourceSet = null, string lang = null)
     {
         var db = new DbResourceDataManager();
@@ -114,7 +129,9 @@ public class DbRes
     }
 
     /// <summary>
-    /// Clears resources from memory and forces reloading
+    /// Clears resources from memory and forces reloading.
+    /// 
+    /// Effectively unloads the ResourceManager and ResourceProvider.
     /// </summary>
     public static void ClearResources()
     {
