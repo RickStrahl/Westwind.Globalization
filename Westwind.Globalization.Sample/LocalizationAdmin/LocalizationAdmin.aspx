@@ -7,11 +7,11 @@
          Culture="auto" meta:resourcekey="Page1" 
          UICulture="auto"       
 %>
-<%
-    bool safeMode = true;    
-%>
+<script runat="server">
+    // Allow hiding of 'Write Operations' Menu Items
+    const bool safeMode = false;    
+</script>
 <%@ Register Assembly="Westwind.Globalization" Namespace="Westwind.Globalization" TagPrefix="ww" %>
-<%@ Register Assembly="Westwind.Web" Namespace="Westwind.Web.Controls" TagPrefix="ww" %>
 <%@ Register Assembly="Westwind.Web.WebForms" Namespace="Westwind.Web.Controls" TagPrefix="ww" %>
 <!DOCTYPE html>
 <html>
@@ -55,7 +55,8 @@
         
             <div id="Toolbar" class="toolbarcontainer">
            
-                <div id="divToolbar" style="margin-bottom: 10px;display:none;">            
+                <!-- WRITE options can be disabled with the safeMode switch -->
+                <div id="divToolbar" style="margin-bottom: 10px;" class="safemode">            
                     <span class="hoverbutton">
                         <img runat="server" id="imgExportResources" />
                         <asp:LinkButton runat="server" ID="btnExportResources" Title="Export to Resource Files" Text="Export to Resource Files"  
@@ -65,13 +66,19 @@
                     <span class="hoverbutton"> 
                         <img runat="server" id="imgImport"  />
                         <asp:LinkButton runat="server" ID="btnImport" Title="Import Resources" Text="Import" onclick="btnImport_Click" meta:resourcekey="btnImport" />
-                    </span>                   
+                    </span>                 
+                      
                     <span class="hoverbutton">
                         <img src="images/codegen.png" />
                         <asp:LinkButton runat="server" id="btnGenerateStronglyTypedResources" Text="Generate Strong Resources" 
                                         meta:resourcekey="btnGenerateStronglyTypedResources"
                                         onclick="btnGenerateStronglyTypedResources_Click" />
                     </span>            
+                                
+                    <span class="hoverbutton" >
+                        <img runat="server" id="imgCreateTable" visible="false" />
+                        <asp:LinkButton runat="server" ID="btnCreateTable" Title="Create" Text="Create Table" OnClick="btnCreateTable_Click"  meta:resourcekey="btnCreateTable" />
+                    </span>
                 </div>
 
 
@@ -84,11 +91,6 @@
                 <span class="hoverbutton">            
                     <img runat="server" id="imgRecycleApp" />
                     <asp:LinkButton runat="server" ID="btnRecycleApp" Title="Recycle Application" AccessKey="R" Text="Recyle App" OnClientClick="ReloadResources();return false;" meta:resourcekey="btnRecycleApp"></asp:LinkButton>&nbsp;&nbsp;
-                </span>
-            
-                <span class="hoverbutton" style="display:none;">
-                    <img runat="server" id="imgCreateTable" visible="false" />
-                    <asp:LinkButton runat="server" ID="btnCreateTable" Title="Create" Text="Create Table" OnClick="btnCreateTable_Click"  meta:resourcekey="btnCreateTable" />
                 </span>
             
                 <span class="hoverbutton">            
@@ -313,7 +315,9 @@
                             visible="true"> 
     </ww:DbResourceControl>
     <br />
-
+        
+    
+                
     <!-- Page Scripts to be loaded. REQUIRED to get load order correct -->
     <ww:ScriptContainer runat="server" ID="ScriptContainer">
         <Scripts>
@@ -328,7 +332,12 @@
     
     <%--<div id="divDebug" class="errordisplay" style="font: normal normal 8pt;"></div> --%>
     
-
+    <script>
+        var safeMode = <%= safeMode.ToString().ToLower() %>;
+        if (safeMode) {
+            $(".safemode").hide();
+        }
+    </script>
     </form>
 </body>
 </html>

@@ -76,10 +76,14 @@ body,table,td,th,input,textarea,select
 pre
 {
     color: black;
+    font-size: 9pt;
     font-family: monospace,courier new;
     font-weight: normal;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin: 5px;    
+    padding: 7px 10px;
+    background-color: whitesmoke;
+    border: solid 1px silver;
+    border-radius: 3px;
 }
 img
 {

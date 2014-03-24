@@ -147,13 +147,6 @@
     </Compile>
     <Compile Include="LocalizationAdmin\StronglyTypedGlobalResources.aspx.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResourceTest.aspx.cs">
-      <DependentUpon>ResourceTest.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ResourceTest.aspx.designer.cs">
-      <DependentUpon>ResourceTest.aspx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -216,8 +209,6 @@
   <ItemGroup>
     <Content Include="LocalizationAdmin\App_LocalResources\LocalizationAdmin.aspx.de.resx" />
     <Content Include="LocalizationAdmin\App_LocalResources\LocalizationAdmin.aspx.resx" />
-    <EmbeddedResource Include="LocalizationAdmin\localizationadmin.aspx.de.resx" />
-    <EmbeddedResource Include="LocalizationAdmin\localizationadmin.aspx.resx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Westwind.Globalization\Westwind.Globalization.csproj">

@@ -103,6 +103,24 @@ namespace Westwind.GlobalizationWeb {
         protected global::System.Web.UI.WebControls.LinkButton btnGenerateStronglyTypedResources;
         
         /// <summary>
+        /// imgCreateTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlImage imgCreateTable;
+        
+        /// <summary>
+        /// btnCreateTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnCreateTable;
+        
+        /// <summary>
         /// imgRefresh control.
         /// </summary>
         /// <remarks>
@@ -137,24 +155,6 @@ namespace Westwind.GlobalizationWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnRecycleApp;
-        
-        /// <summary>
-        /// imgCreateTable control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage imgCreateTable;
-        
-        /// <summary>
-        /// btnCreateTable control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnCreateTable;
         
         /// <summary>
         /// imgBackup control.

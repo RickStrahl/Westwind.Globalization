@@ -293,12 +293,17 @@ namespace Westwind.GlobalizationWeb
         this.ErrorDisplay.ShowError(WebUtils.LRes("FeatureDisabled"));
         return;
 #endif
-
             if (!this.Manager.CreateLocalizationTable(null))
-                this.ErrorDisplay.ShowError(WebUtils.LRes("LocalizationTableNotCreated") + "<br />" + this.Manager.ErrorMessage);
+                this.ErrorDisplay.ShowError(WebUtils.LRes("LocalizationTableNotCreated") + "<br />" +
+                                            this.Manager.ErrorMessage);
             else
-                this.ErrorDisplay.ShowMessage(WebUtils.LRes("LocalizationTableCreated"));
+            {                
+                ErrorDisplay.ShowMessage(WebUtils.LRes("LocalizationTableCreated"));
+                Response.AddHeader("Refresh", "3;" + Request.Url.ToString());
+            }
         }
+
+        
 
 
         protected void btnExportResources_Click(object sender, EventArgs e)
