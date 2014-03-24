@@ -23,7 +23,9 @@ namespace Westwind.Globalization.Sample
 
         protected void Application_BeginRequest()
         {
-            WebUtils.SetUserLocale("$", setUICulture: true);
+            // Automatically set the user's locale to what the browser returns
+            // and set the currency symbol
+            WebUtils.SetUserLocale(currencySymbol: "$",setUiCulture: true);
         }
     }
 }
