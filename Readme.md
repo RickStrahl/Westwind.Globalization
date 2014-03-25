@@ -34,7 +34,7 @@ Requirements:
 * Easy to use UI Helpers to access resources in ASP.NET markup
 
 ###Web Resource Editor###
-Perhaps one of the main reasons people want to use Database resources rather
+One of the main reasons people want to use Database resources rather
 than Resx resources is that it allows for dynamic updates of resources. Resx
 resources are static and compiled into an application and so are typically
 tied to the development process, while dynamic resources can be updated
@@ -55,7 +55,7 @@ easy to create your own customized UI or data driven API that suits your
 application needs exactly.
 
 ###How it works###
-This library works by implementing custom a .NET resource manager and 
+This library works by implementing a custom .NET resource manager and 
 ASP.NET resource provider that are tied to a database provider. This 
 means you can access resources using the same mechanisms that you
 use with standard Resx Resources in your .NET applications. This
@@ -92,6 +92,8 @@ There are three distinct resource access mechanisms supported:
 * .NET Resource Manager (Non-Web apps, and or MVC apps where you already use Resx)
 * Direct Db Provider access (easiest overall - works everywhere)
 
+<a name="InstallationAndConfiguration">
+</a>
 ###Installation and Configuration###
 The easiest way to use the data drive resource provider is to install the NuGet
 package into an ASP.NET application.
@@ -179,6 +181,9 @@ protected void Application_BeginRequest()
 
 This forces the user's Culture and UI Culture to whatever the browser is using,
 and explicitly. Now when a page is rendered it will use the UiCulture of the browser.
+The optional allowLocales enforces that only certain locales can be set - anything
+not matched is defaulted to the server's default locale.
+
 The way .NET resource managers work, if there's no match for the locale the user
 provides, resources fall back to the closest matching locale or the invariant locale.
 So if the user comes in with it-IT but you don't support it or it-IT in your resources
@@ -186,7 +191,6 @@ the user will see resources for invariant. Likewise if a user comes in with
 de-CH (Swiss german) and you de (without a locale specific suffix) the de German
 version will be returned. Resource Fallback tries to ensure that always something
 is returned.
-
 
 ###Using Resources in your Application###
 There are a number of different ways to access resources from this provider.
@@ -203,7 +207,7 @@ retrieve and manipulate resources.
 In an ASP.NET Web MVC (or WebPages) application you can use:
 
 ```C#
-// Using current UiCulture
+// Using current UiCulture - empty resource set
 DbRes.T("HelloWorld")
 
 // Exact match with resource - Hallo Welt
@@ -215,7 +219,7 @@ DbRes.T("HelloWorld","Resources","de-CH")
 
 This is an easy mechanism that's tied closely to the database
 resources created and can be applied with minimal fuss in any
-kind of .NET application. You can use this easily use this:
+kind of .NET application.
 
 ####ASP.NET MVC or ASP.NET WebPages####
 ```HTML
@@ -231,12 +235,6 @@ Say Hello: <%: DbRes.T("HelloWorld") %> at <%= DateTime.Now %>
 ```HTML
 string value = DbRes.T("HelloWorld");
 ```
-
-*Note: 
-Even though it appears you're not using a resource manager or
-provider, you are actually using a .NET ResourceManager implementation
-underneath the hood, so all resources are using standard .NET 
-ResourceSet caching optimizations. One read per ResourceSet.*
 
 ###Using the ASP.NET Resource Provider###
 If you're using an existing WebForms application or you want to
@@ -331,6 +329,7 @@ namespace WebApplication1
 			}
 		}
 	}
+}
 ```
 
 These can then be used in any ASP.NET application:

@@ -238,10 +238,13 @@
         </member>
         <member name="T:Westwind.Globalization.DbRes">
             <summary>
-            Helper class that handles access to the dbResourceManager
-            more easily with single method access. Allows for resource
-            reading, writing (new and updates transparently), deleting
-            and clearing of resources from memory.
+            Helper class that handles access to the DbResourceManager
+            more easily with single method access. The T() method provides
+            an easy way to embed resources into applications using the
+            resource key.
+            
+            Also allows for resource reading, writing (new and updates transparently), 
+            deleting and clearing of resources from memory.
             
             This class uses the DbResourceManager class to access
             resources and still uses the standard ResourceManager 
@@ -258,7 +261,7 @@
         <member name="M:Westwind.Globalization.DbRes.T(System.String,System.String,System.String,System.Boolean)">
             <summary>
             Localization helper function that Translates a resource
-            Id to a resource value. Easy access that allows full
+            Id to a resource value string. Easy access that allows full
             control over the resource to retrieve or default UiCulture
             locale retrieval.
             </summary>
@@ -266,12 +269,29 @@
             Note resource Ids can be *any* string and if no
             matching resource is found the id is returned.
             </param>
-            <param name="resourceSet">Name of the ResourceSet that houses this resource</param>
-            <param name="lang">Language as ieetf code: en-US, de-DE etc.</param>
+            <param name="resourceSet">Name of the ResourceSet that houses this resource. If null or empty resources are used.</param>
+            <param name="lang">5 letter or 2 letter language ieetf code: en-US, de-DE or en, de etc.</param>
+            <param name="autoAdd">If true if a resource cannot be found a new entry is added in the invariant locale</param>
             <returns>
             Localized resource or the resource Id if no match is found. 
-            
-            This value always returns a string unless you pass in null.
+            This value *always* returns a string unless you pass in null.
+            </returns>
+        </member>
+        <member name="M:Westwind.Globalization.DbRes.TO(System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Localization helper function that Translates a resource
+            Id to a resource value object. Use this function if you're
+            retrieving non-string values - for string values just use T.
+            </summary>
+            <param name="resId">The Resource Id to retrieve
+            Note resource Ids can be *any* string and if no
+            matching resource is found the id is returned.
+            </param>
+            <param name="resourceSet">Name of the ResourceSet that houses this resource. If null or empty resources are used.</param>
+            <param name="lang">5 letter or 2 letter language ieetf code: en-US, de-DE or en, de etc.</param>
+            <param name="autoAdd">If true if a resource cannot be found a new entry is added in the invariant locale</param>
+            <returns>
+            The resource as an object.    
             </returns>
         </member>
         <member name="M:Westwind.Globalization.DbRes.WriteResource(System.String,System.String,System.String,System.String)">
@@ -298,8 +318,7 @@
         </member>
         <member name="M:Westwind.Globalization.DbRes.ClearResources">
             <summary>
-            Clears resources from memory and forces reloading.
-            
+            Clears resources from memory and forces reloading of all ResourceSets.
             Effectively unloads the ResourceManager and ResourceProvider.
             </summary>
         </member>
@@ -634,10 +653,10 @@
             
             Creates strongly typed keys for each of the keys/values.
             </summary>
-            <param name="ResourceSet"></param>
+            <param name="resourceSet"></param>
             <param name="Namespace">Namespace of the generated class. Pass Null or string.Empty to not generate a namespace</param>
-            <param name="Classname">Name of the class to generate. Pass null to use the ResourceSet name</param>
-            <param name="FileName">Output filename for the CSharp class. If null no file is generated and only the class is returned</param>
+            <param name="classname">Name of the class to generate. Pass null to use the ResourceSet name</param>
+            <param name="fileName">Output filename for the CSharp class. If null no file is generated and only the class is returned</param>
             <returns></returns>
         </member>
         <member name="M:Westwind.Globalization.StronglyTypedWebResources.CreateClassHeader(System.String,System.Boolean,System.Text.StringBuilder)">
@@ -706,7 +725,7 @@
             or set the configuration values for these two.
             
             More info on setup:
-            http://www.west-wind.com/weblog/
+            http://weblog.west-wind.com/posts/2013/Jun/06/Setting-up-and-using-Bing-Translate-API-Service-for-Machine-Translation
             </summary>
             <param name="text">Text to translate</param>
             <param name="fromCulture">Two letter culture name</param>

@@ -84,6 +84,7 @@
         <member name="T:Westwind.Web.CallbackMessage">
             <summary>
             Special return type that can be used to return messages to the
+            caller directly rather than throwing an exception.
             </summary>    
         </member>
         <member name="T:Westwind.Web.CallbackHandler">
@@ -2692,9 +2693,18 @@
         <member name="T:Westwind.Web.ApplicationErrorModule">
             <summary>
             Application Error Module that can be used to handle
-            errors.
-            
+            errors. Uses WebErrorHandler to collect error and
+            request information in a single place, and abstracts
+            the error handling to OnLogError and OnDisplayError
+            hooks to manage only the parts that we are typically
+            interested in in error processing.
             </summary>
+        </member>
+        <member name="M:Westwind.Web.ApplicationErrorModule.Init(System.Web.HttpApplication)">
+            <summary>
+            Hook up Application.Error event
+            </summary>
+            <param name="context"></param>
         </member>
         <member name="M:Westwind.Web.ApplicationErrorModule.OnInitializeErrorHandlingMode">
             <summary>
@@ -2709,8 +2719,12 @@
             use the Westwind.Web.ViewRenderer class to easily display an
             MVC view.
             </summary>
-            <param name="errorHandler"></param>
-            <param name="model"></param>
+            <param name="errorHandler">Contains error and request information</param>
+            <param name="model">
+            Model that contains a few simple properties like title and message
+            as well as an instance of the errorHandler object passed in to allow
+            for error pages that can provide a wealth of detail if desired.
+            </param>
         </member>
         <member name="M:Westwind.Web.ApplicationErrorModule.OnLogError(Westwind.Web.WebErrorHandler,System.Exception)">
             <summary>
@@ -2718,8 +2732,8 @@
             the WebErrorHandler instance that is fully parsed and filled
             with the error and Http request data.
             </summary>
-            <param name="errorHandler"></param>
-            <param name="ex"></param>
+            <param name="errorHandler">Contains formatted error and request information</param>
+            <param name="ex">The original exception that caused the error</param>
         </member>
         <member name="P:Westwind.Web.ApplicationErrorModule.ErrorHandlingMode">
             <summary>
@@ -3021,15 +3035,25 @@
             </param>
             <param name="setUiCulture">if true sets the UI culture in addition to core culture</param>
         </member>
-        <member name="M:Westwind.Utilities.WebUtils.SetUserLocale(System.String,System.String,System.String,System.Boolean)">
+        <member name="M:Westwind.Utilities.WebUtils.SetUserLocale(System.String,System.String,System.String,System.Boolean,System.String)">
             <summary>
             Sets the culture and UI culture to a specific culture. Allows overriding of currency
             and optionally disallows setting the UI culture.
+            
+            You can also limit the locales that are allowed in order to minimize
+            resource access for locales that aren't implemented at all.
             </summary>
-            <param name="culture"></param>
-            <param name="uiCulture"></param>
-            <param name="currencySymbol"></param>
+            <param name="culture">ietf string code for the Culture to set. Examples: en-US or en</param>
+            <param name="uiCulture">ietf string code for UiCulture to set</param>
+            <param name="currencySymbol">Force currency symbol</param>
             <param name="setUiCulture"></param>
+            <param name="allowedLocales">
+            Names of 2 letter locales you want to allow
+            Any other locales are assumed use the default locale.
+            Useful reducing overhead in looking up resource sets that
+            don't exist.
+            Example: de,fr,it
+            </param>
         </member>
         <member name="M:Westwind.Utilities.WebUtils.FindControlRecursive(System.Web.UI.Control,System.String,System.Boolean)">
             <summary>
