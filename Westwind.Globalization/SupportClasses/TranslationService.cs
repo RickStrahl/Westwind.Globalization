@@ -114,7 +114,7 @@ namespace Westwind.Globalization
         /// or set the configuration values for these two.
         /// 
         /// More info on setup:
-        /// http://www.west-wind.com/weblog/
+        /// http://weblog.west-wind.com/posts/2013/Jun/06/Setting-up-and-using-Bing-Translate-API-Service-for-Machine-Translation
         /// </summary>
         /// <param name="text">Text to translate</param>
         /// <param name="fromCulture">Two letter culture name</param>

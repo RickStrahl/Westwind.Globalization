@@ -34,7 +34,7 @@ public class DbRes
 
     /// <summary>
     /// Localization helper function that Translates a resource
-    /// Id to a resource value. Easy access that allows full
+    /// Id to a resource value string. Easy access that allows full
     /// control over the resource to retrieve or default UiCulture
     /// locale retrieval.
     /// </summary>
@@ -89,6 +89,67 @@ public class DbRes
         string result = manager.GetObject(resId, ci) as string;
 
         if (string.IsNullOrEmpty(result))
+            return resId;
+
+        return result;
+    }
+
+
+    /// <summary>
+    /// Localization helper function that Translates a resource
+    /// Id to a resource value object. Use this function if you're
+    /// retrieving non-string values - for string values just use T.
+    /// </summary>
+    /// <param name="resId">The Resource Id to retrieve
+    /// Note resource Ids can be *any* string and if no
+    /// matching resource is found the id is returned.
+    /// </param>
+    /// <param name="resourceSet">Name of the ResourceSet that houses this resource. If null or empty resources are used.</param>
+    /// <param name="lang">5 letter or 2 letter language ieetf code: en-US, de-DE or en, de etc.</param>
+    /// <param name="autoAdd">If true if a resource cannot be found a new entry is added in the invariant locale</param>
+    /// <returns>
+    /// The resource as an object.    
+    /// </returns>
+    public static object TO(string resId, string resourceSet = null, string lang = null, bool autoAdd = false)
+    {
+        if (string.IsNullOrEmpty(resId))
+            return resId;
+
+        if (resourceSet == null)
+            resourceSet = string.Empty;
+
+        // check if the res manager exists
+        DbResourceManager manager = null;
+        ResourceManagers.TryGetValue(resourceSet, out manager);
+
+        // if not we have to create it and add it to static collection
+        if (manager == null)
+        {
+            lock (ResourceManagers)
+            {
+                ResourceManagers.TryGetValue(resourceSet, out manager);
+                if (manager == null)
+                {
+                    manager = new DbResourceManager(resourceSet);
+                    ResourceManagers.Add(resourceSet, manager);
+                }
+            }
+        }
+
+        // no manager no resources
+        if (manager == null)
+            return resId;
+
+        CultureInfo ci = null;
+        if (string.IsNullOrEmpty(lang))
+            ci = CultureInfo.CurrentUICulture;
+        else
+            ci = new CultureInfo(lang);
+
+        manager.AutoAddMissingEntries = AutoAddResources;
+        object result = manager.GetObject(resId, ci);
+
+        if (result == null)
             return resId;
 
         return result;

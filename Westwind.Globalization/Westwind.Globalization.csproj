@@ -194,8 +194,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="scripts\ww.jquery.js" />
-    <Content Include="scripts\ww.jquery.min.js" />
     <Content Include="_readme.Westwind.Globalization.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

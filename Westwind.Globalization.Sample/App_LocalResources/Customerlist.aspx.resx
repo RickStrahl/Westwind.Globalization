@@ -1,0 +1,231 @@
+﻿<root>
+   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+      <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+      <xsd:element name="root" msdata:IsDataSet="true">
+         <xsd:complexType>
+            <xsd:choice maxOccurs="unbounded">
+               <xsd:element name="metadata">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                     </xsd:sequence>
+                     <xsd:attribute name="name" use="required" type="xsd:string" />
+                     <xsd:attribute name="type" type="xsd:string" />
+                     <xsd:attribute name="mimetype" type="xsd:string" />
+                     <xsd:attribute ref="xml:space" />
+                  </xsd:complexType>
+               </xsd:element>
+               <xsd:element name="assembly">
+                  <xsd:complexType>
+                     <xsd:attribute name="alias" type="xsd:string" />
+                     <xsd:attribute name="name" type="xsd:string" />
+                  </xsd:complexType>
+               </xsd:element>
+               <xsd:element name="data">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                        <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                     </xsd:sequence>
+                     <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+                     <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+                     <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+                     <xsd:attribute ref="xml:space" />
+                  </xsd:complexType>
+               </xsd:element>
+               <xsd:element name="resheader">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                     </xsd:sequence>
+                     <xsd:attribute name="name" type="xsd:string" use="required" />
+                  </xsd:complexType>
+               </xsd:element>
+            </xsd:choice>
+         </xsd:complexType>
+      </xsd:element>
+   </xsd:schema>
+   <resheader name="resmimetype">
+      <value>text/microsoft-resx</value>
+   </resheader>
+   <resheader name="version">
+      <value>2.0</value>
+   </resheader>
+   <resheader name="reader">
+      <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+   </resheader>
+   <resheader name="writer">
+      <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+   </resheader>
+   <data name="ResourceImportComplete" xml:space="preserve">
+      <value>Resource import completed</value>
+   </data>
+   <data name="txtCountry.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="btnSave.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="lblCountry.Text" xml:space="preserve">
+      <value>Country:</value>
+   </data>
+   <data name="lblPageHeader.Text" xml:space="preserve">
+      <value>Northwind Localizable Customer with Ajax Admin</value>
+   </data>
+   <data name="lblPostalCode.Text" xml:space="preserve">
+      <value>Postal Code:</value>
+   </data>
+   <data name="txtCity.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="lblName.Text" xml:space="preserve">
+      <value>Name:</value>
+   </data>
+   <data name="lblCompany.Text" xml:space="preserve">
+      <value>Company:</value>
+   </data>
+   <data name="lblAddress.Text" xml:space="preserve">
+      <value>Address:</value>
+   </data>
+   <data name="lblPageHeader.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="btnRefresh.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="txtCompany.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="Page1.Title" xml:space="preserve">
+      <value>Northwind Customer List using ATLAS</value>
+   </data>
+   <data name="Localizer.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="dgOrders.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="lblCity.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="btnRefresh.Text" xml:space="preserve">
+      <value> Refresh List</value>
+   </data>
+   <data name="txtPostalCode.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="CustomerInfoPanel.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="lblRegion.Text" xml:space="preserve">
+      <value>Region:</value>
+   </data>
+   <data name="txtAddress.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="lblCompany.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="lblCity.Text" xml:space="preserve">
+      <value>City:</value>
+   </data>
+   <data name="lblEntered.Text" xml:space="preserve">
+      <value>Entered:</value>
+   </data>
+   <data name="ErrorDisplay.Text" xml:space="preserve">
+      <value />
+   </data>
+   <data name="lblEntered.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="lblAddress.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="txtRegion.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="ErrorDisplay.UserMessage" xml:space="preserve">
+      <value />
+   </data>
+   <data name="lblDialogTitle.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="lblPostalCode.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="PleaseSelectTwoSeparateLanguages" xml:space="preserve">
+      <value>Please select two separate languages to translate</value>
+   </data>
+   <data name="lblValue.Text" xml:space="preserve">
+      <value>Translated Text:</value>
+   </data>
+   <data name="lblDialogTitle.Text" xml:space="preserve">
+      <value>Customer List</value>
+   </data>
+   <data name="txtResSearch.Text" xml:space="preserve">
+      <value>Search Resource Ids (Alt-E)</value>
+   </data>
+   <data name="lstCustomers.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="btnSave.Text" xml:space="preserve">
+      <value> Save Customer </value>
+   </data>
+   <data name="lblCountry.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="lblRegion.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="lblName.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="BoundField2.HeaderText" xml:space="preserve">
+      <value>Order Total</value>
+   </data>
+   <data name="dgOrders.EmptyDataText" xml:space="preserve">
+      <value />
+   </data>
+   <data name="lnkHome.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="lnkPageRefresh.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="BoundField1.AccessibleHeaderText" xml:space="preserve">
+      <value />
+   </data>
+   <data name="BoundField1.HeaderText" xml:space="preserve">
+      <value>Order Number</value>
+   </data>
+   <data name="BoundField1.FooterText" xml:space="preserve">
+      <value />
+   </data>
+   <data name="lnkPageRefresh.Text" xml:space="preserve">
+      <value>Reset Page</value>
+   </data>
+   <data name="TotalForInvoices" xml:space="preserve">
+      <value>Total for all Invoices:</value>
+   </data>
+   <data name="lblPageCreated.Text" xml:space="preserve">
+      <value>Page created:</value>
+   </data>
+   <data name="BoundField2.AccessibleHeaderText" xml:space="preserve">
+      <value />
+   </data>
+   <data name="lnkHome.Text" xml:space="preserve">
+      <value>Home</value>
+   </data>
+   <data name="BoundField2.FooterText" xml:space="preserve">
+      <value />
+   </data>
+   <data name="BoundField.FooterText" xml:space="preserve">
+      <value />
+   </data>
+   <data name="dgOrders.Caption" xml:space="preserve">
+      <value />
+   </data>
+   <data name="BoundField.HeaderText" xml:space="preserve">
+      <value>Entered</value>
+   </data>
+</root>

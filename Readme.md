@@ -105,7 +105,7 @@ web.config and enables the resource provider by default. It also installs
 the localization administration form shown above, so you can create the
 resource table and manage resources in it.
 
-**Configuration Settings**
+####Configuration Settings####
 The key configuration items set is the DbResourceProvider section in
 the config file which tells the provider where to find the database
 resources:
@@ -134,7 +134,7 @@ The two most important keys are the connectionString and resourceTableName which
 database and a table within it. You can use either a raw connectionstring as above or a connection
 string name in the ConnectionStrings section of your config file.
 
-**Run the Web Resource Editor**
+####Run the Web Resource Editor####
 In order to use database resources you'll actually have to create some resources in a database.
 Make sure you've first added a valid connection string in the config file in the last step! 
 Then open the /LocalizationAdmin/LocalizationAdmin.aspx page in your browser and click on the
@@ -217,17 +217,17 @@ This is an easy mechanism that's tied closely to the database
 resources created and can be applied with minimal fuss in any
 kind of .NET application. You can use this easily use this:
 
-**ASP.NET MVC or ASP.NET WebPages**
+####ASP.NET MVC or ASP.NET WebPages####
 ```HTML
 Say Hello: @DbRes.T("HelloWorld") at @DateTime.Now
 ```
 
-**ASP.NET WebForms**
+####ASP.NET WebForms####
 ```HTML
-Say Hello: <%= DbRes.T("HelloWorld") %> at <%= DateTime.Now %>
+Say Hello: <%: DbRes.T("HelloWorld") %> at <%= DateTime.Now %>
 ```
 
-**In .NET code**
+####In .NET code####
 ```HTML
 string value = DbRes.T("HelloWorld");
 ```
@@ -265,21 +265,88 @@ features:
 * GetGlobalResourceObject, GetLocalResourceObject on Page and HttpContext
 * Using meta
 
-**Page.GetGlobalResourceObject() or HttpContext.GetGlobalResourceObject()**
+####Page.GetGlobalResourceObject() or HttpContext.GetGlobalResourceObject()####
 ```HTML
 <legend>ASP.NET ResourceProvider</legend>
 <label>Get GlobalResource Object (default locale):</label>
-<%= Page.GetGlobalResourceObject("Resources","HelloWorld") %>
+<%: Page.GetGlobalResourceObject("Resources","HelloWorld") %>
 ```
 
-**Page.GetLocalResourceObject()**
+####Page.GetLocalResourceObject()####
 ```HTML
 <label>GetLocalResourceObject via Expression:</label>                 
-<%= GetLocalResourceObject("lblHelloWorldLabel.Text") %>
+<%: GetLocalResourceObject("lblHelloWorldLabel.Text") %>
 ```
 
-**WebForms Control meta:resourcekey attribute**
+####WebForms Control meta:resourcekey attribute####
 ```HTML
 <label>Meta Tag (key lblHelloWorldLabel.Text):</label>
 <asp:Label ID="lblHelloLabel" runat="server" meta:resourcekey="lblHelloWorldLabel"></asp:Label>
-**
+```
+
+####Strongly typed Resources####
+The Web Localization Resource Editor form allows you to create strongly typed resources
+for any global resources in your application. Basically it'll go through all the 
+non-local resources in your file and create strongly type .NET classes in a file that
+is specified in the configuration settings.
+
+```
+stronglyTypedGlobalResource="~/Properties/Resources.cs,WebApplication1"
+```
+You specify the filename in your project and the namespace to generate it to. 
+The generated resources can use either the ASP.NET resource provider (which uses
+whatever provider is configured - Resx or DbResourceProvider) or the 
+DbResourceManager which only uses the DbResourceManager. Using the latter allows
+you to also generate resources for use in non-Web applications.
+
+Here's what generated resources look like:
+```C#
+namespace WebApplication1
+{
+    public class GeneratedResourceSettings
+    {
+        // You can change the ResourceAccess Mode globally in Application_Start        
+        public static ResourceAccessMode ResourceAccessMode = ResourceAccessMode.AspNetResourceProvider;
+    }
+
+	public class Commonwords
+	{
+		public static System.String Ready
+		{
+			get
+			{
+				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
+					return (System.String) HttpContext.GetGlobalResourceObject("Commonwords","Ready");
+				return DbRes.T("Ready","Commonwords");
+			}
+		}
+
+		public static System.String ThisIsALongLineOfText
+		{
+			get
+			{
+				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
+					return (System.String) HttpContext.GetGlobalResourceObject("Commonwords","This is a long line of text");
+				return DbRes.T("This is a long line of text","Commonwords");
+			}
+		}
+	}
+```
+
+These can then be used in any ASP.NET application:
+
+####ASP.NET MVC or WebPages####
+```HTML
+<div class="statusbar">@CommonWords.Ready</div>
+```
+
+####ASP.NET WebForms####
+```HTML
+<div class="statusbar"><%: WebApplication2.CommonWords.Ready %></div>
+```
+
+Note that strongly typed resources must be recreated whenever you add new
+resources, so this is an ongoing process. This is the reason we use a single
+file, rather than a file per resource set, so you can create a single file
+to keep the file management as simple as possible.
+

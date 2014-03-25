@@ -26,7 +26,7 @@ namespace Westwind.Globalization.Sample
         {
             // Automatically set the user's locale to what the browser returns
             // and set the currency symbol
-            WebUtils.SetUserLocale(currencySymbol: "$", culture: "es-MX", setUiCulture: true,allowedLocales: "en,de");
+            WebUtils.SetUserLocale(currencySymbol: "$", setUiCulture: true,allowedLocales: "en,de");
             Console.WriteLine(Thread.CurrentThread.CurrentUICulture.IetfLanguageTag);
         }
     }

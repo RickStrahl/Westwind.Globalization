@@ -130,10 +130,10 @@ namespace Westwind.Globalization
             if (cultureName == null)
                 cultureName = "";
              
-            if (this._resourceCache == null)
-                this._resourceCache = new ListDictionary();
+            if (_resourceCache == null)
+                _resourceCache = new ListDictionary();
 
-            IDictionary Resources = this._resourceCache[cultureName] as IDictionary;
+            IDictionary Resources = _resourceCache[cultureName] as IDictionary;
             if (Resources == null)
             {
                 // DEPENDENCY HERE (#1): Using DbResourceDataManager to retrieve resources
@@ -145,11 +145,12 @@ namespace Westwind.Globalization
                 {
                     if (Resources == null)
                     {
-                        if (this._resourceCache.Contains(cultureName))
-                            Resources = this._resourceCache[cultureName] as IDictionary;
+                        if (_resourceCache.Contains(cultureName))
+                            Resources = _resourceCache[cultureName] as IDictionary;
                         else
-                            Resources = Data.GetResourceSet(cultureName as string, this._ResourceSetName);
-                        this._resourceCache[cultureName] = Resources;
+                            Resources = Data.GetResourceSet(cultureName as string, _ResourceSetName);
+
+                        _resourceCache[cultureName] = Resources;
                     }
                 }
             }
@@ -167,7 +168,7 @@ namespace Westwind.Globalization
         {
             lock (_SyncLock)
             {
-                this._resourceCache.Clear();
+                _resourceCache.Clear();
             }
         }
 
@@ -186,7 +187,7 @@ namespace Westwind.Globalization
             else
                 CultureName = CultureInfo.CurrentUICulture.Name;
 
-            return this.GetObjectInternal(ResourceKey, CultureName);
+            return GetObjectInternal(ResourceKey, CultureName);
         }
 
         /// <summary>
@@ -201,7 +202,7 @@ namespace Westwind.Globalization
         /// <returns></returns>
         object GetObjectInternal(string ResourceKey, string CultureName)
         {
-            IDictionary Resources = this.GetResourceCache(CultureName);
+            IDictionary Resources = GetResourceCache(CultureName);
 
             object value = null;
             if (Resources == null)
@@ -220,7 +221,7 @@ namespace Westwind.Globalization
             // If the value is still null get the invariant value
             if (value == null)
             {
-                Resources = this.GetResourceCache("");
+                Resources = GetResourceCache("");
                 if (Resources == null)
                     value = null;
                 else
@@ -241,7 +242,7 @@ namespace Westwind.Globalization
                 // Add a key in the repository at least for the Invariant culture
                 // Something's referencing but nothing's there
                 if (DbResourceConfiguration.Current.AddMissingResources)
-                    new DbResourceDataManager().AddResource(ResourceKey, value.ToString(), "", this._ResourceSetName,null);
+                    new DbResourceDataManager().AddResource(ResourceKey, value.ToString(), "", _ResourceSetName,null);
 
             }
 
@@ -257,11 +258,11 @@ namespace Westwind.Globalization
         {
             get
             {
-                if (this._ResourceReader != null)
-                    return this._ResourceReader as IResourceReader;
+                if (_ResourceReader != null)
+                    return _ResourceReader as IResourceReader;
 
-                this._ResourceReader = new DbSimpleResourceReader(GetResourceCache(null));
-                return this._ResourceReader as IResourceReader;
+                _ResourceReader = new DbSimpleResourceReader(GetResourceCache(null));
+                return _ResourceReader as IResourceReader;
             }
         }
         private DbSimpleResourceReader _ResourceReader = null;

@@ -1,0 +1,176 @@
+﻿<root>
+   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+      <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+      <xsd:element name="root" msdata:IsDataSet="true">
+         <xsd:complexType>
+            <xsd:choice maxOccurs="unbounded">
+               <xsd:element name="metadata">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                     </xsd:sequence>
+                     <xsd:attribute name="name" use="required" type="xsd:string" />
+                     <xsd:attribute name="type" type="xsd:string" />
+                     <xsd:attribute name="mimetype" type="xsd:string" />
+                     <xsd:attribute ref="xml:space" />
+                  </xsd:complexType>
+               </xsd:element>
+               <xsd:element name="assembly">
+                  <xsd:complexType>
+                     <xsd:attribute name="alias" type="xsd:string" />
+                     <xsd:attribute name="name" type="xsd:string" />
+                  </xsd:complexType>
+               </xsd:element>
+               <xsd:element name="data">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                        <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                     </xsd:sequence>
+                     <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+                     <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+                     <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+                     <xsd:attribute ref="xml:space" />
+                  </xsd:complexType>
+               </xsd:element>
+               <xsd:element name="resheader">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                     </xsd:sequence>
+                     <xsd:attribute name="name" type="xsd:string" use="required" />
+                  </xsd:complexType>
+               </xsd:element>
+            </xsd:choice>
+         </xsd:complexType>
+      </xsd:element>
+   </xsd:schema>
+   <resheader name="resmimetype">
+      <value>text/microsoft-resx</value>
+   </resheader>
+   <resheader name="version">
+      <value>2.0</value>
+   </resheader>
+   <resheader name="reader">
+      <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+   </resheader>
+   <resheader name="writer">
+      <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+   </resheader>
+   <data name="lnkHome.Text" xml:space="preserve">
+      <value>Back to Home Page</value>
+   </data>
+   <data name="lblPageHeader.Text" xml:space="preserve">
+      <value>Thread Culture Mapping</value>
+   </data>
+   <data name="lblThreadCulture.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="btnRefresh.Text" xml:space="preserve">
+      <value>Refresh Page</value>
+   </data>
+   <data name="lblDateTime.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="lblDateTime.Text" xml:space="preserve">
+      <value>Date Time:</value>
+   </data>
+   <data name="lblBrowserLanguage.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="lblBrowserLanguage.Text" xml:space="preserve">
+      <value>Browser Language:</value>
+   </data>
+   <data name="lblCurrency.Text" xml:space="preserve">
+      <value>Currency Value:</value>
+   </data>
+   <data name="lblGeneratedAt.Text" xml:space="preserve">
+      <value>Generated on:</value>
+   </data>
+   <data name="ListItemResource1.Value" xml:space="preserve">
+      <value>Default</value>
+   </data>
+   <data name="lblCurrency.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="ListItemResource3.Value" xml:space="preserve">
+      <value>de-DE</value>
+   </data>
+   <data name="ListItemResource1.Text" xml:space="preserve">
+      <value>Default</value>
+   </data>
+   <data name="ListItemResource4.Value" xml:space="preserve">
+      <value>fr-FR</value>
+   </data>
+   <data name="ListItemResource3.Text" xml:space="preserve">
+      <value>German</value>
+   </data>
+   <data name="lblGeneratedAt.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="ListItemResource4.Text" xml:space="preserve">
+      <value>French</value>
+   </data>
+   <data name="lblSelectLanguageResource1.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="ListItemResource2.Text" xml:space="preserve">
+      <value>English</value>
+   </data>
+   <data name="ListItemResource2.Value" xml:space="preserve">
+      <value>en-US</value>
+   </data>
+   <data name="lblSelectLanguageResource1.Text" xml:space="preserve">
+      <value>Select Language:</value>
+   </data>
+   <data name="ListItem.Text" xml:space="preserve">
+      <value>Default Culture</value>
+   </data>
+   <data name="ListItem1.Text" xml:space="preserve">
+      <value>Map to Browser Culture</value>
+   </data>
+   <data name="ListItem2.Text" xml:space="preserve">
+      <value>Language Selection</value>
+   </data>
+   <data name="btnRefreshLanguage.Text" xml:space="preserve">
+      <value>Refresh now</value>
+   </data>
+   <data name="lblLanguageNote.Text" xml:space="preserve">
+      <value>UICulture Language Translation won't show up until your refresh this page after selection. This is due to the event order. In normal situations you'd just Redirect() to a new page, but here we want to maintain the page state, which gets complicated very quickly when switching cultures on the fly (see code).
+&lt;br/&gt;&lt;br/&gt;
+This dialog is a workaround that forces a refresh with all POST data intact.</value>
+   </data>
+   <data name="lblLanguageNoteHeader.Text" xml:space="preserve">
+      <value>UI Culture has been changed</value>
+   </data>
+   <data name="btnReload.Text" xml:space="preserve">
+      <value>Reload Page</value>
+   </data>
+   <data name="chkSetLocale.Text" xml:space="preserve">
+      <value>Enable Locale Mapping</value>
+   </data>
+   <data name="chkSetLocale.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="lblThreadCulture.Text" xml:space="preserve">
+      <value>Thread Culture:</value>
+   </data>
+   <data name="lblPageHeader.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="lblNumeric.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="lnkHome.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="Page1.Title" xml:space="preserve">
+      <value>Thread Cultures</value>
+   </data>
+   <data name="btnRefresh.ToolTip" xml:space="preserve">
+      <value />
+   </data>
+   <data name="lblNumeric.Text" xml:space="preserve">
+      <value>Numeric Value:</value>
+   </data>
+</root>

@@ -66,21 +66,21 @@ namespace Westwind.Globalization
         /// <returns>An IDictionaryEnumerator of the resources for this reader</returns>
         public IDictionaryEnumerator GetEnumerator()
         {
-            if (this.Items != null)
-                return this.Items.GetEnumerator();
+            if (Items != null)
+                return Items.GetEnumerator();
 
             lock (_SyncLock)
             {
                 // Check again to ensure we still don't have items
-                if (this.Items != null)
-                    return this.Items.GetEnumerator();
+                if (Items != null)
+                    return Items.GetEnumerator();
 
                 // DEPENDENCY HERE
                 // Here's the only place we really access the database and return
                 // a specific ResourceSet for a given ResourceSet Id and Culture
                 DbResourceDataManager Manager = new DbResourceDataManager();
-                this.Items = Manager.GetResourceSet(this.cultureInfo.Name, this.baseNameField);
-                return this.Items.GetEnumerator();
+                Items = Manager.GetResourceSet(cultureInfo.Name, baseNameField);
+                return Items.GetEnumerator();
             }
         }
 
@@ -92,7 +92,7 @@ namespace Westwind.Globalization
         /// <returns>An IEnumerator of the resources for this reader</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
 
 
@@ -101,7 +101,7 @@ namespace Westwind.Globalization
         /// </summary>
         public void Close()
         {
-            this.Dispose();
+            Dispose();
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Westwind.Globalization
         public void Dispose()
         {
             // Clear the Resource Items
-            this.Items = null;
+            Items = null;
         }
 
     }

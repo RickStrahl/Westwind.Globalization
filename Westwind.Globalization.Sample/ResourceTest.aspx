@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" %>
+<%@ Import Namespace="Westwind.Globalization.Sample" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -42,6 +43,16 @@
                 <%= GetLocalResourceObject("lblHelloWorldLabel.Text") %>
             </fieldset>
         </div>
+        
+        <div class="container">
+            <fieldset>
+                <legend>Strongly Typed Resource (generated)</legend>
+                
+                <label>Strongly typed Resource Generated from Db (uses ASP.NET ResourceProvider)</label>                
+                <%= Resources.Helloworld %>
+            </fieldset>
+        </div>
+        
     </form>
 </body>
 </html>
