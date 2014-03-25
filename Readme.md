@@ -1,5 +1,5 @@
 #West Wind Globalization
-###Dabase Resource Localization for .NET###
+###Database Resource Localization for .NET###
 Easily create ASP.NET resources stored in a Sql database for editing and updating 
 at runtime using an interactive editor or programmatically using code.
 The library uses the standard .NET and ASP.NET infrastructure of ResourceSets and 
