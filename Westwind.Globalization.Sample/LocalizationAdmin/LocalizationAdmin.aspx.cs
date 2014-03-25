@@ -93,7 +93,9 @@ namespace Westwind.GlobalizationWeb
             if (this.lstLanguages.Items.Count > 0)
                 this.lstLanguages.SelectedIndex = 0;
             else
-                this.lstLanguages.Items.Add(new ListItem("Invariant", ""));            
+                this.lstLanguages.Items.Add(new ListItem("Invariant", ""));      
+      
+            
         }
 
 

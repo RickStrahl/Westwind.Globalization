@@ -105,7 +105,7 @@ web.config and enables the resource provider by default. It also installs
 the localization administration form shown above, so you can create the
 resource table and manage resources in it.
 
-**Configuration Settings***
+**Configuration Settings**
 The key configuration items set is the DbResourceProvider section in
 the config file which tells the provider where to find the database
 resources:
@@ -227,8 +227,8 @@ Say Hello: @DbRes.T("HelloWorld") at @DateTime.Now
 Say Hello: <%= DbRes.T("HelloWorld") %> at <%= DateTime.Now %>
 ```
 
-```HTML
 **In .NET code**
+```HTML
 string value = DbRes.T("HelloWorld");
 ```
 
@@ -262,4 +262,24 @@ To use this provider you have to enable it in web.config. To do so:
 Once enabled you can use all the standard ASP.NET Resource Provider
 features:
 
-**Resources
+* GetGlobalResourceObject, GetLocalResourceObject on Page and HttpContext
+* Using meta
+
+**Page.GetGlobalResourceObject() or HttpContext.GetGlobalResourceObject()**
+```HTML
+<legend>ASP.NET ResourceProvider</legend>
+<label>Get GlobalResource Object (default locale):</label>
+<%= Page.GetGlobalResourceObject("Resources","HelloWorld") %>
+```
+
+**Page.GetLocalResourceObject()**
+```HTML
+<label>GetLocalResourceObject via Expression:</label>                 
+<%= GetLocalResourceObject("lblHelloWorldLabel.Text") %>
+```
+
+**WebForms Control meta:resourcekey attribute**
+```HTML
+<label>Meta Tag (key lblHelloWorldLabel.Text):</label>
+<asp:Label ID="lblHelloLabel" runat="server" meta:resourcekey="lblHelloWorldLabel"></asp:Label>
+**

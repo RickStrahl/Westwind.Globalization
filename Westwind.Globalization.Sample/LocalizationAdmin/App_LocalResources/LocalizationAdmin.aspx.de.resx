@@ -57,24 +57,24 @@
    <resheader name="writer">
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
-   <data name="imgAddResourceSet.Title" xml:space="preserve">
-      <value>Neuer Resource Set (benoetigt eine neue ResourceId)</value>
-   </data>
-   <data name="btnAddValueAndKeepOpen" xml:space="preserve">
-      <value>Hinzufügen und offen lassen
-</value>
-   </data>
    <data name="NoResourceIdEntered" xml:space="preserve">
       <value>Eine ResourceId ist muss angegeben werden</value>
    </data>
    <data name="btnRefresh.Text" xml:space="preserve">
       <value>Seite erneuern</value>
    </data>
+   <data name="imgAddResourceSet.Title" xml:space="preserve">
+      <value>Neuer Resource Set (benoetigt eine neue ResourceId)</value>
+   </data>
    <data name="btnGenerateStronglyTypedResources.Text" xml:space="preserve">
       <value>Starke Resourcen generieren</value>
    </data>
    <data name="txtNewResourceSet.ToolTip" xml:space="preserve">
       <value>Der Name des ResourceSets ohne die .resx extension. Local Resourcen sollten den Web relativen Seiten Namen angeben (bzw. admin/admin.aspx)</value>
+   </data>
+   <data name="btnAddValueAndKeepOpen" xml:space="preserve">
+      <value>Hinzufügen und offen lassen
+</value>
    </data>
    <data name="btnExportResources.Text" xml:space="preserve">
       <value>Export zu Resources</value>

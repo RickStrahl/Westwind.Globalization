@@ -57,20 +57,20 @@
    <resheader name="writer">
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
-   <data name="btnGenerateStronglyTypedResources.Text" xml:space="preserve">
-      <value>Generate Strong Resources</value>
+   <data name="btnAddValueAndKeepOpen" xml:space="preserve">
+      <value>Add and keep open</value>
    </data>
    <data name="StronglyTypedGlobalResourcesCreated" xml:space="preserve">
       <value>Strongly typed resources have been created</value>
    </data>
-   <data name="imgAddResourceSet.Title" xml:space="preserve">
-      <value>New ResourceSet (requires that you add a new ResourceId)</value>
-   </data>
-   <data name="btnAddValueAndKeepOpen" xml:space="preserve">
-      <value>Add and keep open</value>
+   <data name="btnGenerateStronglyTypedResources.Text" xml:space="preserve">
+      <value>Generate Strong Resources</value>
    </data>
    <data name="NoResourceIdEntered" xml:space="preserve">
       <value>The ResourceId is required</value>
+   </data>
+   <data name="imgAddResourceSet.Title" xml:space="preserve">
+      <value>New ResourceSet (requires that you add a new ResourceId)</value>
    </data>
    <data name="lblTranslateFrom.ToolTip" xml:space="preserve">
       <value />
@@ -400,7 +400,7 @@ Are you sure you want to continue?</value>
       <value>To:</value>
    </data>
    <data name="lblPageHeader.Text" xml:space="preserve">
-      <value>Web Resource Localization Editor!</value>
+      <value>Web Resource Localization Editor</value>
    </data>
    <data name="lblRenamedResourceSet.ToolTip" xml:space="preserve">
       <value />
