@@ -1,5 +1,5 @@
 #West Wind Globalization
-###Dabase Resource Localization for .NET###
+###Database Resource Localization for .NET###
 Easily create ASP.NET resources stored in a Sql database for editing and updating 
 at runtime using an interactive editor or programmatically using code.
 The library uses the standard .NET and ASP.NET infrastructure of ResourceSets and 
@@ -92,17 +92,15 @@ There are three distinct resource access mechanisms supported:
 * .NET Resource Manager (Non-Web apps, and or MVC apps where you already use Resx)
 * Direct Db Provider access (easiest overall - works everywhere)
 
-<a name="InstallationAndConfiguration">
-</a>
 ###Installation and Configuration###
-The easiest way to use the data drive resource provider is to install the NuGet
+The easiest way to use data driven resources with this library is to install the NuGet
 package into an ASP.NET application.
 
 ```
 pm> Install-Package Westwind.Globalization
 ```
 
-This is installs the required assemblies, adds a few configuration entries in
+This installs the required assemblies, adds a few configuration entries in
 web.config and enables the resource provider by default. It also installs
 the localization administration form shown above, so you can create the
 resource table and manage resources in it.
@@ -261,7 +259,7 @@ Once enabled you can use all the standard ASP.NET Resource Provider
 features:
 
 * GetGlobalResourceObject, GetLocalResourceObject on Page and HttpContext
-* Using meta
+* Using meta:resourcekey attributes on Web Controls
 
 ####Page.GetGlobalResourceObject() or HttpContext.GetGlobalResourceObject()####
 ```HTML
@@ -283,10 +281,10 @@ features:
 ```
 
 ####Strongly typed Resources####
-The Web Localization Resource Editor form allows you to create strongly typed resources
+The Web Resource Editor form allows you to create strongly typed resources
 for any global resources in your application. Basically it'll go through all the 
 non-local resources in your file and create strongly type .NET classes in a file that
-is specified in the configuration settings.
+is specified in the DbResourceProvider configuration settings.
 
 ```
 stronglyTypedGlobalResource="~/Properties/Resources.cs,WebApplication1"
@@ -345,7 +343,7 @@ These can then be used in any ASP.NET application:
 ```
 
 Note that strongly typed resources must be recreated whenever you add new
-resources, so this is an ongoing process. This is the reason we use a single
-file, rather than a file per resource set, so you can create a single file
-to keep the file management as simple as possible.
-
+resources, so this is an ongoing process. As with the Resx Generator if
+you remove or rename a resource you may break your code. This is the 
+reason we use a single file, rather than a file per resource set to 
+keep the file management as simple as possible.
