@@ -314,7 +314,10 @@ namespace Westwind.Globalization
             foreach (IWestWindResourceProvider provider in LoadedProviders)
             {
                 provider.ClearResourceCache();
-            }                
+            }
+
+            // clear any resource managers
+            DbRes.ClearResources();
         }
 #endregion
 

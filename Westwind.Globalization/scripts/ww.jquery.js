@@ -1,7 +1,7 @@
 ﻿/// <reference path="jquery.js" />
 /*
 ww.jQuery.js  
-Version 1.11 - 1/2/2014
+Version 1.13 - 2/21/2014
 West Wind jQuery plug-ins and utilities
 
 (c) 2008-2014 Rick Strahl, West Wind Technologies 
@@ -488,16 +488,16 @@ http://en.wikipedia.org/wiki/MIT_License
         return sum;
     }
 
-    $.fn.makeAbsolute = function (rebase) {
+    $.fn.makeAbsolute = function(rebase) {
         /// <summary>
         /// Makes an element absolute
         /// </summary>    
         /// <param name="rebase" type="boolean">forces element onto the body tag. Note: might effect rendering or references</param>    
         /// </param>    
         /// <returns type="jQuery" /> 
-        return this.each(function () {
+        return this.each(function() {
             var el = $(this);
-            
+
             var isvis = true;
             if (!el.is(":visible")) {
                 el.show();
@@ -506,16 +506,84 @@ http://en.wikipedia.org/wiki/MIT_License
             var pos = el.position();
             if (!isvis)
                 el.hide();
-            
+
             el.css({
                 position: "absolute",
-                marginLeft: 0, marginTop: 0,
-                top: pos.top, left: pos.left
+                marginLeft: 0,
+                marginTop: 0,
+                top: pos.top,
+                left: pos.left
             });
             if (rebase)
                 el.remove().appendTo("body");
         });
+    };
+    $.fn.slideUpTransition = function () {        
+        return this.each(function () {
+            var $el = $(this);
+            $el.css("max-height", "0");
+            $el.addClass("height-transition-hidden");
+            console.log('up', $el);
+        });
+    };
+
+    $.fn.slideDownTransition = function () {
+        /*
+    jquery.slide-transition plug-in
+
+    Requirements:
+    -------------
+    You'll need to define these two styles to make this work:
+
+    .height-transition {
+        -webkit-transition: max-height 0.5s ease-in-out;
+        -moz-transition: max-height 0.5s ease-in-out;
+        -o-transition: max-height 0.5s ease-in-out;
+        transition: max-height 0.5s ease-in-out;
+        overflow-y: hidden;            
     }
+    .height-transition-hidden {            
+        max-height: 0;            
+    }
+
+    You need to wrap your actual content that you
+    plan to slide up and down into a container. This
+    container has to have a class of height-transition
+    and optionally height-transition-hidden to initially
+    hide the container (collapsed).
+
+    <div id="SlideContainer" 
+            class="height-transition height-transition-hidden">
+        <div id="Actual">
+            Your actual content to slide up or down goes here
+        </div>
+    </div>
+
+    To call it:
+    -----------
+    var $sw = $("#SlideWrapper");
+
+    if (!$sw.hasClass("height-transition-hidden"))
+        $sw.slideUpTransition();                      
+    else 
+        $sw.slideDownTransition();
+           */
+        return this.each(function () {
+            var $el = $(this);
+            $el.removeClass("height-transition-hidden");
+
+            // temporarily make visible to get the size
+            $el.css("max-height", "none");
+            var height = $el.outerHeight();
+
+            // reset to 0 then animate with small delay
+            $el.css("max-height", "0");
+
+            setTimeout(function () {
+                $el.css({ "max-height": height });
+            }, 1);
+        });
+    };
 
     $.fn.stretchToBottom = function (options) {
         /// <summary>
@@ -2044,7 +2112,7 @@ mind + '}' : '{' + partial.join(',') + '}'; gap = mind; return v;
     }());
 
     if (this.JSON && !this.JSON.dateParser) {
-        var reISO = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*))(?:Z|(\+|-)([\d|:]*))?$/;
+        var reISO = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.{0,1}\d*))(?:Z|(\+|-)([\d|:]*))?$/;
         var reMsAjax = /^\/Date\((d|-|.*)\)[\/|\\]$/;
 
         /// <summary>

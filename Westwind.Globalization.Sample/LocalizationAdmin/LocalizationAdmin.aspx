@@ -16,7 +16,7 @@
 <!DOCTYPE html>
 <html>
 <head runat="server">
-    <title>Application Resource Localization</title>    
+    <title>Localization Resource Editor</title>    
     <link href="LocalizeAdminForm.css" rel="stylesheet" type="text/css" /> 
     <style>
         #lstResourceIds option {
@@ -42,7 +42,7 @@
 
     <div style="width: 300px; float: left;padding: 3px 10px 0 3px">    
            <asp:TextBox runat="server" ID="txtResSearch"  AccessKey="E" PlaceHolder="Search" ToolTip="Search (Alt-E)" meta:resourcekey="txtResSearch"
-                         style="width: 290px; margin: 5px 0px; border-collapse: collapse; padding-right: 5px;background-image: url(images/search.gif); background-position: right; background-repeat: no-repeat;" />
+                         style="width: 270px; margin: 5px 0px; border-collapse: collapse; padding-left: 25px;background-image: url(images/search.png); background-position: 4px 2px;  background-repeat: no-repeat;" />
             <br />
                  
              <asp:ListBox runat="server" ID="lstResourceIds"  
@@ -276,8 +276,8 @@
             <asp:TextBox runat="server" ID="txtGoogle" TextMode="MultiLine" Width="300px" meta:resourcekey="txtGoogle"></asp:TextBox>
             <input type="button" runat="server" ID="btnUseGoogle" value="Use"  onclick="UseTranslation('Google');"/>
             <br />            
-            <asp:HyperLink runat="server" ID="lblBing" Text="Bing Translation:" Target="_Translation" NavigateUrl="http://www.bing.com/translator" meta:resourcekey="lblBabelFish" style="margin-top:8px; display:block;"/>
-            <asp:TextBox runat="server" ID="txtBing" TextMode="MultiLine" Width="300px" meta:resourcekey="txtBabelFish" ></asp:TextBox>
+            <asp:HyperLink runat="server" ID="lblBing" Text="Bing Translation:" Target="_Translation" NavigateUrl="http://www.bing.com/translator" meta:resourcekey="lblBing" style="margin-top:8px; display:block;"/>
+            <asp:TextBox runat="server" ID="txtBing" TextMode="MultiLine" Width="300px" meta:resourcekey="txtBing" ></asp:TextBox>
             <input runat="server" type="button" ID="btnBing" value="Use"  onclick="UseTranslation('Bing');"/>
         </div>
     </ww:DragPanel>        

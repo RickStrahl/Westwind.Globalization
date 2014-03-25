@@ -424,7 +424,9 @@ namespace Westwind.Globalization
                 else
                 {
                     if (lastId == tokens[0])
-                        item.Attributes.Add("style", "color: maroon; padding-left: 20px;");
+                    {
+                        item.Attributes.Add("style", "color: maroon; margin-left: 20px;");                        
+                    }
                     lastId = tokens[0];
                 }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -25,7 +26,8 @@ namespace Westwind.Globalization.Sample
         {
             // Automatically set the user's locale to what the browser returns
             // and set the currency symbol
-            WebUtils.SetUserLocale(currencySymbol: "$",setUiCulture: true);
+            WebUtils.SetUserLocale(currencySymbol: "$", culture: "es-MX", setUiCulture: true,allowedLocales: "en,de");
+            Console.WriteLine(Thread.CurrentThread.CurrentUICulture.IetfLanguageTag);
         }
     }
 }

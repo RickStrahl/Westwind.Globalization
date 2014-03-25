@@ -129,7 +129,7 @@ namespace Westwind.Globalization
         {
             if (cultureName == null)
                 cultureName = "";
-
+             
             if (this._resourceCache == null)
                 this._resourceCache = new ListDictionary();
 

@@ -585,8 +585,8 @@ namespace Westwind.GlobalizationWeb
         public void ReloadResources()
         {
             //Westwind.Globalization.Tools.wwWebUtils.RestartWebApplication();
-            //DbResourceConfiguration.ClearResourceCache();
-            DbRes.ClearResources();
+            DbResourceConfiguration.ClearResourceCache(); // resource provider
+            DbRes.ClearResources();  // resource manager
         }
 
         [CallbackMethod]
