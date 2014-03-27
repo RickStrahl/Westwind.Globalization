@@ -31,10 +31,15 @@ Provider and inject resources as strings. Think of it as a localization
 helper that allows resource access. Alternately you can also just 
 generate strongly typed resources and reference those.
 
+* **Improved Strongly Typed Resource Generator**
+Updated the strongly typed resource generator to allow to create 
+resources that can switch between the ASP.NET ResourceProvider or
+plain ResourceManager for retrieving resources. Allows generated
+resources to be used in non-Web applications (services, console etc.)
+
 * **Updated Admin UI**
 Tweaked the Admin UI so it works better as a standalone html
 form with its own HTML resources and dependencies. Added switch
 to allow turning safemode on and off which prevents access to
 the write functions that import/export resources or create
 table.
-

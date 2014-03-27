@@ -159,8 +159,8 @@ LocalizationAdmin/LocalizationAdmin.aspx
 Adding and manipulating resources in the Web editor should be pretty straight forward. One thing
 to note however is:
 
-* If you add a new Language in a resource you have to refresh the entire form
-  otherwise the new language doesn't show up in the Languages list.
+* If you add a new ResourcesSet or Language in a resource you have to refresh the entire form
+  otherwise the new language or ResourceSet doesn't show up in lists.
 
 ####Setting ASP.NET Locale based on Browser Locale####
 In order to do automatic localization based on a browser's language used you can
