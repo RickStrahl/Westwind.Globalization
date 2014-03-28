@@ -1,8 +1,6 @@
-﻿<%@ Page Language="C#"  %>
-
-<%@ Import Namespace="System.Threading" %>
-<%@ Import Namespace="Westwind.Globalization.Sample" %>
-
+﻿@using System.Threading
+@using Westwind.Globalization
+@using Westwind.Globalization.Sample
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -19,24 +17,20 @@
 <body>
     <form id="form1" runat="server">
         <h1>DbResourceManager Simple Resource Test</h1>
-
+        
         <div class="well container">
-            <div>
-                Current Culture: <%= Thread.CurrentThread.CurrentCulture.IetfLanguageTag %>
-            </div>
-            <div>
-                Current UI Culture: <%= Thread.CurrentThread.CurrentUICulture.IetfLanguageTag %>
-            </div>
+            <div>Current Culture: @Thread.CurrentThread.CurrentCulture.IetfLanguageTag</div>
+            <div>Current UI Culture: @Thread.CurrentThread.CurrentUICulture.IetfLanguageTag</div>
 
             <div class="container">
                 <fieldset>
                     <legend>DbRes</legend>
 
                     <label>Using DbRes Direct Access Provider (default locale):</label>
-                    <%= DbRes.T("HelloWorld","Resources") %>
+                    @DbRes.T("HelloWorld", "Resources")
 
                     <label>Using DbRes Force to German:</label>
-                    <%= DbRes.T("HelloWorld","Resources","de") %>
+                    @DbRes.T("HelloWorld", "Resources", "de")
                 </fieldset>
             </div>
 
@@ -44,13 +38,7 @@
                 <fieldset>
                     <legend>ASP.NET ResourceProvider</legend>
                     <label>Get GlobalResource Object (default locale):</label>
-                    <%= GetGlobalResourceObject("Resources","HelloWorld") %>
-
-                    <label>Meta Tag (key lblHelloWorldLabel.Text):</label>
-                    <asp:Label ID="lblHelloLabel" runat="server" meta:resourcekey="lblHelloWorldLabel"></asp:Label>
-
-                    <label>GetLocalResourceObject via Expression:</label>
-                    <%= GetLocalResourceObject("lblHelloWorldLabel.Text") %>
+                    @HttpContext.GetGlobalResourceObject("Resources", "HelloWorld")
                 </fieldset>
             </div>
 
@@ -59,11 +47,10 @@
                     <legend>Strongly Typed Resource (generated)</legend>
 
                     <label>Strongly typed Resource Generated from Db (uses ASP.NET ResourceProvider)</label>
-                    <%= Resources.Helloworld %>
+                    @Resources.Helloworld
                 </fieldset>
             </div>
         </div>
-
-    </form>
+</form>
 </body>
 </html>

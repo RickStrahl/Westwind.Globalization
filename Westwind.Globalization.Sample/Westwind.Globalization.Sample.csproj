@@ -187,6 +187,7 @@
     <Content Include="LocalizationAdmin\LocalizeAdminForm.css" />
     <Content Include="LocalizationAdmin\LocalizeAdminForm.js" />
     <Content Include="LocalizationAdmin\StronglyTypedGlobalResources.aspx" />
+    <None Include="ResourceTest.cshtml" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="LocalizationAdmin\Web.config" />
@@ -198,7 +199,9 @@
     <Content Include="Scripts\ww.jquery.js" />
     <Content Include="Scripts\ww.jquery.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
