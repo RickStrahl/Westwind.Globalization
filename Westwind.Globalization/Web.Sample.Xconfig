@@ -15,7 +15,7 @@
                         localizationFormWebPath="~/localizationadmin/LocalizationAdmin.aspx" 
                         addMissingResources="false" 
                         useVsNetResourceNaming="false"   
-                        stronglyTypedGlobalResource="~/_Classese/Resources.cs,AppResources"
+                        stronglyTypedGlobalResource="~/_Classes/Resources.cs,AppResources"
                         bingClientID =""
                         bingClientSecret=""                                      
                       />
