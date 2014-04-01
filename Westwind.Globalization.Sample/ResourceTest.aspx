@@ -48,6 +48,9 @@
 
                     <label>Meta Tag (key lblHelloWorldLabel.Text):</label>
                     <asp:Label ID="lblHelloLabel" runat="server" meta:resourcekey="lblHelloWorldLabel"></asp:Label>
+                                         
+                    <label>Resource Expressions (Global Resources):</label>
+                    <asp:Label ID="Label1" runat="server" Text="<%$ Resources:Resources,HelloWorld %>"></asp:Label>
 
                     <label>GetLocalResourceObject via Expression:</label>
                     <%= GetLocalResourceObject("lblHelloWorldLabel.Text") %>
