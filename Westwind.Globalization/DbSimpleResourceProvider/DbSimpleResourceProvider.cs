@@ -197,44 +197,44 @@ namespace Westwind.Globalization
         /// but the routine handles resource fallback in case the
         /// code is manually called.
         /// </summary>
-        /// <param name="ResourceKey"></param>
-        /// <param name="CultureName"></param>
+        /// <param name="resourceKey"></param>
+        /// <param name="cultureName"></param>
         /// <returns></returns>
-        object GetObjectInternal(string ResourceKey, string CultureName)
+        object GetObjectInternal(string resourceKey, string cultureName)
         {
-            IDictionary Resources = GetResourceCache(CultureName);
+            IDictionary resources = GetResourceCache(cultureName);
 
             object value = null;
-            if (Resources == null)
+            if (resources == null)
                 value = null;
             else
-                value = Resources[ResourceKey];
+                value = resources[resourceKey];
 
             // If we're at a specific culture (en-Us) and there's no value fall back
             // to the generic culture (en)
-            if (value == null && CultureName.Length > 3)
+            if (value == null && cultureName.Length > 3)
             {
                 // try again with the 2 letter locale
-                return GetObjectInternal(ResourceKey, CultureName.Substring(0, 2));
+                return GetObjectInternal(resourceKey, cultureName.Substring(0, 2));
             }
 
             // If the value is still null get the invariant value
             if (value == null)
             {
-                Resources = GetResourceCache("");
-                if (Resources == null)
+                resources = GetResourceCache("");
+                if (resources == null)
                     value = null;
                 else
-                    value = Resources[ResourceKey];
+                    value = resources[resourceKey];
             }
 
             // If the value is still null and we're at the invariant culture
             // let's add a marker that the value is missing
             // this also allows the pre-compiler to work and never return null
-            if (value == null && string.IsNullOrEmpty(CultureName))
+            if (value == null)
             {
                 // No entry there
-                value = "";
+                value = resourceKey;
 
                 // DEPENDENCY HERE (#2): using DbResourceConfiguration and DbResourceDataManager to optionally
                 //                           add missing resource keys
@@ -242,7 +242,21 @@ namespace Westwind.Globalization
                 // Add a key in the repository at least for the Invariant culture
                 // Something's referencing but nothing's there
                 if (DbResourceConfiguration.Current.AddMissingResources)
-                    new DbResourceDataManager().AddResource(ResourceKey, value.ToString(), "", _ResourceSetName,null);
+                {
+                    lock (_SyncLock)
+                    {
+                        if (resources[resourceKey] == null)
+                        {
+                            var data = new DbResourceDataManager();
+                            if (!data.ResourceExists(resourceKey,"",_ResourceSetName))
+                                data.AddResource(resourceKey, resourceKey,"",
+                                                 _ResourceSetName, null);
+
+                            // add to current invariant resource set
+                            resources.Add(resourceKey, resourceKey);
+                        }
+                    }
+                }
 
             }
 

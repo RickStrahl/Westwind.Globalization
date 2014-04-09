@@ -66,6 +66,7 @@ namespace Westwind.Globalization
         /// Critical Section lock used for loading/adding resource sets
         /// </summary>
         private static object SyncLock = new object();
+        private static object AddSyncLock = new object();
 
         /// <summary>
         /// If true causes any entries that aren't found to be added
@@ -123,6 +124,8 @@ namespace Westwind.Globalization
         protected void Initialize(string baseName, Assembly assembly)
         {                     
             BaseNameField = baseName;
+
+            AutoAddMissingEntries = DbResourceConfiguration.Current.AddMissingResources;
             
             // InternalResourceSets contains a set of resources for each locale
             InternalResourceSets = new Dictionary<string, ResourceSet>();
@@ -191,14 +194,14 @@ namespace Westwind.Globalization
         {
             object value = base.GetObject(name);
 
-            if (AutoAddMissingEntries && value == null)            
+            if (value == null && AutoAddMissingEntries)            
                 AddMissingResource(name,name);
             
             return value;
         }
 
         /// <summary>
-        /// Core worker method that returnsa  resource value for a
+        /// Core worker method that returns a  resource value for a
         /// given culture from the this resourcemanager/resourceset.
         /// 
         /// If resource is not found it returns the null
@@ -210,10 +213,8 @@ namespace Westwind.Globalization
         {
             object value = base.GetObject(name, culture);
 
-            if (AutoAddMissingEntries && value == null)
-            {     
-                AddMissingResource(name, name, null);
-            }
+            if (value == null && AutoAddMissingEntries)
+                AddMissingResource(name, name);
 
             return value;
         }
@@ -225,20 +226,24 @@ namespace Westwind.Globalization
         /// <param name="value"></param>
         public void AddMissingResource(string name, string value, CultureInfo culture = null)
         {
-            DbResourceDataManager man = new DbResourceDataManager();
+            DbResourceDataManager manager = new DbResourceDataManager();
 
             string cultureName = string.Empty;
             if (culture != null)
                 cultureName = culture.IetfLanguageTag;
 
-            // double check if culture neutral version exists
-            string item = man.GetResourceObject(name, BaseName, cultureName) as string;
-            if (item != null)
-                return;
-            
-            man.AddResource(name, value, cultureName, BaseName, null);
+            lock (AddSyncLock)
+            {
+                // double check if culture neutral version exists
+                string item = manager.GetResourceObject(name, BaseName, cultureName) as string;
+                if (item != null)
+                    return;
+
+                manager.AddResource(name, value, cultureName, BaseName,null);
+            }
         }
 
+        
     } 
 
 }

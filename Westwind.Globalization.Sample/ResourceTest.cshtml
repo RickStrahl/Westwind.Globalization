@@ -50,6 +50,11 @@
                     @Resources.Helloworld
                 </fieldset>
             </div>
+            
+            
+            New Value: @DbRes.T("Brand New Value")
+            New Value (Resource Provider): @HttpContext.GetGlobalResourceObject("Resources","Brand New Value 2")
+
         </div>
 </form>
 </body>

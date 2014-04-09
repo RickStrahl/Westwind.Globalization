@@ -31,9 +31,9 @@ namespace Westwind.Globalization
     /// </summary>
     public class DbResourceDataManager
     {
-        //public static string ConnectionString = string.Empty;
-        //public static string ResourceTableName = "Localizations";
-
+        /// <summary>
+        /// Internally used Transaction object
+        /// </summary>
         protected DbTransaction Transaction = null;
 
         /// <summary>
@@ -260,7 +260,7 @@ namespace Westwind.Globalization
         /// <returns></returns>
         private object LoadFileResource(IDataReader reader)
         {
-            object Value = null;
+            object value = null;
 
             try
             {
@@ -268,17 +268,17 @@ namespace Westwind.Globalization
 
                 if (TypeInfo.IndexOf("System.String") > -1)
                 {
-                    Value = reader["TextFile"] as string;
+                    value = reader["TextFile"] as string;
                 }
                 else if (TypeInfo.IndexOf("System.Drawing.Bitmap") > -1)
                 {
                     MemoryStream ms = new MemoryStream(reader["BinFile"] as byte[]);
-                    Value = new Bitmap(ms);
+                    value = new Bitmap(ms);
                     ms.Close();
                 }
                 else
                 {
-                    Value = reader["BinFile"] as byte[];
+                    value = reader["BinFile"] as byte[];
                 }
             }
             catch (Exception ex)
@@ -288,7 +288,7 @@ namespace Westwind.Globalization
 
 
 
-            return Value;
+            return value;
         }
 
         /// <summary>
@@ -696,28 +696,13 @@ namespace Westwind.Globalization
         /// <summary>
         /// Adds a resource to the Localization Table
         /// </summary>
-        /// <param name="resourceId"></param>
-        /// <param name="value"></param>
-        /// <param name="cultureName"></param>
-        /// <param name="resourceSet"></param>
-        /// <param name="Type"></param>
-        /// <param name="Filename"></param>
-        public int AddResource(string resourceId, object value, string cultureName, string resourceSet, string comment)
-        {
-            return AddResource(resourceId, value, cultureName, resourceSet, comment, false);
-        }
-
-        /// <summary>
-        /// Adds a resource to the Localization Table
-        /// </summary>
-        /// <param name="resourceId"></param>
-        /// <param name="value"></param>
-        /// <param name="cultureName"></param>
-        /// <param name="resourceSet"></param>
-        /// <param name="Type"></param>
-        /// <param name="Filename"></param>
+        /// <param name="resourceId">The resource key name</param>
+        /// <param name="value">Value to set it to. Can also be a file which is loaded as binary data when valueIsFileName is true</param>
+        /// <param name="cultureName">name of the culture or null for invariant/default</param>
+        /// <param name="resourceSet">The ResourceSet to which the resource id is added</param>
+        /// <param name="comment">Optional comment for the key</param>
         /// <param name="valueIsFileName">if true the Value property is a filename to import</param>
-        public int AddResource(string resourceId, object value, string cultureName, string resourceSet, string comment, bool valueIsFileName)
+        public int AddResource(string resourceId, object value, string cultureName, string resourceSet, string comment = null, bool valueIsFileName = false)
         {
             string Type = string.Empty;
 
@@ -726,7 +711,7 @@ namespace Westwind.Globalization
 
             if (string.IsNullOrEmpty(resourceId))
             {
-                ErrorMessage = "No ResourceId specified. Can't add resource";
+                ErrorMessage = Resources.Resources.NoResourceIdSpecifiedCantAddResource;
                 return -1;
             }
 

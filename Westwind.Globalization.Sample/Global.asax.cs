@@ -25,7 +25,7 @@ namespace Westwind.Globalization.Sample
 
         protected void Application_BeginRequest()
         {
-            WebUtils.SetUserLocale(currencySymbol: "$", allowedLocales: "en,de");
+            WebUtils.SetUserLocale(currencySymbol: "$");
             Trace.WriteLine("Begin Request Culture: " + Thread.CurrentThread.CurrentCulture.IetfLanguageTag);
         }
   

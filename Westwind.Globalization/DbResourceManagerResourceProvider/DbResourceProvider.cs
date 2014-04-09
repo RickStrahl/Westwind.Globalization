@@ -102,11 +102,11 @@ namespace Westwind.Globalization
         {
             get
             {
-                if (this._ResourceManager == null)
+                if (_ResourceManager == null)
                 {
-                    DbResourceManager manager = new DbResourceManager(this._className);
+                    DbResourceManager manager = new DbResourceManager(_className);
                     manager.IgnoreCase = true;
-                    this._ResourceManager = manager;                    
+                    _ResourceManager = manager;                    
                 }
                 return _ResourceManager;
             }
@@ -120,20 +120,20 @@ namespace Westwind.Globalization
         /// </summary>
         public void ClearResourceCache()
         {
-            this.ResourceManager.ReleaseAllResources(); 
+            ResourceManager.ReleaseAllResources(); 
         }
 
         /// <summary>
         /// The main method to retrieve a specific resource key. The provider
         /// internally handles resource fallback based on the ResourceSet implementation.
         /// </summary>
-        /// <param name="ResourceKey"></param>
+        /// <param name="resourceKey"></param>
         /// <param name="culture"></param>
         /// <returns></returns>
-        object IResourceProvider.GetObject(string ResourceKey, CultureInfo culture)
+        object IResourceProvider.GetObject(string resourceKey, CultureInfo culture)
         {
             
-            object value = this.ResourceManager.GetObject(ResourceKey, culture);
+            object value = ResourceManager.GetObject(resourceKey, culture);
 
             // If the value is still null and we're at the invariant culture
             // let's add a marker that the value is missing
@@ -141,14 +141,23 @@ namespace Westwind.Globalization
             if (value == null && (culture == null || culture == CultureInfo.InvariantCulture) )
             {
                 // No entry there
-                value =  "";
+                value =  resourceKey;
 
                 if (DbResourceConfiguration.Current.AddMissingResources)
                 {
-                    // Add invariant resource
-                    DbResourceDataManager Data = new DbResourceDataManager();
-                    if (!Data.ResourceExists(ResourceKey,"",this._className))
-                        Data.UpdateOrAdd(ResourceKey,"*** Missing","",this._className,null);
+                    lock (_SyncLock)
+                    {
+                        value = ResourceManager.GetObject(resourceKey, culture);
+                        if (value == null)
+                        {
+                            // Add invariant resource
+                            DbResourceDataManager data = new DbResourceDataManager();
+                            if (!data.ResourceExists(resourceKey, "", _className))
+                                data.AddResource(resourceKey, resourceKey, "", _className, null);
+                            
+                            value = resourceKey;
+                        }
+                    }
                 }                
             }
 
@@ -166,10 +175,10 @@ namespace Westwind.Globalization
         {
             get
             {
-                if (this._ResourceReader == null)
-                    this._ResourceReader = new DbResourceReader(this._className, CultureInfo.InvariantCulture);
+                if (_ResourceReader == null)
+                    _ResourceReader = new DbResourceReader(_className, CultureInfo.InvariantCulture);
 
-                return this._ResourceReader;
+                return _ResourceReader;
             }
         }
         private DbResourceReader _ResourceReader = null;
@@ -188,7 +197,7 @@ namespace Westwind.Globalization
         /// <returns></returns>
         object IImplicitResourceProvider.GetObject(ImplicitResourceKey implicitKey, CultureInfo culture)
         {
-            return this.ResourceManager.GetObject(ConstructFullKey(implicitKey), culture);
+            return ResourceManager.GetObject(ConstructFullKey(implicitKey), culture);
         }
 
         /// <summary>
@@ -221,7 +230,7 @@ namespace Westwind.Globalization
         {
             List<ImplicitResourceKey> keys = new List<ImplicitResourceKey>(); 
 
-            foreach (DictionaryEntry dictentry in this.ResourceReader)
+            foreach (DictionaryEntry dictentry in ResourceReader)
             { 
                 string key = (string)dictentry.Key;
 

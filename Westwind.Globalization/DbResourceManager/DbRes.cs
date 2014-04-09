@@ -22,7 +22,9 @@ namespace Westwind.Globalization
 public class DbRes
 {
     /// <summary>
-    /// Internal dictionary that
+    /// Internal dictionary that holds instances of resource managers
+    /// for each resourceset defined in the application. Lazy loaded
+    /// as resources are accessed.
     /// </summary>
     static Dictionary<string, DbResourceManager> ResourceManagers = new Dictionary<string, DbResourceManager>();
 
@@ -31,6 +33,11 @@ public class DbRes
     /// added to the resource table
     /// </summary>
     public static bool AutoAddResources { get; set; }
+
+    static DbRes()
+    {
+        AutoAddResources = DbResourceConfiguration.Current.AddMissingResources;
+    }
 
     /// <summary>
     /// Localization helper function that Translates a resource
@@ -44,12 +51,11 @@ public class DbRes
     /// </param>
     /// <param name="resourceSet">Name of the ResourceSet that houses this resource. If null or empty resources are used.</param>
     /// <param name="lang">5 letter or 2 letter language ieetf code: en-US, de-DE or en, de etc.</param>
-    /// <param name="autoAdd">If true if a resource cannot be found a new entry is added in the invariant locale</param>
     /// <returns>
     /// Localized resource or the resource Id if no match is found. 
     /// This value *always* returns a string unless you pass in null.
     /// </returns>
-    public static string T(string resId, string resourceSet = null, string lang = null, bool autoAdd = false)
+    public static string T(string resId, string resourceSet = null, string lang = null)
     {
         if (string.IsNullOrEmpty(resId))
             return resId;
@@ -58,7 +64,7 @@ public class DbRes
             resourceSet = string.Empty;
 
         // check if the res manager exists
-        DbResourceManager manager = null;
+        DbResourceManager manager;
         ResourceManagers.TryGetValue(resourceSet, out manager);
         
         // if not we have to create it and add it to static collection
@@ -71,6 +77,7 @@ public class DbRes
                 {
                     manager = new DbResourceManager(resourceSet);
                     ResourceManagers.Add(resourceSet, manager);
+                    manager.AutoAddMissingEntries = AutoAddResources;
                 }
             }
         }
@@ -79,13 +86,12 @@ public class DbRes
         if (manager == null)
             return resId;
 
-        CultureInfo ci = null;
+        CultureInfo ci;
         if (string.IsNullOrEmpty(lang))
             ci = CultureInfo.CurrentUICulture;
         else
             ci = new CultureInfo(lang);
 
-        manager.AutoAddMissingEntries = AutoAddResources;
         string result = manager.GetObject(resId, ci) as string;
 
         if (string.IsNullOrEmpty(result))

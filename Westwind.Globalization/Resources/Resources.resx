@@ -127,16 +127,13 @@
     <value>Show Localization Icons</value>
   </data>
   <data name="ConnectionFailed" xml:space="preserve">
-    <value>Connection faled: </value>
-    <comment>ConnectionFaled description</comment>
+    <value>Connection failed: </value>
   </data>
   <data name="InvalidSearchResult" xml:space="preserve">
     <value>Invalid search result.</value>
-    <comment>InvalidSearchResult description</comment>
   </data>
   <data name="ConnectionStringForResourcesIsNotConfigure" xml:space="preserve">
     <value>Connection string for resources is not configured</value>
-    <comment>ConnectionStringForResourcesIsNotConfigure description</comment>
   </data>
   <data name="LocalizationTable_Localization_Table_exists_already" xml:space="preserve">
     <value>Localization Table exists already</value>
@@ -152,5 +149,8 @@
   </data>
   <data name="Client_Id_and_Client_Secret_must_be_provided" xml:space="preserve">
     <value>Client Id and Client Secret must be provided.</value>
+  </data>
+  <data name="NoResourceIdSpecifiedCantAddResource" xml:space="preserve">
+    <value>No ResourceId specified. Can't add resource</value>
   </data>
 </root>
