@@ -12,12 +12,16 @@
             margin-top: 10px;
             margin-bottom: 0;
         }
+        legend {
+            color: steelblue;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
         <h1>DbResourceManager Simple Resource Test</h1>
-        
+
         <div class="well container">
             <div>Current Culture: @Thread.CurrentThread.CurrentCulture.IetfLanguageTag</div>
             <div>Current UI Culture: @Thread.CurrentThread.CurrentUICulture.IetfLanguageTag</div>
@@ -51,11 +55,22 @@
                 </fieldset>
             </div>
             
-            
-            New Value: @DbRes.T("Brand New Value")
-            New Value (Resource Provider): @HttpContext.GetGlobalResourceObject("Resources","Brand New Value 2")
+            <div class="container">
+                <fieldset>
+                    <legend>JavaScript Resource Handler</legend>
+
+                    <label>Localized JavaScript Variable (assigned in JavaScript code from resources.HelloWorld):</label>
+                    <div id="JavaScriptHelloWorld"></div>
+                </fieldset>
+            </div>
 
         </div>
-</form>
+
+        <!-- Generates a resources variable that contains all server side resources translated for this resource set-->
+        <script src="@JavaScriptResourceHandler.GetJavaScriptResourcesUrl("resources","Resources")"></script>
+        <script>
+            document.querySelector("#JavaScriptHelloWorld").innerText = resources.HelloWorld;
+        </script>
+    </form>
 </body>
 </html>

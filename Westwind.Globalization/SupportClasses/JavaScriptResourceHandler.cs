@@ -86,17 +86,17 @@ namespace Westwind.Globalization
             string localeId = Request.Params["LocaleId"] ?? "";
             string resourceType = Request.Params["ResourceType"] ?? "Resx";   // Resx/ResDb
             bool includeControls = (Request.Params["IncludeControls"] ?? "") != "";
-            string varname = Request.Params["VarName"] ?? "localRes";
+            string varname = Request.Params["VarName"] ?? "resources";
             string resourceMode = (Request.Params["ResourceMode"] ?? "0");
 
             // varname is embedded into script so validate to avoid script injection
             // it's gotta be a valid C# and valid JavaScript name
-            Match match = Regex.Match(varname, @"^[\w|\d|_|$|@]*$");
+            Match match = Regex.Match(varname, @"^[\w|\d|_|$|@|\.]*$");
             if (match.Length < 1 || match.Groups[0].Value != varname)
-                this.SendErrorResponse("Invalid variable name passed.");
+                SendErrorResponse("Invalid variable name passed.");
 
             if (string.IsNullOrEmpty(resourceSet))
-                this.SendErrorResponse("Invalid ResourceSet specified.");
+                SendErrorResponse("Invalid ResourceSet specified.");
 
             Dictionary<string, object> resDict = null;
 
@@ -110,7 +110,7 @@ namespace Westwind.Globalization
                 DbResXConverter converter = new DbResXConverter();
                 // must figure out the path
                 string resxPath = null;
-                if (DbResourceConfiguration.Current.ProjectType == GlobalizationProjectTypes.WebForms)
+                if (DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.WebForms)
                     resxPath = converter.FormatWebResourceSetPath(resourceSet, (resourceMode == "0") );
                 else
                     resxPath = converter.FormatResourceSetPath(resourceSet);
@@ -133,7 +133,7 @@ namespace Westwind.Globalization
                            .ToDictionary(dict => dict.Key, dict => dict.Value);
             }
 
-            string javaScript = this.SerializeResourceDictionary(resDict, varname);
+            string javaScript = SerializeResourceDictionary(resDict, varname);
 
 
             // client cache
@@ -143,7 +143,8 @@ namespace Westwind.Globalization
                 Response.Cache.SetLastModified(DateTime.UtcNow);
                 Response.AppendHeader("Accept-Ranges", "bytes");
                 Response.AppendHeader("Vary", "Accept-Encoding");
-                //Response.Cache.SetETag("\"" + javaScript.GetHashCode().ToString("x") + "\"");
+                Response.Cache.SetETag("\"" + javaScript.GetHashCode().ToString("x") + "\"");
+                Response.Cache.SetLastModified(DateTime.UtcNow);
             }
 
             // OutputCache settings
@@ -162,7 +163,7 @@ namespace Westwind.Globalization
             cache.SetValidUntilExpires(true);
             cache.SetLastModified(now);
 
-            this.SendTextOutput(javaScript, "application/javascript");
+            SendTextOutput(javaScript, "application/javascript");
         }
 
         /// <summary>

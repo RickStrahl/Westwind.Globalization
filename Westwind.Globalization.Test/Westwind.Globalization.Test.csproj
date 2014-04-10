@@ -73,15 +73,18 @@
     <Reference Include="System.XML" />
     <Reference Include="Westwind.Globalization, Version=1.99.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Westwind.Globalization.1.992.2\lib\net45\Westwind.Globalization.dll</HintPath>
+      <HintPath>..\packages\Westwind.Globalization.1.995\lib\net45\Westwind.Globalization.dll</HintPath>
     </Reference>
-    <Reference Include="Westwind.Utilities, Version=2.50.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Westwind.Utilities, Version=2.52.5191.30688, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Westwind.Utilities.2.50.0\lib\net40\Westwind.Utilities.dll</HintPath>
+      <HintPath>..\packages\Westwind.Utilities.2.52\lib\net40\Westwind.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Westwind.Web, Version=2.51.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Westwind.Web.2.51\lib\net45\Westwind.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Westwind.Web.WebForms">
+      <HintPath>..\packages\Westwind.Web.WebForms.2.51\lib\net45\Westwind.Web.WebForms.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -117,6 +120,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ResourceTest.aspx" />
     <Content Include="_readme.Westwind.Globalization.html" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -77,7 +77,7 @@ namespace Westwind.Globalization
         private string _ResourceTableName = "Localizations";
 
         /// <summary>
-        /// The virtual path for the Web application. This value is used at design time.
+        /// The virtual path for the Web application. This value is used at design time for WebForms implicit resource import from Visual Studio.
         /// </summary>
         public string DesignTimeVirtualPath
         {
@@ -183,13 +183,13 @@ namespace Westwind.Globalization
         /// <summary>
         /// Determines how what type of project we are working with
         /// </summary>
-        public GlobalizationProjectTypes ProjectType
+        public GlobalizationResxExportProjectTypes ResxExportProjectType
         {
-            get { return _ProjectType; }
-            set { _ProjectType = value; }
+            get { return _resxExportProjectType; }
+            set { _resxExportProjectType = value; }
         }
 
-        private GlobalizationProjectTypes _ProjectType = GlobalizationProjectTypes.WebForms;
+        private GlobalizationResxExportProjectTypes _resxExportProjectType = GlobalizationResxExportProjectTypes.WebForms;
  
 
 
@@ -208,7 +208,7 @@ namespace Westwind.Globalization
         public DbResourceConfiguration(bool readConfigurationSection)
         {
             if (readConfigurationSection)
-                this.ReadConfigurationSection();
+                ReadConfigurationSection();
         }
 
 
@@ -255,11 +255,11 @@ namespace Westwind.Globalization
             // in the propertyGet of the resource configration, but it uses
             // ConfigurationManager which is not available at design time
             //  So we have to duplicate the code here using the WebConfiguration.
-            if (!this.ConnectionString.Contains("="))
+            if (!ConnectionString.Contains("="))
             {
                 try
                 {
-                    string conn = webApp.OpenWebConfiguration(true).ConnectionStrings.ConnectionStrings[this.ConnectionString].ConnectionString;
+                    string conn = webApp.OpenWebConfiguration(true).ConnectionStrings.ConnectionStrings[ConnectionString].ConnectionString;
                     ConnectionString = conn;
                 }
                 catch { }                
@@ -282,7 +282,7 @@ namespace Westwind.Globalization
             ShowControlIcons = section.ShowControlIcons;
             AddMissingResources = section.AddMissingResources;
             StronglyTypedGlobalResource = section.StronglyTypedGlobalResource;
-            ProjectType = section.ProjectType;
+            ResxExportProjectType = section.ResxExportProjectType;
             BingClientId = section.BingClientId;
             BingClientSecret = section.BingClientSecret;
         }
@@ -323,19 +323,24 @@ namespace Westwind.Globalization
 
     }
 
-    public enum GlobalizationProjectTypes 
+    /// <summary>
+    /// Project types for Resx Exports. Either WebForms using 
+    /// local and global resources files, or project
+    /// </summary>
+    public enum GlobalizationResxExportProjectTypes 
     {        
         /// <summary>
         /// WebForms project that use App_LocalResource/App_GlobalResources
+        /// to store local and global resources
         /// </summary>
         WebForms,
 
         /// <summary>
         /// Any .NET project other than WebForms that 
-        /// uses normal directory based resources and 
-        /// not App_LocalResources/AppGlobalResources
+        /// uses a single directory (Properties) for 
+        ///  Resx resources
         /// </summary>
-        Class
+        Project
 
     }
 

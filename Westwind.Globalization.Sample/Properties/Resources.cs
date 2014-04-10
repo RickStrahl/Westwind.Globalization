@@ -12,23 +12,33 @@ namespace Westwind.Globalization.Sample
 
 	public class Commonwords
 	{
-		public static System.String Ready
+		public static System.String Save
 		{
 			get
 			{
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
-					return (System.String) HttpContext.GetGlobalResourceObject("Commonwords","Ready");
-				return DbRes.T("Ready","Commonwords");
+					return (System.String) HttpContext.GetGlobalResourceObject("Commonwords","Save");
+				return DbRes.T("Save","Commonwords");
 			}
 		}
 
-		public static System.String ThisIsALongLineOfText
+		public static System.String Cancel
 		{
 			get
 			{
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
-					return (System.String) HttpContext.GetGlobalResourceObject("Commonwords","This is a long line of text");
-				return DbRes.T("This is a long line of text","Commonwords");
+					return (System.String) HttpContext.GetGlobalResourceObject("Commonwords","Cancel");
+				return DbRes.T("Cancel","Commonwords");
+			}
+		}
+
+		public static System.String Edit
+		{
+			get
+			{
+				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
+					return (System.String) HttpContext.GetGlobalResourceObject("Commonwords","Edit");
+				return DbRes.T("Edit","Commonwords");
 			}
 		}
 
@@ -36,16 +46,6 @@ namespace Westwind.Globalization.Sample
 
 	public class Resources
 	{
-		public static System.String Tomorrow
-		{
-			get
-			{
-				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
-					return (System.String) HttpContext.GetGlobalResourceObject("Resources","Tomorrow");
-				return DbRes.T("Tomorrow","Resources");
-			}
-		}
-
 		public static System.String Yesterday
 		{
 			get
@@ -53,6 +53,16 @@ namespace Westwind.Globalization.Sample
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
 					return (System.String) HttpContext.GetGlobalResourceObject("Resources","Yesterday");
 				return DbRes.T("Yesterday","Resources");
+			}
+		}
+
+		public static System.String Ready
+		{
+			get
+			{
+				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
+					return (System.String) HttpContext.GetGlobalResourceObject("Resources","Ready");
+				return DbRes.T("Ready","Resources");
 			}
 		}
 
@@ -66,16 +76,6 @@ namespace Westwind.Globalization.Sample
 			}
 		}
 
-		public static System.String VeryLongLineOfText
-		{
-			get
-			{
-				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
-					return (System.String) HttpContext.GetGlobalResourceObject("Resources","Very long line of text");
-				return DbRes.T("Very long line of text","Resources");
-			}
-		}
-
 		public static System.String Helloworld
 		{
 			get
@@ -83,20 +83,6 @@ namespace Westwind.Globalization.Sample
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
 					return (System.String) HttpContext.GetGlobalResourceObject("Resources","HelloWorld");
 				return DbRes.T("HelloWorld","Resources");
-			}
-		}
-
-	}
-
-	public class Resourcetest
-	{
-		public static System.String LblhelloworldText
-		{
-			get
-			{
-				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
-					return (System.String) HttpContext.GetGlobalResourceObject("Resourcetest","lblHelloWorld.Text");
-				return DbRes.T("lblHelloWorld.Text","Resourcetest");
 			}
 		}
 

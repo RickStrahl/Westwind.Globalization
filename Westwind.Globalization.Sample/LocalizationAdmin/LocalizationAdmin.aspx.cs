@@ -2,6 +2,7 @@
 
 using System;
 using System.Data;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 using Westwind.Globalization;
 using System.Globalization;
@@ -16,7 +17,7 @@ using System.Configuration;
 
 namespace Westwind.GlobalizationWeb
 {
-    public partial class LocalizeAdmin : System.Web.UI.Page
+    public partial class LocalizeAdmin : Page
     {
         /// <summary>
         /// We talk directly to the Db resource manager (bus object) here rather than
@@ -35,22 +36,22 @@ namespace Westwind.GlobalizationWeb
 
             // *** On callbacks we don't need to populate any data since they are
             // *** raw method calls. Callback routes to parser from here
-            if (this.Callback.IsCallback)
+            if (Callback.IsCallback)
                 return;
 
             Response.Expires = 0;
 
             if (!Manager.IsLocalizationTable(null))
             {
-                this.ErrorDisplay.ShowError( WebUtils.LRes("ResourceTableDoesntExist"));
-                this.btnCreateTable.Visible = true;
+                ErrorDisplay.ShowError( WebUtils.LRes("ResourceTableDoesntExist"));
+                btnCreateTable.Visible = true;
                 return;
             }
 
             GetResourceSet();
 
             ListItem[] items = Manager.GetAllResourceIdsForHtmlDisplay(ResourceSet);
-            this.lstResourceIds.Items.AddRange(items);
+            lstResourceIds.Items.AddRange(items);
 
 
             //DataTable dt = Manager.GetAllResourceIds(ResourceSet);
@@ -64,13 +65,13 @@ namespace Westwind.GlobalizationWeb
             //this.lstResourceIds.DataBind();
 
 
-            if (this.lstResourceIds.Items.Count > 0)
-                this.lstResourceIds.SelectedIndex = 0;
+            if (lstResourceIds.Items.Count > 0)
+                lstResourceIds.SelectedIndex = 0;
 
             DataTable dt = Manager.GetAllLocaleIds(ResourceSet);
             if (dt == null)
             {
-                this.ErrorDisplay.ShowError("Couldn't load resources: " + Manager.ErrorMessage);
+                ErrorDisplay.ShowError("Couldn't load resources: " + Manager.ErrorMessage);
                 return;
             }
 
@@ -85,15 +86,15 @@ namespace Westwind.GlobalizationWeb
                     row["Language"] = "Invariant";
             }
 
-            this.lstLanguages.DataSource = dt;
-            this.lstLanguages.DataValueField = "LocaleId";
-            this.lstLanguages.DataTextField = "Language";
-            this.lstLanguages.DataBind();
+            lstLanguages.DataSource = dt;
+            lstLanguages.DataValueField = "LocaleId";
+            lstLanguages.DataTextField = "Language";
+            lstLanguages.DataBind();
 
-            if (this.lstLanguages.Items.Count > 0)
-                this.lstLanguages.SelectedIndex = 0;
+            if (lstLanguages.Items.Count > 0)
+                lstLanguages.SelectedIndex = 0;
             else
-                this.lstLanguages.Items.Add(new ListItem("Invariant", ""));      
+                lstLanguages.Items.Add(new ListItem("Invariant", ""));      
       
             
         }
@@ -103,32 +104,32 @@ namespace Westwind.GlobalizationWeb
         {
             // *** On callbacks we don't need to populate any data since they are
             // *** raw method calls. Callback routes to parser from here
-            if (this.Callback.IsCallback)
+            if (Callback.IsCallback)
                 return;
 
             // create a localRes object in JavaScript so reosurces are available 
             // on the client
             JavaScriptResourceHandler.RegisterJavaScriptLocalResources(this, "localRes");
 
-            this.SetControlId();
+            SetControlId();
 
             // Need to manually load images from resources
-            this.imgExportResources.Src = this.Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_EXTRACTRESOURCES);
-            this.imgRefresh.Src = this.Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_REFRESH);
-            this.imgRecycleApp.Src = this.Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_RECYCLE);
+            imgExportResources.Src = Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_EXTRACTRESOURCES);
+            imgRefresh.Src = Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_REFRESH);
+            imgRecycleApp.Src = Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_RECYCLE);
 
-            if (this.btnCreateTable.Visible)
+            if (btnCreateTable.Visible)
             {
-                this.imgCreateTable.Src = this.Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_CREATETABLE);
-                this.imgCreateTable.Visible = true;
+                imgCreateTable.Src = Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_CREATETABLE);
+                imgCreateTable.Visible = true;
             }
 
-            this.imgDeleteResourceSet.ImageUrl = this.Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_DELETE);
-            this.imgRenameResourceSet.ImageUrl = this.Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_RENAME);
-            this.imgAddResourceSet.ImageUrl = this.Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_NEW);
+            imgDeleteResourceSet.ImageUrl = Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_DELETE);
+            imgRenameResourceSet.ImageUrl = Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_RENAME);
+            imgAddResourceSet.ImageUrl = Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_NEW);
 
-            this.imgImport.Src = this.Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_IMPORT);
-            this.imgBackup.Src = this.Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_BACKUP);            
+            imgImport.Src = Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_IMPORT);
+            imgBackup.Src = Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_BACKUP);            
 
             //// *** Check if resources are properly active if not we have a 
             ////     problem and need to let user know
@@ -146,19 +147,19 @@ namespace Westwind.GlobalizationWeb
 
         private void GetResourceSet()
         {
-            this.ResourceSet = Request.Form[this.lstResourceSet.UniqueID];
+            ResourceSet = Request.Form[lstResourceSet.UniqueID];
             if (ResourceSet == null)
-                this.ResourceSet = Request.QueryString["ResourceSet"];
-            if (this.ResourceSet == null)
-                this.ResourceSet = ViewState["ResourceSet"] as string;
+                ResourceSet = Request.QueryString["ResourceSet"];
+            if (ResourceSet == null)
+                ResourceSet = ViewState["ResourceSet"] as string;
 
-            if (this.ResourceSet == null)
-                this.ResourceSet = "";
+            if (ResourceSet == null)
+                ResourceSet = "";
 
-            this.ResourceSet = this.ResourceSet.ToLower();
+            ResourceSet = ResourceSet.ToLower();
 
-            if (!string.IsNullOrEmpty(this.ResourceSet))
-                ViewState["ResourceSet"] = this.ResourceSet;
+            if (!string.IsNullOrEmpty(ResourceSet))
+                ViewState["ResourceSet"] = ResourceSet;
 
             // *** Clear selections
             //lstResourceIds.Items.Clear();
@@ -167,12 +168,12 @@ namespace Westwind.GlobalizationWeb
             lstResourceSet.ClearSelection();   
 
             DataTable dt = Manager.GetAllResourceSets(ResourceListingTypes.AllResources);
-            this.lstResourceSet.DataSource = dt;
-            this.lstResourceSet.DataValueField = "ResourceSet";
+            lstResourceSet.DataSource = dt;
+            lstResourceSet.DataValueField = "ResourceSet";
 
             try
             {
-                this.lstResourceSet.DataBind();
+                lstResourceSet.DataBind();
             }
             catch 
             { 
@@ -187,7 +188,7 @@ namespace Westwind.GlobalizationWeb
                 // DataBind() DOES exist in the data.
             }
 
-            if (!string.IsNullOrEmpty(this.ResourceSet))
+            if (!string.IsNullOrEmpty(ResourceSet))
             {
                 // find item to select w/o case
                 foreach (ListItem itm in lstResourceSet.Items)
@@ -201,10 +202,10 @@ namespace Westwind.GlobalizationWeb
             }
             else
             {
-                if (this.lstResourceSet.Items.Count > 0)
+                if (lstResourceSet.Items.Count > 0)
                 {
-                    this.ResourceSet = this.lstResourceSet.Items[0].Value;
-                    this.lstResourceSet.SelectedValue = this.ResourceSet;
+                    ResourceSet = lstResourceSet.Items[0].Value;
+                    lstResourceSet.SelectedValue = ResourceSet;
                 }
             }
         }
@@ -212,8 +213,8 @@ namespace Westwind.GlobalizationWeb
         private void SetControlId()
         {
             string CtlId = null;
-            if (this.IsPostBack)
-                CtlId = Request.Form[this.lstResourceIds.UniqueID];
+            if (IsPostBack)
+                CtlId = Request.Form[lstResourceIds.UniqueID];
 
             if (CtlId == null)
                 CtlId = Request.QueryString["CtlId"];
@@ -234,11 +235,11 @@ namespace Westwind.GlobalizationWeb
                     // *** No match for .text - find passed property
                     Id = CtlId;
 
-                foreach (ListItem li in this.lstResourceIds.Items)
+                foreach (ListItem li in lstResourceIds.Items)
                 {
                     if (li.Value.ToLower() == Id.ToLower())
                     {
-                        this.lstResourceIds.SelectedValue = Id;
+                        lstResourceIds.SelectedValue = Id;
                         return;
                     }
                 }
@@ -256,36 +257,36 @@ namespace Westwind.GlobalizationWeb
 #endif
 
 
-            if (!this.FileUpload.HasFile)
+            if (!FileUpload.HasFile)
                 return;
 
             //FileInfo fi = new FileInfo(this.FileUpload.FileName);
-            string Extension = Path.GetExtension(this.FileUpload.FileName).TrimStart('.');  // fi.Extension.TrimStart('.');
+            string Extension = Path.GetExtension(FileUpload.FileName).TrimStart('.');  // fi.Extension.TrimStart('.');
 
             string Filter = ",bmp,ico,gif,jpg,png,css,js,txt,wav,mp3,";
             if (Filter.IndexOf("," + Extension + ",") == -1)
             {
-                this.ErrorDisplay.ShowError(WebUtils.LRes("InvalidFileUploaded"));
+                ErrorDisplay.ShowError(WebUtils.LRes("InvalidFileUploaded"));
                 return;
             }
 
-            string FilePath = Server.MapPath(this.FileUpload.FileName);
+            string FilePath = Server.MapPath(FileUpload.FileName);
 
             File.WriteAllBytes(FilePath, FileUpload.FileBytes);
 
-            string ResourceId = this.txtNewResourceId.Text;
+            string ResourceId = txtNewResourceId.Text;
 
             // *** Try to add the file
             DbResourceDataManager Data = new DbResourceDataManager();
-            if (Data.UpdateOrAdd(ResourceId, FilePath, this.txtNewLanguage.Text, this.ResourceSet, null, true) == -1)
-                this.ErrorDisplay.ShowError(WebUtils.LRes("ResourceUpdateFailed") + "<br/>" + Data.ErrorMessage);
+            if (Data.UpdateOrAdd(ResourceId, FilePath, txtNewLanguage.Text, ResourceSet, null, true) == -1)
+                ErrorDisplay.ShowError(WebUtils.LRes("ResourceUpdateFailed") + "<br/>" + Data.ErrorMessage);
             else
-                this.ErrorDisplay.ShowMessage(WebUtils.LRes("ResourceUpdated"));
+                ErrorDisplay.ShowMessage(WebUtils.LRes("ResourceUpdated"));
 
             File.Delete(FilePath);
 
-            this.lstResourceIds.Items.Add(ResourceId);
-            this.lstResourceIds.SelectedValue = ResourceId;
+            lstResourceIds.Items.Add(ResourceId);
+            lstResourceIds.SelectedValue = ResourceId;
         }
 
 
@@ -295,9 +296,9 @@ namespace Westwind.GlobalizationWeb
         this.ErrorDisplay.ShowError(WebUtils.LRes("FeatureDisabled"));
         return;
 #endif
-            if (!this.Manager.CreateLocalizationTable(null))
-                this.ErrorDisplay.ShowError(WebUtils.LRes("LocalizationTableNotCreated") + "<br />" +
-                                            this.Manager.ErrorMessage);
+            if (!Manager.CreateLocalizationTable(null))
+                ErrorDisplay.ShowError(WebUtils.LRes("LocalizationTableNotCreated") + "<br />" +
+                                            Manager.ErrorMessage);
             else
             {                
                 ErrorDisplay.ShowMessage(WebUtils.LRes("LocalizationTableCreated"));
@@ -315,9 +316,9 @@ namespace Westwind.GlobalizationWeb
         return;
 #endif
 
-            DbResXConverter Exporter = new DbResXConverter(this.Context.Request.PhysicalApplicationPath);
+            DbResXConverter Exporter = new DbResXConverter(Context.Request.PhysicalApplicationPath);
 
-            if (DbResourceConfiguration.Current.ProjectType == GlobalizationProjectTypes.WebForms)
+            if (DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.WebForms)
             {
                 if (!Exporter.GenerateLocalWebResourceResXFiles())
                 {
@@ -329,7 +330,6 @@ namespace Westwind.GlobalizationWeb
                     ErrorDisplay.ShowError(WebUtils.LRes("ResourceGenerationFailed"));
                     return;
                 }
-                
             }
             else
             {
@@ -340,8 +340,7 @@ namespace Westwind.GlobalizationWeb
                 }
             }
 
-
-            this.ErrorDisplay.ShowMessage(WebUtils.LRes("ResourceGenerationComplete"));
+            ErrorDisplay.ShowMessage(WebUtils.LRes("ResourceGenerationComplete"));
         }
 
 
@@ -369,25 +368,25 @@ namespace Westwind.GlobalizationWeb
         return;
 #endif
 
-            DbResXConverter Converter = new DbResXConverter(this.Context.Request.PhysicalApplicationPath);            
+            DbResXConverter Converter = new DbResXConverter(Context.Request.PhysicalApplicationPath);            
             
             bool res = false;
 
-            if (DbResourceConfiguration.Current.ProjectType == GlobalizationProjectTypes.WebForms)
+            if (DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.WebForms)
                 res = Converter.ImportWebResources();
             else
                 res = Converter.ImportWinResources(Server.MapPath("~/"), "CodePasteMvc");       
             
 
             if (res)
-                this.ErrorDisplay.ShowMessage(WebUtils.LRes("ResourceImportComplete"));
+                ErrorDisplay.ShowMessage(WebUtils.LRes("ResourceImportComplete"));
             else
-                this.ErrorDisplay.ShowError(WebUtils.LRes("ResourceImportFailed"));
+                ErrorDisplay.ShowError(WebUtils.LRes("ResourceImportFailed"));
 
-            this.lstResourceIds.ClearSelection();
-            this.lstResourceSet.ClearSelection();
+            lstResourceIds.ClearSelection();
+            lstResourceSet.ClearSelection();
 
-            this.GetResourceSet();
+            GetResourceSet();
         }
 
         protected void btnRenameResourceSet_Click(object sender, EventArgs e)
@@ -397,20 +396,20 @@ namespace Westwind.GlobalizationWeb
         return;
 #endif
 
-            if (!this.Manager.RenameResourceSet(this.txtOldResourceSet.Text, this.txtRenamedResourceSet.Text))
-                this.ErrorDisplay.ShowError(this.Manager.ErrorMessage);
+            if (!Manager.RenameResourceSet(txtOldResourceSet.Text, txtRenamedResourceSet.Text))
+                ErrorDisplay.ShowError(Manager.ErrorMessage);
             else
             {
                 // *** Force the selected value to be set
-                this.lstResourceSet.Items.Add(new ListItem("", this.txtRenamedResourceSet.Text.ToLower()));
-                this.lstResourceSet.SelectedValue = this.txtRenamedResourceSet.Text.ToLower();
+                lstResourceSet.Items.Add(new ListItem("", txtRenamedResourceSet.Text.ToLower()));
+                lstResourceSet.SelectedValue = txtRenamedResourceSet.Text.ToLower();
 
                 //this.lstResourceSet.SelectedValue = string.Empty;   // null; 
 
                 // *** Refresh and reset the resource list
-                this.GetResourceSet();
+                GetResourceSet();
 
-                this.ErrorDisplay.ShowMessage(WebUtils.LRes("ResourceSetRenamed"));
+                ErrorDisplay.ShowMessage(WebUtils.LRes("ResourceSetRenamed"));
             }
         }
 
@@ -435,10 +434,10 @@ namespace Westwind.GlobalizationWeb
         [CallbackMethod]
         public string GetResourceString(string ResourceId, string ResourceSet, string CultureName)
         {
-            string Value = this.Manager.GetResourceString(ResourceId, ResourceSet, CultureName);
+            string Value = Manager.GetResourceString(ResourceId, ResourceSet, CultureName);
 
             if (Value == null && !string.IsNullOrEmpty(Manager.ErrorMessage))
-                throw new ArgumentException(this.Manager.ErrorMessage);
+                throw new ArgumentException(Manager.ErrorMessage);
 
             return Value;
         }
@@ -446,7 +445,7 @@ namespace Westwind.GlobalizationWeb
         [CallbackMethod]
         public ResourceItem GetResourceItem(string ResourceId, string ResourceSet, string CultureName)
         {
-            return this.Manager.GetResourceItem(ResourceId, ResourceSet, CultureName);
+            return Manager.GetResourceItem(ResourceId, ResourceSet, CultureName);
         }
 
         /// <summary>
@@ -459,10 +458,10 @@ namespace Westwind.GlobalizationWeb
         [CallbackMethod]
         public object GetResourceStrings(string ResourceId, string ResourceSet)
         {
-            Dictionary<string, string> Resources = this.Manager.GetResourceStrings(ResourceId, ResourceSet);
+            Dictionary<string, string> Resources = Manager.GetResourceStrings(ResourceId, ResourceSet);
 
             if (Resources == null)
-                throw new ApplicationException(this.Manager.ErrorMessage);
+                throw new ApplicationException(Manager.ErrorMessage);
 
             return Resources;
         }
@@ -472,9 +471,9 @@ namespace Westwind.GlobalizationWeb
         public bool UpdateResourceString(string Value, string ResourceId, string ResourceSet, string LocaleId)
         {
             if (string.IsNullOrEmpty(Value))            
-                return this.Manager.DeleteResource(ResourceId, LocaleId, ResourceSet);
+                return Manager.DeleteResource(ResourceId, LocaleId, ResourceSet);
             
-            if (this.Manager.UpdateOrAdd(ResourceId, Value, LocaleId, ResourceSet,null) == -1)
+            if (Manager.UpdateOrAdd(ResourceId, Value, LocaleId, ResourceSet,null) == -1)
                 return false;
 
             return true;
@@ -484,9 +483,9 @@ namespace Westwind.GlobalizationWeb
         public bool UpdateResourceWithComment(string Value, string Comment, string ResourceId, string ResourceSet, string LocaleId)
         {
             if (string.IsNullOrEmpty(Value))
-                return this.Manager.DeleteResource(ResourceId, LocaleId, ResourceSet);
+                return Manager.DeleteResource(ResourceId, LocaleId, ResourceSet);
 
-            if (this.Manager.UpdateOrAdd(ResourceId, Value, LocaleId, ResourceSet, Comment) == -1)
+            if (Manager.UpdateOrAdd(ResourceId, Value, LocaleId, ResourceSet, Comment) == -1)
                 return false;
 
             return true;
@@ -501,8 +500,8 @@ namespace Westwind.GlobalizationWeb
         throw new ApplicationException(WebUtils.LRes("FeatureDisabled"));
 #endif
 
-            if (!this.Manager.DeleteResource(ResourceId, LocaleId, ResourceSet))
-                throw new ApplicationException(WebUtils.LRes("ResourceUpdateFailed") + ": " + this.Manager.ErrorMessage);
+            if (!Manager.DeleteResource(ResourceId, LocaleId, ResourceSet))
+                throw new ApplicationException(WebUtils.LRes("ResourceUpdateFailed") + ": " + Manager.ErrorMessage);
 
             return true;
         }
@@ -514,7 +513,7 @@ namespace Westwind.GlobalizationWeb
         throw new ApplicationException(WebUtils.LRes("FeatureDisabled"));
 #endif
 
-            if (!this.Manager.RenameResource(ResourceId, NewResourceId, ResourceSet))
+            if (!Manager.RenameResource(ResourceId, NewResourceId, ResourceSet))
                 throw new ApplicationException(WebUtils.LRes("InvalidResourceId"));
 
             return true;
@@ -532,7 +531,7 @@ namespace Westwind.GlobalizationWeb
         [CallbackMethod]
         public bool RenameResourceProperty(string Property, string NewProperty, string ResourceSet)
         {
-            if (!this.Manager.RenameResourceProperty(Property, NewProperty, ResourceSet))
+            if (!Manager.RenameResourceProperty(Property, NewProperty, ResourceSet))
                 throw new ApplicationException(WebUtils.LRes("InvalidResourceId"));
 
             return true;
@@ -570,7 +569,7 @@ namespace Westwind.GlobalizationWeb
         throw new ApplicationException(WebUtils.LRes("FeatureDisabled"));
 #endif
 
-            return this.Manager.DeleteResourceSet(ResourceSet);
+            return Manager.DeleteResourceSet(ResourceSet);
         }
 
         [CallbackMethod]
@@ -580,7 +579,7 @@ namespace Westwind.GlobalizationWeb
         throw new ApplicationException(WebUtils.LRes("FeatureDisabled"));
 #endif
 
-            return this.Manager.RenameResourceSet(OldResourceSet, NewResourceSet);
+            return Manager.RenameResourceSet(OldResourceSet, NewResourceSet);
         }
 
         [CallbackMethod]
@@ -597,7 +596,7 @@ namespace Westwind.GlobalizationWeb
 #if OnlineDemo
             throw new ApplicationException(WebUtils.LRes("FeatureDisabled"));
 #endif
-            return this.Manager.CreateBackupTable(null);
+            return Manager.CreateBackupTable(null);
         }
 
 

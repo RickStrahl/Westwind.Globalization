@@ -236,6 +236,19 @@
             This is the resource provider section that mimics the settings stored in DbResourceConfiguration object.
             </summary>
         </member>
+        <member name="P:Westwind.Globalization.DbResourceProviderSection.ResxExportProjectType">
+            <summary>
+            Determines whether WebForms (using App_Global/LocalResource) or plain .NET Resx files are 
+            used for exporting ResX resources. Options are WebForms and Project. WebForms generates resources 
+            in resource folders, Class generates ResX files in the Properties folder of the project.
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.DbResourceProviderSection.StronglyTypedGlobalResource">
+            <summary>
+            Determines whether a strongly typed resource is created when database resources are exported to a ResX file
+            Specify the project relative filename (~/Properties/Resources.cs) and a namespace ("AppResources")
+            </summary>
+        </member>
         <member name="T:Westwind.Globalization.DbRes">
             <summary>
             Helper class that handles access to the DbResourceManager
@@ -255,10 +268,12 @@
         </member>
         <member name="F:Westwind.Globalization.DbRes.ResourceManagers">
             <summary>
-            Internal dictionary that
+            Internal dictionary that holds instances of resource managers
+            for each resourceset defined in the application. Lazy loaded
+            as resources are accessed.
             </summary>
         </member>
-        <member name="M:Westwind.Globalization.DbRes.T(System.String,System.String,System.String,System.Boolean)">
+        <member name="M:Westwind.Globalization.DbRes.T(System.String,System.String,System.String)">
             <summary>
             Localization helper function that Translates a resource
             Id to a resource value string. Easy access that allows full
@@ -271,7 +286,6 @@
             </param>
             <param name="resourceSet">Name of the ResourceSet that houses this resource. If null or empty resources are used.</param>
             <param name="lang">5 letter or 2 letter language ieetf code: en-US, de-DE or en, de etc.</param>
-            <param name="autoAdd">If true if a resource cannot be found a new entry is added in the invariant locale</param>
             <returns>
             Localized resource or the resource Id if no match is found. 
             This value *always* returns a string unless you pass in null.
@@ -361,7 +375,7 @@
         </member>
         <member name="P:Westwind.Globalization.Resources.Resources.ConnectionFailed">
             <summary>
-              Looks up a localized string similar to Connection faled: .
+              Looks up a localized string similar to Connection failed: .
             </summary>
         </member>
         <member name="P:Westwind.Globalization.Resources.Resources.ConnectionStringForResourcesIsNotConfigure">
@@ -392,6 +406,11 @@
         <member name="P:Westwind.Globalization.Resources.Resources.No_matching_Recordset_found_">
             <summary>
               Looks up a localized string similar to No matching Recordset found..
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.Resources.Resources.NoResourceIdSpecifiedCantAddResource">
+            <summary>
+              Looks up a localized string similar to No ResourceId specified. Can&apos;t add resource.
             </summary>
         </member>
         <member name="P:Westwind.Globalization.Resources.Resources.ShowLocalizationIcons">
@@ -1065,7 +1084,7 @@
         </member>
         <member name="P:Westwind.Globalization.DbResourceConfiguration.DesignTimeVirtualPath">
             <summary>
-            The virtual path for the Web application. This value is used at design time.
+            The virtual path for the Web application. This value is used at design time for WebForms implicit resource import from Visual Studio.
             </summary>
         </member>
         <member name="P:Westwind.Globalization.DbResourceConfiguration.ShowLocalizationControlOptions">
@@ -1127,21 +1146,28 @@
             ~/App_Code/Resources.cs,AppResources
             </summary>
         </member>
-        <member name="P:Westwind.Globalization.DbResourceConfiguration.ProjectType">
+        <member name="P:Westwind.Globalization.DbResourceConfiguration.ResxExportProjectType">
             <summary>
             Determines how what type of project we are working with
             </summary>
         </member>
-        <member name="F:Westwind.Globalization.GlobalizationProjectTypes.WebForms">
+        <member name="T:Westwind.Globalization.GlobalizationResxExportProjectTypes">
             <summary>
-            WebForms project that use App_LocalResource/App_GlobalResources
+            Project types for Resx Exports. Either WebForms using 
+            local and global resources files, or project
             </summary>
         </member>
-        <member name="F:Westwind.Globalization.GlobalizationProjectTypes.Class">
+        <member name="F:Westwind.Globalization.GlobalizationResxExportProjectTypes.WebForms">
+            <summary>
+            WebForms project that use App_LocalResource/App_GlobalResources
+            to store local and global resources
+            </summary>
+        </member>
+        <member name="F:Westwind.Globalization.GlobalizationResxExportProjectTypes.Project">
             <summary>
             Any .NET project other than WebForms that 
-            uses normal directory based resources and 
-            not App_LocalResources/AppGlobalResources
+            uses a single directory (Properties) for 
+             Resx resources
             </summary>
         </member>
         <member name="T:Westwind.Globalization.DbResourceControl">
@@ -1302,6 +1328,11 @@
             Dependencies:
             DbResourceConfiguration   (holds and reads all config data from .Current)
             SqlDataAccess             (provides a data access (DAL))
+            </summary>
+        </member>
+        <member name="F:Westwind.Globalization.DbResourceDataManager.Transaction">
+            <summary>
+            Internally used Transaction object
             </summary>
         </member>
         <member name="M:Westwind.Globalization.DbResourceDataManager.#ctor">
@@ -1470,27 +1501,15 @@
             <param name="resourceSet"></param>
             <param name="Type"></param>
         </member>
-        <member name="M:Westwind.Globalization.DbResourceDataManager.AddResource(System.String,System.Object,System.String,System.String,System.String)">
-            <summary>
-            Adds a resource to the Localization Table
-            </summary>
-            <param name="resourceId"></param>
-            <param name="value"></param>
-            <param name="cultureName"></param>
-            <param name="resourceSet"></param>
-            <param name="Type"></param>
-            <param name="Filename"></param>
-        </member>
         <member name="M:Westwind.Globalization.DbResourceDataManager.AddResource(System.String,System.Object,System.String,System.String,System.String,System.Boolean)">
             <summary>
             Adds a resource to the Localization Table
             </summary>
-            <param name="resourceId"></param>
-            <param name="value"></param>
-            <param name="cultureName"></param>
-            <param name="resourceSet"></param>
-            <param name="Type"></param>
-            <param name="Filename"></param>
+            <param name="resourceId">The resource key name</param>
+            <param name="value">Value to set it to. Can also be a file which is loaded as binary data when valueIsFileName is true</param>
+            <param name="cultureName">name of the culture or null for invariant/default</param>
+            <param name="resourceSet">The ResourceSet to which the resource id is added</param>
+            <param name="comment">Optional comment for the key</param>
             <param name="valueIsFileName">if true the Value property is a filename to import</param>
         </member>
         <!-- Badly formed XML comment ignored for member "M:Westwind.Globalization.DbResourceDataManager.UpdateResource(System.String,System.Object,System.String,System.String,System.String)" -->
@@ -1781,7 +1800,7 @@
         </member>
         <member name="M:Westwind.Globalization.DbResourceManager.GetObject(System.String,System.Globalization.CultureInfo)">
             <summary>
-            Core worker method that returnsa  resource value for a
+            Core worker method that returns a  resource value for a
             given culture from the this resourcemanager/resourceset.
             
             If resource is not found it returns the null
@@ -1861,7 +1880,7 @@
             The main method to retrieve a specific resource key. The provider
             internally handles resource fallback based on the ResourceSet implementation.
             </summary>
-            <param name="ResourceKey"></param>
+            <param name="resourceKey"></param>
             <param name="culture"></param>
             <returns></returns>
         </member>
@@ -1979,8 +1998,8 @@
             but the routine handles resource fallback in case the
             code is manually called.
             </summary>
-            <param name="ResourceKey"></param>
-            <param name="CultureName"></param>
+            <param name="resourceKey"></param>
+            <param name="cultureName"></param>
             <returns></returns>
         </member>
         <member name="P:Westwind.Globalization.DbSimpleResourceProvider.ResourceReader">

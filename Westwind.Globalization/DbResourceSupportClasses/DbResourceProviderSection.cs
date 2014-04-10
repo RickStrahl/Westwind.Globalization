@@ -31,12 +31,17 @@ namespace Westwind.Globalization
             set { this["resourceTableName"] = value; }
         }
 
-        [Description("Determines whether WebForms (using App_Global/LocalResource) or any other .NET project type is used. Options are WebForms and Class."),
-ConfigurationProperty("projectType", DefaultValue = GlobalizationProjectTypes.WebForms)]
-        public GlobalizationProjectTypes ProjectType
+        /// <summary>
+        /// Determines whether WebForms (using App_Global/LocalResource) or plain .NET Resx files are 
+        /// used for exporting ResX resources. Options are WebForms and Project. WebForms generates resources 
+        /// in resource folders, Class generates ResX files in the Properties folder of the project.
+        /// </summary>
+        [Description("Determines whether WebForms (using App_Global/LocalResource) or any other .NET project type is used for exporting ResX resources. Options are WebForms and Class. WebForms generates resources in resource folders, Class generates ResX files in the Properties folder of the project."),
+ConfigurationProperty("resxExportProjectType", DefaultValue = GlobalizationResxExportProjectTypes.WebForms)]
+        public GlobalizationResxExportProjectTypes ResxExportProjectType
         {
-            get { return (GlobalizationProjectTypes)this["projectType"]; }
-            set { this["projectType"] = value; }
+            get { return (GlobalizationResxExportProjectTypes)this["resxExportProjectType"]; }
+            set { this["resxExportProjectType"] = value; }
         }        
  
 
@@ -106,8 +111,12 @@ ConfigurationProperty("projectType", DefaultValue = GlobalizationProjectTypes.We
             set { this["useVsNetResourceNaming"] = value; }
         }
 
+        /// <summary>
+        /// Determines whether a strongly typed resource is created when database resources are exported to a ResX file
+        /// Specify the project relative filename (~/Properties/Resources.cs) and a namespace ("AppResources")
+        /// </summary>
         [Description("Determines whether a strongly typed resource is created when database resources are exported to a ResX file"),
-         ConfigurationProperty("stronglyTypedGlobalResource", DefaultValue = "~/App_Code/Resources.cs,AppResources")]
+         ConfigurationProperty("stronglyTypedGlobalResource", DefaultValue = "~/Properties/Resources.cs,AppResources")]
         public string StronglyTypedGlobalResource
         {
             get { return (string)this["stronglyTypedGlobalResource"]; }
@@ -117,11 +126,11 @@ ConfigurationProperty("projectType", DefaultValue = GlobalizationProjectTypes.We
 
 
 
-        public DbResourceProviderSection(string ConnectionString, string ResourceTableName, string DesignTimeVirtualPath)
+        public DbResourceProviderSection(string connectionString, string resourceTableName, string designTimeVirtualPath)
         {
-            this.ConnectionString = ConnectionString;
-            this.DesignTimeVirtualPath = DesignTimeVirtualPath;
-            this.ResourceTableName = ResourceTableName;
+            ConnectionString = connectionString;
+            DesignTimeVirtualPath = designTimeVirtualPath;
+            ResourceTableName = resourceTableName;
         }
 
         public DbResourceProviderSection()

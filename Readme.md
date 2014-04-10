@@ -20,31 +20,34 @@ Requirements:
 * [Original Article for Database Driven Resource Provider](http://www.west-wind.com/presentations/wwdbresourceprovider/)
 * [Documentation](http://west-wind.com/westwind.globalization/docs/)
 * [Class Reference](http://west-wind.com/westwind.globalization/docs/?page=_40y0vh66q.htm)
+* [License](http://west-wind.com/Westwind.Globalization/docs/_2lp0u0i9b.htm)
 
 
 ###Features###
 * .NET Resources stored in Sql Server, Sql Compact Database
   (other providers in the future)  
-* Database Resource Provider 
-* Database Resource Manager
+* ASP.NET Database ResourceProvider 
+* Standard .NET Database ResourceManager
+* Use resources same way as with ResX or use our DbRes helper
 * Interactive Web resource editor
 * Use code to manipulate resources
 * Import and Export Resx resources 
 * Generate strongly typed resource classes
-* Serve server side resources to JavaScript using a resource handler
-* Release and reload resources
-* Easy to use UI Helpers to access resources in ASP.NET markup
+* Resource Handler to serve server side resources to JavaScript
+* Release and reload resources at runtime
+* DbRes helper to easily embed resources into markup and code
 
 ###Web Resource Editor###
 One of the main reasons people want to use Database resources rather
 than Resx resources is that it allows for dynamic updates of resources. Resx
 resources are static and compiled into an application and so are typically
 tied to the development process, while dynamic resources can be updated
-separately even after the application has been completed.
+separately even after the application has been completed and deployed.
 
 Since data is stored in a database it's easy to create editing front ends
 or programmatic tools that simply manipulate the database. This library
-ships with a Web interface that allows editing of resources interactively.
+ships with a Web interface that allows editing of resources interactively
+and an easy to use data API to update resources programmatically.
 
 ![Web Resource Editor](https://raw.github.com/RickStrahl/Westwind.Globalization/master/WebResourceLocalizationForm.png)
 
@@ -56,11 +59,11 @@ to the data API underneath it as well as the database itself, it's
 easy to create your own customized UI or data driven API that suits your
 application needs exactly.
 
-###How it works###
-This library works by implementing a custom .NET resource manager and 
-ASP.NET resource provider that are tied to a database provider. This 
+###How the database Providers work###
+This library works by implementing a custom .NET ResourceManager and 
+ASP.NET ResourceProvider that are tied to a database provider. This 
 means you can access resources using the same mechanisms that you
-use with standard Resx Resources in your .NET applications. This
+use with standard Resx Resources in your .NET applications. It also
 means although resources are initially loaded from the database
 for the first load of each ResourceSet, resources are cached for
 each individual ResourceSet and locale the same way that Resx 
@@ -91,8 +94,9 @@ implementation of a host of interface based classes for customization.
 There are three distinct resource access mechanisms supported:
 
 * ASP.NET Resource Provider (best used with WebForms)
-* .NET Resource Manager (Non-Web apps, and or MVC apps where you already use Resx)
-* Direct Db Provider access (easiest overall - works everywhere)
+* .NET Resource Manager and strongly typed resources 
+  (Non-Web apps, and or MVC apps where you already use Resx)
+* Direct Db Provider access using DbRes helper (easiest overall - works everywhere)
 
 ###Installation and Configuration###
 The easiest way to use data driven resources with this library is to install the NuGet
@@ -108,7 +112,7 @@ the localization administration form shown above, so you can create the
 resource table and manage resources in it.
 
 ####Configuration Settings####
-The key configuration items set is the DbResourceProvider section in
+The key configuration items set are the DbResourceProvider section in
 the config file which tells the provider where to find the database
 resources:
 
@@ -119,14 +123,14 @@ resources:
   </configSections>
   <DbResourceProvider connectionString="server=.;database=localizations;integrated security=true"
                       resourceTableName="Localizations"
-                      projectType="WebForms"
+                      addMissingResources="false"
+                      stronglyTypedGlobalResource="~/Properties/Resources.cs,AppResources"
+                      localizationFormWebPath="~/localizationadmin/LocalizationAdmin.aspx"                      
                       designTimeVirtualPath="/internationalization"
                       showLocalizationControlOptions="true"
                       showControlIcons="true"
-                      localizationFormWebPath="~/localizationadmin/LocalizationAdmin.aspx"
-                      addMissingResources="false"
                       useVsNetResourceNaming="false"
-                      stronglyTypedGlobalResource="~/Properties/Resources.cs,AppResources"
+                      resxExportProjectType="WebForms"
                       bingClientId=""
                       bingClientSecret="" />
 </configuration>
@@ -349,3 +353,94 @@ resources, so this is an ongoing process. As with the Resx Generator if
 you remove or rename a resource you may break your code. This is the 
 reason we use a single file, rather than a file per resource set to 
 keep the file management as simple as possible.
+
+####License####
+The Westwind.Globalization library is licensed under the
+[MIT License](http://opensource.org/licenses/MIT) and there's no charge to use, 
+integrate or modify the code for this project. You are free to use it in personal, 
+commercial, government and any other type of application. 
+
+[Commercial Licenses](http://west-wind.com/Westwind.Globalization/docs/?page=_2lp0u0i9b.htm) 
+are also available as an option.
+
+All source code is copyright West Wind Technologies, regardless of changes made to them. 
+Any source code modifications must leave the original copyright code headers intact.
+
+####JavaScript Resource Handler####
+Localization doesn't stop with server templates - if you're building applications
+that include JavaScript logic it's likely that you also need to access resources
+on the client that are localized. This library provides a JavaScript Resource 
+HttpHandler that can serve resources in the proper localized locale to your
+client application.
+
+**Configuration**
+To configure the Resource Handler it has to be registered in web.config as follows:
+
+```xml
+<configuration>
+<system.webServer>
+<handlers>
+    <add name="JavaScriptResourceHandler"
+        verb="GET"
+        path="JavascriptResourceHandler.axd"
+        type="Westwind.Globalization.JavaScriptResourceHandler,Westwind.Globalization" />
+</handlers>
+</system.webServer>
+</configuration>
+```
+
+**Usage:**
+The resource handler is then accessed as a script resource in your code by calling the
+static JavaScriptResourceHandler.GetJavaScriptResourcesUrl() method:
+
+```html
+<!-- Generates a resources variable that contains all server side resources translated for this resource set-->
+<script src="@JavaScriptResourceHandler.GetJavaScriptResourcesUrl("resources","Resources")"></script>
+<script>
+    document.querySelector("#JavaScriptHelloWorld").innerText = resources.HelloWorld;
+</script>
+```
+You pass in the name of the variable you want to have created which in this case is `resources`. 
+
+This generates a fairly verbose and ugly URL:
+http://localhost:7894/JavaScriptResourceHandler.axd?ResourceSet=Resources&LocaleId=de-DE&VarName=resources&ResourceType=resdb&ResourceMode=1
+
+which in turn generates the following script code (shown here localized in German):
+
+```javascript
+resources = {
+	"HelloWorld": "Hallo schn\u00F6de Welt",
+	"Ready": "Los",
+	"Today": "Heute",
+	"Yesterday": "Gestern"
+};
+```
+
+The localization by default uses the active locale of the current request, so if you switch
+the locale using WebUtils.SetUserLocale() as shown earlier, the resources are localized to
+that locale as well.
+
+Note that the variable name is generated in global scope by default, so `resources` is generated
+in global scope. However, you can pass in any variable name. For example, if you have a previously
+declared object that you want to attach the resources to you can use that name. For example:
+
+```html
+<script>
+    global = {};  //  declare your own global object on the page
+</script>
+<!-- generated resources to global.resources -->
+<script src="@JavaScriptResourceHandler.GetJavaScriptResourcesUrl("global.resources","Resources")"></script>
+<script>
+    // use global.resources object to access resource values
+    document.querySelector("#JavaScriptHelloWorld").innerText = global.resources.HelloWorld;
+</script>
+```
+
+**Warranty Disclaimer: No Warranty!**
+IN NO EVENT SHALL THE AUTHOR, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR REDISTRIBUTE 
+THIS PROGRAM AND DOCUMENTATION, BE LIABLE FOR ANY COMMERCIAL, SPECIAL, INCIDENTAL, 
+OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM 
+INCLUDING, BUT NOT LIMITED TO, LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR 
+LOSSES SUSTAINED BY YOU OR LOSSES SUSTAINED BY THIRD PARTIES OR A FAILURE OF THE 
+PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS, EVEN IF YOU OR OTHER PARTIES HAVE 
+BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
