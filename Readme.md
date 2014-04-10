@@ -354,17 +354,6 @@ you remove or rename a resource you may break your code. This is the
 reason we use a single file, rather than a file per resource set to 
 keep the file management as simple as possible.
 
-####License####
-The Westwind.Globalization library is licensed under the
-[MIT License](http://opensource.org/licenses/MIT) and there's no charge to use, 
-integrate or modify the code for this project. You are free to use it in personal, 
-commercial, government and any other type of application. 
-
-[Commercial Licenses](http://west-wind.com/Westwind.Globalization/docs/?page=_2lp0u0i9b.htm) 
-are also available as an option.
-
-All source code is copyright West Wind Technologies, regardless of changes made to them. 
-Any source code modifications must leave the original copyright code headers intact.
 
 ####JavaScript Resource Handler####
 Localization doesn't stop with server templates - if you're building applications
@@ -373,7 +362,7 @@ on the client that are localized. This library provides a JavaScript Resource
 HttpHandler that can serve resources in the proper localized locale to your
 client application.
 
-**Configuration**
+**Configuration:**
 To configure the Resource Handler it has to be registered in web.config as follows:
 
 ```xml
@@ -388,6 +377,8 @@ To configure the Resource Handler it has to be registered in web.config as follo
 </system.webServer>
 </configuration>
 ```
+
+Note this entry is automatically made for you when you install the NuGet package.
 
 **Usage:**
 The resource handler is then accessed as a script resource in your code by calling the
@@ -436,7 +427,20 @@ declared object that you want to attach the resources to you can use that name. 
 </script>
 ```
 
-**Warranty Disclaimer: No Warranty!**
+####License####
+The Westwind.Globalization library is licensed under the
+[MIT License](http://opensource.org/licenses/MIT) and there's no charge to use, 
+integrate or modify the code for this project. You are free to use it in personal, 
+commercial, government and any other type of application. 
+
+[Commercial Licenses](http://west-wind.com/Westwind.Globalization/docs/?page=_2lp0u0i9b.htm) 
+are also available as an option.
+
+All source code is copyright West Wind Technologies, regardless of changes made to them. 
+Any source code modifications must leave the original copyright code headers intact.
+
+
+####Warranty Disclaimer: No Warranty!####
 IN NO EVENT SHALL THE AUTHOR, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR REDISTRIBUTE 
 THIS PROGRAM AND DOCUMENTATION, BE LIABLE FOR ANY COMMERCIAL, SPECIAL, INCIDENTAL, 
 OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM 
