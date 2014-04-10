@@ -286,6 +286,13 @@ features:
 <asp:Label ID="lblHelloLabel" runat="server" meta:resourcekey="lblHelloWorldLabel"></asp:Label>
 ```
 
+####WebForms Resource Expressions####
+```HTML
+<label>Resource Expressions (Global Resources):</label>
+<asp:Label ID="Label1" runat="server" Text="<%$ Resources:Resources,HelloWorld %>"></asp:Label>
+```
+
+
 ####Strongly typed Resources####
 The Web Resource Editor form allows you to create strongly typed resources
 for any global resources in your application. Basically it'll go through all the 
