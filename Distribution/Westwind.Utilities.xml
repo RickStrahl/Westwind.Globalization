@@ -1486,13 +1486,13 @@
             Extends dictionary classes with XML 
             </summary>
         </member>
-        <member name="M:Westwind.Utilities.Extensions.DictionaryExtensions.ToXmlz(System.Collections.IDictionary,System.String)">
+        <member name="M:Westwind.Utilities.Extensions.DictionaryExtensions.ToXml(System.Collections.IDictionary,System.String)">
             <summary>
             Serializes the dictionary to an XML string
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Westwind.Utilities.Extensions.DictionaryExtensions.FromXmlz(System.Collections.IDictionary,System.String)">
+        <member name="M:Westwind.Utilities.Extensions.DictionaryExtensions.FromXml(System.Collections.IDictionary,System.String)">
             <summary>
             Loads the dictionary from an Xml string
             </summary>
@@ -1518,13 +1518,6 @@
             <param name="ms"></param>
             <param name="inputString"></param>
             <param name="encoding"></param>
-        </member>
-        <member name="M:Westwind.Utilities.Extensions.GuidExtensions.IsEmpty(System.Guid)">
-            <summary>
-            Determines whether this is an empty guid
-            </summary>
-            <param name="guid"></param>
-            <returns></returns>
         </member>
         <member name="M:Westwind.Utilities.Logging.ILogAdapter.WriteEntry(Westwind.Utilities.Logging.WebLogEntry)">
             <summary>
@@ -2199,9 +2192,19 @@
               Looks up a localized string similar to This Configuration method is no longer supported. Use a Provider configuration instead..
             </summary>
         </member>
+        <member name="P:Westwind.Utilities.Properties.Resources.CouldntLoadEntityInvalidKeyProvided">
+            <summary>
+              Looks up a localized string similar to Couldn&apos;t load entity - invalid key provided..
+            </summary>
+        </member>
         <member name="P:Westwind.Utilities.Properties.Resources.DataReaderPassedToDataReaderToObjectCannot">
             <summary>
               Looks up a localized string similar to DataReader passed to DataReaderToObject cannot be closed.
+            </summary>
+        </member>
+        <member name="P:Westwind.Utilities.Properties.Resources.ErrorColon">
+            <summary>
+              Looks up a localized string similar to Error: .
             </summary>
         </member>
         <member name="P:Westwind.Utilities.Properties.Resources.InvalidConnectionString">
@@ -3317,7 +3320,7 @@
             Summary description for wwImaging.
             </summary>
         </member>
-        <member name="M:Westwind.Utilities.ImageUtils.ResizeImage(System.String,System.Int32,System.Int32)">
+        <member name="M:Westwind.Utilities.ImageUtils.ResizeImage(System.String,System.Int32,System.Int32,System.Drawing.Drawing2D.InterpolationMode)">
             <summary>
             Creates a resized bitmap from an existing image on disk. Resizes the image by 
             creating an aspect ratio safe image. Image is sized to the larger size of width
@@ -3330,7 +3333,7 @@
             <param name="height"></param>
             <returns>Bitmap or null</returns>
         </member>
-        <member name="M:Westwind.Utilities.ImageUtils.ResizeImage(System.Byte[],System.Int32,System.Int32)">
+        <member name="M:Westwind.Utilities.ImageUtils.ResizeImage(System.Byte[],System.Int32,System.Int32,System.Drawing.Drawing2D.InterpolationMode)">
             <summary>
             Resizes an image from byte array and returns a Bitmap.
             Make sure you Dispose() the bitmap after you're done 
@@ -3341,7 +3344,7 @@
             <param name="height"></param>
             <returns></returns>
         </member>
-        <member name="M:Westwind.Utilities.ImageUtils.ResizeImage(System.String,System.String,System.Int32,System.Int32)">
+        <member name="M:Westwind.Utilities.ImageUtils.ResizeImage(System.String,System.String,System.Int32,System.Int32,System.Drawing.Drawing2D.InterpolationMode)">
             <summary>
             Resizes an image and saves the image to a file
             </summary>
@@ -3351,9 +3354,19 @@
             <param name="height"></param>
             <returns></returns>
         </member>
-        <member name="M:Westwind.Utilities.ImageUtils.ResizeImage(System.Drawing.Bitmap,System.Int32,System.Int32)">
+        <member name="M:Westwind.Utilities.ImageUtils.GetImageFormatFromFilename(System.String)">
             <summary>
-            Resizes an image from a bitmap
+            Tries to return an image format 
+            </summary>
+            <param name="filename"></param>
+            <returns>Image format or ImageFormat.Emf if no match was found</returns>
+        </member>
+        <member name="M:Westwind.Utilities.ImageUtils.ResizeImage(System.Drawing.Bitmap,System.Int32,System.Int32,System.Drawing.Drawing2D.InterpolationMode)">
+            <summary>
+            Resizes an image from a bitmap.
+            
+            Note it will size to the larger of the sides 
+            
             </summary>
             <param name="bmp"></param>
             <param name="width"></param>
@@ -4609,15 +4622,6 @@
             </summary>
             <param name="url"></param>
             <param name="size"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Utilities.InternetTools.HttpClient.GetUrlBytes(System.String,System.Int64)">
-            <summary>
-            Retrieves URL into an Byte Array.
-            </summary>
-            <remarks>Fires the ReceiveData Event</remarks>
-            <param name="Url">Url to read</param>
-            <param name="bufferSize">Size of the buffer for each read. 0 = 8192</param>
             <returns></returns>
         </member>
         <member name="M:Westwind.Utilities.InternetTools.HttpClient.DownloadBytes(System.String,System.Int64)">
