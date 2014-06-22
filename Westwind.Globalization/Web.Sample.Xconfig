@@ -16,6 +16,7 @@
                         addMissingResources="false" 
                         useVsNetResourceNaming="false"   
                         stronglyTypedGlobalResource="~/_Classes/Resources.cs,AppResources"
+                        resourceNamespace="AppResources"
                         bingClientID =""
                         bingClientSecret=""                                      
                       />

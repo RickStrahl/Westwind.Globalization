@@ -124,13 +124,14 @@ resources:
   <DbResourceProvider connectionString="server=.;database=localizations;integrated security=true"
                       resourceTableName="Localizations"
                       addMissingResources="false"
-                      stronglyTypedGlobalResource="~/Properties/Resources.cs,AppResources"
+                      stronglyTypedGlobalResource="~/Properties/Resources.cs"
+                      resourceNamespace="AppResources"
+                      resxExportProjectType="WebForms"
                       localizationFormWebPath="~/localizationadmin/LocalizationAdmin.aspx"                      
                       designTimeVirtualPath="/internationalization"
                       showLocalizationControlOptions="true"
                       showControlIcons="true"
-                      useVsNetResourceNaming="false"
-                      resxExportProjectType="WebForms"
+                      useVsNetResourceNaming="false
                       bingClientId=""
                       bingClientSecret="" />
 </configuration>
@@ -441,7 +442,9 @@ integrate or modify the code for this project. You are free to use it in persona
 commercial, government and any other type of application. 
 
 [Commercial Licenses](http://west-wind.com/Westwind.Globalization/docs/?page=_2lp0u0i9b.htm) 
-are also available as an option.
+are also available as an option. If you are using these tools in a commercial application
+please consider purchasing one of our reasonably priced commercial licenses that help support 
+this project's development.
 
 All source code is copyright West Wind Technologies, regardless of changes made to them. 
 Any source code modifications must leave the original copyright code headers intact.

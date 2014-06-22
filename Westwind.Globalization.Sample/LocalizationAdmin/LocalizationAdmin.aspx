@@ -29,7 +29,8 @@
     <form id="form1" runat="server">    
     <br />        
         <ww:ErrorDisplay ID="ErrorDisplay" runat="server" 
-                    DisplayTimeout="5000" width="600px" 
+                    DisplayTimeout="5000" 
+                    width="600px" 
                     meta:resourcekey="ErrorDisplay" 
                     UseFixedHeightWhenHiding="False" />        
                 
@@ -59,13 +60,13 @@
                 <!-- WRITE options can be disabled with the safeMode switch -->
                 <div id="divToolbar" style="margin-bottom: 10px;" class="safemode">            
                     <span class="hoverbutton">
-                        <img runat="server" id="imgExportResources" />
+                        <img runat="server" id="imgExportResources" src="images/extractresources.png" />
                         <asp:LinkButton runat="server" ID="btnExportResources" Title="Export to Resource Files" Text="Export to Resource Files"  
                                         OnClick="btnExportResources_Click" OnClientClick="if (!confirm(ResC('ResourceGenerationConfirmation'))) return false;" meta:resourcekey="btnExportResources" />
                      </span>
             
                     <span class="hoverbutton"> 
-                        <img runat="server" id="imgImport"  />
+                        <img runat="server" id="imgImport" src="images/import.png" />
                         <asp:LinkButton runat="server" ID="btnImport" Title="Import Resources" Text="Import" onclick="btnImport_Click" meta:resourcekey="btnImport" />
                     </span>                 
                       
@@ -77,7 +78,7 @@
                     </span>            
                                 
                     <span class="hoverbutton" >
-                        <img runat="server" id="imgCreateTable" visible="false" />
+                        <img runat="server" id="imgCreateTable" visible="false" src="images/createtable.png" />
                         <asp:LinkButton runat="server" ID="btnCreateTable" Title="Create" Text="Create Table" OnClick="btnCreateTable_Click"  meta:resourcekey="btnCreateTable" />
                     </span>
                 </div>
@@ -85,17 +86,17 @@
 
                 <div id="divToolbar2" >
                  <span class="hoverbutton">            
-                    <img runat="server" id="imgRefresh" />
+                    <img runat="server" id="imgRefresh" src="images/refresh.png"/>
                     <asp:LinkButton runat="server" ID="btnRefresh" Title="Refresh Page" Text="Refresh Page" meta:resourcekey="btnRefresh"></asp:LinkButton>                    
                 </span>
             
                 <span class="hoverbutton">            
-                    <img runat="server" id="imgRecycleApp" />
+                    <img runat="server" id="imgRecycleApp" src="images/recycle.png" />
                     <asp:LinkButton runat="server" ID="btnRecycleApp" Title="Recycle Application" AccessKey="R" Text="Recyle App" OnClientClick="ReloadResources();return false;" meta:resourcekey="btnRecycleApp"></asp:LinkButton>&nbsp;&nbsp;
                 </span>
             
                 <span class="hoverbutton">            
-                    <img runat="server" id="imgBackup" />
+                    <img runat="server" id="imgBackup" src="images/backup.png" />
                     <asp:LinkButton runat="server" ID="btnBackup" Title="Backup Resource Database" Text="Backup Table" OnClientClick="Backup();return false;" meta:resourcekey="btnBackup"></asp:LinkButton>
                 </span>
             
@@ -114,9 +115,9 @@
             
                 <asp:DropDownList runat="server" ID="lstResourceSet" width="450px" AutoPostBack="True" meta:resourcekey="lstResourceSet"></asp:DropDownList>
                 
-                <a href="javascript:ShowNewResourceDisplay(true);" class="hoverbutton"><asp:Image  runat="server" ID="imgAddResourceSet" Title="Add ResourceSet" meta:resourcekey="imgAddResourceSet" /></a>
-                <a href="javascript:ShowResourceSetRenameDisplay();" class="hoverbutton"><asp:Image  runat="server"  ID="imgRenameResourceSet" Title="Rename ResourceSet" meta:resourcekey="imgRenameResourceSet" /></a>
-                <a href="javascript:DeleteResourceSet();" class="hoverbutton"><asp:Image  runat="server"  ID="imgDeleteResourceSet" Title="Delete ResourceSet" meta:resourcekey="imgDeleteResourceSet" /></a>
+                <a href="javascript:ShowNewResourceDisplay(true);" class="hoverbutton"><asp:Image  runat="server" ID="imgAddResourceSet" Title="Add ResourceSet" ImageUrl="images/new.png" /></a>
+                <a href="javascript:ShowResourceSetRenameDisplay();" class="hoverbutton"><asp:Image  runat="server"  ID="imgRenameResourceSet" Title="Rename ResourceSet" ImageUrl="images/rename.png" /></a>
+                <a href="javascript:DeleteResourceSet();" class="hoverbutton"><asp:Image  runat="server"  ID="imgDeleteResourceSet" Title="Delete ResourceSet" ImageUrl="images/delete.png" /></a>
             </div>
             
             <br />

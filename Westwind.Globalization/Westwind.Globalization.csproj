@@ -132,23 +132,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\editresources.png" />
-    <EmbeddedResource Include="Resources\extractresources.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\localize.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\refresh.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\recycle.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\delete.gif" />
-    <EmbeddedResource Include="Resources\rename.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\createtable.gif" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DbSimpleResourceProvider\BasicResourceProvider.cd" />
@@ -162,8 +145,6 @@
     <None Include="DbResourceManagerResourceProvider\DbResourceProviderHierarchy.cd" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\backup.gif" />
-    <EmbeddedResource Include="Resources\import.gif" />
     <EmbeddedResource Include="Resources\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -172,9 +153,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\new.gif" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -194,6 +172,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\localize.png" />
     <Content Include="ResourceTest.aspx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

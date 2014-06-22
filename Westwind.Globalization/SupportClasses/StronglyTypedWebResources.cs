@@ -164,7 +164,7 @@ namespace Westwind.Globalization
             foreach (DataRow row in Resources.Rows)
             {
                 string ResourceSet = row["resourceset"] as string;
-                string Class = CreateClassFromDatabaseResource(ResourceSet, null, CultureInfo.InvariantCulture.TextInfo.ToTitleCase(ResourceSet), null);
+                string Class = CreateClassFromDatabaseResource(ResourceSet, null, ResourceSet, null);
                 sbClasses.Append(Class);
             }
 
@@ -376,6 +376,12 @@ namespace Westwind.Globalization
         /// <param name="sbClass"></param>
         private void CreateClassHeader(string Classname, bool IsVb, StringBuilder sbClass)
         {
+            if (Classname.Contains("/") || Classname.Contains("\\"))
+            {
+                Classname = Classname.Replace("\\", "/");
+                Classname = Classname.Substring(Classname.LastIndexOf("/")+1);
+            }
+
             if (!IsVb)
                 sbClass.Append("\tpublic class " + Classname + "\r\n\t{\r\n");
             else
@@ -475,7 +481,7 @@ namespace Westwind.Globalization
                 if (nextUpper)
                     sb.Append(char.ToUpper(ch));
                 else
-                    sb.Append(char.ToLower(ch));
+                    sb.Append(ch);
 
                 nextUpper = false;
             }

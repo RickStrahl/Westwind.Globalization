@@ -113,23 +113,11 @@ namespace Westwind.GlobalizationWeb
 
             SetControlId();
 
-            // Need to manually load images from resources
-            imgExportResources.Src = Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_EXTRACTRESOURCES);
-            imgRefresh.Src = Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_REFRESH);
-            imgRecycleApp.Src = Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_RECYCLE);
 
             if (btnCreateTable.Visible)
             {
-                imgCreateTable.Src = Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_CREATETABLE);
                 imgCreateTable.Visible = true;
             }
-
-            imgDeleteResourceSet.ImageUrl = Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_DELETE);
-            imgRenameResourceSet.ImageUrl = Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_RENAME);
-            imgAddResourceSet.ImageUrl = Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_NEW);
-
-            imgImport.Src = Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_IMPORT);
-            imgBackup.Src = Page.ClientScript.GetWebResourceUrl(typeof(GlobalizationResources), GlobalizationResources.INFO_ICON_BACKUP);            
 
             //// *** Check if resources are properly active if not we have a 
             ////     problem and need to let user know
@@ -346,18 +334,18 @@ namespace Westwind.GlobalizationWeb
 
         protected void btnGenerateStronglyTypedResources_Click(object sender, EventArgs e)
         {
-            string[] tokens = DbResourceConfiguration.Current.StronglyTypedGlobalResource.Split(',');
-            if (tokens.Length == 2)
-            {
-                StronglyTypedWebResources strongTypes = new StronglyTypedWebResources(Context.Request.PhysicalApplicationPath);
-                strongTypes.CreateClassFromAllDatabaseResources(tokens[1], HttpContext.Current.Server.MapPath(tokens[0]));
-                 
-                if (string.IsNullOrEmpty(strongTypes.ErrorMessage))                
-                    ErrorDisplay.ShowMessage(string.Format( WebUtils.LRes("StronglyTypedGlobalResourcesCreated"), tokens[1]) );
-                else
-                    ErrorDisplay.ShowMessage(WebUtils.LRes("StronglyTypedGlobalResourcesFailed"));
-                
-            }
+            var config = DbResourceConfiguration.Current;
+
+            StronglyTypedWebResources strongTypes =
+                new StronglyTypedWebResources(Context.Request.PhysicalApplicationPath);
+            strongTypes.CreateClassFromAllDatabaseResources(config.ResourceBaseNamespace,
+                HttpContext.Current.Server.MapPath(config.StronglyTypedGlobalResource));
+
+            if (string.IsNullOrEmpty(strongTypes.ErrorMessage))
+                ErrorDisplay.ShowMessage(string.Format(WebUtils.LRes("StronglyTypedGlobalResourcesCreated"),
+                    config.ResourceBaseNamespace));
+            else
+                ErrorDisplay.ShowMessage(WebUtils.LRes("StronglyTypedGlobalResourcesFailed"));
         }
 
 
@@ -375,8 +363,7 @@ namespace Westwind.GlobalizationWeb
             if (DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.WebForms)
                 res = Converter.ImportWebResources();
             else
-                res = Converter.ImportWinResources(Server.MapPath("~/"), "CodePasteMvc");       
-            
+                res = Converter.ImportWinResources(Server.MapPath("~/"),DbResourceConfiguration.Current.ResourceBaseNamespace);       
 
             if (res)
                 ErrorDisplay.ShowMessage(WebUtils.LRes("ResourceImportComplete"));

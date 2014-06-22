@@ -84,31 +84,31 @@ namespace Westwind.Globalization
             get { return _DesignTimeVirtualPath; }
             set { _DesignTimeVirtualPath = value; }
         }
-        private string _DesignTimeVirtualPath = "";
+        private string _DesignTimeVirtualPath = string.Empty;
 
         /// <summary>
         /// Determines whether the DbResourceControl shows its localization options on the
         /// page. 
         /// </summary>
-        public bool ShowLocalizationControlOptions
-        {
-            get { return _ShowLocalizationOptions; }
-            set { _ShowLocalizationOptions = value; }
-        }
-        private bool _ShowLocalizationOptions = false;
+        public bool ShowLocalizationControlOptions { get; set; }
 
         /// <summary>
         /// Determines whether page controls show icons when a 
         /// DbResourceControl is active. Note requires that ShowLocalizationControlOptions
         /// is true as well.
         /// </summary>
-        public bool ShowControlIcons
-        {
-            get { return _ShowControlIcons; }
-            set { _ShowControlIcons = value; }
-        }
-        private bool _ShowControlIcons = false;
+        public bool ShowControlIcons {get; set; }
 
+
+        /// <summary>
+        /// Type that is instantiated to handle Database access
+        /// </summary>
+        public string DbResourceManagerType
+        {
+            get { return _DbResourceManagerType; }
+            set { _DbResourceManagerType = value; }
+        }
+        private string _DbResourceManagerType = "Westwind.Globalization.DbResourceDataManager";
 
 
         /// <summary>
@@ -163,21 +163,33 @@ namespace Westwind.Globalization
 
 
         /// <summary>
-        /// Path and Name space of an optionally generated strongly typed resource
+        /// Path of an optionally generated strongly typed resource
         /// which is created when exporting to ResX resources.
         /// 
         /// Leave this value blank if you don't want a strongly typed resource class
         /// generated for you.
         /// 
-        /// Otherwise format is: (File Path,Namespace)
-        /// ~/App_Code/Resources.cs,AppResources
+        /// Otherwise format is: 
+        /// ~/App_Code/Resources.cs
         /// </summary>
         public string StronglyTypedGlobalResource
         {
             get { return _StronglyTypedGlobalResource; }
             set { _StronglyTypedGlobalResource = value; }
         }
-        private string _StronglyTypedGlobalResource = "~/App_Code/Resources.cs,AppResources";
+        private string _StronglyTypedGlobalResource = "~/App_Code/Resources.cs";
+
+
+        /// <summary>
+        /// The namespace used for exporting and importing resources 
+        /// </summary>
+        public string ResourceBaseNamespace
+        {
+            get { return _resourceBaseNamespace; }
+            set { _resourceBaseNamespace = value; }
+           
+        }
+        private string _resourceBaseNamespace = "AppResources";
 
 
         /// <summary>
@@ -282,6 +294,7 @@ namespace Westwind.Globalization
             ShowControlIcons = section.ShowControlIcons;
             AddMissingResources = section.AddMissingResources;
             StronglyTypedGlobalResource = section.StronglyTypedGlobalResource;
+            ResourceBaseNamespace = section.ResourceBaseNamespace;
             ResxExportProjectType = section.ResxExportProjectType;
             BingClientId = section.BingClientId;
             BingClientSecret = section.BingClientSecret;

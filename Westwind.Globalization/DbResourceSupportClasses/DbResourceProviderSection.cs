@@ -116,14 +116,26 @@ ConfigurationProperty("resxExportProjectType", DefaultValue = GlobalizationResxE
         /// Specify the project relative filename (~/Properties/Resources.cs) and a namespace ("AppResources")
         /// </summary>
         [Description("Determines whether a strongly typed resource is created when database resources are exported to a ResX file"),
-         ConfigurationProperty("stronglyTypedGlobalResource", DefaultValue = "~/Properties/Resources.cs,AppResources")]
+         ConfigurationProperty("stronglyTypedGlobalResource", DefaultValue = "~/Properties/Resources.cs")]
         public string StronglyTypedGlobalResource
         {
             get { return (string)this["stronglyTypedGlobalResource"]; }
             set { this["stronglyTypedGlobalResource"] = value; }
         }
 
-
+        /// <summary>
+        /// The base namespace used for resources imported from Resx resources
+        /// and for generation of strongly typed resources.
+        /// Resourcenames then add the project path to the base path
+        /// (ie. AppResources.Properties.Resources) 
+        /// </summary>
+        [Description("The base resource namespace for imported Resx resources and generated strongly typed resource classes"),
+         ConfigurationProperty("resourceBaseNamespace", DefaultValue = "AppResources")]
+        public string ResourceBaseNamespace
+        {
+            get { return (string)this["resourceBaseNamespace"]; }
+            set { this["resourceBaseNamespace"] = value; }
+        }
 
 
         public DbResourceProviderSection(string connectionString, string resourceTableName, string designTimeVirtualPath)

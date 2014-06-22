@@ -18,7 +18,6 @@ using Westwind.Web;
 
 namespace Westwind.Globalization
 {
-
     /// <summary>
     /// This class provides the Data Access to the database
     /// for the DbResourceManager, Provider and design time
@@ -29,7 +28,7 @@ namespace Westwind.Globalization
     /// DbResourceConfiguration   (holds and reads all config data from .Current)
     /// SqlDataAccess             (provides a data access (DAL))
     /// </summary>
-    public class DbResourceDataManager
+    public class DbResourceDataManager 
     {
         /// <summary>
         /// Internally used Transaction object
@@ -443,16 +442,17 @@ namespace Westwind.Globalization
         public DataTable GetAllResourceSets(ResourceListingTypes Type)
         {
             SqlDataAccess Data = new SqlDataAccess(DbResourceConfiguration.Current.ConnectionString);
-            DataTable dt = null;
+            DataTable dt = null;           
 
             if (Type == ResourceListingTypes.AllResources)
                 dt = Data.ExecuteTable("TResourcesets", "select ResourceSet as ResourceSet from " + DbResourceConfiguration.Current.ResourceTableName + " group by ResourceSet");
             else if (Type == ResourceListingTypes.LocalResourcesOnly)
-                dt = Data.ExecuteTable("TResourcesets", "select ResourceSet as ResourceSet from " + DbResourceConfiguration.Current.ResourceTableName + " where resourceset like @ResourceSet group by ResourceSet",
+                dt = Data.ExecuteTable("TResourcesets", "select ResourceSet as ResourceSet from " + DbResourceConfiguration.Current.ResourceTableName +
+                    " where resourceset like '%.aspx' or resourceset like '%.ascx' or resourceset like '%.master' or resourceset like '%.sitemap' group by ResourceSet",
                                  Data.CreateParameter("@ResourceSet", "%.%"));
             else if (Type == ResourceListingTypes.GlobalResourcesOnly)
-                dt = Data.ExecuteTable("TResourcesets", "select ResourceSet as ResourceSet from " + DbResourceConfiguration.Current.ResourceTableName + " where resourceset not like @ResourceSet group by ResourceSet",
-                                 Data.CreateParameter("@ResourceSet", "%.%"));
+                dt = Data.ExecuteTable("TResourcesets", "select ResourceSet as ResourceSet from " + DbResourceConfiguration.Current.ResourceTableName + 
+                        " where resourceset not like '%.aspx' and resourceset not like '%.ascx' and resourceset not like '%.master' and resourceset not like '%.sitemap' group by ResourceSet");
 
             if (dt == null)
                 ErrorMessage = Data.ErrorMessage;

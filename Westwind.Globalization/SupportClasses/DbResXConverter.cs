@@ -537,11 +537,12 @@ namespace Westwind.Globalization
             if (!basePhysicalPath.EndsWith("\\"))
                 basePhysicalPath += "\\";
 
-            if (!string.IsNullOrEmpty(baseNamespace))
-                baseNamespace += ".";
+            // We need to create a Web relative path (ie. admin/myresources.resx)
+            string relPath = basePhysicalPath.Replace(this.BasePhysicalPath, "");
+            relPath = relPath.Replace("\\", "/");
 
             // Import the base path first
-            ImportDirectoryResources(basePhysicalPath, baseNamespace);
+            ImportDirectoryResources(basePhysicalPath, relPath);
             
             // Recurse into child folders
             string[] Directories = Directory.GetDirectories(basePhysicalPath);
@@ -551,10 +552,10 @@ namespace Westwind.Globalization
                 
                 string dir = directory.Name;
                 
-                if (dir == "" || ("|bin|obj|.svn|_svn|app_data|app_globalresources|app_localresources|".Contains("|" + dir.ToLower() + "|")))
+                if (dir == "" || ("|bin|obj|.git|.svn|_svn|app_data|app_globalresources|app_localresources|Migrations".Contains("|" + dir.ToLower() + "|")))
                     continue;
-                
-                ImportWinResources(basePhysicalPath + dir + "\\",baseNamespace + dir );
+
+                ImportWinResources(basePhysicalPath + dir + "\\","");
             }
 
             return true;
@@ -587,23 +588,23 @@ namespace Westwind.Globalization
                 
 
                 // ResName: admin/default.aspx or default.aspx or resources (global or assembly resources)
-                string LocaleId = "";
-                string ResName = relativePath + Path.GetFileNameWithoutExtension(tokens[0]);
+                string localeId = "";
+                string resName = relativePath + Path.GetFileNameWithoutExtension(tokens[0]);
 
                 if (tokens.Length > 1)
                 {
-                    string Extension = tokens[1];
-                    if ("aspx|ascx|master|sitemap|".Contains(Extension + "|") )
-                        ResName += "." + Extension;
+                    string extension = tokens[1];
+                    if ("aspx|ascx|master|sitemap|".Contains(extension + "|") )
+                        resName += "." + extension;
                     else
-                        LocaleId = Extension;
+                        localeId = extension;
                 }
                 if (tokens.Length > 2)
                 {
-                    LocaleId = tokens[2];
+                    localeId = tokens[2];
                 }
 
-                this.ImportResourceFile(file, ResName, LocaleId);
+                this.ImportResourceFile(file, resName, localeId);
             }
 
             return true;
