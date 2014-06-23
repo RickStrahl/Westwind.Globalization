@@ -249,6 +249,14 @@
             Specify the project relative filename (~/Properties/Resources.cs) and a namespace ("AppResources")
             </summary>
         </member>
+        <member name="P:Westwind.Globalization.DbResourceProviderSection.ResourceBaseNamespace">
+            <summary>
+            The base namespace used for resources imported from Resx resources
+            and for generation of strongly typed resources.
+            Resourcenames then add the project path to the base path
+            (ie. AppResources.Properties.Resources) 
+            </summary>
+        </member>
         <member name="T:Westwind.Globalization.DbRes">
             <summary>
             Helper class that handles access to the DbResourceManager
@@ -1100,6 +1108,11 @@
             is true as well.
             </summary>
         </member>
+        <member name="P:Westwind.Globalization.DbResourceConfiguration.DbResourceManagerType">
+            <summary>
+            Type that is instantiated to handle Database access
+            </summary>
+        </member>
         <member name="P:Westwind.Globalization.DbResourceConfiguration.LocalizationFormWebPath">
             <summary>
             Determines the location of the Localization form in a Web relative path.
@@ -1136,14 +1149,19 @@
         </member>
         <member name="P:Westwind.Globalization.DbResourceConfiguration.StronglyTypedGlobalResource">
             <summary>
-            Path and Name space of an optionally generated strongly typed resource
+            Path of an optionally generated strongly typed resource
             which is created when exporting to ResX resources.
             
             Leave this value blank if you don't want a strongly typed resource class
             generated for you.
             
-            Otherwise format is: (File Path,Namespace)
-            ~/App_Code/Resources.cs,AppResources
+            Otherwise format is: 
+            ~/App_Code/Resources.cs
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.DbResourceConfiguration.ResourceBaseNamespace">
+            <summary>
+            The namespace used for exporting and importing resources 
             </summary>
         </member>
         <member name="P:Westwind.Globalization.DbResourceConfiguration.ResxExportProjectType">
