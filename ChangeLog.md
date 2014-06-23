@@ -1,7 +1,7 @@
 #West Wind Globalization Changelog
 
-###Version 2.0
-*not released yet*
+###Version 1.997
+<small><i>June 23, 2014</i></small>
 
 * **Single Import and Export Mode**
 Removed separation between WebForms and Project mode Resx Imports and
@@ -11,7 +11,19 @@ is also respected for exports. The provider now checks explicitly
 for WebForms resources (.aspx/.ascx/.master/.sitemap) files and
 explicitly exports them to App_LocalResources folders in their
 respective directories. All other resources are automatically
-exported to the relative folder they specify.
+exported to the relative folder specified in their resourceset id.
+
+* **Removed Web Resources used for Admin Form**
+Remove Web Resources used for the admin form and referenced
+those resources directly with disk resources. This reduces
+the assembly size somewhat and removes clutter from project.
+
+* **Fix: Skip over Migrations folder .resx files**
+Some customers have reported importing of .resx files from 
+the 
+
+###Version 1.995
+<small><i>April 15, 2014</i></small>
 
 * **DbRes Provider for direct Resource Access**
 Added a new DbRes resource provider that bypasses the traditional
@@ -46,6 +58,9 @@ Updated the strongly typed resource generator to allow to create
 resources that can switch between the ASP.NET ResourceProvider or
 plain ResourceManager for retrieving resources. Allows generated
 resources to be used in non-Web applications (services, console etc.)
+
+###Version 1.990
+<small><i>January 11, 2014</i></small>
 
 * **Updated Admin UI**
 Tweaked the Admin UI so it works better as a standalone html
