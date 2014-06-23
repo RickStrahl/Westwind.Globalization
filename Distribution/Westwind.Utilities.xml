@@ -47,11 +47,8 @@
         <member name="M:Westwind.Utilities.Configuration.AppConfiguration.#ctor">
             <summary>
             Default constructor of this class SHOULD ALWAYS be implemented in
-            every subclass to allow serialization instantiation. Should be left empty.
-            
-            Typically subclass implementations should leave this blank
-            and implement the version that passes in a provider instance
-            or null (default provider).
+            every subclass to allow serialization instantiation and setting
+            of initial property values.
             </summary>         
         </member>
         <member name="M:Westwind.Utilities.Configuration.AppConfiguration.Initialize(Westwind.Utilities.Configuration.IConfigurationProvider,System.String,System.Object)">
@@ -447,6 +444,39 @@
             <param name="dom"></param>
             <param name="configSection"></param>
             <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.Configuration.ConfigurationFileConfigurationProvider`1.TypedValueToString(System.Object,System.Globalization.CultureInfo,System.String)">
+            <summary>
+            Converts a type to string if possible. This method supports an optional culture generically on any value.
+            It calls the ToString() method on common types and uses a type converter on all other objects
+            if available
+            </summary>
+            <param name="rawValue">The Value or Object to convert to a string</param>
+            <param name="culture">Culture for numeric and DateTime values</param>
+            <param name="unsupportedReturn">Return string for unsupported types</param>
+            <returns>string</returns>
+        </member>
+        <member name="M:Westwind.Utilities.Configuration.ConfigurationFileConfigurationProvider`1.StringToTypedValue(System.String,System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            Turns a string into a typed value generically.
+            Explicitly assigns common types and falls back
+            on using type converters for unhandled types.         
+            
+            Common uses: 
+            * UI -&gt; to data conversions
+            * Parsers
+            <seealso>Class ReflectionUtils</seealso>
+            </summary>
+            <param name="sourceString">
+            The string to convert from
+            </param>
+            <param name="targetType">
+            The type to convert to
+            </param>
+            <param name="culture">
+            Culture used for numeric and datetime values.
+            </param>
+            <returns>object. Throws exception if it cannot be converted.</returns>
         </member>
         <member name="P:Westwind.Utilities.Configuration.ConfigurationFileConfigurationProvider`1.ConfigurationFile">
             <summary>
@@ -4054,7 +4084,7 @@
             Takes a phrase and turns it into CamelCase text.
             White Space, punctuation and separators are stripped
             </summary>
-            <param name="?"></param>
+            <param name="phrase">Text to convert to CamelCase</param>
         </member>
         <member name="M:Westwind.Utilities.StringUtils.FromCamelCase(System.String)">
             <summary>
@@ -4095,7 +4125,7 @@
         </member>
         <member name="M:Westwind.Utilities.StringUtils.StringToBytes(System.String,System.Text.Encoding)">
             <summary>
-            Converts a string into bytes for storage in any byte[] type
+            Converts a string into bytes for storage in any byte[] types
             buffer or stream format (like MemoryStream).
             </summary>
             <param name="text"></param>
@@ -4147,18 +4177,9 @@
             Parses an string into an integer. If the value can't be parsed
             a default value is returned instead
             </summary>
-            <param name="input"></param>
-            <param name="defaultValue"></param>
-            <param name="formatProvider"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Utilities.StringUtils.ParseInt(System.String,System.Int32)">
-            <summary>
-            Parses an string into an integer. If the value can't be parsed
-            a default value is returned instead
-            </summary>
-            <param name="input"></param>
-            <param name="defaultValue"></param>
+            <param name="input">Input numeric string to be parsed</param>
+            <param name="defaultValue">Optional default value if parsing fails</param>
+            <param name="formatProvider">Optional NumberFormat provider. Defaults to current culture's number format</param>
             <returns></returns>
         </member>
         <member name="M:Westwind.Utilities.StringUtils.ParseDecimal(System.String,System.Decimal,System.IFormatProvider)">
@@ -4388,6 +4409,42 @@
             </summary>
             <param name="Time"></param>
         </member>
+        <member name="M:Westwind.Utilities.TimeUtils.Truncate(System.DateTime,Westwind.Utilities.DateTimeResolution)">
+            <summary>
+            Truncates a DateTime value to the nearest partial value.
+            </summary>
+            <remarks>
+            From: http://stackoverflow.com/questions/1004698/how-to-truncate-milliseconds-off-of-a-net-datetime        
+            </remarks>
+            <param name="date"></param>
+            <param name="resolution"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.TimeUtils.UtcToTimezoneTime(System.DateTime,System.String)">
+            <summary>
+            Converts a UtcTime to a local time based on a specific timezone
+            </summary>
+            <param name="dateTime"></param>
+            <param name="timeZoneId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.TimeUtils.UtcToTimezoneTime(System.DateTime,System.TimeZoneInfo)">
+            <summary>
+            Converts a UtcTime to a local time based on a specific timezone
+            </summary>
+            <param name="dateTime"></param>
+            <param name="timeZoneId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.TimeUtils.ToTimeZoneTime(System.DateTime,System.String)">
+            <summary>
+            Returns TimeZone adjusted time for a given from a Utc or local time.
+            Date is first converted to UTC then adjusted.
+            </summary>
+            <param name="time"></param>
+            <param name="timeZoneId"></param>
+            <returns></returns>
+        </member>
         <member name="T:Westwind.Utilities.RoundingDirection">
             <summary>
             Determines how date time values are rounded
@@ -4506,38 +4563,38 @@
             Adds POST form variables to the request buffer.
             PostMode determines how parms are handled.
             </summary>
-            <param name="Key">Key value or raw buffer depending on post type</param>
-            <param name="Value">Value to store. Used only in key/value pair modes</param>
+            <param name="key">Key value or raw buffer depending on post type</param>
+            <param name="value">Value to store. Used only in key/value pair modes</param>
         </member>
         <member name="M:Westwind.Utilities.InternetTools.HttpClient.AddPostKey(System.String,System.String)">
             <summary>
             Adds POST form variables to the request buffer.
             PostMode determines how parms are handled.
             </summary>
-            <param name="Key">Key value or raw buffer depending on post type</param>
-            <param name="Value">Value to store. Used only in key/value pair modes</param>
+            <param name="key">Key value or raw buffer depending on post type</param>
+            <param name="value">Value to store. Used only in key/value pair modes</param>
         </member>
         <member name="M:Westwind.Utilities.InternetTools.HttpClient.AddPostKey(System.String)">
             <summary>
             Adds a fully self contained POST buffer to the request.
             Works for XML or previously encoded content.
             </summary>
-            <param name="FullPostBuffer">String based full POST buffer</param>
+            <param name="fullPostBuffer">String based full POST buffer</param>
         </member>
         <member name="M:Westwind.Utilities.InternetTools.HttpClient.AddPostKey(System.Byte[])">
             <summary>
             Adds a fully self contained POST buffer to the request.
             Works for XML or previously encoded content.
-            </summary>
-            <param name="PostBuffer">Byte array of a full POST buffer</param>
+            </summary>	    
+            <param name="fullPostBuffer">Byte array of a full POST buffer</param>
         </member>
         <member name="M:Westwind.Utilities.InternetTools.HttpClient.AddPostFile(System.String,System.String)">
             <summary>
             Allows posting a file to the Web Server. Make sure that you 
             set PostMode
             </summary>
-            <param name="Key"></param>
-            <param name="FileName"></param>
+            <param name="key"></param>
+            <param name="fileName"></param>
             <returns></returns>
         </member>
         <member name="M:Westwind.Utilities.InternetTools.HttpClient.GetUrlStream(System.String)">

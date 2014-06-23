@@ -126,7 +126,6 @@ resources:
                       addMissingResources="false"
                       stronglyTypedGlobalResource="~/Properties/Resources.cs"
                       resourceNamespace="AppResources"
-                      resxExportProjectType="WebForms"
                       localizationFormWebPath="~/localizationadmin/LocalizationAdmin.aspx"                      
                       designTimeVirtualPath="/internationalization"
                       showLocalizationControlOptions="true"

@@ -3,6 +3,16 @@
 ###Version 2.0
 *not released yet*
 
+* **Single Import and Export Mode**
+Removed separation between WebForms and Project mode Resx Imports and
+exports - there's now only a single mode that works for both. All
+resources are now imported with a project relative path Id that
+is also respected for exports. The provider now checks explicitly
+for WebForms resources (.aspx/.ascx/.master/.sitemap) files and
+explicitly exports them to App_LocalResources folders in their
+respective directories. All other resources are automatically
+exported to the relative folder they specify.
+
 * **DbRes Provider for direct Resource Access**
 Added a new DbRes resource provider that bypasses the traditional
 .NET resource providers and goes directly to the database provider.
