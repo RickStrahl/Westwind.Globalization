@@ -110,10 +110,10 @@ namespace Westwind.Globalization
                 DbResXConverter converter = new DbResXConverter();
                 // must figure out the path
                 string resxPath = null;
-                if (DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.WebForms)
-                    resxPath = converter.FormatWebResourceSetPath(resourceSet, (resourceMode == "0") );
-                else
-                    resxPath = converter.FormatResourceSetPath(resourceSet);
+                //if (DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.WebForms)
+                //    resxPath = converter.FormatWebResourceSetPath(resourceSet, (resourceMode == "0") );
+                //else
+                resxPath = converter.FormatResourceSetPath(resourceSet);
 
                 resDict = converter.GetResXResourcesNormalizedForLocale(resxPath, localeId) as Dictionary<string, object>;
             }

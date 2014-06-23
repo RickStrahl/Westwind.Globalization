@@ -905,11 +905,19 @@
             <param name="ResourceSet"></param>
             <returns></returns>
         </member>
+        <member name="M:Westwind.Globalization.DbResXConverter.IsLocalResourceSet(System.String)">
+            <summary>
+            Determines if a resourceset is a local resource based
+            on the extension of the resource set
+            </summary>
+            <param name="resourceSet"></param>
+            <returns></returns>
+        </member>
         <member name="M:Westwind.Globalization.DbResXConverter.FormatResourceSetPath(System.String)">
             <summary>
             Returns the path the resource file withouth the resx and localeId extension
             </summary>
-            <param name="ResourceSet"></param>
+            <param name="resourceSet"></param>
             <param name="LocalResources"></param>
             <returns></returns>
         </member>
@@ -931,7 +939,7 @@
             <param name="WebPath">Physical path of the directory to pars</param>
             <returns></returns>
         </member>
-        <member name="M:Westwind.Globalization.DbResXConverter.ImportWinResources(System.String,System.String)">
+        <member name="M:Westwind.Globalization.DbResXConverter.ImportWinResources(System.String)">
             <summary>
             Imports Resources recursively from a non-Web project
             </summary>

@@ -549,7 +549,7 @@ namespace Westwind.Globalization
         /// <param name="basePhysicalPath">The physical path to the directory</param>
         /// <param name="baseNamespace">The base namespace in the project to prefix InternalResourceSets with</param>
         /// <returns></returns>
-        public bool ImportWinResources(string basePhysicalPath, string baseNamespace)
+        public bool ImportWinResources(string basePhysicalPath)
         {
             if (basePhysicalPath == null)
                 basePhysicalPath = this.BasePhysicalPath;
@@ -573,10 +573,10 @@ namespace Westwind.Globalization
                 
                 string dir = directory.Name;
                 
-                if (dir == "" || ("|bin|obj|.git|.svn|_svn|app_data|app_globalresources|app_localresources|Migrations".Contains("|" + dir.ToLower() + "|")))
+                if (dir == "" || ("|bin|obj|.git|.svn|_svn|app_data|Migrations|".Contains("|" + dir.ToLower() + "|")))
                     continue;
 
-                ImportWinResources(basePhysicalPath + dir + "\\","");
+                ImportWinResources(basePhysicalPath + dir + "\\");
             }
 
             return true;
@@ -611,6 +611,13 @@ namespace Westwind.Globalization
                 // ResName: admin/default.aspx or default.aspx or resources (global or assembly resources)
                 string localeId = "";
                 string resName = relativePath + Path.GetFileNameWithoutExtension(tokens[0]);
+
+
+                if (resName.Contains("App_LocalResources/"))
+                    resName = resName.Replace("App_LocalResources/", "");
+                else if (resName.Contains("App_GlobalResources/"))
+                    resName = resName.Replace("App_GlobalResources/", "");
+
 
                 if (tokens.Length > 1)
                 {

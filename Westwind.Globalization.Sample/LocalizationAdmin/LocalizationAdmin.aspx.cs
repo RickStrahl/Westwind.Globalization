@@ -363,7 +363,7 @@ namespace Westwind.GlobalizationWeb
             if (DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.WebForms)
                 res = Converter.ImportWebResources();
             else
-                res = Converter.ImportWinResources(Server.MapPath("~/"),DbResourceConfiguration.Current.ResourceBaseNamespace);       
+                res = Converter.ImportWinResources(Server.MapPath("~/"));       
 
             if (res)
                 ErrorDisplay.ShowMessage(WebUtils.LRes("ResourceImportComplete"));

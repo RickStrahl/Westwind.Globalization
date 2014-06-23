@@ -37,7 +37,8 @@ namespace Westwind.Globalization
         /// in resource folders, Class generates ResX files in the Properties folder of the project.
         /// </summary>
         [Description("Determines whether WebForms (using App_Global/LocalResource) or any other .NET project type is used for exporting ResX resources. Options are WebForms and Class. WebForms generates resources in resource folders, Class generates ResX files in the Properties folder of the project."),
-ConfigurationProperty("resxExportProjectType", DefaultValue = GlobalizationResxExportProjectTypes.WebForms)]
+ConfigurationProperty("resxExportProjectType", DefaultValue = GlobalizationResxExportProjectTypes.WebForms),
+        Obsolete("This value is no longer used and if set is ignored. Kept for backwards compatibility - remove from section")]
         public GlobalizationResxExportProjectTypes ResxExportProjectType
         {
             get { return (GlobalizationResxExportProjectTypes)this["resxExportProjectType"]; }

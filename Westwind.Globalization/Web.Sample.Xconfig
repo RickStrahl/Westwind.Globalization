@@ -15,8 +15,8 @@
                         localizationFormWebPath="~/localizationadmin/LocalizationAdmin.aspx" 
                         addMissingResources="false" 
                         useVsNetResourceNaming="false"   
-                        stronglyTypedGlobalResource="~/_Classes/Resources.cs,AppResources"
-                        resourceNamespace="AppResources"
+                        stronglyTypedGlobalResource="~/_Classes/Resources.cs"
+                        resourceBaseNamespace="AppResources"
                         bingClientID =""
                         bingClientSecret=""                                      
                       />
@@ -31,8 +31,8 @@
 		<!-- ASP.NET ResourceProvider is configured here  
            if no provider default ResX provider is used 
      -->
-		<globalization resourceProviderFactoryType="Westwind.Globalization.DbSimpleResourceProviderFactory,Westwind.Globalization"/>
-		<!--<globalization resourceProviderFactoryType="Westwind.Globalization.DbResourceProviderFactory,Westwind.Globalization"  />-->
+		<!--<globalization resourceProviderFactoryType="Westwind.Globalization.DbSimpleResourceProviderFactory,Westwind.Globalization"/>-->
+		
 		
     <!-- Medium trust works fine. Note you'll need WRITE access in folders to write out resources -->
 		<!--<trust level="Medium" originUrl="(http://www.google.com/translate_t)|(http://babelfish.yahoo.com/translate_txt)"/>-->

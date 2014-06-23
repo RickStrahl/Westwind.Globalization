@@ -409,7 +409,8 @@ function DeleteResourceSet()
             function(result) {
                 if (result) {
                     ShowMessage("ResourceSet deleted...", 5000);
-                    $("#lstResourceSet option[value=" + ResourceSet + "]").remove();                
+                    var $el = $("#lstResourceSet option[value='" + ResourceSet + "']");
+                    $el.remove();                
                 }
                 else
                     ShowMessage("ResourceSet deletion failed...", 5000);

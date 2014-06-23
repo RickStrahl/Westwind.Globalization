@@ -201,7 +201,7 @@ namespace Westwind.Globalization
             set { _resxExportProjectType = value; }
         }
 
-        private GlobalizationResxExportProjectTypes _resxExportProjectType = GlobalizationResxExportProjectTypes.WebForms;
+        private GlobalizationResxExportProjectTypes _resxExportProjectType = GlobalizationResxExportProjectTypes.Project;
  
 
 
@@ -295,7 +295,7 @@ namespace Westwind.Globalization
             AddMissingResources = section.AddMissingResources;
             StronglyTypedGlobalResource = section.StronglyTypedGlobalResource;
             ResourceBaseNamespace = section.ResourceBaseNamespace;
-            ResxExportProjectType = section.ResxExportProjectType;
+            //ResxExportProjectType = section.ResxExportProjectType;
             BingClientId = section.BingClientId;
             BingClientSecret = section.BingClientSecret;
         }
