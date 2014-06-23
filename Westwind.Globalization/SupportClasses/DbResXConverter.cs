@@ -276,60 +276,60 @@ namespace Westwind.Globalization
             if (dtResources == null)
                 return false;
 
-            string LastSet = "";
-            string LastLocale = "@!";
+            string lastSet = "";
+            string lastLocale = "@!";
 
             // Load the document schema
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(ResXDocumentTemplate);
 
             XmlWriter xWriter = null;
-            XmlWriterSettings XmlSettings = new XmlWriterSettings();
+            var xmlSettings = new XmlWriterSettings();
 
             //// Make sure we use fragment syntax so there's no validation
             //// otherwise loading the original string will fail
-            XmlSettings.ConformanceLevel = ConformanceLevel.Document;
-            XmlSettings.IndentChars = "   ";
-            XmlSettings.Indent = true;
+            xmlSettings.ConformanceLevel = ConformanceLevel.Document;
+            xmlSettings.IndentChars = "   ";
+            xmlSettings.Indent = true;
 
             foreach (DataRow dr in dtResources.Rows)
             {
                 // Read into vars for easier usage below
-                string ResourceId = dr["ResourceId"] as string;
-                string Value = dr["Value"] as string;
-                string Comment = dr["Comment"] as string;
+                string resourceId = dr["ResourceId"] as string;
+                string value = dr["Value"] as string;
+                string comment = dr["Comment"] as string;
 
-                string Type = dr["Type"] as string;
-                string TextFile = dr["TextFile"] as string;
-                byte[] BinFile = dr["BinFile"] as byte[];
-                string FileName = dr["FileName"] as string;
+                string type = dr["Type"] as string;
+                string textFile = dr["TextFile"] as string;
+                byte[] binFile = dr["BinFile"] as byte[];
+                string fileName = dr["FileName"] as string;
 
-                string ResourceSet = dr["ResourceSet"] as string;
+                string resourceSet = dr["ResourceSet"] as string;
                 //ResourceSet = ResourceSet.ToLower();
 
-                string LocaleId = dr["LocaleId"] as string;
-                LocaleId = LocaleId.ToLower();
+                string localeId = dr["LocaleId"] as string;
+                localeId = localeId.ToLower();
 
                 // Create a new output file if the resource set or locale changes
-                if (ResourceSet != LastSet || LocaleId != LastLocale)
+                if (resourceSet != lastSet || localeId != lastLocale)
                 {
                     if (xWriter != null)
                     {
-                        //xWriter.WriteRaw("\r\n</root>");
                         xWriter.WriteEndElement();
                         xWriter.Close();
                     }
 
                     string localizedExtension = ".resx";
-                    if (LocaleId != "")
-                        localizedExtension = "." + LocaleId + ".resx";
+                    if (localeId != "")
+                        localizedExtension = "." + localeId + ".resx";
 
-                    //xWriter = XmlWriter.Create( this.FormatResourceSetPath(ResourceSet,LocalResources) + Loc,XmlSettings) ;
-                    XmlTextWriter Writer = new XmlTextWriter(this.FormatResourceSetPath(ResourceSet) + localizedExtension,Encoding.UTF8);
-                    Writer.Indentation = 3;
-                    Writer.IndentChar = ' ';
-                    Writer.Formatting = Formatting.Indented;
-                    xWriter = Writer as XmlWriter;
+                    var fullFileName = this.FormatResourceSetPath(resourceSet) + localizedExtension;
+
+                    XmlTextWriter writer = new XmlTextWriter(fullFileName,Encoding.UTF8);
+                    writer.Indentation = 3;
+                    writer.IndentChar = ' ';
+                    writer.Formatting = Formatting.Indented;
+                    xWriter = writer as XmlWriter;
 
                     xWriter.WriteStartElement("root");
 
@@ -343,32 +343,32 @@ namespace Westwind.Globalization
                         Node.WriteTo(xWriter);
                     }
 
-                    LastSet = ResourceSet;
-                    LastLocale = LocaleId;
+                    lastSet = resourceSet;
+                    lastLocale = localeId;
                 }
 
-                if (Type == "")  // plain string value
+                if (type == "")  // plain string value
                 {
                     //<data name="LinkButton1Resource1.Text" xml:space="preserve">
                     //    <value>LinkButton</value>
                     //</data>
                     xWriter.WriteStartElement("data");
-                    xWriter.WriteAttributeString("name", ResourceId);
+                    xWriter.WriteAttributeString("name", resourceId);
                     xWriter.WriteAttributeString("xml", "space", null, "preserve");
-                    xWriter.WriteElementString("value", Value);
-                    if (!string.IsNullOrEmpty(Comment))
-                        xWriter.WriteElementString("comment", Comment);
+                    xWriter.WriteElementString("value", value);
+                    if (!string.IsNullOrEmpty(comment))
+                        xWriter.WriteElementString("comment", comment);
                     xWriter.WriteEndElement(); // data
                 }
                 // File Resources get written to disk
-                else if (Type == "FileResource")
+                else if (type == "FileResource")
                 {
-                    string ResourceFilePath = this.FormatResourceSetPath(ResourceSet);
+                    string ResourceFilePath = this.FormatResourceSetPath(resourceSet);
                     string ResourcePath = new FileInfo(ResourceFilePath).DirectoryName;
 
-                    if (Value.IndexOf("System.String") > -1)
+                    if (value.IndexOf("System.String") > -1)
                     {
-                        string[] Tokens = Value.Split(';');
+                        string[] Tokens = value.Split(';');
                         Encoding Encode = Encoding.Default;
                         try
                         {
@@ -376,7 +376,7 @@ namespace Westwind.Globalization
                                 Encode = Encoding.GetEncoding(Tokens[2]);
 
                             // Write out the file to disk
-                            File.WriteAllText(ResourcePath + "\\" + FileName, TextFile, Encode);
+                            File.WriteAllText(ResourcePath + "\\" + fileName, textFile, Encode);
                         }
                         catch
                         {
@@ -384,20 +384,20 @@ namespace Westwind.Globalization
                     }
                     else
                     {
-                        File.WriteAllBytes(ResourcePath + "\\" + FileName, BinFile);
+                        File.WriteAllBytes(ResourcePath + "\\" + fileName, binFile);
                     }
 
                     //<data name="Scratch" type="System.Resources.ResXFileRef, System.Windows.Forms">
                     //  <value>Scratch.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
                     //</data>
                     xWriter.WriteStartElement("data");
-                    xWriter.WriteAttributeString("name", ResourceId);
+                    xWriter.WriteAttributeString("name", resourceId);
                     xWriter.WriteAttributeString("type", "System.Resources.ResXFileRef, System.Windows.Forms");
 
                     // values are already formatted in the database
-                    xWriter.WriteElementString("value", Value);
-                    if (!string.IsNullOrEmpty(Comment))
-                        xWriter.WriteElementString("comment", Comment);
+                    xWriter.WriteElementString("value", value);
+                    if (!string.IsNullOrEmpty(comment))
+                        xWriter.WriteElementString("comment", comment);
 
                     xWriter.WriteEndElement(); // data
                 }
@@ -445,26 +445,47 @@ namespace Westwind.Globalization
                return ResourceSet;
         }
 
+
+        /// <summary>
+        /// Determines if a resourceset is a local resource based
+        /// on the extension of the resource set
+        /// </summary>
+        /// <param name="resourceSet"></param>
+        /// <returns></returns>
+        public static bool IsLocalResourceSet(string resourceSet)
+        {
+            var lres = resourceSet.ToLower();
+            if (lres.EndsWith(".aspx") || lres.EndsWith(".ascx") || lres.EndsWith(".master") || lres.EndsWith(".sitemap"))
+                return true;
+
+            return false;
+        }
+
         /// <summary>
         /// Returns the path the resource file withouth the resx and localeId extension
         /// </summary>
-        /// <param name="ResourceSet"></param>
+        /// <param name="resourceSet"></param>
         /// <param name="LocalResources"></param>
         /// <returns></returns>
-        public string FormatResourceSetPath(string ResourceSet)
+        public string FormatResourceSetPath(string resourceSet)
         {
-            // strip off root namespace
-            if (ResourceSet.Contains("."))
-                ResourceSet = ResourceSet.Substring(ResourceSet.IndexOf(".") + 1);
-
             // Make sure our slashes are right
-            ResourceSet = this.BasePhysicalPath +  ResourceSet.Replace(".", "\\");
+            resourceSet = this.BasePhysicalPath +  resourceSet;
+            resourceSet = resourceSet.Replace("/", "\\");
 
-            FileInfo fi = new FileInfo(ResourceSet);
+            if (IsLocalResourceSet(resourceSet) && !resourceSet.Contains("App_LocalResources"))
+            {
+                string pathOnly = Path.GetDirectoryName(resourceSet);
+                string fileOnly = Path.GetFileName(resourceSet);
+
+                resourceSet = pathOnly + "\\App_LocalResources\\" + fileOnly;
+            }
+
+            FileInfo fi = new FileInfo(resourceSet);
             if (!fi.Directory.Exists)
                 fi.Directory.Create();
 
-            return ResourceSet;
+            return resourceSet;
         }
 
 
