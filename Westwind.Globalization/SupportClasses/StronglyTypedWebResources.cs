@@ -462,7 +462,7 @@ namespace Westwind.Globalization
             StringBuilder sb = new StringBuilder(phrase.Length);
 
             // First letter is always upper case
-            bool nextUpper = true;
+            bool nextUpper = false;
             bool isFirst = true;
 
             foreach (char ch in phrase)

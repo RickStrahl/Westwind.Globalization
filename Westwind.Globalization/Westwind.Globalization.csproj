@@ -174,8 +174,6 @@
   <ItemGroup>
     <Content Include="Resources\localize.png" />
     <Content Include="ResourceTest.aspx" />
-    <Content Include="scripts\ww.jquery.js" />
-    <Content Include="scripts\ww.jquery.min.js" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
