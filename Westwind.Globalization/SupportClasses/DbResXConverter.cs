@@ -622,7 +622,7 @@ namespace Westwind.Globalization
                 if (tokens.Length > 1)
                 {
                     string extension = tokens[1];
-                    if ("aspx|ascx|master|sitemap|".Contains(extension + "|") )
+                    if ("aspx|ascx|master|sitemap|".Contains(extension.ToLower() + "|") )
                         resName += "." + extension;
                     else
                         localeId = extension;
