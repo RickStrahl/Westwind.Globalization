@@ -148,6 +148,11 @@
     <Compile Include="LocalizationAdmin\StronglyTypedGlobalResources.aspx.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.cs" />
+    <Compile Include="Properties\Test.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Test.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -243,6 +248,13 @@
       <Project>{51dece39-764c-4c32-a57a-d93a5fd9bd6a}</Project>
       <Name>Westwind.Globalization</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Test.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Test.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Test.de.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

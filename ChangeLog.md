@@ -22,6 +22,11 @@ the assembly size somewhat and removes clutter from project.
 Some customers have reported importing of .resx files from 
 the 
 
+* **Fix: Case strongly typed ResourceIds is preserved in Properties**
+Previous versions generated the strongly typed property names using a
+parsing algorithm. New code uses original resource ID names and only
+fixes up Camel casing for spaces/dahses and symbols.
+
 ###Version 1.995
 <small><i>April 15, 2014</i></small>
 
