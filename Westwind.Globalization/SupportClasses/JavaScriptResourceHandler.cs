@@ -150,6 +150,7 @@ namespace Westwind.Globalization
             // OutputCache settings
             HttpCachePolicy cache = Response.Cache;
 
+            cache.VaryByParams["ResourceSet"] = true;
             cache.VaryByParams["LocaleId"] = true;
             cache.VaryByParams["ResoureType"] = true;
             cache.VaryByParams["IncludeControls"] = true;
