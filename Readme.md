@@ -1,6 +1,6 @@
-#West Wind Globalization
-###Database Resource Localization for .NET###
-Easily create ASP.NET resources stored in a Sql database for editing and updating 
+# West Wind Globalization#
+### Database Resource Localization for .NET###
+Easily create ASP.NET resources stored iSn a Sql database for editing and updating 
 at runtime using an interactive editor or programmatically using code.
 The library uses the standard .NET and ASP.NET infrastructure of ResourceSets and 
 ResourceManagers with a generic data backend to feed resource sets and provide 
@@ -13,7 +13,7 @@ Requirements:
 * .NET 4.5
 * Sql Server, Sql Express or SQL CE 4 or later
 
-###Resources:###
+### Resources:###
 * [Westwind.Globalization Home Page](http://west-wind.com/westwind.globalization/)
 * [Nuget Package](https://www.nuget.org/packages/Westwind.Globalization/)
 * [Getting Started Video](https://www.youtube.com/watch?v=jHg4hlnZNoA)
@@ -24,7 +24,7 @@ Requirements:
 * [License](http://west-wind.com/Westwind.Globalization/docs/_2lp0u0i9b.htm)
 
 
-###Features###
+### Features###
 * .NET Resources stored in Sql Server, Sql Compact Database
   (other providers in the future)  
 * ASP.NET Database ResourceProvider 
@@ -38,7 +38,7 @@ Requirements:
 * Release and reload resources at runtime
 * DbRes helper to easily embed resources into markup and code
 
-###Web Resource Editor###
+### Web Resource Editor###
 One of the main reasons people want to use Database resources rather
 than Resx resources is that it allows for dynamic updates of resources. Resx
 resources are static and compiled into an application and so are typically
@@ -60,7 +60,7 @@ to the data API underneath it as well as the database itself, it's
 easy to create your own customized UI or data driven API that suits your
 application needs exactly.
 
-###How the database Providers work###
+### How the database Providers work###
 This library works by implementing a custom .NET ResourceManager and 
 ASP.NET ResourceProvider that are tied to a database provider. This 
 means you can access resources using the same mechanisms that you
@@ -99,7 +99,7 @@ There are three distinct resource access mechanisms supported:
   (Non-Web apps, and or MVC apps where you already use Resx)
 * Direct Db Provider access using DbRes helper (easiest overall - works everywhere)
 
-###Installation and Configuration###
+### Installation and Configuration###
 The easiest way to use data driven resources with this library is to install the NuGet
 package into an ASP.NET application.
 
@@ -112,7 +112,7 @@ web.config and enables the resource provider by default. It also installs
 the localization administration form shown above, so you can create the
 resource table and manage resources in it.
 
-####Configuration Settings####
+#### Configuration Settings####
 The key configuration items set are the DbResourceProvider section in
 the config file which tells the provider where to find the database
 resources:
@@ -141,7 +141,7 @@ The two most important keys are the connectionString and resourceTableName which
 database and a table within it. You can use either a raw connectionstring as above or a connection
 string name in the ConnectionStrings section of your config file.
 
-####Run the Web Resource Editor####
+#### Run the Web Resource Editor####
 In order to use database resources you'll actually have to create some resources in a database.
 Make sure you've first added a valid connection string in the config file in the last step! 
 Then open the /LocalizationAdmin/LocalizationAdmin.aspx page in your browser and click on the
@@ -169,7 +169,7 @@ to note however is:
 * If you add a new ResourcesSet or Language in a resource you have to refresh the entire form
   otherwise the new language or ResourceSet doesn't show up in lists.
 
-####Setting ASP.NET Locale based on Browser Locale####
+#### Setting ASP.NET Locale based on Browser Locale####
 In order to do automatic localization based on a browser's language used you can
 sniff the browser's default language and set the UiCulture in the Begin_Request 
 handler of your ASP.NET application class. A helper method to provide this 
@@ -197,14 +197,14 @@ de-CH (Swiss german) and you de (without a locale specific suffix) the de German
 version will be returned. Resource Fallback tries to ensure that always something
 is returned.
 
-###Using Resources in your Application###
+### Using Resources in your Application###
 There are a number of different ways to access resources from this provider.
 
 * Direct access with DbRes 
 * ASP.NET Resource provider
 * .NET Resource Manager
 
-####DbRes Helper Class###
+#### DbRes Helper Class###
 The DbRes Helper class is a wrapper around the DbResourceManager and DbResouceDataManager
 object. The DbRes class contains a handful of common use static methods that are used to 
 retrieve and manipulate resources.
@@ -226,7 +226,7 @@ This is an easy mechanism that's tied closely to the database
 resources created and can be applied with minimal fuss in any
 kind of .NET application.
 
-####ASP.NET MVC or ASP.NET WebPages####
+#### ASP.NET MVC or ASP.NET WebPages####
 ```HTML
 Say Hello: @DbRes.T("HelloWorld") at @DateTime.Now
 ```
@@ -241,7 +241,7 @@ Say Hello: <%: DbRes.T("HelloWorld") %> at <%= DateTime.Now %>
 string value = DbRes.T("HelloWorld");
 ```
 
-###Using the ASP.NET Resource Provider###
+### Using the ASP.NET Resource Provider###
 If you're using an existing WebForms application or you want to
 use the ASP.NET based Resource Provider model for accessing resources
 you can use the DbSimpleResourceProvider. This implementation is an
@@ -268,14 +268,14 @@ features:
 * GetGlobalResourceObject, GetLocalResourceObject on Page and HttpContext
 * Using meta:resourcekey attributes on Web Controls
 
-####Page.GetGlobalResourceObject() or HttpContext.GetGlobalResourceObject()####
+#### Page.GetGlobalResourceObject() or HttpContext.GetGlobalResourceObject()####
 ```HTML
 <legend>ASP.NET ResourceProvider</legend>
 <label>Get GlobalResource Object (default locale):</label>
 <%: Page.GetGlobalResourceObject("Resources","HelloWorld") %>
 ```
 
-####Page.GetLocalResourceObject()####
+#### Page.GetLocalResourceObject()####
 ```HTML
 <label>GetLocalResourceObject via Expression:</label>                 
 <%: GetLocalResourceObject("lblHelloWorldLabel.Text") %>
@@ -287,14 +287,14 @@ features:
 <asp:Label ID="lblHelloLabel" runat="server" meta:resourcekey="lblHelloWorldLabel"></asp:Label>
 ```
 
-####WebForms Resource Expressions####
+#### WebForms Resource Expressions####
 ```HTML
 <label>Resource Expressions (Global Resources):</label>
 <asp:Label ID="Label1" runat="server" Text="<%$ Resources:Resources,HelloWorld %>"></asp:Label>
 ```
 
 
-####Strongly typed Resources####
+#### Strongly typed Resources####
 The Web Resource Editor form allows you to create strongly typed resources
 for any global resources in your application. Basically it'll go through all the 
 non-local resources in your file and create strongly type .NET classes in a file that
@@ -346,12 +346,12 @@ namespace WebApplication1
 
 These can then be used in any ASP.NET application:
 
-####ASP.NET MVC or WebPages####
+#### ASP.NET MVC or WebPages####
 ```HTML
 <div class="statusbar">@CommonWords.Ready</div>
 ```
 
-####ASP.NET WebForms####
+#### ASP.NET WebForms####
 ```HTML
 <div class="statusbar"><%: WebApplication2.CommonWords.Ready %></div>
 ```
@@ -363,7 +363,7 @@ reason we use a single file, rather than a file per resource set to
 keep the file management as simple as possible.
 
 
-####JavaScript Resource Handler####
+#### JavaScript Resource Handler####
 Localization doesn't stop with server templates - if you're building applications
 that include JavaScript logic it's likely that you also need to access resources
 on the client that are localized. This library provides a JavaScript Resource 
@@ -435,14 +435,14 @@ declared object that you want to attach the resources to you can use that name. 
 </script>
 ```
 
-####License####
+#### License####
 The Westwind.Globalization library is licensed under the
 [MIT License](http://opensource.org/licenses/MIT) and there's no charge to use, 
 integrate or modify the code for this project. You are free to use it in personal, 
 commercial, government and any other type of application. 
 
-[Commercial Licenses](http://west-wind.com/Westwind.Globalization/docs/?page=_2lp0u0i9b.htm) 
-are also available as an option. If you are using these tools in a commercial application
+[Commercial Licenses](http://west-wind.com/Westwind.Globalization/docs/?page=_2lp0u0i9b.htm) are 
+also available as an option. If you are using these tools in a commercial application
 please consider purchasing one of our reasonably priced commercial licenses that help support 
 this project's development.
 
@@ -450,7 +450,7 @@ All source code is copyright West Wind Technologies, regardless of changes made 
 Any source code modifications must leave the original copyright code headers intact.
 
 
-####Warranty Disclaimer: No Warranty!####
+#### Warranty Disclaimer: No Warranty!####
 IN NO EVENT SHALL THE AUTHOR, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR REDISTRIBUTE 
 THIS PROGRAM AND DOCUMENTATION, BE LIABLE FOR ANY COMMERCIAL, SPECIAL, INCIDENTAL, 
 OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM 

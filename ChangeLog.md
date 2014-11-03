@@ -1,6 +1,6 @@
-#West Wind Globalization Changelog
+# West Wind Globalization Changelog
 
-###Version 1.997
+### Version 1.997
 <small><i>June 23, 2014</i></small>
 
 * **Single Import and Export Mode**
@@ -27,7 +27,7 @@ Previous versions generated the strongly typed property names using a
 parsing algorithm. New code uses original resource ID names and only
 fixes up Camel casing for spaces/dahses and symbols.
 
-###Version 1.995
+### Version 1.995
 <small><i>April 15, 2014</i></small>
 
 * **DbRes Provider for direct Resource Access**
@@ -64,7 +64,7 @@ resources that can switch between the ASP.NET ResourceProvider or
 plain ResourceManager for retrieving resources. Allows generated
 resources to be used in non-Web applications (services, console etc.)
 
-###Version 1.990
+### Version 1.990
 <small><i>January 11, 2014</i></small>
 
 * **Updated Admin UI**
