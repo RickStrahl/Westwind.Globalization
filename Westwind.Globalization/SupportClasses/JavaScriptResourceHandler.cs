@@ -138,32 +138,32 @@ namespace Westwind.Globalization
 
             // client cache
             if (!HttpContext.Current.IsDebuggingEnabled)
-            {                
-                Response.ExpiresAbsolute = DateTime.UtcNow.AddDays(30);
-                Response.Cache.SetLastModified(DateTime.UtcNow);
+            {
+                Response.ExpiresAbsolute = DateTime.UtcNow.AddDays(1);                
                 Response.AppendHeader("Accept-Ranges", "bytes");
                 Response.AppendHeader("Vary", "Accept-Encoding");
                 Response.Cache.SetETag("\"" + javaScript.GetHashCode().ToString("x") + "\"");
                 Response.Cache.SetLastModified(DateTime.UtcNow);
+
+                // OutputCache settings
+                HttpCachePolicy cache = Response.Cache;
+
+                cache.VaryByParams["ResourceSet"] = true;
+                cache.VaryByParams["LocaleId"] = true;
+                cache.VaryByParams["ResoureType"] = true;
+                cache.VaryByParams["IncludeControls"] = true;
+                cache.VaryByParams["VarName"] = true;
+                cache.VaryByParams["ResourceMode"] = true;
+                //cache.SetOmitVaryStar(true);
+
+                DateTime now = DateTime.Now;
+                cache.SetCacheability(HttpCacheability.Public);
+                cache.SetExpires(now + TimeSpan.FromDays(1));
+                cache.SetValidUntilExpires(true);
+                cache.SetLastModified(now);
             }
 
-            // OutputCache settings
-            HttpCachePolicy cache = Response.Cache;
-
-            cache.VaryByParams["LocaleId"] = true;
-            cache.VaryByParams["ResoureType"] = true;
-            cache.VaryByParams["IncludeControls"] = true;
-            cache.VaryByParams["VarName"] = true;
-            cache.VaryByParams["ResourceMode"] = true;           
-            //cache.SetOmitVaryStar(true);
-
-            DateTime now = DateTime.Now;
-            cache.SetCacheability(HttpCacheability.Public);
-            cache.SetExpires(now + TimeSpan.FromDays(10));
-            cache.SetValidUntilExpires(true);
-            cache.SetLastModified(now);
-
-            SendTextOutput(javaScript, "application/javascript");
+            SendTextOutput(javaScript, "application/json");
         }
 
         /// <summary>
@@ -233,16 +233,15 @@ namespace Westwind.Globalization
         /// <param name="text"></param>
         /// <param name="useGZip"></param>
         /// <param name="contentType"></param>
-        private void SendTextOutput(string text, string contentType)
+        private void SendTextOutput(string text, string contentType = "application/json")
         {
             HttpResponse Response = HttpContext.Current.Response;
             Response.ContentType = contentType;
             Response.Charset = "utf-8";
 
             // Trigger Gzip encoding and headers if supported
-            //WebUtils.GZipEncodePage();       
-            //byte[] Output = Encoding.UTF8.GetBytes(text);
-            //Response.BinaryWrite(Output);
+            if (text.Length > 2000)
+                WebUtils.GZipEncodePage();       
 
             Response.Write(text);            
         }
