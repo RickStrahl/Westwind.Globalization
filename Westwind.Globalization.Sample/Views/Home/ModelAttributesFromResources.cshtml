@@ -1,0 +1,45 @@
+﻿@model ViewModelWithLocalizedAttributes
+@{
+    ViewBag.Title = "ModelAttributesFromResourcesView";
+}
+
+<div class="content" style="margin-top:70px;">
+
+    <h2>ModelAttributesFromResourcesView</h2>
+
+    <div class="well">
+        <small>
+            <p>
+                This example demonstrates using resources for validation error messages
+                in ASP.NET MVC model validation.
+            </p>
+            <p>
+                In order for this to work your Db Resources have to create strongly named
+                Resource types (from the Localization Admin form), which can then be 
+                referenced in the [ErrorMessageResourceName, ErrorMessageResourceType] attribute
+                values.
+            </p>
+        </small>
+    </div>
+    
+    @Html.ValidationSummary()
+
+    @using (Html.BeginForm())
+    {
+        <div class="form-group">
+             <label for="Name">Name</label>
+            
+                @Html.TextBoxFor(mdl => mdl.Name, new { @class="form-control"} )
+                @Html.ValidationMessageFor(mdl => mdl.Name)
+            
+        </div>
+        <div class="form-group">
+             <label for="Address">Address</label>
+            
+                @Html.TextBoxFor(mdl => mdl.Address,new { @class="form-control"})
+                @Html.ValidationMessageFor(mdl => mdl.Address)
+            
+        </div>
+        <input type="submit" id="btnSave" name="btnSave" value="Save" />
+    }
+</div>

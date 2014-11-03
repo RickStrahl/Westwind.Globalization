@@ -23,8 +23,13 @@ namespace Westwind.Globalization.Sample.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
-
             return View();
         }
+
+        public ActionResult ModelAttributesFromResources(ViewModelWithLocalizedAttributes model)
+        {
+            return View();
+        }
+
     }
 }

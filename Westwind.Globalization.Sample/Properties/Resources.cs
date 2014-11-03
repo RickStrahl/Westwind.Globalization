@@ -10,15 +10,15 @@ namespace Westwind.Globalization.Sample
         public static ResourceAccessMode ResourceAccessMode = ResourceAccessMode.AspNetResourceProvider;
     }
 
-	public class Commonwords
+	public class CommonWords
 	{
 		public static System.String Save
 		{
 			get
 			{
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
-					return (System.String) HttpContext.GetGlobalResourceObject("Commonwords","Save");
-				return DbRes.T("Save","Commonwords");
+					return (System.String) HttpContext.GetGlobalResourceObject("CommonWords","Save");
+				return DbRes.T("Save","CommonWords");
 			}
 		}
 
@@ -27,8 +27,8 @@ namespace Westwind.Globalization.Sample
 			get
 			{
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
-					return (System.String) HttpContext.GetGlobalResourceObject("Commonwords","Cancel");
-				return DbRes.T("Cancel","Commonwords");
+					return (System.String) HttpContext.GetGlobalResourceObject("CommonWords","Cancel");
+				return DbRes.T("Cancel","CommonWords");
 			}
 		}
 
@@ -37,8 +37,8 @@ namespace Westwind.Globalization.Sample
 			get
 			{
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
-					return (System.String) HttpContext.GetGlobalResourceObject("Commonwords","Edit");
-				return DbRes.T("Edit","Commonwords");
+					return (System.String) HttpContext.GetGlobalResourceObject("CommonWords","Edit");
+				return DbRes.T("Edit","CommonWords");
 			}
 		}
 
@@ -46,23 +46,13 @@ namespace Westwind.Globalization.Sample
 
 	public class Resources
 	{
-		public static System.String Yesterday
+		public static System.String NameIsRequired
 		{
 			get
 			{
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
-					return (System.String) HttpContext.GetGlobalResourceObject("Resources","Yesterday");
-				return DbRes.T("Yesterday","Resources");
-			}
-		}
-
-		public static System.String Ready
-		{
-			get
-			{
-				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
-					return (System.String) HttpContext.GetGlobalResourceObject("Resources","Ready");
-				return DbRes.T("Ready","Resources");
+					return (System.String) HttpContext.GetGlobalResourceObject("Resources","NameIsRequired");
+				return DbRes.T("NameIsRequired","Resources");
 			}
 		}
 
@@ -76,13 +66,43 @@ namespace Westwind.Globalization.Sample
 			}
 		}
 
-		public static System.String Helloworld
+		public static System.String Yesterday
+		{
+			get
+			{
+				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
+					return (System.String) HttpContext.GetGlobalResourceObject("Resources","Yesterday");
+				return DbRes.T("Yesterday","Resources");
+			}
+		}
+
+		public static System.String HelloWorld
 		{
 			get
 			{
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
 					return (System.String) HttpContext.GetGlobalResourceObject("Resources","HelloWorld");
 				return DbRes.T("HelloWorld","Resources");
+			}
+		}
+
+		public static System.String Ready
+		{
+			get
+			{
+				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
+					return (System.String) HttpContext.GetGlobalResourceObject("Resources","Ready");
+				return DbRes.T("Ready","Resources");
+			}
+		}
+
+		public static System.String AddressIsRequired
+		{
+			get
+			{
+				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
+					return (System.String) HttpContext.GetGlobalResourceObject("Resources","AddressIsRequired");
+				return DbRes.T("AddressIsRequired","Resources");
 			}
 		}
 
