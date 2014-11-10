@@ -123,7 +123,9 @@ namespace Westwind.Globalization
                                 resourceValue = string.Empty;
                         }
 
-                        resources.Add(reader["ResourceId"].ToString(), resourceValue);
+                        var key = reader["ResourceId"].ToString();
+                        if (!resources.ContainsKey(key))
+                            resources.Add(key, resourceValue);
                     }
                 }
                 catch (Exception ex)
