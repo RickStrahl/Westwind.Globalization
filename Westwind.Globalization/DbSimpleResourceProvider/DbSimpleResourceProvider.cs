@@ -114,7 +114,7 @@ namespace Westwind.Globalization
             {
                 ProviderLoaded = true;
                 _ResourceSetName = className;
-                DbResourceConfiguration.LoadedProviders.Add(this);
+                DbResourceConfiguration.AddProvider(this);
             }
               
         }

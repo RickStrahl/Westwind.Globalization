@@ -3,6 +3,7 @@ using System.Web.UI.Design;
 using System.Configuration;
 using System.Web.Configuration;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Westwind.Globalization
 {
@@ -307,7 +308,27 @@ namespace Westwind.Globalization
         /// <summary>
         /// Keep track of loaded providers so we can unload them
         /// </summary>
-        internal static List<IWestWindResourceProvider> LoadedProviders = new List<IWestWindResourceProvider>();
+        private static List<IWestWindResourceProvider> _LoadedProviders = new List<IWestWindResourceProvider>();
+
+        /// <summary>
+        /// Lock to ensure access to LoadedProviders is thread-safe.
+        /// </summary>
+        private static ReaderWriterLockSlim _SyncLock = new ReaderWriterLockSlim();
+
+        /// <summary>
+        /// Add a new instance of a provider to LoadedProviders
+        /// </summary>
+        /// <param name="provider"></param>
+        public static void AddProvider(IWestWindResourceProvider provider)
+        {
+            try{
+                _SyncLock.EnterWriteLock();
+                _LoadedProviders.Add(provider);
+            }
+            finally{
+                _SyncLock.ExitWriteLock();
+            }
+        }
 
         /// <summary>
         /// This static method clears all resources from the loaded Resource Providers 
@@ -324,9 +345,17 @@ namespace Westwind.Globalization
         /// </summary>
         public static void ClearResourceCache()
         {
-            foreach (IWestWindResourceProvider provider in LoadedProviders)
+            try
             {
-                provider.ClearResourceCache();
+                _SyncLock.EnterReadLock();
+                foreach (IWestWindResourceProvider provider in _LoadedProviders)
+                {
+                    provider.ClearResourceCache();
+                }
+            }
+            finally
+            {
+                _SyncLock.ExitReadLock();
             }
 
             // clear any resource managers
