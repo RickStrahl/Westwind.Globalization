@@ -86,7 +86,7 @@ namespace Westwind.Globalization
             {
                 //  _virtualPath = virtualPath;
                 _className = classname;
-                DbResourceConfiguration.LoadedProviders.Add(this);
+                DbResourceConfiguration.AddProvider(this);
             }
         }
 
