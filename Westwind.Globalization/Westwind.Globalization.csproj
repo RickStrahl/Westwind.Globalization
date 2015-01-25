@@ -101,12 +101,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbResourceManagerResourceProvider\DbResourceProviderFactory.cs" />
+    <Compile Include="DbResourceProvider\DbResourceProviderFactory.cs" />
     <Compile Include="DbResourceManager\DbResourceReader.cs" />
     <Compile Include="DbResourceManager\DbResourceSet.cs" />
     <Compile Include="DbResourceManager\DbResourceWriter.cs" />
+    <Compile Include="DbResourceSupportClasses\DbResourceSqlServerDataManager.cs" />
     <Compile Include="DbResourceSupportClasses\DbResourceProviderSection.cs" />
     <Compile Include="DbResourceManager\DbRes.cs" />
+    <Compile Include="DbResourceSupportClasses\ResourceItem.cs" />
     <Compile Include="Resources\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -124,7 +126,7 @@
     <Compile Include="DbResourceSupportClasses\DbResourceDataManager.cs" />
     <Compile Include="DbResourceManager\DbResourceManager.cs">
     </Compile>
-    <Compile Include="DbResourceManagerResourceProvider\DbResourceProvider.cs">
+    <Compile Include="DbResourceProvider\DbResourceProvider.cs">
     </Compile>
     <Compile Include="DbSimpleResourceProvider\DbSimpleResourceProvider.cs" />
     <Compile Include="DbSimpleResourceProvider\DbSimpleResourceProviderFactory.cs" />
@@ -140,7 +142,7 @@
     <None Include="Web.Sample.Xconfig">
       <SubType>Designer</SubType>
     </None>
-    <None Include="DbResourceManagerResourceProvider\DbResourceProviderHierarchy.cd" />
+    <None Include="DbResourceProvider\DbResourceProviderHierarchy.cd" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Resources.resx">

@@ -12,7 +12,7 @@ namespace Westwind.Globalization.Test
     {
 
         [Test]
-        public void DbResourceManagerBasic()
+        public void DbResourceManagerBasic()        
         {
             var res = new DbResourceManager("Resources");
 

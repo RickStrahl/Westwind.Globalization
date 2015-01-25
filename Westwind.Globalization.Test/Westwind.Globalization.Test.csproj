@@ -96,6 +96,7 @@
     <Compile Include="TranslationServiceTests.cs" />
     <Compile Include="DbResTests.cs" />
     <Compile Include="DbSimpleResourceProviderTests.cs" />
+    <Compile Include="DbResourceSqlDataManagerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
