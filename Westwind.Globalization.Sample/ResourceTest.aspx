@@ -66,7 +66,7 @@
                     <legend>Strongly Typed Resource (generated)</legend>
 
                     <label>Strongly typed Resource Generated from Db (uses ASP.NET ResourceProvider)</label>
-                    <%= Resources.Helloworld %>
+                    <%= Resources.HelloWorld %>
                 </fieldset>
             </div>
             

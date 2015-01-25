@@ -621,7 +621,8 @@ namespace Westwind.Globalization
 
             var data = new SqlDataAccess(DbResourceConfiguration.Current.ConnectionString);
 
-            DbDataReader reader = data.ExecuteReader("select Value,Type from " + DbResourceConfiguration.Current.ResourceTableName + " where ResourceId=@ResourceId and ResourceSet=@ResourceSet and LocaleId=@LocaleId",
+            DbDataReader reader = data.ExecuteReader("select Value,Type from " + DbResourceConfiguration.Current.ResourceTableName +
+                                                     " where ResourceId=@ResourceId and ResourceSet=@ResourceSet and LocaleId=@LocaleId",
                                data.CreateParameter("@ResourceId", resourceId),
                                data.CreateParameter("@ResourceSet", resourceSet),
                                data.CreateParameter("@LocaleId", cultureName));

@@ -41,7 +41,11 @@ namespace Westwind.Globalization
         /// non-Web projects this will be the project base path 
         /// as a string.
         /// </summary>
-        /// <param name="basePhsyicalPath"></param>
+        /// <param name="basePhsyicalPath">
+        /// Optional - allows specifying the virtual path where the resources are loaded and saved to.
+        /// 
+        /// If not specified HttpContext.Current.PhysicalPath is used instead.
+        /// </param>
         public DbResXConverter(string basePhsyicalPath)
         {
             if (string.IsNullOrEmpty(basePhsyicalPath))
@@ -263,6 +267,10 @@ namespace Westwind.Globalization
         /// Generates Resx Files for standard non-Web Resource files        
         /// based on the BasePhysicalPath
         /// </summary>
+        /// <param name="outputPath">
+        /// Optional output path where resources are generated.
+        /// If not specified the value is inferred for an ASP.NET Web app.
+        /// </param>        
         /// <returns></returns>
         public bool GenerateResXFiles()
         {
@@ -279,7 +287,7 @@ namespace Westwind.Globalization
             string lastSet = "";
             string lastLocale = "@!";
 
-            // Load the document schema
+            //// Load the document schema
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(ResXDocumentTemplate);
 
@@ -323,7 +331,7 @@ namespace Westwind.Globalization
                     if (localeId != "")
                         localizedExtension = "." + localeId + ".resx";
 
-                    var fullFileName = this.FormatResourceSetPath(resourceSet) + localizedExtension;
+                    string fullFileName = FormatResourceSetPath(resourceSet) + localizedExtension;
 
                     XmlTextWriter writer = new XmlTextWriter(fullFileName,Encoding.UTF8);
                     writer.Indentation = 3;
@@ -331,6 +339,7 @@ namespace Westwind.Globalization
                     writer.Formatting = Formatting.Indented;
                     xWriter = writer as XmlWriter;
 
+                    xWriter.WriteProcessingInstruction("xml", "version='1.0' encoding='UTF-8'");
                     xWriter.WriteStartElement("root");
 
                     // Write out the schema

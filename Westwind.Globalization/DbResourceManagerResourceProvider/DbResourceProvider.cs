@@ -59,19 +59,14 @@ namespace Westwind.Globalization
         /// </summary>
         string _className;
 
-        object _SyncLock = new object();
+        static object _SyncLock = new object();
 
         /// <summary>
         /// Flag that can be read to see if the resource provider is loaded
         /// </summary>
         public static bool ProviderLoaded = false;
 
-        private DbResourceProvider()
-        {             
-            if (!ProviderLoaded)
-                ProviderLoaded = true;
-        }
-
+       
         /// <summary>
         /// Default constructor - only captures the parameter values
         /// </summary>
@@ -131,8 +126,7 @@ namespace Westwind.Globalization
         /// <param name="culture"></param>
         /// <returns></returns>
         object IResourceProvider.GetObject(string resourceKey, CultureInfo culture)
-        {
-            
+        {     
             object value = ResourceManager.GetObject(resourceKey, culture);
 
             // If the value is still null and we're at the invariant culture

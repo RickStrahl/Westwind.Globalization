@@ -108,15 +108,19 @@ namespace Westwind.Globalization
         private static object _SyncLock = new object();
 
 
-        public DbSimpleResourceProvider(string virtualPath, string className)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="virtualPath">The virtual path to the Web application</param>
+        /// <param name="resourceSet">Name of the resource set to load</param>
+        public DbSimpleResourceProvider(string virtualPath, string resourceSet)
         {
             lock (_SyncLock)
             {
                 ProviderLoaded = true;
-                _ResourceSetName = className;
+                _ResourceSetName = resourceSet;
                 DbResourceConfiguration.LoadedProviders.Add(this);
-            }
-              
+            }              
         }
 
         /// <summary>
@@ -139,7 +143,7 @@ namespace Westwind.Globalization
                 // DEPENDENCY HERE (#1): Using DbResourceDataManager to retrieve resources
 
                 // Use datamanager to retrieve the resource keys from the database
-                DbResourceDataManager Data = new DbResourceDataManager();                                
+                DbResourceDataManager data = new DbResourceDataManager();                                
 
                 lock (_SyncLock)
                 {
@@ -148,9 +152,10 @@ namespace Westwind.Globalization
                         if (_resourceCache.Contains(cultureName))
                             Resources = _resourceCache[cultureName] as IDictionary;
                         else
-                            Resources = Data.GetResourceSet(cultureName as string, _ResourceSetName);
-
-                        _resourceCache[cultureName] = Resources;
+                        {
+                            Resources = data.GetResourceSet(cultureName as string, _ResourceSetName);
+                            _resourceCache[cultureName] = Resources;
+                        }
                     }
                 }
             }
@@ -181,13 +186,13 @@ namespace Westwind.Globalization
         /// <returns></returns>
         object IResourceProvider.GetObject(string ResourceKey, CultureInfo Culture)
         {
-            string CultureName = null;
+            string cultureName;
             if (Culture != null)
-                CultureName = Culture.Name;
+                cultureName = Culture.Name;
             else
-                CultureName = CultureInfo.CurrentUICulture.Name;
+                cultureName = CultureInfo.CurrentUICulture.Name;
 
-            return GetObjectInternal(ResourceKey, CultureName);
+            return GetObjectInternal(ResourceKey, cultureName);
         }
 
         /// <summary>
@@ -205,9 +210,7 @@ namespace Westwind.Globalization
             IDictionary resources = GetResourceCache(cultureName);
 
             object value = null;
-            if (resources == null)
-                value = null;
-            else
+            if (resources != null)
                 value = resources[resourceKey];
 
             // If we're at a specific culture (en-Us) and there's no value fall back
@@ -222,9 +225,7 @@ namespace Westwind.Globalization
             if (value == null)
             {
                 resources = GetResourceCache("");
-                if (resources == null)
-                    value = null;
-                else
+                if (resources != null)
                     value = resources[resourceKey];
             }
 

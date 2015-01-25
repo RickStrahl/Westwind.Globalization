@@ -33,8 +33,8 @@ namespace Westwind.Globalization
         public DbResourceSet(string baseName, CultureInfo culture)
             : base(new DbResourceReader(baseName, culture))
         {
-            this._BaseName = baseName;
-            this._Culture = culture;
+            _BaseName = baseName;
+            _Culture = culture;
         }
 
         /// <summary>
@@ -56,26 +56,5 @@ namespace Westwind.Globalization
         {
             return typeof(DbResourceWriter);
         }
-
-#if false  // Factory methods for ResourceReader and ResourceWriter objects - not used
-		        /// <summary>
-		        /// Custom implementations that allow calling code to get an instance of 
-		        /// ResourceReader.
-		        /// </summary>
-		        /// <returns>An IResourceReader to read the resources</returns>
-		        public IResourceReader CreateDefaultReader()
-		        {
-		            return new DbResourceReader(this._BaseName,this._Culture);
-		        }
-
-		        /// <summary>
-		        /// CreateDefaultWriter creates an IResourceWriter to write the resources
-		        /// </summary>
-		        /// <returns>An IResourceWriter to write the resources</returns>
-		        public IResourceWriter CreateDefaultWriter()
-		        {
-		            return new DbResourceWriter(this._BaseName,this._Culture);
-		        }
-#endif
     }
 }

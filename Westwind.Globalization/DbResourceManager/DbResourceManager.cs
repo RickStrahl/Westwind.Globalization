@@ -143,7 +143,7 @@ namespace Westwind.Globalization
         /// <returns></returns>
         protected override ResourceSet InternalGetResourceSet(CultureInfo culture, bool createIfNotExists, bool tryParents)
         {
-            var resourceSets = this.InternalResourceSets;
+            var resourceSets = InternalResourceSets;
 
             // retrieve cached instance - outside of lock for perf
             if (resourceSets.ContainsKey(culture.Name))

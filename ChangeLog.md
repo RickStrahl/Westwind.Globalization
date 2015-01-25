@@ -1,5 +1,20 @@
 # West Wind Globalization Changelog
 
+### Version 1.998
+<small><i>not released yet</i></small>
+
+* **Add Basic Unit Tests for Testing Resource Managers and Providers**
+Added high level integration tests for testing the DbResourceManager
+and ASP.NET providers. Also added load tests for each of these to detect
+possible ResourceSet locking conflicts.
+
+* **Fix: Add Processing Instruction for exported .resx Resources**
+Added code to add missing processing instruction when exporting 
+Db resources back to .resx resources in DbResXConverter.
+Additionally the ability to specify a base path where resources
+can be read from in addition to the default of the physical 
+ASP.NET path.
+
 ### Version 1.997
 <small><i>June 23, 2014</i></small>
 

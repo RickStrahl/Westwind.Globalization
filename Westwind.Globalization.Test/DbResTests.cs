@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Threading;
 using NUnit.Framework;
 using Westwind.Utilities.Data;
 
 namespace Westwind.Globalization.Test
 {
     [TestFixture]
-    public class DbResTests
+    public class DbResourceDataManagerWithSqlTests
     {
         [Test]
         public void DataBase()
@@ -18,13 +19,41 @@ namespace Westwind.Globalization.Test
         [Test]
         public void DbResSimpleValues()
         {
-            Console.WriteLine(DbRes.T("Today", "CommonPhrases", "de-de"));
-            Console.WriteLine(DbRes.T("Yesterday", "CommonPhrases", "de-de"));
-            Console.WriteLine(DbRes.T("Save", "CommonPhrases", "de-de"));
+            Console.WriteLine(DbRes.T("Today", "Resources", "de-de"));
+            Console.WriteLine(DbRes.T("Yesterday", "Resources", "de-de"));
+            Console.WriteLine(DbRes.T("Save", "Resources", "de-de"));
 
-            Console.WriteLine(DbRes.T("Today","CommonPhrases","en-US"));
-            Console.WriteLine(DbRes.T("Yesterday", "CommonPhrases","en-US"));
-            Console.WriteLine(DbRes.T("Save", "CommonPhrases","en-US"));
+            Console.WriteLine(DbRes.T("Today", "Resources", "en-US"));
+            Console.WriteLine(DbRes.T("Yesterday", "Resources", "en-US"));
+            Console.WriteLine(DbRes.T("Save", "Resources", "en-US"));
+        }
+
+        [Test]
+        public void DbResHeavyLoad()
+        {
+            var dt = DateTime.Now;
+            for (int i = 0; i < 1500; i++)
+            {
+                var t = new Thread(threadedDbRes);
+                t.Start(dt);                
+            }
+
+
+            Thread.Sleep(5000);
+        }
+
+
+        void threadedDbRes(object dt)
+        {                                    
+            try
+            {
+                Console.WriteLine(DbRes.T("Today", "Resources", "de-de") + " - " + Thread.CurrentThread.ManagedThreadId + " - " + DateTime.Now.Ticks);
+                Console.WriteLine(DbRes.T("Today", "Resources", "en-US") + " - " + Thread.CurrentThread.ManagedThreadId + " - " + DateTime.Now.Ticks);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("*** ERROR: "  + ex.Message);
+            }
         }
     }
 }

@@ -14,30 +14,39 @@ namespace Westwind.Globalization.Test
     {
    
 
+        /// <summary>
+        ///  convert Resx file to a resource dictionary
+        /// </summary>
         [Test]
         public void GetResXResourcesTest()
         {
             DbResXConverter converter = new DbResXConverter(null);            
-            Dictionary<string,object> items = converter.GetResXResourcesNormalizedForLocale(@"C:\projects2008\Westwind.GlobalizationWeb\App_GlobalResources\resources","de-de");
-            this.WriteResourceDictionary(items,"ResX Resources");
+            Dictionary<string,object> items = converter.GetResXResourcesNormalizedForLocale(@"C:\projects2010\libraries\Westwind.GlobalizationWeb\App_GlobalResources\resources","de-de");
+            WriteResourceDictionary(items,"ResX Resources");
         }
 
         [Test]
         public void GetDbResourcesTest()
         {
             DbResourceDataManager manager = new DbResourceDataManager();
-            Dictionary<string,object> items = manager.GetResourceSetNormalizedForLocaleId("de-de", "resources");
+            Dictionary<string,object> items = manager.GetResourceSetNormalizedForLocaleId("de-de", "Resources");
 
             WriteResourceDictionary(items, "DB Resources");            
         }
 
+        [Test]
+        public void WriteResxFromDbResources()
+        {
+            DbResXConverter converter = new DbResXConverter(@"c:\temp\resources");
+            Assert.IsTrue(converter.GenerateResXFiles(), converter.ErrorMessage);
+        }
 
         private void WriteResourceDictionary(Dictionary<string,object> items, string title)
         {
             Console.WriteLine("*** " + title);
             foreach (var item in items)
             {
-                Console.WriteLine(item.Key + " " + item.Value.ToString());
+                Console.WriteLine(item.Key + ": " + item.Value.ToString());
             }
 
             Dictionary<string,string> its = new Dictionary<string, string> { { "rick","strahl" }, { "frank", "hovell"} };

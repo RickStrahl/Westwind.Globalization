@@ -3,6 +3,7 @@ using System.Web.UI.Design;
 using System.Configuration;
 using System.Web.Configuration;
 using System.Collections.Generic;
+using Westwind.Utilities;
 
 namespace Westwind.Globalization
 {
@@ -110,7 +111,6 @@ namespace Westwind.Globalization
         }
         private string _DbResourceManagerType = "Westwind.Globalization.DbResourceDataManager";
 
-
         /// <summary>
         /// Determines the location of the Localization form in a Web relative path.
         /// This form is popped up when clicking on Edit Resources in the 
@@ -202,14 +202,13 @@ namespace Westwind.Globalization
         }
 
         private GlobalizationResxExportProjectTypes _resxExportProjectType = GlobalizationResxExportProjectTypes.Project;
- 
-
 
         /// <summary>
         /// Base constructor that doesn't do anything to the default values.
         /// </summary>
         public DbResourceConfiguration()
         {
+            
         }
 
         /// <summary>
@@ -298,6 +297,17 @@ namespace Westwind.Globalization
             //ResxExportProjectType = section.ResxExportProjectType;
             BingClientId = section.BingClientId;
             BingClientSecret = section.BingClientSecret;
+        }
+
+
+        /// <summary>
+        /// Creates an instance of the DbResourceDataManager based on configuration settings
+        /// </summary>
+        /// <returns></returns>
+        public static DbResourceDataManager CreateDbResourceDataManager()
+        {
+            return ReflectionUtils.CreateInstanceFromString(DbResourceConfiguration.Current.DbResourceManagerType) as
+                DbResourceDataManager;
         }
 
 
