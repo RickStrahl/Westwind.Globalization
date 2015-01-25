@@ -1,9 +1,22 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-
+@section header{
+    <style>
+        html,body { font-family: 'Trebuchet', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif }
+         .header {
+             font-size: 220%;
+             line-height: 1.3em;
+         }
+    </style>
+}
 <div class="jumbotron">
-    <h1>Westwind.Globalization Samples</h1>
+
+    
+    <header class="header">Westwind.Globalization Samples</header>
+
+    <img src="~/Content/Images/Westwind.Localization_128.png" class="pull-left"/>
+
     <p class="lead">
         The Westwind.Globalization ASP.NET components provide the abillity to easily create
         database hosted resources, that are easily and dynamically modifiable while still using

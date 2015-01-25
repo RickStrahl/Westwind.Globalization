@@ -19,14 +19,13 @@ namespace Westwind.Globalization.Sample
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            //BundleConfig.RegisterBundles(BundleTable.Bundles);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);            
         }
 
         protected void Application_BeginRequest()
         {
             WebUtils.SetUserLocale(currencySymbol: "$");
-            Trace.WriteLine("Begin Request Culture: " + Thread.CurrentThread.CurrentCulture.IetfLanguageTag);
+            Trace.WriteLine("App_BeginRequest - Culture: " + Thread.CurrentThread.CurrentCulture.IetfLanguageTag);
         }
   
     }
