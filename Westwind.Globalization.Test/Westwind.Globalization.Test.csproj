@@ -73,16 +73,17 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Web" />
     <Reference Include="System.XML" />
-    <Reference Include="Westwind.Utilities, Version=2.55.5278.25222, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Westwind.Utilities, Version=2.59.5499.28193, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Westwind.Utilities.2.55\lib\net40\Westwind.Utilities.dll</HintPath>
+      <HintPath>..\packages\Westwind.Utilities.2.59.1\lib\net45\Westwind.Utilities.dll</HintPath>
     </Reference>
-    <Reference Include="Westwind.Web, Version=2.51.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Westwind.Web, Version=2.59.5499.28286, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Westwind.Web.2.51\lib\net45\Westwind.Web.dll</HintPath>
+      <HintPath>..\packages\Westwind.Web.2.59\lib\net45\Westwind.Web.dll</HintPath>
     </Reference>
-    <Reference Include="Westwind.Web.WebForms">
-      <HintPath>..\packages\Westwind.Web.WebForms.2.51\lib\net45\Westwind.Web.WebForms.dll</HintPath>
+    <Reference Include="Westwind.Web.WebForms, Version=2.59.5500.1075, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Westwind.Web.WebForms.2.59\lib\net45\Westwind.Web.WebForms.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -125,6 +126,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="scripts\ww.jquery.js" />
+    <Content Include="scripts\ww.jquery.min.js" />
     <Content Include="_readme.Westwind.Globalization.html" />
   </ItemGroup>
   <ItemGroup>

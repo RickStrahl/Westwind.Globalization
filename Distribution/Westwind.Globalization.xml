@@ -865,7 +865,11 @@
             non-Web projects this will be the project base path 
             as a string.
             </summary>
-            <param name="basePhsyicalPath"></param>
+            <param name="basePhsyicalPath">
+            Optional - allows specifying the virtual path where the resources are loaded and saved to.
+            
+            If not specified HttpContext.Current.PhysicalPath is used instead.
+            </param>
         </member>
         <member name="M:Westwind.Globalization.DbResXConverter.GenerateLocalWebResourceResXFiles">
             <summary>
@@ -895,6 +899,10 @@
             Generates Resx Files for standard non-Web Resource files        
             based on the BasePhysicalPath
             </summary>
+            <param name="outputPath">
+            Optional output path where resources are generated.
+            If not specified the value is inferred for an ASP.NET Web app.
+            </param>        
             <returns></returns>
         </member>
         <member name="M:Westwind.Globalization.DbResXConverter.FormatWebResourceSetPath(System.String,System.Boolean)">
@@ -1062,6 +1070,12 @@
             Reads the actual section values
             </summary>
             <param name="section"></param>
+        </member>
+        <member name="M:Westwind.Globalization.DbResourceConfiguration.CreateDbResourceDataManager">
+            <summary>
+            Creates an instance of the DbResourceDataManager based on configuration settings
+            </summary>
+            <returns></returns>
         </member>
         <member name="F:Westwind.Globalization.DbResourceConfiguration.LoadedProviders">
             <summary>
@@ -1990,6 +2004,13 @@
             <summary>
             Critical section for loading Resource Cache safely
             </summary>
+        </member>
+        <member name="M:Westwind.Globalization.DbSimpleResourceProvider.#ctor(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="virtualPath">The virtual path to the Web application</param>
+            <param name="resourceSet">Name of the resource set to load</param>
         </member>
         <member name="M:Westwind.Globalization.DbSimpleResourceProvider.GetResourceCache(System.String)">
             <summary>

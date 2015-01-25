@@ -87,17 +87,17 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.XML" />
-    <Reference Include="Westwind.Utilities, Version=2.55.5278.25222, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Westwind.Utilities, Version=2.59.5499.28193, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Westwind.Utilities.2.55\lib\net40\Westwind.Utilities.dll</HintPath>
+      <HintPath>..\packages\Westwind.Utilities.2.59.1\lib\net45\Westwind.Utilities.dll</HintPath>
     </Reference>
-    <Reference Include="Westwind.Web, Version=2.55.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Westwind.Web.2.55.01\lib\net45\Westwind.Web.dll</HintPath>
+    <Reference Include="Westwind.Web">
+      <HintPath>..\packages\Westwind.Web.2.59\lib\net45\Westwind.Web.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Westwind.Web.WebForms, Version=2.50.5196.39647, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Westwind.Web.WebForms, Version=2.59.5500.1075, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Westwind.Web.WebForms.2.55.01\lib\net45\Westwind.Web.WebForms.dll</HintPath>
+      <HintPath>..\packages\Westwind.Web.WebForms.2.59\lib\net45\Westwind.Web.WebForms.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -136,9 +136,7 @@
   <ItemGroup>
     <None Include="DbSimpleResourceProvider\BasicResourceProvider.cd" />
     <None Include="DbSimpleResourceProvider\DbSimpleResourceProviderHierarchy.cd" />
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
     <None Include="Web.Sample.Xconfig">
       <SubType>Designer</SubType>
     </None>
@@ -176,6 +174,8 @@
     <Content Include="ResourceTest.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
+    <Content Include="scripts\ww.jquery.js" />
+    <Content Include="scripts\ww.jquery.min.js" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

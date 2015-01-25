@@ -61,7 +61,6 @@ namespace Westwind.Globalization.Test
             Console.WriteLine(german);
             Console.WriteLine(english);
             Console.WriteLine(unknown);
-
         }
 
         static ResourceManager resManager;

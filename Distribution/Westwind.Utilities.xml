@@ -1077,54 +1077,58 @@
         </member>
         <member name="M:Westwind.Utilities.Data.DataAccessBase.Find``1(System.Object,System.String,System.String)">
             <summary>
-            Returns a single
+            Returns a single entity based on a keyfield and key value
             </summary>
-            <typeparam name="T"></typeparam>
-            <param name="keyValue"></param>
-            <param name="tableName"></param>
-            <param name="keyField"></param>
+            <typeparam name="T">Type of entity to populate</typeparam>
+            <param name="keyValue">Value to look up in keyfield</param>
+            <param name="tableName">Name of the table to work on</param>
+            <param name="keyField">Field that is used for the key lookup</param>
             <returns></returns>
         </member>
         <member name="M:Westwind.Utilities.Data.DataAccessBase.Find``1(System.String,System.Object[])">
             <summary>
-            Returns a single object retrieved from data
+            Returns the first matching record retrieved from data based on a SQL statement
+            as an entity or null if no match was found.
             </summary>
-            <typeparam name="T"></typeparam>
-            <param name="sql"></param>
-            <param name="parameters"></param>
+            <typeparam name="T">Entity type to fill</typeparam>
+            <param name="sql">SQL string to execute. Use @0,@1,@2 for parameters</param>
+            <param name="parameters">SQL parameter values to pass.</param>
             <returns></returns>
         </member>
-        <member name="M:Westwind.Utilities.Data.DataAccessBase.Find``1(System.String,System.String,System.Object[])">
+        <member name="M:Westwind.Utilities.Data.DataAccessBase.FindEx``1(System.String,System.String,System.Object[])">
             <summary>
-            Returns a single object retrieved from data
+            Returns an entity that is the first match from a sql statement string.
             </summary>
-            <typeparam name="T"></typeparam>
-            <param name="sql"></param>
-            <param name="parameters"></param>
+            <typeparam name="T">Entity type to return</typeparam>
+            <param name="sql">Sql string to execute. Use @0,@1,@2 for positional parameters</param>
+            <param name="fieldsToSkip">fields to not update from the resultset</param>
+            <param name="parameters">Parameters to pass to SQL statement</param>
             <returns></returns>
         </member>
         <member name="M:Westwind.Utilities.Data.DataAccessBase.UpdateEntity(System.Object,System.String,System.String,System.String)">
             <summary>
             Updates an entity object that has matching fields in the database for each
             public property. Kind of a poor man's quick entity update mechanism.
-            </summary>
-            <param name="entity"></param>
-            <param name="table"></param>
-            <param name="keyField"></param>
+            
+            Note this method will not save if the record doesn't already exist in the db.
+            </summary>        
+            <param name="entity">entity to update</param>
+            <param name="table">the table name to update</param>
+            <param name="keyField">keyfield used to find entity</param>
             <param name="fieldsToSkip"></param>
             <returns></returns>
         </member>
         <!-- Badly formed XML comment ignored for member "M:Westwind.Utilities.Data.DataAccessBase.UpdateEntity(System.Object,System.String,System.String,System.String,System.String)" -->
-        <!-- Badly formed XML comment ignored for member "M:Westwind.Utilities.Data.DataAccessBase.InsertEntity(System.Object,System.String,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:Westwind.Utilities.Data.DataAccessBase.InsertEntity(System.Object,System.String,System.String,System.Boolean)" -->
         <member name="M:Westwind.Utilities.Data.DataAccessBase.SaveEntity(System.Object,System.String,System.String,System.String)">
             <summary>
             Saves an enity into the database using insert or update as required.
             Requires a keyfield that exists on both the entity and the database.
             </summary>
-            <param name="entity"></param>
-            <param name="table"></param>
-            <param name="keyField"></param>
-            <param name="fieldsToSkip"></param>
+            <param name="entity">entity to save</param>
+            <param name="table">table to save to</param>
+            <param name="keyField">keyfield to update</param>
+            <param name="fieldsToSkip">optional fields to skip when updating (keys related items etc)</param>
             <returns></returns>
         </member>
         <member name="M:Westwind.Utilities.Data.DataAccessBase.BeginTransaction">
@@ -1548,6 +1552,144 @@
             <param name="ms"></param>
             <param name="inputString"></param>
             <param name="encoding"></param>
+        </member>
+        <member name="T:Westwind.Utilities.HttpUtils">
+            <summary>
+            Simple HTTP request helper to let you retrieve data from a Web
+            server and convert it to something useful.
+            </summary>
+        </member>
+        <member name="M:Westwind.Utilities.HttpUtils.HttpRequestString(System.String)">
+            <summary>
+            Retrieves and Http request and returns data as a string.
+            </summary>
+            <param name="url">A url to call for a GET request without custom headers</param>
+            <returns>string of HTTP response</returns>
+        </member>
+        <member name="M:Westwind.Utilities.HttpUtils.HttpRequestString(Westwind.Utilities.HttpRequestSettings)">
+            <summary>
+            Retrieves and Http request and returns data as a string.
+            </summary>
+            <param name="settings">Pass HTTP request configuration parameters object to set the URL, Verb, Headers, content and more</param>
+            <returns>string of HTTP response</returns>
+        </member>
+        <member name="M:Westwind.Utilities.HttpUtils.JsonRequest``1(Westwind.Utilities.HttpRequestSettings)">
+            <summary>
+            Makes an HTTP with option JSON data serialized from an object
+            and parses the result from JSON back into an object.
+            Assumes that the service returns a JSON response
+            </summary>
+            <typeparam name="TResultType">The type of the object returned</typeparam>
+            <param name="settings"><see cref="T:Westwind.Utilities.HttpRequestSettings"/>
+            Configuration object for the HTTP request made to the server.
+            </param>
+            <returns>deserialized value/object from returned JSON data</returns>
+        </member>
+        <member name="M:Westwind.Utilities.HttpUtils.HttpRequestStringAsync(System.String)">
+            <summary>
+            Retrieves and Http request and returns data as a string.
+            </summary>
+            <param name="url">The Url to access</param>
+            <returns>string of HTTP response</returns>
+        </member>
+        <member name="M:Westwind.Utilities.HttpUtils.HttpRequestStringAsync(Westwind.Utilities.HttpRequestSettings)">
+            <summary>
+            Retrieves and Http request and returns data as a string.
+            </summary>
+            <param name="settings">Pass HTTP request configuration parameters object to set the URL, Verb, Headers, content and more</param>
+            <returns>string of HTTP response</returns>
+        </member>
+        <member name="M:Westwind.Utilities.HttpUtils.JsonRequestAsync``1(Westwind.Utilities.HttpRequestSettings)">
+            <summary>
+            Makes an HTTP with option JSON data serialized from an object
+            and parses the result from JSON back into an object.
+            Assumes that the service returns a JSON response and that
+            any data sent is json.
+            </summary>
+            <typeparam name="TResultType">The type of the object returned</typeparam>
+            <param name="settings"><see cref="T:Westwind.Utilities.HttpRequestSettings"/>
+            Configuration object for the HTTP request made to the server.
+            </param>
+            <returns>deserialized value/object from returned JSON data</returns>
+        </member>
+        <member name="T:Westwind.Utilities.HttpRequestSettings">
+            <summary>
+            Configuration object for Http Requests used by the HttpUtils
+            methods. Allows you to set the URL, verb, headers proxy and
+            credentials that are then passed to the HTTP client.
+            </summary>
+        </member>
+        <member name="P:Westwind.Utilities.HttpRequestSettings.Url">
+            <summary>
+            The URL to send the request to
+            </summary>
+        </member>
+        <member name="P:Westwind.Utilities.HttpRequestSettings.HttpVerb">
+            <summary>
+            The HTTP verb to use when sending the request
+            </summary>
+        </member>
+        <member name="P:Westwind.Utilities.HttpRequestSettings.Content">
+            <summary>
+            The Request content to send to the server.
+            Data can be either string or byte[] type
+            </summary>
+        </member>
+        <member name="P:Westwind.Utilities.HttpRequestSettings.IsRawData">
+            <summary>
+            When true data is not translated. For example
+            when using JSON Request if you want to send 
+            raw POST data rather than a serialized object.
+            </summary>
+        </member>
+        <member name="P:Westwind.Utilities.HttpRequestSettings.ContentType">
+            <summary>
+            The content type of any request data sent to the server
+            in the Data property.
+            </summary>
+        </member>
+        <member name="P:Westwind.Utilities.HttpRequestSettings.Headers">
+            <summary>
+            Any Http request headers you want to set for this request
+            </summary>
+        </member>
+        <member name="P:Westwind.Utilities.HttpRequestSettings.Credentials">
+            <summary>
+            Authentication information for this request
+            </summary>
+        </member>
+        <member name="P:Westwind.Utilities.HttpRequestSettings.Proxy">
+            <summary>
+            An optional proxy to set for this request
+            </summary>
+        </member>
+        <member name="P:Westwind.Utilities.HttpRequestSettings.CapturedRequestContent">
+            <summary>
+            Capture request string data that was actually sent to the server.
+            </summary>
+        </member>
+        <member name="P:Westwind.Utilities.HttpRequestSettings.CapturedResponseContent">
+            <summary>
+            Captured string Response Data from the server
+            </summary>
+        </member>
+        <member name="P:Westwind.Utilities.HttpRequestSettings.ResponseByteData">
+            <summary>
+            Capture binary Response data from the server when 
+            using the Data methods rather than string methods.
+            </summary>
+        </member>
+        <member name="P:Westwind.Utilities.HttpRequestSettings.ResponseStatusCode">
+            <summary>
+            The HTTP Status code of the HTTP response
+            </summary>
+        </member>
+        <member name="P:Westwind.Utilities.HttpRequestSettings.Response">
+            <summary>
+            Instance of the full HttpResponse object that gives access
+            to the full HttpWebResponse object to provide things
+            like Response headers, status etc.
+            </summary>
         </member>
         <member name="M:Westwind.Utilities.Logging.ILogAdapter.WriteEntry(Westwind.Utilities.Logging.WebLogEntry)">
             <summary>
@@ -2247,6 +2389,11 @@
               Looks up a localized string similar to Invalid Connection string name..
             </summary>
         </member>
+        <member name="P:Westwind.Utilities.Properties.Resources.InvalidEncryptionPropertyName">
+            <summary>
+              Looks up a localized string similar to Invalid encryptipon property name.
+            </summary>
+        </member>
         <member name="P:Westwind.Utilities.Properties.Resources.InvalidHexDigit">
             <summary>
               Looks up a localized string similar to Invalid hex digit: .
@@ -2260,6 +2407,11 @@
         <member name="P:Westwind.Utilities.Properties.Resources.InvalidTypeForXmlTypeToNETTypeConversion">
             <summary>
               Looks up a localized string similar to Invalid type for XmlType to .NET Type conversion..
+            </summary>
+        </member>
+        <member name="P:Westwind.Utilities.Properties.Resources.InvalidXMLConfigurationFileFormat">
+            <summary>
+              Looks up a localized string similar to Invalid XML configuration file format in {0}..
             </summary>
         </member>
         <member name="P:Westwind.Utilities.Properties.Resources.ObjectCouldNotBeDeserializedFromXml">
@@ -2716,6 +2868,64 @@
             </summary>
             <param name="xml">Serialize</param>
             <returns></returns>
+        </member>
+        <member name="T:Westwind.Utilities.UrlEncodingParser">
+            <summary>
+            A query string or UrlEncoded form parser and editor 
+            class that allows reading and writing of urlencoded
+            key value pairs used for query string and HTTP 
+            form data.
+            
+            Useful for parsing and editing querystrings inside
+            of non-Web code that doesn't have easy access to
+            the HttpUtility class.                
+            </summary>
+            <remarks>
+            Supports multiple values per key
+            </remarks>
+        </member>
+        <member name="M:Westwind.Utilities.UrlEncodingParser.#ctor(System.String)">
+            <summary>
+            Always pass in a UrlEncoded data or a URL to parse from
+            unless you are creating a new one from scratch.
+            </summary>
+            <param name="queryStringOrUrl">
+            Pass a query string or raw Form data, or a full URL.
+            If a URL is parsed the part prior to the ? is stripped
+            but saved. Then when you write the original URL is 
+            re-written with the new query string.
+            </param>
+        </member>
+        <member name="M:Westwind.Utilities.UrlEncodingParser.SetValues(System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Assigns multiple values to the same key
+            </summary>
+            <param name="key"></param>
+            <param name="values"></param>
+        </member>
+        <member name="M:Westwind.Utilities.UrlEncodingParser.Parse(System.String)">
+            <summary>
+            Parses the query string into the internal dictionary
+            and optionally also returns this dictionary
+            </summary>
+            <param name="query">
+            Query string key value pairs or a full URL. If URL is
+            passed the URL is re-written in Write operation
+            </param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.UrlEncodingParser.ToString">
+            <summary>
+            Writes out the urlencoded data/query string or full URL based 
+            on the internally set values.
+            </summary>
+            <returns>urlencoded data or url</returns>
+        </member>
+        <member name="P:Westwind.Utilities.UrlEncodingParser.Url">
+            <summary>
+            Holds the original Url that was assigned if any
+            Url must contain // to be considered a url
+            </summary>
         </member>
         <member name="T:Westwind.Utilities.Scheduler">
             <summary>
@@ -3344,6 +3554,13 @@
             </summary>
             <param name="html"></param>
             <returns></returns>
+        </member>
+        <member name="T:Westwind.Utilities.HttpUtilsWebClient">
+            <summary>
+            Customized version of WebClient that provides access
+            to the Response object so we can read result data 
+            from the Response.
+            </summary>
         </member>
         <member name="T:Westwind.Utilities.ImageUtils">
             <summary>
@@ -4783,6 +5000,14 @@
             Determines whether requests attempt to use GZip when retrieving content
             from the server.
             </summary>
+        </member>
+        <member name="P:Westwind.Utilities.InternetTools.HttpClient.HttpTimings">
+            <summary>
+            Keeps track of request timings for the last executed request. Tracks started, 
+            firstbyte and lastbyte times as well as ms to first byte 
+            (actually first 'buffer' loaded) and last byte.
+            </summary>
+            <remarks>Does not work with DownloadStream() since you control the stream's operations.</remarks>
         </member>
         <member name="P:Westwind.Utilities.InternetTools.HttpClient.ErrorMessage">
             <summary>

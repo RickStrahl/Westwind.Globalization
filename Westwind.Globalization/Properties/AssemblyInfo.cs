@@ -14,7 +14,7 @@ using System.Web.UI;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("West Wind Technologies")]
 [assembly: AssemblyProduct("Westwind.Globalization")]
-[assembly: AssemblyCopyright("© West Wind Technologies, 2006 - 2014")]
+[assembly: AssemblyCopyright("© West Wind Technologies, 2006 - 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -37,5 +37,5 @@ using System.Web.UI;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.99.71.0")]
-[assembly: AssemblyFileVersion("1.99.71.0")]
+[assembly: AssemblyVersion("1.99.8.0")]
+[assembly: AssemblyFileVersion("1.99.8.0")]

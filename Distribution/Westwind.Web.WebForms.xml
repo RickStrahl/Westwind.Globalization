@@ -4,6 +4,293 @@
         <name>Westwind.Web.WebForms</name>
     </assembly>
     <members>
+        <member name="T:Westwind.Web.ScriptVariables">
+             <summary>
+             ScriptVariables allows you to easily push server side values into JavaScript
+             code. It allows you add properties to a collection which can then be rendered
+             into a JavaScript object using the ToString() or ToHtmlString(). Output is
+             rendered as a single JavaScript object literal with properties for each 
+             item/value added. Any type of value or object can be added including nested
+             objects and collections. It's an easy way to serialize complex data into 
+             a JavaScript code from the server.
+             
+             The component also supports posting back of updated values from the client
+             and a generic Items[] collection that allows page data to update generic
+             values and post them back to the server. The items are available
+            
+             This component produces either straight string or HtmlString output when used directly
+             using the ToString() or HtmlString() methods for use in ASP.NET MVC or Web Pages,
+             or can be used as WebForms control that automatically handles embedding of
+             the script and deserialization of return values on the server.
+             
+             This component supports:&lt;&lt;ul&gt;&gt;
+             &lt;&lt;li&gt;&gt; Creating individual client side variables
+             &lt;&lt;li&gt;&gt; Dynamic values that are 'evaluated' in OnPreRender to 
+             pick up a value
+             &lt;&lt;li&gt;&gt; Creating properties of ClientIDs for a given container
+             &lt;&lt;li&gt;&gt; Changing the object values and POSTing them back on 
+             Postback
+             &lt;&lt;/ul&gt;&gt;
+             
+             You create a script variables instance and add new keys to it:
+             &lt;&lt;code lang="C#"&gt;&gt;
+             ScriptVariables scriptVars = new ScriptVariables(this,"scriptVars");
+             
+             // Simple value
+             scriptVars.Add("userToken", UserToken);
+             
+             AmazonBook tbook = new AmazonBook();
+             tbook.Entered = DateTime.Now;
+             
+             // Complex value marshalled
+             scriptVars.Add("emptyBook", tbook);
+             
+             scriptVars.AddDynamic("author", txtAuthor,"Text");
+             
+             // Cause all client ids to be rendered as scriptVars.formFieldId vars (Id 
+             postfix)
+             scriptVars.AddClientIds(Form,true);
+             &lt;&lt;/code&gt;&gt;
+             
+             In client code you can then access these variables:
+             &lt;&lt;code lang="JavaScript"&gt;&gt;$( function() {
+             	alert(scriptVars.book.Author);
+             	alert(scriptVars.author);
+             	alert( $("#" + scriptVars.txtAmazonUrlId).val() );
+             });&lt;&lt;/code&gt;&gt;
+             </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptVariables.ScriptVars">
+            <summary>Edit
+            Internally holds all script variables declared
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptVariables.Page">
+            <summary>
+            Internally tracked reference to the Page object
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptVariables.JsonSerializer">
+            <summary>
+            Internal instance of the Json Serializer used to serialize
+            the object and deserialize the updateable fields
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptVariables.sbPrefixScriptCode">
+            <summary>
+            Internally tracked prefix code
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptVariables.sbPostFixScriptCode">
+            <summary>
+            Internally tracked postfix code
+            </summary>
+        </member>
+        <member name="F:Westwind.Web.ScriptVariables.SubmitCounter">
+            <summary>
+            Internal counter for submit script embedded
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.#ctor(System.String)">
+            <summary>
+            Constructor that optionally accepts the name of the
+            variable that is to be created
+            </summary>
+            <param name="clientObjectName">Name of the JavaScript variable to create</param>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.#ctor(System.Web.UI.Control)">
+            <summary>
+            This constructor only takes an instance of a Control. The name of the
+            client object generated will be serverVars.
+            </summary>
+            <param name="control"></param>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.#ctor(System.Web.UI.Control,System.String)">
+            <summary>
+            Full constructor that receives an instance of any control object
+            and the client name of the generated script object that contains
+            the specified properties.
+            </summary>
+            <param name="control"></param>
+            <param name="clientObjectName"></param>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.Page_PreRenderComplete(System.Object,System.EventArgs)">
+            <summary>
+            Implemented after Page's OnPreRender() has fired to ensure all
+            page code has a chance to write script variables.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.Add(System.String,System.Object)">
+            <summary>
+            Adds a property and value to the client side object to be rendered into 
+            JavaScript code. VariableName becomes a property on the object and the 
+            value will be properly converted into JavaScript Compatible JSON text.
+            <seealso>Class ScriptVariables</seealso>
+            </summary>
+            <param name="variableName">
+            The name of the property created on the client object.
+            </param>
+            <param name="value">
+            The value that is to be assigned. Can be any simple type and most complex 
+            objects that can be serialized into JSON.
+            </param>
+            <example>
+            &amp;lt;&amp;lt;code 
+            lang=&amp;quot;C#&amp;quot;&amp;gt;&amp;gt;ScriptVariables scriptVars = new
+             ScriptVariables(this,&amp;quot;serverVars&amp;quot;);
+            
+            // Add simple values
+            scriptVars.Add(&amp;quot;name&amp;quot;,&amp;quot;Rick&amp;quot;);
+            scriptVars.Add(&amp;quot;pageLoadTime&amp;quot;,DateTime.Now);
+            
+            // Add objects
+            AmazonBook amazon = new AmazonBook();
+            bookEntity book = amazon.New();
+            
+            scripVars.Add(&amp;quot;book&amp;quot;,book);
+            &amp;lt;&amp;lt;/code&amp;gt;&amp;gt;
+            </example>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.Add(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Adds an entire dictionary of values
+            </summary>
+            <param name="values"></param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Westwind.Web.ScriptVariables.AddDynamicValue(System.String,System.Object,System.String)" -->
+        <member name="M:Westwind.Web.ScriptVariables.AddClientIds(System.Web.UI.Control,System.Boolean)">
+            <summary>
+            Adds all the client ids for a container as properties of the client object.
+             The name of the property is the ID + "Id" Example: txtNameId
+            
+            Note that there's no attempt made to  resolve naming conflicts in different
+             naming containers. If there's a naming conflict last one wins.
+            <seealso>Class ScriptVariables</seealso>
+            </summary>
+            <param name="container">
+            The container from which to retrieve Client IDs. You can use Form or 
+            this for the top level.
+            </param>
+            <param name="recursive">
+            Determines whether ClientIDs are retrieved recursively by drilling into 
+            containers. Use with care - large pages with many controls may take a long 
+            time to find and serialize all control Ids. It's best to focus on the 
+            controls you are interested and if necesary use multiple AddClientIds() 
+            calls.
+            </param>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.AddClientIds(System.Web.UI.Control)">
+            <summary>
+            Adds all the client ids for a container as properties of the client object.
+             The name of the property is the ID + "Id" Example: txtNameId This version 
+            only retrieves ids for the specified container level - no hierarchical 
+            recursion of controls is performed.
+            <seealso>Class ScriptVariables</seealso>
+            </summary>
+            <param name="container">
+            The container for which to retrieve client IDs.
+            </param>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.AddScriptBefore(System.String)">
+            <summary>
+            Any custom JavaScript code that is to immediately preceed the
+            client object declaration. This allows setting up of namespaces
+            if necesary for scoping.
+            </summary>
+            <param name="scriptCode"></param>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.AddScriptAfter(System.String)">
+            <summary>
+            Any custom JavaScript code that is to immediately follow the
+            client object declaration. This allows setting up of namespaces
+            if necesary for scoping.
+            </summary>
+            <param name="scriptCode"></param>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.GetValue``1(System.String)">
+            <summary>
+            Returns a value that has been updated on the client 
+            
+            Note this method will throw if it is not called
+            during PostBack or if AllowUpdates is false.
+            </summary>
+            <typeparam name="TType"></typeparam>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.GetItemValue``1(System.String)">
+            <summary>
+            Returns a value from the client Items collection
+            </summary>
+            <typeparam name="TType"></typeparam>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.ToString">
+            <summary>
+            Returns the rendered JavaScript as a string
+            </summary>
+            <returns>string</returns>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.ToString(System.Boolean)">
+            <summary>
+            Returns the rendered JavaScript for the generated object and name. 
+            Note this method returns only the generated object, not the 
+            related code to save updates.
+            
+            You can use this method with MVC Views to embedd generated JavaScript
+            into the the View page.
+            <param name="addScriptTags">If provided wraps the script text with script tags</param>
+            </summary>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.ToHtmlString(System.Boolean)">
+            <summary>
+            Returns the script as an HTML string. Use this version
+            with AsP.NET MVC to force raw unencoded output in Razor:
+            
+            @scriptVars.ToHtmlString()
+            </summary>
+            <param name="addScriptTags"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Web.ScriptVariables.RenderClientScript">
+            <summary>
+            Explicitly forces the client script to be rendered into the page.
+            This code is called automatically by the configured event handler that
+            is hooked to Page_PreRenderComplete
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.ScriptVariables.ClientObjectName">
+            <summary>
+            The name of the object generated in client script code
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.ScriptVariables.AutoRenderClientScript">
+            <summary>
+            Determines whether the output object script is rendered
+            automatically as part of Page PreRenderComplete. If false
+            you can manually call the GetClientScript() method to
+            retrieve the script as a string and embed it yourself.
+            </summary>        
+        </member>
+        <member name="P:Westwind.Web.ScriptVariables.UpdateMode">
+            <summary>
+            Determines how updates to the server from the client are performed.
+            If enabled changes to the client side properties post back to the
+            server on a full Postback. 
+            
+            Options allow for none, updating the properties only or updating
+            only the Items collection (use .add() on the client to add new items)
+            </summary>
+        </member>
+        <member name="P:Westwind.Web.ScriptVariables.PostBackValue">
+            <summary>
+            Internal string of the postback value for the field values
+            if AllowUpdates is true
+            </summary>
+        </member>
         <member name="T:Westwind.Web.WebForms.Properties.Resources">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
