@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -91,7 +92,7 @@ namespace Westwind.Globalization
         {
             if (cultureName == null)
                 cultureName = string.Empty;
-
+            
             string resourceFilter;
             resourceFilter = " ResourceSet=@ResourceSet";
 
@@ -99,6 +100,9 @@ namespace Westwind.Globalization
 
             using (var data = GetDb())
             {
+                Trace.WriteLine("GetResourceSet: " + cultureName + " - " + resourceSet + "\r\n" +
+                                "\t" + data.ConnectionString);
+
                 DbDataReader reader;
 
                 if (string.IsNullOrEmpty(cultureName))
@@ -188,7 +192,11 @@ namespace Westwind.Globalization
 
             using (var data = GetDb())
             {
-                DbDataReader reader = null;
+                Trace.WriteLine("GetResourceSetNormalizedForId: " + cultureName + " - " + resourceSet + "\r\n" +
+                                      "\t" + data.ConnectionString);
+
+
+                  DbDataReader reader = null;
 
                 string sql =
                     @"select resourceId, LocaleId, Value, Type, BinFile, TextFile, FileName

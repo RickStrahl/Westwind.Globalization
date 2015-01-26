@@ -10,6 +10,7 @@ using System.Web.UI;
 using System.IO;
 using System.Drawing;
 using System.Data.Common;
+using System.Diagnostics;
 using Westwind.Utilities;
 using Westwind.Utilities.Data;
 using System.Web.UI.WebControls;
@@ -73,6 +74,11 @@ namespace Westwind.Globalization
 
             using (var data = new SqlDataAccess(DbResourceConfiguration.Current.ConnectionString))
             {
+
+                Trace.WriteLine("GetResourceSet: " + cultureName + " - " + resourceSet + "\r\n" +
+                               "\t" + data.ConnectionString);
+
+
                 DbDataReader reader;
 
                 if (string.IsNullOrEmpty(cultureName))
@@ -378,7 +384,7 @@ namespace Westwind.Globalization
                 string sql =
                     @"select resourceId,CAST( MAX( 
 	  case  
-		WHEN len( CAST(Value as varchar(max))) > 0 THEN 1
+		WHEN len( CAST(Value as nvarchar(10))) > 0 THEN 1
 		ELSE 0
 	  end ) as Bit) as HasValue
 	  	from " + DbResourceConfiguration.Current.ResourceTableName +

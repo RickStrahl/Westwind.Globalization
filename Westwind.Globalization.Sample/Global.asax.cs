@@ -19,7 +19,10 @@ namespace Westwind.Globalization.Sample
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);            
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            // override configuration values
+            DbResourceConfiguration.Current.ConnectionString = "SqlServerCeLocalizations";
         }
 
         protected void Application_BeginRequest()

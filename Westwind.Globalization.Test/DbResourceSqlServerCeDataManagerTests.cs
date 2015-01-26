@@ -14,8 +14,8 @@ namespace Westwind.Globalization.Test
         private DbResourceSqlServerCeDataManager GetManager()
         {
             var manager = new DbResourceSqlServerCeDataManager();
-            manager.Configuration.ConnectionString = "SqlServerCeLocalizations";
-            manager.Configuration.ResourceTableName = "Localizations";
+            //manager.Configuration.ConnectionString = "SqlServerCeLocalizations";
+            //manager.Configuration.ResourceTableName = "Localizations";
             return manager;
         }
 

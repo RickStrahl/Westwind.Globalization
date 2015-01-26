@@ -147,6 +147,7 @@
     <Compile Include="Properties\Resources.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\localizations.sdf" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\Westwind.Localization.png" />
@@ -226,7 +227,6 @@
     <Content Include="Views\Home\ModelAttributesFromResources.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Content\Controllers\" />
     <Folder Include="images\" />
   </ItemGroup>
