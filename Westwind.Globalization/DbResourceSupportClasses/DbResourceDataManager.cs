@@ -10,6 +10,7 @@ using System.Web.UI;
 using System.IO;
 using System.Drawing;
 using System.Data.Common;
+using System.Diagnostics;
 using Westwind.Utilities;
 using Westwind.Utilities.Data;
 using System.Web.UI.WebControls;
@@ -28,7 +29,7 @@ namespace Westwind.Globalization
     /// DbResourceConfiguration   (holds and reads all config data from .Current)
     /// SqlDataAccess             (provides a data access (DAL))
     /// </summary>
-    public class DbResourceDataManager 
+    public class DbResourceDataManager
     {
         /// <summary>
         /// Internally used Transaction object
@@ -73,6 +74,11 @@ namespace Westwind.Globalization
 
             using (var data = new SqlDataAccess(DbResourceConfiguration.Current.ConnectionString))
             {
+
+                Trace.WriteLine("GetResourceSet: " + cultureName + " - " + resourceSet + "\r\n" +
+                               "\t" + data.ConnectionString);
+
+
                 DbDataReader reader;
 
                 if (string.IsNullOrEmpty(cultureName))
@@ -378,7 +384,7 @@ namespace Westwind.Globalization
                 string sql =
                     @"select resourceId,CAST( MAX( 
 	  case  
-		WHEN len( CAST(Value as varchar(max))) > 0 THEN 1
+		WHEN len( CAST(Value as nvarchar(10))) > 0 THEN 1
 		ELSE 0
 	  end ) as Bit) as HasValue
 	  	from " + DbResourceConfiguration.Current.ResourceTableName +
@@ -1537,93 +1543,4 @@ GO
         AllResources
     }
 
-    /// <summary>
-    /// Returns a resource item that contains both Value and Comment
-    /// </summary>
-    public class ResourceItem : INotifyPropertyChanged
-    {
-        /// <summary>
-        /// The Id of the resource
-        /// </summary>
-        public string ResourceId
-        {
-            get { return _ResourceId; }
-            set
-            {
-                _ResourceId = value;
-                SendPropertyChanged("ResourceId");
-            }
-        }
-        private string _ResourceId = null;
-
-        /// <summary>
-        /// The value of this resource
-        /// </summary>
-        public object Value
-        {
-            get { return _Value; }
-            set
-            {
-                _Value = value;
-                SendPropertyChanged("Value");
-            }
-        }
-        private object _Value = null;
-
-
-        /// <summary>
-        /// The optional comment for this resource
-        /// </summary>
-        public string Comment
-        {
-            get { return _Comment; }
-            set
-            {
-                _Comment = value;
-                SendPropertyChanged("Comment");
-            }
-        }
-        private string _Comment = null;
-
-        /// <summary>
-        /// The localeId ("" invariant or "en-US", "de" etc). Note
-        /// Empty means invariant or default locale.
-        /// </summary>
-        public string LocaleId
-        {
-            get { return _LocaleId; }
-            set
-            {
-                _LocaleId = value;
-                SendPropertyChanged("LocaleId");
-            }
-        }
-        private string _LocaleId = string.Empty;
-
-
-        /// <summary>
-        /// The resource set (file) that this resource belongs to
-        /// </summary>
-        public string ResourceSet
-        {
-            get { return _ResourceSet; }
-            set
-            {
-                _ResourceSet = value;
-                SendPropertyChanged("ResourceSet");
-            }
-        }
-        private string _ResourceSet = string.Empty;
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void SendPropertyChanged(String propertyName)
-        {
-            if ((PropertyChanged != null))
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
 }

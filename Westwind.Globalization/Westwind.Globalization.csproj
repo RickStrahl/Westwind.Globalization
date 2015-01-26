@@ -107,6 +107,7 @@
     <Compile Include="DbResourceManager\DbResourceWriter.cs" />
     <Compile Include="DbResourceSupportClasses\DbResourceProviderSection.cs" />
     <Compile Include="DbResourceManager\DbRes.cs" />
+    <Compile Include="DbResourceSupportClasses\ResourceItem.cs" />
     <Compile Include="Resources\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
