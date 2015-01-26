@@ -7,7 +7,7 @@ using Westwind.Utilities.Data;
 namespace Westwind.Globalization.Test
 {
     [TestFixture]
-    public class DbResourceDataManagerWithSqlTests
+    public partial class DbResourceDataManagerWithSqlTests
     {
 
         private string STR_ConnectionString = "SqlServerLocalizations";

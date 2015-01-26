@@ -12,16 +12,15 @@ namespace Westwind.Globalization.Test
     [TestFixture]
     public class DbResXConverterTests
     {
-   
-
         /// <summary>
         ///  convert Resx file to a resource dictionary
         /// </summary>
         [Test]
         public void GetResXResourcesTest()
         {
-            DbResXConverter converter = new DbResXConverter(null);            
-            Dictionary<string,object> items = converter.GetResXResourcesNormalizedForLocale(@"C:\projects2010\libraries\Westwind.GlobalizationWeb\App_GlobalResources\resources","de-de");
+            string path = @"c:\temp\resources";
+            DbResXConverter converter = new DbResXConverter(path);
+            Dictionary<string, object> items = converter.GetResXResourcesNormalizedForLocale(@"C:\Temp\Westwind.Globalizations\Westwind.Globalization.Sample\LocalizationAdmin\App_LocalResources\LocalizationAdmin.aspx", "de-de");
             WriteResourceDictionary(items,"ResX Resources");
         }
 
