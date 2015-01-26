@@ -59,7 +59,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="MySql.Data, Version=6.5.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -73,10 +72,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Web" />
     <Reference Include="System.XML" />
-    <Reference Include="Westwind.Utilities, Version=2.59.5499.28193, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Westwind.Utilities.2.59.1\lib\net45\Westwind.Utilities.dll</HintPath>
-    </Reference>
     <Reference Include="Westwind.Web, Version=2.59.5499.28286, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Westwind.Web.2.59\lib\net45\Westwind.Web.dll</HintPath>
@@ -89,6 +84,7 @@
   <ItemGroup>
     <Compile Include="DbResourceManagerTests.cs" />
     <Compile Include="DbResourceProviderTests.cs" />
+    <Compile Include="DbResourceSqlServerCeDataManagerTests.cs" />
     <Compile Include="MySqlResourceProviderTests.cs" />
     <Compile Include="DbResXConverterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -96,7 +92,7 @@
     <Compile Include="TranslationServiceTests.cs" />
     <Compile Include="DbResTests.cs" />
     <Compile Include="DbSimpleResourceProviderTests.cs" />
-    <Compile Include="DbResourceSqlDataManagerTests.cs" />
+    <Compile Include="DbResourceSqlServerDataManagerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -127,11 +123,19 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="data\localizations.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\localizations2.sdf" />
     <Content Include="scripts\ww.jquery.js" />
     <Content Include="scripts\ww.jquery.min.js" />
     <Content Include="_readme.Westwind.Globalization.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\WestwindToolkit\Westwind.Utilities\Westwind.Utilities.csproj">
+      <Project>{1c9829a8-8979-4493-863c-635726f8a61c}</Project>
+      <Name>Westwind.Utilities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Westwind.Globalization\Westwind.Globalization.csproj">
       <Project>{51dece39-764c-4c32-a57a-d93a5fd9bd6a}</Project>
       <Name>Westwind.Globalization</Name>

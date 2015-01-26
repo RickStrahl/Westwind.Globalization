@@ -1,0 +1,105 @@
+using System.ComponentModel;
+using Westwind.Web;
+
+namespace Westwind.Globalization
+{
+    /// <summary>
+    /// This class provides the Data Access to the database
+    /// for the DbResourceManager, Provider and design time
+    /// services. This class acts as a Business layer
+    /// and uses the SqlDataAccess DAL for its data access.
+    /// 
+    /// Dependencies:
+    /// DbResourceConfiguration   (holds and reads all config data from .Current)
+    /// SqlDataAccess             (provides a data access (DAL))
+    /// </summary>
+    public class DbResourceSqlServerDataManager : DbResourceBaseDataManager
+    {
+        protected override string TableCreationSql
+        {
+            get
+            {
+                return
+                    @"SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+SET ANSI_PADDING OFF
+GO
+CREATE TABLE [{0}] (
+		[pk]              int NOT NULL IDENTITY(1, 1),
+		[ResourceId]      nvarchar(1024) NOT NULL,
+		[Value]           nvarchar(max) NULL,
+		[LocaleId]        nvarchar(10) NULL,
+		[ResourceSet]     nvarchar(512) NULL,
+		[Type]            nvarchar(512) NULL,
+		[BinFile]         varbinary(max) NULL,
+		[TextFile]        nvarchar(max) NULL,
+		[Filename]        nvarchar(128) NULL,
+        [Comment]         nvarchar(512) NULL
+)
+ON [PRIMARY]
+GO
+ALTER TABLE [{0}]
+	ADD
+	CONSTRAINT [PK_{0}]
+	PRIMARY KEY
+	([pk])
+	ON [PRIMARY]
+GO
+ALTER TABLE [{0}]
+	ADD
+	CONSTRAINT [DF_{0}_Filename]
+	DEFAULT ('') FOR [Filename]
+GO
+ALTER TABLE [{0}]
+	ADD
+	CONSTRAINT [DF_{0}_LocaleId]
+	DEFAULT ('') FOR [LocaleId]
+GO
+ALTER TABLE [{0}]
+	ADD
+	CONSTRAINT [DF_{0}_PageId]
+	DEFAULT ('') FOR [ResourceSet]
+GO
+ALTER TABLE [{0}]
+	ADD
+	CONSTRAINT [DF_{0}_Text]
+	DEFAULT ('') FOR [Value]
+GO
+ALTER TABLE [{0}]
+	ADD
+	CONSTRAINT [DF_{0}_Type]
+	DEFAULT ('') FOR [Type]
+GO
+
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Hello Cruel World','','Resources')
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Hallo schnöde Welt','de','Resources')
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Bonjour tout le monde','fr','Resources')
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Yesterday','Yesterday (invariant)','','Resources')
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Yesterday','Gestern','de','Resources')
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Yesterday','Hier','fr','Resources')
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Today','Today (invariant)','','Resources')
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Today','Heute','de','Resources')
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Today','Aujourd''hui','fr','Resources')
+GO
+";
+            }
+
+        }
+    }
+
+    public enum DbResourceDataManagerTypes
+    {
+        SqlServer,
+        SqlServerCe,
+        MySql,
+        SqlLite,
+        MongoDb
+    }
+
+    public class ResourceIdItem
+    {
+        public string ResourceId { get; set; }
+        public bool HasValue { get; set; }
+        public object Value { get; set; }        
+    }
+}

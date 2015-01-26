@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Threading;
 using System.Web.Compilation;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 
 namespace Westwind.Globalization.Test
@@ -14,7 +13,6 @@ namespace Westwind.Globalization.Test
         [Test]
         public void DbSimpleResourceProviderBasic()
         {
-
             var resRaw = new DbSimpleResourceProvider(null,"Resources");
             var res = resRaw as IResourceProvider;
 

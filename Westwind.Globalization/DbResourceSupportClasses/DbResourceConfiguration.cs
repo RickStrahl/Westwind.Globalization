@@ -3,6 +3,7 @@ using System.Web.UI.Design;
 using System.Configuration;
 using System.Web.Configuration;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using Westwind.Utilities;
 
 namespace Westwind.Globalization
@@ -48,24 +49,7 @@ namespace Westwind.Globalization
         /// <seealso>Class DbResource
         /// Compiling Your Applications with the Provider</seealso>
         /// </summary>
-        public string ConnectionString
-        {
-            get 
-            {
-                // If no = in the string assume it's a ConnectionStrings entry instead
-                if (!_ConnectionString.Contains("="))
-                {
-                    try
-                    {
-                        return ConfigurationManager.ConnectionStrings[_ConnectionString].ConnectionString;
-                    }
-                    catch { }
-                }
-                return _ConnectionString; 
-            }
-            set { _ConnectionString = value; }
-        }
-        private string _ConnectionString = "";
+        public string ConnectionString { get; set; }
 
         /// <summary>
         /// Database table name used in the database
@@ -202,7 +186,14 @@ namespace Westwind.Globalization
         }
 
         private GlobalizationResxExportProjectTypes _resxExportProjectType = GlobalizationResxExportProjectTypes.Project;
-
+        
+        public Type DbResourceDataManagerType
+        {
+            get { return _DbResourceDataManagerType; }
+            set { _DbResourceDataManagerType = value; }
+        }        
+        private Type _DbResourceDataManagerType = typeof(DbResourceSqlServerDataManager);
+        
         /// <summary>
         /// Base constructor that doesn't do anything to the default values.
         /// </summary>

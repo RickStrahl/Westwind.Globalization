@@ -83,14 +83,14 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.XML" />
-    <Reference Include="Westwind.Utilities, Version=2.59.5499.28193, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Westwind.Utilities.2.59.1\lib\net45\Westwind.Utilities.dll</HintPath>
-    </Reference>
     <Reference Include="Westwind.Web">
       <HintPath>..\packages\Westwind.Web.2.59\lib\net45\Westwind.Web.dll</HintPath>
       <Private>True</Private>
@@ -101,14 +101,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbResourceDataManager\DbResourceBaseDataManager.cs" />
+    <Compile Include="DbResourceDataManager\DbResourceSqlServerCeDataManager.cs" />
     <Compile Include="DbResourceProvider\DbResourceProviderFactory.cs" />
     <Compile Include="DbResourceManager\DbResourceReader.cs" />
     <Compile Include="DbResourceManager\DbResourceSet.cs" />
     <Compile Include="DbResourceManager\DbResourceWriter.cs" />
-    <Compile Include="DbResourceSupportClasses\DbResourceSqlServerDataManager.cs" />
+    <Compile Include="DbResourceDataManager\DbResourceSqlServerDataManager.cs" />
     <Compile Include="DbResourceSupportClasses\DbResourceProviderSection.cs" />
     <Compile Include="DbResourceManager\DbRes.cs" />
-    <Compile Include="DbResourceSupportClasses\ResourceItem.cs" />
+    <Compile Include="DbResourceDataManager\IDbResourceBaseDataManager.cs" />
+    <Compile Include="DbResourceDataManager\ResourceItem.cs" />
     <Compile Include="Resources\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -123,7 +126,7 @@
     <Compile Include="SupportClasses\DbResXConverter.cs" />
     <Compile Include="DbResourceSupportClasses\DbResourceConfiguration.cs" />
     <Compile Include="DbResourceSupportClasses\DbResourceControl.cs" />
-    <Compile Include="DbResourceSupportClasses\DbResourceDataManager.cs" />
+    <Compile Include="DbResourceDataManager\DbResourceDataManager.cs" />
     <Compile Include="DbResourceManager\DbResourceManager.cs">
     </Compile>
     <Compile Include="DbResourceProvider\DbResourceProvider.cs">
@@ -177,6 +180,12 @@
       <SubType>ASPXCodeBehind</SubType>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\WestwindToolkit\Westwind.Utilities\Westwind.Utilities.csproj">
+      <Project>{1c9829a8-8979-4493-863c-635726f8a61c}</Project>
+      <Name>Westwind.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -187,7 +196,10 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>
-    </PostBuildEvent>
+    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
+    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
 </Project>

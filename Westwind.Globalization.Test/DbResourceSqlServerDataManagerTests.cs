@@ -8,12 +8,20 @@ using Westwind.Utilities.Data;
 namespace Westwind.Globalization.Test
 {
     [TestFixture]
-    public class DbResourceSqlDataManagerTests
+    public class DbResourceSqlServerDataManagerTests
     {
+        private DbResourceSqlServerDataManager GetManager()
+        {
+            var manager = new DbResourceSqlServerDataManager();
+            manager.Configuration.ConnectionString = "SqlServerLocalizations";
+            manager.Configuration.ResourceTableName = "Localizations";
+            return manager;
+        }
+
         [Test]
         public void GetAllResources()
         {
-            var manager = new DbResourceSqlServerDataManager();
+            var manager = GetManager();
 
             var items = manager.GetAllResources(false);
             Assert.IsNotNull(items);
@@ -25,7 +33,7 @@ namespace Westwind.Globalization.Test
         [Test]
         public void GetResourceSet()
         {
-            var manager = new DbResourceSqlServerDataManager();
+            var manager = GetManager();
 
             var items = manager.GetResourceSet("de","Resources");
             Assert.IsNotNull(items);
@@ -37,7 +45,7 @@ namespace Westwind.Globalization.Test
         [Test]
         public void GetResourceSetNormalizedForLocaleId()
         {
-            var manager = new DbResourceSqlServerDataManager();
+            var manager = GetManager();
 
             var items = manager.GetResourceSetNormalizedForLocaleId("de", "Resources");
             Assert.IsNotNull(items);
@@ -49,7 +57,7 @@ namespace Westwind.Globalization.Test
         [Test]
         public void GetAllResourceIds()
         {
-            var manager = new DbResourceSqlServerDataManager();
+            var manager = GetManager();
 
             var items = manager.GetAllResourceIds("Resources");
             Assert.IsNotNull(items);
@@ -60,7 +68,7 @@ namespace Westwind.Globalization.Test
         [Test]
         public void GetAllResourceIdsForHtmlDisplay()
         {
-            var manager = new DbResourceSqlServerDataManager();
+            var manager = GetManager();
             var items = manager.GetAllResourceIdsForHtmlDisplay("Resources");
 
             Assert.IsNotNull(items);
@@ -75,7 +83,7 @@ namespace Westwind.Globalization.Test
         [Test]
         public void GetAllResourceSets()
         {
-            var manager = new DbResourceSqlServerDataManager();
+            var manager = GetManager();
 
             var items = manager.GetAllResourceSets(ResourceListingTypes.AllResources);
             Assert.IsNotNull(items);
@@ -108,7 +116,7 @@ namespace Westwind.Globalization.Test
         [Test]
         public void GetAllLocaleIds()
         {
-            var manager = new DbResourceSqlServerDataManager();
+            var manager = GetManager();
 
             var items = manager.GetAllLocaleIds("Resources");
             Assert.IsNotNull(items);
@@ -124,7 +132,7 @@ namespace Westwind.Globalization.Test
         [Test]
         public void GetAllResourcesForCulture()
         {
-            var manager = new DbResourceSqlServerDataManager();
+            var manager = GetManager();
 
             var items = manager.GetAllResourcesForCulture("Resources","de");
             Assert.IsNotNull(items);
@@ -139,7 +147,7 @@ namespace Westwind.Globalization.Test
         [Test]
         public void GetResourceString()
         {
-            var manager = new DbResourceSqlServerDataManager();
+            var manager = GetManager();
 
             var item = manager.GetResourceString("Today", "Resources", "de");
 
@@ -150,7 +158,7 @@ namespace Westwind.Globalization.Test
         [Test]
         public void GetResourceItem()
         {
-            var manager = new DbResourceSqlServerDataManager();
+            var manager = GetManager();
 
             var item = manager.GetResourceItem("Today", "Resources", "de");
 
@@ -161,7 +169,7 @@ namespace Westwind.Globalization.Test
         [Test]
         public void GetResourceObject()
         {
-            var manager = new DbResourceSqlServerDataManager();
+            var manager = GetManager();
 
             // this method allows retrieving non-string values as their
             // underlying type - demo data doesn't include any binary data.
@@ -174,7 +182,7 @@ namespace Westwind.Globalization.Test
         [Test]
         public void GetResourceStrings()
         {
-            var manager = new DbResourceSqlServerDataManager();
+            var manager = GetManager();
 
             var items = manager.GetResourceStrings("Today", "Resources");
 
@@ -182,6 +190,23 @@ namespace Westwind.Globalization.Test
             Assert.IsTrue(items.Count > 0);
 
             ShowResources(items);
+
+        }
+
+
+        [Test]
+        public void CreateTable()
+        {
+            var manager = GetManager();
+
+            bool result = manager.CreateLocalizationTable();
+            
+            // no assertions as table can exist - to test explicitly remove the table
+            if (result)
+                Console.WriteLine("Localization Table created.");
+            else
+                Console.WriteLine(manager.ErrorMessage);
+
 
         }
 

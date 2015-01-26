@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Common;
 using System.Threading;
 using NUnit.Framework;
 using Westwind.Utilities.Data;
@@ -8,13 +9,19 @@ namespace Westwind.Globalization.Test
     [TestFixture]
     public class DbResourceDataManagerWithSqlTests
     {
+
+        private string STR_ConnectionString = "SqlServerLocalizations";
+
+      
+
         [Test]
-        public void DataBase()
+        public void CheckDataBase()
         {
-            SqlDataAccess db = new SqlDataAccess("DevSamples");
+            SqlDataAccess db = new SqlDataAccess(STR_ConnectionString);
             var tb = db.ExecuteTable("localizations","select * from localizations");
             Console.WriteLine(tb.Rows.Count);
         }
+        
 
         [Test]
         public void DbResSimpleValues()

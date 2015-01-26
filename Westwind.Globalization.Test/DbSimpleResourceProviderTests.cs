@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Threading;
 using System.Web.Compilation;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 
 namespace Westwind.Globalization.Test
