@@ -1401,20 +1401,23 @@ namespace Westwind.Globalization
         /// <summary>
         /// Checks to see if the LocalizationTable exists
         /// </summary>
-        /// <param name="TableName"></param>
+        /// <param name="tableName">Table name or the configuration.ResourceTableName if not passed</param>
         /// <returns></returns>
-        public bool IsLocalizationTable(string TableName)
+        public bool IsLocalizationTable(string tableName = null)
         {
-            if (TableName == null)
-                TableName = Configuration.ResourceTableName;
+            if (tableName == null)
+                tableName = Configuration.ResourceTableName;
 
             using (var data = GetDb())
             {
-                var Pk = data.ExecuteScalar("select count(pk) from " + TableName);
+                var Pk = data.ExecuteScalar("select count(pk) from " + tableName);
 
-                if (Pk is int)
+                if (Pk is int || Pk is long)
                     return true;
+
+                SetError(data.ErrorMessage);
             }
+            
             return false;
         }
 

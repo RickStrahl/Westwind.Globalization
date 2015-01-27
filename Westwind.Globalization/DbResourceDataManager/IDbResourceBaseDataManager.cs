@@ -296,9 +296,9 @@ namespace Westwind.Globalization
         /// <summary>
         /// Checks to see if the LocalizationTable exists
         /// </summary>
-        /// <param name="TableName"></param>
+        /// <param name="tableName"></param>
         /// <returns></returns>
-        bool IsLocalizationTable(string TableName);
+        bool IsLocalizationTable(string tableName);
 
         /// <summary>
         /// Create a backup of the localization database.

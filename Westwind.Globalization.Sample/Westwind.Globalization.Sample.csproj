@@ -158,6 +158,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="LocalizationAdmin\Default.aspx" />
+    <Content Include="LocalizationAdmin\favicon.ico" />
     <Content Include="LocalizationAdmin\images\backup.png" />
     <Content Include="LocalizationAdmin\images\calendar.png" />
     <Content Include="LocalizationAdmin\images\close.png" />

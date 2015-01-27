@@ -23,9 +23,12 @@ namespace Westwind.Globalization.Sample
 
             // override which connection string is used for the provider configuration values
             //DbResourceConfiguration.Current.ConnectionString = "SqlServerLocalizations";
+            
             //DbResourceConfiguration.Current.ConnectionString = "SqlServerCeLocalizations";
-            DbResourceConfiguration.Current.ConnectionString = "MySqlLocalizations";
+            //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerCeDataManager);
 
+            DbResourceConfiguration.Current.ConnectionString = "MySqlLocalizations";
+            DbResourceConfiguration.Current.DbResourceDataManagerType = typeof (DbResourceMySqlDataManager);
         }
 
         protected void Application_BeginRequest()

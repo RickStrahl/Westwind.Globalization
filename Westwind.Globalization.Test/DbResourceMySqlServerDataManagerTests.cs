@@ -34,6 +34,15 @@ namespace Westwind.Globalization.Test
                 Console.WriteLine(manager.ErrorMessage);
         }
 
+
+        [Test]
+        public void IsLocalizationTable()
+        {
+            var manager = GetManager();
+
+            Assert.IsTrue(manager.IsLocalizationTable("Localizations"), manager.ErrorMessage);
+        }
+
         [Test]
         public void GetAllResources()
         {
