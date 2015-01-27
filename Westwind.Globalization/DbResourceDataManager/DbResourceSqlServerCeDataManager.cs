@@ -1,16 +1,13 @@
-using System.Collections.Generic;
 using System.Data.SqlServerCe;
 using System.IO;
-using System.Linq;
 
 namespace Westwind.Globalization
 {
     /// <summary>
     /// Sql CE implementation of the Db SQL data provider
     /// </summary>
-    public class DbResourceSqlServerCeDataManager : DbResourceSqlServerDataManager
+    public class DbResourceSqlServerCeDataManager : DbResourceBaseDataManager
     {
-
         public override bool CreateLocalizationTable(string tableName = null)
         {
             if (tableName == null)
@@ -85,11 +82,9 @@ CREATE TABLE [{0}] (
 GO
 ALTER TABLE [{0}] ADD CONSTRAINT [PK_Localizations] PRIMARY KEY ([pk]);
 GO
-INSERT INTO [{0}] ([ResourceId],[Value],[LocaleId],[ResourceSet],[Type],[BinFile],[TextFile],[Filename],[Comment]) VALUES (N'HelloWorld',N'Hello Cruel World!!!',N'',N'Resources',N'',NULL,NULL,N'',NULL)
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Hello Cruel World (SqlCe)','','Resources')
 GO
-INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Hello Cruel World','','Resources')
-GO
-INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Hallo schnöde Welt','de','Resources')
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Hallo schnöde Welt (SqlCe)','de','Resources')
 GO
 INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Bonjour tout le monde','fr','Resources')
 GO

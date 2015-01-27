@@ -169,16 +169,6 @@ namespace Westwind.Globalization
         /// <param name="cultureName"></param>
         /// <param name="resourceSet"></param>
         /// <param name="Type"></param>
-        int UpdateOrAdd(string resourceId, object value, string cultureName, string resourceSet, string comment);
-
-        /// <summary>
-        /// Updates a resource if it exists, if it doesn't one is created
-        /// </summary>
-        /// <param name="resourceId"></param>
-        /// <param name="value"></param>
-        /// <param name="cultureName"></param>
-        /// <param name="resourceSet"></param>
-        /// <param name="Type"></param>
         int UpdateOrAdd(string resourceId, object value, string cultureName, string resourceSet,
             string comment, bool valueIsFileName);
 

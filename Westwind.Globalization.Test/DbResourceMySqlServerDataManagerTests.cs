@@ -8,14 +8,30 @@ using Westwind.Utilities.Data;
 namespace Westwind.Globalization.Test
 {
     [TestFixture]
-    public class DbResourceSqlServerDataManagerTests
+    public class DbResourceMySqlDataManagerTests
     {
-        private DbResourceSqlServerDataManager GetManager()
+
+        private DbResourceMySqlDataManager GetManager()
         {
-            var manager = new DbResourceSqlServerDataManager();
-            manager.Configuration.ConnectionString = "SqlServerLocalizations";
-            manager.Configuration.ResourceTableName = "Localizations";
+            var manager = new DbResourceMySqlDataManager();
+            manager.Configuration.ConnectionString = "MySqlLocalizations";
+            //manager.Configuration.ResourceTableName = "Localizations";
             return manager;
+        }
+
+
+        [Test]
+        public void CreateTable()
+        {
+            var manager = GetManager();
+
+            bool result = manager.CreateLocalizationTable();
+
+            // no assertions as table can exist - to test explicitly remove the table
+            if (result)
+                Console.WriteLine("Table created.");
+            else
+                Console.WriteLine(manager.ErrorMessage);
         }
 
         [Test]
@@ -60,7 +76,7 @@ namespace Westwind.Globalization.Test
             var manager = GetManager();
 
             var items = manager.GetAllResourceIds("Resources");
-            Assert.IsNotNull(items);
+            Assert.IsNotNull(items,manager.ErrorMessage);
             Assert.IsTrue(items.Count > 0);
         }
 
@@ -200,7 +216,7 @@ namespace Westwind.Globalization.Test
             var manager = GetManager();
 
             string updated = "Heute Updated";
-            int count = manager.UpdateOrAdd("Today", updated, "de", "Resources");
+            int count =  manager.UpdateOrAdd("Today",updated,"de","Resources");
 
             Assert.IsFalse(count == -1, manager.ErrorMessage);
             string check = manager.GetResourceString("Today", "Resources", "de");
@@ -208,7 +224,7 @@ namespace Westwind.Globalization.Test
             Assert.AreEqual(check, updated);
             Console.WriteLine(check);
 
-            manager.UpdateOrAdd("Today", "Heute", "de", "Resources", null);
+            manager.UpdateOrAdd("Today", "Heute", "de", "Resources",null);
         }
 
 
@@ -229,31 +245,12 @@ namespace Westwind.Globalization.Test
             Assert.AreEqual(check, text);
             Console.WriteLine(check);
 
-            bool result = manager.DeleteResource(resourceId, "de", "Resources");
+            bool result = manager.DeleteResource(resourceId,"de","Resources");
             Assert.IsTrue(result, manager.ErrorMessage);
 
             check = manager.GetResourceString(resourceId, "Resources", "de");
             Assert.IsNull(check, manager.ErrorMessage);
         }
-
-
-
-        [Test]
-        public void CreateTable()
-        {
-            var manager = GetManager();
-
-            bool result = manager.CreateLocalizationTable();
-            
-            // no assertions as table can exist - to test explicitly remove the table
-            if (result)
-                Console.WriteLine("Localization Table created.");
-            else
-                Console.WriteLine(manager.ErrorMessage);
-
-
-        }
-
 
 
 

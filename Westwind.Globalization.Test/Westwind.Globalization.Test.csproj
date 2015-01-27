@@ -84,8 +84,8 @@
   <ItemGroup>
     <Compile Include="DbResourceManagerTests.cs" />
     <Compile Include="DbResourceProviderTests.cs" />
+    <Compile Include="DbResourceMySqlServerDataManagerTests.cs" />
     <Compile Include="DbResourceSqlServerCeDataManagerTests.cs" />
-    <Compile Include="DbResourceMySqlDataManagerTests.cs" />
     <Compile Include="MySqlResourceProviderTests.cs" />
     <Compile Include="DbResXConverterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

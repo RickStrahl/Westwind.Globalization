@@ -14,7 +14,7 @@ namespace Westwind.Globalization.Test
         private DbResourceSqlServerCeDataManager GetManager()
         {
             var manager = new DbResourceSqlServerCeDataManager();
-            //manager.Configuration.ConnectionString = "SqlServerCeLocalizations";
+            manager.Configuration.ConnectionString = "SqlServerCeLocalizations";
             //manager.Configuration.ResourceTableName = "Localizations";
             return manager;
         }
@@ -210,7 +210,48 @@ namespace Westwind.Globalization.Test
         }
 
 
-     
+
+        [Test]
+        public void UpdateResourceString()
+        {
+            var manager = GetManager();
+
+            string updated = "Heute Updated";
+            int count = manager.UpdateOrAdd("Today", updated, "de", "Resources");
+
+            Assert.IsFalse(count == -1, manager.ErrorMessage);
+            string check = manager.GetResourceString("Today", "Resources", "de");
+
+            Assert.AreEqual(check, updated);
+            Console.WriteLine(check);
+
+            manager.UpdateOrAdd("Today", "Heute", "de", "Resources", null);
+        }
+
+
+
+        [Test]
+        public void AddAndDeleteResourceString()
+        {
+            var manager = GetManager();
+
+            string resourceId = "NewlyAddedTest";
+            string text = "Newly Added Test";
+
+            int count = manager.AddResource(resourceId, text, "de", "Resources");
+
+            Assert.IsFalse(count == -1, manager.ErrorMessage);
+            string check = manager.GetResourceString(resourceId, "Resources", "de");
+
+            Assert.AreEqual(check, text);
+            Console.WriteLine(check);
+
+            bool result = manager.DeleteResource(resourceId, "de", "Resources");
+            Assert.IsTrue(result, manager.ErrorMessage);
+
+            check = manager.GetResourceString(resourceId, "Resources", "de");
+            Assert.IsNull(check, manager.ErrorMessage);
+        }
 
 
 

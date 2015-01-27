@@ -1,3 +1,35 @@
+#region License
+/*
+ **************************************************************
+ *  Author: Rick Strahl 
+ *          © West Wind Technologies, 2009-2015
+ *          http://www.west-wind.com/
+ * 
+ *
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following
+ * conditions:
+ * 
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ **************************************************************  
+*/
+#endregion
+  
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -386,19 +418,22 @@ namespace Westwind.Globalization
         /// <param name="resourceSet"></param>
         /// <returns></returns>
         public virtual List<ResourceIdItem> GetAllResourceIds(string resourceSet)
-        {
-                      
+        {                      
             using (var data = GetDb())
             {
-                string sql =
-                    @"select ResourceId,CAST( MAX( 
+                string sql = string.Format(
+//                    @"select ResourceId, CAST(MAX(len(Value)) as bit)  as HasValue
+//	  	from {0}
+//        where ResourceSet=@ResourceSet
+//		group by ResourceId", Configuration.ResourceTableName);
+                @"select ResourceId,CAST( MAX( 
 	  case  
 		WHEN len( CAST(Value as nvarchar(10))) > 0 THEN 1
 		ELSE 0
 	  end ) as Bit) as HasValue
-	  	from " + Configuration.ResourceTableName +
-                    @" where ResourceSet=@ResourceSet 
-	group by ResourceId";
+	  	from {0}
+        where ResourceSet=@ResourceSet 
+	    group by ResourceId",Configuration.ResourceTableName);
 
                 var items = data.Query<ResourceIdItem>(sql,
                     data.CreateParameter("@ResourceSet", resourceSet));
@@ -420,7 +455,7 @@ namespace Westwind.Globalization
         /// <returns></returns>
         public virtual List<ListItem> GetAllResourceIdsForHtmlDisplay(string ResourceSet)
         {
-            var resourceIds = GetAllResourceIds(ResourceSet);
+            var resourceIds = this.GetAllResourceIds(ResourceSet);
             if (resourceIds == null)
                 return null;
 
@@ -735,22 +770,8 @@ namespace Westwind.Globalization
         /// <param name="cultureName"></param>
         /// <param name="resourceSet"></param>
         /// <param name="Type"></param>
-        public virtual int UpdateOrAdd(string resourceId, object value, string cultureName, string resourceSet, string comment)
-        {
-            return UpdateOrAdd(resourceId, value, cultureName, resourceSet, comment, false);
-        }
-
-
-        /// <summary>
-        /// Updates a resource if it exists, if it doesn't one is created
-        /// </summary>
-        /// <param name="resourceId"></param>
-        /// <param name="value"></param>
-        /// <param name="cultureName"></param>
-        /// <param name="resourceSet"></param>
-        /// <param name="Type"></param>
         public virtual int UpdateOrAdd(string resourceId, object value, string cultureName, string resourceSet,
-            string comment, bool valueIsFileName)
+            string comment = null, bool valueIsFileName = false)
         {
             if (!IsValidCulture(cultureName))
             {

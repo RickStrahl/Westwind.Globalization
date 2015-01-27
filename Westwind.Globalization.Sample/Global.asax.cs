@@ -21,8 +21,11 @@ namespace Westwind.Globalization.Sample
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            // override configuration values
+            // override which connection string is used for the provider configuration values
+            //DbResourceConfiguration.Current.ConnectionString = "SqlServerLocalizations";
             //DbResourceConfiguration.Current.ConnectionString = "SqlServerCeLocalizations";
+            DbResourceConfiguration.Current.ConnectionString = "MySqlLocalizations";
+
         }
 
         protected void Application_BeginRequest()
