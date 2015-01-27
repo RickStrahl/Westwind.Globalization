@@ -1441,16 +1441,14 @@ CREATE TABLE [{0}] (
 		[BinFile]         varbinary(max) NULL,
 		[TextFile]        nvarchar(max) NULL,
 		[Filename]        nvarchar(128) NULL,
-        [Comment]         nvarchar(512) NULL
+		[Comment]         nvarchar(512) NULL
 )
-ON [PRIMARY]
 GO
 ALTER TABLE [{0}]
 	ADD
 	CONSTRAINT [PK_{0}]
 	PRIMARY KEY
 	([pk])
-	ON [PRIMARY]
 GO
 ALTER TABLE [{0}]
 	ADD
