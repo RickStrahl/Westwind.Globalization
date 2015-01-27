@@ -57,6 +57,11 @@ namespace Westwind.Globalization
         private string _Comment = null;
 
         /// <summary>
+        /// Type of the data if not a string
+        /// </summary>
+        public string Type { get; set; }
+
+        /// <summary>
         /// The localeId ("" invariant or "en-US", "de" etc). Note
         /// Empty means invariant or default locale.
         /// </summary>
@@ -84,6 +89,12 @@ namespace Westwind.Globalization
                 SendPropertyChanged("ResourceSet");
             }
         }
+
+        public string TextFile { get; set; }
+        public byte[] BinFile { get; set; }
+        public string FileName { get; set; }
+
+
         private string _ResourceSet = string.Empty;
 
 

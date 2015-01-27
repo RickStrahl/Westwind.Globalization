@@ -157,14 +157,13 @@ namespace Westwind.Globalization
         {
             bool IsVb = IsFileVb(FileName);
 
-            DbResourceDataManager man = new DbResourceDataManager();
-            DataTable Resources = man.GetAllResourceSets(ResourceListingTypes.GlobalResourcesOnly);
+            var man = DbResourceBaseDataManager.CreateDbResourceDataManager();  
+            var resources = man.GetAllResourceSets(ResourceListingTypes.GlobalResourcesOnly);
 
             StringBuilder sbClasses = new StringBuilder();
-            foreach (DataRow row in Resources.Rows)
-            {
-                string ResourceSet = row["resourceset"] as string;
-                string Class = CreateClassFromDatabaseResource(ResourceSet, null, ResourceSet, null);
+            foreach (var resourceSet in resources)
+            {                
+                string Class = CreateClassFromDatabaseResource(resourceSet, null, resourceSet, null);
                 sbClasses.Append(Class);
             }
 

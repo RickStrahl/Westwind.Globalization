@@ -27,7 +27,7 @@ namespace Westwind.Globalization.Test
         [Test]
         public void GetDbResourcesTest()
         {
-            DbResourceDataManager manager = new DbResourceDataManager();
+            var manager = DbResourceBaseDataManager.CreateDbResourceDataManager();
             Dictionary<string,object> items = manager.GetResourceSetNormalizedForLocaleId("de-de", "Resources");
 
             WriteResourceDictionary(items, "DB Resources");            

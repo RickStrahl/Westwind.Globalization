@@ -86,20 +86,4 @@ GO
 
         }
     }
-
-    public enum DbResourceDataManagerTypes
-    {
-        SqlServer,
-        SqlServerCe,
-        MySql,
-        SqlLite,
-        MongoDb
-    }
-
-    public class ResourceIdItem
-    {
-        public string ResourceId { get; set; }
-        public bool HasValue { get; set; }
-        public object Value { get; set; }        
-    }
 }

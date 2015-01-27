@@ -22,7 +22,7 @@ namespace Westwind.Globalization.Sample
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             // override configuration values
-            DbResourceConfiguration.Current.ConnectionString = "SqlServerCeLocalizations";
+            //DbResourceConfiguration.Current.ConnectionString = "SqlServerCeLocalizations";
         }
 
         protected void Application_BeginRequest()

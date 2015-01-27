@@ -1,7 +1,7 @@
 using System;
-using System.Resources;
-using System.Globalization;
 using System.Collections;
+using System.Globalization;
+using System.Resources;
 
 namespace Westwind.Globalization
 {
@@ -54,7 +54,7 @@ namespace Westwind.Globalization
             this.baseName = baseName;
             this.cultureInfo = cultureInfo;
 
-            this.resourceList = reader as IDictionary;
+            resourceList = reader as IDictionary;
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Westwind.Globalization
         /// </summary>
         public void Generate()
         {
-            this.Generate(false);
+            Generate(false);
         }
 
         /// <summary>
@@ -131,8 +131,8 @@ namespace Westwind.Globalization
         public void Generate(bool DeleteAllRowsFirst)
         {
             // DEPENDENCY HERE
-            DbResourceDataManager Data = new DbResourceDataManager();
-            Data.GenerateResources(resourceList, this.cultureInfo.Name, this.baseName, DeleteAllRowsFirst);
+            var data = DbResourceBaseDataManager.CreateDbResourceDataManager();               
+            data.GenerateResources(resourceList, cultureInfo.Name, baseName, DeleteAllRowsFirst);
         }
     }
 }

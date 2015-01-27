@@ -17,28 +17,25 @@
  * Created:  10/10/2006
  **************************************************************  
 */
+
+using System;
+using System.Collections;
+using System.Collections.Specialized;
+using System.ComponentModel.Design;
+using System.Globalization;
+using System.Resources;
+using System.Web.Compilation;
+using System.Web.UI;
+using System.Web.UI.Design;
+
 namespace Westwind.Globalization
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Specialized;
-    using System.ComponentModel.Design;
-    using System.Globalization;
-    using System.Resources;
-    using System.Web.Compilation;
-    using System.Web.UI;
-    using System.Web.UI.Design;
-
     /// <remarks>
     /// Design-time resource provider to provide Generate Local Resources functionality.
     /// </remarks>
     public sealed class DbDesignTimeResourceProviderFactory : DesignTimeResourceProviderFactory
     {
         private IResourceProvider _localResourceProvider;
-        
-        public DbDesignTimeResourceProviderFactory()
-        {
-        }
 
         public override IResourceProvider CreateDesignTimeGlobalResourceProvider(IServiceProvider serviceProvider, string applicationKey)
         {
@@ -96,7 +93,7 @@ namespace Westwind.Globalization
         {
             private IServiceProvider _serviceProvider;
             private IResourceDictionary _localResources;
-            private IDictionary _reader = null;
+            private IDictionary _reader;
 
 
             public DbDesignTimeLocalResourceProvider(IServiceProvider serviceProvider)
@@ -133,18 +130,18 @@ namespace Westwind.Globalization
             private void Load()
             {
                 // RAS Modified: Read the full page path ie. /internationalization/test.aspx  
-                string ResourceSet = GetFullPagePath();
+                string resourceSet = GetFullPagePath();
                 
                 // Load IDictionary data using the DataManager (same code as provider)
-                DbResourceDataManager Manager = new DbResourceDataManager();                
-                this._reader = Manager.GetResourceSet("", ResourceSet);
+                var manager = DbResourceBaseDataManager.CreateDbResourceDataManager();                
+                _reader = manager.GetResourceSet("", resourceSet);
             }
 
             private void Flush()
             {
                 if (LocalResources != null && LocalResources.Persistable)
                 {
-                    string ResourceSet = this.GetFullPagePath();
+                    string ResourceSet = GetFullPagePath();
 
                     bool refreshLocalResource = false;
 
@@ -168,9 +165,9 @@ namespace Westwind.Globalization
             private static void AddResourceToStore(string key, object value, string resourceSet, IServiceProvider serviceProvider)
             {
                 // Use custom data manager to write the values into the database
-                DbResourceDataManager Manager = new DbResourceDataManager();
-                if (Manager.UpdateOrAdd(key, value, "", resourceSet, null) == -1)
-                    throw new InvalidOperationException("Resource update error: " + Manager.ErrorMessage);
+                var manager = DbResourceBaseDataManager.CreateDbResourceDataManager();  
+                if (manager.UpdateOrAdd(key, value, "", resourceSet, null) == -1)
+                    throw new InvalidOperationException("Resource update error: " + manager.ErrorMessage);
             }
 
             private IResourceDictionary LocalResources

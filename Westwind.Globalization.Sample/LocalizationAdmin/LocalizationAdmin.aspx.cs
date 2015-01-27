@@ -24,7 +24,7 @@ namespace Westwind.GlobalizationWeb
         /// through the provider or resource manager, as we don't have the flexibility
         /// with the core resource managers.
         /// </summary>
-        protected DbResourceDataManager Manager  = new DbResourceDataManager();
+        protected DbResourceBaseDataManager Manager =  DbResourceBaseDataManager.CreateDbResourceDataManager();
 
         public string ResourceSet {get; set; }
 
@@ -50,8 +50,9 @@ namespace Westwind.GlobalizationWeb
 
             GetResourceSet();
 
-            ListItem[] items = Manager.GetAllResourceIdsForHtmlDisplay(ResourceSet);
-            lstResourceIds.Items.AddRange(items);
+            var items = Manager.GetAllResourceIdsForHtmlDisplay(ResourceSet);           
+            lstResourceIds.Items.AddRange(items.ToArray());    
+            
 
 
             //DataTable dt = Manager.GetAllResourceIds(ResourceSet);
@@ -68,28 +69,27 @@ namespace Westwind.GlobalizationWeb
             if (lstResourceIds.Items.Count > 0)
                 lstResourceIds.SelectedIndex = 0;
 
-            DataTable dt = Manager.GetAllLocaleIds(ResourceSet);
-            if (dt == null)
+            var ids = Manager.GetAllLocaleIds(ResourceSet);
+            if (ids == null)
             {
                 ErrorDisplay.ShowError("Couldn't load resources: " + Manager.ErrorMessage);
                 return;
             }
 
-            foreach (DataRow row in dt.Rows)
+            foreach (string localeId in ids)
             {
-                string Code = row["LocaleId"] as string;
-                CultureInfo ci = CultureInfo.GetCultureInfo(Code.Trim());
+                CultureInfo ci = CultureInfo.GetCultureInfo(localeId.Trim());
 
-                if (Code != "")
-                    row["Language"] = ci.DisplayName + " (" + ci.Name + ")";
-                else
-                    row["Language"] = "Invariant";
-            }
+                string language = "Invariant";
+                if (!string.IsNullOrEmpty(localeId))
+                    language = ci.DisplayName + " (" + ci.Name + ")";
 
-            lstLanguages.DataSource = dt;
-            lstLanguages.DataValueField = "LocaleId";
-            lstLanguages.DataTextField = "Language";
-            lstLanguages.DataBind();
+                lstLanguages.Items.Add(new ListItem()
+                {
+                    Value = localeId,
+                    Text = language
+                });
+            }            
 
             if (lstLanguages.Items.Count > 0)
                 lstLanguages.SelectedIndex = 0;
@@ -155,9 +155,8 @@ namespace Westwind.GlobalizationWeb
             lstResourceSet.Items.Clear();
             lstResourceSet.ClearSelection();   
 
-            DataTable dt = Manager.GetAllResourceSets(ResourceListingTypes.AllResources);
-            lstResourceSet.DataSource = dt;
-            lstResourceSet.DataValueField = "ResourceSet";
+            var dt = Manager.GetAllResourceSets(ResourceListingTypes.AllResources);
+            lstResourceSet.DataSource = dt;            
 
             try
             {
@@ -249,32 +248,32 @@ namespace Westwind.GlobalizationWeb
                 return;
 
             //FileInfo fi = new FileInfo(this.FileUpload.FileName);
-            string Extension = Path.GetExtension(FileUpload.FileName).TrimStart('.');  // fi.Extension.TrimStart('.');
+            string extension = Path.GetExtension(FileUpload.FileName).TrimStart('.');  // fi.Extension.TrimStart('.');
 
-            string Filter = ",bmp,ico,gif,jpg,png,css,js,txt,wav,mp3,";
-            if (Filter.IndexOf("," + Extension + ",") == -1)
+            string filter = ",bmp,ico,gif,jpg,png,css,js,txt,wav,mp3,";
+            if (filter.IndexOf("," + extension + ",") == -1)
             {
                 ErrorDisplay.ShowError(WebUtils.LRes("InvalidFileUploaded"));
                 return;
             }
 
-            string FilePath = Server.MapPath(FileUpload.FileName);
+            string filePath = Server.MapPath(FileUpload.FileName);
 
-            File.WriteAllBytes(FilePath, FileUpload.FileBytes);
+            File.WriteAllBytes(filePath, FileUpload.FileBytes);
 
-            string ResourceId = txtNewResourceId.Text;
+            string resourceId = txtNewResourceId.Text;
 
             // *** Try to add the file
-            DbResourceDataManager Data = new DbResourceDataManager();
-            if (Data.UpdateOrAdd(ResourceId, FilePath, txtNewLanguage.Text, ResourceSet, null, true) == -1)
-                ErrorDisplay.ShowError(WebUtils.LRes("ResourceUpdateFailed") + "<br/>" + Data.ErrorMessage);
+            var data = DbResourceBaseDataManager.CreateDbResourceDataManager();
+            if (data.UpdateOrAdd(resourceId, filePath, txtNewLanguage.Text, ResourceSet, null, true) == -1)
+                ErrorDisplay.ShowError(WebUtils.LRes("ResourceUpdateFailed") + "<br/>" + data.ErrorMessage);
             else
                 ErrorDisplay.ShowMessage(WebUtils.LRes("ResourceUpdated"));
 
-            File.Delete(FilePath);
+            File.Delete(filePath);
 
-            lstResourceIds.Items.Add(ResourceId);
-            lstResourceIds.SelectedValue = ResourceId;
+            lstResourceIds.Items.Add(resourceId);
+            lstResourceIds.SelectedValue = resourceId;
         }
 
 
@@ -404,18 +403,13 @@ namespace Westwind.GlobalizationWeb
         #region CallbackMethods
 
         [CallbackMethod]
-        public DataTable GetResourceList(string ResourceSet)
+        public IEnumerable<ResourceIdItem> GetResourceList(string ResourceSet)
         {
-            DataTable dt = Manager.GetAllResourceIds(ResourceSet);
-            if (Manager == null)
+            var ids = Manager.GetAllResourceIds(ResourceSet);
+            if (ids == null)
                 throw new ApplicationException(WebUtils.LRes("ResourceSetLoadingFailed") + ":" + Manager.ErrorMessage);
 
-            foreach (DataRow row in dt.Rows)
-            {
-
-            }
-
-            return dt;
+            return ids;
         }
 
         [CallbackMethod]

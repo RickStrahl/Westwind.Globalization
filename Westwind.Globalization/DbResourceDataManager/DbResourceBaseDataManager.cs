@@ -58,6 +58,20 @@ namespace Westwind.Globalization
         }
 
         /// <summary>
+        /// Creates an instance of the DbResourceDataManager based on configuration settings
+        /// </summary>
+        /// <returns></returns>
+        public static DbResourceBaseDataManager CreateDbResourceDataManager(Type managerType = null)
+        {
+            if (managerType == null)
+                managerType = DbResourceConfiguration.Current.DbResourceDataManagerType;
+            if (managerType == null)
+                managerType = typeof (DbResourceSqlServerDataManager);
+
+            return ReflectionUtils.CreateInstanceFromType(managerType) as DbResourceBaseDataManager;
+        }
+
+        /// <summary>
         /// TODO: figure out how to instantiate different providers
         /// </summary>
         /// <returns></returns>
@@ -1525,4 +1539,21 @@ namespace Westwind.Globalization
 
 
     }
+
+    public enum DbResourceDataManagerTypes
+    {
+        SqlServer,
+        SqlServerCe,
+        MySql,
+        SqlLite,
+        MongoDb
+    }
+
+    public class ResourceIdItem
+    {
+        public string ResourceId { get; set; }
+        public bool HasValue { get; set; }
+        public object Value { get; set; }
+    }
+
 }

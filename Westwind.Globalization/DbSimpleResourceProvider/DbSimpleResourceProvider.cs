@@ -137,30 +137,30 @@ namespace Westwind.Globalization
             if (_resourceCache == null)
                 _resourceCache = new ListDictionary();
 
-            IDictionary Resources = _resourceCache[cultureName] as IDictionary;
-            if (Resources == null)
+            IDictionary resources = _resourceCache[cultureName] as IDictionary;
+            if (resources == null)
             {
                 // DEPENDENCY HERE (#1): Using DbResourceDataManager to retrieve resources
 
                 // Use datamanager to retrieve the resource keys from the database
-                DbResourceDataManager data = new DbResourceDataManager();                                
+                var data = DbResourceBaseDataManager.CreateDbResourceDataManager();                                 
 
                 lock (_SyncLock)
                 {
-                    if (Resources == null)
+                    if (resources == null)
                     {
                         if (_resourceCache.Contains(cultureName))
-                            Resources = _resourceCache[cultureName] as IDictionary;
+                            resources = _resourceCache[cultureName] as IDictionary;
                         else
                         {
-                            Resources = data.GetResourceSet(cultureName as string, _ResourceSetName);
-                            _resourceCache[cultureName] = Resources;
+                            resources = data.GetResourceSet(cultureName as string, _ResourceSetName);
+                            _resourceCache[cultureName] = resources;
                         }
                     }
                 }
             }
 
-            return Resources;
+            return resources;
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Westwind.Globalization
                     {
                         if (resources[resourceKey] == null)
                         {
-                            var data = new DbResourceDataManager();
+                            var data = DbResourceBaseDataManager.CreateDbResourceDataManager();  
                             if (!data.ResourceExists(resourceKey,"",_ResourceSetName))
                                 data.AddResource(resourceKey, resourceKey,"",
                                                  _ResourceSetName, null);

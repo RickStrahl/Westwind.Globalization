@@ -183,7 +183,7 @@ namespace Westwind.Globalization
             if (value == null)
                 value = resourceId;
 
-            var db = new DbResourceDataManager();
+            var db = DbResourceBaseDataManager.CreateDbResourceDataManager();  
             return db.UpdateOrAdd(resourceId, value, lang, resourceSet, null) > -1;
         }
 
@@ -196,7 +196,7 @@ namespace Westwind.Globalization
         /// <returns>true or false</returns>
         public static bool DeleteResource(string resourceId, string resourceSet = null, string lang = null)
         {
-            var db = new DbResourceDataManager();
+            var db = DbResourceBaseDataManager.CreateDbResourceDataManager();  
             return db.DeleteResource(resourceId, lang, resourceSet);
         }
 

@@ -1,14 +1,11 @@
 using System;
-using System.Text;
-using System.Data;
-using System.Xml;
-using System.Linq;
-using System.IO;
-using System.Resources;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Collections;
+using System.IO;
+using System.Linq;
+using System.Text;
 using System.Web;
+using System.Xml;
 
 namespace Westwind.Globalization
 {
@@ -51,7 +48,7 @@ namespace Westwind.Globalization
             if (string.IsNullOrEmpty(basePhsyicalPath))
                 basePhsyicalPath = HttpContext.Current.Request.PhysicalApplicationPath;
 
-            this.BasePhysicalPath = basePhsyicalPath;
+            BasePhysicalPath = basePhsyicalPath;
         }
 
         /// <summary>
@@ -92,7 +89,7 @@ namespace Westwind.Globalization
         /// <returns></returns>
         public bool GenerateLocalWebResourceResXFiles()
         {
-            return this.GenerateWebResourceResXFiles(true);
+            return GenerateWebResourceResXFiles(true);
         }
         /// <summary>
         /// Genereates Local Web Resource ResX files from the DbResourceDataManager
@@ -100,7 +97,7 @@ namespace Westwind.Globalization
         /// <returns></returns>
         public bool GenerateGlobalWebResourceResXFiles()
         {
-            return this.GenerateWebResourceResXFiles(false);
+            return GenerateWebResourceResXFiles(false);
         }
 
 
@@ -115,14 +112,14 @@ namespace Westwind.Globalization
         /// <returns></returns>
         protected bool GenerateWebResourceResXFiles(bool localResources)
         {
-            DbResourceDataManager Data = new DbResourceDataManager();
+            var data = DbResourceBaseDataManager.CreateDbResourceDataManager();
             
             // Retrieve all resources for a ResourceSet for all cultures
             // The data is ordered by ResourceSet, LocaleId and resource ID as each
             // ResourceSet or Locale changes a new file is written
-            DataTable dtResources = Data.GetAllResources(localResources);
+            var resources = data.GetAllResources(localResources);
             
-            if (dtResources == null)
+            if (resources == null)
                 return false;
 
             string LastSet = "";
@@ -141,21 +138,21 @@ namespace Westwind.Globalization
             XmlSettings.IndentChars = "   ";
             XmlSettings.Indent = true;
                        
-            foreach(DataRow dr in dtResources.Rows)
+            foreach(var res in resources)
             {
                 // Read into vars for easier usage below
-                string ResourceId = dr["ResourceId"] as string;                
-                string Value = dr["Value"] as string;
-                string Comment = dr["Comment"] as string;
+                string ResourceId = res.ResourceId;
+                string Value = res.Value as string;
+                string Comment = res.Comment;
 
-                string Type = dr["Type"] as string;
-                string TextFile = dr["TextFile"] as string;
-                byte[] BinFile = dr["BinFile"] as byte[];
-                string FileName = dr["FileName"] as string;
+                string Type = res.Type;
+                string TextFile = res.TextFile;
+                byte[] BinFile = res.BinFile;
+                string FileName = res.FileName;
 
-                string ResourceSet = dr["ResourceSet"] as string;                
+                string ResourceSet = res.ResourceSet;
 
-                string LocaleId = dr["LocaleId"] as string;
+                string LocaleId = res.LocaleId;
                 LocaleId = LocaleId.ToLower();
                                  
                 // Create a new output file if the resource set or locale changes
@@ -173,12 +170,12 @@ namespace Westwind.Globalization
                         Loc = "." + LocaleId + ".resx";
 
                     //xWriter = XmlWriter.Create( this.FormatResourceSetPath(ResourceSet,LocalResources) + Loc,XmlSettings) ;
-                    string resourceFilename = this.FormatWebResourceSetPath(ResourceSet, localResources) + Loc;
+                    string resourceFilename = FormatWebResourceSetPath(ResourceSet, localResources) + Loc;
                     XmlTextWriter Writer = new XmlTextWriter(resourceFilename, Encoding.UTF8);
                     Writer.Indentation = 3;
                     Writer.IndentChar = ' ';
                     Writer.Formatting = Formatting.Indented;
-                    xWriter = Writer as XmlWriter;
+                    xWriter = Writer;
                     
                     xWriter.WriteStartElement("root");
 
@@ -212,7 +209,7 @@ namespace Westwind.Globalization
                 // File Resources get written to disk
                 else if (Type == "FileResource")  
                 {
-                    string resourceFilenname = this.FormatWebResourceSetPath(ResourceSet,localResources);
+                    string resourceFilenname = FormatWebResourceSetPath(ResourceSet,localResources);
                     string resourcePath = new FileInfo(resourceFilenname).DirectoryName;
 
                     if (Value.IndexOf("System.String") > -1)
@@ -274,14 +271,14 @@ namespace Westwind.Globalization
         /// <returns></returns>
         public bool GenerateResXFiles()
         {
-            DbResourceDataManager Data = new DbResourceDataManager();
+            var data = DbResourceBaseDataManager.CreateDbResourceDataManager();  
 
             // Retrieve all resources for a ResourceSet for all cultures
             // The data is ordered by ResourceSet, LocaleId and resource ID as each
             // ResourceSet or Locale changes a new file is written
-            DataTable dtResources = Data.GetAllResources();
+            var resources = data.GetAllResources();
 
-            if (dtResources == null)
+            if (resources == null)
                 return false;
 
             string lastSet = "";
@@ -300,26 +297,29 @@ namespace Westwind.Globalization
             xmlSettings.IndentChars = "   ";
             xmlSettings.Indent = true;
 
-            foreach (DataRow dr in dtResources.Rows)
+            foreach (var res in resources)
             {
-                // Read into vars for easier usage below
-                string resourceId = dr["ResourceId"] as string;
-                string value = dr["Value"] as string;
-                string comment = dr["Comment"] as string;
+                //// Read into vars for easier usage below
+                //string resourceId = res.ResourceId;
+                //string value = res.Value as string;
+                //string comment = res.Comment;
 
-                string type = dr["Type"] as string;
-                string textFile = dr["TextFile"] as string;
-                byte[] binFile = dr["BinFile"] as byte[];
-                string fileName = dr["FileName"] as string;
+                //string type = res.Type;
+                //string textFile = res.TextFile;
+                //byte[] binFile = res.BinFile;
+                //string fileName = res["FileName"] as string;
 
-                string resourceSet = dr["ResourceSet"] as string;
-                //ResourceSet = ResourceSet.ToLower();
+                //string resourceSet = res["ResourceSet"] as string;
+                ////ResourceSet = ResourceSet.ToLower();
 
-                string localeId = dr["LocaleId"] as string;
-                localeId = localeId.ToLower();
+                //string localeId = res["LocaleId"] as string;
+                //localeId = localeId.ToLower();
+
+                res.LocaleId = res.LocaleId.ToLower();
+                string stringValue = res.Value as string;
 
                 // Create a new output file if the resource set or locale changes
-                if (resourceSet != lastSet || localeId != lastLocale)
+                if (res.ResourceSet != lastSet || res.LocaleId != lastLocale)
                 {
                     if (xWriter != null)
                     {
@@ -328,16 +328,16 @@ namespace Westwind.Globalization
                     }
 
                     string localizedExtension = ".resx";
-                    if (localeId != "")
-                        localizedExtension = "." + localeId + ".resx";
+                    if (res.LocaleId != "")
+                        localizedExtension = "." + res.LocaleId + ".resx";
 
-                    string fullFileName = FormatResourceSetPath(resourceSet) + localizedExtension;
+                    string fullFileName = FormatResourceSetPath(res.ResourceSet) + localizedExtension;
 
                     XmlTextWriter writer = new XmlTextWriter(fullFileName,Encoding.UTF8);
                     writer.Indentation = 3;
                     writer.IndentChar = ' ';
                     writer.Formatting = Formatting.Indented;
-                    xWriter = writer as XmlWriter;
+                    xWriter = writer;
 
                     xWriter.WriteProcessingInstruction("xml", "version='1.0' encoding='UTF-8'");
                     xWriter.WriteStartElement("root");
@@ -352,32 +352,32 @@ namespace Westwind.Globalization
                         Node.WriteTo(xWriter);
                     }
 
-                    lastSet = resourceSet;
-                    lastLocale = localeId;
+                    lastSet = res.ResourceSet;
+                    lastLocale = res.LocaleId;
                 }
 
-                if (type == "")  // plain string value
+                if (string.IsNullOrEmpty(res.Type))  // plain string value
                 {
                     //<data name="LinkButton1Resource1.Text" xml:space="preserve">
                     //    <value>LinkButton</value>
                     //</data>
                     xWriter.WriteStartElement("data");
-                    xWriter.WriteAttributeString("name", resourceId);
+                    xWriter.WriteAttributeString("name", res.ResourceId);
                     xWriter.WriteAttributeString("xml", "space", null, "preserve");
-                    xWriter.WriteElementString("value", value);
-                    if (!string.IsNullOrEmpty(comment))
-                        xWriter.WriteElementString("comment", comment);
+                    xWriter.WriteElementString("value", stringValue);
+                    if (!string.IsNullOrEmpty(res.Comment))
+                        xWriter.WriteElementString("comment", res.Comment);
                     xWriter.WriteEndElement(); // data
                 }
                 // File Resources get written to disk
-                else if (type == "FileResource")
+                else if (res.Type == "FileResource")
                 {
-                    string ResourceFilePath = this.FormatResourceSetPath(resourceSet);
+                    string ResourceFilePath = FormatResourceSetPath(res.ResourceSet);
                     string ResourcePath = new FileInfo(ResourceFilePath).DirectoryName;
-
-                    if (value.IndexOf("System.String") > -1)
+                    
+                    if (stringValue.IndexOf("System.String") > -1)
                     {
-                        string[] Tokens = value.Split(';');
+                        string[] Tokens = stringValue.Split(';');
                         Encoding Encode = Encoding.Default;
                         try
                         {
@@ -385,7 +385,7 @@ namespace Westwind.Globalization
                                 Encode = Encoding.GetEncoding(Tokens[2]);
 
                             // Write out the file to disk
-                            File.WriteAllText(ResourcePath + "\\" + fileName, textFile, Encode);
+                            File.WriteAllText(ResourcePath + "\\" + res.FileName, res.TextFile, Encode);
                         }
                         catch
                         {
@@ -393,20 +393,20 @@ namespace Westwind.Globalization
                     }
                     else
                     {
-                        File.WriteAllBytes(ResourcePath + "\\" + fileName, binFile);
+                        File.WriteAllBytes(ResourcePath + "\\" + res.FileName, res.BinFile);
                     }
 
                     //<data name="Scratch" type="System.Resources.ResXFileRef, System.Windows.Forms">
                     //  <value>Scratch.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
                     //</data>
                     xWriter.WriteStartElement("data");
-                    xWriter.WriteAttributeString("name", resourceId);
+                    xWriter.WriteAttributeString("name", res.ResourceId);
                     xWriter.WriteAttributeString("type", "System.Resources.ResXFileRef, System.Windows.Forms");
 
                     // values are already formatted in the database
-                    xWriter.WriteElementString("value", value);
-                    if (!string.IsNullOrEmpty(comment))
-                        xWriter.WriteElementString("comment", comment);
+                    xWriter.WriteElementString("value", stringValue);
+                    if (!string.IsNullOrEmpty(res.Comment))
+                        xWriter.WriteElementString("comment", res.Comment);
 
                     xWriter.WriteEndElement(); // data
                 }
@@ -440,11 +440,11 @@ namespace Westwind.Globalization
                {
                    // Inject App_LocalResource
                    ResourceSet = ResourceSet.Insert(ResourceSet.LastIndexOf('\\')+1, "App_LocalResources\\");
-                   ResourceSet = this.BasePhysicalPath + ResourceSet;
+                   ResourceSet = BasePhysicalPath + ResourceSet;
                }
                else
                {
-                   ResourceSet = this.BasePhysicalPath + "App_GlobalResources\\" + ResourceSet;
+                   ResourceSet = BasePhysicalPath + "App_GlobalResources\\" + ResourceSet;
                }
 
                FileInfo fi = new FileInfo(ResourceSet);
@@ -479,7 +479,7 @@ namespace Westwind.Globalization
         public string FormatResourceSetPath(string resourceSet)
         {
             // Make sure our slashes are right
-            resourceSet = this.BasePhysicalPath +  resourceSet;
+            resourceSet = BasePhysicalPath +  resourceSet;
             resourceSet = resourceSet.Replace("/", "\\");
 
             if (IsLocalResourceSet(resourceSet) && !resourceSet.Contains("App_LocalResources"))
@@ -509,7 +509,7 @@ namespace Westwind.Globalization
         /// <returns></returns>
         public bool ImportWebResources()
         {
-            return this.ImportWebResources(null);
+            return ImportWebResources(null);
         }
 
 
@@ -521,7 +521,7 @@ namespace Westwind.Globalization
         protected bool ImportWebResources(string WebPath)
         {
             if (WebPath == null)
-                WebPath = this.BasePhysicalPath;
+                WebPath = BasePhysicalPath;
 
             WebPath = WebPath.ToLower();
             if (!WebPath.EndsWith("\\"))
@@ -536,7 +536,7 @@ namespace Westwind.Globalization
                 if (string.Compare(dir,"app_localresources",StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     // We need to create a Web relative path (ie. admin/default.aspx)
-                    string RelPath = WebPath.Replace(this.BasePhysicalPath.ToLower(), "");
+                    string RelPath = WebPath.Replace(BasePhysicalPath.ToLower(), "");
                     RelPath = RelPath.Replace("\\","/");
 
                     ImportDirectoryResources(WebPath + dir + "\\",RelPath) ;
@@ -561,14 +561,14 @@ namespace Westwind.Globalization
         public bool ImportWinResources(string basePhysicalPath)
         {
             if (basePhysicalPath == null)
-                basePhysicalPath = this.BasePhysicalPath;
+                basePhysicalPath = BasePhysicalPath;
 
             // basePhysicalPath = basePhysicalPath.ToLower();
             if (!basePhysicalPath.EndsWith("\\"))
                 basePhysicalPath += "\\";
 
             // We need to create a Web relative path (ie. admin/myresources.resx)
-            string relPath = basePhysicalPath.Replace(this.BasePhysicalPath, "");
+            string relPath = basePhysicalPath.Replace(BasePhysicalPath, "");
             relPath = relPath.Replace("\\", "/");
 
             // Import the base path first
@@ -641,7 +641,7 @@ namespace Westwind.Globalization
                     localeId = tokens[2];
                 }
 
-                this.ImportResourceFile(file, resName, localeId);
+                ImportResourceFile(file, resName, localeId);
             }
 
             return true;
@@ -657,22 +657,22 @@ namespace Westwind.Globalization
     public bool ImportResourceFile(string FileName,string ResourceSetName,string LocaleId)
     {
         string FilePath = Path.GetDirectoryName(FileName) + "\\";
+
+        var Data = DbResourceBaseDataManager.CreateDbResourceDataManager();  
         
-        DbResourceDataManager Data = new DbResourceDataManager();
-        
-        XmlDocument Dom = new XmlDocument();
+        XmlDocument dom = new XmlDocument();
 
         try
         {
-            Dom.Load(FileName);
+            dom.Load(FileName);
         }
         catch (Exception ex)
         {
-            this.ErrorMessage = ex.Message;
+            ErrorMessage = ex.Message;
             return false;
         }
 
-        XmlNodeList nodes = Dom.DocumentElement.SelectNodes("data");
+        XmlNodeList nodes = dom.DocumentElement.SelectNodes("data");
 
         foreach (XmlNode Node in nodes)
         {
@@ -734,7 +734,7 @@ namespace Westwind.Globalization
         }
         catch (Exception ex)
         {
-            this.ErrorMessage = ex.Message;
+            ErrorMessage = ex.Message;
             return null;
         }
 
@@ -757,7 +757,7 @@ namespace Westwind.Globalization
             if (Node.Attributes["type"] != null)
                 Type = Node.Attributes["type"].Value;
 
-            ResxItem resxItem = new ResxItem() { Name = Name, Type = Type, Value = Value };
+            ResxItem resxItem = new ResxItem { Name = Name, Type = Type, Value = Value };
             resxItems.Add(resxItem);
         }
         return resxItems;
@@ -783,18 +783,18 @@ namespace Westwind.Globalization
 
         if (!string.IsNullOrEmpty(LocaleId))
         {
-            localeRes = this.GetResXResources(baseFile + "." + LocaleId + ".resx");
+            localeRes = GetResXResources(baseFile + "." + LocaleId + ".resx");
             if (localeRes == null)
                 localeRes = new List<ResxItem>();
         }
         if (!string.IsNullOrEmpty(LocaleId1))
         {
-            locale1Res = this.GetResXResources(baseFile + "." + LocaleId1 + ".resx");
+            locale1Res = GetResXResources(baseFile + "." + LocaleId1 + ".resx");
             if (locale1Res == null)
                 locale1Res = new List<ResxItem>();
         }
 
-        invariantRes = this.GetResXResources(baseFile + ".resx");        
+        invariantRes = GetResXResources(baseFile + ".resx");        
         if (invariantRes == null)
             invariantRes = new List<ResxItem>();
 
@@ -889,7 +889,7 @@ namespace Westwind.Globalization
     public class ResxItem
     {
         public string Name = string.Empty;
-        public object Value = null;
+        public object Value;
         public string Type = string.Empty;
         public string LocaleId = string.Empty;
     }

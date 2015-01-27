@@ -29,7 +29,7 @@ namespace Westwind.Globalization
     /// DbResourceConfiguration   (holds and reads all config data from .Current)
     /// SqlDataAccess             (provides a data access (DAL))
     /// </summary>
-    public class DbResourceDataManager
+    public class DbResourceDataManager_Renamed
     {
         /// <summary>
         /// Internally used Transaction object
@@ -51,7 +51,7 @@ namespace Westwind.Globalization
         /// Default constructor. Instantiates with the default connection string
         /// which is loaded from the configuration section.
         /// </summary>
-        public DbResourceDataManager()
+        public DbResourceDataManager_Renamed()
         {
         }
 
