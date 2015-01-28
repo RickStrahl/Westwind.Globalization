@@ -668,7 +668,15 @@
         </member>
         <member name="T:Westwind.Utilities.Data.DataAccessBase">
             <summary>
-            Basic low level Data Access Layer
+            Base Data Access Layer (DAL) for ADO.NET SQL operations.
+            Provides easy, single method operations to retrieve DataReader,
+            DataTable, DataSet and Entities, perform non-query operations,
+            call stored procedures.
+            
+            This abstract class implements most data operations using a
+            configured DbProvider. Subclasses implement specific database
+            providers and override a few methods that might have provider
+            specific SQL Syntax.
             </summary>
         </member>
         <member name="M:Westwind.Utilities.Data.DataAccessBase.#ctor">
@@ -1313,7 +1321,9 @@
         </member>
         <member name="T:Westwind.Utilities.Data.SqlDataAccess">
             <summary>
-            Basic low level Data Access Layer
+            Sql Server specific implementation of the DataAccessBase class to
+            provide an easy to use Data Access Layer (DAL) with single line
+            operations for most data retrieval and non-query operations.
             </summary>
         </member>
         <member name="M:Westwind.Utilities.Data.SqlDataAccess.CreatePagingCommand(System.String,System.Int32,System.Int32,System.String,System.Object[])">

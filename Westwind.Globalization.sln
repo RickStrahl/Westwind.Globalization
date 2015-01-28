@@ -22,8 +22,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Westwind.Globalization", "W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Westwind.Globalization.Sample", "Westwind.Globalization.Sample\Westwind.Globalization.Sample.csproj", "{1E36A3C9-2F87-407A-B568-EBF336061A06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Westwind.Utilities", "..\..\WestwindToolkit\Westwind.Utilities\Westwind.Utilities.csproj", "{1C9829A8-8979-4493-863C-635726F8A61C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Westwind.Globalization.MySql", "Westwind.Globalization.MySql\Westwind.Globalization.MySql.csproj", "{9D405441-66D4-45D0-8832-9E17587BA921}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Westwind.Globalization.SqLite", "Westwind.Globalization.SqlLite\Westwind.Globalization.SqLite.csproj", "{4C74DAE9-4F4D-4D94-B3CA-783ACEF494F2}"
@@ -74,18 +72,6 @@ Global
 		{1E36A3C9-2F87-407A-B568-EBF336061A06}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1E36A3C9-2F87-407A-B568-EBF336061A06}.SandBox|Any CPU.ActiveCfg = Release|Any CPU
 		{1E36A3C9-2F87-407A-B568-EBF336061A06}.SandBox|Any CPU.Build.0 = Release|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.DemoMode|Any CPU.ActiveCfg = Deploy|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.DemoMode|Any CPU.Build.0 = Deploy|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.Deploy|Any CPU.ActiveCfg = Deploy|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.Deploy|Any CPU.Build.0 = Deploy|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.net40|Any CPU.ActiveCfg = net40|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.net40|Any CPU.Build.0 = net40|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.SandBox|Any CPU.ActiveCfg = SandBox|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.SandBox|Any CPU.Build.0 = SandBox|Any CPU
 		{9D405441-66D4-45D0-8832-9E17587BA921}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9D405441-66D4-45D0-8832-9E17587BA921}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D405441-66D4-45D0-8832-9E17587BA921}.DemoMode|Any CPU.ActiveCfg = Debug|Any CPU

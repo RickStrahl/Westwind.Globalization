@@ -6,7 +6,7 @@
 * **New DbResourceDataManager Model to allow for pluggable Data Providers**<br/>
 New DbResourceDataManager interface and adpater model for supporting multiple data providers. You can easily implement new DataManager implementations to handle the data access to read and write data into the provider for all supported features.
 
-* **Add SqlCompact, MySql, SqlLite and MongoDb DbResourceManagers**<br/>
+* **Add SqlCompact, MySql, SqlLite DbResourceManagers**<br/>
 Added custom DbResourceDataManager implementations for each of these data engines and created separate assemblies for each of them to isolate dependencies. You can specify which DataManager is used via the Configuration.DataManagerType property.
 
 

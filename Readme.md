@@ -1,5 +1,5 @@
-# West Wind Globalization #
-### Database Resource Localization for .NET ###
+# West Wind Globalization
+### Database Resource Localization for .NET
 Easily create ASP.NET resources stored iSn a Sql database for editing and updating 
 at runtime using an interactive editor or programmatically using code.
 The library uses the standard .NET and ASP.NET infrastructure of ResourceSets and 
@@ -11,7 +11,7 @@ the ability to serve server side resources as JSON resources to JavaScript clien
 
 Requirements:
 * .NET 4.5
-* Sql Server, Sql Express or SQL Compact 4, MySql, SqlLite or later
+* Sql Server, Sql Express or SQL Compact 4, MySql, SqLite or later
 
 ### Resources:
 * [Westwind.Globalization Home Page](http://west-wind.com/westwind.globalization/)
@@ -25,18 +25,29 @@ Requirements:
 
 
 ### Features
-* .NET Resources stored in Sql Server, Sql Compact Database
-  (other providers in the future)  
-* ASP.NET Database ResourceProvider 
-* Standard .NET Database ResourceManager
-* Use resources same way as with ResX or use our DbRes helper
-* Interactive Web resource editor
-* Use code to manipulate resources
+* .NET Resources in Sql Server, Sql Server Compact, MySql and SqLite   
+* Two Database ASP.NET ResourceProviders (ASP.NET,WebForms) 
+* Database .NET  ResourceManager (MVC,non-Web apps)
+* Uses standard .NET Resource Management and Caching - no code changes
+* Or: Use our dynamic DbRes string based helper (works anywhere)
+* Interactive, live Web Resource Editor to edit Resources
+* DbResourceManagers let you manage resources with code
 * Import and Export Resx resources 
-* Generate strongly typed resource classes
-* Resource Handler to serve server side resources to JavaScript
+* Generate strongly typed resource classes from the Db provider
+* Serve .NET Resources to JavaScript as JSON
 * Release and reload resources at runtime
 * DbRes helper to easily embed resources into markup and code
+
+To use the DbResourceProvider or DbResourceManager requires no code changes 
+from ResX resources, other than a few lines of provider configuration. 
+You can import existing ASP.NET and standard .RESX resources and edit 
+them interactively, then export them back to RESX resources if desired, 
+or run them out of the database directly.
+
+> **Note**: The database is accessed only once per ResourceSet and per Locale, using the
+> standard .NET Resource caching architecture used in Resource Providers and
+> Resource Managers, so database access and usage is minimal. You can use these 
+> Providers/Manager in MVC, WebForms and even in non Web applications.
 
 ### Web Resource Editor
 One of the main reasons people want to use Database resources rather
@@ -50,9 +61,9 @@ or programmatic tools that simply manipulate the database. This library
 ships with a Web interface that allows editing of resources interactively
 and an easy to use data API to update resources programmatically.
 
-![Web Resource Editor](https://raw.github.com/RickStrahl/Westwind.Globalization/master/WebResourceLocalizationForm.png)
+![Web Resource Editor](WebResourceLocalizationForm.png)
 
-![Web Resource Translator Dialog](https://raw.github.com/RickStrahl/Westwind.Globalization/master/WebResourceTranslateDialog.png)
+![Web Resource Translator Dialog](WebResourceTranslateDialog.png)
 
 The resource editor is an easy way to localize resources interactively,
 but it's not the only way you can do this of course. Since you have access 
@@ -140,6 +151,7 @@ resources:
 </configuration>
 ```
 
+**ConnectionString**<br/>
 The two most important keys are the connectionString and resourceTableName which point at your
 database and a table within it. You can use either a raw connectionstring as above or a connection
 string name in the ConnectionStrings section of your config file.
@@ -365,6 +377,49 @@ you remove or rename a resource you may break your code. This is the
 reason we use a single file, rather than a file per resource set to 
 keep the file management as simple as possible.
 
+#### Non Sql Server Database Providers
+By default the resource providers and manager use SQL Server to hold the database resources. If you don't do any custom configuration in code to specify the Configuration.DbResourceDataManagerType you'll get the Sql Server provider/manager. 
+
+However, all of the following providers are supported:
+
+* Sql Server (2008, 2012, Express, Azure(?))
+* Sql Server Compact
+* MySql
+* SqLite
+
+As mentioned previously there is very little database access that actually happens when running the application, so even local databases like SqLite or Sql Compact can be used.
+
+To use a provider other than Sql Server you need to do the following:
+
+* Add the appropriate Westwind.Globalization.<DataBase> assembly/NuGet Package
+* Specify the Configuration.DbResourceDbD
+ 
+
+**Sql Server Compact**<br/>
+*add: Westwind.Globalization.SqlServerCe*
+```c#
+DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerCeDataManager);
+```
+
+**MySql**<br/>
+*add: Westwind.Globalization.MySql*
+```c#
+DbResourceConfiguration.Current.DbResourceDataManagerType = typeof (DbResourceMySqlDataManager);
+```
+**SqLite**<br/>
+*add: Westwind.Globalization.SqLite*
+```c#
+DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);
+```  
+
+**Sql Server**<br/>
+*no additional assembly needed*
+```c#
+// not required - use only if you need to reset provider in code
+DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerDataManager);
+```  
+
+This code configures the data manager globally so every time a data access operation occurs it instantiates the data manager configured here. It's important that you add the appropriate assembly first, otherwise these provider types will not be available and your code won't compile.
 
 #### JavaScript Resource Handler
 Localization doesn't stop with server templates - if you're building applications

@@ -17,8 +17,8 @@ namespace Westwind.Globalization.Test
     
         public DbResXConverterTests()
         {
-            DbResourceConfiguration.Current.ConnectionString = "SqLiteLocalizations";
-            DbResourceConfiguration.Current.DbResourceDataManagerType = typeof (DbResourceSqLiteDataManager);
+            //DbResourceConfiguration.Current.ConnectionString = "SqLiteLocalizations";
+            //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof (DbResourceSqLiteDataManager);
         }
 
         /// <summary>
@@ -55,9 +55,9 @@ namespace Westwind.Globalization.Test
         public void ImportResxResources()
         {
             bool result = false;
-            var manager = Activator.CreateInstance(DbResourceConfiguration.Current.DbResourceDataManagerType) as IDbResourceDataManager;
-            result = manager.CreateLocalizationTable("Localizations");
-            Assert.IsTrue(result, manager.ErrorMessage);
+            //var manager = Activator.CreateInstance(DbResourceConfiguration.Current.DbResourceDataManagerType) as IDbResourceDataManager;
+            //result = manager.CreateLocalizationTable("Localizations");
+            //Assert.IsTrue(result, manager.ErrorMessage);
             
             string physicalPath = Path.GetFullPath(@"..\..\..\Westwind.Globalization.Sample");
             DbResXConverter converter = new DbResXConverter(physicalPath);

@@ -85,15 +85,15 @@ namespace Westwind.Globalization
         public bool ShowControlIcons {get; set; }
 
 
-        /// <summary>
-        /// Type that is instantiated to handle Database access
-        /// </summary>
-        public string DbResourceManagerType
-        {
-            get { return _DbResourceManagerType; }
-            set { _DbResourceManagerType = value; }
-        }
-        private string _DbResourceManagerType = "Westwind.Globalization.DbResourceDataManager";
+        ///// <summary>
+        ///// Type that is instantiated to handle Database access
+        ///// </summary>
+        //public string DbResourceManagerType
+        //{
+        //    get { return _DbResourceManagerType; }
+        //    set { _DbResourceManagerType = value; }
+        //}
+        //private string _DbResourceManagerType = "Westwind.Globalization.DbResourceDataManager";
 
         /// <summary>
         /// Determines the location of the Localization form in a Web relative path.
@@ -297,7 +297,7 @@ namespace Westwind.Globalization
         /// <returns></returns>
         public static DbResourceDataManager CreateDbResourceDataManager()
         {
-            return ReflectionUtils.CreateInstanceFromString(DbResourceConfiguration.Current.DbResourceManagerType) as
+            return ReflectionUtils.CreateInstanceFromType(Current.DbResourceDataManagerType) as
                 DbResourceDataManager;
         }
 

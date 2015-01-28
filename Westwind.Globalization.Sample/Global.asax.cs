@@ -37,8 +37,8 @@ namespace Westwind.Globalization.Sample
             //DbResourceConfiguration.Current.ConnectionString = "MySqlLocalizations";
             //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof (DbResourceMySqlDataManager);
 
-            DbResourceConfiguration.Current.ConnectionString = "SqLiteLocalizations";
-            DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);
+            //DbResourceConfiguration.Current.ConnectionString = "SqLiteLocalizations";
+            //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);
         }
 
         protected void Application_BeginRequest()
