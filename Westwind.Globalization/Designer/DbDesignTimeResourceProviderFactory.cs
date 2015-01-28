@@ -133,7 +133,7 @@ namespace Westwind.Globalization
                 string resourceSet = GetFullPagePath();
                 
                 // Load IDictionary data using the DataManager (same code as provider)
-                var manager = DbResourceBaseDataManager.CreateDbResourceDataManager();                
+                var manager = DbResourceDataManager.CreateDbResourceDataManager();                
                 _reader = manager.GetResourceSet("", resourceSet);
             }
 
@@ -165,7 +165,7 @@ namespace Westwind.Globalization
             private static void AddResourceToStore(string key, object value, string resourceSet, IServiceProvider serviceProvider)
             {
                 // Use custom data manager to write the values into the database
-                var manager = DbResourceBaseDataManager.CreateDbResourceDataManager();  
+                var manager = DbResourceDataManager.CreateDbResourceDataManager();  
                 if (manager.UpdateOrAdd(key, value, "", resourceSet, null) == -1)
                     throw new InvalidOperationException("Resource update error: " + manager.ErrorMessage);
             }

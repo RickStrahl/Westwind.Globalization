@@ -295,10 +295,10 @@ namespace Westwind.Globalization
         /// Creates an instance of the DbResourceDataManager based on configuration settings
         /// </summary>
         /// <returns></returns>
-        public static DbResourceBaseDataManager CreateDbResourceDataManager()
+        public static DbResourceDataManager CreateDbResourceDataManager()
         {
             return ReflectionUtils.CreateInstanceFromString(DbResourceConfiguration.Current.DbResourceManagerType) as
-                DbResourceBaseDataManager;
+                DbResourceDataManager;
         }
 
 

@@ -145,7 +145,7 @@ namespace Westwind.Globalization
                         if (value == null)
                         {
                             // Add invariant resource
-                            var data = DbResourceBaseDataManager.CreateDbResourceDataManager();  
+                            var data = DbResourceDataManager.CreateDbResourceDataManager();  
                             if (!data.ResourceExists(resourceKey, "", _className))
                                 data.AddResource(resourceKey, resourceKey, "", _className, null);
                             

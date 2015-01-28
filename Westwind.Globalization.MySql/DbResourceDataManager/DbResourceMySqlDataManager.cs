@@ -1,16 +1,12 @@
 
 using System.Collections.Generic;
-using System.Data.SqlServerCe;
-using System.IO;
-using System.Linq;
-using MySql.Data.MySqlClient;
 
 namespace Westwind.Globalization
 {
     /// <summary>
     /// Sql CE implementation of the Db SQL data provider
     /// </summary>
-    public class DbResourceMySqlDataManager : DbResourceBaseDataManager
+    public class DbResourceMySqlDataManager : DbResourceDataManager
     {
 
         /// <summary>

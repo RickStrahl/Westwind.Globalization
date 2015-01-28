@@ -8,13 +8,13 @@ using Westwind.Utilities.Data;
 namespace Westwind.Globalization.Test
 {
     [TestFixture]
-    public class DbResourceMySqlDataManagerTests
+    public class DbResourceSqLiteDataManagerTests
     {
 
-        private DbResourceMySqlDataManager GetManager()
+        private IDbResourceDataManager GetManager()
         {
-            var manager = new DbResourceMySqlDataManager();
-            manager.Configuration.ConnectionString = "MySqlLocalizations";
+            var manager = new DbResourceSqLiteDataManager();
+            manager.Configuration.ConnectionString = "SqLiteLocalizations";
             //manager.Configuration.ResourceTableName = "Localizations";
             return manager;
         }
@@ -39,7 +39,6 @@ namespace Westwind.Globalization.Test
         public void IsLocalizationTable()
         {
             var manager = GetManager();
-
             Assert.IsTrue(manager.IsLocalizationTable("Localizations"), manager.ErrorMessage);
         }
 
@@ -225,7 +224,7 @@ namespace Westwind.Globalization.Test
             var manager = GetManager();
 
             string updated = "Heute Updated";
-            int count =  manager.UpdateOrAdd("Today",updated,"de","Resources");
+            int count =  manager.UpdateOrAdd("Today",updated,"de","Resources",null,false);
 
             Assert.IsFalse(count == -1, manager.ErrorMessage);
             string check = manager.GetResourceString("Today", "Resources", "de");
@@ -233,7 +232,7 @@ namespace Westwind.Globalization.Test
             Assert.AreEqual(check, updated);
             Console.WriteLine(check);
 
-            manager.UpdateOrAdd("Today", "Heute", "de", "Resources",null);
+            manager.UpdateOrAdd("Today", "Heute", "de", "Resources",null,false);
         }
 
 

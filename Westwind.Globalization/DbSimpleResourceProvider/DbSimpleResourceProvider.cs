@@ -143,7 +143,7 @@ namespace Westwind.Globalization
                 // DEPENDENCY HERE (#1): Using DbResourceDataManager to retrieve resources
 
                 // Use datamanager to retrieve the resource keys from the database
-                var data = DbResourceBaseDataManager.CreateDbResourceDataManager();                                 
+                var data = DbResourceDataManager.CreateDbResourceDataManager();                                 
 
                 lock (_SyncLock)
                 {
@@ -248,7 +248,7 @@ namespace Westwind.Globalization
                     {
                         if (resources[resourceKey] == null)
                         {
-                            var data = DbResourceBaseDataManager.CreateDbResourceDataManager();  
+                            var data = DbResourceDataManager.CreateDbResourceDataManager();  
                             if (!data.ResourceExists(resourceKey,"",_ResourceSetName))
                                 data.AddResource(resourceKey, resourceKey,"",
                                                  _ResourceSetName, null);

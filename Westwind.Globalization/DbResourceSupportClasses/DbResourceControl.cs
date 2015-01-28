@@ -197,7 +197,7 @@ namespace Westwind.Globalization
                 ResourceSet = this.Context.Request.ApplicationPath + this.Parent.TemplateControl.AppRelativeVirtualPath.Replace("~", "");
 
 
-            var Data = DbResourceBaseDataManager.CreateDbResourceDataManager();  
+            var Data = DbResourceDataManager.CreateDbResourceDataManager();  
 
             List<LocalizableProperty> ResourceList = this.GetAllLocalizableControls(ParentControl);
 
@@ -576,7 +576,7 @@ function AddHtmlAfterControl(ControlId,HtmlMarkup)
         [CallbackMethod]
         public Dictionary<string, string> GetResourcesForId(string resourceID, string resourceSet)
         {
-            var manager = DbResourceBaseDataManager.CreateDbResourceDataManager();  
+            var manager = DbResourceDataManager.CreateDbResourceDataManager();  
             var resourceStrings =  manager.GetResourceStrings(resourceID, resourceSet);
             return resourceStrings;
         }

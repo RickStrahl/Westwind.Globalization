@@ -24,7 +24,7 @@ namespace Westwind.GlobalizationWeb
         /// through the provider or resource manager, as we don't have the flexibility
         /// with the core resource managers.
         /// </summary>
-        protected DbResourceBaseDataManager Manager =  DbResourceBaseDataManager.CreateDbResourceDataManager();
+        protected DbResourceDataManager Manager =  DbResourceDataManager.CreateDbResourceDataManager();
 
         public string ResourceSet {get; set; }
 
@@ -264,7 +264,7 @@ namespace Westwind.GlobalizationWeb
             string resourceId = txtNewResourceId.Text;
 
             // *** Try to add the file
-            var data = DbResourceBaseDataManager.CreateDbResourceDataManager();
+            var data = DbResourceDataManager.CreateDbResourceDataManager();
             if (data.UpdateOrAdd(resourceId, filePath, txtNewLanguage.Text, ResourceSet, null, true) == -1)
                 ErrorDisplay.ShowError(WebUtils.LRes("ResourceUpdateFailed") + "<br/>" + data.ErrorMessage);
             else

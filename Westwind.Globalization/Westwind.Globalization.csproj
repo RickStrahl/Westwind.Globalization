@@ -77,10 +77,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MySql.Data, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MySql.Data.6.9.5\lib\net45\MySql.Data.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -105,9 +101,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbResourceDataManager\DbResourceBaseDataManager.cs" />
-    <Compile Include="DbResourceDataManager\DbResourceMySqlDataManager.cs" />
+    <Compile Include="DbResourceDataManager\DbResourceDataManager.cs" />
     <Compile Include="DbResourceDataManager\DbResourceSqlServerCeDataManager.cs" />
+    <Compile Include="DbResourceDataManager\IDbResourceSetDataManager.cs" />
     <Compile Include="DbResourceProvider\DbResourceProviderFactory.cs" />
     <Compile Include="DbResourceManager\DbResourceReader.cs" />
     <Compile Include="DbResourceManager\DbResourceSet.cs" />
@@ -131,7 +127,6 @@
     <Compile Include="SupportClasses\DbResXConverter.cs" />
     <Compile Include="DbResourceSupportClasses\DbResourceConfiguration.cs" />
     <Compile Include="DbResourceSupportClasses\DbResourceControl.cs" />
-    <Compile Include="DbResourceDataManager\DbResourceDataManager.cs" />
     <Compile Include="DbResourceManager\DbResourceManager.cs">
     </Compile>
     <Compile Include="DbResourceProvider\DbResourceProvider.cs">

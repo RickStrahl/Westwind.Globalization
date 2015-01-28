@@ -36,6 +36,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\WestWindWebToolkit\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>6d6a9d39</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -70,6 +71,9 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.94.0\lib\net45\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.XML" />
     <Reference Include="Westwind.Web, Version=2.59.5499.28286, Culture=neutral, processorArchitecture=MSIL">
@@ -83,8 +87,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbResourceManagerTests.cs" />
+    <Compile Include="DbResourceMySqlDataManagerTests .cs" />
     <Compile Include="DbResourceProviderTests.cs" />
-    <Compile Include="DbResourceMySqlServerDataManagerTests.cs" />
+    <Compile Include="DbResourceSqLiteServerDataManagerTests.cs" />
     <Compile Include="DbResourceSqlServerCeDataManagerTests.cs" />
     <Compile Include="MySqlResourceProviderTests.cs" />
     <Compile Include="DbResXConverterTests.cs" />
@@ -99,6 +104,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="data\SqlLiteLocalizations.db" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -127,7 +133,6 @@
     <Content Include="data\localizations.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="data\localizations2.sdf" />
     <Content Include="scripts\ww.jquery.js" />
     <Content Include="scripts\ww.jquery.min.js" />
     <Content Include="_readme.Westwind.Globalization.html" />
@@ -137,6 +142,14 @@
       <Project>{1c9829a8-8979-4493-863c-635726f8a61c}</Project>
       <Name>Westwind.Utilities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Westwind.Globalization.MySql\Westwind.Globalization.MySql.csproj">
+      <Project>{9d405441-66d4-45d0-8832-9e17587ba921}</Project>
+      <Name>Westwind.Globalization.MySql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Westwind.Globalization.SqlLite\Westwind.Globalization.SqlLite.csproj">
+      <Project>{4c74dae9-4f4d-4d94-b3ca-783acef494f2}</Project>
+      <Name>Westwind.Globalization.SqlLite</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Westwind.Globalization\Westwind.Globalization.csproj">
       <Project>{51dece39-764c-4c32-a57a-d93a5fd9bd6a}</Project>
       <Name>Westwind.Globalization</Name>
@@ -144,6 +157,13 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.94.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.94.0\build\net45\System.Data.SQLite.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.94.0\build\net45\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.94.0\build\net45\System.Data.SQLite.Core.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

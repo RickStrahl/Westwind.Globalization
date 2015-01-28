@@ -226,7 +226,7 @@ namespace Westwind.Globalization
         /// <param name="value"></param>
         public void AddMissingResource(string name, string value, CultureInfo culture = null)
         {
-            var manager = DbResourceBaseDataManager.CreateDbResourceDataManager();  
+            var manager = DbResourceDataManager.CreateDbResourceDataManager();  
 
             string cultureName = string.Empty;
             if (culture != null)

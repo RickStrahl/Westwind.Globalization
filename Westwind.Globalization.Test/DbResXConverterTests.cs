@@ -12,6 +12,14 @@ namespace Westwind.Globalization.Test
     [TestFixture]
     public class DbResXConverterTests
     {
+
+    
+        public DbResXConverterTests()
+        {
+            
+            
+        }
+
         /// <summary>
         ///  convert Resx file to a resource dictionary
         /// </summary>
@@ -27,7 +35,9 @@ namespace Westwind.Globalization.Test
         [Test]
         public void GetDbResourcesTest()
         {
-            var manager = DbResourceBaseDataManager.CreateDbResourceDataManager();
+            // create manager based on configuration
+            var manager = DbResourceDataManager.CreateDbResourceDataManager();
+
             Dictionary<string,object> items = manager.GetResourceSetNormalizedForLocaleId("de-de", "Resources");
 
             WriteResourceDictionary(items, "DB Resources");            

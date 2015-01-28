@@ -157,7 +157,7 @@ namespace Westwind.Globalization
         {
             bool IsVb = IsFileVb(FileName);
 
-            var man = DbResourceBaseDataManager.CreateDbResourceDataManager();  
+            var man = DbResourceDataManager.CreateDbResourceDataManager();  
             var resources = man.GetAllResourceSets(ResourceListingTypes.GlobalResourcesOnly);
 
             StringBuilder sbClasses = new StringBuilder();

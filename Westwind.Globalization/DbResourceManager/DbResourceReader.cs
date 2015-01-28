@@ -78,7 +78,7 @@ namespace Westwind.Globalization
                 // DEPENDENCY HERE
                 // Here's the only place we really access the database and return
                 // a specific ResourceSet for a given ResourceSet Id and Culture
-                DbResourceBaseDataManager manager = DbResourceBaseDataManager.CreateDbResourceDataManager();
+                DbResourceDataManager manager = DbResourceDataManager.CreateDbResourceDataManager();
                 Items = manager.GetResourceSet(cultureInfo.Name, baseNameField);
                 return Items.GetEnumerator();
             }

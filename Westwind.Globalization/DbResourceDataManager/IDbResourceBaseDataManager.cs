@@ -6,22 +6,6 @@ using Westwind.Utilities.Data;
 namespace Westwind.Globalization
 {
     /// <summary>
-    /// This interface is all that's required to use the Db resource provider
-    /// or resource manager operation
-    /// </summary>
-    public interface IDbResourceSetDataManager
-    {
-        /// <summary>
-        /// Returns a specific set of resources for a given culture and 'resource set' which
-        /// in this case is just the virtual directory and culture.
-        /// </summary>
-        /// <param name="cultureName"></param>
-        /// <param name="resourceSet"></param>
-        /// <returns></returns>
-        IDictionary GetResourceSet(string cultureName, string resourceSet);
-    }
-
-    /// <summary>
     /// This interface provides for all data operations supported by
     /// both the ResourceProvider and Manager as well as the admin
     /// interfaces that retrieve additional data to access the view

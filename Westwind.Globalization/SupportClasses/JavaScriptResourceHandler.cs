@@ -102,7 +102,7 @@ namespace Westwind.Globalization
 
             if (resourceType.ToLower() == "resdb")
             {
-                var manager = DbResourceBaseDataManager.CreateDbResourceDataManager();
+                var manager = DbResourceDataManager.CreateDbResourceDataManager();
                 resDict = manager.GetResourceSetNormalizedForLocaleId(localeId, resourceSet) as Dictionary<string, object>;
             }
             else  // Resx Resources

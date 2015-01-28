@@ -1,5 +1,5 @@
-# West Wind Globalization#
-### Database Resource Localization for .NET###
+# West Wind Globalization #
+### Database Resource Localization for .NET ###
 Easily create ASP.NET resources stored iSn a Sql database for editing and updating 
 at runtime using an interactive editor or programmatically using code.
 The library uses the standard .NET and ASP.NET infrastructure of ResourceSets and 
@@ -11,7 +11,7 @@ the ability to serve server side resources as JSON resources to JavaScript clien
 
 Requirements:
 * .NET 4.5
-* Sql Server, Sql Express or SQL CE 4 or later
+* Sql Server, Sql Express or SQL Compact 4, MySql, SqlLite or later
 
 ### Resources:
 * [Westwind.Globalization Home Page](http://west-wind.com/westwind.globalization/)
@@ -99,7 +99,7 @@ There are three distinct resource access mechanisms supported:
   (Non-Web apps, and or MVC apps where you already use Resx)
 * Direct Db Provider access using DbRes helper (easiest overall - works everywhere)
 
-### Installation and Configuration###
+### Installation and Configuration
 The easiest way to use data driven resources with this library is to install the NuGet
 package into an ASP.NET application.
 
@@ -117,11 +117,11 @@ The key configuration items set are the DbResourceProvider section in
 the config file which tells the provider where to find the database
 resources:
 
-```Xml
+```xml
 <configuration>
   <configSections>
     <section name="DbResourceProvider" type="Westwind.Globalization.DbResourceProviderSection,Westwind.Globalization" requirePermission="false" />
-  </configSections>
+  </configSections>  
   <DbResourceProvider connectionString="server=.;database=localizations;integrated security=true"
                       resourceTableName="Localizations"
                       addMissingResources="false"
@@ -134,6 +134,9 @@ resources:
                       useVsNetResourceNaming="false"
                       bingClientId=""
                       bingClientSecret="" />
+
+  <!-- Enable ASP.NET Resource Provider  -->
+  <globalization resourceProviderFactoryType="Westwind.Globalization.DbSimpleResourceProviderFactory,Westwind.Globalization" />
 </configuration>
 ```
 

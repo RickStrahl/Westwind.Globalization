@@ -131,7 +131,7 @@ namespace Westwind.Globalization
         public void Generate(bool DeleteAllRowsFirst)
         {
             // DEPENDENCY HERE
-            var data = DbResourceBaseDataManager.CreateDbResourceDataManager();               
+            var data = DbResourceDataManager.CreateDbResourceDataManager();               
             data.GenerateResources(resourceList, cultureInfo.Name, baseName, DeleteAllRowsFirst);
         }
     }

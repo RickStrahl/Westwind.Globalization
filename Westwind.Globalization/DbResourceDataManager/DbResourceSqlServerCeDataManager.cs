@@ -6,7 +6,7 @@ namespace Westwind.Globalization
     /// <summary>
     /// Sql CE implementation of the Db SQL data provider
     /// </summary>
-    public class DbResourceSqlServerCeDataManager : DbResourceBaseDataManager
+    public class DbResourceSqlServerCeDataManager : DbResourceDataManager
     {
         public override bool CreateLocalizationTable(string tableName = null)
         {

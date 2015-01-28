@@ -13,7 +13,7 @@ namespace Westwind.Globalization
     /// DbResourceConfiguration   (holds and reads all config data from .Current)
     /// SqlDataAccess             (provides a data access (DAL))
     /// </summary>
-    public class DbResourceSqlServerDataManager : DbResourceBaseDataManager
+    public class DbResourceSqlServerDataManager : DbResourceDataManager
     {
         protected override string TableCreationSql
         {
@@ -36,14 +36,12 @@ CREATE TABLE [{0}] (
 		[Filename]        nvarchar(128) NULL,
         [Comment]         nvarchar(512) NULL
 )
-ON [PRIMARY]
 GO
 ALTER TABLE [{0}]
 	ADD
 	CONSTRAINT [PK_{0}]
 	PRIMARY KEY
 	([pk])
-	ON [PRIMARY]
 GO
 ALTER TABLE [{0}]
 	ADD

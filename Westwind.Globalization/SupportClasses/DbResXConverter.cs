@@ -112,7 +112,7 @@ namespace Westwind.Globalization
         /// <returns></returns>
         protected bool GenerateWebResourceResXFiles(bool localResources)
         {
-            var data = DbResourceBaseDataManager.CreateDbResourceDataManager();
+            var data = DbResourceDataManager.CreateDbResourceDataManager();
             
             // Retrieve all resources for a ResourceSet for all cultures
             // The data is ordered by ResourceSet, LocaleId and resource ID as each
@@ -271,7 +271,7 @@ namespace Westwind.Globalization
         /// <returns></returns>
         public bool GenerateResXFiles()
         {
-            var data = DbResourceBaseDataManager.CreateDbResourceDataManager();  
+            var data = DbResourceDataManager.CreateDbResourceDataManager();  
 
             // Retrieve all resources for a ResourceSet for all cultures
             // The data is ordered by ResourceSet, LocaleId and resource ID as each
@@ -658,7 +658,7 @@ namespace Westwind.Globalization
     {
         string FilePath = Path.GetDirectoryName(FileName) + "\\";
 
-        var Data = DbResourceBaseDataManager.CreateDbResourceDataManager();  
+        var Data = DbResourceDataManager.CreateDbResourceDataManager();  
         
         XmlDocument dom = new XmlDocument();
 
