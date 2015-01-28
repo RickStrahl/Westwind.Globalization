@@ -20,7 +20,7 @@ Requirements:
 * [Original Article for Database Driven Resource Provider](http://www.west-wind.com/presentations/wwdbresourceprovider/)
 * [Documentation](http://west-wind.com/westwind.globalization/docs/)
 * [Class Reference](http://west-wind.com/westwind.globalization/docs/?page=_40y0vh66q.htm)
-* [Change Log](https://github.com/RickStrahl/Westwind.Globalization/blob/ResourceImportAndExportChanges/ChangeLog.md)
+* [Change Log](ChangeLog.md)
 * [License](http://west-wind.com/Westwind.Globalization/docs/_2lp0u0i9b.htm)
 
 
