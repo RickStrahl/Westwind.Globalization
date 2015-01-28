@@ -21,14 +21,24 @@ namespace Westwind.Globalization.Sample
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            // override which connection string is used for the provider configuration values
+            // *** override which connection string is used for the provider configuration values
+            // *** Note: The appropriate providers and Westwind.Globalization.DataProvider package
+            //           have to be installed for all but SQL Server. 
+            //           On Nuget.org: Search for Westwind.Globalization.
+
+            // this is the default and doesn't need to be explicitly set
             //DbResourceConfiguration.Current.ConnectionString = "SqlServerLocalizations";
-            
+            //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerDataManager);
+
+            // for all other providers explicitly override the DbResourceDataManagerType
             //DbResourceConfiguration.Current.ConnectionString = "SqlServerCeLocalizations";
             //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerCeDataManager);
 
-            DbResourceConfiguration.Current.ConnectionString = "MySqlLocalizations";
-            DbResourceConfiguration.Current.DbResourceDataManagerType = typeof (DbResourceMySqlDataManager);
+            //DbResourceConfiguration.Current.ConnectionString = "MySqlLocalizations";
+            //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof (DbResourceMySqlDataManager);
+
+            DbResourceConfiguration.Current.ConnectionString = "SqLiteLocalizations";
+            DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);
         }
 
         protected void Application_BeginRequest()

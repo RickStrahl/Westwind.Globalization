@@ -235,6 +235,21 @@ namespace Westwind.Globalization.Test
             manager.UpdateOrAdd("Today", "Heute", "de", "Resources",null,false);
         }
 
+        [Test]
+        public void UpdateInvalidResourceString()
+        {
+            var manager = GetManager();
+
+            string resourceId = "NewlyAddedTestThatDoesntExist";
+            string text = "Newly Added Test";
+
+            int count = manager.UpdateResource(resourceId, text, "de", "Resources");
+
+            Assert.IsTrue(string.IsNullOrEmpty(manager.ErrorMessage));
+            Assert.IsTrue(count == 0,"Shouldn't update a non-existing record");
+            Console.WriteLine(count);
+        }
+
 
 
         [Test]

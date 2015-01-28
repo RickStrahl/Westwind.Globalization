@@ -154,7 +154,7 @@ namespace Westwind.Globalization
         /// <param name="resourceSet"></param>
         /// <param name="Type"></param>
         int UpdateOrAdd(string resourceId, object value, string cultureName, string resourceSet,
-            string comment, bool valueIsFileName);
+            string comment = null, bool valueIsFileName = false);
 
         /// <summary>
         /// Adds a resource to the Localization Table
@@ -167,26 +167,16 @@ namespace Westwind.Globalization
         /// <param name="valueIsFileName">if true the Value property is a filename to import</param>
         int AddResource(string resourceId, object value, string cultureName, string resourceSet, string comment = null, bool valueIsFileName = false);
 
-        /// <summary>
-        /// Updates an existing resource in the Localization table
-        /// </summary>
-        /// <param name="ResourceId">The Resource id to update</param>
-        /// <param name="Value">The value to set it to</param>
-        /// <param name="CultureName">The 2 (en) or 5 character (en-us)culture. Or "" for Invariant </param>
-        /// <param name="ResourceSet">The name of the resourceset.</param>
-        /// <param name="Type"></param>
-        /// <
-        int UpdateResource(string ResourceId, object Value, string CultureName, string ResourceSet, string Comment);
 
         /// <summary>
         /// Updates an existing resource in the Localization table
         /// </summary>
-        /// <param name="ResourceId"></param>
-        /// <param name="Value"></param>
-        /// <param name="CultureName"></param>
-        /// <param name="ResourceSet"></param>
+        /// <param name="resourceId"></param>
+        /// <param name="value"></param>
+        /// <param name="cultureName"></param>
+        /// <param name="resourceSet"></param>
         /// <param name="Type"></param>
-        int UpdateResource(string ResourceId, object Value, string CultureName, string ResourceSet, string Comment, bool ValueIsFileName);
+        int UpdateResource(string resourceId, object value, string cultureName, string resourceSet, string comment = null, bool valueIsFileName = false);
 
         /// <summary>
         /// Deletes a specific resource ID based on ResourceId, ResourceSet and Culture.

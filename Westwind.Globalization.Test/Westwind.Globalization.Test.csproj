@@ -104,7 +104,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="data\SqlLiteLocalizations.db" />
+    <None Include="data\SqLiteLocalizations.db" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -146,9 +146,9 @@
       <Project>{9d405441-66d4-45d0-8832-9e17587ba921}</Project>
       <Name>Westwind.Globalization.MySql</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Westwind.Globalization.SqlLite\Westwind.Globalization.SqlLite.csproj">
+    <ProjectReference Include="..\Westwind.Globalization.SqlLite\Westwind.Globalization.SqLite.csproj">
       <Project>{4c74dae9-4f4d-4d94-b3ca-783acef494f2}</Project>
-      <Name>Westwind.Globalization.SqlLite</Name>
+      <Name>Westwind.Globalization.SqLite</Name>
     </ProjectReference>
     <ProjectReference Include="..\Westwind.Globalization\Westwind.Globalization.csproj">
       <Project>{51dece39-764c-4c32-a57a-d93a5fd9bd6a}</Project>

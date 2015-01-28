@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using NUnit.Framework;
 
@@ -16,8 +17,8 @@ namespace Westwind.Globalization.Test
     
         public DbResXConverterTests()
         {
-            
-            
+            DbResourceConfiguration.Current.ConnectionString = "SqLiteLocalizations";
+            DbResourceConfiguration.Current.DbResourceDataManagerType = typeof (DbResourceSqLiteDataManager);
         }
 
         /// <summary>
@@ -50,6 +51,22 @@ namespace Westwind.Globalization.Test
             Assert.IsTrue(converter.GenerateResXFiles(), converter.ErrorMessage);
         }
 
+        [Test]
+        public void ImportResxResources()
+        {
+            bool result = false;
+            var manager = Activator.CreateInstance(DbResourceConfiguration.Current.DbResourceDataManagerType) as IDbResourceDataManager;
+            result = manager.CreateLocalizationTable("Localizations");
+            Assert.IsTrue(result, manager.ErrorMessage);
+            
+            string physicalPath = Path.GetFullPath(@"..\..\..\Westwind.Globalization.Sample");
+            DbResXConverter converter = new DbResXConverter(physicalPath);
+            result = converter.ImportWebResources();
+
+            Assert.IsTrue(result, converter.ErrorMessage);
+        }
+
+
         private void WriteResourceDictionary(Dictionary<string,object> items, string title)
         {
             Console.WriteLine("*** " + title);
@@ -63,5 +80,7 @@ namespace Westwind.Globalization.Test
             Dictionary<string, string> sss = its.Where(dd => dd.Key.Contains('.')).ToDictionary( dd=> dd.Key, dd=> dd.Value);
 
         }
+
+
     }
 }

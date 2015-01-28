@@ -35,28 +35,6 @@ namespace Westwind.Globalization
                     SetError(data.ErrorMessage);
                     return null;
                 }
-
-                //// have to use a reader as bool values are coming back as longs that 
-                //// aren't automatically parsed into bool
-                //var reader = data.ExecuteReader(sql, data.CreateParameter("@ResourceSet", resourceSet));               
-                //if (reader == null)
-                //{
-                //    SetError(data.ErrorMessage);
-                //    return null;
-                //}
-
-                //var list = new List<ResourceIdItem>();
-                //while (reader.Read())
-                //{
-                //    bool val = ((long) reader["HasValue"]) == 1 ? true : false;
-
-                //    list.Add(new ResourceIdItem()
-                //    {
-                //        ResourceId = reader["ResourceId"] as string,
-                //        HasValue = val
-                //    });
-                //}
-                
                 return list.ToList();
             }
         }
@@ -102,10 +80,10 @@ namespace Westwind.Globalization
                 return
                     @"CREATE TABLE [{0}] (
  [Pk] INTEGER PRIMARY KEY AUTOINCREMENT 
-, [ResourceId] nvarchar(1024) NOT NULL
+, [ResourceId] nvarchar(1024) COLLATE NOCASE NOT NULL
 , [Value] ntext  NULL
-, [LocaleId] nvarchar(10) DEFAULT '' NULL
-, [ResourceSet] nvarchar(512) DEFAULT ''  NULL
+, [LocaleId] nvarchar(10) COLLATE NOCASE DEFAULT '' NULL
+, [ResourceSet] nvarchar(512) COLLATE NOCASE DEFAULT ''  NULL
 , [Type] nvarchar(512) DEFAULT '' NULL
 , [BinFile] image NULL
 , [TextFile] ntext NULL

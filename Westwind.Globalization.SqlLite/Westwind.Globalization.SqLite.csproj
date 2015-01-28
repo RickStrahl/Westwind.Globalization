@@ -7,8 +7,8 @@
     <ProjectGuid>{4C74DAE9-4F4D-4D94-B3CA-783ACEF494F2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Westwind.Globalization.SqlLite</RootNamespace>
-    <AssemblyName>Westwind.Globalization.SqlLite</AssemblyName>
+    <RootNamespace>Westwind.Globalization</RootNamespace>
+    <AssemblyName>Westwind.Globalization.SqLite</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

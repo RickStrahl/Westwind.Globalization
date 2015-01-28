@@ -22,6 +22,7 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>1e6249bc</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,6 +49,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite, Version=1.0.94.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.94.0\lib\net45\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -250,6 +255,10 @@
       <Project>{9d405441-66d4-45d0-8832-9e17587ba921}</Project>
       <Name>Westwind.Globalization.MySql</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Westwind.Globalization.SqlLite\Westwind.Globalization.SqLite.csproj">
+      <Project>{4c74dae9-4f4d-4d94-b3ca-783acef494f2}</Project>
+      <Name>Westwind.Globalization.SqLite</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Westwind.Globalization\Westwind.Globalization.csproj">
       <Project>{51dece39-764c-4c32-a57a-d93a5fd9bd6a}</Project>
       <Name>Westwind.Globalization</Name>
@@ -289,7 +298,9 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.94.0\build\net45\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.94.0\build\net45\System.Data.SQLite.Core.targets'))" />
   </Target>
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.94.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.94.0\build\net45\System.Data.SQLite.Core.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

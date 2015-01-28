@@ -801,7 +801,8 @@ namespace Westwind.Globalization
         /// <param name="resourceSet">The ResourceSet to which the resource id is added</param>
         /// <param name="comment">Optional comment for the key</param>
         /// <param name="valueIsFileName">if true the Value property is a filename to import</param>
-        public virtual int AddResource(string resourceId, object value, string cultureName, string resourceSet, string comment = null, bool valueIsFileName = false)
+        public virtual int AddResource(string resourceId, object value, string cultureName, string resourceSet,
+            string comment = null, bool valueIsFileName = false)
         {
             string Type = string.Empty;
 
@@ -814,64 +815,65 @@ namespace Westwind.Globalization
                 return -1;
             }
 
+            if (value != null && !(value is string))
+            {
+                Type = value.GetType().AssemblyQualifiedName;
+                try
+                {
+                    LosFormatter output = new LosFormatter();
+                    StringWriter writer = new StringWriter();
+                    output.Serialize(writer, value);
+                    value = writer.ToString();
+                }
+                catch (Exception ex)
+                {
+                    ErrorMessage = ex.Message;
+                    return -1;
+                }
+            }
+            else
+                Type = string.Empty;
+
+            byte[] BinFile = null;
+            string TextFile = null;
+            string FileName = string.Empty;
+
+            if (valueIsFileName)
+            {
+                FileInfoFormat FileData = null;
+                try
+                {
+                    FileData = GetFileInfo(value as string);
+                }
+                catch (Exception ex)
+                {
+                    ErrorMessage = ex.Message;
+                    return -1;
+                }
+
+                Type = "FileResource";
+                value = FileData.ValueString;
+                FileName = FileData.FileName;
+
+                if (FileData.FileFormatType == FileFormatTypes.Text)
+                    TextFile = FileData.TextContent;
+                else
+                    BinFile = FileData.BinContent;
+            }
+
+            if (value == null)
+                value = string.Empty;
+
             using (var data = GetDb())
             {
                 if (Transaction != null)
                     data.Transaction = Transaction;
 
-                if (value != null && !(value is string))
-                {
-                    Type = value.GetType().AssemblyQualifiedName;
-                    try
-                    {
-                        LosFormatter output = new LosFormatter();
-                        StringWriter writer = new StringWriter();
-                        output.Serialize(writer, value);
-                        value = writer.ToString();
-                    }
-                    catch (Exception ex)
-                    {
-                        ErrorMessage = ex.Message;
-                        return -1;
-                    }
-                }
-                else
-                    Type = string.Empty;
-
-                byte[] BinFile = null;
-                string TextFile = null;
-                string FileName = string.Empty;
-
-                if (valueIsFileName)
-                {
-                    FileInfoFormat FileData = null;
-                    try
-                    {
-                        FileData = GetFileInfo(value as string);
-                    }
-                    catch (Exception ex)
-                    {
-                        ErrorMessage = ex.Message;
-                        return -1;
-                    }
-
-                    Type = "FileResource";
-                    value = FileData.ValueString;
-                    FileName = FileData.FileName;
-
-                    if (FileData.FileFormatType == FileFormatTypes.Text)
-                        TextFile = FileData.TextContent;
-                    else
-                        BinFile = FileData.BinContent;
-                }
-
-                if (value == null)
-                    value = string.Empty;
-
                 DbParameter BinFileParm = data.CreateParameter("@BinFile", BinFile, DbType.Binary);
                 DbParameter TextFileParm = data.CreateParameter("@TextFile", TextFile);
 
-                string Sql = "insert into " + Configuration.ResourceTableName + " (ResourceId,Value,LocaleId,Type,Resourceset,BinFile,TextFile,Filename,Comment) Values (@ResourceID,@Value,@LocaleId,@Type,@ResourceSet,@BinFile,@TextFile,@FileName,@Comment)";
+                string Sql = "insert into " + Configuration.ResourceTableName +
+                             " (ResourceId,Value,LocaleId,Type,Resourceset,BinFile,TextFile,Filename,Comment) Values (@ResourceID,@Value,@LocaleId,@Type,@ResourceSet,@BinFile,@TextFile,@FileName,@Comment)";
                 if (data.ExecuteNonQuery(Sql,
                     data.CreateParameter("@ResourceId", resourceId),
                     data.CreateParameter("@Value", value),
@@ -892,33 +894,90 @@ namespace Westwind.Globalization
 
 
 
-        /// <summary>
-        /// Updates an existing resource in the Localization table
-        /// </summary>
-        /// <param name="ResourceId">The Resource id to update</param>
-        /// <param name="Value">The value to set it to</param>
-        /// <param name="CultureName">The 2 (en) or 5 character (en-us)culture. Or "" for Invariant </param>
-        /// <param name="ResourceSet">The name of the resourceset.</param>
-        /// <param name="Type"></param>
-        /// <
-        public virtual int UpdateResource(string ResourceId, object Value, string CultureName, string ResourceSet, string Comment)
-        {
-            return UpdateResource(ResourceId, Value, CultureName, ResourceSet, Comment, false);
-        }
+        ///// <summary>
+        ///// Updates an existing resource in the Localization table
+        ///// </summary>
+        ///// <param name="ResourceId">The Resource id to update</param>
+        ///// <param name="Value">The value to set it to</param>
+        ///// <param name="CultureName">The 2 (en) or 5 character (en-us)culture. Or "" for Invariant </param>
+        ///// <param name="ResourceSet">The name of the resourceset.</param>
+        ///// <param name="Type"></param>
+        ///// <
+        //public virtual int UpdateResource(string ResourceId, object Value, string CultureName, string ResourceSet, string Comment)
+        //{
+        //    return UpdateResource(ResourceId, Value, CultureName, ResourceSet, Comment, false);
+        //}
 
         /// <summary>
         /// Updates an existing resource in the Localization table
         /// </summary>
-        /// <param name="ResourceId"></param>
-        /// <param name="Value"></param>
-        /// <param name="CultureName"></param>
-        /// <param name="ResourceSet"></param>
+        /// <param name="resourceId"></param>
+        /// <param name="value"></param>
+        /// <param name="cultureName"></param>
+        /// <param name="resourceSet"></param>
         /// <param name="Type"></param>
-        public virtual int UpdateResource(string ResourceId, object Value, string CultureName, string ResourceSet, string Comment, bool ValueIsFileName)
+        public virtual int UpdateResource(string resourceId, object value, string cultureName, string resourceSet,
+            string comment = null, bool valueIsFileName = false)
         {
             string type;
-            if (CultureName == null)
-                CultureName = string.Empty;
+            if (cultureName == null)
+                cultureName = string.Empty;
+
+
+            if (value != null && !(value is string))
+            {
+                type = value.GetType().AssemblyQualifiedName;
+                try
+                {
+                    LosFormatter output = new LosFormatter();
+                    StringWriter writer = new StringWriter();
+                    output.Serialize(writer, value);
+                    value = writer.ToString();
+                }
+                catch (Exception ex)
+                {
+                    ErrorMessage = ex.Message;
+                    return -1;
+                }
+            }
+            else
+            {
+                type = string.Empty;
+
+                if (value == null)
+                    value = string.Empty;
+            }
+
+            byte[] BinFile = null;
+            string TextFile = null;
+            string FileName = string.Empty;
+
+            if (valueIsFileName)
+            {
+                FileInfoFormat FileData = null;
+                try
+                {
+                    FileData = GetFileInfo(value as string);
+                }
+                catch (Exception ex)
+                {
+                    ErrorMessage = ex.Message;
+                    return -1;
+                }
+
+                type = "FileResource";
+                value = FileData.ValueString;
+                FileName = FileData.FileName;
+
+                if (FileData.FileFormatType == FileFormatTypes.Text)
+                    TextFile = FileData.TextContent;
+                else
+                    BinFile = FileData.BinContent;
+            }
+
+            if (value == null)
+                value = string.Empty;
+
 
             int result;
             using (var data = GetDb())
@@ -926,78 +985,25 @@ namespace Westwind.Globalization
                 if (Transaction != null)
                     data.Transaction = Transaction;
 
-                if (Value != null && !(Value is string))
-                {
-                    type = Value.GetType().AssemblyQualifiedName;
-                    try
-                    {
-                        LosFormatter output = new LosFormatter();
-                        StringWriter writer = new StringWriter();
-                        output.Serialize(writer, Value);
-                        Value = writer.ToString();
-                    }
-                    catch (Exception ex)
-                    {
-                        ErrorMessage = ex.Message;
-                        return -1;
-                    }
-                }
-                else
-                {
-                    type = string.Empty;
-
-                    if (Value == null)
-                        Value = string.Empty;
-                }
-
-                byte[] BinFile = null;
-                string TextFile = null;
-                string FileName = string.Empty;
-
-                if (ValueIsFileName)
-                {
-                    FileInfoFormat FileData = null;
-                    try
-                    {
-                        FileData = GetFileInfo(Value as string);
-                    }
-                    catch (Exception ex)
-                    {
-                        ErrorMessage = ex.Message;
-                        return -1;
-                    }
-
-                    type = "FileResource";
-                    Value = FileData.ValueString;
-                    FileName = FileData.FileName;
-
-                    if (FileData.FileFormatType == FileFormatTypes.Text)
-                        TextFile = FileData.TextContent;
-                    else
-                        BinFile = FileData.BinContent;
-                }
-
-                if (Value == null)
-                    Value = string.Empty;
-
                 // Set up Binfile and TextFile parameters which are set only for
                 // file values - otherwise they'll pass as Null values.
                 var binFileParm = data.CreateParameter("@BinFile", BinFile, DbType.Binary);
 
                 var textFileParm = data.CreateParameter("@TextFile", TextFile);
-                
 
-                string sql = "update " + Configuration.ResourceTableName + " set Value=@Value, Type=@Type, BinFile=@BinFile,TextFile=@TextFile,FileName=@FileName, Comment=@Comment " +
+
+                string sql = "update " + Configuration.ResourceTableName +
+                             " set Value=@Value, Type=@Type, BinFile=@BinFile,TextFile=@TextFile,FileName=@FileName, Comment=@Comment " +
                              "where LocaleId=@LocaleId AND ResourceSet=@ResourceSet and ResourceId=@ResourceId";
                 result = data.ExecuteNonQuery(sql,
-                    data.CreateParameter("@ResourceId", ResourceId),
-                    data.CreateParameter("@Value", Value),
+                    data.CreateParameter("@ResourceId", resourceId),
+                    data.CreateParameter("@Value", value),
                     data.CreateParameter("@Type", type),
-                    data.CreateParameter("@LocaleId", CultureName),
-                    data.CreateParameter("@ResourceSet", ResourceSet),
+                    data.CreateParameter("@LocaleId", cultureName),
+                    data.CreateParameter("@ResourceSet", resourceSet),
                     binFileParm, textFileParm,
                     data.CreateParameter("@FileName", FileName),
-                    data.CreateParameter("@Comment", Comment)
+                    data.CreateParameter("@Comment", comment)
                     );
                 if (result == -1)
                 {
