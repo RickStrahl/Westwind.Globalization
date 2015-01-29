@@ -28,6 +28,8 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 *.vssscc
 $tf*/
+node_modules/
+.idea/
 /Westwind.ApplicationConfiguration.WebSample/Properties/PublishProfiles/*.pubxml
 /Westwind.ApplicationConfiguration.WebSample/Properties/PublishProfiles/*.pubxml
 /WebApplication1

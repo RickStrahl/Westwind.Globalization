@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Web.UI.WebControls;
 using Westwind.Utilities.Data;
 
 namespace Westwind.Globalization
@@ -75,9 +74,9 @@ namespace Westwind.Globalization
         /// Returns an DataTable called TResourceIds with ResourceId and HasValues fields
         /// where the ResourceId is formatted for HTML display.
         /// </summary>
-        /// <param name="ResourceSet"></param>
+        /// <param name="resourceSet"></param>
         /// <returns></returns>
-        List<ListItem> GetAllResourceIdsForHtmlDisplay(string ResourceSet);
+        List<ResourceIdListItem> GetAllResourceIdListItems(string resourceSet);
 
         /// <summary>
         /// Returns all available resource sets

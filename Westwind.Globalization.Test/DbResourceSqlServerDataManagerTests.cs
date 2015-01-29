@@ -69,14 +69,14 @@ namespace Westwind.Globalization.Test
         public void GetAllResourceIdsForHtmlDisplay()
         {
             var manager = GetManager();
-            var items = manager.GetAllResourceIdsForHtmlDisplay("Resources");
+            var items = manager.GetAllResourceIdListItems("Resources");
 
             Assert.IsNotNull(items);
             Assert.IsTrue(items.Count > 0);
 
             foreach (var item in items)
             {
-                Console.WriteLine(item.Value + ": " + item.Text + " " + (item.Selected ? "* " : "") + (item.Attributes.Count > 0) );
+                Console.WriteLine(item.Value + ": " + item.Text + " " + (item.Selected ? "* " : "")  );
             }
         }
         

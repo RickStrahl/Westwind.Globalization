@@ -9,6 +9,7 @@ using System.Globalization;
 using Westwind.Web.Controls;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 using Westwind.Web;
 using Westwind.Utilities;
@@ -50,8 +51,21 @@ namespace Westwind.GlobalizationWeb
 
             GetResourceSet();
 
-            var items = Manager.GetAllResourceIdsForHtmlDisplay(ResourceSet);           
-            lstResourceIds.Items.AddRange(items.ToArray());    
+            var items = Manager.GetAllResourceIdListItems(ResourceSet);
+            var listItems = new List<ListItem>();
+            foreach (var item in items)
+            {
+                var listItem = new ListItem
+                {
+
+                    Value = item.Value as string,
+                    Text = item.Text
+                };
+                if (!string.IsNullOrEmpty(item.Style))
+                    listItem.Attributes.Add("style", item.Style);
+            }
+
+            lstResourceIds.Items.AddRange(listItems.ToArray());    
             
 
 
@@ -72,7 +86,7 @@ namespace Westwind.GlobalizationWeb
             var ids = Manager.GetAllLocaleIds(ResourceSet);
             if (ids == null)
             {
-                ErrorDisplay.ShowError("Couldn't load resources: " + Manager.ErrorMessage);
+                ErrorDisplay.ShowError("Couldn't load lcoaleIds: " + Manager.ErrorMessage);
                 return;
             }
 

@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Localization Administration Form">
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="apple-touch-icon" href="touch-icon.png" />
+
+    <link rel="icon" href="touch-icon.png" />
+    <meta name="msapplication-TileImage" content="touch-icon.png">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+     <![endif]-->
+
+    <title>Localization Administration</title>
+
+    <!-- combined CSS file - build with gulp -->
+    <!--<link href="build/app.min.css" rel="stylesheet" />-->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />-->
+
+
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-theme.css" rel="stylesheet" />
+    <link href="bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet" />
+
+    <link href="css/localizationAdmin.css" rel="stylesheet" />
+</head>
+<body ng-app="app">
+
+    <div id="TitleBar">
+        <a href="#/albums">
+            <img src="images/Westwind.Localization_128.png"
+                 style="height: 35px; float: left" />
+            <div style="float: left; margin-left: 5px; line-height: 1.2">
+                <i style="color: steelblue; font-size: 0.8em; font-weight: bold;">West Wind Globalization</i><br />
+                <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;">Localization Administration</i>
+            </div>
+        </a>
+    </div>
+
+    <div class="banner" ng-controller="headerController" ng-cloak>
+        <nav id="TopMenu" class="pull-right">
+            <form style="float: left; padding-top: 2px;">
+                <input id="SearchBox" type="text"
+                       class="form-control" placeholder="Search..."
+                       ng-model="searchText"
+                       ng-keyup="onKey()"
+                       ng-blur="searchBlur()"
+                       ng-hide="!searchAllowed || !searchVisible">
+            </form>
+            <a ng-click="showSearch()" ng-hide="searchVisible || !searchAllowed"><i class=" fa fa-search" title="Search" style="font-size: 135%"></i> <span>Search</span></a>
+            <!--<a href="#/albums" ng-hide="searchVisible" ng-class="{ selected: activeTab == 'albums'}"><img src="images/record.png" title="Albums" style="height: 20px; vertical-align: top;" /> <span>Albums</span></a>-->
+            <!--<a href="#/artists" ng-hide="searchVisible" ng-class="{ selected: activeTab == 'artists'}"><img src="images/artists32.png" title="Artists" style="height: 20px" /> <span>Artists</span></a>-->
+            <!--<a href="javascript: window.location.reload();" ng-class="{ selected: activeTab == 'about'}"><i class=" fa fa-info-circle" title="About" style="font-size: 165%;vertical-align: bottom"></i> <span>About</span></a>-->
+        </nav>
+
+    </div>
+
+    <div style="margin-top: 72px; padding: 5px 10px;">
+        <div id="List" ng-controller="listController as view">
+            <div class=" form-group">
+                <label>ResourceSet - {{view.resourceSet}}</label>
+                <select class="form-control" ng-model="view.resourceSet"
+                        ng-change="view.onResourceSetChange()"
+                        ng-options="set for set in view.resourceSets"></select>
+
+            </div>
+
+            <div class=" form-group">
+                <label>Locale Id - {{view.localeId}}</label>
+                <select class="form-control" size="2" style="height: 65px;"
+                        ng-model="view.localeId"
+                        ng-change="view.onLocaleIdChanged()">
+                    <option ng-repeat="localeId in view.localeIds"
+                            value="{{localeId.LocaleId}}"
+                            selected="{{ localeId.LocaleId == vm.localeId ? 'selected' : '' }}">
+                        {{localeId.Name}}
+                    </option>
+                </select>
+            </div>
+
+            <div>
+                <div class=" form-group">
+                    <!--{{view.resourceList}}-->
+                    <label>Resources - !{{view.resourceId}}!</label>
+                    <select ng-model="view.resourceId"
+                            ng-change="view.onResourceIdChange(resource)"
+                            size="4" style="height: 400px;" class="form-control">
+                        <option ng-repeat="resource in view.resourceList"
+                                value="{{resource.ResourceId}}"
+                                style="{{resource.Style}}"
+                                selected=""
+                                >
+                            {{resource.ResourceId}}
+                        </option>
+                    </select>
+                    <!--<label>Resources - !{{view.resourceId}}!</label>
+                    <select size="4" style="height: 400px;" class="form-control"
+                            ng-model="view.resourceId"
+                            ng-change="view.onResourceIdChange(resource)"
+                            ng-options="resource.ResourceId as resource.ResourceId for resource in view.resourceList"></select>-->
+                </div>
+            </div>
+
+            <div id="Resource" class="well">
+
+                <label>{{view.resourceItem.ResourceId}}</label>
+                <textarea ng-model="view.resourceItem.Value" class="form-control">                    
+                </textarea>
+                        
+                <div ng-repeat="string in view.resourceStrings">
+                    {{string.LocaleId ? string.LocaleId : 'Invariant'}} - {{string.Value}}
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="scripts/ww.jquery.min.js"></script>
+    <script src="bower_components/lodash/lodash.min.js"></script>
+
+
+    <script>
+
+    </script>
+
+
+
+
+
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="scripts/ww.angular.js"></script>
+
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+    <!-- combined app scripts - build with gulp -->
+    <!--<script src="js/app.min.js"></script>-->
+
+    <script src="app/app.js"></script>
+    <script src="app/localizationService.js"></script>
+    <script src="app/headerController.js"></script>
+    <script src="app/listController.js"></script>
+    <script src="app/resourceController.js"></script>
+</body>
+</html>

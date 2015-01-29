@@ -1,6 +1,6 @@
 # West Wind Globalization
 ### Database Resource Localization for .NET
-Easily create ASP.NET resources stored iSn a Sql database for editing and updating 
+Easily create ASP.NET resources stored in a Sql database for editing and updating 
 at runtime using an interactive editor or programmatically using code.
 The library uses the standard .NET and ASP.NET infrastructure of ResourceSets and 
 ResourceManagers with a generic data backend to feed resource sets and provide 
@@ -32,6 +32,7 @@ Requirements:
 * Or: Use our dynamic DbRes string based helper (works anywhere)
 * Interactive, live Web Resource Editor to edit Resources
 * DbResourceManagers let you manage resources with code
+* Extensible DbResourceManager interface to create custom Providers
 * Import and Export Resx resources 
 * Generate strongly typed resource classes from the Db provider
 * Serve .NET Resources to JavaScript as JSON

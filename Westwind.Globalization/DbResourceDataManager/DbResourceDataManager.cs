@@ -43,7 +43,6 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Westwind.Utilities;
 using Westwind.Utilities.Data;
 using Westwind.Web.JsonSerializers;
@@ -448,22 +447,26 @@ namespace Westwind.Globalization
         /// Returns an DataTable called TResourceIds with ResourceId and HasValues fields
         /// where the ResourceId is formatted for HTML display.
         /// </summary>
-        /// <param name="ResourceSet"></param>
+        /// <param name="resourceSet"></param>
         /// <returns></returns>
-        public virtual List<ListItem> GetAllResourceIdsForHtmlDisplay(string ResourceSet)
+        public virtual List<ResourceIdListItem> GetAllResourceIdListItems(string resourceSet)
         {
-            var resourceIds = this.GetAllResourceIds(ResourceSet);
+            var resourceIds = GetAllResourceIds(resourceSet);
             if (resourceIds == null)
                 return null;
 
-            List<ListItem> items = new List<ListItem>();
-
+            var listItems = resourceIds.Select(id => new ResourceIdListItem
+            {
+                 ResourceId = id.ResourceId,
+                 HasValue = id.HasValue,
+                 Value = id.Value
+            }).ToList();
+            
             string lastId = "xx";
-            foreach (var resId in resourceIds)
+            foreach (var resId in listItems)
             {
                 string resourceId = resId.ResourceId;
-                ListItem item = new ListItem(resourceId);                
-
+               
                 string[] tokens = resourceId.Split('.');
                 if (tokens.Length == 1)
                 {
@@ -473,15 +476,14 @@ namespace Westwind.Globalization
                 {
                     if (lastId == tokens[0])
                     {
-                        item.Attributes.Add("style", "color: maroon; margin-left: 20px;");                        
+                        resId.Style = "color: maroon; margin-left: 20px;";                        
                     }
                     lastId = tokens[0];
                 }
-
-                items.Add(item);
+                
             }
 
-            return items;
+            return listItems;
         }
 
         /// <summary>
@@ -705,7 +707,7 @@ namespace Westwind.Globalization
             {
                 using (IDataReader reader =
                     data.ExecuteReader(
-                        "select ResourceId, Value,Comment from " + Configuration.ResourceTableName +
+                        "select * from " + Configuration.ResourceTableName +
                         " where ResourceId=@ResourceId and ResourceSet=@ResourceSet and LocaleId=@LocaleId",
                         data.CreateParameter("@ResourceId", resourceId),
                         data.CreateParameter("@ResourceSet", resourceSet),
@@ -718,6 +720,12 @@ namespace Westwind.Globalization
                     {
                         ResourceId = reader["ResourceId"] as string,
                         Value = reader["Value"] as string,
+                        ResourceSet = reader["ResourceSet"] as string,
+                        LocaleId = reader["LocaleId"] as string,
+                        Type = reader["Type"] as string,
+                        FileName = reader["FileName"] as string,
+                        TextFile = reader["TextFile"] as string,
+                        BinFile = reader["BinFile"] as byte[],
                         Comment = reader["Comment"] as string
                     };
 
@@ -1576,7 +1584,8 @@ namespace Westwind.Globalization
         SqlServerCe,
         MySql,
         SqlLite,
-        MongoDb
+        MongoDb, // not implemented yet
+        None
     }
 
     /// <summary>
@@ -1586,7 +1595,14 @@ namespace Westwind.Globalization
     {
         public string ResourceId { get; set; }
         public bool HasValue { get; set; }
-        public object Value { get; set; }
+        public object Value { get; set; }        
+    }
+
+    public class ResourceIdListItem : ResourceIdItem
+    {
+        public string Text { get; set;  }
+        public bool Selected { get; set; }
+        public string Style { get; set; }
     }
 
     /// <summary>
