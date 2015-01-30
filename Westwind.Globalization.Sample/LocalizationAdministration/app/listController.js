@@ -1,5 +1,5 @@
 /// <reference path="../bower_components/lodash/lodash.js" />
-(function () {
+(function (undefined) {
     'use strict';
 
     var app = angular
@@ -46,8 +46,10 @@
         vm.onResourceIdChange = function onResourceIdChange() {
             vm.getResourceItem();
         }
-        vm.onLocaleIdChanged = function onLocaleIdChanged() {
-            vm.getResourceItem();
+        vm.onLocaleIdChanged = function onLocaleIdChanged(localeId) {            
+            if (localeId !== undefined)
+                vm.localeId = localeId;
+            vm.getResourceItem(localeId);
         }
 
         vm.getResourceList = function getResourceList() {

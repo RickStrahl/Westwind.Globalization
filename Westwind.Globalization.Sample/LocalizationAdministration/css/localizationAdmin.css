@@ -15,9 +15,36 @@ h3 {
 }
 #TitleBar {
     position: fixed;
-    top: 18px;
+    top: 10px;
     left: 8px;
     z-index: 100;
+}
+#ListPanel,#ContentPanel {
+    position: absolute;    
+    top: 85px;
+    left: 0;    
+    bottom: 0px;
+    width: 310px;
+    xbackground: steelblue;
+    xborder-right: 1px #e1e1e1 solid;
+    padding: 0 ;    
+}
+#ListPanel select {
+    position: absolute;
+    width: 310px;    
+    top: 35px;
+    bottom: 1px;        
+    left: 0;
+    right: 0;
+    border-radius: 0;
+    border: none;    
+}
+#ContentPanel {        
+    left: 310px;
+    right: 0;    
+    width: auto;
+    padding: 0px 20px 10px;
+    overflow-x: auto;
 }
 #TopMenu {
 }
@@ -42,7 +69,7 @@ h3 {
     top: 0;
     left: 0;
     padding-top: 15px;
-    height: 58px;
+    height: 50px;
     width: 100%;
     z-index: 10;   
 }
