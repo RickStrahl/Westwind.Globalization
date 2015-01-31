@@ -307,6 +307,7 @@
     <Content Include="LocalizationAdministration\favicon.ico" />
     <Content Include="LocalizationAdministration\gulpfile.js" />
     <Content Include="LocalizationAdministration\images\Westwind.Localization_128.png" />
+    <Content Include="LocalizationAdministration\TranslateDialog.html" />
     <Content Include="LocalizationAdministration\index.html" />
     <Content Include="LocalizationAdministration\scripts\ww.angular.js" />
     <Content Include="LocalizationAdministration\scripts\ww.jquery.js" />

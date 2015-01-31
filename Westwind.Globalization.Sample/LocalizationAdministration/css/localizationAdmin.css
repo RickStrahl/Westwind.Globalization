@@ -1,5 +1,4 @@
-body {
-       
+body {        
 }
 .page-header-text{
     font-size: 1.8em;
@@ -7,7 +6,7 @@ body {
     color: steelblue;
 }
 h2,h3 {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;    
+    font-family: 'Trebuchet','Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;    
     font-weight: bold;
 }
 h3 {

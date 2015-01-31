@@ -9,7 +9,7 @@
 
    listController.$inject = [ '$scope','$timeout','localizationService'];
 
-   function listController( $scope,$timeout, localizationService) {
+   function listController( $scope,$timeout,localizationService) {
        console.log('list controller');
 
         var vm = this;
@@ -63,6 +63,22 @@
         vm.onStringUpdate = function onStringUpdate(string) {
             vm.updateResourceString(string.Value, string.LocaleId);
         };
+       vm.onResourceKeyDown = function onResourceKeyDown(ev,string,form) {
+           // Ctrl-Enter - save and next field
+           if (ev.ctrlKey && ev.keyCode === 13) {
+               vm.onStringUpdate(string);
+               $timeout(function() {
+                   var el = $(ev.target);
+                   var id = el.prop("id").replace("value_", "") * 1;
+                   var $el = $("#value_" + (id + 1));                   
+                   if ($el.length < 1) 
+                       $el = $("#value_1"); // loop around
+                   $el.focus();
+               }, 100);
+               $scope.resourceForm.$setPristine();
+
+           }
+       };
 
         vm.getResourceList = function getResourceList() {
             localizationService.getResourceList(vm.resourceSet)
@@ -82,7 +98,7 @@
             localizationService.getResourceItem(vm.resourceId, vm.resourceSet, vm.localeId)
                 .success(function(resourceItem) {
                     vm.resourceItem = resourceItem;
-                    vm.resourceItemId = vm.resourceItem.ResourceId;
+                    vm.resourceItemId = vm.resourceItem.ResourceId;                    
                 })
                 .error(handleErrorResult);
         };
