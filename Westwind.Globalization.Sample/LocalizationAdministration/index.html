@@ -57,17 +57,8 @@
         </a>
     </div>
 
-    <div class="banner" ng-controller="headerController" ng-cloak>
+    <div class="banner">
         <nav id="TopMenu" class="pull-right">
-            <form style="float: left; padding-top: 2px;">
-                <input id="SearchBox" type="text"
-                       class="form-control" placeholder="Search..."
-                       ng-model="searchText"
-                       ng-keyup="onKey()"
-                       ng-blur="searchBlur()"
-                       ng-hide="!searchAllowed || !searchVisible">
-            </form>
-            <a ng-click="showSearch()" ng-hide="searchVisible || !searchAllowed"><i class=" fa fa-search" title="Search" style="font-size: 135%"></i> <span>Search</span></a>
             <!--<a href="#/albums" ng-hide="searchVisible" ng-class="{ selected: activeTab == 'albums'}"><img src="images/record.png" title="Albums" style="height: 20px; vertical-align: top;" /> <span>Albums</span></a>-->
             <!--<a href="#/artists" ng-hide="searchVisible" ng-class="{ selected: activeTab == 'artists'}"><img src="images/artists32.png" title="Artists" style="height: 20px" /> <span>Artists</span></a>-->
             <!--<a href="javascript: window.location.reload();" ng-class="{ selected: activeTab == 'about'}"><i class=" fa fa-info-circle" title="About" style="font-size: 165%;vertical-align: bottom"></i> <span>About</span></a>-->
@@ -99,12 +90,12 @@
 
 
             <div class="form-group">
-                <select ng-model="view.resourceId"
+                <select id="ResourceIdList" ng-model="view.resourceId"
                         ng-change="view.onResourceIdChange(resource)"
                         size="2" class="form-control">
                     <option ng-repeat="resource in view.resourceList"
                             value="{{resource.ResourceId}}"
-                            style=" { {resource.Style}}">
+                            style="{{resource.Style}}">
                         {{resource.ResourceId}}
                     </option>
                 </select>
@@ -113,74 +104,82 @@
 
         <div id="ContentPanel" class="col-sm-8">
 
-            <div class=" form-group">
-                <label>ResourceSet</label>
-                <select class="form-control" ng-model="view.resourceSet"
-                        ng-change="view.onResourceSetChange()"
-                        ng-options="set for set in view.resourceSets"></select>
-                <div class="btn-group" style="margin-top: 2px;">
-                    <button class="btn btn-sm btn-default" title="Add new ResourceSet"><i class="fa fa-plus"></i> Add</button>
-                    <button class="btn btn-sm btn-default" title="Delete ResourceSet"><i class="fa fa-remove"></i> Delete</button>
-                    <button class="btn btn-sm btn-default" title="Rename ResourceSet"><i class="fa fa-exchange"></i> Rename</button>
-                </div>                
-            </div>
+           
 
-            <hr class="hrstyle"/>
+            <div id="ResourceList" class="well"
+                 style="margin-bottom: 2px; padding: 10px; background: #f2f2f2;">
 
-            <div id="ResourceList" class="well well-sm"
-                 style="margin-bottom: 2px">
-
-                <label style="font-size: 14pt; color: darkred; font-weight: bold;">
+                <label style="font-size: 15pt; color: darkred; font-weight: bold;">
                     {{view.resourceItem.ResourceId}}
                 </label>
 
-                <div style="margin: 0 0 8px; color: silver; background: silver; height: 1px"></div>
+                <div class="separator"></div>
 
-                <div id="resourcegroup_{{$index + 1}}" class="resource-group" ng-repeat="string in view.resourceStrings">
+                <div id="resourcegroup_{{$index + 1}}" class="resource-group" 
+                     ng-repeat="string in view.resourceStrings">
 
                     <div class="input-group" style="margin-top: 2px;">
                         <span class="input-group-addon active" style="width: 70px; cursor: pointer"
                               ng-click="view.onLocaleIdChanged(string.LocaleId)">
-                            <div style="float: left; width: 70px;">
+                            <div style="float: left; width: 70px; font-weight: bold; color: darkred;">
                                 {{string.LocaleId ? string.LocaleId : 'Invariant'}}
                             </div>
                         </span>
                         <form name="resourceForm" id="form1">
                             <textarea id="value_{{$index+1}}"
                                       class="form-control"
-                                      data-localeId="{{string.localeId}}"
+                                      data-localeId="{{string.LocaleId}}"
                                       ng-model="string.Value"
                                       ng-keydown="view.onResourceKeyDown($event,string,resourceForm)"
                                       title="Ctl-Enter to save and move to next field">                                                                    
                             </textarea>
                         </form>
                         <span class="input-group-addon" title="Save change"
-                                  ng-click="view.onStringUpdate(string)"
-                                  ng-class="{'colorCheck': resourceForm.$dirty }" 
-                                  ng-enabled="resourceForm.$dirty"
-                                  ><i class="fa fa-check"></i></span>
-                        <span class="input-group-addon" title="Translate"
-                                  ng-click="view.onStringUpdate(string)"><i class="fa fa-flag-o"></i></span>
+                              ng-class="{'color-check': resourceForm.$dirty }"
+                              ng-enabled="resourceForm.$dirty"
+                              ng-click="view.onStringUpdate(string)"><i class="fa fa-check-circle"></i></span>
+                        <span class="input-group-addon" title="Translate"                              
+                              ng-click="view.onTranslateClick($event,string)"><i class="fa fa-flag-o"></i></span>
                         <span class="input-group-addon" title="Comment"
                                   ng-click="view.onStringUpdate(string)"><i class="fa fa-comment-o"></i></span>                                                
                     </div>
 
                 </div>
+
+                <!--<div class="separator" style="margin-top: 10px;margin-bottom:10px"></div>-->
+
+                <div class="btn-group" style="margin-top: 12px;">
+                    <button class="btn btn-sm btn-default" title="Add new Resource"
+                            data-toggle="modal" data-target="#AddResourceDialog">
+                        <i class="fa fa-plus"></i> Add
+                    </button>
+                    <button class="btn btn-sm btn-default" title="Delete all entries for this Resource"><i class="fa fa-remove"></i> Delete</button>
+                    <button class="btn btn-sm btn-default" title="Rename this Resource for all languages"><i class="fa fa-exchange"></i> Rename</button>
+                </div> {{view.localeId}}
             </div>
 
 
-            <div class="btn-group" style="margin-top: 2px;">
-                <button class="btn btn-sm btn-default" title="Add new Resource"
-                        data-toggle="modal" data-target="#TranslateDialog">
-                    <i class="fa fa-plus"></i> Add
-                </button>
-                <button class="btn btn-sm btn-default" title="Delete all entries for this Resource"><i class="fa fa-remove"></i> Delete</button>
-                <button class="btn btn-sm btn-default" title="Rename this Resource for all languages"><i class="fa fa-exchange"></i> Rename</button>
+
+            <div class="well well-sm" style="margin-top: 25px;">
+
+                <div class=" form-group">
+                    <label>ResourceSet</label>
+                    <select class="form-control" ng-model="view.resourceSet"
+                            ng-change="view.onResourceSetChange()"
+                            ng-options="set for set in view.resourceSets"></select>
+
+                    <div class="btn-group" style="margin-top: 12px;">
+                        <button class="btn btn-sm btn-default" title="Add new ResourceSet"><i class="fa fa-plus"></i> Add</button>
+                        <button class="btn btn-sm btn-default" title="Delete ResourceSet"><i class="fa fa-remove"></i> Delete</button>
+                        <button class="btn btn-sm btn-default" title="Rename ResourceSet"><i class="fa fa-exchange"></i> Rename</button>
+                    </div>
+                </div>
+
             </div>
-            {{view.localeId}}
 
 
-            <!-- <div class="form-group">
+
+                <!-- <div class="form-group">
                 <label>Translated Text ({{view.localeId ? view.localeId : 'Invariant'}})</label>
                 <textarea ng-model="view.resourceItem.Value" style="height: 100px;"
                           class="form-control" class="form-control">
@@ -208,6 +207,8 @@
             <div ng-include src="'TranslateDialog.html'">
             </div>
 
+            <div ng-include src="'AddResourceDialog.html'">
+            </div>
 
         </div>
     </div>
@@ -238,8 +239,8 @@
 
     <script src="app/app.js"></script>
     <script src="app/localizationService.js"></script>
-    <script src="app/headerController.js"></script>
     <script src="app/listController.js"></script>
-    <script src="app/resourceController.js"></script>
+    <script src="app/translateController.js"></script>
+    
 </body>
 </html>

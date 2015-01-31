@@ -459,7 +459,7 @@ namespace Westwind.Globalization
             {
                  ResourceId = id.ResourceId,
                  HasValue = id.HasValue,
-                 Value = id.Value
+                 Value = id.Value as string
             }).ToList();
             
             string lastId = "xx";

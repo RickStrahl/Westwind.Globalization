@@ -201,22 +201,27 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         }
 
         [CallbackMethod]
-        public string Translate(string Text, string From, string To, string Service)
+        public string Translate(dynamic parm)
         {
-            Service = Service.ToLower();
+            string text = parm.text;
+            string from = parm.from;
+            string to = parm.to;
+            string service = parm.service;
+
+            service = service.ToLower();
 
             var translate = new TranslationServices();
             translate.TimeoutSeconds = 10;
 
             string result = null;
-            if (Service == "google")
-                result = translate.TranslateGoogle(Text, From, To);
-            else if (Service == "bing")
+            if (service == "google")
+                result = translate.TranslateGoogle(text, @from, to);
+            else if (service == "bing")
             {
                 if (string.IsNullOrEmpty(DbResourceConfiguration.Current.BingClientId))
                     result = ""; // don't do anything -  just return blank 
                 else
-                    result = translate.TranslateBing(Text, From, To);
+                    result = translate.TranslateBing(text, @from, to);
             }
 
             if (result == null)

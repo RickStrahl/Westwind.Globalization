@@ -172,11 +172,11 @@
     <Content Include="LocalizationAdministration\.idea\vcs.xml" />
     <Content Include="LocalizationAdministration\.idea\workspace.xml" />
     <Content Include="LocalizationAdministration\app\app.js" />
-    <Content Include="LocalizationAdministration\app\favicon.ico" />
     <Content Include="LocalizationAdministration\app\headerController.js" />
     <Content Include="LocalizationAdministration\app\listController.js" />
     <Content Include="LocalizationAdministration\app\localizationservice.js" />
     <Content Include="LocalizationAdministration\app\resourceController.js" />
+    <Content Include="LocalizationAdministration\app\translateController.js" />
     <Content Include="LocalizationAdministration\bower_components\angular-sanitize\angular-sanitize.js" />
     <Content Include="LocalizationAdministration\bower_components\angular-sanitize\angular-sanitize.min.js" />
     <Content Include="LocalizationAdministration\bower_components\angular\angular-csp.css" />
@@ -307,6 +307,7 @@
     <Content Include="LocalizationAdministration\favicon.ico" />
     <Content Include="LocalizationAdministration\gulpfile.js" />
     <Content Include="LocalizationAdministration\images\Westwind.Localization_128.png" />
+    <Content Include="LocalizationAdministration\AddResourceDialog.html" />
     <Content Include="LocalizationAdministration\TranslateDialog.html" />
     <Content Include="LocalizationAdministration\index.html" />
     <Content Include="LocalizationAdministration\scripts\ww.angular.js" />
@@ -535,7 +536,6 @@
   <ItemGroup>
     <Folder Include="Content\Controllers\" />
     <Folder Include="images\" />
-    <Folder Include="LocalizationAdministration\app\views\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

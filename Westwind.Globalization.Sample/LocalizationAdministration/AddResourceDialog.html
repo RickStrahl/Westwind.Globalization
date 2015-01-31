@@ -13,47 +13,38 @@
                     <div class="form-group">
                         <label xclass="sr-only" for="exampleInputEmail3">From:</label>
                         <input type="text" class="form-control" ng-model="view.fromLang" placeholder="From"
-                               style="width: 60px;"/>
+                               style="width: 60px;"  />
                     </div>
                     <div class="form-group">
                         <label xclass="sr-only" for="exampleInputPassword3"> &nbsp;To:</label>
                         <input style="width: 60px;" type="text" class="form-control" ng-model="view.toLang" placeholder="To">
-                    </div>
+                    </div>                                     
                 </div>
 
                 <div class="form-group">
                     <label class="control-label" for="form-group-input">Text to translate</label>
-                    <textarea class="form-control" ng-model="view.inputText" placeholder="Text to translate"></textarea>
+                    <textarea class="form-control" ng-model="view.inputText" placeholder="Text to translates">
+                    </textarea>
                 </div>
-
-                <button class="btn btn-primary" ng-click="view.onTranslateClick()">Translate</button>
 
                 <hr class="hrstyle"/>
 
                 <div class="form-group">
                     <label class="control-label" for="form-group-input">Google Translation:</label>
-                    <div class="input-group">
-
-                        <textarea class="form-control" ng-model="view.googleTranslation" placeholder="Text to translate" ></textarea>
-                        <span class=" input-group-addon clickable"
-                              ng-click="view.useGoogleClick()"><i class="fa fa-check"></i> Use</span>
-                    </div>
+                    <textarea class="form-control" ng-model="view.googleTranslation" placeholder="Text to translates">                        
+                    </textarea>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label" for="form-group-input">Bing Translation:</label>
-                    <div class="input-group">
-
-                        <textarea class="form-control" ng-model="view.bingTranslation" placeholder="Translated text"></textarea>
-                        <span class=" input-group-addon"
-                              ng-click="view.useBingClick()"><i class="fa fa-check"></i> Use</span>
-                    </div>
+                    <textarea class="form-control" ng-model="view.bingTranslation" placeholder="Text to translates">
+                    </textarea>
                 </div>
             </div>
-
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>                
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
             </div>
         </div>
-    </div>    
+    </div>
 </div>

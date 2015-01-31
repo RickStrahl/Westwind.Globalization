@@ -58,17 +58,17 @@ namespace Westwind.GlobalizationWeb
                 var listItem = new ListItem
                 {
 
-                    Value = item.Value as string,
-                    Text = item.Text
+                    Value = item.ResourceId,
+                    Text = item.ResourceId
                 };
                 if (!string.IsNullOrEmpty(item.Style))
                     listItem.Attributes.Add("style", item.Style);
+
+                listItems.Add(listItem);
             }
 
-            lstResourceIds.Items.AddRange(listItems.ToArray());    
+            lstResourceIds.Items.AddRange(listItems.ToArray());  
             
-
-
             //DataTable dt = Manager.GetAllResourceIds(ResourceSet);
             //if (dt == null)
             //{

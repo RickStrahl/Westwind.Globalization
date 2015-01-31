@@ -112,103 +112,18 @@ h3 {
         }
     }
 
-.album {
-    margin-bottom: 10px;
-    margin-right: 5px;
-    padding: 10px;
-    border: 1px solid silver;
-    border-radius: 6px;
-    height: 135px;
-    overflow-y:hidden;
-    float: left;
-    max-width: 300px;
-        
-    transition: background linear 275ms;
-    position: relative;
+
+  
+.color-check {
+    color: #009f00;
 }
-    .album:hover {
-        background: steelblue;
-        color: white !important;
-        cursor: pointer;        
-    }
-    .album:hover .album-overlay {
-        display: block;
-    }
-    .album-overlay {
-        position: relative;
-        float: right;
-        background: #034e8d;
-        color: #whitesmoke;        
-        padding: 5px;        
-        min-width: 40px;
-        display: none;
-        margin-top: -10px;
-        margin-right: -10px;
-        border-radius: 3px;
-        opacity: 0.85;
-        z-index: 1000;
-        box-shadow: 2px 2px 4px #535353;
-
-    }.album-overlay:hover {
-         opacity: 1;
-     }
-    .album-overlay a, .album-overlay a:hover {
-        color: beige;
-        text-decoration: none;
-    }
-    .album-overlay a:hover {        
-        color: white;
-    }
-
-.album-title {
-    font-weight: bold;
+.hrstyle {
+    margin: 10px 0;
+}
+.clickable {
+    cursor: pointer;
 }
 
-.album-title-big {
-    font-weight: bold;
-    font-size: 1.55em;
-}
-
-.album-descript {
-    font-size: 0.85em;          
-    overflow: hidden;
-}
-
-.album-artist {
-    font-size: 0.85em;
-    font-style: italic;
-    color: #2a5fb4;
-}
-
-.album-year {
-    font-size: 0.85em;
-    color: steelblue;
-}
-
-
-.album-image,.album-image-big {
-    width: 72px;
-    float: left;
-    border-radius: 35px;
-}
-.album-image-big {
-    width: auto;
-    float: none;
-    max-width: 95%;
-    border-radius: 4px;
-    box-shadow: 2px 2px 4px #535353;
-}
-@media(max-width: 768px){
-    .album-image-big {
-        margin-bottom: 10px;
-    }
-}
-
-.song { 
-    font-size: .85em;
-    padding: 5px;
-    border-bottom: 1px dashed silver;
-}
 
 .separator {
     border-bottom: 1px solid lightgrey;

@@ -60,7 +60,23 @@ http://en.wikipedia.org/wiki/MIT_License
             var d = $q.defer();
             d.then($http.success, $http.error);
             return d.promise;
+        },
+        // Assigns a value to DOM element explicitly and forces
+        // an Angular binding to be updated. Use this function
+        // when you need to update values 'manually' via DOM
+        // manipulation
+        // element parameter can be DOM or jq element
+        applyBindingValue: function(element, value) {            
+            var el = angular.element(element);
+            // must use timeout to avoid recursive $apply errors
+            setTimeout(function () {                
+                el.scope().$apply(function () {                    
+                    el.val(value);
+                    el.controller('ngModel').$setViewValue(el.val());
+                });
+            });
         }
+
     };
     self = ww.angular;
 })();

@@ -20,6 +20,7 @@
         vm.localeIds = [];
         vm.localeId = null;
         vm.resourceStrings = [];
+        vm.editedResource = null,
         vm.error = {
             message:null,
             icon: "info-circle",
@@ -61,6 +62,8 @@
             vm.getResourceItem(localeId);
         };
         vm.onStringUpdate = function onStringUpdate(string) {
+            vm.localeId = string.LocaleId;
+            vm.editedResource = string.Value;
             vm.updateResourceString(string.Value, string.LocaleId);
         };
        vm.onResourceKeyDown = function onResourceKeyDown(ev,string,form) {
@@ -79,6 +82,13 @@
 
            }
        };
+       vm.onTranslateClick = function (ev, string) {               
+           vm.localeId = string.LocaleId;
+           vm.editedResource = string.Value;
+           var id = $(ev.target).parent().find("textarea").prop("id");
+           $scope.$emit("startTranslate",string,id);
+           $("#TranslateDialog").modal();
+       }
 
         vm.getResourceList = function getResourceList() {
             localizationService.getResourceList(vm.resourceSet)
@@ -164,6 +174,12 @@
 
             showMessage(msg, "warning", "warning");            
         };
+
+       $(document.body).keydown(function(ev) {
+           if (ev.keyCode == 76 && ev.altKey) {
+               $("#ResourceIdList").focus();
+           }
+       });
        
 
         // initialize
