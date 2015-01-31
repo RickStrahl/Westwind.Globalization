@@ -184,7 +184,7 @@ namespace Westwind.Globalization
                 value = resourceId;
 
             var db = DbResourceDataManager.CreateDbResourceDataManager();  
-            return db.UpdateOrAdd(resourceId, value, lang, resourceSet, null) > -1;
+            return db.UpdateOrAddResource(resourceId, value, lang, resourceSet, null) > -1;
         }
 
         /// <summary>

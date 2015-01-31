@@ -279,7 +279,7 @@ namespace Westwind.GlobalizationWeb
 
             // *** Try to add the file
             var data = DbResourceDataManager.CreateDbResourceDataManager();
-            if (data.UpdateOrAdd(resourceId, filePath, txtNewLanguage.Text, ResourceSet, null, true) == -1)
+            if (data.UpdateOrAddResource(resourceId, filePath, txtNewLanguage.Text, ResourceSet, null, true) == -1)
                 ErrorDisplay.ShowError(WebUtils.LRes("ResourceUpdateFailed") + "<br/>" + data.ErrorMessage);
             else
                 ErrorDisplay.ShowMessage(WebUtils.LRes("ResourceUpdated"));
@@ -468,7 +468,7 @@ namespace Westwind.GlobalizationWeb
             if (string.IsNullOrEmpty(Value))            
                 return Manager.DeleteResource(ResourceId, LocaleId, ResourceSet);
             
-            if (Manager.UpdateOrAdd(ResourceId, Value, LocaleId, ResourceSet,null) == -1)
+            if (Manager.UpdateOrAddResource(ResourceId, Value, LocaleId, ResourceSet,null) == -1)
                 return false;
 
             return true;
@@ -480,7 +480,7 @@ namespace Westwind.GlobalizationWeb
             if (string.IsNullOrEmpty(Value))
                 return Manager.DeleteResource(ResourceId, LocaleId, ResourceSet);
 
-            if (Manager.UpdateOrAdd(ResourceId, Value, LocaleId, ResourceSet, Comment) == -1)
+            if (Manager.UpdateOrAddResource(ResourceId, Value, LocaleId, ResourceSet, Comment) == -1)
                 return false;
 
             return true;

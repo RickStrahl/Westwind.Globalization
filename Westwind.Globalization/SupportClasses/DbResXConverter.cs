@@ -696,7 +696,7 @@ namespace Westwind.Globalization
 
 
             if (string.IsNullOrEmpty(Type))
-                Data.UpdateOrAdd(Name, Value, LocaleId, ResourceSetName,Comment);
+                Data.UpdateOrAddResource(Name, Value, LocaleId, ResourceSetName,Comment);
             else
             {
                 // File based resources are formatted: filename;full type name
@@ -706,7 +706,7 @@ namespace Westwind.Globalization
                     string ResFileName = FilePath + tokens[0];
                     if (File.Exists(ResFileName) )
                         // DataManager knows about file resources and can figure type info
-                        Data.UpdateOrAdd(Name, ResFileName, LocaleId, ResourceSetName, Comment,true);
+                        Data.UpdateOrAddResource(Name, ResFileName, LocaleId, ResourceSetName, Comment,true);
                 }
             }
 

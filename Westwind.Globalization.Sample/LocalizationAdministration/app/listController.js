@@ -1,15 +1,17 @@
+/// <reference path="localizationservice.js" />
 /// <reference path="../bower_components/lodash/lodash.js" />
 (function (undefined) {
     'use strict';
-
+    
     var app = angular
         .module('app')
         .controller('listController', listController);
 
-   listController.$inject = [ 'localizationService'];
+   listController.$inject = [ '$scope','$timeout','localizationService'];
 
-    function listController(localizationService) {
-        console.log('list controller');
+   function listController( $scope,$timeout, localizationService) {
+       console.log('list controller');
+
         var vm = this;
         vm.resourceSet = null;
         vm.resourceSets = [];
@@ -18,13 +20,10 @@
         vm.localeIds = [];
         vm.localeId = null;
         vm.resourceStrings = [];
-        vm.error = {};
-
-
-
-        function handleErrorResult() {
-            vm.error = vm.error;
-            console.log(vm.error,arguments);
+        vm.error = {
+            message:null,
+            icon: "info-circle",
+            cssClass: "info"
         };
 
         vm.getResourceSets = function getResourceSets() {
@@ -37,6 +36,16 @@
                 })
                 .error(handleErrorResult);
         };
+        vm.updateResourceString = function (value, localeId) {            
+            localizationService.updateResourceString(value, vm.resourceId, vm.resourceSet, localeId)
+                .success(function() {                               
+                    vm.getResourceItem();
+                    showMessage("Resource saved.");
+                })
+                .error(handleErrorResult);
+
+
+        };
 
         vm.onResourceSetChange = function onResourceSetChange() {
             vm.getAllLocaleIds();
@@ -45,12 +54,15 @@
         };
         vm.onResourceIdChange = function onResourceIdChange() {
             vm.getResourceItem();
-        }
-        vm.onLocaleIdChanged = function onLocaleIdChanged(localeId) {            
+        };
+        vm.onLocaleIdChanged = function onLocaleIdChanged(localeId) {
             if (localeId !== undefined)
                 vm.localeId = localeId;
             vm.getResourceItem(localeId);
-        }
+        };
+        vm.onStringUpdate = function onStringUpdate(string) {
+            vm.updateResourceString(string.Value, string.LocaleId);
+        };
 
         vm.getResourceList = function getResourceList() {
             localizationService.getResourceList(vm.resourceSet)
@@ -92,23 +104,50 @@
                         if (vm.localeId == null)
                             vm.localeId = vm.localeId = vm.localeIds[0].LocaleId;
                         else {
-                            var idx = _.findIndex(vm.localeIds, function(localeId) {
-                                console.log(localeId.LocaleId, oldId);
+                            var idx = _.findIndex(vm.localeIds, function(localeId) {                                
                                 if (localeId.LocaleId === oldId)
                                     return true;
+
                                 return false;
                             });
                             idx = idx > -1 ? idx : 0;
                             vm.localeId = vm.localeIds[1].LocaleId;
-                            console.log("Setting Locale Id: " + vm.localeId + " " + idx);
                         }
-                    } else
-                        console.log("not setting Locale Id: " + vm.localeId);
-
+                    }
                 })
                 .error(handleErrorResult);
         };
+   
 
+
+        function showMessage(msg, icon, cssClass) {
+            
+            if (!vm.error)
+                vm.error = {};
+            if (msg)
+                vm.error.message = msg;
+
+            if (icon)
+                vm.error.icon = icon;
+            else
+                vm.error.icon = "info-circle";
+
+            if (cssClass)
+                vm.error.cssClass = cssClass;
+            else
+                vm.error.cssClass = "info";            
+
+            $timeout(function() {
+                if (msg === vm.error.message)
+                    vm.error.message = null;
+            }, 5000);            
+        }
+
+        function handleErrorResult(msg) {
+            msg = msg || vm.error.message;
+
+            showMessage(msg, "warning", "warning");            
+        };
        
 
         // initialize

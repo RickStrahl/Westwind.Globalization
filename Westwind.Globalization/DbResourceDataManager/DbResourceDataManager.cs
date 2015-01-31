@@ -766,6 +766,19 @@ namespace Westwind.Globalization
             return Resources;
         }
 
+        /// <summary>
+        /// Updates a resource if it exists, if it doesn't one is created
+        /// </summary>
+        /// <param name="resource">Resource to update</param>
+        public virtual int UpdateOrAddResource(ResourceItem resource)
+        {
+            if (resource == null)
+            {
+                SetError("Resource passed cannot be null.");
+                return -1;
+            }
+            return UpdateOrAddResource(resource.ResourceId, resource.Value, resource.LocaleId, resource.ResourceSet, resource.Comment,false);
+        }
 
         /// <summary>
         /// Updates a resource if it exists, if it doesn't one is created
@@ -774,8 +787,8 @@ namespace Westwind.Globalization
         /// <param name="value"></param>
         /// <param name="cultureName"></param>
         /// <param name="resourceSet"></param>
-        /// <param name="Type"></param>
-        public virtual int UpdateOrAdd(string resourceId, object value, string cultureName, string resourceSet,
+        /// <param name="Type"></param>        
+        public virtual int UpdateOrAddResource(string resourceId, object value, string cultureName, string resourceSet,
             string comment = null, bool valueIsFileName = false)
         {
             if (!IsValidCulture(cultureName))
@@ -798,6 +811,21 @@ namespace Westwind.Globalization
                 return -1;
 
             return 1;
+        }
+
+
+        /// <summary>
+        /// Adds a resource to the Localization Table
+        /// </summary>
+        /// <param name="resource">Resource to update</param>
+        public virtual int AddResource(ResourceItem resource)
+        {
+            if (resource == null)
+            {
+                SetError("Resource passed cannot be null.");
+                return -1;
+            }
+            return AddResource(resource.ResourceId, resource.Value, resource.LocaleId, resource.ResourceSet, resource.Comment, false);
         }
 
         /// <summary>
@@ -1021,6 +1049,20 @@ namespace Westwind.Globalization
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Updates a resource if it exists, if it doesn't one is created
+        /// </summary>
+        /// <param name="resource">Resource to update</param>
+        public virtual int UpdateResource(ResourceItem resource)
+        {
+            if (resource == null)
+            {
+                SetError("Resource passed cannot be null.");
+                return -1;
+            }
+            return UpdateResource(resource.ResourceId, resource.Value, resource.LocaleId, resource.ResourceSet, resource.Comment, false);
         }
 
         /// <summary>
@@ -1348,7 +1390,7 @@ namespace Westwind.Globalization
                             if (deleteAllResourceFirst)
                                 Result = AddResource(Entry.Key.ToString(), Entry.Value, cultureName, resourceSet, null);
                             else
-                                Result = UpdateOrAdd(Entry.Key.ToString(), Entry.Value, cultureName, resourceSet, null);
+                                Result = UpdateOrAddResource(Entry.Key.ToString(), Entry.Value, cultureName, resourceSet, null);
                             if (Result == -1)
                             {
                                 data.RollbackTransaction();

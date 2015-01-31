@@ -21,7 +21,7 @@ h3 {
 }
 #ListPanel,#ContentPanel {
     position: absolute;    
-    top: 85px;
+    top: 20px;
     left: 0;    
     bottom: 0px;
     width: 310px;

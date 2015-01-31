@@ -166,7 +166,7 @@ namespace Westwind.Globalization
             {
                 // Use custom data manager to write the values into the database
                 var manager = DbResourceDataManager.CreateDbResourceDataManager();  
-                if (manager.UpdateOrAdd(key, value, "", resourceSet, null) == -1)
+                if (manager.UpdateOrAddResource(key, value, "", resourceSet, null) == -1)
                     throw new InvalidOperationException("Resource update error: " + manager.ErrorMessage);
             }
 

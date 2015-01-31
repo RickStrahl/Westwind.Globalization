@@ -22,7 +22,8 @@
             getAllLocaleIds: getAllLocaleIds,
             localeIds: [],
             resourceStrings: [],
-            getResourceStrings: getResourceStrings
+            getResourceStrings: getResourceStrings,
+            updateResourceString: updateResourceString
         };
         return service;
 
@@ -70,6 +71,18 @@
                 .success(function (resourceStrings) {
                     service.resourceStrings = resourceStrings;
                 })
+                .error(parseHttpError);
+        }
+
+        function updateResourceString(value, resourceId, resourceSet, localeId) {
+            var parm = {
+                value: value,
+                resourceId: resourceId,
+                resourceSet: resourceSet,
+                localeId: localeId
+            };
+
+            return $http.post("localizationService.ashx?method=UpdateResourceString", parm)
                 .error(parseHttpError);
         }
 

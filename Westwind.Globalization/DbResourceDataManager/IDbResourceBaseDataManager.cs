@@ -144,6 +144,13 @@ namespace Westwind.Globalization
         /// <returns></returns>
         Dictionary<string, string> GetResourceStrings(string resourceId, string resourceSet);
 
+
+        /// <summary>
+        /// Updates an existing resource in the Localization table
+        /// </summary>
+        /// <param name="resource">Resource to add or update</param>
+        int UpdateOrAddResource(ResourceItem resource);
+
         /// <summary>
         /// Updates a resource if it exists, if it doesn't one is created
         /// </summary>
@@ -152,8 +159,15 @@ namespace Westwind.Globalization
         /// <param name="cultureName"></param>
         /// <param name="resourceSet"></param>
         /// <param name="Type"></param>
-        int UpdateOrAdd(string resourceId, object value, string cultureName, string resourceSet,
+        int UpdateOrAddResource(string resourceId, object value, string cultureName, string resourceSet,
             string comment = null, bool valueIsFileName = false);
+
+        /// <summary>
+        /// Adds a resource to the Localization Table
+        /// </summary>   
+        /// <param name="resource">Resource instance to add</param>      
+        int AddResource(ResourceItem resource);
+        
 
         /// <summary>
         /// Adds a resource to the Localization Table
@@ -166,6 +180,11 @@ namespace Westwind.Globalization
         /// <param name="valueIsFileName">if true the Value property is a filename to import</param>
         int AddResource(string resourceId, object value, string cultureName, string resourceSet, string comment = null, bool valueIsFileName = false);
 
+        /// <summary>
+        /// Updates an existing resource in the Localization table
+        /// </summary>
+        /// <param name="resource">Resource instance to update</param>        
+        int UpdateResource(ResourceItem resource);
 
         /// <summary>
         /// Updates an existing resource in the Localization table

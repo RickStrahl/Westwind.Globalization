@@ -224,7 +224,7 @@ namespace Westwind.Globalization.Test
             var manager = GetManager();
 
             string updated = "Heute Updated";
-            int count =  manager.UpdateOrAdd("Today",updated,"de","Resources",null,false);
+            int count =  manager.UpdateOrAddResource("Today",updated,"de","Resources",null,false);
 
             Assert.IsFalse(count == -1, manager.ErrorMessage);
             string check = manager.GetResourceString("Today", "Resources", "de");
@@ -232,7 +232,7 @@ namespace Westwind.Globalization.Test
             Assert.AreEqual(check, updated);
             Console.WriteLine(check);
 
-            manager.UpdateOrAdd("Today", "Heute", "de", "Resources",null,false);
+            manager.UpdateOrAddResource("Today", "Heute", "de", "Resources",null,false);
         }
 
         [Test]
