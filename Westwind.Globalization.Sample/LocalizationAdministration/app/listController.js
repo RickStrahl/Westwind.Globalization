@@ -19,7 +19,10 @@
         vm.resourceId = null;
         vm.localeIds = [];
         vm.localeId = null;
-        vm.resourceStrings = [];
+
+        vm.resourceItems = [];
+        vm.resourceItemIndex = 0;
+
         vm.editedResource = null,
         vm.error = {
             message:null,
@@ -40,12 +43,10 @@
         vm.updateResourceString = function (value, localeId) {            
             localizationService.updateResourceString(value, vm.resourceId, vm.resourceSet, localeId)
                 .success(function() {                               
-                    vm.getResourceItem();
+                    vm.getResourceItems();
                     showMessage("Resource saved.");
                 })
                 .error(handleErrorResult);
-
-
         };
 
         vm.onResourceSetChange = function onResourceSetChange() {
@@ -54,39 +55,41 @@
 
         };
         vm.onResourceIdChange = function onResourceIdChange() {
-            vm.getResourceItem();
+            vm.getResourceItems();
         };
         vm.onLocaleIdChanged = function onLocaleIdChanged(localeId) {
             if (localeId !== undefined)
-                vm.localeId = localeId;
-            vm.getResourceItem(localeId);
+                vm.localeId = localeId;            
         };
-        vm.onStringUpdate = function onStringUpdate(string) {
-            vm.localeId = string.LocaleId;
-            vm.editedResource = string.Value;
-            vm.updateResourceString(string.Value, string.LocaleId);
+        vm.onStringUpdate = function onStringUpdate(resource) {                
+            vm.localeId = resource.LocaleId;
+            vm.editedResource = resource.Value;
+            vm.updateResourceString(resource.Value, resource.LocaleId);
         };
-       vm.onResourceKeyDown = function onResourceKeyDown(ev,string,form) {
+       vm.onResourceKeyDown = function onResourceKeyDown(ev,resource,form) {
            // Ctrl-Enter - save and next field
            if (ev.ctrlKey && ev.keyCode === 13) {
-               vm.onStringUpdate(string);
-               $timeout(function() {
+               vm.onStringUpdate(resource);
+               $timeout(function () {
+                   // set focus to next field
                    var el = $(ev.target);
                    var id = el.prop("id").replace("value_", "") * 1;
                    var $el = $("#value_" + (id + 1));                   
                    if ($el.length < 1) 
-                       $el = $("#value_1"); // loop around
+                       $el = $("#value_0"); // loop around
                    $el.focus();
                }, 100);
                $scope.resourceForm.$setPristine();
 
            }
        };
-       vm.onTranslateClick = function (ev, string) {               
-           vm.localeId = string.LocaleId;
-           vm.editedResource = string.Value;
+       vm.onTranslateClick = function (ev, resource) {               
+           vm.localeId = resource.LocaleId;
+           vm.editedResource = resource.Value;
            var id = $(ev.target).parent().find("textarea").prop("id");
-           $scope.$emit("startTranslate",string,id);
+
+           // notify Translate Dialog of active resource and source element id
+           $scope.$emit("startTranslate", resource, id);
            $("#TranslateDialog").modal();
        }
 
@@ -102,24 +105,14 @@
                 .error(handleErrorResult);
         };
 
-        vm.getResourceItem = function getResourceItem() {
-            vm.getResourceStrings();
+        vm.getResourceItems = function getResourceItems() {
 
-            localizationService.getResourceItem(vm.resourceId, vm.resourceSet, vm.localeId)
-                .success(function(resourceItem) {
-                    vm.resourceItem = resourceItem;
-                    vm.resourceItemId = vm.resourceItem.ResourceId;                    
+            localizationService.getResourceItems(vm.resourceId, vm.resourceSet)
+                .success(function(resourceItems) {
+                    vm.resourceItems = resourceItems;                   
                 })
                 .error(handleErrorResult);
         };
-
-        vm.getResourceStrings = function getResourceStrings() {
-            localizationService.getResourceStrings(vm.resourceId, vm.resourceSet)
-                .success(function(resourceStrings) {
-                    vm.resourceStrings = resourceStrings;
-                })
-                .error(handleErrorResult);
-        }
 
         vm.getAllLocaleIds = function getAllLocaleIds() {
             var oldId = vm.localeId;

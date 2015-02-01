@@ -14,8 +14,8 @@
             baseUrl: "./",
             getResourceList: getResourceList,
             resourceList: [],
-            getResourceItem: getResourceItem,
-            resourceItem: {},
+            getResourceItems: getResourceItems,
+            resourceItems: [],
             resourceId: null,
             getResourceSets: getResourceSets,
             resourceSets: [],
@@ -51,7 +51,17 @@
                 .error(parseHttpError);
         }
 
-
+        function getResourceItems(resourceId, resourceSet) {
+            return $http.post("localizationService.ashx?method=GetResourceItems",
+                {
+                    ResourceId: resourceId,
+                    ResourceSet: resourceSet                    
+                })
+                .success(function (resourceItems) {
+                    service.resourceItems = resourceItems;
+                })
+                .error(parseHttpError);
+        }
 
         function getResourceItem(resourceId, resourceSet, lang) {
             return $http.post("localizationService.ashx?method=GetResourceItem",

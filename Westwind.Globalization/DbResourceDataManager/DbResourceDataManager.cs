@@ -737,6 +737,64 @@ namespace Westwind.Globalization
         }
 
         /// <summary>
+        /// Returns all resource items for a given resource ID in all locales
+        /// </summary>
+        /// <param name="resourceId">The resource Id to return for</param>
+        /// <param name="resourceSet">Resourceset to look in</param>
+        /// <returns>List of resource items or null</returns>
+        public virtual IEnumerable<ResourceItem> GetResourceItems(string resourceId, string resourceSet)
+        {
+            ErrorMessage = string.Empty;
+
+            if (resourceSet == null)
+                resourceSet = string.Empty;
+            
+            List<ResourceItem> items = null;
+
+            using (var data = GetDb())
+            {
+                using (IDataReader reader =
+                    data.ExecuteReader(
+                        "select * from " + Configuration.ResourceTableName +
+                        " where ResourceId=@ResourceId and ResourceSet=@ResourceSet " +
+                        " order by LocaleId",
+                        data.CreateParameter("@ResourceId", resourceId),
+                        data.CreateParameter("@ResourceSet", resourceSet)))
+                {
+                    if (reader == null)
+                    {
+                        SetError(data.ErrorMessage);
+                        return null;
+                    }
+                        
+
+                    items = new List<ResourceItem>();
+                    while (reader.Read())
+                    {
+                        var item = new ResourceItem()
+                        {
+                            ResourceId = reader["ResourceId"] as string,
+                            Value = reader["Value"] as string,
+                            ResourceSet = reader["ResourceSet"] as string,
+                            LocaleId = reader["LocaleId"] as string,
+                            Type = reader["Type"] as string,
+                            FileName = reader["FileName"] as string,
+                            TextFile = reader["TextFile"] as string,
+                            BinFile = reader["BinFile"] as byte[],
+                            Comment = reader["Comment"] as string
+                        };
+                        items.Add(item);
+                    }
+
+                    reader.Close();
+                }
+            }
+
+            return items;
+        }
+        
+
+        /// <summary>
         /// Returns all the resource strings for all cultures for a specific resource Id.
         /// </summary>
         /// <param name="resourceId"></param>

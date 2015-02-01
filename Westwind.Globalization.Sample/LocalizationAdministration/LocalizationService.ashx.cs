@@ -87,13 +87,30 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         }
 
         [CallbackMethod()]
+        public IEnumerable<ResourceItem> GetResourceItems(dynamic parm)
+        {
+            string resourceId = parm.ResourceId;
+            string resourceSet = parm.ResourceSet;            
+
+            
+            var items = Manager.GetResourceItems(resourceId, resourceSet).ToList();
+            if (items == null)
+            {
+                throw new InvalidOperationException(Manager.ErrorMessage);
+                return null;
+            }
+
+            return items;
+        }
+
+        [CallbackMethod()]
         public ResourceItemEx GetResourceItem(dynamic parm)
         {
             string resourceId = parm.ResourceId;
             string resourceSet = parm.ResourceSet;
             string cultureName = parm.CultureName;
 
-            var item = Manager.GetResourceItem(resourceId, resourceSet, cultureName);
+            var item = Manager.GetResourceItem(resourceId, resourceSet, "");
             if (item == null)
                 throw new ArgumentException(Manager.ErrorMessage);
 
