@@ -66,57 +66,61 @@
 
     </div>
 
-<div style="margin-top: 50px; min-width: 768px" ng-controller="listController as view" ng-cloak>
+    <div style="margin-top: 50px; min-width: 768px" ng-controller="listController as view" ng-cloak>
 
-    <div id="ErrorMessage" class="alert alert-{{view.error.cssClass}} alert-dismissable"
-         style="border-radius: 0; margin-bottom: 0"
-         ng-show="view.error.message">
-        <!--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>-->
-        <i class="fa fa-{{view.error.icon}}"></i> &nbsp;&nbsp;<strong>{{view.error.message}}</strong>
-    </div>
+        <div id="ErrorMessage" class="alert alert-{{view.error.cssClass}} alert-dismissable"
+             style="border-radius: 0; margin-bottom: 0"
+             ng-show="view.error.message">
+            <!--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>-->
+            <i class="fa fa-{{view.error.icon}}"></i> &nbsp;&nbsp;<strong>{{view.error.message}}</strong>
+        </div>
 
 
-    <div style="position: relative; height: 700px;">
+        <div style="position: relative; height: 700px;">
 
-        <div id="ListPanel" class="col-sm-3">
-            
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <input id="SearchResources"
-                       class="form-control"
-                       placeholder="Search Resources"
-                       type="search"/>
+            <div id="ListPanel" class="col-sm-3">
+
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    <input id="SearchResources"
+                           class="form-control"
+                           placeholder="Search Resources"
+                           ng-model="view.searchText"
+                           type="search" />
+                </div>
+
+
+                <div class="form-group">
+                    <select id="ResourceIdList" ng-model="view.resourceId"
+                            ng-change="view.onResourceIdChange(resource)"
+                            size="2" class="form-control">
+                        <option ng-repeat="resource in view.resourceList | filter:view.searchText"
+                                value="{{resource.ResourceId}}"
+                                style="{{resource.Style}}">
+                            {{resource.ResourceId}}
+                        </option>
+                    </select>
+                </div>
             </div>
 
+            <div id="ContentPanel" class="col-sm-8">
 
-            <div class="form-group">
-                <select id="ResourceIdList" ng-model="view.resourceId"
-                        ng-change="view.onResourceIdChange(resource)"
-                        size="2" class="form-control">
-                    <option ng-repeat="resource in view.resourceList"
-                            value="{{resource.ResourceId}}"
-                            style="{{resource.Style}}">
-                        {{resource.ResourceId}}
-                    </option>
-                </select>
+                <div ng-include src="'ResourceList.html'"></div>
+
+                <div ng-include src="'ResourceSetList.html'"></div>
             </div>
         </div>
 
-        <div id="ContentPanel" class="col-sm-8">
+        <div ng-include src="'TranslateDialog.html'"></div>
+        
+        <div ng-include src="'AddResourceDialog.html'"></div>
 
-            <div ng-include src="'ResourceList.html'"></div>
-
-            <div ng-include src="'ResourceSetList.html'"></div>
-
-            <div ng-include src="'TranslateDialog.html'"></div>
-
-            <div ng-include src="'AddResourceDialog.html'"></div>
-
-        </div>
     </div>
-</div>
 
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+
+
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="scripts/ww.jquery.min.js"></script>
     <script src="bower_components/lodash/lodash.min.js"></script>
 
@@ -143,6 +147,6 @@
     <script src="app/localizationService.js"></script>
     <script src="app/listController.js"></script>
     <script src="app/translateController.js"></script>
-    
+
 </body>
 </html>

@@ -1,49 +1,45 @@
-﻿<div class="modal fade" ng-controller="translateController as view"
-     id="TranslateDialog" tabindex="-1" role="dialog"
+﻿<div id="AddResourceDialog"
+     class="modal fade"
+     tabindex="-1" role="dialog"
      aria-labelledby="myModal-label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3 class="modal-title" id="TranslateTitle">Translate Resource</h3>
+                <h3 class="modal-title" id="TranslateTitle">Resource Editor</h3>
             </div>
             <div class="modal-body">
-
-                <div class="form-inline form-group">
-                    <div class="form-group">
-                        <label xclass="sr-only" for="exampleInputEmail3">From:</label>
-                        <input type="text" class="form-control" ng-model="view.fromLang" placeholder="From"
-                               style="width: 60px;"  />
+                <div class="form-inline" style="margin-bottom: 15px;" >
+                    <div class="form-group" style="margin-right: 14px;">
+                        <label xclass="sr-only">Lang:</label>
+                        <input type="text" class="form-control" 
+                               ng-model="view.activeResource.LocaleId" placeholder="Locale Id"
+                               style="width: 70px;"/>
                     </div>
                     <div class="form-group">
-                        <label xclass="sr-only" for="exampleInputPassword3"> &nbsp;To:</label>
-                        <input style="width: 60px;" type="text" class="form-control" ng-model="view.toLang" placeholder="To">
-                    </div>                                     
+                        <label>ResourceSet:</label>
+                        <input type="text" class="form-control"
+                               ng-model="view.activeResource.ResourceSet"
+                               placeholder="ResourceSet"
+                               style="width: 330px;" />
+                    </div>
+                </div>
+                
+                
+                <div class="form-group">
+                    <label xclass="sr-only" for="exampleInputPassword3">Resource Id:</label>
+                    <textarea type="text" class="form-control" ng-model="view.activeResource.ResourceId" placeholder="Resource Id"></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label" for="form-group-input">Text to translate</label>
-                    <textarea class="form-control" ng-model="view.inputText" placeholder="Text to translates">
-                    </textarea>
+                    <label class="control-label" for="form-group-input">Text</label>
+                    <textarea class="form-control" ng-model="view.activeResource.Value" placeholder="Resource text"></textarea>
                 </div>
 
-                <hr class="hrstyle"/>
-
-                <div class="form-group">
-                    <label class="control-label" for="form-group-input">Google Translation:</label>
-                    <textarea class="form-control" ng-model="view.googleTranslation" placeholder="Text to translates">                        
-                    </textarea>
-                </div>
-
-                <div class="form-group">
-                    <label class="control-label" for="form-group-input">Bing Translation:</label>
-                    <textarea class="form-control" ng-model="view.bingTranslation" placeholder="Text to translates">
-                    </textarea>
-                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save</button>
+                <button type="button" ng-click="view.onSaveResourceClick()" class="btn btn-primary">Save</button>
             </div>
         </div>
     </div>

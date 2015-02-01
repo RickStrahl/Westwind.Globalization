@@ -171,6 +171,8 @@
     <Content Include="LocalizationAdministration\.idea\scopes\scope_settings.xml" />
     <Content Include="LocalizationAdministration\.idea\vcs.xml" />
     <Content Include="LocalizationAdministration\.idea\workspace.xml" />
+    <Content Include="LocalizationAdministration\ResourceSetList.html" />
+    <Content Include="LocalizationAdministration\ResourceList.html" />
     <Content Include="LocalizationAdministration\app\app.js" />
     <Content Include="LocalizationAdministration\app\headerController.js" />
     <Content Include="LocalizationAdministration\app\listController.js" />

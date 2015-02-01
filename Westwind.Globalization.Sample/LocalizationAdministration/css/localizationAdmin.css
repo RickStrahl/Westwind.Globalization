@@ -117,6 +117,9 @@ h3 {
 .color-check {
     color: #009f00;
 }
+.color-disabled {
+    color: silver;
+}
 .hrstyle {
     margin: 10px 0;
 }

@@ -12,14 +12,15 @@
    function listController( $scope,$timeout,localizationService) {
        console.log('list controller');
 
-        var vm = this;
+       var vm = this;
+        vm.searchText = null;
         vm.resourceSet = null;
         vm.resourceSets = [];
         vm.resourceList = [];
         vm.resourceId = null;
+        vm.activeResource = null;
         vm.localeIds = [];
-        vm.localeId = null;
-
+        
         vm.resourceItems = [];
         vm.resourceItemIndex = 0;
 
@@ -29,6 +30,20 @@
             icon: "info-circle",
             cssClass: "info"
         };
+
+       vm.newResource = function() {
+           return {
+               "ResourceId": null,
+               "Value": null,
+               "Comment": null,
+               "Type": "",
+               "LocaleId": "",
+               "ResourceSet": "",
+               "TextFile": null,
+               "BinFile": null,
+               "FileName": ""
+           };
+       };
 
         vm.getResourceSets = function getResourceSets() {
             localizationService.getResourceSets()
@@ -40,8 +55,19 @@
                 })
                 .error(handleErrorResult);
         };
+
+
+       vm.updateResource = function(resource) {
+           return localizationService.updateResource(resource)
+                    .success(function () {
+                        vm.getResourceItems();
+                        showMessage("Resource saved.");
+           })
+           .error(handleErrorResult);
+       };
+
         vm.updateResourceString = function (value, localeId) {            
-            localizationService.updateResourceString(value, vm.resourceId, vm.resourceSet, localeId)
+            return localizationService.updateResourceString(value, vm.resourceId, vm.resourceSet, localeId)
                 .success(function() {                               
                     vm.getResourceItems();
                     showMessage("Resource saved.");
@@ -49,49 +75,7 @@
                 .error(handleErrorResult);
         };
 
-        vm.onResourceSetChange = function onResourceSetChange() {
-            vm.getAllLocaleIds();
-            vm.getResourceList();
-
-        };
-        vm.onResourceIdChange = function onResourceIdChange() {
-            vm.getResourceItems();
-        };
-        vm.onLocaleIdChanged = function onLocaleIdChanged(localeId) {
-            if (localeId !== undefined)
-                vm.localeId = localeId;            
-        };
-        vm.onStringUpdate = function onStringUpdate(resource) {                
-            vm.localeId = resource.LocaleId;
-            vm.editedResource = resource.Value;
-            vm.updateResourceString(resource.Value, resource.LocaleId);
-        };
-       vm.onResourceKeyDown = function onResourceKeyDown(ev,resource,form) {
-           // Ctrl-Enter - save and next field
-           if (ev.ctrlKey && ev.keyCode === 13) {
-               vm.onStringUpdate(resource);
-               $timeout(function () {
-                   // set focus to next field
-                   var el = $(ev.target);
-                   var id = el.prop("id").replace("value_", "") * 1;
-                   var $el = $("#value_" + (id + 1));                   
-                   if ($el.length < 1) 
-                       $el = $("#value_0"); // loop around
-                   $el.focus();
-               }, 100);
-               $scope.resourceForm.$setPristine();
-
-           }
-       };
-       vm.onTranslateClick = function (ev, resource) {               
-           vm.localeId = resource.LocaleId;
-           vm.editedResource = resource.Value;
-           var id = $(ev.target).parent().find("textarea").prop("id");
-
-           // notify Translate Dialog of active resource and source element id
-           $scope.$emit("startTranslate", resource, id);
-           $("#TranslateDialog").modal();
-       }
+        
 
         vm.getResourceList = function getResourceList() {
             localizationService.getResourceList(vm.resourceSet)
@@ -109,34 +93,110 @@
 
             localizationService.getResourceItems(vm.resourceId, vm.resourceSet)
                 .success(function(resourceItems) {
-                    vm.resourceItems = resourceItems;                   
+                    vm.resourceItems = resourceItems;
+                    if (vm.resourceItems.length > 0)
+                        vm.activeResource = vm.resourceItems[0];
                 })
                 .error(handleErrorResult);
         };
 
-        vm.getAllLocaleIds = function getAllLocaleIds() {
-            var oldId = vm.localeId;
-            localizationService.getAllLocaleIds(vm.resourceSet)
-                .success(function(localeIds) {
-                    vm.localeIds = localeIds;
-                    if (localeIds.length > 0) {
-                        if (vm.localeId == null)
-                            vm.localeId = vm.localeId = vm.localeIds[0].LocaleId;
-                        else {
-                            var idx = _.findIndex(vm.localeIds, function(localeId) {                                
-                                if (localeId.LocaleId === oldId)
-                                    return true;
+        //vm.getAllLocaleIds = function getAllLocaleIds() {
+        //    var oldId = vm.localeId;
+        //    localizationService.getAllLocaleIds(vm.resourceSet)
+        //        .success(function(localeIds) {
+        //            vm.localeIds = localeIds;
+        //            if (localeIds.length > 0) {
+        //                if (vm.localeId == null)
+        //                    vm.localeId = vm.localeId = vm.localeIds[0].LocaleId;
+        //                else {
+        //                    var idx = _.findIndex(vm.localeIds, function(localeId) {                                
+        //                        if (localeId.LocaleId === oldId)
+        //                            return true;
 
-                                return false;
-                            });
-                            idx = idx > -1 ? idx : 0;
-                            vm.localeId = vm.localeIds[1].LocaleId;
-                        }
-                    }
-                })
-                .error(handleErrorResult);
-        };
+        //                        return false;
+        //                    });
+        //                    idx = idx > -1 ? idx : 0;
+        //                    vm.localeId = vm.localeIds[1].LocaleId;
+        //                }
+        //            }
+        //        })
+        //        .error(handleErrorResult);
+        //};
    
+
+        /// *** Event handlers *** 
+
+        vm.onResourceSetChange = function onResourceSetChange() {            
+            vm.getResourceList();
+        };
+        vm.onResourceIdChange = function onResourceIdChange() {
+            vm.getResourceItems();
+        };
+       
+        vm.onLocaleIdChanged = function onLocaleIdChanged(resource) {
+            if (resource !== undefined) {                
+                vm.activeResource = resource;
+            }
+        };
+        vm.onStringUpdate = function onStringUpdate(resource) {            
+            vm.activeResource = resource;
+            vm.editedResource = resource.Value;
+            vm.updateResourceString(resource.Value, resource.LocaleId);
+        };
+        vm.onResourceKeyDown = function onResourceKeyDown(ev, resource, form) {
+            // Ctrl-Enter - save and next field
+            if (ev.ctrlKey && ev.keyCode === 13) {
+                vm.onStringUpdate(resource);
+                $timeout(function () {
+                    // set focus to next field
+                    var el = $(ev.target);
+                    var id = el.prop("id").replace("value_", "") * 1;
+                    var $el = $("#value_" + (id + 1));
+                    if ($el.length < 1)
+                        $el = $("#value_0"); // loop around
+                    $el.focus();
+                }, 100);
+                $scope.resourceForm.$setPristine();
+
+            }
+        };
+       vm.onTranslateClick = function(ev, resource) {           
+           vm.editedResource = resource.Value;
+           var id = $(ev.target).parent().find("textarea").prop("id");
+
+           // notify Translate Dialog of active resource and source element id
+           $scope.$emit("startTranslate", resource, id);
+           $("#TranslateDialog").modal();
+       };
+
+       vm.onAddResourceClick = function() {
+           
+           var res = vm.newResource();           
+           res.ResourceSet = vm.activeResource.ResourceSet;
+           res.LocaleId = vm.activeResource.LocaleId;
+           res.ResourceId = vm.activeResource.ResourceId;
+           vm.activeResource = res;
+
+           $("#AddResourceDialog").modal();
+       };
+
+       vm.onSaveResourceClick = function () {
+           vm.updateResource(vm.activeResource)
+               .success(function () {
+                   var id = vm.activeResource.ResourceId;
+                   var i = _.findIndex(vm.resourceList,function(res) {
+                       return res.ResourceId === id;
+                   });                   
+                   if (i < 0)
+                       vm.resourceList.unshift(vm.activeResource);
+                   
+                   $("#AddResourceDialog").modal('hide');
+               })
+               .error(function() {
+                   var err = ww.angular.parseHttpError(arguments);
+                   alert(err.message);
+               });
+       };
 
 
         function showMessage(msg, icon, cssClass) {

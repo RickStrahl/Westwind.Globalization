@@ -11,7 +11,7 @@
 
         <div class="input-group" style="margin-top: 2px;">
             <span class="input-group-addon active" style="width: 70px; cursor: pointer"
-                  ng-click="view.onLocaleIdChanged(resource.LocaleId)">
+                  ng-click="view.onLocaleIdChanged(resource)">
                 <div style="float: left; width: 70px; font-weight: bold; color: steelblue;">
                     {{resource.LocaleId ? resource.LocaleId : 'Invariant'}}
                 </div>
@@ -19,13 +19,14 @@
             <form name="resourceForm" id="form1">
                 <textarea id="value_{{$index}}"
                           class="form-control"
+                          ng-focus="view.onLocaleIdChanged(resource)"
                           data-localeid="{{resource.LocaleId}}"
                           ng-model="resource.Value"
                           ng-keydown="view.onResourceKeyDown($event,resource,resourceForm)"
                           title="Ctl-Enter to save and move to next field"></textarea>
             </form>
             <span class="input-group-addon" title="Save resource (Ctrl-Enter)"
-                  ng-class="{'color-check': resourceForm.$dirty }"
+                  ng-class="{'color-check': resourceForm.$dirty, 'color-disabled': !resourceForm.$dirty }"
                   ng-enabled="resourceForm.$dirty"
                   ng-click="view.onStringUpdate(resource)"><i class="fa fa-check"></i></span>
             <span class="input-group-addon" title="Translate"
@@ -37,8 +38,7 @@
     <!--<div class="separator" style="margin-top: 10px;margin-bottom:10px"></div>-->
 
     <div class="btn-group" style="margin-top: 12px;">
-        <button class="btn btn-sm btn-default" title="Add new Resource"
-                data-toggle="modal" data-target="#AddResourceDialog">
+        <button ng-click="view.onAddResourceClick()" class="btn btn-sm btn-default" title="Add new Resource">
             <i class="fa fa-plus"></i> Add
         </button>
         <button class="btn btn-sm btn-default" title="Delete all entries for this Resource"><i class="fa fa-remove"></i> Delete</button>
@@ -46,5 +46,5 @@
         <button class="btn btn-sm btn-default" title="Comment">
             <i class="fa fa-comment-o"></i> Add Comment
         </button>
-    </div> {{view.localeId}}
+    </div> {{view.activeResource.LocaleId}}
 </div>

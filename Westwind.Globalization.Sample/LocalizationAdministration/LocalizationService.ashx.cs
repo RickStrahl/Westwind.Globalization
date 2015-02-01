@@ -159,14 +159,25 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             return true;
         }
 
+        /// <summary>
+        /// Updates or Adds a resource if it doesn't exist
+        /// </summary>
+        /// <param name="resource"></param>
+        /// <returns></returns>
         [CallbackMethod]
-        public bool UpdateResourceWithComment(string value, string comment, string resourceId, string resourceSet, string localeId)
+        public bool UpdateResource(ResourceItem resource)
         {
-            if (string.IsNullOrEmpty(value))
-                return Manager.DeleteResource(resourceId, localeId, resourceSet);
+            if (resource == null)
+                throw new ArgumentException("No resource passed to add or update.");
 
-            if (Manager.UpdateOrAddResource(resourceId, value, localeId, resourceSet, comment) == -1)
-                return false;
+            if (resource.Value == null)
+            {
+                return Manager.DeleteResource(resource.ResourceId,resource.LocaleId,resource.ResourceSet);
+            }
+
+            int result =  Manager.UpdateOrAddResource(resource);
+            if (result == -1)
+                throw new InvalidOperationException(Manager.ErrorMessage);
 
             return true;
         }
