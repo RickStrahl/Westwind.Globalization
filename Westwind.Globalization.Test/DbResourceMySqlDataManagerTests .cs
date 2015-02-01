@@ -253,7 +253,7 @@ namespace Westwind.Globalization.Test
             Assert.AreEqual(check, text);
             Console.WriteLine(check);
 
-            bool result = manager.DeleteResource(resourceId,"de","Resources");
+            bool result = manager.DeleteResource(resourceId,resourceSet: "Resources", cultureName: "de");
             Assert.IsTrue(result, manager.ErrorMessage);
 
             check = manager.GetResourceString(resourceId, "Resources", "de");

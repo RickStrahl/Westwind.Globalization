@@ -151,7 +151,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             string localeId = parm.localeId;
 
             if (string.IsNullOrEmpty(value))
-                return Manager.DeleteResource(resourceId, localeId, resourceSet);
+                return Manager.DeleteResource(resourceId, resourceSet: resourceSet, cultureName: localeId);
 
             if (Manager.UpdateOrAddResource(resourceId, value, localeId, resourceSet, null) == -1)
                 return false;
@@ -172,7 +172,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
 
             if (resource.Value == null)
             {
-                return Manager.DeleteResource(resource.ResourceId,resource.LocaleId,resource.ResourceSet);
+                return Manager.DeleteResource(resource.ResourceId,resourceSet: resource.ResourceSet, cultureName: resource.LocaleId);
             }
 
             int result =  Manager.UpdateOrAddResource(resource);
@@ -184,14 +184,22 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
 
 
         [CallbackMethod]
-        public bool DeleteResource(string resourceId, string resourceSet, string localeId)
+        public bool DeleteResource(dynamic parm)
         {
 
 #if OnlineDemo        
         throw new ApplicationException(WebUtils.LRes("FeatureDisabled"));
 #endif
+            string resourceId = parm.resourceId;
+            string resourceSet = parm.resourceSet;
+            string localeId = null;
+            try
+            {
+                // localeId is optional
+                localeId = parm.LocaleId;
+            } catch{}
 
-            if (!Manager.DeleteResource(resourceId, localeId, resourceSet))
+            if (!Manager.DeleteResource(resourceId,resourceSet, localeId))
                 throw new ApplicationException(WebUtils.LRes("ResourceUpdateFailed") + ": " + Manager.ErrorMessage);
 
             return true;

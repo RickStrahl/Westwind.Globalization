@@ -197,7 +197,7 @@ namespace Westwind.Globalization
         public static bool DeleteResource(string resourceId, string resourceSet = null, string lang = null)
         {
             var db = DbResourceDataManager.CreateDbResourceDataManager();  
-            return db.DeleteResource(resourceId, lang, resourceSet);
+            return db.DeleteResource(resourceId, resourceSet: resourceSet, cultureName: lang);
         }
 
         /// <summary>

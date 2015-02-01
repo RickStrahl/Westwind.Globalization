@@ -68,8 +68,6 @@ namespace Westwind.Globalization
         /// </summary>
         protected virtual string TableCreationSql { get; set; }
 
-        
-
         /// <summary>
         /// Error message that can be checked after a method complets
         /// and returns a failure result.
@@ -130,13 +128,15 @@ namespace Westwind.Globalization
         /// Returns a specific set of resources for a given culture and 'resource set' which
         /// in this case is just the virtual directory and culture.
         /// </summary>
-        /// <param name="cultureName"></param>
-        /// <param name="resourceSet"></param>
+        /// <param name="cultureName">name of the culture Id (de, de-de) to retrieve</param>
+        /// <param name="resourceSet">Name of the resource set to retrieve</param>
         /// <returns></returns>
         public virtual IDictionary GetResourceSet(string cultureName, string resourceSet)
         {
             if (cultureName == null)
                 cultureName = string.Empty;
+            if (resourceSet == null)
+                resourceSet = string.Empty;
             
             string resourceFilter;
             resourceFilter = " ResourceSet=@ResourceSet";
@@ -716,18 +716,8 @@ namespace Westwind.Globalization
                     if (reader == null || !reader.Read())
                         return null;
 
-                    item = new ResourceItem()
-                    {
-                        ResourceId = reader["ResourceId"] as string,
-                        Value = reader["Value"] as string,
-                        ResourceSet = reader["ResourceSet"] as string,
-                        LocaleId = reader["LocaleId"] as string,
-                        Type = reader["Type"] as string,
-                        FileName = reader["FileName"] as string,
-                        TextFile = reader["TextFile"] as string,
-                        BinFile = reader["BinFile"] as byte[],
-                        Comment = reader["Comment"] as string
-                    };
+                    item = new ResourceItem();
+                    item.FromDataReader(reader);
 
                     reader.Close();
                 }
@@ -771,18 +761,8 @@ namespace Westwind.Globalization
                     items = new List<ResourceItem>();
                     while (reader.Read())
                     {
-                        var item = new ResourceItem()
-                        {
-                            ResourceId = reader["ResourceId"] as string,
-                            Value = reader["Value"] as string,
-                            ResourceSet = reader["ResourceSet"] as string,
-                            LocaleId = reader["LocaleId"] as string,
-                            Type = reader["Type"] as string,
-                            FileName = reader["FileName"] as string,
-                            TextFile = reader["TextFile"] as string,
-                            BinFile = reader["BinFile"] as byte[],
-                            Comment = reader["Comment"] as string
-                        };
+                        var item = new ResourceItem();
+                        item.FromDataReader(reader);
                         items.Add(item);
                     }
 
@@ -1194,10 +1174,11 @@ namespace Westwind.Globalization
         /// If an empty culture is passed the entire group is removed (ie. all locales).
         /// </summary>
         /// <param name="resourceId">Resource Id to delete</param>
-        /// <param name="cultureName">language ID - if empty all languages are deleted</param>e
         /// <param name="resourceSet">The resource set to remove</param>
+        /// <param name="cultureName">language ID - if empty all languages are deleted</param>
+        /// e
         /// <returns></returns>
-        public bool DeleteResource(string resourceId, string cultureName = null, string resourceSet = null)
+        public bool DeleteResource(string resourceId, string resourceSet = null, string cultureName = null)
         {
             int Result = 0;
 

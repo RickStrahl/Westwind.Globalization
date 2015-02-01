@@ -28,12 +28,16 @@
                 
                 <div class="form-group">
                     <label xclass="sr-only" for="exampleInputPassword3">Resource Id:</label>
-                    <textarea type="text" class="form-control" ng-model="view.activeResource.ResourceId" placeholder="Resource Id"></textarea>
+                    <textarea type="text" class="form-control"
+                              ng-blur="view.onResourceIdBlur()"
+                              ng-model="view.activeResource.ResourceId" placeholder="Resource Id"></textarea>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label" for="form-group-input">Text</label>
-                    <textarea class="form-control" ng-model="view.activeResource.Value" placeholder="Resource text"></textarea>
+                    <textarea                              
+                              onfocus ="this.select();"
+                              class="form-control" ng-model="view.activeResource.Value" placeholder="Resource text"></textarea>
                 </div>
 
             </div>

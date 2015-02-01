@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -106,6 +108,28 @@ namespace Westwind.Globalization
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        public ResourceItem()
+        {          
+        }
+
+        /// <summary>
+        /// initializes the resource item properties from
+        /// the active data reader item.
+        /// </summary>
+        /// <param name="reader"></param>
+        public void FromDataReader(IDataReader reader)
+        {
+            ResourceId = reader["ResourceId"] as string;
+            Value = reader["Value"];
+            ResourceSet = reader["ResourceSet"] as string;
+            LocaleId = reader["LocaleId"] as string;
+            Type = reader["Type"] as string;
+            FileName = reader["FileName"] as string;
+            TextFile = reader["TextFile"] as string;
+            BinFile = reader["BinFile"] as byte[];
+            Comment = reader["Comment"] as string;                    
         }
     }
 }

@@ -209,10 +209,11 @@ namespace Westwind.Globalization
         /// If an empty culture is passed the entire group is removed (ie. all locales).
         /// </summary>
         /// <param name="resourceId">Resource Id to delete</param>
-        /// <param name="cultureName">language ID - if empty all languages are deleted</param>e
         /// <param name="resourceSet">The resource set to remove</param>
+        /// <param name="cultureName">language ID - if empty all languages are deleted</param>
+        /// e
         /// <returns></returns>
-        bool DeleteResource(string resourceId, string cultureName = null, string resourceSet = null);
+        bool DeleteResource(string resourceId, string resourceSet = null, string cultureName = null);
 
         /// <summary>
         /// Renames a given resource in a resource set. Note all languages will be renamed

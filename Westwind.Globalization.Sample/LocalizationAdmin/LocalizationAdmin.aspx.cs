@@ -466,7 +466,7 @@ namespace Westwind.GlobalizationWeb
         public bool UpdateResourceString(string Value, string ResourceId, string ResourceSet, string LocaleId)
         {
             if (string.IsNullOrEmpty(Value))            
-                return Manager.DeleteResource(ResourceId, LocaleId, ResourceSet);
+                return Manager.DeleteResource(ResourceId, resourceSet: ResourceSet, cultureName: LocaleId);
             
             if (Manager.UpdateOrAddResource(ResourceId, Value, LocaleId, ResourceSet,null) == -1)
                 return false;
@@ -478,7 +478,7 @@ namespace Westwind.GlobalizationWeb
         public bool UpdateResourceWithComment(string Value, string Comment, string ResourceId, string ResourceSet, string LocaleId)
         {
             if (string.IsNullOrEmpty(Value))
-                return Manager.DeleteResource(ResourceId, LocaleId, ResourceSet);
+                return Manager.DeleteResource(ResourceId, resourceSet: ResourceSet, cultureName: LocaleId);
 
             if (Manager.UpdateOrAddResource(ResourceId, Value, LocaleId, ResourceSet, Comment) == -1)
                 return false;
@@ -495,7 +495,7 @@ namespace Westwind.GlobalizationWeb
         throw new ApplicationException(WebUtils.LRes("FeatureDisabled"));
 #endif
 
-            if (!Manager.DeleteResource(ResourceId, LocaleId, ResourceSet))
+            if (!Manager.DeleteResource(ResourceId, resourceSet: ResourceSet, cultureName: LocaleId))
                 throw new ApplicationException(WebUtils.LRes("ResourceUpdateFailed") + ": " + Manager.ErrorMessage);
 
             return true;

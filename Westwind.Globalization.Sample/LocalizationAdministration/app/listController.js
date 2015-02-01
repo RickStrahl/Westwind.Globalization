@@ -100,28 +100,6 @@
                 .error(handleErrorResult);
         };
 
-        //vm.getAllLocaleIds = function getAllLocaleIds() {
-        //    var oldId = vm.localeId;
-        //    localizationService.getAllLocaleIds(vm.resourceSet)
-        //        .success(function(localeIds) {
-        //            vm.localeIds = localeIds;
-        //            if (localeIds.length > 0) {
-        //                if (vm.localeId == null)
-        //                    vm.localeId = vm.localeId = vm.localeIds[0].LocaleId;
-        //                else {
-        //                    var idx = _.findIndex(vm.localeIds, function(localeId) {                                
-        //                        if (localeId.LocaleId === oldId)
-        //                            return true;
-
-        //                        return false;
-        //                    });
-        //                    idx = idx > -1 ? idx : 0;
-        //                    vm.localeId = vm.localeIds[1].LocaleId;
-        //                }
-        //            }
-        //        })
-        //        .error(handleErrorResult);
-        //};
    
 
         /// *** Event handlers *** 
@@ -168,7 +146,11 @@
            $scope.$emit("startTranslate", resource, id);
            $("#TranslateDialog").modal();
        };
+       vm.onResourceIdBlur = function() {
+           if (!vm.activeResource.Value)
+               vm.activeResource.Value = vm.activeResource.ResourceId;
 
+       }
        vm.onAddResourceClick = function() {
            
            var res = vm.newResource();           
@@ -189,12 +171,44 @@
                    });                   
                    if (i < 0)
                        vm.resourceList.unshift(vm.activeResource);
-                   
+
+                   vm.resourceId = id;
+                   vm.onResourceIdChange();
+
                    $("#AddResourceDialog").modal('hide');
                })
                .error(function() {
                    var err = ww.angular.parseHttpError(arguments);
                    alert(err.message);
+               });
+       };
+       vm.onDeleteResourceClick = function() {
+           var id = vm.activeResource.ResourceId;
+
+           if (!confirm(
+               id +
+               "\n\nAre you sure you want to delete this resource?"))
+               return;
+
+           localizationService.deleteResource(id, vm.activeResource.ResourceSet)
+               .success(function() {
+                   var i = _.findIndex(vm.resourceList, function(res) {
+                       return res.ResourceId === id;
+                   });
+
+                   vm.resourceList.splice(i, 1);
+
+                   if (i > 0)
+                       vm.resourceId = vm.resourceList[i - 1].ResourceId;
+                   else
+                       vm.resourceId = vm.resourceList[0].ResourceId;
+                   vm.onResourceIdChange();
+
+                   showMessage(id + " resource deleted.");
+               })
+               .error(function() {
+                   showMessage(id + " was not deleted deleted.");
+
                });
        };
 
