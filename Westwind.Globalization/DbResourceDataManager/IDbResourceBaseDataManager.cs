@@ -137,6 +137,14 @@ namespace Westwind.Globalization
         ResourceItem GetResourceItem(string resourceId, string resourceSet, string cultureName);
 
         /// <summary>
+        /// Returns all resource items for a given resource ID in all locales
+        /// </summary>
+        /// <param name="resourceId">The resource Id to return for</param>
+        /// <param name="resourceSet">Resourceset to look in</param>
+        /// <returns>List of resource items or null</returns>
+        IEnumerable<ResourceItem> GetResourceItems(string resourceId, string resourceSet);
+
+        /// <summary>
         /// Returns all the resource strings for all cultures for a specific resource Id.
         /// </summary>
         /// <param name="resourceId"></param>
@@ -316,6 +324,10 @@ namespace Westwind.Globalization
         /// <returns></returns>
         bool CreateLocalizationTable(string tableName = null);
 
+        /// <summary>
+        /// Reports error information from the last operation
+        /// </summary>
+        /// <param name="message"></param>
         void SetError(string message);
     }
 }
