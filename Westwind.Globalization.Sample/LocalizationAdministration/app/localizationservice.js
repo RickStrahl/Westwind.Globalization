@@ -30,7 +30,8 @@
             deleteResourceSet: deleteResourceSet,
             renameResourceSet: renameResourceSet,
             reloadResources: reloadResources,
-            backup: backup
+            backup: backup,
+            createDatabase: createDatabase
     };
         return service;
 
@@ -147,6 +148,11 @@
             return $http.get("localizationService.ashx?method=Backup")
                  .error(parseHttpError);
         }
+        function createDatabase() {
+            return $http.get("localizationService.ashx?method=CreateDatabase")
+                 .error(parseHttpError);
+        }
+
 
         function parseHttpError() {
             service.error = ww.angular.parseHttpError(arguments);

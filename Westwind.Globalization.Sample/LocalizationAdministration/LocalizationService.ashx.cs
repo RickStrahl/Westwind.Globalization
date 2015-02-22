@@ -325,6 +325,19 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             return Manager.CreateBackupTable(null);
         }
 
+        [CallbackMethod]
+        public bool CreateDatabase()
+        {
+#if OnlineDemo
+        throw new ApplicationException(WebUtils.LRes("FeatureDisabled"));
+#endif
+
+            if (!Manager.CreateLocalizationTable(null))
+                throw new ApplicationException(WebUtils.LRes(STR_RESOURCESET, "LocalizationTableNotCreated" + "\r\n" +
+                                                                              Manager.ErrorMessage));
+            return true;
+        }
+
     }
 
     public class ResourceString

@@ -295,6 +295,13 @@
                })
                .error(parseError);
        };
+       vm.onCreateDatabaseClick = function () {
+           localizationService.createDatabase()
+               .success(function () {
+                   showMessage("Database has been created.");
+               })
+               .error(parseError);
+       };
 
 
        function parseError() {               
