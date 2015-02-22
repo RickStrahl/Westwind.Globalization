@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Web;
 using Westwind.Utilities;
 using Westwind.Web;
 using Westwind.Web.JsonSerializers;
@@ -335,6 +336,24 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             if (!Manager.CreateLocalizationTable(null))
                 throw new ApplicationException(WebUtils.LRes(STR_RESOURCESET, "LocalizationTableNotCreated" + "\r\n" +
                                                                               Manager.ErrorMessage));
+            return true;
+        }
+
+        [CallbackMethod]
+        public bool CreateClass()
+        {
+            var config = DbResourceConfiguration.Current;
+
+            StronglyTypedWebResources strongTypes =
+                new StronglyTypedWebResources(Context.Request.PhysicalApplicationPath);
+
+            strongTypes.CreateClassFromAllDatabaseResources(config.ResourceBaseNamespace,
+                HttpContext.Current.Server.MapPath(config.StronglyTypedGlobalResource));
+
+            
+            if (!string.IsNullOrEmpty(strongTypes.ErrorMessage))
+                throw new ApplicationException(WebUtils.LRes(STR_RESOURCESET, "StronglyTypedGlobalResourcesFailed"));
+
             return true;
         }
 

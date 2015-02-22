@@ -302,7 +302,13 @@
                })
                .error(parseError);
        };
-
+       vm.onCreateClassClick = function () {
+           localizationService.createClass()
+               .success(function () {
+                   showMessage("Strongly typed class has been created. You'll have to re-compile your application to use any added resources.");
+               })
+               .error(parseError);
+       };
 
        function parseError() {               
            var err = ww.angular.parseHttpError(arguments);           

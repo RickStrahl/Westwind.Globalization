@@ -56,44 +56,49 @@
             <i class="fa fa-bars"></i>
         </button>
         <div id="MenuButtons"  class="pull-right">
-            <button class="btn btn-sm"
+            <button class="btn btn-default btn-sm"
                     ng-show="view.resourceSets && view.resourceSets.length > 0"
                     disabled="disabled"
                     title="Export all resources to Resx files">
                 <i class="fa fa-download"></i> Export Resx
             </button>
-            <button class="btn btn-sm"
+            <button class="btn btn-default btn-sm"
                     ng-show="view.resourceSets && view.resourceSets.length > 0"
                     disabled="disabled"
                     title="Import all Resx resources from project path">
                 <i class="fa fa-upload"></i> Import Resx
             </button>
-            <button class="btn btn-sm"
-                    ng-show="view.resourceSets && view.resourceSets.length > 0"
-                    disabled="disabled"
+            <button class="btn btn-default btn-sm"
+                    ng-click="view.onCreateClassClick()"
+                    ng-show="view.resourceSets && view.resourceSets.length > 0"                    
                     title="Generate strongly typed classes from ResourceSets">
                 <i class="fa fa-code" style="font-weight: bold;"></i> Create Class
             </button>
             &nbsp;&nbsp;
-            <button class="btn btn-sm"
+            <button class="btn btn-default btn-sm"
                     ng-show="view.resourceSets && view.resourceSets.length > 0"
                     ng-show="!view.resourceSets || view.resourceSets.length < 1"
                     ng-click="view.onCreateDatabaseClick()"
                     title="Create a new translation table if it doesn't exist">
                 <i class="fa fa-plus-square"></i> Create Table
             </button>
-            <button class="btn btn-sm"
+            <button class="btn btn-default btn-sm"
                     ng-show="view.resourceSets && view.resourceSets.length > 0"
                     ng-click="view.onReloadResourcesClick()"
                     title="Force database resources for the application to reload">
                 <i class="fa fa-refresh"></i> Reload Resources
             </button>
-            <button class="btn btn-sm"
+            <button class="btn btn-default btn-sm"
                     ng-show="view.resourceSets && view.resourceSets.length > 0"
                     ng-click="view.onBackupClick()"
                     title="Backup resource database to a backup table">
                 <i class="fa fa-save"></i> Backup
             </button>
+            &nbsp;&nbsp;
+            <a href="../" class="btn btn-default btn-sm"                    
+                    title="Back to site home">
+                <i class="fa fa-home"></i>
+            </a>
         </div>
         <div class="clearfix"></div>
     </nav>

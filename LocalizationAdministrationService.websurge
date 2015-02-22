@@ -157,6 +157,11 @@ Accept-Encoding: gzip,deflate
 
 ------------------------------------------------------------------
 
+GET http://localhost:7894/localizationAdministration/localizationService.ashx?method=CreateClass HTTP/1.1
+Accept-Encoding: gzip,deflate
+
+------------------------------------------------------------------
+
 
 ----- Start WebSurge Options -----
 

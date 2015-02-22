@@ -86,6 +86,16 @@ namespace Westwind.Globalization.Sample
 			}
 		}
 
+		public static System.String NewResource
+		{
+			get
+			{
+				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
+					return (System.String) HttpContext.GetGlobalResourceObject("Resources","NewResource");
+				return DbRes.T("NewResource","Resources");
+			}
+		}
+
 		public static System.String Ready
 		{
 			get

@@ -171,6 +171,7 @@
     <Content Include="LocalizationAdministration\.idea\scopes\scope_settings.xml" />
     <Content Include="LocalizationAdministration\.idea\vcs.xml" />
     <Content Include="LocalizationAdministration\.idea\workspace.xml" />
+    <Content Include="LocalizationAdministration\index.html" />
     <Content Include="LocalizationAdministration\RenameResourceDialog.html" />
     <Content Include="LocalizationAdministration\ResourceSetList.html" />
     <Content Include="LocalizationAdministration\ResourceList.html" />
@@ -312,7 +313,6 @@
     <Content Include="LocalizationAdministration\images\Westwind.Localization_128.png" />
     <Content Include="LocalizationAdministration\AddResourceDialog.html" />
     <Content Include="LocalizationAdministration\TranslateDialog.html" />
-    <Content Include="LocalizationAdministration\index.html" />
     <Content Include="LocalizationAdministration\scripts\ww.angular.js" />
     <Content Include="LocalizationAdministration\scripts\ww.jquery.js" />
     <Content Include="LocalizationAdministration\scripts\ww.jquery.min.js" />

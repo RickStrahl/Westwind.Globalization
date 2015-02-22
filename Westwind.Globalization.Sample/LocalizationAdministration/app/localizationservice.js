@@ -8,7 +8,6 @@
     localizationService.$inject = ['$http', '$q'];
 
     function localizationService($http, $q) {
-
         var service = {
             error: null,
             baseUrl: "./",
@@ -31,8 +30,9 @@
             renameResourceSet: renameResourceSet,
             reloadResources: reloadResources,
             backup: backup,
-            createDatabase: createDatabase
-    };
+            createDatabase: createDatabase,
+            createClass: createClass
+        };
         return service;
 
         function getResourceList(resourceSet) {            
@@ -152,13 +152,14 @@
             return $http.get("localizationService.ashx?method=CreateDatabase")
                  .error(parseHttpError);
         }
-
+        function createClass() {
+            return $http.get("localizationService.ashx?method=CreateClass")
+                    .error(parseHttpError);
+        }
 
         function parseHttpError() {
             service.error = ww.angular.parseHttpError(arguments);
         }
-
-
     }
 })();
     

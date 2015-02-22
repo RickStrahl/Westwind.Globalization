@@ -59,9 +59,13 @@ h3 {
     left: 0;
     right: 0;
     border-radius: 0;
-    border: none;    
+    border: none;
+    padding: 0;
 }
-
+    #ListPanel select option {
+        padding: 5px 0 5px 5px !important;        
+        min-height: 1.5em;    
+    }
 #ContentPanel {
     top: 17px;
     left: 310px;
