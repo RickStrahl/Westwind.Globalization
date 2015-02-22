@@ -171,6 +171,7 @@
     <Content Include="LocalizationAdministration\.idea\scopes\scope_settings.xml" />
     <Content Include="LocalizationAdministration\.idea\vcs.xml" />
     <Content Include="LocalizationAdministration\.idea\workspace.xml" />
+    <Content Include="LocalizationAdministration\RenameResourceDialog.html" />
     <Content Include="LocalizationAdministration\ResourceSetList.html" />
     <Content Include="LocalizationAdministration\ResourceList.html" />
     <Content Include="LocalizationAdministration\app\app.js" />

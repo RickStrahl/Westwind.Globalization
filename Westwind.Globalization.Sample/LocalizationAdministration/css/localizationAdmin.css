@@ -75,7 +75,9 @@ h3 {
 #ContentPanel.expanded {
     left: 0;
 }
-
+.color-check {
+    color: limegreen;
+}
 .color-disabled {
     color: silver;
 }

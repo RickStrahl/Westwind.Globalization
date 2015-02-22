@@ -45,7 +45,7 @@ Accept-Encoding: gzip,deflate
 
 ------------------------------------------------------------------
 
-POST http://localhost:7894/localizationAdministration/localizationService.ashx?method=UpdateResourceItem HTTP/1.1
+POST http://localhost:7894/localizationAdministration/localizationService.ashx?method=UpdateResourceString HTTP/1.1
 Accept-Encoding: gzip,deflate
 Content-Type: application/json
 Accept: application/json
@@ -135,10 +135,25 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  resourceId: "",
-  newResourceId: "",
-  resourceSet: ""
+  resourceId: "Ready",
+  newResourceId: "Ready2",
+  resourceSet: "Resources"
 }
+
+------------------------------------------------------------------
+
+GET http://localhost:7894/localizationAdministration/localizationService.ashx?method=DeleteResourceSet&ResourceSet=NewResourceSet HTTP/1.1
+Accept-Encoding: gzip,deflate
+
+------------------------------------------------------------------
+
+GET http://localhost:7894/localizationAdministration/localizationService.ashx?method=RenameResourceSet&oldResourceSet=CommonWords&NewResourceSet=CommonWords2 HTTP/1.1
+Accept-Encoding: gzip,deflate
+
+------------------------------------------------------------------
+
+GET http://localhost:7894/localizationAdministration/localizationService.ashx?method=ReloadResources HTTP/1.1
+Accept-Encoding: gzip,deflate
 
 ------------------------------------------------------------------
 

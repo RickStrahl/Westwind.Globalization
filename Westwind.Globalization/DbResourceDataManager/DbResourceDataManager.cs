@@ -1294,14 +1294,17 @@ namespace Westwind.Globalization
                     data.CreateParameter("@ResourceSet", ResourceSet));
                 if (result < 0)
                 {
-                    ErrorMessage = data.ErrorMessage;
+                    SetError(data.ErrorMessage);
                     return false;
                 }
-                if (result > 0)
-                    return true;
-            }
+                if (result == 0)
+                {
+                    SetError(Resources.Resources.No_matching_Recordset_found);
+                    return false;
+                }
 
-            return false;
+                return true;
+            }
         }
 
         /// <summary>
@@ -1330,7 +1333,7 @@ namespace Westwind.Globalization
                 }
                 if (result == 0)
                 {
-                    SetError(Resources.Resources.No_matching_Recordset_found_);
+                    SetError(Resources.Resources.No_matching_Recordset_found);
                     return false;
                 }
             }

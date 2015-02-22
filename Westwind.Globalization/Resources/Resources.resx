@@ -138,7 +138,7 @@
   <data name="LocalizationTable_Localization_Table_exists_already" xml:space="preserve">
     <value>Localization Table exists already</value>
   </data>
-  <data name="No_matching_Recordset_found_" xml:space="preserve">
+  <data name="No_matching_Recordset_found" xml:space="preserve">
     <value>No matching Recordset found.</value>
   </data>
   <data name="Can_t_save_resource__Invalid_culture_id_passed" xml:space="preserve">

@@ -26,8 +26,12 @@
             updateResourceString: updateResourceString,
             updateResource: updateResource,
             deleteResource: deleteResource,
-            renameResource: renameResource
-        };
+            renameResource: renameResource,
+            deleteResourceSet: deleteResourceSet,
+            renameResourceSet: renameResourceSet,
+            reloadResources: reloadResources,
+            backup: backup
+    };
         return service;
 
         function getResourceList(resourceSet) {            
@@ -127,6 +131,22 @@
                 .error(parseHttpError);
         }
 
+        function deleteResourceSet(resourceSet) {
+           return $http.get("localizationService.ashx?method=DeleteResourceSet&ResourceSet=" + resourceSet)
+                .error(parseHttpError);
+        }
+        function renameResourceSet(oldResourceSet, newResourceSet) {
+            return $http.get("localizationService.ashx?method=RenameResourceSet&oldResourceSet=" + oldResourceSet + "&newResourceSet=" + newResourceSet)
+                 .error(parseHttpError);
+        }
+        function reloadResources() {
+            return $http.get("localizationService.ashx?method=ReloadResources")
+                 .error(parseHttpError);
+        }
+        function backup() {
+            return $http.get("localizationService.ashx?method=Backup")
+                 .error(parseHttpError);
+        }
 
         function parseHttpError() {
             service.error = ww.angular.parseHttpError(arguments);

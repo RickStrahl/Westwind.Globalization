@@ -9,9 +9,23 @@
 
     <div class="btn-group" style="margin-top: 12px;">
         <button class="btn btn-sm btn-default" title="Add new ResourceSet"
-                ng-click="view.onAddResourceClick()"><i class="fa fa-plus"></i> Add</button>
-        <button class="btn btn-sm btn-default" title="Delete ResourceSet" disabled="disabled"><i class="fa fa-remove"></i> Delete</button>
-        <button class="btn btn-sm btn-default" title="Rename ResourceSet" disabled="disabled"><i class="fa fa-exchange"></i> Rename</button>
+                ng-click="view.onAddResourceClick()">
+            <i class="fa fa-plus">
+            </i> Add
+        </button>
+        <button class="btn btn-sm btn-default"
+                ng-click="view.onDeleteResourceSetClick()"
+                title="Delete ResourceSet">
+            <i class="fa fa-remove">
+            </i> Delete
+        </button>
+        <button class="btn btn-sm btn-default" title="Rename ResourceSet"
+                ng-click="view.onRenameResourceSetClick()">
+            <i class="fa fa-exchange"></i> Rename
+        </button>
+        <button class="btn btn-sm btn-default" title="Reload ResourceSets from database" ng-click="view.getResourceSets()">
+            <i class="fa fa-refresh"></i> Refresh
+        </button>
     </div>
 
 </div>

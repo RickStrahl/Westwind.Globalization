@@ -284,23 +284,28 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         }
 
         [CallbackMethod]
-        public bool DeleteResourceSet(string ResourceSet)
+        public bool DeleteResourceSet(string resourceSet)
         {
 #if OnlineDemo
         throw new ApplicationException(WebUtils.LRes("FeatureDisabled"));
 #endif
 
-            return Manager.DeleteResourceSet(ResourceSet);
+            if (!Manager.DeleteResourceSet(resourceSet))
+                throw new ApplicationException(Manager.ErrorMessage);
+
+            return true;
         }
 
         [CallbackMethod]
-        public bool RenameResourceSet(string OldResourceSet, string NewResourceSet)
+        public bool RenameResourceSet(string oldResourceSet, string newResourceSet)
         {
 #if OnlineDemo
         throw new ApplicationException(WebUtils.LRes("FeatureDisabled"));
 #endif
+            if (!Manager.RenameResourceSet(oldResourceSet, newResourceSet))
+                throw new ApplicationException(Manager.ErrorMessage);
 
-            return Manager.RenameResourceSet(OldResourceSet, NewResourceSet);
+            return true;
         }
 
         [CallbackMethod]

@@ -52,7 +52,7 @@
        };
 
         vm.getResourceSets = function getResourceSets() {
-            localizationService.getResourceSets()
+            return localizationService.getResourceSets()
                 .success(function(resourceSets) {
                     vm.resourceSets = resourceSets;
                     if (!vm.resourceSet && resourceSets.length > 0)
@@ -84,7 +84,7 @@
         
 
         vm.getResourceList = function getResourceList() {
-            localizationService.getResourceList(vm.resourceSet)
+            return localizationService.getResourceList(vm.resourceSet)
                 .success(function(resourceList) {
                     vm.resourceList = resourceList;
                     if (resourceList.length > 0) {
@@ -241,6 +241,61 @@
                })
                .error(parseError);
        }
+
+       vm.onDeleteResourceSetClick = function () {
+           if (!confirm("You are about to delete this resource set:\n\n     " + 
+                        vm.resourceSet + "\n\n" +
+               "Are you sure you want to do this?"))
+               return;
+
+           localizationService.deleteResourceSet(vm.resourceSet)
+               .success(function () {
+                   vm.getResourceSets();
+                   showMessage("Resource set deleted.");
+               })
+               .error(parseError);
+       }
+
+       vm.onRenameResourceSetClick = function () {
+           var newResourceSet = prompt("Rename resource set " + vm.resourceSet + " to:" , "");
+           if (!newResourceSet)
+               return;
+
+
+           localizationService.renameResourceSet(vm.resourceSet, newResourceSet)
+               .success(function() {
+                   vm.getResourceSets()
+                       .success(function() {
+                           vm.resourceSets.every(function(rs) {
+                               if (rs == newResourceSet) {
+                                   vm.resourceSet = rs;
+                                   vm.getResourceList();
+                                   return false;
+                               }
+                               return true;
+                           });
+                       });
+
+
+                   showMessage("Resource set renamed.");
+               })
+               .error(parseError);
+       }
+       vm.onReloadResourcesClick = function() {
+           localizationService.reloadResources()
+               .success(function() {
+                   showMessage("Resources have been reloaded.");
+               })
+               .error(parseError);           
+       };
+       vm.onBackupClick = function () {
+           localizationService.backup()
+               .success(function () {
+                   showMessage("Resources have been backed up.");
+               })
+               .error(parseError);
+       };
+
 
        function parseError() {               
            var err = ww.angular.parseHttpError(arguments);           
