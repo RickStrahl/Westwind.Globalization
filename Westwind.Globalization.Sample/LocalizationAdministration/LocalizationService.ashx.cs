@@ -30,7 +30,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         {
             var ids = Manager.GetAllResourceIds(resourceSet);
             if (ids == null)
-                throw new ApplicationException(WebUtils.LRes(STR_RESOURCESET,"ResourceSetLoadingFailed") + ":" + Manager.ErrorMessage);
+                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET,"ResourceSetLoadingFailed") + ":" + Manager.ErrorMessage);
 
             return ids;
         }
@@ -40,7 +40,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         {
             var ids = Manager.GetAllResourceIdListItems(resourceSet);
             if (ids == null)
-                throw new ApplicationException(WebUtils.LRes(STR_RESOURCESET,"ResourceSetLoadingFailed") + ":" + Manager.ErrorMessage);
+                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET,"ResourceSetLoadingFailed") + ":" + Manager.ErrorMessage);
 
             return ids;
         }
@@ -56,7 +56,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         {
             var ids =  Manager.GetAllLocaleIds(resourceSet);
             if (ids == null)
-                throw new ApplicationException(WebUtils.LRes(STR_RESOURCESET,"LocaleIdsFailedToLoad") + ":" + Manager.ErrorMessage);
+                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET,"LocaleIdsFailedToLoad") + ":" + Manager.ErrorMessage);
 
             var list = new List<object>();
 
@@ -191,7 +191,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         {
 
 #if OnlineDemo        
-        throw new ApplicationException(WebUtils.LRes("FeatureDisabled"));
+        throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
 #endif
             string resourceId = parm.resourceId;
             string resourceSet = parm.resourceSet;
@@ -203,7 +203,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             } catch{}
 
             if (!Manager.DeleteResource(resourceId,resourceSet, localeId))
-                throw new ApplicationException(WebUtils.LRes(STR_RESOURCESET, "ResourceUpdateFailed") + ": " + Manager.ErrorMessage);
+                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceUpdateFailed") + ": " + Manager.ErrorMessage);
 
             return true;
         }
@@ -223,7 +223,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         public bool RenameResource(dynamic parms)
         {
 #if OnlineDemo
-        throw new ApplicationException(WebUtils.LRes("FeatureDisabled"));
+        throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
 #endif
             string resourceId =parms["resourceId"];
             string newResourceId = parms["newResourceId"];
@@ -231,7 +231,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
 
             
             if (!Manager.RenameResource(resourceId, newResourceId, resourceSet))
-                throw new ApplicationException(WebUtils.LRes("localizationadmin/LocalizationAdmin.aspx","InvalidResourceId"));
+                throw new ApplicationException(WebUtils.GRes("localizationadmin/LocalizationAdmin.aspx","InvalidResourceId"));
 
             return true;
         }
@@ -249,7 +249,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         public bool RenameResourceProperty(string Property, string NewProperty, string ResourceSet)
         {
             if (!Manager.RenameResourceProperty(Property, NewProperty, ResourceSet))
-                throw new ApplicationException(WebUtils.LRes("InvalidResourceId"));
+                throw new ApplicationException(WebUtils.GRes("InvalidResourceId"));
 
             return true;
         }
@@ -288,7 +288,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         public bool DeleteResourceSet(string resourceSet)
         {
 #if OnlineDemo
-        throw new ApplicationException(WebUtils.LRes("FeatureDisabled"));
+        throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
 #endif
 
             if (!Manager.DeleteResourceSet(resourceSet))
@@ -301,7 +301,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         public bool RenameResourceSet(string oldResourceSet, string newResourceSet)
         {
 #if OnlineDemo
-        throw new ApplicationException(WebUtils.LRes("FeatureDisabled"));
+        throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
 #endif
             if (!Manager.RenameResourceSet(oldResourceSet, newResourceSet))
                 throw new ApplicationException(Manager.ErrorMessage);
@@ -321,7 +321,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         public bool Backup()
         {
 #if OnlineDemo
-            throw new ApplicationException(WebUtils.LRes("FeatureDisabled"));
+            throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
 #endif
             return Manager.CreateBackupTable(null);
         }
@@ -330,11 +330,11 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         public bool CreateDatabase()
         {
 #if OnlineDemo
-        throw new ApplicationException(WebUtils.LRes("FeatureDisabled"));
+        throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
 #endif
 
             if (!Manager.CreateLocalizationTable(null))
-                throw new ApplicationException(WebUtils.LRes(STR_RESOURCESET, "LocalizationTableNotCreated" + "\r\n" +
+                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "LocalizationTableNotCreated" + "\r\n" +
                                                                               Manager.ErrorMessage));
             return true;
         }
@@ -352,7 +352,46 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
 
             
             if (!string.IsNullOrEmpty(strongTypes.ErrorMessage))
-                throw new ApplicationException(WebUtils.LRes(STR_RESOURCESET, "StronglyTypedGlobalResourcesFailed"));
+                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "StronglyTypedGlobalResourcesFailed"));
+
+            return true;
+        }
+
+        [CallbackMethod]
+        public bool ExportResxResources()
+        {
+            DbResXConverter Exporter = new DbResXConverter(Context.Request.PhysicalApplicationPath);
+
+            if (DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.WebForms)
+            {
+                if (!Exporter.GenerateLocalWebResourceResXFiles())
+                    throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceGenerationFailed"));
+                if (!Exporter.GenerateGlobalWebResourceResXFiles())
+                    throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceGenerationFailed"));
+            }
+            else
+            {
+                if (!Exporter.GenerateResXFiles())
+                    throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceGenerationFailed"));
+            }
+
+            return true;
+        }
+
+        [CallbackMethod]
+        public bool ImportResxResources()
+        {
+            DbResXConverter Converter = new DbResXConverter(Context.Request.PhysicalApplicationPath);
+
+            bool res = false;
+
+            if (DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.WebForms)
+                res = Converter.ImportWebResources();
+            else
+                res = Converter.ImportWinResources(HttpContext.Current.Server.MapPath("~/"));
+
+            if (!res)
+               new ApplicationException(WebUtils.LRes("ResourceImportFailed"));
 
             return true;
         }

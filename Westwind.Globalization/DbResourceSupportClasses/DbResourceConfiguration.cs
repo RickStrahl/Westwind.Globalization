@@ -285,7 +285,7 @@ namespace Westwind.Globalization
             AddMissingResources = section.AddMissingResources;
             StronglyTypedGlobalResource = section.StronglyTypedGlobalResource;
             ResourceBaseNamespace = section.ResourceBaseNamespace;
-            //ResxExportProjectType = section.ResxExportProjectType;
+            ResxExportProjectType = section.ResxExportProjectType;
             BingClientId = section.BingClientId;
             BingClientSecret = section.BingClientSecret;
         }

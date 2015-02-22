@@ -139,6 +139,7 @@ resources:
                       addMissingResources="false"
                       stronglyTypedGlobalResource="~/Properties/Resources.cs"
                       resourceNamespace="AppResources"
+                      resxExportProjectType="Project"
                       localizationFormWebPath="~/localizationadmin/LocalizationAdmin.aspx"                      
                       designTimeVirtualPath="/internationalization"
                       showLocalizationControlOptions="true"
@@ -154,8 +155,7 @@ resources:
 
 **ConnectionString**<br/>
 The two most important keys are the connectionString and resourceTableName which point at your
-database and a table within it. You can use either a raw connectionstring as above or a connection
-string name in the ConnectionStrings section of your config file.
+database and a table within it. You can use either a raw connectionstring as above or a connection string name in the ConnectionStrings section of your config file.
 
 #### Run the Web Resource Editor
 In order to use database resources you'll actually have to create some resources in a database.

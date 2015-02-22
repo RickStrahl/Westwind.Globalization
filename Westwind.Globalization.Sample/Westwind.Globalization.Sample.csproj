@@ -547,10 +547,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="LocalizationAdmin\App_LocalResources\LocalizationAdmin.aspx.de.resx" />
-    <Content Include="LocalizationAdmin\App_LocalResources\LocalizationAdmin.aspx.resx" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\WestwindToolkit\Westwind.Web\Westwind.Web.csproj">
       <Project>{0c38b4e1-0c87-4289-a57b-87c1b5be3bbe}</Project>
       <Name>Westwind.Web</Name>

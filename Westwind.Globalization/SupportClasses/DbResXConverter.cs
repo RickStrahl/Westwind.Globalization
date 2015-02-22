@@ -478,9 +478,17 @@ namespace Westwind.Globalization
         /// <returns></returns>
         public string FormatResourceSetPath(string resourceSet)
         {
-            // Make sure our slashes are right
-            resourceSet = BasePhysicalPath +  resourceSet;
-            resourceSet = resourceSet.Replace("/", "\\");
+            if (DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.Project)
+            {                
+                resourceSet = BasePhysicalPath + "\\Properties\\" + resourceSet;
+                resourceSet = resourceSet.Replace("/", "\\");
+            }
+            else
+            {
+                // Make sure our slashes are right
+                resourceSet = BasePhysicalPath + resourceSet;
+                resourceSet = resourceSet.Replace("/", "\\");
+            }
 
             if (IsLocalResourceSet(resourceSet) && !resourceSet.Contains("App_LocalResources"))
             {

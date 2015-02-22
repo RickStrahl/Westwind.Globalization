@@ -268,7 +268,7 @@ Are you sure you want to continue?</value>
       <value />
    </data>
    <data name="imgDeleteResourceSet.ToolTip" xml:space="preserve">
-      <value />
+      <value>Delete ResourceSet</value>
    </data>
    <data name="lblNewLanguage.Text" xml:space="preserve">
       <value>Lang:</value>
@@ -313,7 +313,7 @@ Are you sure you want to continue?</value>
       <value />
    </data>
    <data name="btnRefresh.ToolTip" xml:space="preserve">
-      <value />
+      <value>Refresh</value>
    </data>
    <data name="txtGoogle.ToolTip" xml:space="preserve">
       <value />
@@ -334,9 +334,6 @@ Are you sure you want to continue?</value>
       <value>Input Text:</value>
    </data>
    <data name="lstResourceIds.ToolTip" xml:space="preserve">
-      <value />
-   </data>
-   <data name="btnCreateTable.ToolTip" xml:space="preserve">
       <value />
    </data>
    <data name="btnRecycleApp.Text" xml:space="preserve">
@@ -518,9 +515,6 @@ Do you want to continue?</value>
    <data name="txtOldResourceSet.Text" xml:space="preserve">
       <value />
    </data>
-   <data name="ErrorDisplay.UserMessage" xml:space="preserve">
-      <value />
-   </data>
    <data name="btnExportResources.ToolTip" xml:space="preserve">
       <value />
    </data>
@@ -536,9 +530,6 @@ Do you want to continue?</value>
    <data name="txtTranslateFrom.Text" xml:space="preserve">
       <value>en</value>
    </data>
-   <data name="lblLanguages.ToolTip" xml:space="preserve">
-      <value />
-   </data>
    <data name="panelNewResource.GroupingText" xml:space="preserve">
       <value />
    </data>
@@ -547,5 +538,8 @@ Do you want to continue?</value>
    </data>
    <data name="lblNewValue.Text" xml:space="preserve">
       <value>Value:</value>
+   </data>
+   <data name="LocaleIdsFailedToLoad" xml:space="preserve">
+      <value>Locale Ids failed to load</value>
    </data>
 </root>

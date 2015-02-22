@@ -31,7 +31,9 @@
             reloadResources: reloadResources,
             backup: backup,
             createDatabase: createDatabase,
-            createClass: createClass
+            createClass: createClass,
+            exportResxResources: exportResxResources,
+            importResxResources: importResxResources
         };
         return service;
 
@@ -154,6 +156,14 @@
         }
         function createClass() {
             return $http.get("localizationService.ashx?method=CreateClass")
+                    .error(parseHttpError);
+        }
+        function exportResxResources() {
+            return $http.get("localizationService.ashx?method=ExportResxResources")
+                    .error(parseHttpError);
+        }
+        function importResxResources() {
+            return $http.get("localizationService.ashx?method=ImportResxResources")
                     .error(parseHttpError);
         }
 

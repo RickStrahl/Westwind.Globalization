@@ -298,6 +298,7 @@
        vm.onCreateDatabaseClick = function () {
            localizationService.createDatabase()
                .success(function () {
+                   vm.getResourceSets();
                    showMessage("Database has been created.");
                })
                .error(parseError);
@@ -309,9 +310,28 @@
                })
                .error(parseError);
        };
+       vm.onExportResxResourcesClick = function () {
+           localizationService.exportResxResources()
+               .success(function () {
+                   showMessage("Resx Resources have been created in your Web project.");
+               })
+               .error(parseError);
+       };
+       vm.onImportResxResourcesClick = function () {
+           localizationService.importResxResources()
+               .success(function() {
+                   vm.getResourceSets();
+                   showMessage("Resx Resources have been imported in your Web project. Make sure to recompile your application and turn on code generation on any Resx resources for stronly typed Resx resources.");
+               })
+               .error(function() {
+                   vm.getResourceSets();
+                   parseError(arguments);
+               });
+       };
 
-       function parseError() {               
-           var err = ww.angular.parseHttpError(arguments);           
+
+       function parseError(args) {               
+           var err = ww.angular.parseHttpError(args || arguments);           
            showMessage(err.message,"warning","warning");
        }
         function showMessage(msg, icon, cssClass) {

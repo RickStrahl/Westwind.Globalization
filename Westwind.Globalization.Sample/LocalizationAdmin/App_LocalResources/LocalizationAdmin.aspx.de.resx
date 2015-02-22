@@ -57,6 +57,12 @@
    <resheader name="writer">
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
+   <data name="LocaleIdsFailedToLoad" xml:space="preserve">
+      <value>Locale IDs wurden nicht geladen</value>
+   </data>
+   <data name="btnBackup.Text" xml:space="preserve">
+      <value>Sicherungskopie</value>
+   </data>
    <data name="NoResourceIdEntered" xml:space="preserve">
       <value>Eine ResourceId ist muss angegeben werden</value>
    </data>
@@ -120,7 +126,7 @@
    </data>
    <data name="BackupNotification" xml:space="preserve">
       <value>Diese Operation macht einen Backup von der Lokalisationtabelle. 
-Möchten Sie fortfahren?</value>
+Wollen Sie fortfahren?</value>
    </data>
    <data name="btnRename.Text" xml:space="preserve">
       <value>Umbenennen</value>

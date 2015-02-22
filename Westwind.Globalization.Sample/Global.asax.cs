@@ -21,11 +21,12 @@ namespace Westwind.Globalization.Sample
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
+            GeneratedResourceSettings.ResourceAccessMode = ResourceAccessMode.DbResourceManager;
+
             // *** override which connection string is used for the provider configuration values
             // *** Note: The appropriate providers and Westwind.Globalization.DataProvider package
             //           have to be installed for all but SQL Server. 
             //           On Nuget.org: Search for Westwind.Globalization.
-
             // this is the default and doesn't need to be explicitly set
             //DbResourceConfiguration.Current.ConnectionString = "SqlServerLocalizations";
             //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerDataManager);
