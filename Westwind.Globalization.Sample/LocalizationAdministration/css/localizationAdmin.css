@@ -5,32 +5,55 @@ body {
     font-weight: bold;
     color: steelblue;
 }
-h2,h3 {
+h2,h3,h4 {
     font-family: 'Trebuchet','Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;    
     font-weight: bold;
 }
 h3 {
     color: steelblue;
 }
+.banner {
+    background: #535353;
+    height: 50px;
+}
 #TitleBar {
-    position: fixed;
+    position: absolute;
     top: 10px;
     left: 8px;
     z-index: 100;
 }
+#ErrorMessage {
+    border-radius: 4px;
+    margin-bottom: 0;
+    padding: 8px;
+    position: fixed;
+    bottom: 8px;
+    left: 30%;
+    right: -5px;
+    z-index: 10000;
+    opacity: 0.88;
+    box-shadow: 2px 2px 4px #535353;
+}
+#ContentContainer {
+    position: relative;    
+}
 #ListPanel,#ContentPanel {
-    position: absolute;    
-    top: 20px;
+    position: absolute;
+    top: 0;
     left: 0;    
-    bottom: 0px;
+    bottom: 0;
     width: 310px;
-    xbackground: steelblue;
-    xborder-right: 1px #e1e1e1 solid;
-    padding: 0 ;    
+    padding: 0 ;
+    overflow-x: hidden;    
+    -webkit-transition: width 1.2s;
+    transition: width 1.2s;
+}
+#ListPanel.collapsed {
+    width: 0;
 }
 #ListPanel select {
     position: absolute;
-    width: 310px;    
+    width: 309px;    
     top: 35px;
     bottom: 1px;        
     left: 0;
@@ -38,85 +61,21 @@ h3 {
     border-radius: 0;
     border: none;    
 }
-#ContentPanel {        
+
+#ContentPanel {
+    top: 17px;
     left: 310px;
     right: 0;    
     width: auto;
     padding: 0px 20px 10px;
     overflow-x: auto;
+      -webkit-transition: left 1.2s;
+    transition: left 1.2s;
 }
-#TopMenu {
-}
-#SearchBox {
-    width: 220px;
-}
-@media(max-width: 500px) {
-    #SearchBox {
-        width: 135px;
-    }    
-}
-    #TopMenu input {
-        color: #535353;
-        padding: 4px 5px;
-        height: auto;
-    }
-.banner {
-    background: #535353;
-    color: #e1e1e1;
-    border-bottom: solid 1px black;
-    position: fixed;
-    top: 0;
+#ContentPanel.expanded {
     left: 0;
-    padding-top: 15px;
-    height: 50px;
-    width: 100%;
-    z-index: 10;   
-}
-    .banner.active {
-        color: white;
-        font-weight: bolder;
-    }
-
-
-.banner nav {
-    display: inline-block;
-    margin-top: 2px;
-    margin-right: 3px;
-    padding: 0;    
 }
 
-    .banner nav a, .banner nav input {
-        display: inline-block;
-        padding: 7px 5px;
-        color: #e1e1e1;
-        text-decoration: none;
-    }
-
-    .banner nav a:hover {
-        color: white;
-        background: #767676;
-        text-decoration: none;
-        border-bottom: solid 4px silver;
-        border-radius: 2px;
-    }
-
-    .banner nav a.active, .banner nav a.selected {
-        color: white;        
-        font-weight: bold;
-        border-bottom: solid 4px orange;
-        border-radius: 2px;
-    }
-    @media(max-width: 640px) {
-        .banner nav a span {
-            display: none;
-        }
-    }
-
-
-  
-.color-check {
-    color: #009f00;
-}
 .color-disabled {
     color: silver;
 }
@@ -139,10 +98,9 @@ input.ng-invalid,textarea.ng-invalid,select.ng-invalid {
 }
 
 
-@media (max-width: 690px) {
-    .album {
-        max-width: 100% !important;
-        min-height: 100px;
+@media (max-width: 767px) {
+    #MenuButtons {
+        display: none;
     }
 
 }
@@ -175,53 +133,6 @@ input.ng-invalid,textarea.ng-invalid,select.ng-invalid {
     padding: 10px 20px 5px 20px;
 }
 
-@-webkit-keyframes slideOutLeft {    
-    to {
-        -webkit-transform: translateX(-100%);
-        transform: translateX(-100%);
-    }	
-}
-@keyframes slideOutLeft {
-
-    to {
-        -webkit-transform: translateX(-100%);
-        transform: translateX(-100%);
-    }
-}
-
-/* slide in from the bottom */
-@-webkit-keyframes slideInRight {
-    from {
-        -webkit-transform: translateX(100%);
-        transform: translateX(100%);
-    }
-    to {
-        -webkit-transform: translateX(0%);
-        transform: translateX(0);
-    }
-}
-@keyframes slideInRight {
-    from {
-        -webkit-transform: translateX(100%);
-        transform: translateX(100%);
-    }
-    to {
-        -webkit-transform: translateX(0%);
-        transform: translateX(0);
-    }
-}
-
-.slide-animation.ng-enter {
-    -webkit-animation: slideInRight 0.70s both ease-in;
-    animation: slideInRight 0.70s both ease-in;
-    z-index: 9999;    
-}
-
-.slide-animation.ng-leave {
-   -webkit-animation: slideOutLeft 0.35s both ease-in;
-    animation: slideOutLeft 0.35s both ease-in;
-    z-index: 8888;
-}
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }

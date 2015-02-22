@@ -26,10 +26,13 @@
                           title="Ctl-Enter to save and move to next field"></textarea>
             </form>
             <span class="input-group-addon" title="Save resource (Ctrl-Enter)"
+                  tabindex="0" role="button" aria-label="Save resource (Ctrl-Enter)"
                   ng-class="{'color-check': resourceForm.$dirty, 'color-disabled': !resourceForm.$dirty }"
                   ng-enabled="resourceForm.$dirty"
                   ng-click="view.onStringUpdate(resource)"><i class="fa fa-check"></i></span>
-            <span class="input-group-addon" title="Translate"
+            <span class="input-group-addon"
+                  tabindex="-1" role="button" aria-label="Translate resource"
+                  title="Translate Resource"
                   ng-click="view.onTranslateClick($event,resource)"><i class="fa fa-flag-o"></i></span>
         </div>
 
@@ -44,7 +47,7 @@
         <button class="btn btn-sm btn-default"
                 title="Delete all entries for this Resource"
                 ng-click="view.onDeleteResourceClick()"><i class="fa fa-remove"></i> Delete</button>
-        <button class="btn btn-sm btn-default" title="Rename this Resource for all languages" disabled="disabled"><i class="fa fa-exchange"></i> Rename</button>
+        <button class="btn btn-sm btn-default" title="Rename this Resource for all languages" ng-click="view.onRenameResourceClick()"><i class="fa fa-exchange"></i> Rename</button>
         <button class="btn btn-sm btn-default" title="Comment" disabled="disabled">
             <i class="fa fa-comment-o"></i> Add Comment
         </button>

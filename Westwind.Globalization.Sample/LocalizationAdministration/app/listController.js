@@ -13,23 +13,23 @@
        console.log('list controller');
 
        var vm = this;
+       vm.listVisible = true;
         vm.searchText = null;
         vm.resourceSet = null;
         vm.resourceSets = [];
         vm.resourceList = [];
         vm.resourceId = null;
         vm.activeResource = null;
-        vm.localeIds = [];
-        
+        vm.localeIds = [];        
         vm.resourceItems = [];
         vm.resourceItemIndex = 0;
-
-        vm.editedResource = null,
-        vm.error = {
-            message:null,
-            icon: "info-circle",
-            cssClass: "info"
-        };
+       vm.newResourceId = null;
+       vm.editedResource = null,
+           vm.error = {
+               message: null,
+               icon: "info-circle",
+               cssClass: "info"
+           };
 
        vm.newResource = function() {
            return {
@@ -43,6 +43,12 @@
                "BinFile": null,
                "FileName": ""
            };
+       };
+
+
+       vm.collapseList = function () {           
+           vm.listVisible = !vm.listVisible;
+           console.log(vm.listVisible);
        };
 
         vm.getResourceSets = function getResourceSets() {
@@ -146,6 +152,7 @@
            $scope.$emit("startTranslate", resource, id);
            $("#TranslateDialog").modal();
        };
+
        vm.onResourceIdBlur = function() {
            if (!vm.activeResource.Value)
                vm.activeResource.Value = vm.activeResource.ResourceId;
@@ -211,8 +218,34 @@
 
                });
        };
+       vm.onRenameResourceClick = function () {
+           vm.newResourceId = null;
+           $("#RenameResourceDialog").modal();
+           $timeout(function() {
+               $("#NewResourceId").focus();
+           },1000);
+       };
+       vm.onRenameResourceDialogClick = function () {
+           localizationService.renameResource(vm.activeResource.ResourceId, vm.newResourceId, vm.activeResource.ResourceSet)
+               .success(function () {                                      
+                   for (var i = 0; i < vm.resourceList.length; i++) {
+                       var res = vm.resourceList[i];                       
+                       if (res.ResourceId == vm.activeResource.ResourceId) {                               
+                           vm.resourceList[i].ResourceId = vm.newResourceId;
+                           break;
+                       }
+                   }
+                   vm.activeResource.ResourceId = vm.newResourceId;
+                   showMessage("Resource was renamed to '"+ vm.newResourceId + "" +"'.");
+                   $("#RenameResourceDialog").modal("hide");
+               })
+               .error(parseError);
+       }
 
-
+       function parseError() {               
+           var err = ww.angular.parseHttpError(arguments);           
+           showMessage(err.message,"warning","warning");
+       }
         function showMessage(msg, icon, cssClass) {
             
             if (!vm.error)

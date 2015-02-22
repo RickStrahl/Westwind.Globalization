@@ -20,7 +20,8 @@
 
     app.config([
             function() {
-                console.log('app.coifig');
+                resizeControls();
+                $(window).resize(resizeControls);
             }
         ])
         .filter('linebreakFilter', function () {        
@@ -31,4 +32,9 @@
             };
         });
     
+    function resizeControls() {
+        var cHeight = $(window).height() - $(".banner").outerHeight() - $(".menubar").outerHeight()  ;
+        console.log(cHeight);
+        $("#ContentContainer").height(cHeight);
+    }
 })();

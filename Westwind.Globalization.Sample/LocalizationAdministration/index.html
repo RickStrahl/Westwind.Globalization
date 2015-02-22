@@ -33,104 +33,98 @@
     <link href="bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet" />
 
     <link href="css/localizationAdmin.css" rel="stylesheet"/>
-    <style>
-        .colorCheck {
-            color: green;
-        }
-        .hrstyle {
-            margin: 10px 0;
-        }
-    </style>
-    
 </head>
-<body ng-app="app">
-
-    <div id="TitleBar">
-        <a href="#/albums">
-            <img src="images/Westwind.Localization_128.png"
-                 style="height: 35px; float: left" />
-            <div style="float: left; margin-left: 5px; line-height: 1.2">
-                <i style="color: steelblue; font-size: 0.8em; font-weight: bold;">West Wind Globalization</i><br />
-                <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;">Localization Administration</i>
-            </div>
-        </a>
-    </div>
+<body ng-app="app" ng-controller="listController as view">
 
     <div class="banner">
-        <nav id="TopMenu" class="pull-right">
-            <!--<a href="#/albums" ng-hide="searchVisible" ng-class="{ selected: activeTab == 'albums'}"><img src="images/record.png" title="Albums" style="height: 20px; vertical-align: top;" /> <span>Albums</span></a>-->
-            <!--<a href="#/artists" ng-hide="searchVisible" ng-class="{ selected: activeTab == 'artists'}"><img src="images/artists32.png" title="Artists" style="height: 20px" /> <span>Artists</span></a>-->
-            <!--<a href="javascript: window.location.reload();" ng-class="{ selected: activeTab == 'about'}"><i class=" fa fa-info-circle" title="About" style="font-size: 165%;vertical-align: bottom"></i> <span>About</span></a>-->
-        </nav>
-
+        <div id="TitleBar">
+            <a href="index.html">
+                <img src="images/Westwind.Localization_128.png"
+                     style="height: 35px; float: left" />
+                <div style="float: left; margin-left: 5px; line-height: 1.2">
+                    <i style="color: steelblue; font-size: 0.8em; font-weight: bold;">West Wind Globalization</i><br />
+                    <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;">Localization Administration</i>
+                </div>
+            </a>
+        </div>
     </div>
 
-    <div style="margin-top: 50px; min-width: 768px; border-bottom: 1px silver solid;" ng-controller="listController as view" ng-cloak>
-
-        <div id="ErrorMessage" class="alert alert-{{view.error.cssClass}} alert-dismissable"
-             style="border-radius: 0; margin-bottom: 0"
-             ng-show="view.error.message">
-            <!--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>-->
-            <i class="fa fa-{{view.error.icon}}"></i> &nbsp;&nbsp;<strong>{{view.error.message}}</strong>
+    <nav class="menubar" style="background: #727272; padding: 7px;">
+        <button class="btn btn-link pull-left" style="color: white; border: none;"
+                title="Collapse/expand list panel"
+                ng-click="view.collapseList()">
+            <i class="fa fa-bars"></i>
+        </button>
+        <div id="MenuButtons"  class="pull-right">
+            <button class="btn btn-sm" title="Export all resources to Resx files"><i class="fa fa-download"></i> Export Resx</button>
+            <button class="btn btn-sm" title="Import all Resx resources from project path"><i class="fa fa-upload"></i> Import Resx</button>
+            <button class="btn btn-sm" title="Generate strongly typed classes from ResourceSets"><i class="fa fa-code" style="font-weight: bold;"></i> Create Class</button>
+            &nbsp;&nbsp;
+            <button class="btn btn-sm" title="Create a new translation table if it doesn't exist"><i class="fa fa-plus-square"></i> Create Table</button>
+            <button class="btn btn-sm" title="Force database resources for the application to reload"><i class="fa fa-refresh" title="Force database resources for the application to reload"></i> Reload Resources</button>
+            <button class="btn btn-sm" title="Backup resource database to a backup table"><i class="fa fa-save"></i> Backup</button>
         </div>
+        <div class="clearfix"></div>
+    </nav>
 
 
-        <div style="position: relative; height: 600px;">
-
-            <div id="ListPanel" class="col-sm-3">
-
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                    <input id="SearchResources"
-                           class="form-control"
-                           placeholder="Search Resources"
-                           ng-model="view.searchText"
-                           type="search" />
-                </div>
-
-
-                <div class="form-group">
-                    <select id="ResourceIdList" ng-model="view.resourceId"
-                            ng-change="view.onResourceIdChange(resource)"
-                            size="2" class="form-control">
-                        <option ng-repeat="resource in view.resourceList | filter:view.searchText"
-                                value="{{resource.ResourceId}}"
-                                style="{{resource.Style}}">
-                            {{resource.ResourceId}}
-                        </option>
-                    </select>
-                </div>
-            </div>
-
-            <div id="ContentPanel" class="col-sm-8">
-
-                <div ng-include src="'ResourceList.html'"></div>
-
-                <div ng-include src="'ResourceSetList.html'"></div>
-            </div>
-        </div>
-
-        <div ng-include src="'TranslateDialog.html'"></div>
+    <div id="ContentContainer"
+         ng-cloak>
         
-        <div ng-include src="'AddResourceDialog.html'"></div>
+        <div id="ListPanel"
+             ng-class="{ collapsed: !view.listVisible}"
+             class="col-sm-3"
+             style="padding-right: 1px;border-right: 1px solid silver;">
 
+            <div class="input-group">
+                <span class="input-group-addon" style="border-radius: 0"><i class="fa fa-search"></i></span>
+                <input id="SearchResources"
+                       class="form-control"
+                       placeholder="Search Resources"
+                       ng-model="view.searchText"
+                       style="border-radius: 0;margin:0"
+                       type="search" />
+            </div>
+
+
+            <div class="form-group">
+                <select id="ResourceIdList" ng-model="view.resourceId"
+                        ng-change="view.onResourceIdChange(resource)"
+                        size="2" class="form-control">
+                    <option ng-repeat="resource in view.resourceList | filter:view.searchText"
+                            value="{{resource.ResourceId}}"
+                            style="{{resource.Style}}">
+                        {{resource.ResourceId}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div id="ContentPanel" class="col-sm-8" ng-class="{expanded: !view.listVisible }">
+
+            <div ng-include src="'ResourceList.html'"></div>
+
+            <div ng-include src="'ResourceSetList.html'"></div>
+        </div>
     </div>
 
 
+    <div id="ErrorMessage" class="alert alert-{{view.error.cssClass}} alert-dismissable"
+         ng-show="view.error.message">
+        <!--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>-->
+        <i class="fa fa-{{view.error.icon}}"></i> &nbsp;&nbsp;<strong>{{view.error.message}}</strong>
+    </div>
+
+    <div ng-include src="'TranslateDialog.html'"></div>
+
+    <div ng-include src="'AddResourceDialog.html'"></div>
+
+    <div ng-include src="'RenameResourceDialog.html'"></div>
 
 
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="scripts/ww.jquery.min.js"></script>
     <script src="bower_components/lodash/lodash.min.js"></script>
-
-
-    <script>
-
-    </script>
-
-
-
-
 
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>

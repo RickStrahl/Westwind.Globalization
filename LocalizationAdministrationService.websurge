@@ -1,0 +1,170 @@
+GET http://localhost:7894/localizationAdministration/localizationService.ashx?method=GetResourceList&ResourceSet=Resources HTTP/1.1
+Accept: application/json
+
+------------------------------------------------------------------
+
+POST http://localhost:7894/localizationAdministration/localizationService.ashx?method=GetResourceString HTTP/1.1
+Accept-Encoding: gzip,deflate
+Content-Type: application/json
+Accept: application/json
+
+{
+ResourceId: "Today",
+ResourceSet: "Resources",
+CultureName: "de"
+}
+
+------------------------------------------------------------------
+
+GET http://localhost:7894/localizationAdministration/localizationService.ashx?method=GetResourceSets HTTP/1.1
+Accept-Encoding: gzip,deflate
+Accept: application/json
+
+------------------------------------------------------------------
+
+GET http://localhost:7894/localizationAdministration/localizationService.ashx?method=GetAllLocaleIds&ResourceSet=Resources HTTP/1.1
+Accept-Encoding: gzip,deflate
+
+------------------------------------------------------------------
+
+POST http://localhost:7894/localizationAdministration/localizationService.ashx?method=GetResourceItem HTTP/1.1
+Accept-Encoding: gzip,deflate
+Content-Type: application/json
+Accept: application/json
+
+{
+ResourceId: "Today",
+ResourceSet: "Resources",
+CultureName: "de"
+}
+
+------------------------------------------------------------------
+
+GET http://localhost:7894/localizationAdministration/localizationService.ashx?method=GetResourceStrings&ResourceId=Today&ResourceSet=Resources HTTP/1.1
+Accept-Encoding: gzip,deflate
+
+------------------------------------------------------------------
+
+POST http://localhost:7894/localizationAdministration/localizationService.ashx?method=UpdateResourceItem HTTP/1.1
+Accept-Encoding: gzip,deflate
+Content-Type: application/json
+Accept: application/json
+
+{
+  ResourceId: "Today",
+  ResourceSet: "Resources",
+  CultureName: "fr",
+  Value: "Aujourd'hui 2"
+}
+
+------------------------------------------------------------------
+
+POST http://localhost:7894/localizationAdministration/localizationService.ashx?method=UpdateResource HTTP/1.1
+Accept-Encoding: gzip,deflate
+Content-Type: application/json
+Accept: application/json
+
+{
+  ResourceId: "Today",
+  ResourceSet: "Resources",
+  CultureName: "fr",
+  Value: "Aujourd'hui 2"
+}
+
+------------------------------------------------------------------
+
+POST http://localhost:7894/localizationAdministration/localizationService.ashx?method=UpdateResourceString HTTP/1.1
+Accept-Encoding: gzip,deflate
+Content-Type: application/json
+Accept: application/json
+
+{
+  resourceId: "Today",
+  resourceSet: "Resources",
+  localeId: "fr",
+  value: "Aujourd'hui 3"
+}
+
+------------------------------------------------------------------
+
+POST http://localhost:7894/localizationAdministration/localizationService.ashx?method=Translate HTTP/1.1
+Accept-Encoding: gzip,deflate
+Content-Type: application/json
+Accept: application/json
+
+{
+  text: "Today",
+  from: "en",
+  to: "de",
+  service: "google"
+}
+
+------------------------------------------------------------------
+
+POST http://localhost:7894/localizationAdministration/localizationService.ashx?method=Translate HTTP/1.1
+Accept-Encoding: gzip,deflate
+Content-Type: application/json
+Accept: application/json
+
+{
+  text: "Today",
+  from: "en",
+  to: "de",
+  service: "google"
+}
+
+------------------------------------------------------------------
+
+POST http://localhost:7894/localizationAdministration/localizationService.ashx?method=Translate HTTP/1.1
+Accept-Encoding: gzip,deflate
+Content-Type: application/json
+Accept: application/json
+
+{
+  text: "Today",
+  from: "en",
+  to: "de",
+  service: "bing"
+}
+
+------------------------------------------------------------------
+
+POST http://localhost:7894/localizationAdministration/localizationService.ashx?method=RenameResource HTTP/1.1
+Accept-Encoding: gzip,deflate
+Content-Type: application/json
+Accept: application/json
+
+{
+  resourceId: "",
+  newResourceId: "",
+  resourceSet: ""
+}
+
+------------------------------------------------------------------
+
+
+----- Start WebSurge Options -----
+
+{
+  "NoProgressEvents": false,
+  "DelayTimeMs": 0,
+  "CaptureMinimalResponseData": false,
+  "MaxResponseSize": 0,
+  "ReplaceCookieValue": "",
+  "ReplaceAuthorization": "",
+  "ReplaceQueryStringValuePairs": "",
+  "ReplaceDomain": "localhost/Westwind.Globalization.Sample",
+  "Username": null,
+  "Password": "",
+  "RandomizeRequests": false,
+  "RequestTimeoutMs": 15000,
+  "WarmupSeconds": 2,
+  "ReloadTemplates": false,
+  "FormattedPreviewTheme": "visualstudio",
+  "LastThreads": 50,
+  "IgnoreCertificateErrors": false,
+  "LastSecondsToRun": 60
+}
+
+----- End WebSurge Options -----
+

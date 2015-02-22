@@ -14,7 +14,9 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
     /// </summary>
     public class LocalizationService : CallbackHandler
     {
-        
+
+        public const string STR_RESOURCESET = "localizationadmin/LocalizationAdmin.aspx";
+
         protected DbResourceDataManager Manager = DbResourceDataManager.CreateDbResourceDataManager();
 
         public LocalizationService()
@@ -27,7 +29,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         {
             var ids = Manager.GetAllResourceIds(resourceSet);
             if (ids == null)
-                throw new ApplicationException(WebUtils.LRes("ResourceSetLoadingFailed") + ":" + Manager.ErrorMessage);
+                throw new ApplicationException(WebUtils.LRes(STR_RESOURCESET,"ResourceSetLoadingFailed") + ":" + Manager.ErrorMessage);
 
             return ids;
         }
@@ -37,7 +39,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         {
             var ids = Manager.GetAllResourceIdListItems(resourceSet);
             if (ids == null)
-                throw new ApplicationException(WebUtils.LRes("ResourceSetLoadingFailed") + ":" + Manager.ErrorMessage);
+                throw new ApplicationException(WebUtils.LRes(STR_RESOURCESET,"ResourceSetLoadingFailed") + ":" + Manager.ErrorMessage);
 
             return ids;
         }
@@ -53,7 +55,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         {
             var ids =  Manager.GetAllLocaleIds(resourceSet);
             if (ids == null)
-                throw new ApplicationException(WebUtils.LRes("LocaleIdsFailedToLoad") + ":" + Manager.ErrorMessage);
+                throw new ApplicationException(WebUtils.LRes(STR_RESOURCESET,"LocaleIdsFailedToLoad") + ":" + Manager.ErrorMessage);
 
             var list = new List<object>();
 
@@ -200,20 +202,35 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             } catch{}
 
             if (!Manager.DeleteResource(resourceId,resourceSet, localeId))
-                throw new ApplicationException(WebUtils.LRes("ResourceUpdateFailed") + ": " + Manager.ErrorMessage);
+                throw new ApplicationException(WebUtils.LRes(STR_RESOURCESET, "ResourceUpdateFailed") + ": " + Manager.ErrorMessage);
 
             return true;
         }
 
+        /// <summary>
+        /// Renames a resource key to a new name.
+        /// 
+        /// Requires a JSON object with the following properties:
+        /// {
+        /// }
+        /// 
+        /// 
+        /// </summary>
+        /// <param name="parms"></param>
+        /// <returns></returns>
         [CallbackMethod]
-        public bool RenameResource(string ResourceId, string NewResourceId, string ResourceSet)
+        public bool RenameResource(dynamic parms)
         {
 #if OnlineDemo
         throw new ApplicationException(WebUtils.LRes("FeatureDisabled"));
 #endif
+            string resourceId =parms["resourceId"];
+            string newResourceId = parms["newResourceId"];
+            string resourceSet = parms["resourceSet"];
 
-            if (!Manager.RenameResource(ResourceId, NewResourceId, ResourceSet))
-                throw new ApplicationException(WebUtils.LRes("InvalidResourceId"));
+            
+            if (!Manager.RenameResource(resourceId, newResourceId, resourceSet))
+                throw new ApplicationException(WebUtils.LRes("localizationadmin/LocalizationAdmin.aspx","InvalidResourceId"));
 
             return true;
         }

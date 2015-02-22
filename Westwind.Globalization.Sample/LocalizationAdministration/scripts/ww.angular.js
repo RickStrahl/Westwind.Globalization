@@ -1,4 +1,4 @@
-﻿/// <reference path="jquery.js" />
+/// <reference path="jquery.js" />
 /// <reference path="ww.jquery.js" />
 /*
 ww.jQuery.js  
@@ -20,8 +20,12 @@ http://en.wikipedia.org/wiki/MIT_License
             var status = args[1];
             var msg = args[2];
             var errorMsg = "";
+            if (data) 
+            {                      
+                if(data.hasOwnProperty("message") || msg.hasOwnProperty("Message"))       
+                   return data;
 
-            if (data) {
+                // assume JSON   
                 try {
                     var msg = JSON.parse(data);
 

@@ -25,7 +25,8 @@
             getResourceStrings: getResourceStrings,
             updateResourceString: updateResourceString,
             updateResource: updateResource,
-            deleteResource: deleteResource
+            deleteResource: deleteResource,
+            renameResource: renameResource
         };
         return service;
 
@@ -114,6 +115,18 @@
             return $http.post("localizationService.ashx?method=DeleteResource", parm)
                 .error(parseHttpError);
         }
+
+        function renameResource(resourceId, newResourceId, resourceSet) {
+            var parm = {
+                resourceId: resourceId,
+                newResourceId: newResourceId,
+                resourceSet: resourceSet                
+            };
+
+            return $http.post("localizationService.ashx?method=RenameResource", parm)
+                .error(parseHttpError);
+        }
+
 
         function parseHttpError() {
             service.error = ww.angular.parseHttpError(arguments);
