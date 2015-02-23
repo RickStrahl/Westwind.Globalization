@@ -29,10 +29,10 @@
 
 
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!--<link href="LocalizationAdministrations/css/bootstrap-theme.css" rel="stylesheet" />-->
+    <!--<link href="LocalizationAdministration/css/bootstrap-theme.css" rel="stylesheet" />-->
     <link href="bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet" />
 
-    <link href="css/localizationAdmin.css" rel="stylesheet"/>
+    <link href="css/localizationAdmin.css" rel="stylesheet" />
 </head>
 <body ng-app="app" ng-controller="listController as view">
 
@@ -49,63 +49,80 @@
         </div>
     </div>
 
-    <nav class="menubar" style="background: #727272; padding: 7px;">
-        <button class="btn btn-link pull-left" style="color: white; border: none;"
-                title="Collapse/expand list panel"
-                ng-click="view.collapseList()">
-            <i class="fa fa-bars"></i>
-        </button>
-        <div id="MenuButtons"  class="pull-right">
-            <button class="btn btn-default btn-sm"
-                    ng-show="view.resourceSets && view.resourceSets.length > 0"
-                    ng-click="view.onExportResxResourcesClick()"
-                    title="Export all resources to Resx files">
-                <i class="fa fa-download"></i> Export Resx
-            </button>
-            <button class="btn btn-default btn-sm"
-                    ng-show="view.resourceSets && view.resourceSets.length > 0"
-                    ng-click="view.onImportResxResourcesClick()"
-                    title="Import all Resx resources from project path">
-                <i class="fa fa-upload"></i> Import Resx
-            </button>
-            <button class="btn btn-default btn-sm"
-                    ng-click="view.onCreateClassClick()"
-                    ng-show="view.resourceSets && view.resourceSets.length > 0"                    
-                    title="Generate strongly typed classes from ResourceSets">
-                <i class="fa fa-code" style="font-weight: bold;"></i> Create Class
-            </button>
-            &nbsp;&nbsp;
-            <button class="btn btn-default btn-sm"                    
-                    ng-show="!view.resourceSets || view.resourceSets.length < 1"
-                    ng-click="view.onCreateDatabaseClick()"
-                    title="Create a new translation table if it doesn't exist">
-                <i class="fa fa-plus-square"></i> Create Table
-            </button>
-            <button class="btn btn-default btn-sm"
-                    ng-show="view.resourceSets && view.resourceSets.length > 0"
-                    ng-click="view.onReloadResourcesClick()"
-                    title="Force database resources for the application to reload">
-                <i class="fa fa-refresh"></i> Reload Resources
-            </button>
-            <button class="btn btn-default btn-sm"
-                    ng-show="view.resourceSets && view.resourceSets.length > 0"
-                    ng-click="view.onBackupClick()"
-                    title="Backup resource database to a backup table">
-                <i class="fa fa-save"></i> Backup
-            </button>
-            &nbsp;&nbsp;
-            <a href="../" class="btn btn-default btn-sm"                    
-                    title="Back to site home">
-                <i class="fa fa-home"></i>
-            </a>
-        </div>
+    <nav class="menubar " style="background: #727272;">
+        <ul class="nav navbar-nav pull-left">
+            <li>
+                <a  style="border: none;"
+                   title="Collapse/expand resource list panel"
+                   ng-click="view.collapseList()">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </li>
+        </ul>
+
+        <style>
+   
+        </style>
+        <ul id="MenuButtons" class="nav navbar-nav pull-right navbar">
+            <li>
+                <a ng-show="view.resourceSets && view.resourceSets.length > 0"
+                   ng-click="view.onExportResxResourcesClick()"
+                   title="Export all resources to Resx files">
+                    <i class="fa fa-download"></i> Export Resx
+                </a>
+            </li>
+            <li>
+                <a ng-show="view.resourceSets && view.resourceSets.length > 0"
+                   ng-click="view.onImportResxResourcesClick()"
+                   title="Import all Resx resources from project path">
+                    <i class="fa fa-upload"></i> Import Resx
+                </a>
+            </li>
+            <li>
+                <a ng-click="view.onCreateClassClick()"
+                   ng-show="view.resourceSets && view.resourceSets.length > 0"
+                   title="Generate strongly typed classes from ResourceSets">
+                    <i class="fa fa-code" style="font-weight: bold;"></i> Create Class
+                </a>
+            </li>            
+            <li>
+                <a ng-show="view.resourceSets && view.resourceSets.length > 0"
+                   ng-click="view.onReloadResourcesClick()"
+                   xtitle="Force database resources for the application to reload">
+                    <i class="fa fa-refresh"></i> Reload Resources
+                </a>
+            </li>
+            <li>
+                <a 
+                        ng-show="!view.resourceSets || view.resourceSets.length < 1"
+                        ng-click="view.onCreateDatabaseClick()"
+                        title="Create a new translation table if it doesn't exist">
+                    <i class="fa fa-plus-square"></i> Create Table
+                </a>
+
+            </li>
+            <li>
+                <a ng-show="view.resourceSets && view.resourceSets.length > 0"
+                   ng-click="view.onBackupClick()"
+                   title="Backup resource database to a backup table">
+                    <i class="fa fa-save"></i> Backup
+                </a>
+            </li>
+            <li>
+                <a href="../"
+                   title="Back to site home">
+                    <i class="fa fa-home"></i>
+                </a>
+            </li>
+        </ul>
+
         <div class="clearfix"></div>
     </nav>
 
 
     <div id="ContentContainer"
          ng-cloak>
-        
+
         <div id="ListPanel"
              ng-class="{ collapsed: !view.listVisible}"
              class="col-sm-3"
@@ -157,7 +174,7 @@
     <div ng-include src="'RenameResourceDialog.html'"></div>
 
 
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="scripts/ww.jquery.min.js"></script>
     <script src="bower_components/lodash/lodash.min.js"></script>
 

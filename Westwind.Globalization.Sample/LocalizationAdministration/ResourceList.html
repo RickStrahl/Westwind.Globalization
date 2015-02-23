@@ -10,20 +10,20 @@
          ng-repeat="resource in view.resourceItems">
 
         <div class="input-group" style="margin-top: 2px;">
-            <span class="input-group-addon active" style="width: 70px; cursor: pointer"
+            <span class="input-group-addon active" style="cursor: pointer"
                   ng-click="view.onLocaleIdChanged(resource)">
-                <div style="float: left; width: 70px; font-weight: bold; color: steelblue;">
+                <div class="locale-id">
                     {{resource.LocaleId ? resource.LocaleId : 'Invariant'}}
                 </div>
             </span>
             <form name="resourceForm" id="form1">
-                <textarea id="value_{{$index}}"
+                <textarea id="value_{{$index}}" name="value_{{$index}}"
                           class="form-control"
                           ng-focus="view.onLocaleIdChanged(resource)"
                           data-localeid="{{resource.LocaleId}}"
                           ng-model="resource.Value"
-                          ng-keydown="view.onResourceKeyDown($event,resource,resourceForm)"
-                          title="Ctl-Enter to save and move to next field"></textarea>
+                          ng-keydown="view.onResourceKeyDown($event,resource,resourceForm)">                    
+                </textarea>
             </form>
             <span class="input-group-addon" title="Save resource (Ctrl-Enter)"
                   tabindex="0" role="button" aria-label="Save resource (Ctrl-Enter)"
@@ -51,5 +51,5 @@
         <button class="btn btn-sm btn-default" title="Comment" disabled="disabled">
             <i class="fa fa-comment-o"></i> Comment
         </button>
-    </div> {{view.activeResource.LocaleId}}
+    </div>
 </div>

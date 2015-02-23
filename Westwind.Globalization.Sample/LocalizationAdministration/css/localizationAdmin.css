@@ -79,6 +79,12 @@ h3 {
 #ContentPanel.expanded {
     left: 0;
 }
+.locale-id {
+    float: left;
+    width: 60px;
+    font-weight: bold;
+    color: steelblue; 
+}
 .color-check {
     color: limegreen;
 }
@@ -102,13 +108,35 @@ h3 {
 input.ng-invalid,textarea.ng-invalid,select.ng-invalid {
     background: pink;
 }
+.navbar {
+    min-height: 0;
+}
+.navbar-nav a {
+    color: white;    
+    border: none;
+    cursor: pointer;
+    border-right: 1px #868686 solid;
+    padding: 11px 10px !important;
+    font-size: 0.96em;   
+}
 
+    .navbar-nav a:hover {
+        color: #535353;
+    }
 
 @media (max-width: 767px) {
     #MenuButtons {
         display: none;
     }
-
+    .navbar {
+        min-height: 0;
+    }
+    .navbar-nav {
+        margin: 0;
+    }
+    #ContentPanel {
+        padding: 0 5px 0 5px;
+    }
 }
 
 

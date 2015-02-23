@@ -5,7 +5,7 @@
         .module('app')
         .controller('translateController', translateController);
 
-    translateController.$inject = ['$scope','$http', '$timeout']; 
+    translateController.$inject = ['$scope','$http', '$timeout', 'localizationService']; 
 
 
     function translateController($scope, $http, $timeout) {
@@ -43,65 +43,45 @@
         });
 
         vm.onTranslateClick = function () {            
-            vm.googleTranslate();
-            vm.bingTranslate();
+            vm.translate("google");
+            vm.translate("bing");
         };
 
-        vm.useGoogleClick = function () {
+
+       vm.useTranslateClick = function (type) {
             var lang = vm.toLang;  // language to update
 
             // treat default language language as invariant
             if (lang === vm.invariantLanguage)
                 lang = ""; // invariant
 
-            //var resourceList = $scope.$parent.view.resourceItems;
-            //// treat invariant language as invariant entry
+            var val = vm.googleTranslation;
+            if (type == "bing") 
+                val = vm.bingTranslation;
             
-            //// find index to update
-            //var idx = _.findIndex(resourceList, function(res) {                
-            //    return res.LocaleId == lang;
-            //});
-            
-            //// no match - nothing we can do...
-            //if (idx == -1) 
-            //    // TODO: Add new resource
-            //    return;
-            
-            //$timeout(function() {                
-            //    $scope.$parent.view.resourceItems[idx].Value = vm.googleTranslation;
-            //    $scope.$parent.$apply();
-            //},100);            
-            
-            // explicitly update the element so we can show changed status
-            var $el = $("#ResourceList textarea[data-localeId=" + lang + "]" );
-            if ($el.length < 1)
-                // TODO: Add new resource
-                return; 
-
-            ww.angular.applyBindingValue($el, vm.googleTranslation, $timeout);
-
-            
+            // notify caller
+            $scope.$root.$emit("translateComplete", lang, val);
             $("#TranslateDialog").modal("hide");
         };
 
-        vm.googleTranslate = function () {
+        vm.translate = function (type) {
             var data = {
                 from: vm.fromLang,
                 to: vm.toLang,
                 text: vm.inputText,
-                service: "google"
+                service: type
             };
             $http.post("localizationService.ashx?method=Translate", data)
-                .success(function(result) {
-                    vm.googleTranslation = result;
+                .success(function (result) {
+                    if (type == "google")
+                        vm.googleTranslation = result;
+                    else
+                        vm.bingTranslation = result;
                 })
                 .error(function() {
                     var err = ww.angular.parseHttpError(arguments);
                     alert(err.message);
             });
-
-        };
-        vm.bingTranslate = function() {
 
         };
     }

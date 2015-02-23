@@ -157,6 +157,9 @@ resources:
 The two most important keys are the connectionString and resourceTableName which point at your
 database and a table within it. You can use either a raw connectionstring as above or a connection string name in the ConnectionStrings section of your config file.
 
+**resxExportProjectType**<br/>
+This option determines how the Resx export feature works. The two options are `Project` or `WebForms`. Project exports resources  
+
 #### Run the Web Resource Editor
 In order to use database resources you'll actually have to create some resources in a database.
 Make sure you've first added a valid connection string in the config file in the last step! 

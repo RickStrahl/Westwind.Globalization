@@ -153,6 +153,46 @@
            $("#TranslateDialog").modal();
        };
 
+       // call back from translate controller
+       $scope.$root.$on("translateComplete", function (e, lang, value) {
+           var res = null;
+           var index = -1;
+           for (var i = 0; i < vm.resourceItems.length; i++) {
+               res = vm.resourceItems[i];
+               if (res.LocaleId === lang) {
+                   index = i;
+                   break;
+               }                                  
+               res = null;
+           }
+
+           if (res == null) {
+               res = vm.newResource();
+               res.LocaleId = lang;
+               //res.Value = value;
+               res.ResourceId = vm.resourceId;
+               res.ResourceSet = vm.resourceSet;
+               vm.resourceItems.push(res);
+           }
+           //else
+           //    vm.resourceItems[index].Value = value;
+
+           if (index == -1)
+               index = vm.resourceItems.length - 1;
+           
+           ww.angular.applyBindingValue("#value_" + index, value);
+
+           // assign the value directly to field
+           // to force to $dirty state and show green check
+           $timeout(function() {
+               angular.element('#value_' + index)
+                   .val(value)
+                   .controller('ngModel')                   
+                   .$setViewValue(value);
+           }, 100);
+
+       });
+
        vm.onResourceIdBlur = function() {
            if (!vm.activeResource.Value)
                vm.activeResource.Value = vm.activeResource.ResourceId;

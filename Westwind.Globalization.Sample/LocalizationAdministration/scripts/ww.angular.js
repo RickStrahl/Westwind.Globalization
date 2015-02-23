@@ -70,13 +70,13 @@ http://en.wikipedia.org/wiki/MIT_License
         // when you need to update values 'manually' via DOM
         // manipulation
         // element parameter can be DOM or jq element
-        applyBindingValue: function(element, value) {            
-            var el = angular.element(element);
+        applyBindingValue: function(element, value) {                                    
             // must use timeout to avoid recursive $apply errors
             setTimeout(function () {                
-                el.scope().$apply(function () {                    
-                    el.val(value);
-                    el.controller('ngModel').$setViewValue(el.val());
+                var el = angular.element(element);
+                el.scope().$apply(function () {
+                    el.val(value); // force value to be set                    
+                    el.controller('ngModel').$setViewValue(value);                    
                 });
             });
         }
