@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
+using System.Web;
 
 namespace Westwind.Globalization
 {
@@ -99,6 +100,30 @@ namespace Westwind.Globalization
                 return resId;
 
             return result;
+        }
+
+        /// <summary>
+        /// Localization helper function that Translates a resource
+        /// Id to a resource value to an HtmlStringg. Easy access that allows full
+        /// control over the resource to retrieve or default UiCulture
+        /// locale retrieval.
+        /// 
+        /// Use this version for HTML content that needs to be embedded in Razor
+        /// views or other server tools that can use pre-encoded HTML content.
+        /// </summary>
+        /// <param name="resId">The Resource Id to retrieve
+        /// Note resource Ids can be *any* string and if no
+        /// matching resource is found the id is returned.
+        /// </param>
+        /// <param name="resourceSet">Name of the ResourceSet that houses this resource. If null or empty resources are used.</param>
+        /// <param name="lang">5 letter or 2 letter language ieetf code: en-US, de-DE or en, de etc.</param>
+        /// <returns>
+        /// Localized resource or the resource Id if no match is found. 
+        /// This value *always* returns a string unless you pass in null.
+        /// </returns>
+        public static HtmlString THtml(string resId, string resourceSet = null, string lang = null)
+        {
+            return new HtmlString( T(resId,resourceSet,lang) );
         }
 
 

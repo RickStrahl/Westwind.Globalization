@@ -9,6 +9,11 @@ New DbResourceDataManager interface and adpater model for supporting multiple da
 * **Add SqlCompact, MySql, SqlLite DbResourceManagers**<br/>
 Added custom DbResourceDataManager implementations for each of these data engines and created separate assemblies for each of them to isolate dependencies. You can specify which DataManager is used via the Configuration.DataManagerType property.
 
+* **New Administration Form**<br/>
+Complete rewrote the Administration form using a pure client side model using Angular JS and a CallbackHandler service on the backend. The new UI provides much easier navigation of resources and shows all resources available for a resource key for easy editing. The editing UI is also keyboard friendly to allow for quick hands on the keyboard editing of resources.
+
+* **DbRes.THtml() Method**<br/>
+Added DbRes.THtml() method in addition to DbRes.T() to allow for creating HTML pre-encoded content with less typing and function nesting (`@Html.Raw(DbRes.T(...))`) in Razor code.
 
 ### Version 1.998
 <small><i>January 26, 2015</i></small>
