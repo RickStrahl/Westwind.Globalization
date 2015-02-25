@@ -95,20 +95,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Westwind.Utilities.2.59.2\lib\net45\Westwind.Utilities.dll</HintPath>
     </Reference>
-    <Reference Include="Westwind.Web">
-      <HintPath>..\packages\Westwind.Web.2.59\lib\net45\Westwind.Web.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Westwind.Web.WebForms, Version=2.59.5500.1075, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Westwind.Web.WebForms.2.59\lib\net45\Westwind.Web.WebForms.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbResourceDataManager\DbResourceDataManager.cs" />
     <Compile Include="DbResourceDataManager\DbResourceSqlServerCeDataManager.cs" />
     <Compile Include="DbResourceDataManager\IDbResourceSetDataManager.cs" />
-    <Compile Include="DbResourceProvider\DbResourceProviderFactory.cs" />
     <Compile Include="DbResourceManager\DbResourceReader.cs" />
     <Compile Include="DbResourceManager\DbResourceSet.cs" />
     <Compile Include="DbResourceManager\DbResourceWriter.cs" />
@@ -122,35 +113,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SupportClasses\JavaScriptResourceHandler.cs" />
-    <Compile Include="SupportClasses\StronglyTypedWebResources.cs" />
+    <Compile Include="SupportClasses\IWestWindResourceProvider.cs" />
     <Compile Include="SupportClasses\TranslationService.cs" />
-    <Compile Include="Designer\DbDesignTimeResourceProviderFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\GlobalizationResources.cs" />
     <Compile Include="SupportClasses\DbResXConverter.cs" />
     <Compile Include="DbResourceSupportClasses\DbResourceConfiguration.cs" />
-    <Compile Include="DbResourceSupportClasses\DbResourceControl.cs" />
     <Compile Include="DbResourceManager\DbResourceManager.cs">
     </Compile>
-    <Compile Include="DbResourceProvider\DbResourceProvider.cs">
-    </Compile>
-    <Compile Include="DbSimpleResourceProvider\DbSimpleResourceProvider.cs" />
-    <Compile Include="DbSimpleResourceProvider\DbSimpleResourceProviderFactory.cs" />
-    <Compile Include="DbSimpleResourceProvider\DbSimpleResourceReader.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\editresources.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="DbSimpleResourceProvider\BasicResourceProvider.cd" />
-    <None Include="DbSimpleResourceProvider\DbSimpleResourceProviderHierarchy.cd" />
     <None Include="packages.config" />
     <None Include="Web.Sample.Xconfig">
       <SubType>Designer</SubType>
     </None>
-    <None Include="DbResourceProvider\DbResourceProviderHierarchy.cd" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Resources.resx">
@@ -180,7 +156,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\localize.png" />
     <Content Include="ResourceTest.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>

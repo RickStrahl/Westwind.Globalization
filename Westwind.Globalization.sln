@@ -26,9 +26,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Westwind.Globalization.MySq
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Westwind.Globalization.SqLite", "Westwind.Globalization.SqlLite\Westwind.Globalization.SqLite.csproj", "{4C74DAE9-4F4D-4D94-B3CA-783ACEF494F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Westwind.Web", "..\..\WestwindToolkit\Westwind.Web\Westwind.Web.csproj", "{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Westwind.Globalization.Web", "Westwind.Globalization.Web\Westwind.Globalization.Web.csproj", "{D827F9A2-12E0-436C-B986-8589ED643481}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Westwind.Utilities", "..\..\WestwindToolkit\Westwind.Utilities\Westwind.Utilities.csproj", "{1C9829A8-8979-4493-863C-635726F8A61C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample and Tests", "Sample and Tests", "{0BA85EAE-8A25-4B4A-8ACF-553D14C3BAE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -100,32 +100,24 @@ Global
 		{4C74DAE9-4F4D-4D94-B3CA-783ACEF494F2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4C74DAE9-4F4D-4D94-B3CA-783ACEF494F2}.SandBox|Any CPU.ActiveCfg = Release|Any CPU
 		{4C74DAE9-4F4D-4D94-B3CA-783ACEF494F2}.SandBox|Any CPU.Build.0 = Release|Any CPU
-		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.DemoMode|Any CPU.ActiveCfg = Deploy|Any CPU
-		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.DemoMode|Any CPU.Build.0 = Deploy|Any CPU
-		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.Deploy|Any CPU.ActiveCfg = Deploy|Any CPU
-		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.Deploy|Any CPU.Build.0 = Deploy|Any CPU
-		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.net40|Any CPU.ActiveCfg = net40|Any CPU
-		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.net40|Any CPU.Build.0 = net40|Any CPU
-		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.SandBox|Any CPU.ActiveCfg = SandBox|Any CPU
-		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.SandBox|Any CPU.Build.0 = SandBox|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.DemoMode|Any CPU.ActiveCfg = Deploy|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.DemoMode|Any CPU.Build.0 = Deploy|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.Deploy|Any CPU.ActiveCfg = Deploy|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.Deploy|Any CPU.Build.0 = Deploy|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.net40|Any CPU.ActiveCfg = net40|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.net40|Any CPU.Build.0 = net40|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.SandBox|Any CPU.ActiveCfg = SandBox|Any CPU
-		{1C9829A8-8979-4493-863C-635726F8A61C}.SandBox|Any CPU.Build.0 = SandBox|Any CPU
+		{D827F9A2-12E0-436C-B986-8589ED643481}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D827F9A2-12E0-436C-B986-8589ED643481}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D827F9A2-12E0-436C-B986-8589ED643481}.DemoMode|Any CPU.ActiveCfg = Debug|Any CPU
+		{D827F9A2-12E0-436C-B986-8589ED643481}.DemoMode|Any CPU.Build.0 = Debug|Any CPU
+		{D827F9A2-12E0-436C-B986-8589ED643481}.Deploy|Any CPU.ActiveCfg = Debug|Any CPU
+		{D827F9A2-12E0-436C-B986-8589ED643481}.Deploy|Any CPU.Build.0 = Debug|Any CPU
+		{D827F9A2-12E0-436C-B986-8589ED643481}.net40|Any CPU.ActiveCfg = Release|Any CPU
+		{D827F9A2-12E0-436C-B986-8589ED643481}.net40|Any CPU.Build.0 = Release|Any CPU
+		{D827F9A2-12E0-436C-B986-8589ED643481}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D827F9A2-12E0-436C-B986-8589ED643481}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D827F9A2-12E0-436C-B986-8589ED643481}.SandBox|Any CPU.ActiveCfg = Release|Any CPU
+		{D827F9A2-12E0-436C-B986-8589ED643481}.SandBox|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E0DB861F-F563-4016-830A-7710F41E2091} = {0BA85EAE-8A25-4B4A-8ACF-553D14C3BAE1}
+		{1E36A3C9-2F87-407A-B568-EBF336061A06} = {0BA85EAE-8A25-4B4A-8ACF-553D14C3BAE1}
 	EndGlobalSection
 EndGlobal

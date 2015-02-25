@@ -110,6 +110,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Westwind.Utilities.2.59.2\lib\net45\Westwind.Utilities.dll</HintPath>
     </Reference>
+    <Reference Include="Westwind.Web, Version=2.59.5499.28286, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Westwind.Web.2.59\lib\net45\Westwind.Web.dll</HintPath>
+    </Reference>
     <Reference Include="Westwind.Web.WebForms, Version=2.59.5500.1075, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Westwind.Web.WebForms.2.59\lib\net45\Westwind.Web.WebForms.dll</HintPath>
@@ -140,16 +144,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="LocalizationAdmin\LocalizationAdmin.aspx.cs">
-      <DependentUpon>LocalizationAdmin.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="LocalizationAdmin\LocalizationAdmin.aspx.designer.cs" />
-    <Compile Include="LocalizationAdmin\StronglyTypedGlobalResources.aspx.cs">
-      <DependentUpon>StronglyTypedGlobalResources.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="LocalizationAdmin\StronglyTypedGlobalResources.aspx.designer.cs" />
     <Compile Include="Models\ViewModelWithLocalizedAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.cs" />
@@ -317,46 +311,6 @@
     <Content Include="LocalizationAdministration\scripts\ww.jquery.js" />
     <Content Include="LocalizationAdministration\scripts\ww.jquery.min.js" />
     <None Include="LocalizationAdministration\scripts\_references.js" />
-    <Content Include="LocalizationAdmin\Default.aspx" />
-    <Content Include="LocalizationAdmin\favicon.ico" />
-    <Content Include="LocalizationAdmin\images\backup.png" />
-    <Content Include="LocalizationAdmin\images\calendar.png" />
-    <Content Include="LocalizationAdmin\images\close.png" />
-    <Content Include="LocalizationAdmin\images\closeX.png" />
-    <Content Include="LocalizationAdmin\images\codegen.png" />
-    <Content Include="LocalizationAdmin\images\createtable.png" />
-    <Content Include="LocalizationAdmin\images\delete.png" />
-    <Content Include="LocalizationAdmin\images\DialogHeader.png" />
-    <Content Include="LocalizationAdmin\images\DialogHighlight.png" />
-    <Content Include="LocalizationAdmin\images\DialogSelection.png" />
-    <Content Include="LocalizationAdmin\images\DialogStrip.png" />
-    <Content Include="LocalizationAdmin\images\edit.png" />
-    <Content Include="LocalizationAdmin\images\extractresources.png" />
-    <Content Include="LocalizationAdmin\images\HeaderGradient.png" />
-    <Content Include="LocalizationAdmin\images\help.png" />
-    <Content Include="LocalizationAdmin\images\home.png" />
-    <Content Include="LocalizationAdmin\images\import.png" />
-    <Content Include="LocalizationAdmin\images\info.png" />
-    <Content Include="LocalizationAdmin\images\LightBlueGradient.png" />
-    <Content Include="LocalizationAdmin\images\LightOrangeGradient.png" />
-    <Content Include="LocalizationAdmin\images\list.png" />
-    <Content Include="LocalizationAdmin\images\loading_black.gif" />
-    <Content Include="LocalizationAdmin\images\loading_small.gif" />
-    <Content Include="LocalizationAdmin\images\localize.png" />
-    <Content Include="LocalizationAdmin\images\new.png" />
-    <Content Include="LocalizationAdmin\images\recycle.png" />
-    <Content Include="LocalizationAdmin\images\refresh.png" />
-    <Content Include="LocalizationAdmin\images\remove.png" />
-    <Content Include="LocalizationAdmin\images\Rename.png" />
-    <Content Include="LocalizationAdmin\images\search.png" />
-    <Content Include="LocalizationAdmin\images\sort.png" />
-    <Content Include="LocalizationAdmin\images\toolbar.gif" />
-    <Content Include="LocalizationAdmin\images\users.png" />
-    <Content Include="LocalizationAdmin\images\warning.png" />
-    <Content Include="LocalizationAdmin\LocalizationAdmin.aspx" />
-    <Content Include="LocalizationAdmin\LocalizeAdminForm.css" />
-    <Content Include="LocalizationAdmin\LocalizeAdminForm.js" />
-    <Content Include="LocalizationAdmin\StronglyTypedGlobalResources.aspx" />
     <Content Include="LocalizationAdministration\.idea\.name" />
     <Content Include="LocalizationAdministration\.idea\LocalizationAdministration.iml" />
     <Content Include="LocalizationAdministration\bower_components\angular-sanitize\.bower.json" />
@@ -509,7 +463,6 @@
     <None Include="ResourceTest.cshtml" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="LocalizationAdmin\Web.config" />
     <Content Include="ResourceTest.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -547,10 +500,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\WestwindToolkit\Westwind.Web\Westwind.Web.csproj">
-      <Project>{0c38b4e1-0c87-4289-a57b-87c1b5be3bbe}</Project>
-      <Name>Westwind.Web</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Westwind.Globalization.MySql\Westwind.Globalization.MySql.csproj">
       <Project>{9d405441-66d4-45d0-8832-9e17587ba921}</Project>
       <Name>Westwind.Globalization.MySql</Name>
@@ -558,6 +507,10 @@
     <ProjectReference Include="..\Westwind.Globalization.SqlLite\Westwind.Globalization.SqLite.csproj">
       <Project>{4c74dae9-4f4d-4d94-b3ca-783acef494f2}</Project>
       <Name>Westwind.Globalization.SqLite</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Westwind.Globalization.Web\Westwind.Globalization.Web.csproj">
+      <Project>{d827f9a2-12e0-436c-b986-8589ed643481}</Project>
+      <Name>Westwind.Globalization.Web</Name>
     </ProjectReference>
     <ProjectReference Include="..\Westwind.Globalization\Westwind.Globalization.csproj">
       <Project>{51dece39-764c-4c32-a57a-d93a5fd9bd6a}</Project>

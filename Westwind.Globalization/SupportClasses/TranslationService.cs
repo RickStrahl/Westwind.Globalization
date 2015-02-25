@@ -2,7 +2,6 @@ using System;
 using System.Text;
 using System.Web;
 using Westwind.Utilities;
-using Westwind.Web.JsonSerializers;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -65,7 +64,7 @@ namespace Westwind.Globalization
                 toCulture = tokens[0];
             
             string url = string.Format(@"http://translate.google.com/translate_a/t?client=j&text={0}&hl=en&sl={1}&tl={2}",                                     
-                                       HttpUtility.UrlEncode(text),fromCulture,toCulture);
+                                       StringUtils.UrlEncode(text),fromCulture,toCulture);
 
             // Retrieve Translation with HTTP GET call
             string html = null;
@@ -95,14 +94,10 @@ namespace Westwind.Globalization
             {
                 this.ErrorMessage = Westwind.Globalization.Resources.Resources.InvalidSearchResult;
                 return null;
-            }
-
+            }        
+           
             // result string must be JSON decoded
-            return WebUtils.DecodeJsString(result);
-
-            // Result is a JavaScript string so we need to deserialize it properly
-            //JavaScriptSerializer ser = new JavaScriptSerializer();
-            //return ser.Deserialize(result, typeof(string)) as string;            
+            return JsonSerializationUtils.Deserialize(result,typeof(string)) as string;            
         }
 
 
@@ -142,9 +137,9 @@ namespace Westwind.Globalization
                 web.Headers.Add("Authorization", "Bearer " + accessToken);                        
                 string ct = "text/plain";
                 string postData = string.Format("?text={0}&from={1}&to={2}&contentType={3}",
-                                         HttpUtility.UrlEncode(text),
+                                         StringUtils.UrlEncode(text),
                                          fromCulture, toCulture,
-                                         HttpUtility.UrlEncode(ct));
+                                         StringUtils.UrlEncode(ct));
 
                 web.Encoding = Encoding.UTF8;
                 res = web.DownloadString(serviceUrl + postData);
@@ -190,8 +185,8 @@ namespace Westwind.Globalization
             var postData = string.Format("grant_type=client_credentials&client_id={0}" +
                                          "&client_secret={1}" +
                                          "&scope=http://api.microsofttranslator.com",
-                                         HttpUtility.UrlEncode(clientId),
-                                         HttpUtility.UrlEncode(clientSecret));
+                                         StringUtils.UrlEncode(clientId),
+                                         StringUtils.UrlEncode(clientSecret));
 
             // POST Auth data to the oauth API
             string res, token;
@@ -208,8 +203,8 @@ namespace Westwind.Globalization
                 return null;
             }
 
-            var ser = new JSONSerializer();
-            var auth = ser.Deserialize<BingAuth>(res);
+
+            var auth = JsonSerializationUtils.Deserialize(res, typeof (BingAuth)) as BingAuth;
             if (auth == null)
                 return null;
             
@@ -217,7 +212,6 @@ namespace Westwind.Globalization
 
             return token;
         }
-
 
         private class BingAuth
         {

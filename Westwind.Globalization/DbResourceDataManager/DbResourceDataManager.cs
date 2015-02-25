@@ -45,7 +45,6 @@ using System.Web;
 using System.Web.UI;
 using Westwind.Utilities;
 using Westwind.Utilities.Data;
-using Westwind.Web.JsonSerializers;
 
 namespace Westwind.Globalization
 {
@@ -1464,17 +1463,17 @@ namespace Westwind.Globalization
         /// to more generic (de-ch,de,invariant depending on availability)
         /// </summary>
         /// <param name="javaScriptVarName">Name of the JS object variable to createBackupTable</param>
-        /// <param name="ResourceSet">ResourceSet name. Pass NULL for locale Resources</param>
-        /// <param name="LocaleId"></param>
-        public string GetResourcesAsJavascriptObject(string javaScriptVarName, string ResourceSet, string LocaleId)
+        /// <param name="resourceSet">ResourceSet name. Pass NULL for locale Resources</param>
+        /// <param name="localeId"></param>
+        public string GetResourcesAsJavascriptObject(string javaScriptVarName, string resourceSet, string localeId)
         {
-            if (LocaleId == null)
-                LocaleId = CultureInfo.CurrentUICulture.IetfLanguageTag;
-            if (ResourceSet == null)
-                ResourceSet = WebUtils.GetAppRelativePath();
+            if (localeId == null)
+                localeId = CultureInfo.CurrentUICulture.IetfLanguageTag;
+            if (resourceSet == null)
+                resourceSet = string.Empty;
 
             IDictionary resources = GetResourceSetNormalizedForLocaleId(
-                LocaleId, ResourceSet);
+                localeId, resourceSet);
 
             // Filter the list to non-control resources 
             Dictionary<string, string> localRes = new Dictionary<string, string>();
@@ -1485,10 +1484,7 @@ namespace Westwind.Globalization
                     localRes.Add(key, resources[key] as string);
             }
 
-            JSONSerializer ser = new JSONSerializer();
-            ser.FormatJsonOutput = HttpContext.Current.IsDebuggingEnabled;
-            string json = ser.Serialize(localRes);
-
+            var json = JsonSerializationUtils.Serialize(localRes, formatJsonOutput: true);            
             return "var " + javaScriptVarName + " = " + json + ";\r\n";
         }
 

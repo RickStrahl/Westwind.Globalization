@@ -121,10 +121,10 @@ namespace Westwind.Globalization
         /// Localized resource or the resource Id if no match is found. 
         /// This value *always* returns a string unless you pass in null.
         /// </returns>
-        public static HtmlString THtml(string resId, string resourceSet = null, string lang = null)
-        {
-            return new HtmlString( T(resId,resourceSet,lang) );
-        }
+        //public static HtmlString THtml(string resId, string resourceSet = null, string lang = null)
+        //{
+        //    return new HtmlString( T(resId,resourceSet,lang) );
+        //}
 
 
         /// <summary>

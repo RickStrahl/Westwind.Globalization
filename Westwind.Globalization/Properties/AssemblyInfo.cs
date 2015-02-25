@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Web.UI;
 
-[assembly: TagPrefix("Westwind.Globalization", "loc")]
+
 //[assembly: System.Security.AllowPartiallyTrustedCallers()]
 
 // General Information about an assembly is controlled through the following 

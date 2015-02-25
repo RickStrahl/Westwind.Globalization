@@ -1,8 +1,8 @@
 using System;
-using System.Web.UI.Design;
 using System.Configuration;
-using System.Web.Configuration;
 using System.Collections.Generic;
+using System.Web.Configuration;
+using System.Web.UI.Design;
 using System.Xml.Serialization;
 using Westwind.Utilities;
 
@@ -303,12 +303,10 @@ namespace Westwind.Globalization
 
 
 
-#region Allow for provider unloading
-
         /// <summary>
         /// Keep track of loaded providers so we can unload them
         /// </summary>
-        internal static List<IWestWindResourceProvider> LoadedProviders = new List<IWestWindResourceProvider>();
+        public static List<IWestWindResourceProvider> LoadedProviders = new List<IWestWindResourceProvider>();
 
         /// <summary>
         /// This static method clears all resources from the loaded Resource Providers 
@@ -333,7 +331,7 @@ namespace Westwind.Globalization
             // clear any resource managers
             DbRes.ClearResources();
         }
-#endregion
+
 
     }
 

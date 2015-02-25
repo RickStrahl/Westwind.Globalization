@@ -290,9 +290,9 @@ namespace Westwind.Globalization
         /// to more generic (de-ch,de,invariant depending on availability)
         /// </summary>
         /// <param name="javaScriptVarName">Name of the JS object variable to createBackupTable</param>
-        /// <param name="ResourceSet">ResourceSet name. Pass NULL for locale Resources</param>
-        /// <param name="LocaleId"></param>
-        string GetResourcesAsJavascriptObject(string javaScriptVarName, string ResourceSet, string LocaleId);
+        /// <param name="resourceSet">ResourceSet name. Pass NULL for locale Resources</param>
+        /// <param name="localeId"></param>
+        string GetResourcesAsJavascriptObject(string javaScriptVarName, string resourceSet, string localeId);
 
         /// <summary>
         /// Checks to see if the LocalizationTable exists
