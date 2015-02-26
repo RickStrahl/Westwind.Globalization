@@ -159,12 +159,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="LocalizationAdministration\.idea\encodings.xml" />
-    <Content Include="LocalizationAdministration\.idea\misc.xml" />
-    <Content Include="LocalizationAdministration\.idea\modules.xml" />
-    <Content Include="LocalizationAdministration\.idea\scopes\scope_settings.xml" />
-    <Content Include="LocalizationAdministration\.idea\vcs.xml" />
-    <Content Include="LocalizationAdministration\.idea\workspace.xml" />
     <Content Include="LocalizationAdministration\index.html" />
     <Content Include="LocalizationAdministration\RenameResourceDialog.html" />
     <Content Include="LocalizationAdministration\ResourceSetList.html" />
@@ -311,8 +305,6 @@
     <Content Include="LocalizationAdministration\scripts\ww.jquery.js" />
     <Content Include="LocalizationAdministration\scripts\ww.jquery.min.js" />
     <None Include="LocalizationAdministration\scripts\_references.js" />
-    <Content Include="LocalizationAdministration\.idea\.name" />
-    <Content Include="LocalizationAdministration\.idea\LocalizationAdministration.iml" />
     <Content Include="LocalizationAdministration\bower_components\angular-sanitize\.bower.json" />
     <Content Include="LocalizationAdministration\bower_components\angular-sanitize\angular-sanitize.min.js.map" />
     <Content Include="LocalizationAdministration\bower_components\angular-sanitize\bower.json" />

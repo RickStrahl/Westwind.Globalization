@@ -149,7 +149,7 @@ resources:
                       bingClientSecret="" />
 
   <!-- Enable ASP.NET Resource Provider  -->
-  <globalization resourceProviderFactoryType="Westwind.Globalization.DbSimpleResourceProviderFactory,Westwind.Globalization" />
+  <globalization resourceProviderFactoryType="Westwind.Globalization.DbSimpleResourceProviderFactory,Westwind.Globalization.Web" />
 </configuration>
 ```
 

@@ -110,10 +110,6 @@ namespace Westwind.Globalization
             }
         }
 
-        public ResourceItem()
-        {          
-        }
-
         /// <summary>
         /// initializes the resource item properties from
         /// the active data reader item.

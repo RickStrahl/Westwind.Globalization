@@ -1,7 +1,6 @@
 using System;
 using System.Configuration;
 using System.Collections.Generic;
-using System.Web.Configuration;
 using System.Web.UI.Design;
 using System.Xml.Serialization;
 using Westwind.Utilities;
@@ -220,9 +219,9 @@ namespace Westwind.Globalization
         /// </summary>
         /// <returns></returns>
         public bool ReadConfigurationSection()
-        {
-            object TSection = null;
-            TSection = WebConfigurationManager.GetWebApplicationSection("DbResourceProvider");
+        {            
+            //TSection = WebConfigurationManager.GetWebApplicationSection("DbResourceProvider");
+            object TSection = ConfigurationManager.GetSection("DbResourceProvider");
             if (TSection == null)
                 return false;
 

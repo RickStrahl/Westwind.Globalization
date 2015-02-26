@@ -29,7 +29,7 @@
  **************************************************************  
 */
 #endregion
-  
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -41,8 +41,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.UI;
 using Westwind.Utilities;
 using Westwind.Utilities.Data;
 
@@ -178,9 +176,9 @@ namespace Westwind.Globalization
                                     resourceValue = LoadFileResource(reader);
                                 else
                                 {
-                                    LosFormatter formatter = new LosFormatter();
-                                    resourceValue = formatter.Deserialize(resourceValue as string);
+                                    resourceValue =  DeserializeValue(resourceValue as string, resourceType);
                                 }
+
                             }
                             catch
                             {
@@ -207,7 +205,7 @@ namespace Westwind.Globalization
                 finally
                 {
                     // close reader and connection
-                    reader.Close();
+                    reader.Close(); 
                 }
             }
 
@@ -287,10 +285,8 @@ namespace Westwind.Globalization
                             continue;
                         lastResourceId = resourceId;
 
-                        // Read the value into this
-                        object resourceValue = null;
-                        resourceValue = reader["Value"] as string;
-
+                        // Read the value into this                        
+                        object resourceValue = reader["Value"] as string;
                         string resourceType = reader["Type"] as string;
 
                         if (!string.IsNullOrWhiteSpace(resourceType))
@@ -301,10 +297,7 @@ namespace Westwind.Globalization
                             if (resourceType == "FileResource")
                                 resourceValue = LoadFileResource(reader);
                             else
-                            {
-                                LosFormatter Formatter = new LosFormatter();
-                                resourceValue = Formatter.Deserialize(resourceValue as string);
-                            }
+                                DeserializeValue(resourceValue as string, resourceType);
                         }
                         else
                         {
@@ -671,15 +664,13 @@ namespace Westwind.Globalization
                 if (reader.Read())
                 {
 
-                    string Type = reader["Type"] as string;
+                    string resourceType = reader["Type"] as string;
+                    object value = reader["Value"];
 
-                    if (string.IsNullOrEmpty(Type))
-                        result = reader["Value"] as string;
+                    if (string.IsNullOrEmpty(resourceType))
+                        result = value;
                     else
-                    {
-                        LosFormatter Formatter = new LosFormatter();
-                        result = Formatter.Deserialize(reader["Value"] as string);
-                    }
+                        DeserializeValue(value as string, resourceType);
                 }
             }
 
@@ -893,10 +884,7 @@ namespace Westwind.Globalization
                 Type = value.GetType().AssemblyQualifiedName;
                 try
                 {
-                    LosFormatter output = new LosFormatter();
-                    StringWriter writer = new StringWriter();
-                    output.Serialize(writer, value);
-                    value = writer.ToString();
+                    SerializeValue(value);                                        
                 }
                 catch (Exception ex)
                 {
@@ -1002,10 +990,7 @@ namespace Westwind.Globalization
                 type = value.GetType().AssemblyQualifiedName;
                 try
                 {
-                    LosFormatter output = new LosFormatter();
-                    StringWriter writer = new StringWriter();
-                    output.Serialize(writer, value);
-                    value = writer.ToString();
+                    value = SerializeValue(value);
                 }
                 catch (Exception ex)
                 {
@@ -1618,8 +1603,33 @@ namespace Westwind.Globalization
             return true;
         }
 
-       
+        /// <summary>
+        /// Serializes a value to string that can be stored in
+        /// data storage.
+        /// Used for serializing arbitrary objects to store in the application
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>JSON string or null (no exceptions thrown on error)</returns>
+        protected virtual string SerializeValue(object value){
+            return JsonSerializationUtils.Serialize(value, false);
+        }
 
+        /// <summary>
+        /// Deserializes serialized data in JSON format based on a
+        /// type name provided in the resource type parameter.        
+        /// </summary>
+        /// <param name="serializedValue">JSON encoded string</param>
+        /// <param name="resourceType">Type name to deserialize - type must be referenced by the app</param>
+        /// <returns>value or null on failure (no exceptions thrown)</returns>
+        protected virtual object DeserializeValue(string serializedValue, string resourceType)
+        {
+            var type = ReflectionUtils.GetTypeFromName(resourceType);
+            if (type == null)
+                return null;
+
+            return JsonSerializationUtils.Deserialize(serializedValue,type,false);
+        }
+       
         protected void SetError()
         {
             SetError("CLEAR");

@@ -2,9 +2,7 @@ using System;
 using System.Web;
 
 using System.Configuration;
-//using System.Web.Configuration;
 using System.ComponentModel;
-//using System.Web.Compilation;
 using System.Collections.Generic;
 
 namespace Westwind.Globalization

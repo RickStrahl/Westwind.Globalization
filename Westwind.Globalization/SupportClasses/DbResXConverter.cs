@@ -46,7 +46,7 @@ namespace Westwind.Globalization
         public DbResXConverter(string basePhsyicalPath)
         {
             if (string.IsNullOrEmpty(basePhsyicalPath))
-                basePhsyicalPath = HttpContext.Current.Request.PhysicalApplicationPath;
+                basePhsyicalPath = string.Empty;
 
             BasePhysicalPath = basePhsyicalPath;
         }
