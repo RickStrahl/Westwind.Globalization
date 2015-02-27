@@ -374,7 +374,8 @@ namespace Westwind.Globalization
                 
                 string sql = "select ResourceId,Value,LocaleId,ResourceSet,Type,TextFile,BinFile,FileName,Comment from " + Configuration.ResourceTableName +
                              " where ResourceSet " +
-                             (!localResources ? "not" : string.Empty) + " like @ResourceSet ORDER by ResourceSet,LocaleId";
+                             (!localResources ? "not" : string.Empty) + " like @ResourceSet " +
+                             "ORDER BY ResourceSet,LocaleId";
 
                 items = data.Query<ResourceItem>(sql, data.CreateParameter("@ResourceSet", "%.%"));
 

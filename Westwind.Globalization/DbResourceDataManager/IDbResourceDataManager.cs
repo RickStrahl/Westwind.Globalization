@@ -4,13 +4,14 @@ using Westwind.Utilities.Data;
 
 namespace Westwind.Globalization
 {
-    /// <summary>
-    /// This interface provides for all data operations supported by
-    /// both the ResourceProvider and Manager as well as the admin
-    /// interfaces that retrieve additional data to access the view
-    /// </summary>
-    public interface IDbResourceDataManager : IDbResourceSetDataManager
+    public interface IDbResourceDataManager
     {
+        /// <summary>
+        /// Instance of the DbResourceConfiguration that can be overridden
+        /// Defaults to the default instance - DbResourceConfiguration.Current
+        /// </summary>
+        DbResourceConfiguration Configuration { get; set; }
+
         /// <summary>
         /// Error message that can be checked after a method complets
         /// and returns a failure result.
@@ -28,8 +29,8 @@ namespace Westwind.Globalization
         /// Returns a specific set of resources for a given culture and 'resource set' which
         /// in this case is just the virtual directory and culture.
         /// </summary>
-        /// <param name="cultureName"></param>
-        /// <param name="resourceSet"></param>
+        /// <param name="cultureName">name of the culture Id (de, de-de) to retrieve</param>
+        /// <param name="resourceSet">Name of the resource set to retrieve</param>
         /// <returns></returns>
         IDictionary GetResourceSet(string cultureName, string resourceSet);
 
@@ -152,11 +153,10 @@ namespace Westwind.Globalization
         /// <returns></returns>
         Dictionary<string, string> GetResourceStrings(string resourceId, string resourceSet);
 
-
         /// <summary>
-        /// Updates an existing resource in the Localization table
+        /// Updates a resource if it exists, if it doesn't one is created
         /// </summary>
-        /// <param name="resource">Resource to add or update</param>
+        /// <param name="resource">Resource to update</param>
         int UpdateOrAddResource(ResourceItem resource);
 
         /// <summary>
@@ -166,16 +166,15 @@ namespace Westwind.Globalization
         /// <param name="value"></param>
         /// <param name="cultureName"></param>
         /// <param name="resourceSet"></param>
-        /// <param name="Type"></param>
+        /// <param name="Type"></param>        
         int UpdateOrAddResource(string resourceId, object value, string cultureName, string resourceSet,
             string comment = null, bool valueIsFileName = false);
 
         /// <summary>
         /// Adds a resource to the Localization Table
-        /// </summary>   
-        /// <param name="resource">Resource instance to add</param>      
+        /// </summary>
+        /// <param name="resource">Resource to update</param>
         int AddResource(ResourceItem resource);
-        
 
         /// <summary>
         /// Adds a resource to the Localization Table
@@ -186,13 +185,9 @@ namespace Westwind.Globalization
         /// <param name="resourceSet">The ResourceSet to which the resource id is added</param>
         /// <param name="comment">Optional comment for the key</param>
         /// <param name="valueIsFileName">if true the Value property is a filename to import</param>
-        int AddResource(string resourceId, object value, string cultureName, string resourceSet, string comment = null, bool valueIsFileName = false);
-
-        /// <summary>
-        /// Updates an existing resource in the Localization table
-        /// </summary>
-        /// <param name="resource">Resource instance to update</param>        
-        int UpdateResource(ResourceItem resource);
+        int AddResource(string resourceId, object value,
+            string cultureName, string resourceSet,
+            string comment = null, bool valueIsFileName = false);
 
         /// <summary>
         /// Updates an existing resource in the Localization table
@@ -202,7 +197,15 @@ namespace Westwind.Globalization
         /// <param name="cultureName"></param>
         /// <param name="resourceSet"></param>
         /// <param name="Type"></param>
-        int UpdateResource(string resourceId, object value, string cultureName, string resourceSet, string comment = null, bool valueIsFileName = false);
+        int UpdateResource(string resourceId, object value, 
+            string cultureName, string resourceSet,
+            string comment = null, bool valueIsFileName = false);
+
+        /// <summary>
+        /// Updates a resource if it exists, if it doesn't one is created
+        /// </summary>
+        /// <param name="resource">Resource to update</param>
+        int UpdateResource(ResourceItem resource);
 
         /// <summary>
         /// Deletes a specific resource ID based on ResourceId, ResourceSet and Culture.
@@ -297,14 +300,14 @@ namespace Westwind.Globalization
         /// <summary>
         /// Checks to see if the LocalizationTable exists
         /// </summary>
-        /// <param name="tableName"></param>
+        /// <param name="tableName">Table name or the configuration.ResourceTableName if not passed</param>
         /// <returns></returns>
-        bool IsLocalizationTable(string tableName);
+        bool IsLocalizationTable(string tableName = null);
 
         /// <summary>
         /// Create a backup of the localization database.
         /// 
-        /// Note the table used is the one specified in the DbResourceConfiguration.Current.ResourceTableName
+        /// Note the table used is the one specified in the Configuration.ResourceTableName
         /// </summary>
         /// <param name="BackupTableName">Table of the backup table. Null creates a _Backup table.</param>
         /// <returns></returns>
@@ -325,10 +328,6 @@ namespace Westwind.Globalization
         /// <returns></returns>
         bool CreateLocalizationTable(string tableName = null);
 
-        /// <summary>
-        /// Reports error information from the last operation
-        /// </summary>
-        /// <param name="message"></param>
         void SetError(string message);
     }
 }

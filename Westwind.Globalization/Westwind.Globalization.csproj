@@ -98,6 +98,7 @@
   <ItemGroup>
     <Compile Include="DbResourceDataManager\DbResourceDataManager.cs" />
     <Compile Include="DbResourceDataManager\DbResourceSqlServerCeDataManager.cs" />
+    <Compile Include="DbResourceDataManager\IDbResourceDataManager.cs" />
     <Compile Include="DbResourceDataManager\IDbResourceSetDataManager.cs" />
     <Compile Include="DbResourceManager\DbResourceReader.cs" />
     <Compile Include="DbResourceManager\DbResourceSet.cs" />
@@ -105,14 +106,13 @@
     <Compile Include="DbResourceDataManager\DbResourceSqlServerDataManager.cs" />
     <Compile Include="DbResourceSupportClasses\DbResourceProviderSection.cs" />
     <Compile Include="DbResourceManager\DbRes.cs" />
-    <Compile Include="DbResourceDataManager\IDbResourceBaseDataManager.cs" />
     <Compile Include="DbResourceDataManager\ResourceItem.cs" />
     <Compile Include="Resources\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SupportClasses\IWestWindResourceProvider.cs" />
+    <Compile Include="DbResourceSupportClasses\IWestWindResourceProvider.cs" />
     <Compile Include="SupportClasses\TranslationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SupportClasses\DbResXConverter.cs" />

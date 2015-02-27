@@ -137,8 +137,8 @@ namespace Westwind.Globalization
             XmlSettings.ConformanceLevel = ConformanceLevel.Document;            
             XmlSettings.IndentChars = "   ";
             XmlSettings.Indent = true;
-                       
-            foreach(var res in resources)
+
+            foreach (var res in resources)
             {
                 // Read into vars for easier usage below
                 string ResourceId = res.ResourceId;
@@ -154,9 +154,9 @@ namespace Westwind.Globalization
 
                 string LocaleId = res.LocaleId;
                 LocaleId = LocaleId.ToLower();
-                                 
+
                 // Create a new output file if the resource set or locale changes
-                if (ResourceSet != LastSet || LocaleId != LastLocale )
+                if (ResourceSet != LastSet || LocaleId != LastLocale)
                 {
                     if (xWriter != null)
                     {
@@ -176,40 +176,40 @@ namespace Westwind.Globalization
                     Writer.IndentChar = ' ';
                     Writer.Formatting = Formatting.Indented;
                     xWriter = Writer;
-                    
+
                     xWriter.WriteStartElement("root");
 
                     // Write out the schema
                     doc.DocumentElement.ChildNodes[0].WriteTo(xWriter);
-                        
+
                     // Write out the leading resheader elements
                     XmlNodeList Nodes = doc.DocumentElement.SelectNodes("resheader");
-                    foreach(XmlNode Node in Nodes)
+                    foreach (XmlNode Node in Nodes)
                     {
                         Node.WriteTo(xWriter);
                     }
-                    
+
                     LastSet = ResourceSet;
                     LastLocale = LocaleId;
                 }
-                
-                if (Type == "")  // plain string value
+
+                if (string.IsNullOrEmpty(Type)) // plain string value
                 {
                     //<data name="LinkButton1Resource1.Text" xml:space="preserve">
                     //    <value>LinkButton</value>
                     //</data>
                     xWriter.WriteStartElement("data");
-                    xWriter.WriteAttributeString("name", ResourceId);                    
-                    xWriter.WriteAttributeString("xml","space",null,"preserve");                                        
+                    xWriter.WriteAttributeString("name", ResourceId);
+                    xWriter.WriteAttributeString("xml", "space", null, "preserve");
                     xWriter.WriteElementString("value", Value);
                     if (!string.IsNullOrEmpty(Comment))
                         xWriter.WriteElementString("comment", Comment);
                     xWriter.WriteEndElement(); // data
                 }
                 // File Resources get written to disk
-                else if (Type == "FileResource")  
+                else if (Type == "FileResource")
                 {
-                    string resourceFilenname = FormatWebResourceSetPath(ResourceSet,localResources);
+                    string resourceFilenname = FormatWebResourceSetPath(ResourceSet, localResources);
                     string resourcePath = new FileInfo(resourceFilenname).DirectoryName;
 
                     if (Value.IndexOf("System.String") > -1)
@@ -228,25 +228,25 @@ namespace Westwind.Globalization
                         {
                         }
                     }
-                    else 
+                    else
                     {
-                        File.WriteAllBytes(resourcePath + "\\" + FileName,BinFile);
+                        File.WriteAllBytes(resourcePath + "\\" + FileName, BinFile);
                     }
 
-                  //<data name="Scratch" type="System.Resources.ResXFileRef, System.Windows.Forms">
-                  //  <value>Scratch.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-                  //</data>
+                    //<data name="Scratch" type="System.Resources.ResXFileRef, System.Windows.Forms">
+                    //  <value>Scratch.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+                    //</data>
                     xWriter.WriteStartElement("data");
                     xWriter.WriteAttributeString("name", ResourceId);
                     xWriter.WriteAttributeString("type", "System.Resources.ResXFileRef, System.Windows.Forms");
-                    
+
                     // values are already formatted in the database
                     xWriter.WriteElementString("value", Value);
                     if (!string.IsNullOrEmpty(Comment))
-                        xWriter.WriteElementString("comment", Comment); 
-                    
+                        xWriter.WriteElementString("comment", Comment);
+
                     xWriter.WriteEndElement(); // data
-                }                            
+                }
 
             } // foreach dr
 

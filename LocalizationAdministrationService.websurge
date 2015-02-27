@@ -1,9 +1,9 @@
-GET http://localhost:7894/localizationAdministration/localizationService.ashx?method=GetResourceList&ResourceSet=Resources HTTP/1.1
+GET http://localhost:7894/localizationAdmin/localizationService.ashx?method=GetResourceList&ResourceSet=Resources HTTP/1.1
 Accept: application/json
 
 ------------------------------------------------------------------
 
-POST http://localhost:7894/localizationAdministration/localizationService.ashx?method=GetResourceString HTTP/1.1
+POST http://localhost:7894/localizationAdmin/localizationService.ashx?method=GetResourceString HTTP/1.1
 Accept-Encoding: gzip,deflate
 Content-Type: application/json
 Accept: application/json
@@ -16,18 +16,18 @@ CultureName: "de"
 
 ------------------------------------------------------------------
 
-GET http://localhost:7894/localizationAdministration/localizationService.ashx?method=GetResourceSets HTTP/1.1
+GET http://localhost:7894/localizationAdmin/localizationService.ashx?method=GetResourceSets HTTP/1.1
 Accept-Encoding: gzip,deflate
 Accept: application/json
 
 ------------------------------------------------------------------
 
-GET http://localhost:7894/localizationAdministration/localizationService.ashx?method=GetAllLocaleIds&ResourceSet=Resources HTTP/1.1
+GET http://localhost:7894/localizationAdmin/localizationService.ashx?method=GetAllLocaleIds&ResourceSet=Resources HTTP/1.1
 Accept-Encoding: gzip,deflate
 
 ------------------------------------------------------------------
 
-POST http://localhost:7894/localizationAdministration/localizationService.ashx?method=GetResourceItem HTTP/1.1
+POST http://localhost:7894/localizationAdmin/localizationService.ashx?method=GetResourceItem HTTP/1.1
 Accept-Encoding: gzip,deflate
 Content-Type: application/json
 Accept: application/json
@@ -40,12 +40,12 @@ CultureName: "de"
 
 ------------------------------------------------------------------
 
-GET http://localhost:7894/localizationAdministration/localizationService.ashx?method=GetResourceStrings&ResourceId=Today&ResourceSet=Resources HTTP/1.1
+GET http://localhost:7894/localizationAdmin/localizationService.ashx?method=GetResourceStrings&ResourceId=Today&ResourceSet=Resources HTTP/1.1
 Accept-Encoding: gzip,deflate
 
 ------------------------------------------------------------------
 
-POST http://localhost:7894/localizationAdministration/localizationService.ashx?method=UpdateResourceString HTTP/1.1
+POST http://localhost:7894/localizationAdmin/localizationService.ashx?method=UpdateResourceString HTTP/1.1
 Accept-Encoding: gzip,deflate
 Content-Type: application/json
 Accept: application/json
@@ -59,7 +59,7 @@ Accept: application/json
 
 ------------------------------------------------------------------
 
-POST http://localhost:7894/localizationAdministration/localizationService.ashx?method=UpdateResource HTTP/1.1
+POST http://localhost:7894/localizationAdmin/localizationService.ashx?method=UpdateResource HTTP/1.1
 Accept-Encoding: gzip,deflate
 Content-Type: application/json
 Accept: application/json
@@ -73,7 +73,7 @@ Accept: application/json
 
 ------------------------------------------------------------------
 
-POST http://localhost:7894/localizationAdministration/localizationService.ashx?method=UpdateResourceString HTTP/1.1
+POST http://localhost:7894/localizationAdmin/localizationService.ashx?method=UpdateResourceString HTTP/1.1
 Accept-Encoding: gzip,deflate
 Content-Type: application/json
 Accept: application/json
@@ -87,7 +87,7 @@ Accept: application/json
 
 ------------------------------------------------------------------
 
-POST http://localhost:7894/localizationAdministration/localizationService.ashx?method=Translate HTTP/1.1
+POST http://localhost:7894/localizationAdmin/localizationService.ashx?method=Translate HTTP/1.1
 Accept-Encoding: gzip,deflate
 Content-Type: application/json
 Accept: application/json
@@ -101,7 +101,7 @@ Accept: application/json
 
 ------------------------------------------------------------------
 
-POST http://localhost:7894/localizationAdministration/localizationService.ashx?method=Translate HTTP/1.1
+POST http://localhost:7894/localizationAdmin/localizationService.ashx?method=Translate HTTP/1.1
 Accept-Encoding: gzip,deflate
 Content-Type: application/json
 Accept: application/json
@@ -115,7 +115,7 @@ Accept: application/json
 
 ------------------------------------------------------------------
 
-POST http://localhost:7894/localizationAdministration/localizationService.ashx?method=Translate HTTP/1.1
+POST http://localhost:7894/localizationAdmin/localizationService.ashx?method=Translate HTTP/1.1
 Accept-Encoding: gzip,deflate
 Content-Type: application/json
 Accept: application/json
@@ -129,7 +129,7 @@ Accept: application/json
 
 ------------------------------------------------------------------
 
-POST http://localhost:7894/localizationAdministration/localizationService.ashx?method=RenameResource HTTP/1.1
+POST http://localhost:7894/localizationAdmin/localizationService.ashx?method=RenameResource HTTP/1.1
 Accept-Encoding: gzip,deflate
 Content-Type: application/json
 Accept: application/json
@@ -142,22 +142,22 @@ Accept: application/json
 
 ------------------------------------------------------------------
 
-GET http://localhost:7894/localizationAdministration/localizationService.ashx?method=DeleteResourceSet&ResourceSet=NewResourceSet HTTP/1.1
+GET http://localhost:7894/localizationAdmin/localizationService.ashx?method=DeleteResourceSet&ResourceSet=NewResourceSet HTTP/1.1
 Accept-Encoding: gzip,deflate
 
 ------------------------------------------------------------------
 
-GET http://localhost:7894/localizationAdministration/localizationService.ashx?method=RenameResourceSet&oldResourceSet=CommonWords&NewResourceSet=CommonWords2 HTTP/1.1
+GET http://localhost:7894/localizationAdmin/localizationService.ashx?method=RenameResourceSet&oldResourceSet=CommonWords&NewResourceSet=CommonWords2 HTTP/1.1
 Accept-Encoding: gzip,deflate
 
 ------------------------------------------------------------------
 
-GET http://localhost:7894/localizationAdministration/localizationService.ashx?method=ReloadResources HTTP/1.1
+GET http://localhost:7894/localizationAdmin/localizationService.ashx?method=ReloadResources HTTP/1.1
 Accept-Encoding: gzip,deflate
 
 ------------------------------------------------------------------
 
-GET http://localhost:7894/localizationAdministration/localizationService.ashx?method=CreateClass HTTP/1.1
+GET http://localhost:7894/localizationAdmin/localizationService.ashx?method=CreateClass HTTP/1.1
 Accept-Encoding: gzip,deflate
 
 ------------------------------------------------------------------

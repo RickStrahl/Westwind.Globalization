@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace Westwind.Globalization
     /// <summary>
     /// Returns a resource item that contains both Value and Comment
     /// </summary>
+    [DebuggerDisplay("Lang: {Type} - {ResourceId} - {Value}")]
     public class ResourceItem : INotifyPropertyChanged
     {
         /// <summary>
@@ -138,6 +140,9 @@ namespace Westwind.Globalization
             BinFile = reader["BinFile"] as byte[];
             Comment = reader["Comment"] as string;
             
+            // TODO: Phase this out after 2.0 takes hold
+            //       for a while. This will prevent errors
+            //       erros if the field doesn't exist or is null
             try
             {
                 Updated = (DateTime) reader["Updated"];
