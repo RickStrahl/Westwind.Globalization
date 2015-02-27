@@ -57,6 +57,9 @@
    <resheader name="writer">
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
+   <data name="Another New Resource" xml:space="preserve">
+      <value>Another New Resource</value>
+   </data>
    <data name="HelloWorld" xml:space="preserve">
       <value>Hello Cruel World (MySql)</value>
    </data>
@@ -68,8 +71,5 @@
    </data>
    <data name="NewResource" xml:space="preserve">
       <value>New Resource Text</value>
-   </data>
-   <data name="Another New Resource" xml:space="preserve">
-      <value>Another New Resource</value>
    </data>
 </root>

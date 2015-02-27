@@ -116,7 +116,7 @@ namespace Westwind.Globalization
                     this.ShowIcons = true;
                 else if (this.ShowIconsInitially == ShowLocalizationStates.InheritFromProvider)
                     ShowIcons = DbResourceConfiguration.Current.ShowControlIcons &&
-                                     DbResourceConfiguration.Current.ShowLocalizationControlOptions;
+                                DbResourceConfiguration.Current.ShowLocalizationControlOptions;
 
                 if (ShowIcons)
                     this.chkShowIcons.Checked = true;

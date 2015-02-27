@@ -358,20 +358,32 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         }
 
         [CallbackMethod]
-        public bool ExportResxResources()
+        public bool ExportResxResources(string outputBasePath = null)
         {
-            DbResXConverter Exporter = new DbResXConverter(Context.Request.PhysicalApplicationPath);
+#if OnlineDemo
+            throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
+#endif
+            if (string.IsNullOrEmpty(outputBasePath))
+                outputBasePath = DbResourceConfiguration.Current.ResxBaseFolder;
+
+            if (outputBasePath.Contains("~"))
+                outputBasePath = Context.Server.MapPath(outputBasePath);
+
+            outputBasePath = outputBasePath.Replace("/", "\\").Replace("\\\\", "\\");
+
+
+            DbResXConverter exporter = new DbResXConverter(outputBasePath);
 
             if (DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.WebForms)
             {
-                if (!Exporter.GenerateLocalWebResourceResXFiles())
+                if (!exporter.GenerateLocalWebResourceResXFiles())
                     throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceGenerationFailed"));
-                if (!Exporter.GenerateGlobalWebResourceResXFiles())
+                if (!exporter.GenerateGlobalWebResourceResXFiles())
                     throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceGenerationFailed"));
             }
             else
             {
-                if (!Exporter.GenerateResXFiles())
+                if (!exporter.GenerateResXFiles())
                     throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceGenerationFailed"));
             }
 
@@ -379,16 +391,28 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         }
 
         [CallbackMethod]
-        public bool ImportResxResources()
+        public bool ImportResxResources(string inputBasePath = null)
         {
-            DbResXConverter Converter = new DbResXConverter(Context.Request.PhysicalApplicationPath);
+#if OnlineDemo
+            throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
+#endif
+
+            if (string.IsNullOrEmpty(inputBasePath))
+                inputBasePath = DbResourceConfiguration.Current.ResxBaseFolder;
+
+            if (inputBasePath.Contains("~"))
+                inputBasePath = Context.Server.MapPath(inputBasePath);
+            
+            inputBasePath = inputBasePath.Replace("/", "\\").Replace("\\\\","\\");
+
+            DbResXConverter converter = new DbResXConverter(inputBasePath);
 
             bool res = false;
 
             if (DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.WebForms)
-                res = Converter.ImportWebResources();
+                res = converter.ImportWebResources(inputBasePath);
             else
-                res = Converter.ImportWinResources(HttpContext.Current.Server.MapPath("~/"));
+                res = converter.ImportWinResources(inputBasePath);
 
             if (!res)
                new ApplicationException(WebUtils.LRes("ResourceImportFailed"));

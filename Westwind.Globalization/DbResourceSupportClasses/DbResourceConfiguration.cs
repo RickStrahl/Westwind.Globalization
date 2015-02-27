@@ -2,7 +2,6 @@ using System;
 using System.Configuration;
 using System.Collections.Generic;
 using System.Web.UI.Design;
-using System.Xml.Serialization;
 using Westwind.Utilities;
 
 namespace Westwind.Globalization
@@ -59,40 +58,7 @@ namespace Westwind.Globalization
             set { _ResourceTableName = value; }
         }
         private string _ResourceTableName = "Localizations";
-
-        /// <summary>
-        /// The virtual path for the Web application. This value is used at design time for WebForms implicit resource import from Visual Studio.
-        /// </summary>
-        public string DesignTimeVirtualPath
-        {
-            get { return _DesignTimeVirtualPath; }
-            set { _DesignTimeVirtualPath = value; }
-        }
-        private string _DesignTimeVirtualPath = string.Empty;
-
-        /// <summary>
-        /// Determines whether the DbResourceControl shows its localization options on the
-        /// page. 
-        /// </summary>
-        public bool ShowLocalizationControlOptions { get; set; }
-
-        /// <summary>
-        /// Determines whether page controls show icons when a 
-        /// DbResourceControl is active. Note requires that ShowLocalizationControlOptions
-        /// is true as well.
-        /// </summary>
-        public bool ShowControlIcons {get; set; }
-
-
-        ///// <summary>
-        ///// Type that is instantiated to handle Database access
-        ///// </summary>
-        //public string DbResourceManagerType
-        //{
-        //    get { return _DbResourceManagerType; }
-        //    set { _DbResourceManagerType = value; }
-        //}
-        //private string _DbResourceManagerType = "Westwind.Globalization.DbResourceDataManager";
+        
 
         /// <summary>
         /// Determines the location of the Localization form in a Web relative path.
@@ -104,7 +70,7 @@ namespace Westwind.Globalization
             get { return _LocalizationFormWebPath; }
             set { _LocalizationFormWebPath = value; }
         }
-        private string _LocalizationFormWebPath = "~/LocalizationAdmin/LocalizationAdmin.aspx";
+        private string _LocalizationFormWebPath = "~/LocalizationAdmin/";
 
         /// <summary>
         /// Determines whether any resources that are not found are automatically
@@ -130,19 +96,6 @@ namespace Westwind.Globalization
         /// </summary>
         public string BingClientSecret { get; set; }
 
-
-        /// <summary>
-        /// Determines whether generated Resource names use the same syntax
-        /// as VS.Net uses. Defaults to false, which uses simple control
-        /// name syntax (no ResourceX value) if possible. The dfeault value
-        /// is shown without a number and numbers are only used on duplication.
-        /// </summary>
-        public bool UseVsNetResourceNaming
-        {
-            get { return _UseVsNetResourceNaming; }
-            set { _UseVsNetResourceNaming = value; }
-        }
-        private bool _UseVsNetResourceNaming = false;
 
 
         /// <summary>
@@ -183,16 +136,63 @@ namespace Westwind.Globalization
             get { return _resxExportProjectType; }
             set { _resxExportProjectType = value; }
         }
-
         private GlobalizationResxExportProjectTypes _resxExportProjectType = GlobalizationResxExportProjectTypes.Project;
+
+
+        /// <summary>
+        /// The base physical path used to read and write RESX resources for resource imports
+        /// and exports. This path can either be a virtual path in Web apps or a physical disk
+        /// path. Used only by the Web Admin form. All explicit API imports and exports are
+        /// can pass in the base path explicitly.
+        /// </summary>
+        public string ResxBaseFolder
+        {
+            get { return _resxBaseFolder; }
+            set { _resxBaseFolder = value; }
+        }
+        private string _resxBaseFolder = "~/";
         
+
+        /// <summary>
+        /// Allows you to override the data provider used to access resources.
+        /// Defaults to Sql Server. To override set this value during application
+        /// startup - typical on DbResourceConfiguration.Current.DbResourceDataManagerType
+        /// 
+        /// This type instance is used to instantiate the actual provider.       
+        /// </summary>
         public Type DbResourceDataManagerType
         {
             get { return _DbResourceDataManagerType; }
             set { _DbResourceDataManagerType = value; }
         }        
         private Type _DbResourceDataManagerType = typeof(DbResourceSqlServerDataManager);
+
+
+
+        /// <summary>
+        /// WebForms only. The virtual path for the Web application. This value is used at design time for WebForms implicit resource import from Visual Studio.
+        /// </summary>
+        public string DesignTimeVirtualPath
+        {
+            get { return _DesignTimeVirtualPath; }
+            set { _DesignTimeVirtualPath = value; }
+        }
+        private string _DesignTimeVirtualPath = string.Empty;
+
+        /// <summary>
+        /// WebForms only. Determines whether the DbResourceControl shows its localization options on the
+        /// page. 
+        /// </summary>
+        public bool ShowLocalizationControlOptions { get; set; }
+
+        /// <summary>
+        /// WebForms only. Determines whether page controls show icons when a 
+        /// DbResourceControl is active. Note requires that ShowLocalizationControlOptions
+        /// is true as well.
+        /// </summary>
+        public bool ShowControlIcons { get; set; }
         
+
         /// <summary>
         /// Base constructor that doesn't do anything to the default values.
         /// </summary>
@@ -285,6 +285,7 @@ namespace Westwind.Globalization
             StronglyTypedGlobalResource = section.StronglyTypedGlobalResource;
             ResourceBaseNamespace = section.ResourceBaseNamespace;
             ResxExportProjectType = section.ResxExportProjectType;
+            ResxBaseFolder = section.ResxBaseFolder;
             BingClientId = section.BingClientId;
             BingClientSecret = section.BingClientSecret;
         }

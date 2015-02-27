@@ -549,8 +549,8 @@ namespace Westwind.Globalization
                 }
                 else if (string.Compare(dir,"app_globalresources",StringComparison.OrdinalIgnoreCase) == 0)
                     ImportDirectoryResources(webPath + dir + "\\","");
-                
-                else if (  !("bin|app_code|app_themes|app_data|".Contains(dir.ToLower() + "|" )) )
+
+                else if (!("bin|app_code|app_themes|app_data|.git|.svn|_svn|app_data|migrations|node_modules|bower_components|".Contains(dir.ToLower() + "|")))
                     // Recurse through child directories
                     ImportWebResources(webPath + dir + "\\"); 
             }
@@ -581,14 +581,23 @@ namespace Westwind.Globalization
             ImportDirectoryResources(basePhysicalPath, relPath);
             
             // Recurse into child folders
-            string[] Directories = Directory.GetDirectories(basePhysicalPath);
-            foreach (string Dir in Directories)
+            string[] directories;
+            try
             {
-                DirectoryInfo directory = new DirectoryInfo(Dir);
+                directories = Directory.GetDirectories(basePhysicalPath);
+            }
+            catch
+            {
+                return false;
+            }
+
+            foreach (string dirString in directories)
+            {
+                DirectoryInfo directory = new DirectoryInfo(dirString);
                 
                 string dir = directory.Name;
-                
-                if (dir == "" || ("|bin|obj|.git|.svn|_svn|app_data|Migrations|".Contains("|" + dir.ToLower() + "|")))
+
+                if (dir == "" || ("|bin|obj|.git|.svn|_svn|app_code|app_themes|app_data|migrations|node_modules|bower_components|".Contains("|" + dir.ToLower() + "|")))
                     continue;
 
                 ImportWinResources(basePhysicalPath + dir + "\\");

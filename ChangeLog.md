@@ -12,6 +12,8 @@ Added custom DbResourceDataManager implementations for each of these data engine
 * **New Administration Form**<br/>
 Complete rewrote the Administration form using a pure client side model using Angular JS and a CallbackHandler service on the backend. The new UI provides much easier navigation of resources and shows all resources available for a resource key for easy editing. The editing UI is also keyboard friendly to allow for quick hands on the keyboard editing of resources.
 
+* **Improved Resource Import and Export**<br/>
+The Web Interface now supports importing and exportnig resources optionally from virtually any path, not just the path of the actual Web application. this means you can now easily edit resources from any project and write them back out using the Web project. Configuration is done via a configuration setting in a config file.
 * **DbRes.THtml() Method**<br/>
 Added DbRes.THtml() method in addition to DbRes.T() to allow for creating HTML pre-encoded content with less typing and function nesting (`@Html.Raw(DbRes.T(...))`) in Razor code.
 

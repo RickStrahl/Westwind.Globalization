@@ -337,8 +337,8 @@ namespace Westwind.Globalization
                     ResourceKey = obj.GetType().Name;
 
                 // Visual Studio adds Resource post-fix plus a number
-                if (DbResourceConfiguration.Current.UseVsNetResourceNaming)
-                    ResourceKey += "Resource";                
+                //if (DbResourceConfiguration.Current.UseVsNetResourceNaming)
+                //    ResourceKey += "Resource";                
 
                 return CreateKey(ResourceKey);
             }
@@ -489,11 +489,11 @@ namespace Westwind.Globalization
                 
                 string resourceKey = key + count;
 
-                if (!DbResourceConfiguration.Current.UseVsNetResourceNaming)
-                {
-                    // Default with no numeric postfix first
-                    resourceKey = key;
-                }
+                //if (!DbResourceConfiguration.Current.UseVsNetResourceNaming)
+                //{
+                //    // Default with no numeric postfix first
+                //    resourceKey = key;
+                //}
 
                 while (IsUsedKey(resourceKey))
                 {
