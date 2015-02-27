@@ -48,17 +48,19 @@ namespace Westwind.Globalization
 {
     public abstract class DbResourceDataManager : IDbResourceDataManager
     { 
-        /// <summary>
-        /// Internally used Transaction object
-        /// </summary>
-        protected DbTransaction Transaction = null;
-
+    
         /// <summary>
         /// Instance of the DbResourceConfiguration that can be overridden
-        /// Defaults to the default instance.
+        /// Defaults to the default instance - DbResourceConfiguration.Current
         /// </summary>
-        public DbResourceConfiguration Configuration { get; set;  }
-                
+        public DbResourceConfiguration Configuration { get; set;  }                        
+
+        /// <summary>
+        /// Error message that can be checked after a method complets
+        /// and returns a failure result.
+        /// </summary>
+        public string ErrorMessage { get; set;  }
+        
         /// <summary>
         /// Code used to create a database (if required) for the
         /// given data provider.
@@ -66,19 +68,12 @@ namespace Westwind.Globalization
         protected virtual string TableCreationSql { get; set; }
 
         /// <summary>
-        /// Error message that can be checked after a method complets
-        /// and returns a failure result.
+        /// Internally used Transaction object
         /// </summary>
-        public string ErrorMessage
-        {
-            get { return _ErrorMessage; }
-            set { _ErrorMessage = value; }
-        }
-
-        private string _ErrorMessage = string.Empty;
+        protected virtual DbTransaction Transaction { get; set; }
 
 
-        public DbResourceDataManager()
+        protected DbResourceDataManager()
         {
             Configuration = DbResourceConfiguration.Current;
         }
@@ -865,8 +860,9 @@ namespace Westwind.Globalization
         /// <param name="resourceSet">The ResourceSet to which the resource id is added</param>
         /// <param name="comment">Optional comment for the key</param>
         /// <param name="valueIsFileName">if true the Value property is a filename to import</param>
-        public virtual int AddResource(string resourceId, object value, string cultureName, string resourceSet,
-            string comment = null, bool valueIsFileName = false)
+        public virtual int AddResource(string resourceId, object value,
+                                       string cultureName, string resourceSet,
+                                       string comment = null, bool valueIsFileName = false)
         {
             string Type = string.Empty;
 
@@ -977,8 +973,9 @@ namespace Westwind.Globalization
         /// <param name="cultureName"></param>
         /// <param name="resourceSet"></param>
         /// <param name="Type"></param>
-        public virtual int UpdateResource(string resourceId, object value, string cultureName, string resourceSet,
-            string comment = null, bool valueIsFileName = false)
+        public virtual int UpdateResource(string resourceId, object value, 
+                                          string cultureName, string resourceSet,
+                                          string comment = null, bool valueIsFileName = false)
         {
             string type;
             if (cultureName == null)
@@ -1105,7 +1102,7 @@ namespace Westwind.Globalization
             string Extension = fi.Extension.ToLower().TrimStart('.');
             Details.FileName = fi.Name;
 
-            if (Extension == "txt" || Extension == "css" || Extension == "js")
+            if (Extension == "txt" || Extension == "css" || Extension == "js" || Extension.StartsWith("htm") || Extension == "xml")
             {
                 Details.FileFormatType = FileFormatTypes.Text;
                 using (StreamReader sr = new StreamReader(FileName, Encoding.Default, true))
@@ -1129,28 +1126,7 @@ namespace Westwind.Globalization
             return Details;
         }
 
-        internal enum FileFormatTypes
-        {
-            Text,
-            Image,
-            Binary
-        }
-
-        /// <summary>
-        /// Internal structure that contains format information about a file
-        /// resource. Used internally to figure out how to write 
-        /// a resource into the database
-        /// </summary>
-        internal class FileInfoFormat
-        {
-            public string FileName = string.Empty;
-            public string Encoding = string.Empty;
-            public byte[] BinContent = null;
-            public string TextContent = string.Empty;
-            public FileFormatTypes FileFormatType = FileFormatTypes.Binary;
-            public string ValueString = string.Empty;
-            public string Type = "File";
-        }
+    
 
 
         /// <summary>
@@ -1162,7 +1138,7 @@ namespace Westwind.Globalization
         /// <param name="cultureName">language ID - if empty all languages are deleted</param>
         /// e
         /// <returns></returns>
-        public bool DeleteResource(string resourceId, string resourceSet = null, string cultureName = null)
+        public virtual bool DeleteResource(string resourceId, string resourceSet = null, string cultureName = null)
         {
             int Result = 0;
 
@@ -1204,7 +1180,7 @@ namespace Westwind.Globalization
         /// <param name="NewResourceId"></param>
         /// <param name="ResourceSet"></param>
         /// <returns></returns>
-        public bool RenameResource(string ResourceId, string NewResourceId, string ResourceSet)
+        public virtual bool RenameResource(string ResourceId, string NewResourceId, string ResourceSet)
         {
             using (var data = GetDb())
             {
@@ -1239,7 +1215,7 @@ namespace Westwind.Globalization
         /// <param name="NewProperty"></param>
         /// <param name="ResourceSet"></param>
         /// <returns></returns>
-        public bool RenameResourceProperty(string Property, string NewProperty, string ResourceSet)
+        public virtual bool RenameResourceProperty(string Property, string NewProperty, string ResourceSet)
         {
             using (var data = GetDb())
             {
@@ -1266,7 +1242,7 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="ResourceSet"></param>
         /// <returns></returns>
-        public bool DeleteResourceSet(string ResourceSet)
+        public virtual bool DeleteResourceSet(string ResourceSet)
         {
             if (string.IsNullOrEmpty(ResourceSet))
                 return false;
@@ -1303,7 +1279,7 @@ namespace Westwind.Globalization
         /// <param name="OldResourceSet">Name of the existing resource set</param>
         /// <param name="NewResourceSet">Name to set the resourceset name to</param>
         /// <returns></returns>
-        public bool RenameResourceSet(string OldResourceSet, string NewResourceSet)
+        public virtual bool RenameResourceSet(string OldResourceSet, string NewResourceSet)
         {
             using (var  data = GetDb())
             {
@@ -1333,7 +1309,7 @@ namespace Westwind.Globalization
         /// <param name="CultureName"></param>
         /// <param name="ResourceSet"></param>
         /// <returns></returns>
-        public bool ResourceExists(string ResourceId, string CultureName, string ResourceSet)
+        public virtual bool ResourceExists(string ResourceId, string CultureName, string ResourceSet)
         {
             if (CultureName == null)
                 CultureName = string.Empty;
@@ -1358,7 +1334,7 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="IetfTag">two or four letter IETF tag (examples: de, de-DE,fr,fr-CA)</param>
         /// <returns>true or false</returns>
-        public bool IsValidCulture(string IetfTag)
+        public virtual bool IsValidCulture(string IetfTag)
         {
             try
             {
@@ -1378,7 +1354,7 @@ namespace Westwind.Globalization
         /// <param name="resourceList"></param>
         /// <param name="cultureName"></param>
         /// <param name="resourceSet"></param>
-        public bool GenerateResources(IDictionary resourceList, string cultureName, string resourceSet, bool deleteAllResourceFirst)
+        public virtual bool GenerateResources(IDictionary resourceList, string cultureName, string resourceSet, bool deleteAllResourceFirst)
         {
             if (resourceList == null)
                 throw new InvalidOperationException("No Resources");
@@ -1450,7 +1426,7 @@ namespace Westwind.Globalization
         /// <param name="javaScriptVarName">Name of the JS object variable to createBackupTable</param>
         /// <param name="resourceSet">ResourceSet name. Pass NULL for locale Resources</param>
         /// <param name="localeId"></param>
-        public string GetResourcesAsJavascriptObject(string javaScriptVarName, string resourceSet, string localeId)
+        public virtual string GetResourcesAsJavascriptObject(string javaScriptVarName, string resourceSet, string localeId)
         {
             if (localeId == null)
                 localeId = CultureInfo.CurrentUICulture.IetfLanguageTag;
@@ -1479,7 +1455,7 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="tableName">Table name or the configuration.ResourceTableName if not passed</param>
         /// <returns></returns>
-        public bool IsLocalizationTable(string tableName = null)
+        public virtual bool IsLocalizationTable(string tableName = null)
         {
             if (tableName == null)
                 tableName = Configuration.ResourceTableName;
@@ -1505,7 +1481,7 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="BackupTableName">Table of the backup table. Null creates a _Backup table.</param>
         /// <returns></returns>
-        public bool CreateBackupTable(string BackupTableName)
+        public virtual bool CreateBackupTable(string BackupTableName)
         {
             if (BackupTableName == null)
                 BackupTableName = Configuration.ResourceTableName + "_Backup";
@@ -1529,7 +1505,7 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="backupTableName"></param>
         /// <returns></returns>
-        public bool RestoreBackupTable(string backupTableName)
+        public virtual bool RestoreBackupTable(string backupTableName)
         {
             if (backupTableName == null)
                 backupTableName = Configuration.ResourceTableName + "_Backup";
@@ -1705,4 +1681,26 @@ namespace Westwind.Globalization
         AllResources
     }
 
+    internal enum FileFormatTypes
+    {
+        Text,
+        Image,
+        Binary
+    }
+
+    /// <summary>
+    /// Internal structure that contains format information about a file
+    /// resource. Used internally to figure out how to write 
+    /// a resource into the database
+    /// </summary>
+    internal class FileInfoFormat
+    {
+        public string FileName = string.Empty;
+        public string Encoding = string.Empty;
+        public byte[] BinContent = null;
+        public string TextContent = string.Empty;
+        public FileFormatTypes FileFormatType = FileFormatTypes.Binary;
+        public string ValueString = string.Empty;
+        public string Type = "File";
+    }
 }
