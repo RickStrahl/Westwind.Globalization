@@ -30,7 +30,7 @@
             renameResourceSet: renameResourceSet,
             reloadResources: reloadResources,
             backup: backup,
-            createDatabase: createDatabase,
+            createTable: createTable,
             createClass: createClass,
             exportResxResources: exportResxResources,
             importResxResources: importResxResources
@@ -150,8 +150,8 @@
             return $http.get("localizationService.ashx?method=Backup")
                  .error(parseHttpError);
         }
-        function createDatabase() {
-            return $http.get("localizationService.ashx?method=CreateDatabase")
+        function createTable() {
+            return $http.get("localizationService.ashx?method=CreateTable")
                  .error(parseHttpError);
         }
         function createClass() {

@@ -175,7 +175,6 @@ namespace Westwind.Globalization.Test
         public void GetResourceItem()
         {
             var manager = GetManager();
-
             var item = manager.GetResourceItem("Today", "Resources", "de");
 
             Assert.IsNotNull(item);

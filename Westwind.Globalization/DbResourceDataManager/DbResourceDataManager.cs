@@ -47,8 +47,7 @@ using Westwind.Utilities.Data;
 namespace Westwind.Globalization
 {
     public abstract class DbResourceDataManager : IDbResourceDataManager
-    { 
-    
+    {     
         /// <summary>
         /// Instance of the DbResourceConfiguration that can be overridden
         /// Defaults to the default instance - DbResourceConfiguration.Current
@@ -930,7 +929,7 @@ namespace Westwind.Globalization
                 DbParameter TextFileParm = data.CreateParameter("@TextFile", TextFile);
 
                 string Sql = "insert into " + Configuration.ResourceTableName +
-                             " (ResourceId,Value,LocaleId,Type,Resourceset,BinFile,TextFile,Filename,Comment) Values (@ResourceID,@Value,@LocaleId,@Type,@ResourceSet,@BinFile,@TextFile,@FileName,@Comment)";
+                             " (ResourceId,Value,LocaleId,Type,Resourceset,BinFile,TextFile,Filename,Comment,Updated) Values (@ResourceID,@Value,@LocaleId,@Type,@ResourceSet,@BinFile,@TextFile,@FileName,@Comment,@Updated)";
                 if (data.ExecuteNonQuery(Sql,
                     data.CreateParameter("@ResourceId", resourceId),
                     data.CreateParameter("@Value", value),
@@ -939,7 +938,8 @@ namespace Westwind.Globalization
                     data.CreateParameter("@ResourceSet", resourceSet),
                     BinFileParm, TextFileParm,
                     data.CreateParameter("@FileName", FileName),
-                    data.CreateParameter("@Comment", comment)) == -1)
+                    data.CreateParameter("@Comment", comment),
+                    data.CreateParameter("@Updated", DateTime.UtcNow)) == -1)
                 {
                     ErrorMessage = data.ErrorMessage;
                     return -1;
@@ -1043,12 +1043,10 @@ namespace Westwind.Globalization
                 // Set up Binfile and TextFile parameters which are set only for
                 // file values - otherwise they'll pass as Null values.
                 var binFileParm = data.CreateParameter("@BinFile", BinFile, DbType.Binary);
-
                 var textFileParm = data.CreateParameter("@TextFile", TextFile);
 
-
                 string sql = "update " + Configuration.ResourceTableName +
-                             " set Value=@Value, Type=@Type, BinFile=@BinFile,TextFile=@TextFile,FileName=@FileName, Comment=@Comment " +
+                             " set Value=@Value, Type=@Type, BinFile=@BinFile,TextFile=@TextFile,FileName=@FileName, Comment=@Comment, updated=@Updated " +
                              "where LocaleId=@LocaleId AND ResourceSet=@ResourceSet and ResourceId=@ResourceId";
                 result = data.ExecuteNonQuery(sql,
                     data.CreateParameter("@ResourceId", resourceId),
@@ -1058,7 +1056,8 @@ namespace Westwind.Globalization
                     data.CreateParameter("@ResourceSet", resourceSet),
                     binFileParm, textFileParm,
                     data.CreateParameter("@FileName", FileName),
-                    data.CreateParameter("@Comment", comment)
+                    data.CreateParameter("@Comment", comment),
+                    data.CreateParameter("@Updated",DateTime.UtcNow)
                     );
                 if (result == -1)
                 {

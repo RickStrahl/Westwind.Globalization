@@ -78,6 +78,17 @@ namespace Westwind.Globalization
         }
         private string _LocaleId = string.Empty;
 
+        public DateTime Updated
+        {
+            get { return _Updated; }
+            set
+            {
+                _Updated = value;
+                SendPropertyChanged("Updated");
+            }
+        }
+        private DateTime _Updated = DateTime.UtcNow;
+
 
         /// <summary>
         /// The resource set (file) that this resource belongs to
@@ -125,7 +136,16 @@ namespace Westwind.Globalization
             FileName = reader["FileName"] as string;
             TextFile = reader["TextFile"] as string;
             BinFile = reader["BinFile"] as byte[];
-            Comment = reader["Comment"] as string;                    
+            Comment = reader["Comment"] as string;
+            
+            try
+            {
+                Updated = (DateTime) reader["Updated"];
+            }
+            catch
+            {
+                Updated = DateTime.Now; 
+            }
         }
     }
 }

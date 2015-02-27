@@ -55,11 +55,11 @@
             return localizationService.getResourceSets()
                 .success(function(resourceSets) {
                     vm.resourceSets = resourceSets;
-                    if (!vm.resourceSet && resourceSets.length > 0)
+                    if (!vm.resourceSet && resourceSets && resourceSets.length > 0)
                         vm.resourceSet = vm.resourceSets[0];
                     vm.onResourceSetChange();
                 })
-                .error(handleErrorResult);
+                .error(parseError);
         };
 
 
@@ -69,7 +69,7 @@
                         vm.getResourceItems();
                         showMessage("Resource saved.");
            })
-           .error(handleErrorResult);
+           .error(parseError);
        };
 
         vm.updateResourceString = function (value, localeId) {            
@@ -78,7 +78,7 @@
                     vm.getResourceItems();
                     showMessage("Resource saved.");
                 })
-                .error(handleErrorResult);
+                .error(parseError);
         };
 
         
@@ -92,7 +92,7 @@
                         setTimeout(function() { vm.onResourceIdChange(); }, 10);
                     }
                 })
-                .error(handleErrorResult);
+                .error(parseError);
         };
 
         vm.getResourceItems = function getResourceItems() {
@@ -103,7 +103,7 @@
                     if (vm.resourceItems.length > 0)
                         vm.activeResource = vm.resourceItems[0];
                 })
-                .error(handleErrorResult);
+                .error(parseError);
         };
 
    
@@ -335,11 +335,11 @@
                })
                .error(parseError);
        };
-       vm.onCreateDatabaseClick = function () {
-           localizationService.createDatabase()
+       vm.onCreateTableClick = function () {
+           localizationService.createTable()
                .success(function () {
                    vm.getResourceSets();
-                   showMessage("Database has been created.");
+                   showMessage("Localization table has been created.");
                })
                .error(parseError);
        };
@@ -370,7 +370,7 @@
        };
 
 
-       function parseError(args) {               
+       function parseError(args) {           
            var err = ww.angular.parseHttpError(args || arguments);           
            showMessage(err.message,"warning","warning");
        }
@@ -397,13 +397,8 @@
             }, 5000);            
         }
 
-        function handleErrorResult(msg) {
-            msg = msg || vm.error.message;
 
-            showMessage(msg, "warning", "warning");            
-        };
-
-       $(document.body).keydown(function(ev) {
+        $(document.body).keydown(function (ev) {
            if (ev.keyCode == 76 && ev.altKey) {
                $("#ResourceIdList").focus();
            }

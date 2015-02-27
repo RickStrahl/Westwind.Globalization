@@ -327,15 +327,15 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         }
 
         [CallbackMethod]
-        public bool CreateDatabase()
+        public bool CreateTable()
         {
 #if OnlineDemo
         throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
 #endif
 
             if (!Manager.CreateLocalizationTable(null))
-                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "LocalizationTableNotCreated" + "\r\n" +
-                                                                              Manager.ErrorMessage));
+                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "LocalizationTableNotCreated") + "\r\n" +
+                                                                              Manager.ErrorMessage);
             return true;
         }
 

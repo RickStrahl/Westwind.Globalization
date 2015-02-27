@@ -76,13 +76,13 @@
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.XML" />
-    <Reference Include="Westwind.Utilities">
-      <HintPath>..\packages\Westwind.Utilities.2.59.2\lib\net45\Westwind.Utilities.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Westwind.Web, Version=2.59.5499.28286, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Westwind.Utilities, Version=2.60.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Westwind.Web.2.59\lib\net45\Westwind.Web.dll</HintPath>
+      <HintPath>..\packages\Westwind.Utilities.2.60\lib\net45\Westwind.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Westwind.Web, Version=2.60.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Westwind.Web.2.60\lib\net45\Westwind.Web.dll</HintPath>
     </Reference>
     <Reference Include="Westwind.Web.WebForms, Version=2.59.5500.1075, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -146,9 +146,17 @@
       <Project>{9d405441-66d4-45d0-8832-9e17587ba921}</Project>
       <Name>Westwind.Globalization.MySql</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Westwind.Globalization.Sample\Westwind.Globalization.Sample.csproj">
+      <Project>{1e36a3c9-2f87-407a-b568-ebf336061a06}</Project>
+      <Name>Westwind.Globalization.Sample</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Westwind.Globalization.SqlLite\Westwind.Globalization.SqLite.csproj">
       <Project>{4c74dae9-4f4d-4d94-b3ca-783acef494f2}</Project>
       <Name>Westwind.Globalization.SqLite</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Westwind.Globalization.SqlServerCe\Westwind.Globalization.SqlServerCe.csproj">
+      <Project>{1324112A-7929-4246-ABCC-DFE51F755681}</Project>
+      <Name>Westwind.Globalization.SqlServerCe</Name>
     </ProjectReference>
     <ProjectReference Include="..\Westwind.Globalization.Web\Westwind.Globalization.Web.csproj">
       <Project>{d827f9a2-12e0-436c-b986-8589ed643481}</Project>

@@ -53,6 +53,33 @@ namespace Westwind.Globalization
             }
         }
 
+        /// <summary>
+        /// Create a backup of the localization database.
+        /// 
+        /// Note the table used is the one specified in the Configuration.ResourceTableName
+        /// </summary>
+        /// <param name="BackupTableName">Table of the backup table. Null creates a _Backup table.</param>
+        /// <returns></returns>
+        public override bool CreateBackupTable(string BackupTableName)
+        {
+            if (BackupTableName == null)
+                BackupTableName = Configuration.ResourceTableName + "_Backup";
+
+            using (var data = GetDb())
+            {
+                data.ExecuteNonQuery("drop table " + BackupTableName);
+                CreateLocalizationTable(BackupTableName);
+                data.ExecuteNonQuery("delete from " + BackupTableName);
+                if (data.ExecuteNonQuery("insert into " + BackupTableName + " select * from " + Configuration.ResourceTableName) < 0)
+                {
+                    SetError(data.ErrorMessage);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         public override bool CreateLocalizationTable(string tableName = null)
         {
             if (tableName == null)
@@ -92,19 +119,20 @@ namespace Westwind.Globalization
             get
             {
                 return
-                    @"CREATE TABLE `localizations` (
-  `pk` int(11) NOT NULL AUTO_INCREMENT,
-  `ResourceId` varchar(1024) DEFAULT NULL,
-  `Value` varchar(2048) DEFAULT NULL,
-  `LocaleId` varchar(10) DEFAULT NULL,
-  `ResourceSet` varchar(512) DEFAULT NULL,
-  `Type` varchar(512) DEFAULT NULL,
-  `BinFile` blob,
-  `TextFile` text,
-  `Filename` varchar(128) DEFAULT NULL,
-  `Comment` varchar(512) DEFAULT NULL,
+                    @"CREATE TABLE `{0}` (
+  pk int(11) NOT NULL AUTO_INCREMENT,
+  ResourceId varchar(1024) DEFAULT NULL,
+  Value varchar(2048) DEFAULT NULL,
+  LocaleId varchar(10) DEFAULT NULL,
+  ResourceSet varchar(512) DEFAULT NULL,
+  Type varchar(512) DEFAULT NULL,
+  BinFile blob,
+  TextFile text,
+  Filename varchar(128) DEFAULT NULL,
+  Comment varchar(512) DEFAULT NULL,
+  Updated datetime NULL,
   PRIMARY KEY (`pk`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Hello Cruel World (MySql)','','Resources');
 INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Hallo schnöde Welt (MySql)','de','Resources');
@@ -115,6 +143,9 @@ INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Yesterday','H
 INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Today','Today (invariant)','','Resources');
 INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Today','Heute','de','Resources');
 INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Today','Aujourd''hui','fr','Resources');
+INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('lblHelloWorldLabel.Text','Hello Cruel World (local)','','ResourceTest.aspx');
+INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('lblHelloWorldLabel.Text','Hallo Welt (lokal)','de','ResourceTest.aspx');
+INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('lblHelloWorldLabel.Text','Bonjour monde (local)','fr','ResourceTest.aspx');
 ";
             }
 

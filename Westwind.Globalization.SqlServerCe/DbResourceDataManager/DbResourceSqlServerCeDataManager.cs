@@ -1,4 +1,4 @@
-#if false
+
 using System.Data.SqlServerCe;
 using System.IO;
 
@@ -79,6 +79,7 @@ CREATE TABLE [{0}] (
 , [TextFile] ntext NULL
 , [Filename] nvarchar(128) DEFAULT ('') NULL
 , [Comment] nvarchar(512) NULL
+, [Updated] datetime DEFAULT(getDate()) NULL
 );
 GO
 ALTER TABLE [{0}] ADD CONSTRAINT [PK_Localizations] PRIMARY KEY ([pk]);
@@ -113,4 +114,3 @@ GO
         }
     }
 }
-#endif

@@ -15,15 +15,27 @@ http://en.wikipedia.org/wiki/MIT_License
     ww = {};
     var self;
     ww.angular = {
-        parseHttpError: function(args) {
+        parseHttpError: function (args) {
+            // error/message object passed
+            if (args.hasOwnProperty("message"))
+                return args;
+            if (args.hasOwnProperty("Message")) {
+                args.message = args.Message;
+                return args;
+            }
+
             var data = args[0];
             var status = args[1];
             var msg = args[2];
             var errorMsg = "";
             if (data) 
             {                      
-                if(data.hasOwnProperty("message") || msg.hasOwnProperty("Message"))       
+                if(data.hasOwnProperty("message"))
                    return data;
+                if (msg.hasOwnProperty("Message")) {
+                    data.message = data.Message;
+                    return data;
+                }
 
                 // assume JSON   
                 try {

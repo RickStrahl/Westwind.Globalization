@@ -1,10 +1,10 @@
 ﻿/// <reference path="jquery.js" />
 /*
 ww.jQuery.js  
-Version 1.15 - 12/10/2014
+Version 1.16 - 12/10/2014
 West Wind jQuery plug-ins and utilities
 
-(c) 2008-2014 Rick Strahl, West Wind Technologies 
+(c) 2008-2015 Rick Strahl, West Wind Technologies 
 www.west-wind.com
 
 Licensed under MIT License
@@ -1905,7 +1905,7 @@ http://en.wikipedia.org/wiki/MIT_License
         var length = width - this.length
         if (length < 1) return this.substr(0, width);
 
-        return (String.repeat(pad, length) + this).substr(0, width);
+        return (this.repeat(pad, length) + this).substr(0, width);
     }
     String.prototype.padR = function (width, pad) {
         if (!width || width < 1)
@@ -1915,7 +1915,7 @@ http://en.wikipedia.org/wiki/MIT_License
         var length = width - this.length
         if (length < 1) this.substr(0, width);
 
-        return (this + String.repeat(pad, length)).substr(0, width);
+        return (this + this.repeat(pad, length)).substr(0, width);
     }
     String.prototype.startsWith = function (sub) {
         if (this.length == 0) return false;

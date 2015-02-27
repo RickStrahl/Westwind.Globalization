@@ -31,15 +31,15 @@ namespace Westwind.Globalization.Sample
             //DbResourceConfiguration.Current.ConnectionString = "SqlServerLocalizations";
             //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerDataManager);
 
-            // for all other providers explicitly override the DbResourceDataManagerType
-            //DbResourceConfiguration.Current.ConnectionString = "SqlServerCeLocalizations";
-            //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerCeDataManager);
-
             //DbResourceConfiguration.Current.ConnectionString = "MySqlLocalizations";
-            //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof (DbResourceMySqlDataManager);
+            //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceMySqlDataManager);
 
             //DbResourceConfiguration.Current.ConnectionString = "SqLiteLocalizations";
             //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);
+
+            // for all other providers explicitly override the DbResourceDataManagerType
+            //DbResourceConfiguration.Current.ConnectionString = "SqlServerCeLocalizations";
+            //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerCeDataManager);
         }
 
         protected void Application_BeginRequest()
