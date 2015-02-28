@@ -97,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbResourceDataManager\DbResourceDataManager.cs" />
+    <Compile Include="DbResourceDataManager\IDbResourceDataManager.cs" />
     <Compile Include="DbResourceDataManager\IDbResourceSetDataManager.cs" />
     <Compile Include="DbResourceManager\DbResourceReader.cs" />
     <Compile Include="DbResourceManager\DbResourceSet.cs" />
@@ -111,6 +112,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="DbResourceSupportClasses\IWestWindResourceProvider.cs" />
+    <Compile Include="Utilities\StronglyTypedResources.cs" />
     <Compile Include="Utilities\TranslationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\DbResXConverter.cs" />
@@ -121,9 +123,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Web.Sample.Xconfig">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Resources.resx">

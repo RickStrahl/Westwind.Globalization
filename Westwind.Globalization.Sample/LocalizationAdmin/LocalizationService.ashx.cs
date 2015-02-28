@@ -96,7 +96,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             string resourceSet = parm.ResourceSet;            
 
             
-            var items = Manager.GetResourceItems(resourceId, resourceSet).ToList();
+            var items = Manager.GetResourceItems(resourceId, resourceSet,true).ToList();
             if (items == null)
             {
                 throw new InvalidOperationException(Manager.ErrorMessage);
@@ -133,7 +133,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         [CallbackMethod]
         public IEnumerable<ResourceString> GetResourceStrings(string resourceId, string resourceSet)
         {
-            Dictionary<string, string> resources = Manager.GetResourceStrings(resourceId, resourceSet);
+            Dictionary<string, string> resources = Manager.GetResourceStrings(resourceId, resourceSet,true);
 
             if (resources == null)
                 throw new ApplicationException(Manager.ErrorMessage);
@@ -344,8 +344,8 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         {
             var config = DbResourceConfiguration.Current;
 
-            StronglyTypedWebResources strongTypes =
-                new StronglyTypedWebResources(Context.Request.PhysicalApplicationPath);
+            StronglyTypedResources strongTypes =
+                new StronglyTypedResources(Context.Request.PhysicalApplicationPath);
 
             strongTypes.CreateClassFromAllDatabaseResources(config.ResourceBaseNamespace,
                 HttpContext.Current.Server.MapPath(config.StronglyTypedGlobalResource));

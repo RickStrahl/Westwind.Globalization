@@ -21,10 +21,10 @@ namespace Westwind.Globalization
     /// in ASP.NET stock projects and doesn't support custom resource
     /// providers in WAP.
     /// </summary>
-    public class StronglyTypedWebResources
+    public class StronglyTypedResources
     {
                 
-        public StronglyTypedWebResources(string WebPhysicalPath)
+        public StronglyTypedResources(string WebPhysicalPath)
         {
             this.WebPhysicalPath = WebPhysicalPath;
         }

@@ -70,7 +70,6 @@
     </Compile>
     <Compile Include="SupportClasses\DbResourceControl.cs" />
     <Compile Include="SupportClasses\JavaScriptResourceHandler.cs" />
-    <Compile Include="SupportClasses\StronglyTypedWebResources.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DbResourceProvider\DbResourceProviderHierarchy.cd" />
@@ -88,8 +87,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\localize.png" />
-    <Content Include="scripts\ww.jquery.js" />
-    <Content Include="scripts\ww.jquery.min.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Westwind.Globalization\Westwind.Globalization.csproj">
