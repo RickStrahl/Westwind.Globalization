@@ -1,0 +1,172 @@
+body {        
+}
+.page-header-text{
+    font-size: 1.8em;
+    font-weight: bold;
+    color: steelblue;
+}
+h2,h3,h4 {
+    font-family: 'Trebuchet','Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;    
+    font-weight: bold;
+}
+h3 {
+    color: steelblue;
+}
+.banner {
+    background: #535353;
+    height: 50px;
+}
+#TitleBar {
+    position: absolute;
+    top: 10px;
+    left: 8px;
+    z-index: 100;
+}
+#ErrorMessage {
+    border-radius: 4px;
+    margin-bottom: 0;
+    padding: 8px;
+    position: fixed;
+    bottom: 8px;
+    left: 30%;
+    right: -5px;
+    z-index: 10000;
+    opacity: 0.88;
+    box-shadow: 2px 2px 4px #535353;
+}
+#ContentContainer {
+    position: relative;    
+}
+#ListPanel,#ContentPanel {
+    position: absolute;
+    top: 0;
+    left: 0;    
+    bottom: 0;
+    width: 310px;
+    padding: 0 ;
+    overflow-x: hidden;    
+    -webkit-transition: width 1.2s;
+    transition: width 1.2s;
+}
+#ListPanel.collapsed {
+    width: 0;
+}
+#ListPanel select {
+    position: absolute;
+    width: 309px;    
+    top: 35px;
+    bottom: 1px;        
+    left: 0;
+    right: 0;
+    border-radius: 0;
+    border: none;
+    padding: 0;
+}
+    #ListPanel select option {
+        padding: 5px 0 5px 5px !important;        
+        min-height: 1.5em;    
+    }
+#ContentPanel {
+    top: 17px;
+    left: 310px;
+    right: 0;    
+    width: auto;
+    padding: 0px 20px 10px;
+    overflow-x: auto;
+      -webkit-transition: left 1.2s;
+    transition: left 1.2s;
+}
+#ContentPanel.expanded {
+    left: 0;
+}
+.locale-id {
+    float: left;
+    width: 60px;
+    font-weight: bold;
+    color: steelblue; 
+}
+.color-check {
+    color: limegreen;
+}
+.color-disabled {
+    color: silver;
+}
+.hrstyle {
+    margin: 10px 0;
+}
+.clickable {
+    cursor: pointer;
+}
+
+
+.separator {
+    border-bottom: 1px solid lightgrey;
+    margin: 5px auto 15px;
+    height: 1px;
+}
+
+input.ng-invalid,textarea.ng-invalid,select.ng-invalid {
+    background: pink;
+}
+.navbar {
+    min-height: 0;
+}
+.navbar-nav a {
+    color: white;    
+    border: none;
+    cursor: pointer;
+    border-right: 1px #868686 solid;
+    padding: 11px 10px !important;
+    font-size: 0.96em;   
+}
+
+    .navbar-nav a:hover {
+        color: #535353;
+    }
+
+@media (max-width: 767px) {
+    #MenuButtons {
+        display: none;
+    }
+    .navbar {
+        min-height: 0;
+    }
+    .navbar-nav {
+        margin: 0;
+    }
+    #ContentPanel {
+        padding: 0 5px 0 5px;
+    }
+}
+
+
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav > li > a {
+   border-bottom: solid 2px transparent;
+}
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav > li > a:hover {
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .25);
+    color: white;
+    background: #535353 !important;
+    border-bottom: solid 2px darkorange;
+    border-radius: 2px;
+}
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav > li > a.selected {
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .25);
+    color: white;
+    background: #535353 !important;
+        border-bottom: solid 2px orange;
+    border-radius: 2px;
+}
+.modal-dialog {
+    margin: 30px auto;
+}
+.modal-header {
+    padding: 15px 15px 5px;
+}
+.modal-body {
+    padding: 10px 20px 5px 20px;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}

@@ -1,0 +1,50 @@
+﻿<div id="AddResourceDialog"
+     class="modal fade"
+     tabindex="-1" role="dialog"
+     aria-labelledby="myModal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title" id="TranslateTitle">Resource Editor</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-inline" style="margin-bottom: 15px;" >
+                    <div class="form-group" style="margin-right: 14px;">
+                        <label xclass="sr-only">Lang:</label>
+                        <input type="text" class="form-control" 
+                               ng-model="view.activeResource.LocaleId" placeholder="Locale Id"
+                               style="width: 70px;"/>
+                    </div>
+                    <div class="form-group">
+                        <label>ResourceSet:</label>
+                        <input type="text" class="form-control"
+                               ng-model="view.activeResource.ResourceSet"
+                               placeholder="ResourceSet"
+                               style="width: 330px;" />
+                    </div>
+                </div>
+                
+                
+                <div class="form-group">
+                    <label xclass="sr-only" for="exampleInputPassword3">Resource Id:</label>
+                    <textarea type="text" class="form-control"
+                              ng-blur="view.onResourceIdBlur()"
+                              ng-model="view.activeResource.ResourceId" placeholder="Resource Id"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="form-group-input">Text</label>
+                    <textarea                              
+                              onfocus ="this.select();"
+                              class="form-control" ng-model="view.activeResource.Value" placeholder="Resource text"></textarea>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-remove"></i> Cancel</button>
+                <button type="button" ng-click="view.onSaveResourceClick()" class="btn btn-primary"><i class="fa fa-check"></i> Save</button>
+            </div>
+        </div>
+    </div>
+</div>

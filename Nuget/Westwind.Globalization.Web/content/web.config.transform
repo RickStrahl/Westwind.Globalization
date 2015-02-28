@@ -1,0 +1,47 @@
+<configuration>
+  <configSections>
+    <section name="DbResourceConfiguration" requirePermission="false" type="System.Configuration.NameValueSectionHandler,System,Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  </configSections>
+  <DbResourceConfiguration>
+    <add key="ConnectionString" value="Localizations" />
+    <add key="ResourceTableName" value="Localizations" />
+    <add key="StronglyTypedGlobalResource" value="~/App_Code/Resources.cs" />
+    <add key="ResourceBaseNamespace" value="AppResources" />
+    <add key="ResxExportProjectType" value="Project" />
+    <add key="ResxBaseFolder" value="~/" />
+    <add key="AddMissingResources" value="True" />
+    <add key="LocalizationFormWebPath" value="~/LocalizationAdmin/" />
+    <add key="DesignTimeVirtualPath" value="" />
+    <add key="ShowLocalizationControlOptions" value="False" />
+    <add key="ShowControlIcons" value="False" />
+    <add key="BingClientId" value="" />
+    <add key="BingClientSecret" value="" />    
+  </DbResourceConfiguration>
+
+  <system.web>
+    <globalization resourceProviderFactoryType="Westwind.Globalization.DbSimpleResourceProviderFactory,Westwind.Globalization"/>
+    <trust originUrl="(http://www.google.com/translate_t)|(http://babelfish.yahoo.com/translate_txt)"/>
+    <pages>
+      <namespaces>
+        <add namespace="Westwind.Utilities"/>
+        <add namespace="Westwind.Web" />
+		<add namespace="Westwind.Web.Controls" />
+		<add namespace="Westwind.Globalization" />
+      </namespaces>
+      <controls>        
+        <add tagPrefix="ww" namespace="Westwind.Web.Controls" assembly="Westwind.Web.WebForms" />        
+        <add tagPrefix="ww" namespace="Westwind.Globalization" assembly="Westwind.Globalization" />        
+      </controls>	  
+    </pages>
+    <httpHandlers>
+      <add verb="GET" path="JavaScriptResourceHandler.axd" type="Westwind.Globalization.JavaScriptResourceHandler,Westwind.Globalization.Web"/>
+    </httpHandlers>
+  </system.web>
+  <system.webServer>
+    <validation validateIntegratedModeConfiguration="false" />
+    <handlers>
+      <add name="JavaScriptResourceHandler" verb="GET" path="JavascriptResourceHandler.axd" type="Westwind.Globalization.JavaScriptResourceHandler,Westwind.Globalization.Web"/>
+    </handlers>
+  </system.webServer>
+</configuration>
+

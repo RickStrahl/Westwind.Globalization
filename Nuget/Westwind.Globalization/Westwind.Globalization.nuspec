@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<package> 
+  <metadata> 
+    <id>Westwind.Globalization</id> 
+    <version>2.0.01</version>
+    <authors>Rick Strahl, West Wind Technologies</authors>
+    <title>West Wind Globalization Database ResourceManager and ResourceProvider (Westwind.Globalization)</title> 
+    <summary>Database Resource Localization for .NET and ASP.NET</summary>
+    <description>
+	This library provides custom data driven .NET ResourceManagers and ResourceProviders for both plain .NET and ASP.NET applications. The default implementation uses SQL Server with additional providers available in separate packages. This package holds the core library that contains the DbResourceManager and DbSimpleResourceProvider and DbResourceProvider implementations as well as all the core features like data provider interfaces, administration features for importing and exporting resources as well as the SQL Server interface.
+
+	This version contains only the core interfaces needed to run the DbResourceManager and ResourceProvider. It'll work in non-Web applications and any Web applications that don't use the WebForm specific features and that don't use the Web based resource editor.
+
+	For additional Web features and the live Web Resource Editing interface please install the Westwind.Globalization.Web package.
+    </description>
+    <language>en-US</language>
+    <licenseUrl>https://github.com/RickStrahl/Westwind.Globalization#license</licenseUrl>
+    <projectUrl>https://github.com/RickStrahl/Westwind.Globalization</projectUrl>
+    <iconUrl>http://west-wind.com/westwind.globalization/images/Westwind.Localization_128.png</iconUrl>
+   	<dependencies>
+	  <!-- smaller than V3.0 -->
+	  <dependency id="Westwind.Web" version="[2.60,3.0)" />
+	</dependencies>
+  </metadata> 
+</package>
+

@@ -97,8 +97,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbResourceDataManager\DbResourceDataManager.cs" />
-    <Compile Include="DbResourceDataManager\DbResourceSqlServerCeDataManager.cs" />
-    <Compile Include="DbResourceDataManager\IDbResourceDataManager.cs" />
     <Compile Include="DbResourceDataManager\IDbResourceSetDataManager.cs" />
     <Compile Include="DbResourceManager\DbResourceReader.cs" />
     <Compile Include="DbResourceManager\DbResourceSet.cs" />

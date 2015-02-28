@@ -1,0 +1,15 @@
+{
+  "name": "LocalizationAdministration",
+  "version": "1.0.0",
+  "description": "West Wind Globalization Administration Form",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.8.10"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Rick Strahl",
+  "license": "MIT"
+}

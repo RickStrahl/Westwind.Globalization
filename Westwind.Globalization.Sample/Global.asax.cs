@@ -23,6 +23,9 @@ namespace Westwind.Globalization.Sample
 
             GeneratedResourceSettings.ResourceAccessMode = ResourceAccessMode.DbResourceManager;
 
+            DbResourceConfiguration.ConfigurationMode = ConfigurationModes.JsonFile;
+
+
             // *** override which connection string is used for the provider configuration values
             // *** Note: The appropriate providers and Westwind.Globalization.DataProvider package
             //           have to be installed for all but SQL Server. 
@@ -31,8 +34,8 @@ namespace Westwind.Globalization.Sample
             //DbResourceConfiguration.Current.ConnectionString = "SqlServerLocalizations";
             //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerDataManager);
 
-            DbResourceConfiguration.Current.ConnectionString = "MySqlLocalizations";
-            DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceMySqlDataManager);
+            //DbResourceConfiguration.Current.ConnectionString = "MySqlLocalizations";
+            //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceMySqlDataManager);
 
             //DbResourceConfiguration.Current.ConnectionString = "SqLiteLocalizations";
             //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);

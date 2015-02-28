@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<package> 
+  <metadata> 
+    <id>Westwind.Globalization</id> 
+    <version>2.0.01</version>
+    <authors>Rick Strahl, West Wind Technologies</authors>
+    <title>West Wind Globalization ASP.NET Database Resource Provider and Web Tools (Westwind.Globalization.Web)</title> 
+    <summary>Database Resource Localization for ASP.NET</summary>
+    <description>
+	This library provides the ASP.NET specific components to the Westwind.Globalization library as well as the online live Resource Editor to allow editing of data resources in real time. This library also provides the integration with WebForms using the resource control and dynamic icons.	
+    </description>
+    <language>en-US</language>
+    <licenseUrl>https://github.com/RickStrahl/Westwind.Globalization#license</licenseUrl>
+    <projectUrl>https://github.com/RickStrahl/Westwind.Globalization</projectUrl>
+    <iconUrl>http://west-wind.com/westwind.globalization/images/Westwind.Localization_128.png</iconUrl>
+   	<dependencies>
+	  <!-- smaller than V3.0 -->
+	  <dependency id="Westwind.Globalization" version="[2.0.01,3.0)" />
+	  <dependency id="Westwind.Web.WebForms" version="[2.59,3.0)" />
+	</dependencies>
+  </metadata> 
+</package>
+

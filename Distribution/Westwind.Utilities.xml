@@ -2661,6 +2661,15 @@
             </remarks>
             <param name="instance"></param>
         </member>
+        <member name="M:Westwind.Utilities.Expando.GetDynamicMemberNames">
+            <summary>
+            Return both instance and dynamic names.
+            
+            Important to return both so JSON serialization with 
+            Json.NET works.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Westwind.Utilities.Expando.TryGetMember(System.Dynamic.GetMemberBinder,System.Object@)">
             <summary>
             Try to retrieve a member by name first from instance properties
@@ -2894,7 +2903,7 @@
             Supports multiple values per key
             </remarks>
         </member>
-        <member name="M:Westwind.Utilities.UrlEncodingParser.#ctor(System.String)">
+        <member name="M:Westwind.Utilities.UrlEncodingParser.#ctor(System.String,System.Boolean)">
             <summary>
             Always pass in a UrlEncoded data or a URL to parse from
             unless you are creating a new one from scratch.
@@ -2935,6 +2944,12 @@
             <summary>
             Holds the original Url that was assigned if any
             Url must contain // to be considered a url
+            </summary>
+        </member>
+        <member name="P:Westwind.Utilities.UrlEncodingParser.DecodePlusSignsAsSpaces">
+            <summary>
+            Determines whether plus signs in the UrlEncoded content
+            are treated as spaces.
             </summary>
         </member>
         <member name="T:Westwind.Utilities.Scheduler">
@@ -4647,23 +4662,16 @@
             <param name="resolution"></param>
             <returns></returns>
         </member>
-        <member name="M:Westwind.Utilities.TimeUtils.UtcToTimezoneTime(System.DateTime,System.String)">
-            <summary>
-            Converts a UtcTime to a local time based on a specific timezone
-            </summary>
-            <param name="dateTime"></param>
-            <param name="timeZoneId"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Utilities.TimeUtils.UtcToTimezoneTime(System.DateTime,System.TimeZoneInfo)">
-            <summary>
-            Converts a UtcTime to a local time based on a specific timezone
-            </summary>
-            <param name="dateTime"></param>
-            <param name="timeZoneId"></param>
-            <returns></returns>
-        </member>
         <member name="M:Westwind.Utilities.TimeUtils.ToTimeZoneTime(System.DateTime,System.String)">
+            <summary>
+            Returns TimeZone adjusted time for a given from a Utc or local time.
+            Date is first converted to UTC then adjusted.
+            </summary>
+            <param name="time"></param>
+            <param name="timeZoneId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.TimeUtils.ToTimeZoneTime(System.DateTime,System.TimeZoneInfo)">
             <summary>
             Returns TimeZone adjusted time for a given from a Utc or local time.
             Date is first converted to UTC then adjusted.

@@ -1,0 +1,55 @@
+﻿<div id="ResourceList" class="well"
+     style="margin-bottom: 2px; padding: 10px; background: #f2f2f2;">
+
+    <label style="font-size: 15pt; color: darkred; font-weight: bold;">
+        {{view.resourceItems[0].ResourceId}}
+    </label>
+
+    <div class="separator"></div>
+    <div id="resourcegroup_{{$index + 1}}" class="resource-group"
+         ng-repeat="resource in view.resourceItems">
+
+        <div class="input-group" style="margin-top: 2px;">
+            <span class="input-group-addon active" style="cursor: pointer"
+                  ng-click="view.onLocaleIdChanged(resource)">
+                <div class="locale-id">
+                    {{resource.LocaleId ? resource.LocaleId : 'Invariant'}}
+                </div>
+            </span>
+            <form name="resourceForm" id="form1">
+                <textarea id="value_{{$index}}" name="value_{{$index}}"
+                          class="form-control"
+                          ng-focus="view.onLocaleIdChanged(resource)"
+                          data-localeid="{{resource.LocaleId}}"
+                          ng-model="resource.Value"
+                          ng-keydown="view.onResourceKeyDown($event,resource,resourceForm)">                    
+                </textarea>
+            </form>
+            <span class="input-group-addon" title="Save resource (Ctrl-Enter)"
+                  tabindex="0" role="button" aria-label="Save resource (Ctrl-Enter)"
+                  ng-class="{'color-check': resourceForm.$dirty, 'color-disabled': !resourceForm.$dirty }"
+                  ng-enabled="resourceForm.$dirty"
+                  ng-click="view.onStringUpdate(resource)"><i class="fa fa-check"></i></span>
+            <span class="input-group-addon"
+                  tabindex="-1" role="button" aria-label="Translate resource"
+                  title="Translate Resource"
+                  ng-click="view.onTranslateClick($event,resource)"><i class="fa fa-flag-o"></i></span>
+        </div>
+
+    </div>
+
+    <!--<div class="separator" style="margin-top: 10px;margin-bottom:10px"></div>-->
+
+    <div class="btn-group" style="margin-top: 12px;">
+        <button ng-click="view.onAddResourceClick()" class="btn btn-sm btn-default" title="Add new Resource">
+            <i class="fa fa-plus"></i> Add
+        </button>
+        <button class="btn btn-sm btn-default"
+                title="Delete all entries for this Resource"
+                ng-click="view.onDeleteResourceClick()"><i class="fa fa-remove"></i> Delete</button>
+        <button class="btn btn-sm btn-default" title="Rename this Resource for all languages" ng-click="view.onRenameResourceClick()"><i class="fa fa-exchange"></i> Rename</button>
+        <button class="btn btn-sm btn-default" title="Comment" disabled="disabled">
+            <i class="fa fa-comment-o"></i> Comment
+        </button>
+    </div>
+</div>

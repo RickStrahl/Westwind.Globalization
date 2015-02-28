@@ -1,0 +1,15 @@
+﻿{
+  "ConnectionString": "Localizations",
+  "ResourceTableName": "Localizations",
+  "StronglyTypedGlobalResource": "~/App_Code/Resources.cs",
+  "ResourceBaseNamespace": "AppResources",
+  "ResxExportProjectType": "Project",
+  "ResxBaseFolder": "~/",
+  "AddMissingResources": true,
+  "LocalizationFormWebPath": "~/LocalizationAdmin/",
+  "DesignTimeVirtualPath": "",
+  "ShowLocalizationControlOptions": false,
+  "ShowControlIcons": false,
+  "BingClientId": null,
+  "BingClientSecret": null
+}

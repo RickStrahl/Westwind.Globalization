@@ -11,7 +11,7 @@ the ability to serve server side resources as JSON resources to JavaScript clien
 
 Requirements:
 * .NET 4.5
-* Sql Server, Sql Express or SQL Compact 4, MySql, SqLite or later
+* Sql Server 2008+, Sql Express or SQL Compact 4, MySql, SqLite
 
 ### Resources:
 * [Westwind.Globalization Home Page](http://west-wind.com/westwind.globalization/)
@@ -73,21 +73,32 @@ easy to create your own customized UI or data driven API that suits your
 application needs exactly.
 
 ### How the database Providers work
-This library works by implementing a custom .NET ResourceManager and 
-ASP.NET ResourceProvider that are tied to a database provider. This 
-means you can access resources using the same mechanisms that you
+This library implements a custom .NET ResourceManager and 
+ASP.NET ResourceProvider that are tied to a database provider interface.
+(although you can implement non-data providers as well). This means you 
+can access resources using the same mechanisms that you
 use with standard Resx Resources in your .NET applications. It also
 means although resources are initially loaded from the database
-for the first load of each ResourceSet, resources are cached for
-each individual ResourceSet and locale the same way that Resx 
+for the first load of each ResourceSet. .NET then caches resources 
+for each individual ResourceSet and locale the same way that Resx 
 resources are read from the assembly resources and then cached. 
-The database is hit only for the first read of a given 
-ResourceSet/Locale combination. IOW, not every resource access
-hits the database!
+**The database is hit only for the first read of a given 
+ResourceSet/Locale combination - not every resource access
+hits the database!**
+
+The DbResourceManager can be used in any type of .NET application using
+the `DbRes` class methods, generated strongly typed classes, or using the Resource
+Manager directly. The DbResourceProvider classes can be used in ASP.NET
+applications - especially for WebForms with support for local and global
+resources, implicit resources and control meta tags. MVC applications
+typically use the ResourceManager with strongly typed resources or the
+`DbRes` classes or by exporting resources back into RESX 
 
 Underneath the .NET providers lies a the Westwind.Globalization data
-access layer that provides the data interface to provide resources. 
-This API is accessed by the Resource Provider and Resource Manager
+access layer (IDbResourceDataManager) that provides the data interface 
+to provide access to various providers. The default provider uses SQL Server
+as a data source with additional providers available for MySql, SqLite and
+SqlCompact. This API is accessed by the Resource Provider and Resource Manager
 implementations to read the resources from the database.
 
 Additionally the API can be directly accessed to provide resource 
@@ -125,40 +136,72 @@ the localization administration form shown above, so you can create the
 resource table and manage resources in it.
 
 #### Configuration Settings
-The key configuration items set are the DbResourceProvider section in
+The key configuration items set are the DbResourceConfiguration section in
 the config file which tells the provider where to find the database
 resources:
 
 ```xml
 <configuration>
   <configSections>
-    <section name="DbResourceProvider" type="Westwind.Globalization.DbResourceProviderSection,Westwind.Globalization" requirePermission="false" />
+    <section name="DbResourceConfiguration" requirePermission="false" 
+			 type="System.Configuration.NameValueSectionHandler,System,Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   </configSections>  
-  <DbResourceProvider connectionString="server=.;database=localizations;integrated security=true"
-                      resourceTableName="Localizations"
-                      addMissingResources="false"
-                      stronglyTypedGlobalResource="~/Properties/Resources.cs"
-                      resourceNamespace="AppResources"
-                      resxExportProjectType="Project"
-                      localizationFormWebPath="~/localizationadmin/LocalizationAdmin.aspx"                      
-                      designTimeVirtualPath="/internationalization"
-                      showLocalizationControlOptions="true"
-                      showControlIcons="true"
-                      useVsNetResourceNaming="false"
-                      bingClientId=""
-                      bingClientSecret="" />
+
+  <DbResourceConfiguration>
+    <add key="ConnectionString" value="server=.;database=Localizations;integrated security=true;" />
+    <add key="ResourceTableName" value="Localizations" />
+    <add key="AddMissingResources" value="True" />
+
+    <!-- Resource Imports and Exports -->
+    <add key="ResxExportProjectType" value="Project" />
+    <add key="StronglyTypedGlobalResource" value="~/App_Code/Resources.cs" />
+    <add key="ResourceBaseNamespace" value="AppResources" />    
+    <add key="ResxBaseFolder" value="~/" />
+
+    <!-- WebForms specific only -->
+    <add key="LocalizationFormWebPath" value="~/LocalizationAdmin/" />
+    <add key="DesignTimeVirtualPath" value="" />
+    <add key="ShowLocalizationControlOptions" value="False" />
+    <add key="ShowControlIcons" value="False" />
+
+    <!-- Bing Translation -->
+    <add key="BingClientId" value="" />
+    <add key="BingClientSecret" value="" />    
+  </DbResourceConfiguration>
 
   <!-- Enable ASP.NET Resource Provider  -->
-  <globalization resourceProviderFactoryType="Westwind.Globalization.DbSimpleResourceProviderFactory,Westwind.Globalization.Web" />
+  <globalization resourceProviderFactoryType=
+     "Westwind.Globalization.DbSimpleResourceProviderFactory,Westwind.Globalization.Web" />
 </configuration>
 ```
 
-**ConnectionString**<br/>
-The two most important keys are the connectionString and resourceTableName which point at your
-database and a table within it. You can use either a raw connectionstring as above or a connection string name in the ConnectionStrings section of your config file.
+**ConnectionString and ResourceTableName**<br/>
+The two most important keys are the connectionString and resourceTableName which point at your database and a table that holds resources. You can use either a raw connection string as above or a connection string name in the `<ConnectionStrings>` section of your config file.
 
-**resxExportProjectType**<br/>
-This option determines how the Resx export feature works. The two options are `Project` or `WebForms`. Project exports resources  
+**AddMissingResources**
+When set to true causes any resource lookup that fails to produce matching resource ID to write the invariant resource into the database. Use with caution - as this might slow down your application significantly as you now write to the database on any missing resources. Use only during development and testing to get resources into the system for easier debugging later.
+
+**ResxExportProjectType**<br/>
+This option determines how the Resx export feature works. The two options are `Project` or `WebForms`. Project exports all resource files into \properties folder underneath the resxBasePath and excludes any resource sets that include a . in their name (assumed to be ASP.NET resources). WebForms writes out resources into folder specific App_LocalResources and App_GlobalResources folders based on the root folder
+
+**ResxBaseFolder**<br/>
+The base folder that's used for all Resx Import and Export operations. The default is ~/ which is the root web folder, but you can specify a full OS path here. Note that this allows you to read/write resources in other non-web projects - as long as your Web application has writes to the folder specified.
+
+**StronglyTypeGlobalResource and ResourceBaseNamespace**<br/>
+If you do a strongly typed class export from the admin manager all resources will be created in a single file in the this file using the ResourceBaseNameSpace as the namespace in the generated class.
+
+#### Configuration File Overrides
+The default configuration format using .NET .config flies is shown above. If your application/web account has rights to write to the .config file, the configuration information is created automatically the first time you start up the application (except the `<globalization>` section. These config section has standard .NET behavior with auto-restarting on change in web.config.
+
+Configuration information can also be stored in plain Json or Xml files by explicitly setting the configuration provider during startup (in Application_Load or during app startup code):
+
+```C#
+DbResourceConfiguration.ConfigurationMode = ConfigurationModes.JsonFile;
+//DbResourceConfiguration.ConfigurationMode = ConfigurationModes.XmlFile;
+```
+
+These files are external and do not automatically cause an app restart. 
+
 
 #### Run the Web Resource Editor
 In order to use database resources you'll actually have to create some resources in a database.
@@ -216,14 +259,14 @@ de-CH (Swiss german) and you de (without a locale specific suffix) the de German
 version will be returned. Resource Fallback tries to ensure that always something
 is returned.
 
-### Using Resources in your Application
+## Using Resources in your Application
 There are a number of different ways to access resources from this provider.
 
 * Direct access with DbRes 
 * ASP.NET Resource provider
 * .NET Resource Manager
 
-#### DbRes Helper Class
+### DbRes Helper Class
 The DbRes Helper class is a wrapper around the DbResourceManager and DbResouceDataManager
 object. The DbRes class contains a handful of common use static methods that are used to 
 retrieve and manipulate resources.
@@ -245,22 +288,22 @@ This is an easy mechanism that's tied closely to the database
 resources created and can be applied with minimal fuss in any
 kind of .NET application.
 
-#### ASP.NET MVC or ASP.NET WebPages
+### ASP.NET MVC or ASP.NET WebPages
 ```HTML
 Say Hello: @DbRes.T("HelloWorld") at @DateTime.Now
 ```
 
-#### ASP.NET WebForms
+### ASP.NET WebForms
 ```HTML
 Say Hello: <%: DbRes.T("HelloWorld") %> at <%= DateTime.Now %>
 ```
 
-#### In .NET code
+### In .NET code
 ```HTML
 string value = DbRes.T("HelloWorld");
 ```
 
-### Using the ASP.NET Resource Provider 
+## Using the ASP.NET Resource Provider 
 If you're using an existing WebForms application or you want to
 use the ASP.NET based Resource Provider model for accessing resources
 you can use the DbSimpleResourceProvider. This implementation is an
@@ -287,33 +330,33 @@ features:
 * GetGlobalResourceObject, GetLocalResourceObject on Page and HttpContext
 * Using meta:resourcekey attributes on Web Controls
 
-#### Page.GetGlobalResourceObject() or HttpContext.GetGlobalResourceObject() 
+### Page.GetGlobalResourceObject() or HttpContext.GetGlobalResourceObject() 
 ```HTML
 <legend>ASP.NET ResourceProvider</legend>
 <label>Get GlobalResource Object (default locale):</label>
 <%: Page.GetGlobalResourceObject("Resources","HelloWorld") %>
 ```
 
-#### Page.GetLocalResourceObject()
+### Page.GetLocalResourceObject()
 ```HTML
 <label>GetLocalResourceObject via Expression:</label>                 
 <%: GetLocalResourceObject("lblHelloWorldLabel.Text") %>
 ```
 
-####WebForms Control meta:resourcekey attribute
+### WebForms Control meta:resourcekey attribute
 ```HTML
 <label>Meta Tag (key lblHelloWorldLabel.Text):</label>
 <asp:Label ID="lblHelloLabel" runat="server" meta:resourcekey="lblHelloWorldLabel"></asp:Label>
 ```
 
-#### WebForms Resource Expressions
+### WebForms Resource Expressions
 ```HTML
 <label>Resource Expressions (Global Resources):</label>
 <asp:Label ID="Label1" runat="server" Text="<%$ Resources:Resources,HelloWorld %>"></asp:Label>
 ```
 
 
-#### Strongly typed Resources
+### Strongly typed Resources
 The Web Resource Editor form allows you to create strongly typed resources
 for any global resources in your application. Basically it'll go through all the 
 non-local resources in your file and create strongly type .NET classes in a file that
@@ -365,12 +408,12 @@ namespace WebApplication1
 
 These can then be used in any ASP.NET application:
 
-#### ASP.NET MVC or WebPages
+### ASP.NET MVC or WebPages
 ```HTML
 <div class="statusbar">@CommonWords.Ready</div>
 ```
 
-#### ASP.NET WebForms
+### ASP.NET WebForms
 ```HTML
 <div class="statusbar"><%: WebApplication2.CommonWords.Ready %></div>
 ```
@@ -381,7 +424,7 @@ you remove or rename a resource you may break your code. This is the
 reason we use a single file, rather than a file per resource set to 
 keep the file management as simple as possible.
 
-#### Non Sql Server Database Providers
+## Non Sql Server Database Providers
 By default the resource providers and manager use SQL Server to hold the database resources. If you don't do any custom configuration in code to specify the Configuration.DbResourceDataManagerType you'll get the Sql Server provider/manager. 
 
 However, all of the following providers are supported:
@@ -398,34 +441,35 @@ To use a provider other than Sql Server you need to do the following:
 * Add the appropriate Westwind.Globalization.<DataBase> assembly/NuGet Package
 * Specify the Configuration.DbResourceDbD
  
-
-**Sql Server Compact**<br/>
-*add: Westwind.Globalization.SqlServerCe*
-```c#
-DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerCeDataManager);
-```
-
-**MySql**<br/>
-*add: Westwind.Globalization.MySql*
-```c#
-DbResourceConfiguration.Current.DbResourceDataManagerType = typeof (DbResourceMySqlDataManager);
-```
-**SqLite**<br/>
-*add: Westwind.Globalization.SqLite*
-```c#
-DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);
-```  
-
 **Sql Server**<br/>
-*no additional assembly needed*
+*no additional package needed*
 ```c#
 // not required - use only if you need to reset provider in code
 DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerDataManager);
 ```  
 
+**Sql Server Compact**<br/>
+*add NuGet Package: Westwind.Globalization.SqlServerCe*
+```c#
+DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerCeDataManager);
+```
+
+**MySql**<br/>
+*add NuGet Package: Westwind.Globalization.MySql*
+```c#
+DbResourceConfiguration.Current.DbResourceDataManagerType = typeof (DbResourceMySqlDataManager);
+```
+**SqLite**<br/>
+*add NuGet Package: Westwind.Globalization.SqLite*
+```c#
+DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);
+```  
+
+
+
 This code configures the data manager globally so every time a data access operation occurs it instantiates the data manager configured here. It's important that you add the appropriate assembly first, otherwise these provider types will not be available and your code won't compile.
 
-#### JavaScript Resource Handler
+### JavaScript Resource Handler
 Localization doesn't stop with server templates - if you're building applications
 that include JavaScript logic it's likely that you also need to access resources
 on the client that are localized. This library provides a JavaScript Resource 
@@ -501,7 +545,25 @@ declared object that you want to attach the resources to you can use that name. 
 </script>
 ```
 
-#### License
+## Project Sponsors
+The following people/organizations have provided sponsorship to this project by way of direct donations or for paid development as part of a development project using these tools:
+
+* **Frank Lutz - Monosynth**<br/>
+Frank provided a sizable donation to the project and valuable feedback for a host of improvements and bug fixes.
+
+* **Craig Tucker - Alabama Software**<br/>
+Craig offered early support and feedback for this project and billed project time for a number of additions to the library as part of a larger project.
+
+* **Dan Martin - WeatherMaker**<br/>
+Dan and his company provided a block of my billable hours dedicated to this project for adding support for MySql.
+
+Want to sponsor this project or make a donation? You can contact me directly at rstrahl@west-wind.com or you can also make a donation online via PayPal.
+
+* [Make a donation for Westwind.Globalization using PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ERVCP2CMPS4QL)
+* [Make a donation for Westwind.Globalization using our Web Store](http://store.west-wind.com/product/donation)
+
+
+## License
 The Westwind.Globalization library is licensed under the
 [MIT License](http://opensource.org/licenses/MIT) and there's no charge to use, 
 integrate or modify the code for this project. You are free to use it in personal, 

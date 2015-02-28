@@ -1,8 +1,13 @@
+#define IncludeWebFormsControls
+
 using System;
 using System.Configuration;
 using System.Collections.Generic;
+using System.IO;
 using System.Web.UI.Design;
+using System.Xml.Serialization;
 using Westwind.Utilities;
+using Westwind.Utilities.Configuration;
 
 namespace Westwind.Globalization
 {
@@ -16,7 +21,7 @@ namespace Westwind.Globalization
     /// from web.config (at runtime). You can override this behavior by creating your
     /// own configuration object and assigning it to the DbResourceConfiguration.Current property.
     /// </summary>
-    public class DbResourceConfiguration
+    public class DbResourceConfiguration : Westwind.Utilities.Configuration.AppConfiguration
     {
         /// <summary>
         /// A global instance of the current configuration. By default this instance reads its
@@ -30,13 +35,20 @@ namespace Westwind.Globalization
         public static DbResourceConfiguration Current = null;
 
         /// <summary>
+        /// Determines how configuration information is stored: Config, Json or XML
+        /// Default uses .NET configuration files.
+        /// </summary>
+        public static ConfigurationModes ConfigurationMode  = ConfigurationModes.JsonFile;
+
+        /// <summary>
         /// Static constructor for the Current property - guarantees this
         /// code fires exactly once giving us a singleton instance
         /// of the configuration object.
         /// </summary>
         static DbResourceConfiguration()
         {
-            Current = new DbResourceConfiguration(true);
+            Current = new DbResourceConfiguration();
+            Current.Initialize(sectionName: "DbResourceConfiguration");
         }
 
         /// <summary>
@@ -47,7 +59,13 @@ namespace Westwind.Globalization
         /// <seealso>Class DbResource
         /// Compiling Your Applications with the Provider</seealso>
         /// </summary>
-        public string ConnectionString { get; set; }
+        public string ConnectionString
+        {
+            get { return _connectionString; }
+            set { _connectionString = value; }
+        }
+
+        private string _connectionString = "*** ENTER YOUR CONNECTION STRING OR CONNECTION ENTRY HERE ***";
 
         /// <summary>
         /// Database table name used in the database
@@ -58,44 +76,6 @@ namespace Westwind.Globalization
             set { _ResourceTableName = value; }
         }
         private string _ResourceTableName = "Localizations";
-        
-
-        /// <summary>
-        /// Determines the location of the Localization form in a Web relative path.
-        /// This form is popped up when clicking on Edit Resources in the 
-        /// DbResourceControl
-        /// </summary>        
-        public string LocalizationFormWebPath
-        {
-            get { return _LocalizationFormWebPath; }
-            set { _LocalizationFormWebPath = value; }
-        }
-        private string _LocalizationFormWebPath = "~/LocalizationAdmin/";
-
-        /// <summary>
-        /// Determines whether any resources that are not found are automatically
-        /// added to the resource file.
-        /// 
-        /// Note only applies to the Invariant culture.
-        /// </summary>
-        public bool AddMissingResources
-        {
-            get { return _AddMissingResources; }
-            set { _AddMissingResources = value; }
-        }
-        private bool _AddMissingResources = true;
-
-        /// <summary>
-        /// API key for Bing Translate API in the 
-        /// Administration API.
-        /// </summary>
-        public string BingClientId { get; set; }
-
-        /// <summary>
-        /// Bing Secret Key for Bing Translate API Access
-        /// </summary>
-        public string BingClientSecret { get; set; }
-
 
 
         /// <summary>
@@ -151,24 +131,35 @@ namespace Westwind.Globalization
             set { _resxBaseFolder = value; }
         }
         private string _resxBaseFolder = "~/";
-        
 
         /// <summary>
-        /// Allows you to override the data provider used to access resources.
-        /// Defaults to Sql Server. To override set this value during application
-        /// startup - typical on DbResourceConfiguration.Current.DbResourceDataManagerType
+        /// Determines whether any resources that are not found are automatically
+        /// added to the resource file.
         /// 
-        /// This type instance is used to instantiate the actual provider.       
+        /// Note only applies to the Invariant culture.
         /// </summary>
-        public Type DbResourceDataManagerType
+        public bool AddMissingResources
         {
-            get { return _DbResourceDataManagerType; }
-            set { _DbResourceDataManagerType = value; }
-        }        
-        private Type _DbResourceDataManagerType = typeof(DbResourceSqlServerDataManager);
+            get { return _AddMissingResources; }
+            set { _AddMissingResources = value; }
+        }
+        private bool _AddMissingResources = true;
 
 
+        /// <summary>
+        /// Determines the location of the Localization form in a Web relative path.
+        /// This form is popped up when clicking on Edit Resources in the 
+        /// DbResourceControl
+        /// </summary>        
+        public string LocalizationFormWebPath
+        {
+            get { return _LocalizationFormWebPath; }
+            set { _LocalizationFormWebPath = value; }
+        }
+        private string _LocalizationFormWebPath = "~/LocalizationAdmin/";
 
+
+#if IncludeWebFormsControls
         /// <summary>
         /// WebForms only. The virtual path for the Web application. This value is used at design time for WebForms implicit resource import from Visual Studio.
         /// </summary>
@@ -192,6 +183,34 @@ namespace Westwind.Globalization
         /// </summary>
         public bool ShowControlIcons { get; set; }
         
+#endif
+        
+        /// <summary>
+        /// API key for Bing Translate API in the 
+        /// Administration API.
+        /// </summary>
+        public string BingClientId { get; set; }
+
+        /// <summary>
+        /// Bing Secret Key for Bing Translate API Access
+        /// </summary>
+        public string BingClientSecret { get; set; }
+
+
+
+        /// <summary>
+        /// Allows you to override the data provider used to access resources.
+        /// Defaults to Sql Server. To override set this value during application
+        /// startup - typical on DbResourceConfiguration.Current.DbResourceDataManagerType
+        /// 
+        /// This type instance is used to instantiate the actual provider.       
+        /// </summary>
+        [XmlIgnore]                
+        [NonSerialized]
+        public Type DbResourceDataManagerType = typeof(DbResourceSqlServerDataManager);
+
+        
+
 
         /// <summary>
         /// Base constructor that doesn't do anything to the default values.
@@ -202,93 +221,131 @@ namespace Westwind.Globalization
         }
 
         /// <summary>
-        /// Default constructor used to read the configuration section to retrieve its values
-        /// on startup.
+        /// Override this method to create the custom default provider. Here we allow for different 
+        /// configuration providers so we don't have to rely on .NET configuration classed (for vNext)
         /// </summary>
-        /// <param name="readConfigurationSection"></param>
-        public DbResourceConfiguration(bool readConfigurationSection)
+        protected override IConfigurationProvider OnCreateDefaultProvider(string sectionName, object configData)
         {
-            if (readConfigurationSection)
-                ReadConfigurationSection();
-        }
+            if (string.IsNullOrEmpty(sectionName))
+                sectionName = "DbResourceConfiguration";
 
+            IConfigurationProvider provider;
 
-        /// <summary>
-        /// Reads the DbResourceProvider Configuration Section and assigns the values 
-        /// to the properties of this class
-        /// </summary>
-        /// <returns></returns>
-        public bool ReadConfigurationSection()
-        {            
-            //TSection = WebConfigurationManager.GetWebApplicationSection("DbResourceProvider");
-            object TSection = ConfigurationManager.GetSection("DbResourceProvider");
-            if (TSection == null)
-                return false;
-
-            var section = TSection as DbResourceProviderSection;
-            ReadSectionValues(section);
-
-            return true;
-        }
-
-        /// <summary>
-        /// Handle design time access to the configuration settings - used for the 
-        /// DbDesignTimeResourceProvider - when loaded we re-read the settings
-        /// </summary>
-        /// <param name="serviceHost"></param>
-        public bool ReadDesignTimeConfiguration(IServiceProvider serviceProvider )
-        {
-            IWebApplication webApp = serviceProvider.GetService(typeof(IWebApplication)) as IWebApplication;
-
-            // Can't get an application instance - can only exit
-            if (webApp == null)
-                return false;
-
-            object TSection = webApp.OpenWebConfiguration(true).GetSection("DbResourceProvider");
-            if (TSection == null)
-                return false;
-
-            var section = TSection as DbResourceProviderSection;
-            ReadSectionValues(section);
-
-            // If the connection string doesn't contain = then it's
-            // a ConnectionString key from .config. This is handled in
-            // in the propertyGet of the resource configration, but it uses
-            // ConfigurationManager which is not available at design time
-            //  So we have to duplicate the code here using the WebConfiguration.
-            if (!ConnectionString.Contains("="))
+            if (ConfigurationMode == ConfigurationModes.JsonFile)
             {
-                try
+                provider = new JsonFileConfigurationProvider<DbResourceConfiguration>()
                 {
-                    string conn = webApp.OpenWebConfiguration(true).ConnectionStrings.ConnectionStrings[ConnectionString].ConnectionString;
-                    ConnectionString = conn;
-                }
-                catch { }                
+                    JsonConfigurationFile =
+                        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DbResourceConfiguration.json")
+                };
             }
-                
-            return true;
+            else if (ConfigurationMode == ConfigurationModes.XmlFile)
+            {
+                provider = new XmlFileConfigurationProvider<DbResourceConfiguration>()
+                {
+                    XmlConfigurationFile =
+                        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DbResourceConfiguration.xml")
+                };
+            }
+            else
+            {
+                provider = new ConfigurationFileConfigurationProvider<DbResourceConfiguration>()
+                {
+                    ConfigurationSection = sectionName
+                };
+            }
+
+            return provider;
         }
 
-        /// <summary>
-        /// Reads the actual section values
-        /// </summary>
-        /// <param name="section"></param>
-        private void ReadSectionValues(DbResourceProviderSection section)
-        {
-            ConnectionString = section.ConnectionString;
-            ResourceTableName = section.ResourceTableName;
-            DesignTimeVirtualPath = section.DesignTimeVirtualPath;
-            LocalizationFormWebPath = section.LocalizationFormWebPath;
-            ShowLocalizationControlOptions = section.ShowLocalizationControlOptions;
-            ShowControlIcons = section.ShowControlIcons;
-            AddMissingResources = section.AddMissingResources;
-            StronglyTypedGlobalResource = section.StronglyTypedGlobalResource;
-            ResourceBaseNamespace = section.ResourceBaseNamespace;
-            ResxExportProjectType = section.ResxExportProjectType;
-            ResxBaseFolder = section.ResxBaseFolder;
-            BingClientId = section.BingClientId;
-            BingClientSecret = section.BingClientSecret;
-        }
+        ///// <summary>
+        ///// Default constructor used to read the configuration section to retrieve its values
+        ///// on startup.
+        ///// </summary>
+        ///// <param name="readConfigurationSection"></param>
+        //public DbResourceConfiguration(bool readConfigurationSection)
+        //{
+        //    if (readConfigurationSection)
+        //        ReadConfigurationSection();
+        //}
+
+
+        ///// <summary>
+        ///// Reads the DbResourceProvider Configuration Section and assigns the values 
+        ///// to the properties of this class
+        ///// </summary>
+        ///// <returns></returns>
+        //public bool ReadConfigurationSection()
+        //{            
+        //    //TSection = WebConfigurationManager.GetWebApplicationSection("DbResourceProvider");
+        //    object TSection = ConfigurationManager.GetSection("DbResourceProvider");
+        //    if (TSection == null)
+        //        return false;
+
+        //    var section = TSection as DbResourceProviderSection;
+        //    ReadSectionValues(section);
+
+        //    return true;
+        //}
+
+        ///// <summary>
+        ///// Handle design time access to the configuration settings - used for the 
+        ///// DbDesignTimeResourceProvider - when loaded we re-read the settings
+        ///// </summary>
+        ///// <param name="serviceHost"></param>
+        //public bool ReadDesignTimeConfiguration(IServiceProvider serviceProvider )
+        //{
+        //    IWebApplication webApp = serviceProvider.GetService(typeof(IWebApplication)) as IWebApplication;
+
+        //    // Can't get an application instance - can only exit
+        //    if (webApp == null)
+        //        return false;
+
+        //    object TSection = webApp.OpenWebConfiguration(true).GetSection("DbResourceProvider");
+        //    if (TSection == null)
+        //        return false;
+
+        //    var section = TSection as DbResourceProviderSection;
+        //    ReadSectionValues(section);
+
+        //    // If the connection string doesn't contain = then it's
+        //    // a ConnectionString key from .config. This is handled in
+        //    // in the propertyGet of the resource configration, but it uses
+        //    // ConfigurationManager which is not available at design time
+        //    //  So we have to duplicate the code here using the WebConfiguration.
+        //    if (!ConnectionString.Contains("="))
+        //    {
+        //        try
+        //        {
+        //            string conn = webApp.OpenWebConfiguration(true).ConnectionStrings.ConnectionStrings[ConnectionString].ConnectionString;
+        //            ConnectionString = conn;
+        //        }
+        //        catch { }                
+        //    }
+                
+        //    return true;
+        //}
+
+        ///// <summary>
+        ///// Reads the actual section values
+        ///// </summary>
+        ///// <param name="section"></param>
+        //private void ReadSectionValues(DbResourceProviderSection section)
+        //{
+        //    ConnectionString = section.ConnectionString;
+        //    ResourceTableName = section.ResourceTableName;
+        //    DesignTimeVirtualPath = section.DesignTimeVirtualPath;
+        //    LocalizationFormWebPath = section.LocalizationFormWebPath;
+        //    ShowLocalizationControlOptions = section.ShowLocalizationControlOptions;
+        //    ShowControlIcons = section.ShowControlIcons;
+        //    AddMissingResources = section.AddMissingResources;
+        //    StronglyTypedGlobalResource = section.StronglyTypedGlobalResource;
+        //    ResourceBaseNamespace = section.ResourceBaseNamespace;
+        //    ResxExportProjectType = section.ResxExportProjectType;
+        //    ResxBaseFolder = section.ResxBaseFolder;
+        //    BingClientId = section.BingClientId;
+        //    BingClientSecret = section.BingClientSecret;
+        //}
 
 
         /// <summary>
@@ -333,6 +390,13 @@ namespace Westwind.Globalization
         }
 
 
+    }
+
+    public enum ConfigurationModes
+    {
+        ConfigFile,
+        JsonFile,
+        XmlFile
     }
 
     /// <summary>

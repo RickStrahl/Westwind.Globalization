@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Localization Administration Form">
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="apple-touch-icon" href="touch-icon.png" />
+
+    <link rel="icon" href="touch-icon.png" />
+    <meta name="msapplication-TileImage" content="touch-icon.png">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+     <![endif]-->
+
+    <title>Localization Administration</title>
+
+    <!-- combined CSS file - build with gulp -->
+    <!--<link href="build/app.min.css" rel="stylesheet" />-->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />-->
+
+
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!--<link href="LocalizationAdministration/css/bootstrap-theme.css" rel="stylesheet" />-->
+    <link href="bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet" />
+
+    <link href="css/localizationAdmin.css" rel="stylesheet" />
+</head>
+<body ng-app="app" ng-controller="listController as view">
+
+    <div class="banner">
+        <div id="TitleBar">
+            <a href="index.html">
+                <img src="images/Westwind.Localization_128.png"
+                     style="height: 35px; float: left" />
+                <div style="float: left; margin-left: 5px; line-height: 1.2">
+                    <i style="color: steelblue; font-size: 0.8em; font-weight: bold;">West Wind Globalization</i><br />
+                    <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;">Localization Administration</i>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <nav class="menubar " style="background: #727272;">
+        <ul class="nav navbar-nav pull-left">
+            <li>
+                <a style="border: none;"
+                   title="Collapse/expand resource list panel"
+                   ng-click="view.collapseList()">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </li>
+        </ul>
+
+        <style>
+        </style>
+        <ul id="MenuButtons" class="nav navbar-nav pull-right navbar">
+            <li>
+                <a ng-show="view.resourceSets && view.resourceSets.length > 0"
+                   ng-click="view.onExportResxResourcesClick()"
+                   title="Export all resources to Resx files">
+                    <i class="fa fa-download"></i> Export Resx
+                </a>
+            </li>
+            <li>
+                <a ng-show="view.resourceSets && view.resourceSets.length > 0"
+                   ng-click="view.onImportResxResourcesClick()"
+                   title="Import all Resx resources from project path">
+                    <i class="fa fa-upload"></i> Import Resx
+                </a>
+            </li>
+            <li>
+                <a ng-click="view.onCreateClassClick()"
+                   ng-show="view.resourceSets && view.resourceSets.length > 0"
+                   title="Generate strongly typed classes from ResourceSets">
+                    <i class="fa fa-code" style="font-weight: bold;"></i> Create Class
+                </a>
+            </li>
+            <li>
+                <a ng-show="view.resourceSets && view.resourceSets.length > 0"
+                   ng-click="view.onReloadResourcesClick()"
+                   xtitle="Force database resources for the application to reload">
+                    <i class="fa fa-refresh"></i> Reload Resources
+                </a>
+            </li>
+            <li>
+                <a ng-show="!view.resourceSets || view.resourceSets.length < 1"
+                   ng-click="view.onCreateTableClick()"
+                   title="Create a new translation table if it doesn't exist">
+                    <i class="fa fa-plus-square"></i> Create Table
+                </a>
+
+            </li>
+            <li>
+                <a ng-show="view.resourceSets && view.resourceSets.length > 0"
+                   ng-click="view.onBackupClick()"
+                   title="Backup resource database to a backup table">
+                    <i class="fa fa-save"></i> Backup
+                </a>
+            </li>
+            <li>
+                <a href="../"
+                   title="Back to site home">
+                    <i class="fa fa-home"></i>
+                </a>
+            </li>
+        </ul>
+
+        <div class="clearfix"></div>
+    </nav>
+
+
+    <div id="ContentContainer"
+         ng-cloak>
+
+        <div id="ListPanel"
+             ng-class="{ collapsed: !view.listVisible}"
+             class="col-sm-3"
+             style="padding-right: 1px;border-right: 1px solid silver;">
+
+            <div class="input-group">
+                <span class="input-group-addon" style="border-radius: 0"><i class="fa fa-search"></i></span>
+                <input id="SearchResources"
+                       class="form-control"
+                       placeholder="Search Resources"
+                       ng-model="view.searchText"
+                       style="border-radius: 0;margin:0"
+                       type="search" />
+            </div>
+
+
+            <div class="form-group">
+                <select id="ResourceIdList" ng-model="view.resourceId"
+                        ng-change="view.onResourceIdChange(resource)"
+                        size="2" class="form-control">
+                    <option ng-repeat="resource in view.resourceList | filter:view.searchText"
+                            value="{{resource.ResourceId}}"
+                            style="{{resource.Style}}">
+                        {{resource.ResourceId}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div id="ContentPanel" class="col-sm-8" ng-class="{expanded: !view.listVisible }">
+
+            <div ng-include src="'ResourceList.html'"></div>
+
+            <div ng-include src="'ResourceSetList.html'"></div>
+        </div>
+    </div>
+
+
+    <div id="ErrorMessage" class="alert alert-{{view.error.cssClass}} alert-dismissable"
+         ng-show="view.error.message">
+        <!--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>-->
+        <i class="fa fa-{{view.error.icon}}"></i> &nbsp;&nbsp;<strong>{{view.error.message}}</strong>
+    </div>
+
+    <div ng-include src="'TranslateDialog.html'"></div>
+
+    <div ng-include src="'AddResourceDialog.html'"></div>
+
+    <div ng-include src="'RenameResourceDialog.html'"></div>
+
+
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="scripts/ww.jquery.min.js"></script>
+    <script src="bower_components/lodash/lodash.min.js"></script>
+
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="scripts/ww.angular.js"></script>
+
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+    <!-- combined app scripts - build with gulp -->
+    <!--<script src="js/app.min.js"></script>-->
+
+    <script src="app/app.js"></script>
+    <script src="app/localizationService.js"></script>
+    <script src="app/listController.js"></script>
+    <script src="app/translateController.js"></script>
+
+</body>
+</html>

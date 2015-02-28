@@ -98,9 +98,9 @@ namespace Westwind.Globalization
 
             public DbDesignTimeLocalResourceProvider(IServiceProvider serviceProvider)
             {
-                // Have to force the configuration to read Web.Config settings explicitly at design time.
-                if (string.IsNullOrEmpty(DbResourceConfiguration.Current.ConnectionString))
-                    DbResourceConfiguration.Current.ReadDesignTimeConfiguration(serviceProvider);
+                //// Have to force the configuration to read Web.Config settings explicitly at design time.
+                //if (string.IsNullOrEmpty(DbResourceConfiguration.Current.ConnectionString))
+                //    DbResourceConfiguration.Current.ReadDesignTimeConfiguration(serviceProvider);
 
                 _serviceProvider = serviceProvider;
             }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<package> 
+  <metadata> 
+    <id>Westwind.Globalization</id> 
+    <version>1.998</version>
+    <authors>Rick Strahl, West Wind Technologies</authors>
+    <title>West Wind Globalization ASP.NET Database Resource Provider (Westwind.Globalization)</title> 
+    <summary>Database Resource Localization for .NET and ASP.NET</summary>
+    <description>This library provides a data driven ASP.NET resource provider and plain .NET Resource Manager using SQL Server as well as a visual Web Resource Editor to dynamically add and edit language resources to the database via a Web interface. Import and Export ResX resources and generate strongly typed classes from database resources.
+    </description>
+    <language>en-US</language>
+    <licenseUrl>http://www.west-wind.com/westwind.globalization/docs/?page=_2lp0u0i9b.htm</licenseUrl>
+    <projectUrl>http://www.west-wind.com/westwind.globalization/</projectUrl>
+    <iconUrl>http://west-wind.com/westwind.globalization/images/Westwind.Localization_128.png</iconUrl>
+   	<dependencies>
+	  <!-- smaller than V3.0 -->
+	  <dependency id="Westwind.Web.WebForms" version="[2.59,3.0)" />
+	</dependencies>
+  </metadata> 
+</package>
+
