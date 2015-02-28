@@ -23,7 +23,7 @@ namespace Westwind.Globalization.Sample
 
             GeneratedResourceSettings.ResourceAccessMode = ResourceAccessMode.DbResourceManager;
 
-            DbResourceConfiguration.ConfigurationMode = ConfigurationModes.JsonFile;
+            DbResourceConfiguration.ConfigurationMode = ConfigurationModes.ConfigFile;
 
 
             // *** override which connection string is used for the provider configuration values

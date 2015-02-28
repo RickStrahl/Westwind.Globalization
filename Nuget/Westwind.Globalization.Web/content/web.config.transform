@@ -2,8 +2,9 @@
   <configSections>
     <section name="DbResourceConfiguration" requirePermission="false" type="System.Configuration.NameValueSectionHandler,System,Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   </configSections>
+  
   <DbResourceConfiguration>
-    <add key="ConnectionString" value="Localizations" />
+    <add key="ConnectionString" value="*** ENTER A RAW CONNECTION STRING OR CONNECTION STRING ENTRY HERE ***" />
     <add key="ResourceTableName" value="Localizations" />
     <add key="StronglyTypedGlobalResource" value="~/App_Code/Resources.cs" />
     <add key="ResourceBaseNamespace" value="AppResources" />
@@ -30,7 +31,7 @@
       </namespaces>
       <controls>        
         <add tagPrefix="ww" namespace="Westwind.Web.Controls" assembly="Westwind.Web.WebForms" />        
-        <add tagPrefix="ww" namespace="Westwind.Globalization" assembly="Westwind.Globalization" />        
+        <add tagPrefix="ww" namespace="Westwind.Globalization" assembly="Westwind.Globalization.Web" />        
       </controls>	  
     </pages>
     <httpHandlers>

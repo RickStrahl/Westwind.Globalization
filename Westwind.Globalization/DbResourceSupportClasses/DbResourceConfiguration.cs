@@ -38,7 +38,7 @@ namespace Westwind.Globalization
         /// Determines how configuration information is stored: Config, Json or XML
         /// Default uses .NET configuration files.
         /// </summary>
-        public static ConfigurationModes ConfigurationMode  = ConfigurationModes.JsonFile;
+        public static ConfigurationModes ConfigurationMode  = ConfigurationModes.ConfigFile;
 
         /// <summary>
         /// Static constructor for the Current property - guarantees this

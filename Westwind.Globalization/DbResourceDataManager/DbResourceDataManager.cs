@@ -717,6 +717,7 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="resourceId">The resource Id to return for</param>
         /// <param name="resourceSet">Resourceset to look in</param>
+        /// <param name="forAllResourceSetLocales">When true returns empty entries for missing resources of locales in this resource set</param>
         /// <returns>List of resource items or null</returns>
         public virtual IEnumerable<ResourceItem> GetResourceItems(string resourceId, string resourceSet, bool forAllResourceSetLocales = false)
         {

@@ -236,6 +236,7 @@
     <Content Include="LocalizationAdmin\bower_components\fontawesome\fonts\fontawesome-webfont.woff" />
     <Content Include="LocalizationAdmin\bower_components\fontawesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="LocalizationAdmin\bower_components\fontawesome\fonts\FontAwesome.otf" />
+    <Content Include="_readme.Westwind.Globalization.html" />
     <None Include="LocalizationAdmin\scripts\_references.js" />
     <Content Include="LocalizationAdmin\bower_components\jquery\.bower.json" />
     <Content Include="LocalizationAdmin\bower_components\jquery\bower.json" />
