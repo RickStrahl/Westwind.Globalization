@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -34,24 +34,26 @@
         hr {
             margin: 10px 0 -10px;
         }
+        pre { word-wrap: normal;}
+        nav a { color: white;}
     </style>
-    <script src="LocalizationAdmin/bower_components/jquery/dist/jquery.min.js"></script>
+    <!--<script src="LocalizationAdmin/bower_components/jquery/dist/jquery.min.js"></script>-->
 </head>
 <body>
-    <div class="banner">
-        <div id="TitleBar">
-            <a href="index.html">
+    <div class="banner" style="background: #535353;">
+        <div id="TitleBar">            
                 <img src="localizationAdmin/images/Westwind.Localization_128.png"
-                     style="height: 35px; float: left" />
+                     style="height: 35px; float: left"/>
                 <div style="float: left; margin-left: 5px; line-height: 1.2">
-                    <i style="color: steelblue; font-size: 0.8em; font-weight: bold;">West Wind Globalization</i><br />
+                    <i style="color: steelblue; font-size: 0.8em; font-weight: bold;">West Wind Globalization</i><br/>
                     <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;">
                         Westwind Globalization Configuration
                     </i>
-                </div>
-            </a>
+                </div>            
         </div>
+        <div style="clear: both"></div>
     </div>
+    
 
     <nav class="menubar " style="background: #727272;">
         <ul id="MenuButtons" class="nav navbar-nav pull-right navbar">
@@ -65,6 +67,16 @@
                     <i class="fa fa-check-circle"></i> Provider Test Page
                 </a>
             </li>
+            <li>
+                <a href="https://github.com/RickStrahl/Westwind.Globalization"><i class="fa fa-github"></i> Github</a>
+            </li>
+            <li>
+                <a href="https://www.nuget.org/packages?q=westwind.globalization"><i class="fa fa-stop"></i> Nuget</a>
+            </li>
+            <li>
+                <a href="./"><i class="fa fa-home"></i></a>
+            </li>
+
         </ul>
         <div class="clearfix"></div>
     </nav>
@@ -72,55 +84,50 @@
 
 
 
-<div class="well container" style="margin-top: 30px;">
-    <h1>Westwind Globalization Configuration</h1>
-    <div class="toolbarcontainer">
-        <a href="http://west-wind.com/westwind.globalization" class="hoverbutton">Project Home</a>
-        <a href="https://github.com/RickStrahl/Westwind.Globalization" class="hoverbutton">GitHub Project</a>
-        <a href="https://github.com/RickStrahl/Westwind.Globalization#installation-and-configuration" class="hoverbutton">Provider Configuration</a>
-        <a href="LocalizationAdmin/" class="hoverbutton">Localization Admin Form</a>
-    </div>
-    <article class="contentcontainer" style="margin: 30px">
+<div class="well well-sm container" style="margin-top: 30px;">
+ 
+    <article class="contentcontainer" style="margin: 30px; margin-top: 2px; padding-top: 0px;">
+        <h3>West Wind Globalization Configuration</h3>
         <p>
             The NuGet package installs all the required assemblies and configures most
-            web.config configuration settings.
+            web.config configuration settings. The only required setting you have to set
+            initially is the ConnectionString in the configuration.
         </p>
         <p>
-            The following settings are made automatically when you install with the NuGet
-            package, but here are the manual configuration instructions just in case.
+            The following settings should be made automatically when you install with the NuGet
+            package:
         </p>
-
-        <b>Configuration Section Name declaration:</b>
 
         <pre>&lt;configsections&gt;
-        &lt;section name=&quot;DbResourceProvider&quot;
-                 type=&quot;Westwind.Globalization.DbResourceProviderSection,Westwind.Globalization&quot;
-                 requirePermission=&quot;false&quot; /&gt;
-&lt;/configsections&gt;</pre>
-
-        <b>DbResourceProvider Configuration Entry:</b>
-
-        <pre class="code">&lt;DbResourceProvider
-            <b>connectionString="server=.;database=localizations;integrated security=true"</b>
-    resourceTableName="Localizations"
-    localizationFormWebPath="~/localizationadmin/LocalizationAdmin.aspx"
-    addMissingResources="false"
-    stronglyTypedGlobalResource="~/Properties/Resources.cs"
-    resourceBaseNamespace="MyApplication.Properties"
-    designTimeVirtualPath="/internationalization"
-    showLocalizationControlOptions="true"
-    showControlIcons="true"
-    useVsNetResourceNaming="false"
-    bingClientId=""
-    bingClientSecret="" /&gt;</pre>
+   &lt;section name=&quot;DbResourceConfiguration&quot;
+            type=&quot;System.Configuration.NameValueSectionHandler,System,Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b77a5c561934e089&quot;
+            requirepermission=&quot;false&quot; /&gt;
+&lt;/configsections&gt;
+&lt;DbResourceConfiguration&gt;
+  &lt;add key=&quot;ConnectionString&quot; value=&quot;*** Your ConnectionString or ConnectionStrings Entry here ***&quot; /&gt;
+  &lt;add key=&quot;ResourceTableName&quot; value=&quot;Localizations&quot; /&gt;
+  &lt;add key=&quot;StronglyTypedGlobalResource&quot; value=&quot;~/Properties/Resources.cs&quot; /&gt;
+  &lt;add key=&quot;ResourceBaseNamespace&quot; value=&quot;AppResources&quot; /&gt;
+  &lt;add key=&quot;ResxExportProjectType&quot; value=&quot;Project&quot; /&gt;
+  &lt;add key=&quot;ResxBaseFolder&quot; value=&quot;~/&quot; /&gt;
+  &lt;add key=&quot;AddMissingResources&quot; value=&quot;True&quot; /&gt;
+  &lt;add key=&quot;LocalizationFormWebPath&quot; value=&quot;~/LocalizationAdmin/&quot; /&gt;
+  &lt;add key=&quot;DesignTimeVirtualPath&quot; value=&quot;&quot; /&gt;
+  &lt;add key=&quot;ShowLocalizationControlOptions&quot; value=&quot;False&quot; /&gt;
+  &lt;add key=&quot;ShowControlIcons&quot; value=&quot;False&quot; /&gt;
+  &lt;add key=&quot;BingClientId&quot; value=&quot;&quot; /&gt;
+  &lt;add key=&quot;BingClientSecret&quot; value=&quot;&quot; /&gt;  
+&lt;/DbResourceConfiguration&gt;
+</pre>
 
         <p>
-            manually edit the connection string that points at the database that will contain the
+            Manually edit the connection string that points at the database that will contain the
             localization table. You can use a full connection string or a connection string entry
             from your .config file. This table will be auto-created for you when the globalization resources
             are accessed or you are running the localization admin form. Please make sure that the database
             has appropriate rights to create a table.
         </p>
+        <p><a href="https://github.com/RickStrahl/Westwind.Globalization#configuration-settings">More configuration information...</a></p>
 
 
         <h3>Resource Provider is enabled by default</h3>
@@ -131,37 +138,71 @@
         <pre>&lt;globalization resourceproviderfactorytype=&quot;Westwind.Globalization.DbSimpleResourceProviderFactory,Westwind.Globalization&quot; /&gt;</pre>
 
         <p>
-            If you are using Resx resources currently this will likely cause your resources to fail and if so you'll
-            want to uncomment the line above in web.config and first import resources into the resource table. Once
-            imported you can then turn on the new resource provider.
+            If you are currently using Resx resources this will cause your resources to fail and if so you'll
+            want to comment the line above in web.config and first import resources into the resource table. Once
+            imported you can then turn on the new resource provider by uncommenting the line again.
         </p>
+
+        <h3>Providers other than SQL Server</h3>
+        <p>
+            If you're using SQL Server you don't need to add anything - the SQL Server provider is included in the core Westwind.Globalization package.
+            If you want to use MySql, SqLite or SqlServerCompact you have to install the specific provider package from NuGet.
+        </p>
+        <p><a href="https://www.nuget.org/packages?q=westwind.globalization">Go to NuGet Westwind.Globalization Packages...</a>
+        </p>
+        <p>
+            In addition you have to add a code based configuration setting to enable the specific DbResource provider with code as
+            follows:
+
+<pre>
+protected void Application_Start()
+{
+        DbResourceConfiguration.Current.ConnectionString = "MySqlLocalizations";
+        DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceMySqlDataManager);
+}
+</pre>
+            
+
+
+        </p>
+
 
         <h3>Getting Started with Localization</h3>
 
-        <p><b>If you have no resources in your project</b>
-        </p>
-
+        <h4>Set up your Localization Database</h4>
         <ul>
-            <li>Navigate to ./LocalizationAdmin/LocalizationAdmin.aspx</li>
-            <li>Use the Create Table button to create the resource for the database</li>
-            <li>Import resources from project (this will import Resx resources for the Admin form)</li>
+            <li>Recompile your application and make sure there are no errors</li>
+            <li>Make sure the connection string is set in the config file and your Web app has permissions to create a table</li>
+            <li>Navigate to ./LocalizationAdmin/</li>
+            <li>You should get an error that the table doesn't exist</li>
+            <li>Use the <b>Create Table</b> button to create the resource table in the database</li>        
+            <li>Start adding/editing resources</li>
         </ul>
 
+        <h4>If you have existing ResX Resources</h4>
+        <ul>
+            <li>Go to the Localization Admin Form</li>
+            <li>Import resources from your Web project</li>
+            <li>Edit your existing resources</li>
+            <li>When done editing you can write them back out using the Export feature<br/>
+                <small> * please read the documentation for more info on how resources are exported - you may end up with a different format than you started with</small>
+            </li>
+        </ul>
 
-        <p><b>To create new Resources</b>
-        </p>
-
+        <h4>To create new Resources</h4>
         <p>
-            Click on the New icon next to the resource list list. This will let you add a new resource set.
-            Resource names map to .NET ResourceSets, so these are groupings of files resources that are
-            associated. Typically you'll have at least one <i>Resources</i> file that holds common
-            localizations, plus some UI specific Resources that map either to screens or related UI
-            elements/screens. These resources are considered **Global Resources** by ASP.NET.
+            To add new resources simply add a new resource by clicking the button underneath the
+            resource items. The Add Resource button lets you create new resources for an existing
+            resource set or create a new resource set as part of the update. Either of the Add
+            bring up this same form. Simply create a new resource and if desired add a new resource
+            set name to create the resource with a new resource set.
         </p>
         <p>
             In WebForms projects you can also create **Local Resources** which are bound to ASPX
             pages typically. Local resources can be used in Web Forms using the Resource Binding
-            syntax available there. Local resources are named by their full path (ie. relativePath/Page.aspx).
+            syntax available there. Local resources are named by their full path (ie. relativePath/Page.aspx)
+            and with a file extension. All resources with a file extension are assumed to be local resources
+            (when exporting in a WebForms project and ignored in Project mode).
         </p>
         <p>
             You can also create Resources implicitly simply by adding a new resource and specifying a
@@ -170,7 +211,7 @@
         </p>
 
         <div class="notebox">
-            <b>New Resource Sets or new Language Resources require a Page Refresh</b><br/>
+            <b>New Resource Sets or new Language Resources require a Page Refresh</b><br />
             The LocalizationAdmin form uses inline AJAX requests for quick updates, but when adding a new resource set or
             resource item with a new language you have to press the Refresh Page button to see the
             new resource set and language show up in the dialog. The Resources and Language lists
@@ -182,11 +223,7 @@
             MVC projects with raw RESX files.
         </p>
 
-        <h3>Using the Provider</h3>
-        Please take a look at the instructions on the GitHub project page
-        <ul>
-            <li><a href="https://github.com/RickStrahl/Westwind.Globalization#installation-and-configuration">Configuration and Installation</a></li>
-        </ul>
+       
     </article>
 </div>
 

@@ -5,6 +5,7 @@ using Westwind.Utilities;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Xml;
+using Newtonsoft.Json;
 
 namespace Westwind.Globalization
 {
@@ -97,7 +98,7 @@ namespace Westwind.Globalization
             }        
            
             // result string must be JSON decoded
-            return JsonSerializationUtils.Deserialize(result,typeof(string)) as string;            
+            return JsonConvert.DeserializeObject(result,typeof(string)) as string;            
         }
 
 
@@ -204,7 +205,7 @@ namespace Westwind.Globalization
             }
 
 
-            var auth = JsonSerializationUtils.Deserialize(res, typeof (BingAuth)) as BingAuth;
+            var auth = JsonConvert.DeserializeObject(res, typeof (BingAuth)) as BingAuth;
             if (auth == null)
                 return null;
             

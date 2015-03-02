@@ -2,16 +2,16 @@
 <package> 
   <metadata> 
     <id>Westwind.Globalization</id> 
-    <version>2.0.01</version>
+    <version>2.0.04</version>
     <authors>Rick Strahl, West Wind Technologies</authors>
-    <title>West Wind Globalization Database ResourceManager and ResourceProvider (Westwind.Globalization)</title> 
-    <summary>Database Resource Localization for .NET and ASP.NET</summary>
+    <title>West Wind Globalization Database ResourceManager (Westwind.Globalization)</title> 
+    <summary>Database Resource Localization for non-Web .NET projects. For ASP.NET Web projects please use the Web Package</summary>
     <description>
-	This library provides custom data driven .NET ResourceManagers and ResourceProviders for both plain .NET and ASP.NET applications. The default implementation uses SQL Server with additional providers available in separate packages. This package holds the core library that contains the DbResourceManager and DbSimpleResourceProvider and DbResourceProvider implementations as well as all the core features like data provider interfaces, administration features for importing and exporting resources as well as the SQL Server interface.
+	West Wind Globalization provides custom data driven .NET ResourceManagers and ResourceProviders for both plain .NET and ASP.NET applications as well as serving JavaScript resources from .NET resources and a rich real time Web Resource editor that can update resources live. This default implementation supports SQL Server storage for resources, with additional data providers available in separate packages. 
+	
+	This core package includes only core, non-Web specific features which include the custom ResourceManager implementation with support for SQL Server, support for the base database providers and support for the DbRes support class access. If you want to use ASP.NET ResourceProviders, JavaScript resources from .NET Resources, or the Web Resource Editor add the Westwind.Globalization.Web package.
 
-	This version contains only the core interfaces needed to run the DbResourceManager and ResourceProvider. It'll work in non-Web applications and any Web applications that don't use the WebForm specific features and that don't use the Web based resource editor.
-
-	For additional Web features and the live Web Resource Editing interface please install the Westwind.Globalization.Web package.
+	For additional database providers look for the .MySql, .SqLite and .SqlServerCe versions of this package.
     </description>
     <language>en-US</language>
     <licenseUrl>https://github.com/RickStrahl/Westwind.Globalization#license</licenseUrl>
@@ -20,6 +20,7 @@
    	<dependencies>
 	  <!-- smaller than V3.0 -->
 	  <dependency id="Westwind.Web" version="[2.60,3.0)" />
+	  <dependency id="Newtonsoft.Json" version="[6.0.8,7.0)"  />
 	</dependencies>
   </metadata> 
 </package>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 using Westwind.Utilities;
 using Westwind.Web;
 using Westwind.Web.JsonSerializers;
@@ -17,12 +18,12 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
     {
 
         public const string STR_RESOURCESET = "localizationadmin/LocalizationAdmin.aspx";
-
-        protected DbResourceDataManager Manager = DbResourceDataManager.CreateDbResourceDataManager();
+        protected DbResourceDataManager Manager = DbResourceDataManager.CreateDbResourceDataManager();        
 
         public LocalizationService()
         {
-            JSONSerializer.DefaultJsonParserType = SupportedJsonParserTypes.JsonNet;
+            var ensureJsonNet = Formatting.Indented;            
+            JSONSerializer.DefaultJsonParserType = SupportedJsonParserTypes.JsonNet;               
         }
 
         [CallbackMethod]

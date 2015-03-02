@@ -41,6 +41,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 using Westwind.Utilities;
 using Westwind.Utilities.Data;
 
@@ -1508,7 +1509,7 @@ namespace Westwind.Globalization
                     localRes.Add(key, resources[key] as string);
             }
 
-            var json = JsonSerializationUtils.Serialize(localRes, formatJsonOutput: true);            
+            var json = JsonConvert.SerializeObject(localRes, Formatting.Indented);            
             return "var " + javaScriptVarName + " = " + json + ";\r\n";
         }
 
@@ -1650,7 +1651,7 @@ namespace Westwind.Globalization
         /// <param name="value"></param>
         /// <returns>JSON string or null (no exceptions thrown on error)</returns>
         protected virtual string SerializeValue(object value){
-            return JsonSerializationUtils.Serialize(value, false);
+            return JsonConvert.SerializeObject(value);
         }
 
         /// <summary>
@@ -1666,7 +1667,7 @@ namespace Westwind.Globalization
             if (type == null)
                 return null;
 
-            return JsonSerializationUtils.Deserialize(serializedValue,type,false);
+            return JsonConvert.DeserializeObject(serializedValue,type);
         }
        
         protected void SetError()

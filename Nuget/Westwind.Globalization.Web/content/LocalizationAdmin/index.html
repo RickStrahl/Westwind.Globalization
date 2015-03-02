@@ -152,9 +152,9 @@
 
         <div id="ContentPanel" class="col-sm-8" ng-class="{expanded: !view.listVisible }">
 
-            <div ng-include src="'ResourceList.html'"></div>
+            <div ng-include src="'partials/ResourceList.html'"></div>
 
-            <div ng-include src="'ResourceSetList.html'"></div>
+            <div ng-include src="'partials/ResourceSetList.html'"></div>
         </div>
     </div>
 
@@ -165,11 +165,11 @@
         <i class="fa fa-{{view.error.icon}}"></i> &nbsp;&nbsp;<strong>{{view.error.message}}</strong>
     </div>
 
-    <div ng-include src="'TranslateDialog.html'"></div>
+    <div ng-include src="'partials/TranslateDialog.html'"></div>
 
-    <div ng-include src="'AddResourceDialog.html'"></div>
+    <div ng-include src="'partials/AddResourceDialog.html'"></div>
 
-    <div ng-include src="'RenameResourceDialog.html'"></div>
+    <div ng-include src="'partials/RenameResourceDialog.html'"></div>
 
 
     <script src="bower_components/jquery/dist/jquery.min.js"></script>

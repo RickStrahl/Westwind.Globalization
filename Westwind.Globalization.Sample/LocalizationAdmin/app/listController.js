@@ -213,6 +213,19 @@
            vm.updateResource(vm.activeResource)
                .success(function () {
                    var id = vm.activeResource.ResourceId;
+                   var resourceSet = vm.activeResource.ResourceSet;
+
+                   // check to see if resourceset exists
+                   var i = _.findIndex(vm.resourceSets, function (set) {
+                       return set.ResourceSet === resourceSet;
+                   });
+                   if (i < 0) {
+                       vm.resourceSets.unshift(vm.activeResource.ResourceSet);
+                       vm.resourceSet = vm.activeResource.ResourceSet;
+                       vm.onResourceSetChange();
+                   }
+
+                   // check if resourceId exists
                    var i = _.findIndex(vm.resourceList,function(res) {
                        return res.ResourceId === id;
                    });                   
@@ -221,6 +234,8 @@
 
                    vm.resourceId = id;
                    vm.onResourceIdChange();
+
+                   
 
                    $("#AddResourceDialog").modal('hide');
                })
@@ -292,6 +307,8 @@
                .success(function () {
                    vm.getResourceSets();
                    showMessage("Resource set deleted.");
+                   vm.resourceSet = vm.resourceSets[0];
+                   vm.onResourceSetChange();
                })
                .error(parseError);
        }

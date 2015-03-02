@@ -6,11 +6,11 @@
   <DbResourceConfiguration>
     <add key="ConnectionString" value="*** ENTER A RAW CONNECTION STRING OR CONNECTION STRING ENTRY HERE ***" />
     <add key="ResourceTableName" value="Localizations" />
-    <add key="StronglyTypedGlobalResource" value="~/App_Code/Resources.cs" />
+    <add key="StronglyTypedGlobalResource" value="~/Properties/Resources.cs" />
     <add key="ResourceBaseNamespace" value="AppResources" />
     <add key="ResxExportProjectType" value="Project" />
     <add key="ResxBaseFolder" value="~/" />
-    <add key="AddMissingResources" value="True" />
+    <add key="AddMissingResources" value="False" />
     <add key="LocalizationFormWebPath" value="~/LocalizationAdmin/" />
     <add key="DesignTimeVirtualPath" value="" />
     <add key="ShowLocalizationControlOptions" value="False" />
@@ -20,8 +20,8 @@
   </DbResourceConfiguration>
 
   <system.web>
-    <globalization resourceProviderFactoryType="Westwind.Globalization.DbSimpleResourceProviderFactory,Westwind.Globalization"/>
-    <trust originUrl="(http://www.google.com/translate_t)|(http://babelfish.yahoo.com/translate_txt)"/>
+    <globalization resourceProviderFactoryType="Westwind.Globalization.DbSimpleResourceProviderFactory,Westwind.Globalization.Web"/>
+    <trust originUrl="(http://www.google.com/translate_t)|(http://api.microsofttranslator.com/V2/Http.svc/Translate)|(https://datamarket.accesscontrol.windows.net/v2/OAuth2-13)"/>
     <pages>
       <namespaces>
         <add namespace="Westwind.Utilities"/>

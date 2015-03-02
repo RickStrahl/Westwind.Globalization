@@ -153,6 +153,8 @@
 
         <hr />
 
+<%-- 	This works only after you've generated strongly typed resources  -->		
+<%-- 		
         <div class="container">
 
             <h3>Strongly Typed Resource (generated)</h3>
@@ -162,7 +164,7 @@
         </div>
 
         <hr />
-
+--%>
         <div class="container">
 
             <h3>JavaScript Resource Handler</h3>

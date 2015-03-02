@@ -8,11 +8,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Westwind.Globalization SqlLite Connector")]
-[assembly: AssemblyDescription("ASP.NET Data based Localization Provider")]
+[assembly: AssemblyTitle("Westwind.Globalization SqLite Connector")]
+[assembly: AssemblyDescription(".NET Data based Localization Provider")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("West Wind Technologies")]
-[assembly: AssemblyProduct("Westwind.Globalization.SqlLite")]
+[assembly: AssemblyProduct("Westwind.Globalization")]
 [assembly: AssemblyCopyright("© West Wind Technologies, 2006 - 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

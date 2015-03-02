@@ -15,7 +15,7 @@
     <AssemblyName>Westwind.Globalization.Sample</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -178,11 +178,11 @@
     <Content Include="LocalizationAdmin\bower_components\fontawesome\css\font-awesome.css" />
     <Content Include="LocalizationAdmin\bower_components\fontawesome\css\font-awesome.min.css" />
     <Content Include="LocalizationAdmin\bower_components\fontawesome\fonts\fontawesome-webfont.svg" />
-    <Content Include="LocalizationAdmin\nav-menu.html" />
+    <Content Include="LocalizationAdmin\Partials\nav-menu.html" />
     <Content Include="LocalizationAdmin\index.html" />
-    <Content Include="LocalizationAdmin\RenameResourceDialog.html" />
-    <Content Include="LocalizationAdmin\ResourceSetList.html" />
-    <Content Include="LocalizationAdmin\ResourceList.html" />
+    <Content Include="LocalizationAdmin\Partials\RenameResourceDialog.html" />
+    <Content Include="LocalizationAdmin\Partials\ResourceSetList.html" />
+    <Content Include="LocalizationAdmin\Partials\ResourceList.html" />
     <Content Include="LocalizationAdmin\app\app.js" />
     <Content Include="LocalizationAdmin\app\headerController.js" />
     <Content Include="LocalizationAdmin\app\listController.js" />
@@ -200,8 +200,8 @@
     <Content Include="LocalizationAdmin\css\localizationAdmin.css" />
     <Content Include="LocalizationAdmin\favicon.ico" />
     <Content Include="LocalizationAdmin\images\Westwind.Localization_128.png" />
-    <Content Include="LocalizationAdmin\AddResourceDialog.html" />
-    <Content Include="LocalizationAdmin\TranslateDialog.html" />
+    <Content Include="LocalizationAdmin\Partials\AddResourceDialog.html" />
+    <Content Include="LocalizationAdmin\Partials\TranslateDialog.html" />
     <Content Include="LocalizationAdmin\scripts\ww.angular.js" />
     <Content Include="LocalizationAdmin\scripts\ww.jquery.js" />
     <Content Include="LocalizationAdmin\scripts\ww.jquery.min.js" />
@@ -325,7 +325,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>2742</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/Westwind.Globalization.Sample</IISUrl>
+          <IISUrl>http://localhost:2742/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
