@@ -217,7 +217,7 @@
 
                    // check to see if resourceset exists
                    var i = _.findIndex(vm.resourceSets, function (set) {
-                       return set.ResourceSet === resourceSet;
+                       return set === resourceSet;
                    });
                    if (i < 0) {
                        vm.resourceSets.unshift(vm.activeResource.ResourceSet);

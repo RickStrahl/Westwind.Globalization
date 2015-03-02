@@ -148,7 +148,8 @@
             If you're using SQL Server you don't need to add anything - the SQL Server provider is included in the core Westwind.Globalization package.
             If you want to use MySql, SqLite or SqlServerCompact you have to install the specific provider package from NuGet.
         </p>
-        <p><a href="https://www.nuget.org/packages?q=westwind.globalization">Go to NuGet Westwind.Globalization Packages...</a>
+        <p>
+            <a href="https://www.nuget.org/packages?q=westwind.globalization">Go to NuGet Westwind.Globalization Packages...</a>
         </p>
         <p>
             In addition you have to add a code based configuration setting to enable the specific DbResource provider with code as
@@ -161,10 +162,24 @@ protected void Application_Start()
         DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceMySqlDataManager);
 }
 </pre>
-            
 
+            <h3>Web Site Projects Localization Adminformtweaks</h3>
+        <p>
+            If your project is a <b>Web Site Project</b> rather than a <b>Web Application Project</b>
+            in Visual Studio the localization admin form will fail. In order to make it work please edit the
+            LocalizationService.ashx file as follows:
 
+            <ul>
+                <li>Delete the LocalizationService.ashx file</li>
+                <li>Rename the LocalizationService.ashx.cs file to LocalizationService.ashx</li>
+                <li>
+                    Change the header of the page as follows:
+                    <pre>&lt;%@ WebHandler Language=&quot;C#&quot; Class=&quot;LocalizationService&quot; %&gt;</pre>
+                </li>
+                <li>Remove the namespace around the LocalizationService class</li>
+            </ul>
         </p>
+
 
 
         <h3>Getting Started with Localization</h3>
@@ -175,7 +190,7 @@ protected void Application_Start()
             <li>Make sure the connection string is set in the config file and your Web app has permissions to create a table</li>
             <li>Navigate to ./LocalizationAdmin/</li>
             <li>You should get an error that the table doesn't exist</li>
-            <li>Use the <b>Create Table</b> button to create the resource table in the database</li>        
+            <li>Use the <b>Create Table</b> button to create the resource table in the database</li>
             <li>Start adding/editing resources</li>
         </ul>
 
@@ -184,7 +199,8 @@ protected void Application_Start()
             <li>Go to the Localization Admin Form</li>
             <li>Import resources from your Web project</li>
             <li>Edit your existing resources</li>
-            <li>When done editing you can write them back out using the Export feature<br/>
+            <li>
+                When done editing you can write them back out using the Export feature<br />
                 <small> * please read the documentation for more info on how resources are exported - you may end up with a different format than you started with</small>
             </li>
         </ul>
@@ -223,7 +239,7 @@ protected void Application_Start()
             MVC projects with raw RESX files.
         </p>
 
-       
+
     </article>
 </div>
 
