@@ -110,10 +110,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Westwind.Utilities.2.60\lib\net45\Westwind.Utilities.dll</HintPath>
     </Reference>
-    <Reference Include="Westwind.Web, Version=2.60.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Westwind.Web.2.60\lib\net45\Westwind.Web.dll</HintPath>
-    </Reference>
     <Reference Include="Westwind.Web.WebForms, Version=2.59.5500.1075, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Westwind.Web.WebForms.2.59\lib\net45\Westwind.Web.WebForms.dll</HintPath>
@@ -244,7 +240,6 @@
     <Content Include="LocalizationAdmin\bower_components\lodash\.bower.json" />
     <Content Include="LocalizationAdmin\bower_components\lodash\bower.json" />
     <Content Include="LocalizationAdmin\css\bootstrap-theme.css.map" />
-    <Content Include="LocalizationAdmin\package.json" />
     <Content Include="LocalizationAdmin\LocalizationService.ashx" />
     <None Include="ResourceTest.cshtml" />
     <Content Include="Scripts\bootstrap.js" />
@@ -286,6 +281,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\WestwindToolkit\Westwind.Web\Westwind.Web.csproj">
+      <Project>{0c38b4e1-0c87-4289-a57b-87c1b5be3bbe}</Project>
+      <Name>Westwind.Web</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Westwind.Globalization.MySql\Westwind.Globalization.MySql.csproj">
       <Project>{9d405441-66d4-45d0-8832-9e17587ba921}</Project>
       <Name>Westwind.Globalization.MySql</Name>

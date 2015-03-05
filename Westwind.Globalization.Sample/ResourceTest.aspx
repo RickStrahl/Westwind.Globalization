@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" %>
 
 <%@ Import Namespace="System.Threading" %>
-<%@ Import Namespace="Westwind.Globalization.Sample" %>
+<%@ Import Namespace="AppResources" %>
 <script runat="server">
     private string LocaleId;
 

@@ -34,6 +34,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataProviders", "DataProvid
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Westwind.Globalization.SqlServerCe", "Westwind.Globalization.SqlServerCe\Westwind.Globalization.SqlServerCe.csproj", "{1324112A-7929-4246-ABCC-DFE51F755681}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Westwind.Web", "..\..\WestwindToolkit\Westwind.Web\Westwind.Web.csproj", "{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -128,6 +130,18 @@ Global
 		{1324112A-7929-4246-ABCC-DFE51F755681}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1324112A-7929-4246-ABCC-DFE51F755681}.SandBox|Any CPU.ActiveCfg = Release|Any CPU
 		{1324112A-7929-4246-ABCC-DFE51F755681}.SandBox|Any CPU.Build.0 = Release|Any CPU
+		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.DemoMode|Any CPU.ActiveCfg = Deploy|Any CPU
+		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.DemoMode|Any CPU.Build.0 = Deploy|Any CPU
+		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.Deploy|Any CPU.ActiveCfg = Deploy|Any CPU
+		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.Deploy|Any CPU.Build.0 = Deploy|Any CPU
+		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.net40|Any CPU.ActiveCfg = net40|Any CPU
+		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.net40|Any CPU.Build.0 = net40|Any CPU
+		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.SandBox|Any CPU.ActiveCfg = SandBox|Any CPU
+		{0C38B4E1-0C87-4289-A57B-87C1B5BE3BBE}.SandBox|Any CPU.Build.0 = SandBox|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

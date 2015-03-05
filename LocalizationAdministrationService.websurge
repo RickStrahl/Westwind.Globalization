@@ -162,6 +162,17 @@ Accept-Encoding: gzip,deflate
 
 ------------------------------------------------------------------
 
+GET http://localhost:7894/localizationAdmin/localizationService.ashx?method=GetLocalizationInfo HTTP/1.1
+Accept-Encoding: gzip,deflate
+
+------------------------------------------------------------------
+
+GET http://localhost:7894/localizationAdmin/localizationService.ashx?method=GetLocalizationInfo HTTP/1.1
+Accept-Encoding: gzip,deflate
+Accept: application/json
+
+------------------------------------------------------------------
+
 
 ----- Start WebSurge Options -----
 

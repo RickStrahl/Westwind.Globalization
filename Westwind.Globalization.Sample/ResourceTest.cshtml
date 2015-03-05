@@ -1,6 +1,6 @@
 ﻿@using System.Threading
 @using Westwind.Globalization
-@using Westwind.Globalization.Sample
+@using AppResources
 @{    
     var localeId = Request.Params["LocaleId"];
     if (!string.IsNullOrEmpty(localeId))
@@ -50,7 +50,7 @@
 <body>
     <div class="banner">
         <div id="TitleBar">
-            <a href="index.html">
+            <a href="./">
                 <img src="localizationAdmin/images/Westwind.Localization_128.png"
                      style="height: 35px; float: left" />
                 <div style="float: left; margin-left: 5px; line-height: 1.2">

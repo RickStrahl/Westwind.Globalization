@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
+using System.Web.Routing;
 using Newtonsoft.Json;
 using Westwind.Utilities;
 using Westwind.Web;
@@ -18,12 +20,12 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
     {
 
         public const string STR_RESOURCESET = "localizationadmin/LocalizationAdmin.aspx";
-        protected DbResourceDataManager Manager = DbResourceDataManager.CreateDbResourceDataManager();        
+        protected DbResourceDataManager Manager = DbResourceDataManager.CreateDbResourceDataManager();
 
         public LocalizationService()
         {
-            var ensureJsonNet = Formatting.Indented;            
-            JSONSerializer.DefaultJsonParserType = SupportedJsonParserTypes.JsonNet;               
+            var ensureJsonNet = Formatting.Indented;
+            JSONSerializer.DefaultJsonParserType = SupportedJsonParserTypes.JsonNet;
         }
 
         [CallbackMethod]
@@ -31,7 +33,8 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         {
             var ids = Manager.GetAllResourceIds(resourceSet);
             if (ids == null)
-                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET,"ResourceSetLoadingFailed") + ":" + Manager.ErrorMessage);
+                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceSetLoadingFailed") + ":" +
+                                               Manager.ErrorMessage);
 
             return ids;
         }
@@ -41,7 +44,8 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         {
             var ids = Manager.GetAllResourceIdListItems(resourceSet);
             if (ids == null)
-                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET,"ResourceSetLoadingFailed") + ":" + Manager.ErrorMessage);
+                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceSetLoadingFailed") + ":" +
+                                               Manager.ErrorMessage);
 
             return ids;
         }
@@ -55,9 +59,10 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         [CallbackMethod]
         public IEnumerable<object> GetAllLocaleIds(string resourceSet)
         {
-            var ids =  Manager.GetAllLocaleIds(resourceSet);
+            var ids = Manager.GetAllLocaleIds(resourceSet);
             if (ids == null)
-                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET,"LocaleIdsFailedToLoad") + ":" + Manager.ErrorMessage);
+                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "LocaleIdsFailedToLoad") + ":" +
+                                               Manager.ErrorMessage);
 
             var list = new List<object>();
 
@@ -76,13 +81,13 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
 
         [CallbackMethod]
         public string GetResourceString(dynamic parm)
-        {            
+        {
             string resourceId = parm.ResourceId;
             string resourceSet = parm.ResourceSet;
             string cultureName = parm.CultureName;
             string value = Manager.GetResourceString(resourceId,
-                resourceSet, cultureName); 
-                                
+                resourceSet, cultureName);
+
 
             if (value == null && !string.IsNullOrEmpty(Manager.ErrorMessage))
                 throw new ArgumentException(Manager.ErrorMessage);
@@ -94,10 +99,10 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         public IEnumerable<ResourceItem> GetResourceItems(dynamic parm)
         {
             string resourceId = parm.ResourceId;
-            string resourceSet = parm.ResourceSet;            
+            string resourceSet = parm.ResourceSet;
 
-            
-            var items = Manager.GetResourceItems(resourceId, resourceSet,true).ToList();
+
+            var items = Manager.GetResourceItems(resourceId, resourceSet, true).ToList();
             if (items == null)
             {
                 throw new InvalidOperationException(Manager.ErrorMessage);
@@ -119,7 +124,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
                 throw new ArgumentException(Manager.ErrorMessage);
 
             var itemEx = new ResourceItemEx(item);
-            itemEx.ResourceList = GetResourceStrings(resourceId, resourceSet).ToList();            
+            itemEx.ResourceList = GetResourceStrings(resourceId, resourceSet).ToList();
 
             return itemEx;
         }
@@ -134,7 +139,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         [CallbackMethod]
         public IEnumerable<ResourceString> GetResourceStrings(string resourceId, string resourceSet)
         {
-            Dictionary<string, string> resources = Manager.GetResourceStrings(resourceId, resourceSet,true);
+            Dictionary<string, string> resources = Manager.GetResourceStrings(resourceId, resourceSet, true);
 
             if (resources == null)
                 throw new ApplicationException(Manager.ErrorMessage);
@@ -142,8 +147,9 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             // transform into an array
             return resources.Select(kv => new ResourceString
             {
-                LocaleId = kv.Key, Value = kv.Value
-            });            
+                LocaleId = kv.Key,
+                Value = kv.Value
+            });
         }
 
         [CallbackMethod]
@@ -176,10 +182,11 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
 
             if (resource.Value == null)
             {
-                return Manager.DeleteResource(resource.ResourceId,resourceSet: resource.ResourceSet, cultureName: resource.LocaleId);
+                return Manager.DeleteResource(resource.ResourceId, resourceSet: resource.ResourceSet,
+                    cultureName: resource.LocaleId);
             }
 
-            int result =  Manager.UpdateOrAddResource(resource);
+            int result = Manager.UpdateOrAddResource(resource);
             if (result == -1)
                 throw new InvalidOperationException(Manager.ErrorMessage);
 
@@ -201,10 +208,14 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             {
                 // localeId is optional
                 localeId = parm.LocaleId;
-            } catch{}
+            }
+            catch
+            {
+            }
 
-            if (!Manager.DeleteResource(resourceId,resourceSet, localeId))
-                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceUpdateFailed") + ": " + Manager.ErrorMessage);
+            if (!Manager.DeleteResource(resourceId, resourceSet, localeId))
+                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceUpdateFailed") + ": " +
+                                               Manager.ErrorMessage);
 
             return true;
         }
@@ -226,13 +237,14 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
 #if OnlineDemo
         throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
 #endif
-            string resourceId =parms["resourceId"];
+            string resourceId = parms["resourceId"];
             string newResourceId = parms["newResourceId"];
             string resourceSet = parms["resourceSet"];
 
-            
+
             if (!Manager.RenameResource(resourceId, newResourceId, resourceSet))
-                throw new ApplicationException(WebUtils.GRes("localizationadmin/LocalizationAdmin.aspx","InvalidResourceId"));
+                throw new ApplicationException(WebUtils.GRes("localizationadmin/LocalizationAdmin.aspx",
+                    "InvalidResourceId"));
 
             return true;
         }
@@ -315,7 +327,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         {
             //Westwind.Globalization.Tools.wwWebUtils.RestartWebApplication();
             DbResourceConfiguration.ClearResourceCache(); // resource provider
-            DbRes.ClearResources();  // resource manager
+            DbRes.ClearResources(); // resource manager
         }
 
         [CallbackMethod]
@@ -336,7 +348,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
 
             if (!Manager.CreateLocalizationTable(null))
                 throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "LocalizationTableNotCreated") + "\r\n" +
-                                                                              Manager.ErrorMessage);
+                                               Manager.ErrorMessage);
             return true;
         }
 
@@ -351,7 +363,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             strongTypes.CreateClassFromAllDatabaseResources(config.ResourceBaseNamespace,
                 HttpContext.Current.Server.MapPath(config.StronglyTypedGlobalResource));
 
-            
+
             if (!string.IsNullOrEmpty(strongTypes.ErrorMessage))
                 throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "StronglyTypedGlobalResourcesFailed"));
 
@@ -403,8 +415,8 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
 
             if (inputBasePath.Contains("~"))
                 inputBasePath = Context.Server.MapPath(inputBasePath);
-            
-            inputBasePath = inputBasePath.Replace("/", "\\").Replace("\\\\","\\");
+
+            inputBasePath = inputBasePath.Replace("/", "\\").Replace("\\\\", "\\");
 
             DbResXConverter converter = new DbResXConverter(inputBasePath);
 
@@ -416,37 +428,64 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
                 res = converter.ImportWinResources(inputBasePath);
 
             if (!res)
-               new ApplicationException(WebUtils.LRes("ResourceImportFailed"));
+                new ApplicationException(WebUtils.LRes("ResourceImportFailed"));
 
             return true;
         }
 
-    }
 
-    public class ResourceString
-    {
-        public string LocaleId { get; set; }
-        public string Value { get; set; }
-    }
-    public class ResourceItemEx : ResourceItem
-    {
-        public ResourceItemEx()
+        [CallbackMethod()]
+        public object GetLocalizationInfo()
         {
-            
-        }
-        public ResourceItemEx(ResourceItem item)
-        {
-            ResourceId = item.ResourceId;
-            LocaleId = item.LocaleId;
-            Value = item.Value;
-            ResourceSet = item.ResourceSet;
-            Type = item.Type;
-            FileName = item.FileName;
-            TextFile = item.TextFile;
-            BinFile = item.BinFile;
-            Comment = item.Comment;
+            // Get the Web application configuration object.
+            var webConfig = WebConfigurationManager.OpenWebConfiguration("~/web.config");
 
+            // Get the section related object.
+            GlobalizationSection configSection =
+                (GlobalizationSection) webConfig.GetSection("system.web/globalization");
+
+            string providerFactory = configSection.ResourceProviderFactoryType;
+            if (string.IsNullOrEmpty(providerFactory))
+                providerFactory = "Resx provider";
+
+            var config = DbResourceConfiguration.Current;
+
+            return new
+            {
+                ProviderUsed = providerFactory,
+                Connection = config.ConnectionString,
+                ResxExportMode = config.ResxExportProjectType
+            };
         }
-        public List<ResourceString> ResourceList { get; set; }
+
+        public class ResourceString
+        {
+            public string LocaleId { get; set; }
+            public string Value { get; set; }
+        }
+
+        public class ResourceItemEx : ResourceItem
+        {
+            public ResourceItemEx()
+            {
+
+            }
+
+            public ResourceItemEx(ResourceItem item)
+            {
+                ResourceId = item.ResourceId;
+                LocaleId = item.LocaleId;
+                Value = item.Value;
+                ResourceSet = item.ResourceSet;
+                Type = item.Type;
+                FileName = item.FileName;
+                TextFile = item.TextFile;
+                BinFile = item.BinFile;
+                Comment = item.Comment;
+
+            }
+
+            public List<ResourceString> ResourceList { get; set; }
+        }
     }
 }
