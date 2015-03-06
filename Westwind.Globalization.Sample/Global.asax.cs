@@ -8,7 +8,6 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using AppResources;
 using Westwind.Utilities;
 using Westwind.Web;
 
@@ -23,7 +22,8 @@ namespace Westwind.Globalization.Sample
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            GeneratedResourceSettings.ResourceAccessMode = ResourceAccessMode.DbResourceManager;
+            // Set Strongly Typed Resource Mode to direct resource manager access rather than WebForms mode
+            //Westwind.Globalization.Web.GeneratedResourceSettings.ResourceAccessMode = ResourceAccessMode.DbResourceManager;
 
             DbResourceConfiguration.ConfigurationMode = ConfigurationModes.ConfigFile;
 

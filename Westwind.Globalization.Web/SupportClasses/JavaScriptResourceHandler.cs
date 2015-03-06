@@ -37,7 +37,7 @@ using System.Web;
 using System.Text.RegularExpressions;
 using System.Web.UI;
 using System.Globalization;
-
+using System.Threading;
 using Westwind.Web;
 using Westwind.Utilities;
 
@@ -83,7 +83,7 @@ namespace Westwind.Globalization
             HttpResponse Response = HttpContext.Current.Response;
 
             string resourceSet = Request.Params["ResourceSet"];
-            string localeId = Request.Params["LocaleId"] ?? "";
+            string localeId = Request.Params["LocaleId"];
             string resourceType = Request.Params["ResourceType"] ?? "Resx";   // Resx/ResDb
             bool includeControls = (Request.Params["IncludeControls"] ?? "") != "";
             string varname = Request.Params["VarName"] ?? "resources";
@@ -97,6 +97,9 @@ namespace Westwind.Globalization
 
             if (string.IsNullOrEmpty(resourceSet))
                 SendErrorResponse("Invalid ResourceSet specified.");
+
+            if (localeId == "auto")
+                localeId = Thread.CurrentThread.CurrentUICulture.IetfLanguageTag;
 
             Dictionary<string, object> resDict = null;
 
@@ -199,12 +202,13 @@ namespace Westwind.Globalization
                 sb.Append(",\r\n");
             }
 
-            sb.Append("}");
+            // add dbRes function
+            sb.AppendFormat(
+"\t" + @"""dbRes"": function dbRes(resId) {{ return {0}[resId] || resId; }}      
+}}
+",varname);                
 
-            // strip off ,/r/n at end of string (if any)
-            sb.Replace(",\r\n}", "\r\n}");
-            sb.Append(";\r\n");
-
+ 
             return sb.ToString();
         }
 

@@ -6,6 +6,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Xml;
 using Newtonsoft.Json;
+using Westwind.Globalization.Properties;
 
 namespace Westwind.Globalization
 {
@@ -83,7 +84,7 @@ namespace Westwind.Globalization
             }
             catch (Exception ex)
             {
-                this.ErrorMessage = Westwind.Globalization.Resources.Resources.ConnectionFailed + ": " +
+                this.ErrorMessage = Resources.ConnectionFailed + ": " +
                                     ex.GetBaseException().Message;
                 return null;
             }
@@ -93,7 +94,7 @@ namespace Westwind.Globalization
 
             if (string.IsNullOrEmpty(result))
             {
-                this.ErrorMessage = Westwind.Globalization.Resources.Resources.InvalidSearchResult;
+                this.ErrorMessage = Resources.InvalidSearchResult;
                 return null;
             }        
            
@@ -179,7 +180,7 @@ namespace Westwind.Globalization
 
             if (string.IsNullOrEmpty(clientId) || string.IsNullOrEmpty(clientSecret))
             {
-                ErrorMessage = Resources.Resources.Client_Id_and_Client_Secret_must_be_provided;
+                ErrorMessage = Resources.Client_Id_and_Client_Secret_must_be_provided;
                 return null;
             }
             

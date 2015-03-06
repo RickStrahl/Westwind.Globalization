@@ -33,7 +33,8 @@
             createTable: createTable,
             createClass: createClass,
             exportResxResources: exportResxResources,
-            importResxResources: importResxResources
+            importResxResources: importResxResources,
+            getLocalizationInfo: getLocalizationInfo
         };
         return service;
 
@@ -164,6 +165,10 @@
         }
         function importResxResources() {
             return $http.get("localizationService.ashx?method=ImportResxResources")
+                    .error(parseHttpError);
+        }
+        function getLocalizationInfo() {
+            return $http.get("localizationService.ashx?method=GetLocalizationInfo")
                     .error(parseHttpError);
         }
 

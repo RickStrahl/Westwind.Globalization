@@ -41,15 +41,22 @@
     <!--<div class="separator" style="margin-top: 10px;margin-bottom:10px"></div>-->
 
     <div class="btn-group" style="margin-top: 12px;">
-        <button ng-click="view.onAddResourceClick()" class="btn btn-sm btn-default" title="Add new Resource">
-            <i class="fa fa-plus"></i> Add
+        <button ng-click="view.onAddResourceClick()" class="btn btn-sm btn-default"
+                title="{{::view.resources.Add_Title}}"
+                accesskey="A">
+            <i class="fa fa-plus"></i> {{::view.dbRes('Add')}}
         </button>
         <button class="btn btn-sm btn-default"
-                title="Delete all entries for this Resource"
-                ng-click="view.onDeleteResourceClick()"><i class="fa fa-remove"></i> Delete</button>
-        <button class="btn btn-sm btn-default" title="Rename this Resource for all languages" ng-click="view.onRenameResourceClick()"><i class="fa fa-exchange"></i> Rename</button>
+                title="{{::view.dbRes('Delete_Title')}}"
+                ng-click="view.onDeleteResourceClick()">
+            <i class="fa fa-remove"></i> {{::view.dbRes('Delete')}}
+        </button>
+        <button class="btn btn-sm btn-default" title="{{::view.dbRes('Rename_Title')}}"
+                ng-click="view.onRenameResourceClick()">
+            <i class="fa fa-exchange"></i> {{::view.dbRes('Rename')}}
+        </button>
         <button class="btn btn-sm btn-default" title="Comment" disabled="disabled">
-            <i class="fa fa-comment-o"></i> Comment
+            <i class="fa fa-comment-o"></i> {{::view.dbRes('Comment')}}
         </button>
     </div>
 </div>

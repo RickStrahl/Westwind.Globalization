@@ -1,7 +1,9 @@
 ﻿<%@ Page Language="C#" %>
 
 <%@ Import Namespace="System.Threading" %>
-<%@ Import Namespace="AppResources" %>
+
+<%--Import the strongly typed resource namespace - if this fails strongly typed resources don't exist--%>
+<%@ Import Namespace="Westwind.Globalization.Web" %>
 <script runat="server">
     private string LocaleId;
 
@@ -57,7 +59,7 @@
 <body>
     <div class="banner">
         <div id="TitleBar">
-            <a href="index.html">
+            <a href="./">
                 <img src="localizationAdmin/images/Westwind.Localization_128.png"
                     style="height: 35px; float: left" />
                 <div style="float: left; margin-left: 5px; line-height: 1.2">
@@ -80,7 +82,7 @@
                 <a href="resourcetest.cshtml">
                     <i class="fa fa-check-circle"></i> Razor Test Page
                 </a>
-            </li>
+            </li>           
         </ul>
         <div class="clearfix"></div>
     </nav>

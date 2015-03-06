@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.Design;
 using System.IO;
 using System.Reflection;
+using Westwind.Globalization.Properties;
 using Westwind.Utilities;
 using Westwind.Web;
 using Westwind.Web.Controls;
@@ -533,7 +534,7 @@ function AddHtmlAfterControl(ControlId,HtmlMarkup)
             this.Style.Add(HtmlTextWriterStyle.Display, "block");
 
             this.Style.Add(HtmlTextWriterStyle.Margin, "10px");
-            this.Controls.Add(new LiteralControl(string.Format("<b>{0}</b><hr/>", Resources.Resources.LocalizationOptions)));
+            this.Controls.Add(new LiteralControl(string.Format("<b>{0}</b><hr/>", Resources.LocalizationOptions)));
 
             Image img = new Image();
 
@@ -556,7 +557,7 @@ function AddHtmlAfterControl(ControlId,HtmlMarkup)
 
             LinkButton button = this.btnEditResources;
             button.ID = "btnEditResources";
-            button.Text = Resources.Resources.EditPageResources;
+            button.Text = Resources.EditPageResources;
             //but.Attributes.Add("target", "LocalizationForm");
             button.Click += new EventHandler(OnEditResources);
             this.Controls.Add(button);
@@ -565,7 +566,7 @@ function AddHtmlAfterControl(ControlId,HtmlMarkup)
 
             CheckBox cb = this.chkShowIcons;
             cb.ID = "chkShowIcons";
-            cb.Text = Resources.Resources.ShowLocalizationIcons;
+            cb.Text = Resources.ShowLocalizationIcons;
             cb.AutoPostBack = true;
             cb.Checked = this.ShowIcons;
             cb.CheckedChanged += new EventHandler(this.OnShowIcons);

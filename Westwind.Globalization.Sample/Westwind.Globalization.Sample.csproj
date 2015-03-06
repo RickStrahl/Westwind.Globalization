@@ -136,13 +136,13 @@
     <Compile Include="LocalizationAdmin\LocalizationService.ashx.cs">
       <DependentUpon>LocalizationService.ashx</DependentUpon>
     </Compile>
+    <Compile Include="LocalizationAdmin\Properties\Resources.cs" />
     <Compile Include="Views\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModelWithLocalizedAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\localizations.sdf" />
@@ -155,6 +155,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="LocalizationAdmin\app\resourceProviderController.js" />
     <Content Include="LocalizationAdmin\bower_components\angular-sanitize\angular-sanitize.js" />
     <Content Include="LocalizationAdmin\bower_components\angular-sanitize\angular-sanitize.min.js" />
     <Content Include="LocalizationAdmin\bower_components\angular-sanitize\index.js" />
@@ -174,8 +175,9 @@
     <Content Include="LocalizationAdmin\bower_components\fontawesome\css\font-awesome.css" />
     <Content Include="LocalizationAdmin\bower_components\fontawesome\css\font-awesome.min.css" />
     <Content Include="LocalizationAdmin\bower_components\fontawesome\fonts\fontawesome-webfont.svg" />
-    <Content Include="LocalizationAdmin\Partials\nav-menu.html" />
+    <Content Include="LocalizationAdmin\Partials\Menubar.html" />
     <Content Include="LocalizationAdmin\index.html" />
+    <Content Include="LocalizationAdmin\Partials\ResourceProviderInfoDialog.html" />
     <Content Include="LocalizationAdmin\Partials\RenameResourceDialog.html" />
     <Content Include="LocalizationAdmin\Partials\ResourceSetList.html" />
     <Content Include="LocalizationAdmin\Partials\ResourceList.html" />
@@ -200,7 +202,6 @@
     <Content Include="LocalizationAdmin\Partials\TranslateDialog.html" />
     <Content Include="LocalizationAdmin\scripts\ww.angular.js" />
     <Content Include="LocalizationAdmin\scripts\ww.jquery.js" />
-    <Content Include="LocalizationAdmin\scripts\ww.jquery.min.js" />
     <Content Include="LocalizationAdmin\bower_components\bootstrap\.bower.json" />
     <Content Include="LocalizationAdmin\bower_components\bootstrap\bower.json" />
     <Content Include="LocalizationAdmin\bower_components\bootstrap\dist\css\bootstrap-theme.css.map" />
@@ -232,7 +233,16 @@
     <Content Include="LocalizationAdmin\bower_components\fontawesome\fonts\fontawesome-webfont.woff" />
     <Content Include="LocalizationAdmin\bower_components\fontawesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="LocalizationAdmin\bower_components\fontawesome\fonts\FontAwesome.otf" />
+    <Content Include="LocalizationAdmin\scripts\ww.jquery.min.js">
+      <DependentUpon>ww.jquery.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\ww.jquery.min.js">
+      <DependentUpon>ww.jquery.js</DependentUpon>
+    </Content>
     <Content Include="_readme.Westwind.Globalization.html" />
+    <Content Include="LocalizationAdmin\scripts\ww.jquery.min.js.map">
+      <DependentUpon>ww.jquery.min.js</DependentUpon>
+    </Content>
     <None Include="LocalizationAdmin\scripts\_references.js" />
     <Content Include="LocalizationAdmin\bower_components\jquery\.bower.json" />
     <Content Include="LocalizationAdmin\bower_components\jquery\bower.json" />
@@ -249,7 +259,6 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\ww.jquery.js" />
-    <Content Include="Scripts\ww.jquery.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -269,6 +278,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\ModelAttributesFromResources.cshtml" />
+    <Content Include="Scripts\ww.jquery.min.js.map">
+      <DependentUpon>ww.jquery.min.js</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Controllers\" />

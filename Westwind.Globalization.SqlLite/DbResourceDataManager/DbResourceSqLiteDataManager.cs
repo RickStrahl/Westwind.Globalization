@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Westwind.Globalization.Properties;
 
 namespace Westwind.Globalization
 {
@@ -51,7 +52,7 @@ namespace Westwind.Globalization
             // Check for table existing already
             if (IsLocalizationTable(tableName))
             {
-                SetError(Resources.Resources.LocalizationTable_Localization_Table_exists_already);
+                SetError(Resources.LocalizationTable_Localization_Table_exists_already);
                 return false;
             }
 

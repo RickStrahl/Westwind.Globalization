@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using MySql.Data.MySqlClient.Properties;
 
 namespace Westwind.Globalization
 {
@@ -92,7 +93,7 @@ namespace Westwind.Globalization
             // Check for table existing already
             if (IsLocalizationTable(tableName))
             {
-                SetError(Resources.Resources.LocalizationTable_Localization_Table_exists_already);
+                SetError(Westwind.Globalization.Properties.Resources.LocalizationTable_Localization_Table_exists_already);
                 return false;
             }
 

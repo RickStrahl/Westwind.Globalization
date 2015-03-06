@@ -1955,9 +1955,13 @@ http://en.wikipedia.org/wiki/MIT_License
     String.prototype.escapeRegExp = function () {
         return this.replace(/[.*+?^${}()|[\]\/\\]/g, "\\$0");
     };
-    String.format = function (frmt, args) {
+    String.format = function (frmt, args) {        
         for (var x = 0; x < arguments.length; x++) {
-            frmt = frmt.replace(new RegExp("\\{" + x.toString() + "\\}", "g"), arguments[x + 1]);
+            var arg = arguments[x + 1]
+            if (arg == null)
+                arg = '';
+            alert(arg);
+            frmt = frmt.replace(new RegExp("\\{" + x.toString() + "\\}", "g"),arg );
         }
         return frmt;
     }

@@ -377,9 +377,8 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
 #endif
             if (string.IsNullOrEmpty(outputBasePath))
-                outputBasePath = DbResourceConfiguration.Current.ResxBaseFolder;
-
-            if (outputBasePath.Contains("~"))
+                outputBasePath = Context.Server.MapPath("~/");
+            else if(outputBasePath.StartsWith("~"))
                 outputBasePath = Context.Server.MapPath(outputBasePath);
 
             outputBasePath = outputBasePath.Replace("/", "\\").Replace("\\\\", "\\");

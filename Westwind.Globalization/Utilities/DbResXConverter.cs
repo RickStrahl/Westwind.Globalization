@@ -46,7 +46,7 @@ namespace Westwind.Globalization
         public DbResXConverter(string basePhsyicalPath)
         {
             if (string.IsNullOrEmpty(basePhsyicalPath))
-                basePhsyicalPath = string.Empty;
+                basePhsyicalPath = AppDomain.CurrentDomain.BaseDirectory;
 
             BasePhysicalPath = basePhsyicalPath;
         }
@@ -479,9 +479,14 @@ namespace Westwind.Globalization
         public string FormatResourceSetPath(string resourceSet)
         {
             if (DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.Project)
-            {                
-                resourceSet = BasePhysicalPath + "\\Properties\\" + resourceSet;
-                resourceSet = resourceSet.Replace("/", "\\");
+            {
+                var path = DbResourceConfiguration.Current.ResxBaseFolder;
+                if (path.StartsWith("~"))
+                    path = path.Replace("~", BasePhysicalPath).Replace(@"\/","\\").Replace("/","\\");
+
+                resourceSet = resourceSet.Replace("/", "\\"); 
+                resourceSet = Path.Combine(path, resourceSet);
+                
             }
             else
             {

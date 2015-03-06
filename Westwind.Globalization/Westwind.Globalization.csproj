@@ -109,7 +109,7 @@
     <Compile Include="DbResourceSupportClasses\DbResourceProviderSection.cs" />
     <Compile Include="DbResourceManager\DbRes.cs" />
     <Compile Include="DbResourceDataManager\ResourceItem.cs" />
-    <Compile Include="Resources\Resources.Designer.cs">
+    <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -128,7 +128,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Resources.resx">
+    <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>

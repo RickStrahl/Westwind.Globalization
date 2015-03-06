@@ -476,7 +476,7 @@ on the client that are localized. This library provides a JavaScript Resource
 HttpHandler that can serve resources in the proper localized locale to your
 client application.
 
-**Configuration:**
+#### Configuration
 To configure the Resource Handler it has to be registered in web.config as follows:
 
 ```xml
@@ -494,40 +494,40 @@ To configure the Resource Handler it has to be registered in web.config as follo
 
 Note this entry is automatically made for you when you install the NuGet package.
 
-**Usage:**
+#### Usage
 The resource handler is then accessed as a script resource in your code by calling the
 static JavaScriptResourceHandler.GetJavaScriptResourcesUrl() method:
 
 ```html
-<!-- Generates a resources variable that contains all server side resources translated for this resource set-->
 <script src="@JavaScriptResourceHandler.GetJavaScriptResourcesUrl("resources","Resources")"></script>
 <script>
     document.querySelector("#JavaScriptHelloWorld").innerText = resources.HelloWorld;
 </script>
 ```
-You pass in the name of the variable you want to have created which in this case is `resources`. 
 
-This generates a fairly verbose and ugly URL:
+or if you're using a plain HTML page:
 
+```html
+<script src="JavaScriptResourceHandler.axd?ResourceSet=Resources&LocaleId=auto&VarName=resources&ResourceType=resdb&ResourceMode=1"></script>
+<script>
+    document.querySelector("#JavaScriptHelloWorld").innerText = resources.HelloWorld;
+</script>
 ```
-http://localhost:7894/JavaScriptResourceHandler.axd?ResourceSet=Resources
-      &LocaleId=de-DE&VarName=resources&ResourceType=resdb&ResourceMode=1
-```
-
-which in turn generates the following script code (shown here localized in German):
+Either of the above generate the following script code (shown here localized in German):
 
 ```javascript
 resources = {
 	"HelloWorld": "Hallo schn\u00F6de Welt",
 	"Ready": "Los",
 	"Today": "Heute",
-	"Yesterday": "Gestern"
+	"Yesterday": "Gestern",
+    "dbRes": function dbRes(resId) { return resources[resId] || resId; }    
 };
 ```
 
 The localization by default uses the active locale of the current request, so if you switch
 the locale using WebUtils.SetUserLocale() as shown earlier, the resources are localized to
-that locale as well.
+that locale as well. You can also explicitly provide the LocaleId as a parameter in the first call, or in the `LocaleId` query parameter in the raw script call.
 
 Note that the variable name is generated in global scope by default, so `resources` is generated
 in global scope. However, you can pass in any variable name. For example, if you have a previously
@@ -545,6 +545,8 @@ declared object that you want to attach the resources to you can use that name. 
 </script>
 ```
 
+Note also that there's a `dbRes()` function included in the class that allows safe string based access to properties like `resources.dbRes('Ready')`. That is if you try to access resources that don't exist or are null//empty the resourceKey is returned. This allows for resource names that act as 'default' values or at least will  act as fail-safe that returns the key which is better than no text at all. The behavior of this function is similar to to the DbRes.T() function on the server. 
+
 ## Project Sponsors
 The following people/organizations have provided sponsorship to this project by way of direct donations or for paid development as part of a development project using these tools:
 
@@ -557,7 +559,7 @@ Craig offered early support and feedback for this project and billed project tim
 * **Dan Martin - WeatherMaker**<br/>
 Dan and his company provided a block of my billable hours dedicated to this project for adding support for MySql.
 
-Want to sponsor this project or make a donation? You can contact me directly at rstrahl@west-wind.com or you can also make a donation online via PayPal.
+Want to sponsor this project, need customization or make a donation? You can contact me directly at rstrahl@west-wind.com or you can also make a donation online via PayPal.
 
 * [Make a donation for Westwind.Globalization using PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ERVCP2CMPS4QL)
 * [Make a donation for Westwind.Globalization using our Web Store](http://store.west-wind.com/product/donation)
