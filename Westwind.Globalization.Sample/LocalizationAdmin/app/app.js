@@ -5,17 +5,17 @@
         // Angular modules 
         // ngAnimate',
         //'ngRoute',
-        'ngSanitize'        
+        'ngSanitize'
 
 
         // Custom modules 
 
         // 3rd Party Modules
-        
     ]);
 
     // config settings
     app.configuration = {
+    
     };
 
     app.config([
@@ -24,17 +24,28 @@
                 $(window).resize(resizeControls);
             }
         ])
-        .filter('linebreakFilter', function () {        
+        .filter('linebreakFilter', function() {
             return function(text) {
                 if (text !== undefined)
                     return text.replace(/\n/g, '<br />');
                 return text;
             };
         });
-    
+
     function resizeControls() {
-        var cHeight = $(window).height() - $(".banner").outerHeight() - $(".menubar").outerHeight()  ;
+        var cHeight = $(window).height() - $(".banner").outerHeight() - $(".menubar").outerHeight();
         console.log(cHeight);
         $("#ContentContainer").height(cHeight);
     }
+
+    function parseQueryString() {
+        var query = window.location.search;
+        var res = {
+            query: query,
+            resourceId: getUrlEncodedKey("ResourceId", query),
+            resourceSet: getUrlEncodedKey("ResourceSet", query),
+        }
+        return res;
+    }
+
 })();

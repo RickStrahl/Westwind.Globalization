@@ -168,6 +168,19 @@ Accept: application/json
 
 ------------------------------------------------------------------
 
+POST http://localhost:7894/localizationAdmin/localizationService.ashx?method=GetResourceItems HTTP/1.1
+Accept-Encoding: gzip,deflate
+Content-Type: application/json
+Accept: application/json
+
+{
+ResourceId: "Today",
+ResourceSet: "Resources",
+CultureName: "de"
+}
+
+------------------------------------------------------------------
+
 
 ----- Start WebSurge Options -----
 

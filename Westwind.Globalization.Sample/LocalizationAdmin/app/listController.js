@@ -414,6 +414,55 @@
             }, 5000);            
         }
 
+        function parseQueryString() {
+            var query = window.location.search;
+            var res = {
+                isEmpty: !query,
+                query: query,
+                resourceId: getUrlEncodedKey("ResourceId", query),
+                resourceSet: getUrlEncodedKey("ResourceSet", query)
+            }
+
+            return res;
+        }
+
+       function selectResourceSet(query) {           
+           if(!query.resourceSet)
+                return;
+
+           for (var i = 0; i < vm.resourceSets.length; i++) {
+               if (vm.resourceSets[i] == query.resourceSet) {                       
+                   vm.resourceSet = vm.resourceSets[i];
+                   $timeout(function() { selectResourceId(query) });
+                   break;
+               }                   
+           }
+        
+           function selectResourceId(query) {
+               vm.getResourceList()                         
+               .success(function() {
+                   for (var i = 0; i < vm.resourceList.length; i++) {
+                       if (vm.resourceList[i].ResourceId === query.resourceId) {
+                           vm.resourceId = vm.resourceList[i].ResourceId;
+                           vm.onResourceIdChange();
+                           break;
+                       }
+                   }
+               });
+           }
+
+       }
+       function selectResourceId(resourceId) {
+           
+           for (var i = 0; i < vm.resourceList.length; i++) {
+               if (resourceSet.ResourceId == resourceSetId) {
+                   vm.resourceSet == resourceSet;
+                   break;
+               }
+           }
+       }
+
+
 
         $(document.body).keydown(function (ev) {
            if (ev.keyCode == 76 && ev.altKey) {
@@ -422,8 +471,16 @@
        });
        
 
+
         // initialize
-        vm.getResourceSets();        
-    }
+       vm.getResourceSets()
+           .success(function() {
+               var query = parseQueryString();
+               if (query.isEmpty)
+                   return;
+           console.log(query);
+               selectResourceSet(query);
+           });
+   }
 })();
 
