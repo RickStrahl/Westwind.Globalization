@@ -9,7 +9,7 @@
     <add key="StronglyTypedGlobalResource" value="~/Properties/Resources.cs" />
     <add key="ResourceBaseNamespace" value="$rootnamespace$.Properties" />
     <add key="ResxExportProjectType" value="Project" />
-    <add key="ResxBaseFolder" value="~/Properties" />
+    <add key="ResxBaseFolder" value="~/Properties/" />
     <add key="AddMissingResources" value="False" />
     <add key="LocalizationFormWebPath" value="~/LocalizationAdmin/" />
     <add key="DesignTimeVirtualPath" value="" />
