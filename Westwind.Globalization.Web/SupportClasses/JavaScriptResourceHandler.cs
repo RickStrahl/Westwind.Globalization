@@ -103,7 +103,16 @@ namespace Westwind.Globalization
 
             Dictionary<string, object> resDict = null;
 
-            if (resourceType.ToLower() == "resdb")
+            if (string.IsNullOrEmpty(resourceType) || resourceType == "auto")
+            {
+                if (DbResourceProvider.ProviderLoaded || DbSimpleResourceProvider.ProviderLoaded)
+                    resourceType = "resdb";
+                else
+                    resourceType = "resx";
+            }
+
+
+            if (resourceType.ToLower() == "resdb") 
             {
                 var manager = DbResourceDataManager.CreateDbResourceDataManager();
                 resDict = manager.GetResourceSetNormalizedForLocaleId(localeId, resourceSet) as Dictionary<string, object>;
@@ -166,7 +175,7 @@ namespace Westwind.Globalization
                 cache.SetLastModified(now);
             }
 
-            SendTextOutput(javaScript, "application/json");
+            SendTextOutput(javaScript, "text/javascript");
         }
 
         /// <summary>
@@ -237,7 +246,7 @@ namespace Westwind.Globalization
         /// <param name="text"></param>
         /// <param name="useGZip"></param>
         /// <param name="contentType"></param>
-        private void SendTextOutput(string text, string contentType = "application/json")
+        private void SendTextOutput(string text, string contentType = "text/javascript")
         {
             HttpResponse Response = HttpContext.Current.Response;
             Response.ContentType = contentType;
