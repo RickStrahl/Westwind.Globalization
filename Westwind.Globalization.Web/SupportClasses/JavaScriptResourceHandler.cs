@@ -83,7 +83,7 @@ namespace Westwind.Globalization
             HttpResponse Response = HttpContext.Current.Response;
 
             string resourceSet = Request.Params["ResourceSet"];
-            string localeId = Request.Params["LocaleId"];
+            string localeId = Request.Params["LocaleId"] ?? "auto";
             string resourceType = Request.Params["ResourceType"] ?? "Resx";   // Resx/ResDb
             bool includeControls = (Request.Params["IncludeControls"] ?? "") != "";
             string varname = Request.Params["VarName"] ?? "resources";
@@ -98,6 +98,7 @@ namespace Westwind.Globalization
             if (string.IsNullOrEmpty(resourceSet))
                 SendErrorResponse("Invalid ResourceSet specified.");
 
+            // pick current UI Culture
             if (localeId == "auto")
                 localeId = Thread.CurrentThread.CurrentUICulture.IetfLanguageTag;
 
@@ -115,19 +116,20 @@ namespace Westwind.Globalization
             if (resourceType.ToLower() == "resdb") 
             {
                 var manager = DbResourceDataManager.CreateDbResourceDataManager();
-                resDict = manager.GetResourceSetNormalizedForLocaleId(localeId, resourceSet) as Dictionary<string, object>;
+                resDict = manager.GetResourceSetNormalizedForLocaleId(localeId, resourceSet);
+                if (resDict == null || resDict.Keys.Count < 1)
+                {
+                    // try resx instead
+                    DbResXConverter converter = new DbResXConverter();
+                    string resxPath = converter.FormatResourceSetPath(resourceSet);
+                    resDict = converter.GetResXResourcesNormalizedForLocale(resxPath, localeId);
+                }
             }
             else  // Resx Resources
             {
-                DbResXConverter converter = new DbResXConverter();
-                // must figure out the path
-                string resxPath = null;
-                //if (DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.WebForms)
-                //    resxPath = converter.FormatWebResourceSetPath(resourceSet, (resourceMode == "0") );
-                //else
-                resxPath = converter.FormatResourceSetPath(resourceSet);
-
-                resDict = converter.GetResXResourcesNormalizedForLocale(resxPath, localeId) as Dictionary<string, object>;
+                DbResXConverter converter = new DbResXConverter();                
+                string resxPath = converter.FormatResourceSetPath(resourceSet);
+                resDict = converter.GetResXResourcesNormalizedForLocale(resxPath, localeId);
             }
 
 

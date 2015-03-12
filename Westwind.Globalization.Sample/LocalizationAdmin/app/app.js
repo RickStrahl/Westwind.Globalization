@@ -38,14 +38,4 @@
         $("#ContentContainer").height(cHeight);
     }
 
-    function parseQueryString() {
-        var query = window.location.search;
-        var res = {
-            query: query,
-            resourceId: getUrlEncodedKey("ResourceId", query),
-            resourceSet: getUrlEncodedKey("ResourceSet", query),
-        }
-        return res;
-    }
-
 })();

@@ -299,22 +299,6 @@ namespace Westwind.Globalization
 
             foreach (var res in resources)
             {
-                //// Read into vars for easier usage below
-                //string resourceId = res.ResourceId;
-                //string value = res.Value as string;
-                //string comment = res.Comment;
-
-                //string type = res.Type;
-                //string textFile = res.TextFile;
-                //byte[] binFile = res.BinFile;
-                //string fileName = res["FileName"] as string;
-
-                //string resourceSet = res["ResourceSet"] as string;
-                ////ResourceSet = ResourceSet.ToLower();
-
-                //string localeId = res["LocaleId"] as string;
-                //localeId = localeId.ToLower();
-
                 res.LocaleId = res.LocaleId.ToLower();
                 string stringValue = res.Value as string;
 

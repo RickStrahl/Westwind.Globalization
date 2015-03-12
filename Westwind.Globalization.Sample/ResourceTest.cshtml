@@ -1,6 +1,6 @@
 ﻿@using System.Threading
 @using Westwind.Globalization
-@using AppResources
+@using Westwind.Globalization.Sample.LocalizationAdmin.Properties
 @{    
     var localeId = Request.Params["LocaleId"];
     if (!string.IsNullOrEmpty(localeId))
@@ -79,8 +79,6 @@
         </ul>
         <div class="clearfix"></div>
     </nav>
-
-
 
 
     <div class="well container" style="margin-top: 30px;">

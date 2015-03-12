@@ -110,6 +110,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Westwind.Utilities.2.60\lib\net45\Westwind.Utilities.dll</HintPath>
     </Reference>
+    <Reference Include="Westwind.Web, Version=2.60.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Westwind.Web.2.60\lib\net45\Westwind.Web.dll</HintPath>
+    </Reference>
     <Reference Include="Westwind.Web.WebForms, Version=2.59.5500.1075, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Westwind.Web.WebForms.2.59\lib\net45\Westwind.Web.WebForms.dll</HintPath>
@@ -200,6 +204,7 @@
     <Content Include="LocalizationAdmin\images\Westwind.Localization_128.png" />
     <Content Include="LocalizationAdmin\Partials\AddResourceDialog.html" />
     <Content Include="LocalizationAdmin\Partials\TranslateDialog.html" />
+    <Content Include="LocalizationAdmin\Properties\_Readme_LocalizationResources.txt" />
     <Content Include="LocalizationAdmin\scripts\ww.angular.js" />
     <Content Include="LocalizationAdmin\scripts\ww.jquery.js" />
     <Content Include="LocalizationAdmin\bower_components\bootstrap\.bower.json" />
@@ -293,17 +298,9 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\WestwindToolkit\Westwind.Web\Westwind.Web.csproj">
-      <Project>{0c38b4e1-0c87-4289-a57b-87c1b5be3bbe}</Project>
-      <Name>Westwind.Web</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Westwind.Globalization.MySql\Westwind.Globalization.MySql.csproj">
       <Project>{9d405441-66d4-45d0-8832-9e17587ba921}</Project>
       <Name>Westwind.Globalization.MySql</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Westwind.Globalization.SqlLite\Westwind.Globalization.SqLite.csproj">
-      <Project>{4c74dae9-4f4d-4d94-b3ca-783acef494f2}</Project>
-      <Name>Westwind.Globalization.SqLite</Name>
     </ProjectReference>
     <ProjectReference Include="..\Westwind.Globalization.SqlServerCe\Westwind.Globalization.SqlServerCe.csproj">
       <Project>{1324112a-7929-4246-abcc-dfe51f755681}</Project>
@@ -317,6 +314,15 @@
       <Project>{51dece39-764c-4c32-a57a-d93a5fd9bd6a}</Project>
       <Name>Westwind.Globalization</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="LocalizationAdmin\Properties\LocalizationForm.de.resx" />
+    <EmbeddedResource Include="LocalizationAdmin\Properties\LocalizationForm.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizationAdmin\Properties\Resources.de.resx" />
+    <EmbeddedResource Include="LocalizationAdmin\Properties\Resources.fr.resx" />
+    <EmbeddedResource Include="LocalizationAdmin\Properties\Resources.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

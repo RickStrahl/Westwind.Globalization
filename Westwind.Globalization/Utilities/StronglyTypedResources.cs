@@ -163,7 +163,7 @@ namespace Westwind.Globalization
             StringBuilder sbClasses = new StringBuilder();
             foreach (var resourceSet in resources)
             {                
-                string Class = CreateClassFromDatabaseResource(resourceSet, null, resourceSet, null);
+                string Class = CreateClassFromDatabaseResource(resourceSet, Namespace, resourceSet, null);
                 sbClasses.Append(Class);
             }
 
@@ -206,7 +206,7 @@ namespace Westwind.Globalization
             string Indent = "\t\t";
             StringBuilder sbClass = new StringBuilder();
 
-            CreateClassHeader(Classname, IsVb, sbClass);
+            CreateClassHeader(Classname, Namespace, IsVb, sbClass);
             XmlNodeList nodes = Dom.DocumentElement.SelectNodes("data");
 
             foreach (XmlNode Node in nodes)
@@ -302,7 +302,7 @@ namespace Westwind.Globalization
 
             StringBuilder sbClass = new StringBuilder();
 
-            CreateClassHeader(classname, IsVb, sbClass);
+            CreateClassHeader(classname, nameSpace, IsVb, sbClass);
 
             string indent = "\t\t";
 
@@ -332,9 +332,16 @@ namespace Westwind.Globalization
                     sbClass.Append(indent + "public static " + typeName + " " + varName + "\r\n" + indent + "{\r\n");
                     sbClass.AppendFormat(indent + "\tget\r\n" +
                                          indent + "\t{{\r\n" +
-                                         indent + "\t\tif (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)\r\n" +
-                                         indent + "\t\t\treturn ({2}) HttpContext.GetGlobalResourceObject(\"{0}\",\"{1}\");\r\n" +                                         
-                                         
+                                         indent +
+                                         "\t\tif (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)\r\n" +
+                                         indent +
+                                         "\t\t\treturn ({2}) HttpContext.GetGlobalResourceObject(\"{0}\",\"{1}\");\r\n" +
+
+                                         indent +
+                                         "\t\tif (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.Resx)\r\n" +
+                                         indent + "\t\t\t" +
+                                         "return ResourceManager.GetString(\"{1}\");\r\n\r\n" +
+
                                          indent + "\t\treturn " +
                                          (typeName == "System.String" ? "DbRes.T(\"{1}\",\"{0}\");" : "({2}) DbRes.TO(\"{1}\",\"{0}\");") + "\r\n" +
                                          indent + "\t}}\r\n",
@@ -373,7 +380,7 @@ namespace Westwind.Globalization
         /// <param name="Classname"></param>
         /// <param name="IsVb"></param>
         /// <param name="sbClass"></param>
-        private void CreateClassHeader(string Classname, bool IsVb, StringBuilder sbClass)
+        private void CreateClassHeader(string Classname, string nameSpace, bool IsVb, StringBuilder sbClass)
         {
             if (Classname.Contains("/") || Classname.Contains("\\"))
             {
@@ -382,9 +389,34 @@ namespace Westwind.Globalization
             }
 
             if (!IsVb)
-                sbClass.Append("\tpublic class " + Classname + "\r\n\t{\r\n");
+            {                
+                sbClass.AppendFormat(
+@"    [System.CodeDom.Compiler.GeneratedCodeAttribute(""Westwind.Globalization.StronglyTypedResources"", ""2.0"")]
+    [System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    public class {1}
+    {{
+        public static ResourceManager ResourceManager
+        {{
+            get
+            {{
+                if (object.ReferenceEquals(resourceMan, null))
+                {{
+                    var temp = new ResourceManager(""{0}.{1}"", typeof({1}).Assembly);
+                    resourceMan = temp;
+                }}
+                return resourceMan;
+            }}
+        }}
+        private static ResourceManager resourceMan = null;
+
+", nameSpace,Classname);
+
+            }
             else
+            {
                 sbClass.Append("Public Class " + Classname + "\r\n");
+            }
         }
 
         /// <summary>
@@ -401,9 +433,13 @@ namespace Westwind.Globalization
             StringBuilder sbOutput = new StringBuilder();
 
             if (!IsVb)
-               sbOutput.Append("using System;\r\nusing System.Web;\r\nusing Westwind.Globalization;\r\n\r\n");
+               sbOutput.Append(@"using System;
+using System.Web;
+using System.Resources;
+
+");
             else
-                sbOutput.Append("Imports System\r\nImports System.Web\r\nImports Westwind.Globalization\r\n\r\n");
+                sbOutput.Append("Imports System\r\nImports System.Web\r\nImports System.Resources\r\nImports Westwind.Globalization\r\n\r\n");
 
             if (!string.IsNullOrEmpty(Namespace))
             {
@@ -476,82 +512,20 @@ namespace Westwind.Globalization
                     nextUpper = true;
                     continue;
                 }
-                
-                if (nextUpper)
-                    sb.Append(char.ToUpper(ch));
-                else
-                    sb.Append(ch);
+
+                sb.Append(nextUpper ? char.ToUpper(ch) : ch);
 
                 nextUpper = false;
             }
 
             return sb.ToString();
         }
-
-#if false
-            /// <summary>
-        /// Generates a strongly typed assembly from the resources
-        /// 
-        /// UNDER CONSTRUCTION. 
-        /// Doesn't work correctly for Web forms due to hard coded resource managers.
-        /// </summary>
-        /// <param name="ResourceSetName"></param>
-        /// <param name="Namespace"></param>
-        /// <param name="Classname"></param>
-        /// <param name="FileName"></param>
-        /// <returns></returns>
-        public bool CreateStronglyTypedResource(string ResourceSetName,string Namespace, string Classname, string FileName)
-        {
-            try
-            {
-                //wwDbResourceDataManager Data = new wwDbResourceDataManager();
-                //IDictionary ResourceSet = Data.GetResourceSet("", ResourceSetName);
-
-                // Use the custom ResourceManage to retrieve a ResourceSet
-                DbResourceManager Man = new DbResourceManager(ResourceSetName);
-                ResourceSet rs = Man.GetResourceSet(CultureInfo.InvariantCulture, false, false);
-                IDictionaryEnumerator Enumerator = rs.GetEnumerator();
-
-                // We have to turn into a concret Dictionary
-                Dictionary<string, object> Resources = new Dictionary<string, object>();
-                while (Enumerator.MoveNext())
-                {
-                    DictionaryEntry Item = (DictionaryEntry) Enumerator.Current;
-                    Resources.Add(Item.Key as string, Item.Value);
-                }
-                
-                string[] UnmatchedElements;
-                CodeDomProvider CodeProvider = null;
-
-                string FileExtension = Path.GetExtension(FileName).TrimStart('.').ToLower();
-                if (FileExtension == "cs")
-                    CodeProvider = new Microsoft.CSharp.CSharpCodeProvider();
-                else if(FileExtension == "vb")
-                    CodeProvider = new Microsoft.VisualBasic.VBCodeProvider();
-
-                CodeCompileUnit Code = StronglyTypedResourceBuilder.Create(Resources,
-                                                   ResourceSetName, Namespace, CodeProvider, false, out UnmatchedElements);
-
-                StreamWriter writer = new StreamWriter(FileName);
-                CodeProvider.GenerateCodeFromCompileUnit(Code, writer, new CodeGeneratorOptions());
-                writer.Close();
-            }
-            catch (Exception ex)
-            {
-                this.ErrorMessage = ex.Message;
-                return false;
-            }
-
-            return true;
-        }
-#endif
-
-
     }
 
     public enum ResourceAccessMode
     {
         DbResourceManager,
-        AspNetResourceProvider
+        AspNetResourceProvider,
+        Resx
     }
 }

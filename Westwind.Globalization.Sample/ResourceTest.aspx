@@ -5,8 +5,8 @@
 <%--Import the strongly typed resource namespace - if this fails strongly typed resources don't exist--%>
 <%@ Import Namespace="Westwind.Globalization.Web" %>
 <script runat="server">
-    private string LocaleId;
-
+    private string LocaleId;    
+    
     protected override void InitializeCulture()
     {
         base.InitializeCulture();

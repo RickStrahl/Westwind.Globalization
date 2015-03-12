@@ -150,8 +150,8 @@
       <Project>{1e36a3c9-2f87-407a-b568-ebf336061a06}</Project>
       <Name>Westwind.Globalization.Sample</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Westwind.Globalization.SqlLite\Westwind.Globalization.SqLite.csproj">
-      <Project>{4c74dae9-4f4d-4d94-b3ca-783acef494f2}</Project>
+    <ProjectReference Include="..\Westwind.Globalization.SqLite\Westwind.Globalization.SqLite.csproj">
+      <Project>{4C74DAE9-4F4D-4D94-B3CA-783ACEF494F2}</Project>
       <Name>Westwind.Globalization.SqLite</Name>
     </ProjectReference>
     <ProjectReference Include="..\Westwind.Globalization.SqlServerCe\Westwind.Globalization.SqlServerCe.csproj">

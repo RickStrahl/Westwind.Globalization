@@ -19,7 +19,8 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
     public class LocalizationService : CallbackHandler
     {
 
-        public const string STR_RESOURCESET = "localizationadmin/LocalizationAdmin.aspx";
+        public const string STR_RESOURCESET = "LocalizationForm";
+
         protected DbResourceDataManager Manager = DbResourceDataManager.CreateDbResourceDataManager();
 
         public LocalizationService()
@@ -178,7 +179,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         public bool UpdateResource(ResourceItem resource)
         {
             if (resource == null)
-                throw new ArgumentException("No resource passed to add or update.");
+                throw new ArgumentException("NoResourcePassedToAddOrUpdate");
 
             if (resource.Value == null)
             {
@@ -427,7 +428,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
                 res = converter.ImportWinResources(inputBasePath);
 
             if (!res)
-                new ApplicationException(WebUtils.LRes("ResourceImportFailed"));
+                new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceImportFailed"));
 
             return true;
         }
@@ -445,7 +446,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
 
             string providerFactory = configSection.ResourceProviderFactoryType;
             if (string.IsNullOrEmpty(providerFactory))
-                providerFactory = "Resx provider";
+                providerFactory = WebUtils.GRes(STR_RESOURCESET,"NoProviderConfigured");
 
             var config = DbResourceConfiguration.Current;
 
@@ -453,6 +454,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             {
                 ProviderUsed = providerFactory,
                 Connection = config.ConnectionString,
+                ResourceTableName = config.ResourceTableName,
                 ResxExportMode = config.ResxExportProjectType
             };
         }

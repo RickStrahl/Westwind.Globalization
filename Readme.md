@@ -18,7 +18,7 @@ Requirements:
 * [Nuget Package](https://www.nuget.org/packages/Westwind.Globalization/)
 * [Getting Started Video](https://www.youtube.com/watch?v=jHg4hlnZNoA)
 * [Original Article for Database Driven Resource Provider](http://www.west-wind.com/presentations/wwdbresourceprovider/)
-* [Documentation](http://west-wind.com/westwind.globalization/docs/)
+* [Wiki Documentation and FAQ](http://west-wind.com/westwind.globalization/docs/)
 * [Class Reference](http://west-wind.com/westwind.globalization/docs/?page=_40y0vh66q.htm)
 * [Change Log](ChangeLog.md)
 * [License](http://west-wind.com/Westwind.Globalization/docs/_2lp0u0i9b.htm)
@@ -122,7 +122,7 @@ There are three distinct resource access mechanisms supported:
   (Non-Web apps, and or MVC apps where you already use Resx)
 * Direct Db Provider access using DbRes helper (easiest overall - works everywhere)
 
-### Installation and Configuration
+## Installation and Configuration
 The easiest way to use data driven resources with this library is to install the NuGet
 package into an ASP.NET application.
 
@@ -170,8 +170,10 @@ resources:
   </DbResourceConfiguration>
 
   <!-- Enable ASP.NET Resource Provider  -->
-  <globalization resourceProviderFactoryType=
+  <system.web>
+    <globalization resourceProviderFactoryType=
      "Westwind.Globalization.DbSimpleResourceProviderFactory,Westwind.Globalization.Web" />
+  </system.web>
 </configuration>
 ```
 
@@ -204,34 +206,25 @@ These files are external and do not automatically cause an app restart.
 
 
 #### Run the Web Resource Editor
-In order to use database resources you'll actually have to create some resources in a database.
-Make sure you've first added a valid connection string in the config file in the last step! 
-Then open the /LocalizationAdmin/LocalizationAdmin.aspx page in your browser and click on the
-*Create Localization Table* button in the toolbar.
+In order to use database resources you'll actually have to create some resources in a database. Make sure you've first added a valid connection string in the config file in the last step! Then open the `/LocalizationAdmin/` in your browser and click on the *Create Table* button in the toolbar.
 
 Once the table's been created you can now start creation of resources interactively, by directly
 adding values to the database table, or by using the DbResourceDataManager API to manipulate the
 data programmatically.
 
-I recommend you start by adding a 'Resources' resource set that's the 'main' resource set used
-to hold common and global reusable values. Create additional resource sets to break out individual
-forms or sections or other related content.
+By default a `Resources` ResourceSet has been provided for you the resources of which are used in the test page. You can remove those resources or the resource set as needed once you know the provider works. ResourceSets are logical groups of resources that belong together - I like to use one ResourceSet per form or per application feature depending on how much content is involved. But you can also use a single ResourceSet for your entire application if you want. Whatever works for you to make it easy to find resources.
 
-Note if you're using WebForms, ASP.NET uses the concept of global and remote resources. The resource
-editor will treat any ResourceSets that have a 'file extension' like .aspx as a local resource. To 
-match local resources mapped to an ASPX page use (Path)/Page.aspx. Path can be blank in which case
-you don't specify a leading slash. For example the localization admin page local resources live in
-a ResourceSet named: 
+I also recommend that you first perform an *Import Resx* step to pull any existing Resx resources in your project into the application. This will also import the Localization form's resources into your database so that the localization form properly localizes.  
+ 
+Note that you can use the Search feature on the Admin form to quickly locate resources in the selected ResourceSet by name. Just type in a few letters of the resource name and you should get a list matching the entered values which makes it easy to locate resources.
 
-LocalizationAdmin/LocalizationAdmin.aspx
+Note if you're using WebForms, ASP.NET uses the concept of global and remote resources. The resource editor will treat any ResourceSets that have a 'file extension' like .aspx as a local resource. To match local resources mapped to an ASPX page use (Path)/Page.aspx. Path can be blank in which case you don't specify a leading slash. For example the localization admin page local resources live in a ResourceSet named: 
 
-Adding and manipulating resources in the Web editor should be pretty straight forward. One thing
-to note however is:
+LocalizationForm
 
-* If you add a new ResourcesSet or Language in a resource you have to refresh the entire form
-  otherwise the new language or ResourceSet doesn't show up in lists.
+Once you have the form up and running add some resources to your pages.
 
-#### Setting ASP.NET Locale based on Browser Locale
+## Setting ASP.NET Locale based on Browser Locale
 In order to do automatic localization based on a browser's language used you can
 sniff the browser's default language and set the UiCulture in the Begin_Request 
 handler of your ASP.NET application class. A helper method to provide this 
@@ -377,7 +370,8 @@ namespace WebApplication1
 {
     public class GeneratedResourceSettings
     {
-        // You can change the ResourceAccess Mode globally in Application_Start        
+        // You can change the ResourceAccess Mode globally in Application_Start  
+        // AspNetResourceProvider, Project (MVC, Windows), Resx      
         public static ResourceAccessMode ResourceAccessMode = ResourceAccessMode.AspNetResourceProvider;
     }
 
@@ -424,6 +418,36 @@ you remove or rename a resource you may break your code. This is the
 reason we use a single file, rather than a file per resource set to 
 keep the file management as simple as possible.
 
+## ASP.NET MVC ModelValidation
+ASP.NET and Entity Framework support model validation and you can also use the database provider to localize these validation messages. To do so **you have to generate strongly typed resources** or export to Resx and then enable strong resource typing. Model validation works of object properties so in order to use it a type has to exist.
+
+To do this:
+
+* Open the Localization Administration form 
+* Use *Export Class* to export create a class
+* Or: Use *Export to Resx* to export Resx files (in Project mode)<br/>
+then make sure to enable the strong type generation on the Resx and choose *Public class*
+
+Once you've done this you can create your validation classes like you always would:
+
+```c#
+public class ViewModelWithLocalizedAttributes
+{
+    [Required(ErrorMessageResourceName = "NameIsRequired", ErrorMessageResourceType = typeof(Resources))]
+    public string Name { get; set;  }
+
+    [Required(ErrorMessageResourceName = "AddressIsRequired", ErrorMessageResourceType = typeof(Resources))]
+    public string Address { get; set;  }
+}
+```
+
+The type will be your exported class or generated Resx class and the name is the name of the property on the generated object. DataAnnotations use Reflection to lookup the property name, so if for some reason the validation does not work check the following:
+
+* Make sure the property name is typed correctly and matches a property name.
+* Try writing out the actual property using @Resources.AddressIsRequired to ensure the value is valid (on a simple test page perferrably). 
+
+
+
 ## Non Sql Server Database Providers
 By default the resource providers and manager use SQL Server to hold the database resources. If you don't do any custom configuration in code to specify the Configuration.DbResourceDataManagerType you'll get the Sql Server provider/manager. 
 
@@ -441,40 +465,53 @@ To use a provider other than Sql Server you need to do the following:
 * Add the appropriate Westwind.Globalization.<DataBase> assembly/NuGet Package
 * Specify the Configuration.DbResourceDbD
  
-**Sql Server**<br/>
+### Sql Server
 *no additional package needed*
 ```c#
 // not required - use only if you need to reset provider in code
 DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerDataManager);
 ```  
 
-**Sql Server Compact**<br/>
-*add NuGet Package: Westwind.Globalization.SqlServerCe*
+###### Connection String Example:
+	<add name="SqlServerLocalizations" connectionString="server=.;database=localizations;integrated security=true;" providerName="System.Data.SqlClient" />
+
+
+### Sql Server Compact
+*add NuGet Package:* **Westwind.Globalization.SqlServerCe**
+
 ```c#
 DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerCeDataManager);
 ```
+###### Connection String Example:
+	<add name="SqlServerCeLocalizations" connectionString="Data Source=|DataDirectory|\Localizations.sdf;Persist Security Info=False;" providerName="System.Data.SqlServerCe.4.0" />
+	<add name="Localizations" connectionString="server=.;database=localizations;integrated security=true;" providerName="System.Data.SqlClient" />
 
-**MySql**<br/>
+### MySql
 *add NuGet Package: Westwind.Globalization.MySql*
 ```c#
 DbResourceConfiguration.Current.DbResourceDataManagerType = typeof (DbResourceMySqlDataManager);
 ```
-**SqLite**<br/>
+
+###### Connection String Example:
+	<add name="MySqlLocalizations" connectionString="server=localhost;uid=testuser;pwd=super10seekrit;database=Localizations" providerName="MySql.Data.MySqlClient" />
+
+
+### SqLite
 *add NuGet Package: Westwind.Globalization.SqLite*
 ```c#
 DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);
 ```  
 
+###### Connection String Example:
+	<add name="SqLiteLocalizations" connectionString="Data Source=|DataDirectory|\SqLiteLocalizations.db;Version=3" providerName="System.Data.SQLite" />
 
-
+### Global Data Manager Configuration
 This code configures the data manager globally so every time a data access operation occurs it instantiates the data manager configured here. It's important that you add the appropriate assembly first, otherwise these provider types will not be available and your code won't compile.
 
 ### JavaScript Resource Handler
-Localization doesn't stop with server templates - if you're building applications
-that include JavaScript logic it's likely that you also need to access resources
-on the client that are localized. This library provides a JavaScript Resource 
-HttpHandler that can serve resources in the proper localized locale to your
-client application.
+If you're building applications that include JavaScript logic it's likely that you also need to access localized resources on the client. This library provides a JavaScript Resource HttpHandler that can serve resources in the proper localized locale to your client application.
+
+The resource handler allows you to specify which resources to serve and which locale - or auto-detected locale - to serve the data to your JavaScript client application.
 
 #### Configuration
 To configure the Resource Handler it has to be registered in web.config as follows:
@@ -525,6 +562,28 @@ resources = {
 };
 ```
 
+### Handler Url Formatting
+A full JavaScript resource handler URL looks like this:
+
+```
+JavaScriptResourceHandler.axd?ResourceSet=Resources&LocaleId=auto&VarName=resources&ResourceType=resdb&ResourceMode=1
+```
+
+The QueryString parameters on the URL are used as follows:
+
+##### ResourceSet
+The ResourceSet name as defined in the database or the name of the ResX file relative to the ResxBaseFolder defined in the configuration.
+
+##### LocaleId
+This can be either a specific localeId like `de`, or `de-de`. Or it can be `auto` in which ASP.NET will use its default locale, which you can override to match the browser's locale as described in [Auto-detecting browser locale](Auto-Detecting-and-Setting-ASP.NET-Locale-based-on-Browser-Locale). The recommendation is to use `auto` and have IIS detect the browser locale and switch the thread UiCulture.
+
+##### ResourceType - resdb,resx
+You can specify what type of resources are loaded with this Resource handler. The options are `resdb`, which uses the dbResourceProvider/Manager or `resx` which uses Resx resources. Again in order for Resx resources to work the ResxBaseFolder must be set.
+
+##### ResourceMode  0 (WebForms), 1 (Project/folder)
+Determines how Resx Resources are loaded using either *project* (1) or *WebForms* (0) style resources. If *project* (0) resources are used make sure the ResxBaseFolder points to the path where your Resx resources like. If you use *WebForms* mode, resources are located using App_GlobalResources and App_LocalResources folders.
+
+
 The localization by default uses the active locale of the current request, so if you switch
 the locale using WebUtils.SetUserLocale() as shown earlier, the resources are localized to
 that locale as well. You can also explicitly provide the LocaleId as a parameter in the first call, or in the `LocaleId` query parameter in the raw script call.
@@ -545,7 +604,14 @@ declared object that you want to attach the resources to you can use that name. 
 </script>
 ```
 
-Note also that there's a `dbRes()` function included in the class that allows safe string based access to properties like `resources.dbRes('Ready')`. That is if you try to access resources that don't exist or are null//empty the resourceKey is returned. This allows for resource names that act as 'default' values or at least will  act as fail-safe that returns the key which is better than no text at all. The behavior of this function is similar to to the DbRes.T() function on the server. 
+Note also that there's a `dbRes()` function included in the class that allows safe, string based access to properties like this:
+
+```javascript
+var strReady1 = resources.Ready; // error if not found or can be blank  
+var strReady2 = resources.dbRes('Ready'); // no error, output 'Ready' if not found or empty
+```
+    
+That is if you try to access resources that don't exist or are null//empty the resourceKey is returned. This allows for resource names that act as 'default' values or at least will  act as fail-safe that returns the key which is better than no text at all. The behavior of this function is similar to to the DbRes.T() function on the server. 
 
 ## Project Sponsors
 The following people/organizations have provided sponsorship to this project by way of direct donations or for paid development as part of a development project using these tools:
