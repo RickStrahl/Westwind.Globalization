@@ -436,6 +436,7 @@ namespace Westwind.Globalization
                sbOutput.Append(@"using System;
 using System.Web;
 using System.Resources;
+using Westwind.Globalization;
 
 ");
             else
