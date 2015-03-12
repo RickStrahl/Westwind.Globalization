@@ -20,6 +20,7 @@ Thumbs.db
 [Bb]in
 [Dd]ebug*/
 [Pp]ackages/
+App_Data*/
 *.lib
 *.sbr
 obj/
@@ -31,5 +32,3 @@ $tf*/
 node_modules/
 .idea/
 /Westwind.ApplicationConfiguration.WebSample/Properties/PublishProfiles/*.pubxml
-/Westwind.ApplicationConfiguration.WebSample/Properties/PublishProfiles/*.pubxml
-/WebApplication1
