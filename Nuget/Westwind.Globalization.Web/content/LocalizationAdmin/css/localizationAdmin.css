@@ -167,6 +167,17 @@ input.ng-invalid,textarea.ng-invalid,select.ng-invalid {
     padding: 10px 20px 5px 20px;
 }
 
+/*fix for menu drop down cutoff*/
+.pull-right .dropdown-menu:after {
+    left: auto;
+    right: 3px;
+}
+.pull-right .dropdown-menu {
+    left: auto;
+    right: 0;
+}
+
+
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }

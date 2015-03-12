@@ -3,7 +3,8 @@
 <%@ Import Namespace="System.Threading" %>
 
 <%--Import the strongly typed resource namespace - if this fails strongly typed resources don't exist--%>
-<%@ Import Namespace="Westwind.Globalization.Web" %>
+<%@ Import Namespace="Westwind.Globalization.Sample.LocalizationAdmin.Properties" %>
+
 <script runat="server">
     private string LocaleId;    
     
@@ -12,6 +13,8 @@
         base.InitializeCulture();
 
         LocaleId = Request.Params["LocaleId"];
+        
+        // explicitly reset the UserLocale
         if (!string.IsNullOrEmpty(LocaleId))
             Westwind.Utilities.WebUtils.SetUserLocale(LocaleId, LocaleId, "$", true, "en,de,fr");
     }
@@ -64,7 +67,7 @@
                     style="height: 35px; float: left" />
                 <div style="float: left; margin-left: 5px; line-height: 1.2">
                     <i style="color: steelblue; font-size: 0.8em; font-weight: bold;">West Wind Globalization</i><br />
-                    <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;">DbResourceManager
+                    <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;">WebForms DbResourceManager
                         Test</i>
                 </div>
             </a>
@@ -82,7 +85,12 @@
                 <a href="resourcetest.cshtml">
                     <i class="fa fa-check-circle"></i> Razor Test Page
                 </a>
-            </li>           
+            </li>       
+            <li>
+                <a href="./">
+                    <i class="fa fa-home"></i>
+                </a>
+            </li>    
         </ul>
         <div class="clearfix"></div>
     </nav>

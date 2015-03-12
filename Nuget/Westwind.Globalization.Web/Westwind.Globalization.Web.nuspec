@@ -2,7 +2,7 @@
 <package> 
   <metadata> 
     <id>Westwind.Globalization.Web</id> 
-    <version>2.0.04-beta1</version>
+    <version>2.0.05-beta2</version>
     <authors>Rick Strahl, West Wind Technologies</authors>
     <title>West Wind Globalization Web for ASP.NET (Westwind.Globalization.Web)</title> 
     <summary>Database Resource Localization for ASP.NET Web applications.</summary>

@@ -106,13 +106,13 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Westwind.Utilities, Version=2.60.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Westwind.Utilities, Version=2.61.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Westwind.Utilities.2.60\lib\net45\Westwind.Utilities.dll</HintPath>
+      <HintPath>..\packages\Westwind.Utilities.2.61\lib\net45\Westwind.Utilities.dll</HintPath>
     </Reference>
-    <Reference Include="Westwind.Web, Version=2.60.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Westwind.Web, Version=2.61.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Westwind.Web.2.60\lib\net45\Westwind.Web.dll</HintPath>
+      <HintPath>..\packages\Westwind.Web.2.61\lib\net45\Westwind.Web.dll</HintPath>
     </Reference>
     <Reference Include="Westwind.Web.WebForms, Version=2.59.5500.1075, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -241,13 +241,13 @@
     <Content Include="LocalizationAdmin\scripts\ww.jquery.min.js">
       <DependentUpon>ww.jquery.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\ww.jquery.min.js">
-      <DependentUpon>ww.jquery.js</DependentUpon>
-    </Content>
+    <Content Include="Scripts\ww.jquery.js" />
+    <Content Include="Scripts\ww.jquery.min.js" />
     <Content Include="_readme.Westwind.Globalization.html" />
     <Content Include="LocalizationAdmin\scripts\ww.jquery.min.js.map">
       <DependentUpon>ww.jquery.min.js</DependentUpon>
     </Content>
+    <Content Include="App_Data\SqLiteLocalizations.db" />
     <None Include="LocalizationAdmin\scripts\_references.js" />
     <Content Include="LocalizationAdmin\bower_components\jquery\.bower.json" />
     <Content Include="LocalizationAdmin\bower_components\jquery\bower.json" />
@@ -263,7 +263,6 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <Content Include="Scripts\ww.jquery.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -283,9 +282,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\ModelAttributesFromResources.cshtml" />
-    <Content Include="Scripts\ww.jquery.min.js.map">
-      <DependentUpon>ww.jquery.min.js</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Controllers\" />
@@ -301,6 +297,10 @@
     <ProjectReference Include="..\Westwind.Globalization.MySql\Westwind.Globalization.MySql.csproj">
       <Project>{9d405441-66d4-45d0-8832-9e17587ba921}</Project>
       <Name>Westwind.Globalization.MySql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Westwind.Globalization.SqLite\Westwind.Globalization.SqLite.csproj">
+      <Project>{4C74DAE9-4F4D-4D94-B3CA-783ACEF494F2}</Project>
+      <Name>Westwind.Globalization.SqLite</Name>
     </ProjectReference>
     <ProjectReference Include="..\Westwind.Globalization.SqlServerCe\Westwind.Globalization.SqlServerCe.csproj">
       <Project>{1324112a-7929-4246-abcc-dfe51f755681}</Project>

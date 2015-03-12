@@ -1595,33 +1595,6 @@
             </param>
             <returns>deserialized value/object from returned JSON data</returns>
         </member>
-        <member name="M:Westwind.Utilities.HttpUtils.HttpRequestStringAsync(System.String)">
-            <summary>
-            Retrieves and Http request and returns data as a string.
-            </summary>
-            <param name="url">The Url to access</param>
-            <returns>string of HTTP response</returns>
-        </member>
-        <member name="M:Westwind.Utilities.HttpUtils.HttpRequestStringAsync(Westwind.Utilities.HttpRequestSettings)">
-            <summary>
-            Retrieves and Http request and returns data as a string.
-            </summary>
-            <param name="settings">Pass HTTP request configuration parameters object to set the URL, Verb, Headers, content and more</param>
-            <returns>string of HTTP response</returns>
-        </member>
-        <member name="M:Westwind.Utilities.HttpUtils.JsonRequestAsync``1(Westwind.Utilities.HttpRequestSettings)">
-            <summary>
-            Makes an HTTP with option JSON data serialized from an object
-            and parses the result from JSON back into an object.
-            Assumes that the service returns a JSON response and that
-            any data sent is json.
-            </summary>
-            <typeparam name="TResultType">The type of the object returned</typeparam>
-            <param name="settings"><see cref="T:Westwind.Utilities.HttpRequestSettings"/>
-            Configuration object for the HTTP request made to the server.
-            </param>
-            <returns>deserialized value/object from returned JSON data</returns>
-        </member>
         <member name="T:Westwind.Utilities.HttpRequestSettings">
             <summary>
             Configuration object for Http Requests used by the HttpUtils
@@ -3616,7 +3589,7 @@
             <param name="height"></param>
             <returns></returns>
         </member>
-        <member name="M:Westwind.Utilities.ImageUtils.ResizeImage(System.String,System.String,System.Int32,System.Int32,System.Drawing.Drawing2D.InterpolationMode)">
+        <member name="M:Westwind.Utilities.ImageUtils.ResizeImage(System.String,System.String,System.Int32,System.Int32,System.Drawing.Drawing2D.InterpolationMode,System.Int32)">
             <summary>
             Resizes an image and saves the image to a file
             </summary>
@@ -3624,14 +3597,11 @@
             <param name="outputFilename"></param>
             <param name="width"></param>
             <param name="height"></param>
+            <param name="mode"></param>
+            <param name="jpegCompressionMode">
+            If using a jpeg image 
+            </param>
             <returns></returns>
-        </member>
-        <member name="M:Westwind.Utilities.ImageUtils.GetImageFormatFromFilename(System.String)">
-            <summary>
-            Tries to return an image format 
-            </summary>
-            <param name="filename"></param>
-            <returns>Image format or ImageFormat.Emf if no match was found</returns>
         </member>
         <member name="M:Westwind.Utilities.ImageUtils.ResizeImage(System.Drawing.Bitmap,System.Int32,System.Int32,System.Drawing.Drawing2D.InterpolationMode)">
             <summary>
@@ -3645,7 +3615,17 @@
             <param name="height"></param>
             <returns></returns>
         </member>
-        <member name="M:Westwind.Utilities.ImageUtils.RoateImage(System.String,System.String,System.Drawing.RotateFlipType)">
+        <member name="M:Westwind.Utilities.ImageUtils.SaveJpeg(System.Drawing.Bitmap,System.String,System.Int64)">
+            <summary>
+            Saves a jpeg BitMap  to disk with a jpeg quality setting.
+            Does not dispose the bitmap.
+            </summary>
+            <param name="bmp">Bitmap to save</param>
+            <param name="outputFileName">file to write it to</param>
+            <param name="jpegQuality"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.ImageUtils.RoateImage(System.String,System.String,System.Drawing.RotateFlipType,System.Int32)">
             <summary>
             Rotates an image and writes out the rotated image to a file.
             </summary>
@@ -3653,6 +3633,18 @@
             <param name="outputFilename">The output file of the rotated image file. If not passed the original file is overwritten</param>
             <param name="type">Type of rotation to perform</param>
             <returns></returns>
+        </member>
+        <member name="M:Westwind.Utilities.ImageUtils.GetImageFormatFromFilename(System.String)">
+            <summary>
+            Tries to return an image format 
+            </summary>
+            <param name="filename"></param>
+            <returns>Image format or ImageFormat.Emf if no match was found</returns>
+        </member>
+        <member name="P:Westwind.Utilities.ImageUtils.Encoders">
+            <summary>
+            A quick lookup for getting image encoders
+            </summary>
         </member>
         <member name="T:Westwind.Utilities.JsonSerializationUtils">
             <summary>

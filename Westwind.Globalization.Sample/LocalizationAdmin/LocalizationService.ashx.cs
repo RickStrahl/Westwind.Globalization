@@ -455,6 +455,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
                 ProviderUsed = providerFactory,
                 Connection = config.ConnectionString,
                 ResourceTableName = config.ResourceTableName,
+                DbResourceProviderType = config.DbResourceDataManagerType.Name,
                 ResxExportMode = config.ResxExportProjectType
             };
         }

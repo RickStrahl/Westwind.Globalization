@@ -700,19 +700,28 @@ namespace Westwind.Globalization
 
 
             if (string.IsNullOrEmpty(Type))
-                Data.UpdateOrAddResource(Name, Value, LocaleId, ResourceSetName,Comment);
-            else
-            {
-                // File based resources are formatted: filename;full type name
-                string[] tokens = Value.Split(';');
-                if (tokens.Length > 0)
+                if (Data.UpdateOrAddResource(Name, Value, LocaleId, ResourceSetName, Comment) == -1)
                 {
-                    string ResFileName = FilePath + tokens[0];
-                    if (File.Exists(ResFileName) )
-                        // DataManager knows about file resources and can figure type info
-                        Data.UpdateOrAddResource(Name, ResFileName, LocaleId, ResourceSetName, Comment,true);
+                    ErrorMessage = Data.ErrorMessage;
+                    return false;
                 }
-            }
+                else
+                {
+                    // File based resources are formatted: filename;full type name
+                    string[] tokens = Value.Split(';');
+                    if (tokens.Length > 0)
+                    {
+                        string ResFileName = FilePath + tokens[0];
+                        if (File.Exists(ResFileName))
+                            // DataManager knows about file resources and can figure type info
+                            if (Data.UpdateOrAddResource(Name, ResFileName, LocaleId, ResourceSetName, Comment, true) ==
+                                -1)
+                            {
+                                ErrorMessage = Data.ErrorMessage;
+                                return false;
+                            }
+                    }
+                }
 
         }
 

@@ -45,13 +45,13 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Westwind.Utilities, Version=2.60.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Westwind.Utilities, Version=2.61.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Westwind.Utilities.2.60\lib\net45\Westwind.Utilities.dll</HintPath>
+      <HintPath>..\packages\Westwind.Utilities.2.61\lib\net45\Westwind.Utilities.dll</HintPath>
     </Reference>
-    <Reference Include="Westwind.Web, Version=2.60.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Westwind.Web, Version=2.61.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Westwind.Web.2.60\lib\net45\Westwind.Web.dll</HintPath>
+      <HintPath>..\packages\Westwind.Web.2.61\lib\net45\Westwind.Web.dll</HintPath>
     </Reference>
     <Reference Include="Westwind.Web.WebForms">
       <HintPath>..\packages\Westwind.Web.WebForms.2.59\lib\net45\Westwind.Web.WebForms.dll</HintPath>
@@ -90,6 +90,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\localize.png" />
+    <Content Include="scripts\ww.jquery.js" />
+    <Content Include="scripts\ww.jquery.min.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Westwind.Globalization\Westwind.Globalization.csproj">

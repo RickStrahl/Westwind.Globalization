@@ -11,20 +11,20 @@
         <button class="btn btn-sm btn-default" title="Add new ResourceSet"
                 ng-click="view.onAddResourceClick()">
             <i class="fa fa-plus">
-            </i> Add
+            </i> {{::view.dbRes('Add')}}
         </button>
         <button class="btn btn-sm btn-default"
                 ng-click="view.onDeleteResourceSetClick()"
-                title="Delete ResourceSet">
+                title="{{::view.dbRes('Delete_ResourceSet_Title')}}">
             <i class="fa fa-remove">
-            </i> Delete
+            </i> {{::view.dbRes('Delete')}}
         </button>
         <button class="btn btn-sm btn-default" title="Rename ResourceSet"
                 ng-click="view.onRenameResourceSetClick()">
-            <i class="fa fa-exchange"></i> Rename
+            <i class="fa fa-exchange"></i> {{::view.dbRes('Rename')}}
         </button>
         <button class="btn btn-sm btn-default" title="Reload ResourceSets from database" ng-click="view.getResourceSets()">
-            <i class="fa fa-refresh"></i> Refresh
+            <i class="fa fa-refresh"></i> {{::view.dbRes('Refresh')}}
         </button>
     </div>
 
