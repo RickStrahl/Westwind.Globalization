@@ -1,7 +1,7 @@
 ﻿/// <reference path="jquery.js" />
 /*
 ww.jQuery.js  
-Version 1.16 - 12/10/2014
+Version 1.16 - 2/25/2015
 West Wind jQuery plug-ins and utilities
 
 (c) 2008-2015 Rick Strahl, West Wind Technologies 

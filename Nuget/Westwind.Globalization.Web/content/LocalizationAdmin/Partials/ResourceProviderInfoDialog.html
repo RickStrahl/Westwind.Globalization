@@ -1,0 +1,52 @@
+﻿<div id="ResourceProviderInfoDialog"
+     class="modal fade"
+     tabindex="-1" role="dialog"
+     ng-controller="resourceProviderInfoController as view"
+     aria-labelledby="myModal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form name="renameResourceForm" id="renameResourceForm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 class="modal-title" id="ResourceProviderInfoTitle">{{view.dbRes('ResourceProviderInfo')}}</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>ASP.NET Resource Provider in use:</label>
+                        <div>{{view.info.ProviderUsed }}</div>
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label>DbResourceProvider Type in use:</label>
+                        <div>{{view.info.DbResourceProviderType }}</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Connection String:</label>
+                        <div>{{view.info.Connection}}</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Table Name:</label>
+                        <div>{{view.info.ResourceTableName}}</div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label>Resx Export Mode:</label>
+                        <div>{{view.info.ResxExportMode}}</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit"
+                            class="btn btn-primary" 
+                            data-dismiss="modal">
+                        <i class="fa fa-check"></i> OK
+                    </button>
+                </div>
+            </form>   
+        </div>
+    </div>
+</div>

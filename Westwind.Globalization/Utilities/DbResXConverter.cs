@@ -46,7 +46,7 @@ namespace Westwind.Globalization
         public DbResXConverter(string basePhsyicalPath)
         {
             if (string.IsNullOrEmpty(basePhsyicalPath))
-                basePhsyicalPath = string.Empty;
+                basePhsyicalPath = AppDomain.CurrentDomain.BaseDirectory;
 
             BasePhysicalPath = basePhsyicalPath;
         }
@@ -299,22 +299,6 @@ namespace Westwind.Globalization
 
             foreach (var res in resources)
             {
-                //// Read into vars for easier usage below
-                //string resourceId = res.ResourceId;
-                //string value = res.Value as string;
-                //string comment = res.Comment;
-
-                //string type = res.Type;
-                //string textFile = res.TextFile;
-                //byte[] binFile = res.BinFile;
-                //string fileName = res["FileName"] as string;
-
-                //string resourceSet = res["ResourceSet"] as string;
-                ////ResourceSet = ResourceSet.ToLower();
-
-                //string localeId = res["LocaleId"] as string;
-                //localeId = localeId.ToLower();
-
                 res.LocaleId = res.LocaleId.ToLower();
                 string stringValue = res.Value as string;
 
@@ -479,9 +463,14 @@ namespace Westwind.Globalization
         public string FormatResourceSetPath(string resourceSet)
         {
             if (DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.Project)
-            {                
-                resourceSet = BasePhysicalPath + "\\Properties\\" + resourceSet;
-                resourceSet = resourceSet.Replace("/", "\\");
+            {
+                var path = DbResourceConfiguration.Current.ResxBaseFolder;
+                if (path.StartsWith("~"))
+                    path = path.Replace("~", BasePhysicalPath).Replace(@"\/","\\").Replace("/","\\");
+
+                resourceSet = resourceSet.Replace("/", "\\"); 
+                resourceSet = Path.Combine(path, resourceSet);
+                
             }
             else
             {
@@ -711,19 +700,28 @@ namespace Westwind.Globalization
 
 
             if (string.IsNullOrEmpty(Type))
-                Data.UpdateOrAddResource(Name, Value, LocaleId, ResourceSetName,Comment);
-            else
-            {
-                // File based resources are formatted: filename;full type name
-                string[] tokens = Value.Split(';');
-                if (tokens.Length > 0)
+                if (Data.UpdateOrAddResource(Name, Value, LocaleId, ResourceSetName, Comment) == -1)
                 {
-                    string ResFileName = FilePath + tokens[0];
-                    if (File.Exists(ResFileName) )
-                        // DataManager knows about file resources and can figure type info
-                        Data.UpdateOrAddResource(Name, ResFileName, LocaleId, ResourceSetName, Comment,true);
+                    ErrorMessage = Data.ErrorMessage;
+                    return false;
                 }
-            }
+                else
+                {
+                    // File based resources are formatted: filename;full type name
+                    string[] tokens = Value.Split(';');
+                    if (tokens.Length > 0)
+                    {
+                        string ResFileName = FilePath + tokens[0];
+                        if (File.Exists(ResFileName))
+                            // DataManager knows about file resources and can figure type info
+                            if (Data.UpdateOrAddResource(Name, ResFileName, LocaleId, ResourceSetName, Comment, true) ==
+                                -1)
+                            {
+                                ErrorMessage = Data.ErrorMessage;
+                                return false;
+                            }
+                    }
+                }
 
         }
 

@@ -1956,8 +1956,11 @@ http://en.wikipedia.org/wiki/MIT_License
         return this.replace(/[.*+?^${}()|[\]\/\\]/g, "\\$0");
     };
     String.format = function (frmt, args) {
+        if (!frmt)
+            return "";
         for (var x = 0; x < arguments.length; x++) {
-            frmt = frmt.replace(new RegExp("\\{" + x.toString() + "\\}", "g"), arguments[x + 1]);
+            var arg = arguments[x + 1] || "";
+            frmt = frmt.replace(new RegExp("\\{" + x.toString() + "\\}", "g"), arg);
         }
         return frmt;
     }

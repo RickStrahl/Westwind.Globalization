@@ -42,6 +42,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using Westwind.Globalization.Properties;
 using Westwind.Utilities;
 using Westwind.Utilities.Data;
 
@@ -880,7 +881,7 @@ namespace Westwind.Globalization
         {
             if (!IsValidCulture(cultureName))
             {
-                ErrorMessage = string.Format(Resources.Resources.Can_t_save_resource__Invalid_culture_id_passed, cultureName);
+                ErrorMessage = string.Format(Resources.Can_t_save_resource__Invalid_culture_id_passed, cultureName);
                 return -1;
             }
 
@@ -935,7 +936,7 @@ namespace Westwind.Globalization
 
             if (string.IsNullOrEmpty(resourceId))
             {
-                ErrorMessage = Resources.Resources.NoResourceIdSpecifiedCantAddResource;
+                ErrorMessage = Resources.NoResourceIdSpecifiedCantAddResource;
                 return -1;
             }
 
@@ -1323,7 +1324,7 @@ namespace Westwind.Globalization
                 }
                 if (result == 0)
                 {
-                    SetError(Resources.Resources.No_matching_Recordset_found);
+                    SetError(Resources.No_matching_Recordset_found);
                     return false;
                 }
 
@@ -1357,7 +1358,7 @@ namespace Westwind.Globalization
                 }
                 if (result == 0)
                 {
-                    SetError(Resources.Resources.No_matching_Recordset_found);
+                    SetError(Resources.No_matching_Recordset_found);
                     return false;
                 }
             }
@@ -1625,7 +1626,7 @@ namespace Westwind.Globalization
             // Check for table existing already
             if (IsLocalizationTable(tableName))
             {
-                SetError(Resources.Resources.LocalizationTable_Localization_Table_exists_already);
+                SetError(Resources.LocalizationTable_Localization_Table_exists_already);
                 return false;
             }
 

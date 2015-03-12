@@ -1,0 +1,199 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+<root>
+   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+      <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+      <xsd:element name="root" msdata:IsDataSet="true">
+         <xsd:complexType>
+            <xsd:choice maxOccurs="unbounded">
+               <xsd:element name="metadata">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                     </xsd:sequence>
+                     <xsd:attribute name="name" use="required" type="xsd:string" />
+                     <xsd:attribute name="type" type="xsd:string" />
+                     <xsd:attribute name="mimetype" type="xsd:string" />
+                     <xsd:attribute ref="xml:space" />
+                  </xsd:complexType>
+               </xsd:element>
+               <xsd:element name="assembly">
+                  <xsd:complexType>
+                     <xsd:attribute name="alias" type="xsd:string" />
+                     <xsd:attribute name="name" type="xsd:string" />
+                  </xsd:complexType>
+               </xsd:element>
+               <xsd:element name="data">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                        <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                     </xsd:sequence>
+                     <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+                     <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+                     <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+                     <xsd:attribute ref="xml:space" />
+                  </xsd:complexType>
+               </xsd:element>
+               <xsd:element name="resheader">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                     </xsd:sequence>
+                     <xsd:attribute name="name" type="xsd:string" use="required" />
+                  </xsd:complexType>
+               </xsd:element>
+            </xsd:choice>
+         </xsd:complexType>
+      </xsd:element>
+   </xsd:schema>
+   <resheader name="resmimetype">
+      <value>text/microsoft-resx</value>
+   </resheader>
+   <resheader name="version">
+      <value>2.0</value>
+   </resheader>
+   <resheader name="reader">
+      <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+   </resheader>
+   <resheader name="writer">
+      <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+   </resheader>
+   <data name="LocalizationAdministration" xml:space="preserve">
+      <value>Localization Administration</value>
+   </data>
+   <data name="Home.Title" xml:space="preserve">
+      <value>Back to site home.</value>
+   </data>
+   <data name="SearchResources" xml:space="preserve">
+      <value>Search Resources</value>
+   </data>
+   <data name="Add" xml:space="preserve">
+      <value>Add</value>
+   </data>
+   <data name="Delete" xml:space="preserve">
+      <value>Delete</value>
+   </data>
+   <data name="Comment" xml:space="preserve">
+      <value>Comment</value>
+   </data>
+   <data name="Add.Title" xml:space="preserve">
+      <value>Add a new individual resource.</value>
+   </data>
+   <data name="ResourceSaved" xml:space="preserve">
+      <value>Resource has been saved.</value>
+   </data>
+   <data name="ResourceSetRenamed" xml:space="preserve">
+      <value>ResourceSet renamed.</value>
+   </data>
+   <data name="ResourcesHaveBeenReloaded" xml:space="preserve">
+      <value>Resources have been reloaded.</value>
+   </data>
+   <data name="ResourcesHaveBeenBackedUp" xml:space="preserve">
+      <value>Resources have been backed up.</value>
+   </data>
+   <data name="Delete.Title" xml:space="preserve">
+      <value>Delete all resources for this resource id.</value>
+   </data>
+   <data name="Delete.ResourceSet.Title" xml:space="preserve">
+      <value>Delete all resources in this ResourceSet.</value>
+   </data>
+   <data name="Rename" xml:space="preserve">
+      <value>Rename</value>
+   </data>
+   <data name="ExportResx" xml:space="preserve">
+      <value>Export Resx</value>
+   </data>
+   <data name="ExportResx.Title" xml:space="preserve">
+      <value>Export resources to Resx file(s).</value>
+   </data>
+   <data name="ImportResx" xml:space="preserve">
+      <value>Import Resx</value>
+   </data>
+   <data name="ImportResx.Title" xml:space="preserve">
+      <value>Import resources from Resx files.</value>
+   </data>
+   <data name="CreateClass" xml:space="preserve">
+      <value>Create Class</value>
+   </data>
+   <data name="CreateClass.Title" xml:space="preserve">
+      <value>Create class of strongly typed resources from resources.</value>
+   </data>
+   <data name="ReloadResources" xml:space="preserve">
+      <value>Reload Resources</value>
+   </data>
+   <data name="Backup" xml:space="preserve">
+      <value>Backup</value>
+   </data>
+   <data name="ReloadResources.Title" xml:space="preserve">
+      <value>Force database resources to be reloaded so that next server hit refreshes all resources to latest changes. You have to reload the page to see the resource changes.</value>
+   </data>
+   <data name="Backup.Title" xml:space="preserve">
+      <value>Backup resources to a backup table in the database.</value>
+   </data>
+   <data name="Another Long Test Message" xml:space="preserve">
+      <value>Another Long Test Message</value>
+   </data>
+   <data name="AreYouSureYouWantToDoThis" xml:space="preserve">
+      <value>Are you sure you want to do this?</value>
+   </data>
+   <data name="YouAreAboutToDeleteThisResourceSet" xml:space="preserve">
+      <value>You are about to delete this resource set.</value>
+   </data>
+   <data name="LocalizationTableHasBeenCreated" xml:space="preserve">
+      <value>Localization table has been created.</value>
+   </data>
+   <data name="Rename.Title" xml:space="preserve">
+      <value>Rename all resources for this resource id.</value>
+   </data>
+   <data name="HelloWorld" xml:space="preserve">
+      <value>Hello World!</value>
+   </data>
+   <data name="ResourceProviderInfo" xml:space="preserve">
+      <value>Resource Provider Info</value>
+   </data>
+   <data name="Cancel" xml:space="preserve">
+      <value>Cancel</value>
+   </data>
+   <data name="ResxResourcesHaveBeenCreated" xml:space="preserve">
+      <value>Resx Resources have been created in your Web project.</value>
+   </data>
+   <data name="CreateTable" xml:space="preserve">
+      <value>Create Table</value>
+   </data>
+   <data name="NoProviderConfigured" xml:space="preserve">
+      <value>No Provider configured (Resx)</value>
+   </data>
+   <data name="StronglyTypedClassCreated" xml:space="preserve">
+      <value>Strongly typed class has been created. You'll have to re-compile your application to use any added resources.</value>
+   </data>
+   <data name="ResourceImportFailed" xml:space="preserve">
+      <value>Resource import failed.</value>
+   </data>
+   <data name="ResourceSetLoadingFailed" xml:space="preserve">
+      <value>Resourceset failed to load.</value>
+   </data>
+   <data name="NoResourcePassedToAddOrUpdate" xml:space="preserve">
+      <value>No resource passed to add or update.</value>
+   </data>
+   <data name="InvalidResourceId" xml:space="preserve">
+      <value>Invalid Resource Id.</value>
+   </data>
+   <data name="ResourceGenerationFailed" xml:space="preserve">
+      <value>Resource generation failed.</value>
+   </data>
+   <data name="CreateTable.Title" xml:space="preserve">
+      <value>Create the Localization table as defined in the configuration file.</value>
+   </data>
+   <data name="LocalizationTableNotCreated" xml:space="preserve">
+      <value>Localization table has not been created.</value>
+   </data>
+   <data name="StronglyTypedGlobalResourcesFailed" xml:space="preserve">
+      <value>Failed to create strongly typed resources.</value>
+   </data>
+   <data name="LocaleIdsFailedToLoad" xml:space="preserve">
+      <value>Locale Ids failed to load.</value>
+   </data>
+   <data name="ResourceUpdateFailed" xml:space="preserve">
+      <value>Resource update failed.</value>
+   </data>
+</root>

@@ -593,11 +593,7 @@
         </member>
         <member name="P:Westwind.Web.JsonSerializers.JsonNetJsonSerializer.DateSerializationMode">
             <summary>
-            Encodes Dates as a JSON string value that is compatible
-            with MS AJAX and is safe for JSON validators. If false
-            serializes dates as new Date() expression instead.
-            
-            The default is true.
+            ISO or MSAJAX serialization modes. Not supported with JSON.NET
             </summary>
         </member>
         <member name="P:Westwind.Web.JsonSerializers.JsonNetJsonSerializer.FormatJsonOutput">

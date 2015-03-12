@@ -37,7 +37,7 @@ using System.Web;
 using System.Text.RegularExpressions;
 using System.Web.UI;
 using System.Globalization;
-
+using System.Threading;
 using Westwind.Web;
 using Westwind.Utilities;
 
@@ -83,7 +83,7 @@ namespace Westwind.Globalization
             HttpResponse Response = HttpContext.Current.Response;
 
             string resourceSet = Request.Params["ResourceSet"];
-            string localeId = Request.Params["LocaleId"] ?? "";
+            string localeId = Request.Params["LocaleId"] ?? "auto";
             string resourceType = Request.Params["ResourceType"] ?? "Resx";   // Resx/ResDb
             bool includeControls = (Request.Params["IncludeControls"] ?? "") != "";
             string varname = Request.Params["VarName"] ?? "resources";
@@ -98,24 +98,38 @@ namespace Westwind.Globalization
             if (string.IsNullOrEmpty(resourceSet))
                 SendErrorResponse("Invalid ResourceSet specified.");
 
+            // pick current UI Culture
+            if (localeId == "auto")
+                localeId = Thread.CurrentThread.CurrentUICulture.IetfLanguageTag;
+
             Dictionary<string, object> resDict = null;
 
-            if (resourceType.ToLower() == "resdb")
+            if (string.IsNullOrEmpty(resourceType) || resourceType == "auto")
+            {
+                if (DbResourceProvider.ProviderLoaded || DbSimpleResourceProvider.ProviderLoaded)
+                    resourceType = "resdb";
+                else
+                    resourceType = "resx";
+            }
+
+
+            if (resourceType.ToLower() == "resdb") 
             {
                 var manager = DbResourceDataManager.CreateDbResourceDataManager();
-                resDict = manager.GetResourceSetNormalizedForLocaleId(localeId, resourceSet) as Dictionary<string, object>;
+                resDict = manager.GetResourceSetNormalizedForLocaleId(localeId, resourceSet);
+                if (resDict == null || resDict.Keys.Count < 1)
+                {
+                    // try resx instead
+                    DbResXConverter converter = new DbResXConverter();
+                    string resxPath = converter.FormatResourceSetPath(resourceSet);
+                    resDict = converter.GetResXResourcesNormalizedForLocale(resxPath, localeId);
+                }
             }
             else  // Resx Resources
             {
-                DbResXConverter converter = new DbResXConverter();
-                // must figure out the path
-                string resxPath = null;
-                //if (DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.WebForms)
-                //    resxPath = converter.FormatWebResourceSetPath(resourceSet, (resourceMode == "0") );
-                //else
-                resxPath = converter.FormatResourceSetPath(resourceSet);
-
-                resDict = converter.GetResXResourcesNormalizedForLocale(resxPath, localeId) as Dictionary<string, object>;
+                DbResXConverter converter = new DbResXConverter();                
+                string resxPath = converter.FormatResourceSetPath(resourceSet);
+                resDict = converter.GetResXResourcesNormalizedForLocale(resxPath, localeId);
             }
 
 
@@ -163,7 +177,7 @@ namespace Westwind.Globalization
                 cache.SetLastModified(now);
             }
 
-            SendTextOutput(javaScript, "application/json");
+            SendTextOutput(javaScript, "text/javascript");
         }
 
         /// <summary>
@@ -199,12 +213,13 @@ namespace Westwind.Globalization
                 sb.Append(",\r\n");
             }
 
-            sb.Append("}");
+            // add dbRes function
+            sb.AppendFormat(
+"\t" + @"""dbRes"": function dbRes(resId) {{ return {0}[resId] || resId; }}      
+}}
+",varname);                
 
-            // strip off ,/r/n at end of string (if any)
-            sb.Replace(",\r\n}", "\r\n}");
-            sb.Append(";\r\n");
-
+ 
             return sb.ToString();
         }
 
@@ -233,7 +248,7 @@ namespace Westwind.Globalization
         /// <param name="text"></param>
         /// <param name="useGZip"></param>
         /// <param name="contentType"></param>
-        private void SendTextOutput(string text, string contentType = "application/json")
+        private void SendTextOutput(string text, string contentType = "text/javascript")
         {
             HttpResponse Response = HttpContext.Current.Response;
             Response.ContentType = contentType;

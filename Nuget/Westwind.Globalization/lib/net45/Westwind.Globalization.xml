@@ -1119,78 +1119,78 @@
             The resource set (file) that this resource belongs to
             </summary>
         </member>
-        <member name="T:Westwind.Globalization.Resources.Resources">
+        <member name="T:Westwind.Globalization.Properties.Resources">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
             </summary>
         </member>
-        <member name="P:Westwind.Globalization.Resources.Resources.ResourceManager">
+        <member name="P:Westwind.Globalization.Properties.Resources.ResourceManager">
             <summary>
               Returns the cached ResourceManager instance used by this class.
             </summary>
         </member>
-        <member name="P:Westwind.Globalization.Resources.Resources.Culture">
+        <member name="P:Westwind.Globalization.Properties.Resources.Culture">
             <summary>
               Overrides the current thread's CurrentUICulture property for all
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
-        <member name="P:Westwind.Globalization.Resources.Resources.Can_t_save_resource__Invalid_culture_id_passed">
+        <member name="P:Westwind.Globalization.Properties.Resources.Can_t_save_resource__Invalid_culture_id_passed">
             <summary>
               Looks up a localized string similar to Can&apos;t save resource: Invalid culture id passed: {0}.
             </summary>
         </member>
-        <member name="P:Westwind.Globalization.Resources.Resources.Client_Id_and_Client_Secret_must_be_provided">
+        <member name="P:Westwind.Globalization.Properties.Resources.Client_Id_and_Client_Secret_must_be_provided">
             <summary>
               Looks up a localized string similar to Client Id and Client Secret must be provided..
             </summary>
         </member>
-        <member name="P:Westwind.Globalization.Resources.Resources.Client_Id_and_Client_Secret_must_be_provided_">
+        <member name="P:Westwind.Globalization.Properties.Resources.Client_Id_and_Client_Secret_must_be_provided_">
             <summary>
               Looks up a localized string similar to Client Id and Client Secret must be provided..
             </summary>
         </member>
-        <member name="P:Westwind.Globalization.Resources.Resources.ConnectionFailed">
+        <member name="P:Westwind.Globalization.Properties.Resources.ConnectionFailed">
             <summary>
               Looks up a localized string similar to Connection failed: .
             </summary>
         </member>
-        <member name="P:Westwind.Globalization.Resources.Resources.ConnectionStringForResourcesIsNotConfigure">
+        <member name="P:Westwind.Globalization.Properties.Resources.ConnectionStringForResourcesIsNotConfigure">
             <summary>
               Looks up a localized string similar to Connection string for resources is not configured.
             </summary>
         </member>
-        <member name="P:Westwind.Globalization.Resources.Resources.EditPageResources">
+        <member name="P:Westwind.Globalization.Properties.Resources.EditPageResources">
             <summary>
               Looks up a localized string similar to Edit Page Resources.
             </summary>
         </member>
-        <member name="P:Westwind.Globalization.Resources.Resources.InvalidSearchResult">
+        <member name="P:Westwind.Globalization.Properties.Resources.InvalidSearchResult">
             <summary>
               Looks up a localized string similar to Invalid search result..
             </summary>
         </member>
-        <member name="P:Westwind.Globalization.Resources.Resources.LocalizationOptions">
+        <member name="P:Westwind.Globalization.Properties.Resources.LocalizationOptions">
             <summary>
               Looks up a localized string similar to Localization Options.
             </summary>
         </member>
-        <member name="P:Westwind.Globalization.Resources.Resources.LocalizationTable_Localization_Table_exists_already">
+        <member name="P:Westwind.Globalization.Properties.Resources.LocalizationTable_Localization_Table_exists_already">
             <summary>
               Looks up a localized string similar to Localization Table exists already.
             </summary>
         </member>
-        <member name="P:Westwind.Globalization.Resources.Resources.No_matching_Recordset_found">
+        <member name="P:Westwind.Globalization.Properties.Resources.No_matching_Recordset_found">
             <summary>
               Looks up a localized string similar to No matching Recordset found..
             </summary>
         </member>
-        <member name="P:Westwind.Globalization.Resources.Resources.NoResourceIdSpecifiedCantAddResource">
+        <member name="P:Westwind.Globalization.Properties.Resources.NoResourceIdSpecifiedCantAddResource">
             <summary>
               Looks up a localized string similar to No ResourceId specified. Can&apos;t add resource.
             </summary>
         </member>
-        <member name="P:Westwind.Globalization.Resources.Resources.ShowLocalizationIcons">
+        <member name="P:Westwind.Globalization.Properties.Resources.ShowLocalizationIcons">
             <summary>
               Looks up a localized string similar to Show Localization Icons.
             </summary>
@@ -1294,7 +1294,7 @@
             <param name="fileName">Output filename for the CSharp class. If null no file is generated and only the class is returned</param>
             <returns></returns>
         </member>
-        <member name="M:Westwind.Globalization.StronglyTypedResources.CreateClassHeader(System.String,System.Boolean,System.Text.StringBuilder)">
+        <member name="M:Westwind.Globalization.StronglyTypedResources.CreateClassHeader(System.String,System.String,System.Boolean,System.Text.StringBuilder)">
             <summary>
             Creates the class header for a page
             </summary>

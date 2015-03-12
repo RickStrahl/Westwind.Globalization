@@ -7,9 +7,9 @@
     <add key="ConnectionString" value="*** ENTER A RAW CONNECTION STRING OR CONNECTION STRING ENTRY HERE ***" />
     <add key="ResourceTableName" value="Localizations" />
     <add key="StronglyTypedGlobalResource" value="~/Properties/Resources.cs" />
-    <add key="ResourceBaseNamespace" value="AppResources" />
+    <add key="ResourceBaseNamespace" value="$rootnamespace$.Properties" />
     <add key="ResxExportProjectType" value="Project" />
-    <add key="ResxBaseFolder" value="~/" />
+    <add key="ResxBaseFolder" value="~/Properties" />
     <add key="AddMissingResources" value="False" />
     <add key="LocalizationFormWebPath" value="~/LocalizationAdmin/" />
     <add key="DesignTimeVirtualPath" value="" />

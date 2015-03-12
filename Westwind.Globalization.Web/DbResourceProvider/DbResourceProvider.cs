@@ -60,11 +60,11 @@ namespace Westwind.Globalization
         /// <param name="classname"></param>
         public DbResourceProvider(string virtualPath, string classname)
         {
-            if (!ProviderLoaded)
-                ProviderLoaded = true;
-
             lock (_SyncLock)
             {
+                if (!ProviderLoaded)
+                    ProviderLoaded = true;
+
                 //  _virtualPath = virtualPath;
                 _className = classname;
                 DbResourceConfiguration.LoadedProviders.Add(this);

@@ -1,15 +1,20 @@
 ﻿<%@ Page Language="C#" %>
 
 <%@ Import Namespace="System.Threading" %>
-<%@ Import Namespace="Westwind.Globalization.Sample" %>
-<script runat="server">
-    private string LocaleId;
 
+<%--Import the strongly typed resource namespace - if this fails strongly typed resources don't exist--%>
+<%@ Import Namespace="$rootnamespace$.Properties" %>
+
+<script runat="server">
+    private string LocaleId;    
+    
     protected override void InitializeCulture()
     {
         base.InitializeCulture();
 
         LocaleId = Request.Params["LocaleId"];
+        
+        // explicitly reset the UserLocale
         if (!string.IsNullOrEmpty(LocaleId))
             Westwind.Utilities.WebUtils.SetUserLocale(LocaleId, LocaleId, "$", true, "en,de,fr");
     }
@@ -57,12 +62,12 @@
 <body>
     <div class="banner">
         <div id="TitleBar">
-            <a href="index.html">
+            <a href="./">
                 <img src="localizationAdmin/images/Westwind.Localization_128.png"
                     style="height: 35px; float: left" />
                 <div style="float: left; margin-left: 5px; line-height: 1.2">
                     <i style="color: steelblue; font-size: 0.8em; font-weight: bold;">West Wind Globalization</i><br />
-                    <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;">DbResourceManager
+                    <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;">WebForms DbResourceManager
                         Test</i>
                 </div>
             </a>
@@ -75,12 +80,12 @@
                 <a href="localizationAdmin/">
                     <i class="fa fa-gears"></i> Resource Editor
                 </a>
-            </li>
+            </li>      
             <li>
-                <a href="resourcetest.cshtml">
-                    <i class="fa fa-check-circle"></i> Razor Test Page
+                <a href="./">
+                    <i class="fa fa-home"></i>
                 </a>
-            </li>
+            </li>    
         </ul>
         <div class="clearfix"></div>
     </nav>
@@ -141,20 +146,18 @@
             <label>Get GlobalResource Object (default locale):</label>
             <%= GetGlobalResourceObject("Resources","HelloWorld") %>
 
-            <label>Meta Tag (key lblHelloWorldLabel.Text):</label>
+			<label>GetLocalResourceObject:</label>
+            <%= GetLocalResourceObject("lblHelloWorldLabel.Text") %>
+			
+            <label>Meta Tag (meta:resourcekey= lblHelloWorldLabel.Text):</label>
             <asp:Label ID="lblHelloLabel" runat="server" meta:resourcekey="lblHelloWorldLabel"></asp:Label>
 
             <label>Resource Expressions (Global Resources):</label>
             <asp:Label ID="Label1" runat="server" Text="<%$ Resources:Resources,HelloWorld %>"></asp:Label>
-
-            <label>GetLocalResourceObject via Expression:</label>
-            <%= GetLocalResourceObject("lblHelloWorldLabel.Text") %>
         </div>
 
         <hr />
 
-<%-- 	This works only after you've generated strongly typed resources  -->		
-<%-- 		
         <div class="container">
 
             <h3>Strongly Typed Resource (generated)</h3>
@@ -164,7 +167,7 @@
         </div>
 
         <hr />
---%>
+
         <div class="container">
 
             <h3>JavaScript Resource Handler</h3>

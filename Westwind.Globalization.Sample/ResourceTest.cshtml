@@ -1,6 +1,6 @@
 ﻿@using System.Threading
 @using Westwind.Globalization
-@using Westwind.Globalization.Sample
+@using Westwind.Globalization.Sample.LocalizationAdmin.Properties
 @{    
     var localeId = Request.Params["LocaleId"];
     if (!string.IsNullOrEmpty(localeId))
@@ -50,14 +50,13 @@
 <body>
     <div class="banner">
         <div id="TitleBar">
-            <a href="index.html">
+            <a href="./">
                 <img src="localizationAdmin/images/Westwind.Localization_128.png"
                      style="height: 35px; float: left" />
                 <div style="float: left; margin-left: 5px; line-height: 1.2">
                     <i style="color: steelblue; font-size: 0.8em; font-weight: bold;">West Wind Globalization</i><br />
                     <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;">
-                        DbResourceManager
-                        Test
+                        Razor DbResourceManager Test
                     </i>
                 </div>
             </a>
@@ -72,15 +71,18 @@
                 </a>
             </li>
             <li>
-                <a href="resourcetest.cshtml">
-                    <i class="fa fa-check-circle"></i> Razor Test Page
+                <a href="resourcetest.aspx">
+                    <i class="fa fa-check-circle"></i> WebForms Test Page
                 </a>
             </li>
+            <li>
+                <a href="~/">
+                    <i class="fa fa-home"></i>
+                </a>
+            </li>         
         </ul>
         <div class="clearfix"></div>
     </nav>
-
-
 
 
     <div class="well container" style="margin-top: 30px;">
