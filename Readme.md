@@ -18,7 +18,7 @@ Requirements:
 * [Nuget Package](https://www.nuget.org/packages/Westwind.Globalization/)
 * [Getting Started Video](https://www.youtube.com/watch?v=jHg4hlnZNoA)
 * [Original Article for Database Driven Resource Provider](http://www.west-wind.com/presentations/wwdbresourceprovider/)
-* [Wiki Documentation and FAQ](wiki/)
+* [Wiki Documentation and FAQ](https://github.com/RickStrahl/Westwind.Globalization/wiki)
 * [Class Reference](http://west-wind.com/westwind.globalization/docs/?page=_40y0vh66q.htm)
 * [Change Log](ChangeLog.md)
 * [License](http://west-wind.com/Westwind.Globalization/docs/_2lp0u0i9b.htm)
