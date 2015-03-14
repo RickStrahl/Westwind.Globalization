@@ -58,11 +58,20 @@
    <resheader name="writer">
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
+   <data name="ResourceGenerationFailed" xml:space="preserve">
+      <value>Ressourcengenerierung fehlgeschlagen.</value>
+   </data>
+   <data name="ResxImportInfo" xml:space="preserve">
+      <value>Der Ressourcen-Import wird alle Resx Ressourcen aus dem angegebenen Ressourcen Ordner rekursiv importieren.</value>
+   </data>
+   <data name="Resources" xml:space="preserve">
+      <value>Ressourcen</value>
+   </data>
    <data name="InvalidResourceId" xml:space="preserve">
       <value>Ungültige Ressourcen-ID.</value>
    </data>
-   <data name="ResourceGenerationFailed" xml:space="preserve">
-      <value>Ressourcengenerierung fehlgeschlagen.</value>
+   <data name="ResxImportInfo.WebForms" xml:space="preserve">
+      <value>Ihr Resx Exportmodus ist &lt;b&gt; WebForms &lt;/ b&gt;, also werden RESX-Ressourcen aus den entsprechenden App_GlobalResources und App_LocalResources Ordner importiert.</value>
    </data>
    <data name="CreateTable" xml:space="preserve">
       <value>Tabelle erstellen</value>
@@ -75,6 +84,21 @@
    </data>
    <data name="ResourceSetLoadingFailed" xml:space="preserve">
       <value>ResourceSet konnte nicht geladen werden.</value>
+   </data>
+   <data name="ResxImportInfo.Project" xml:space="preserve">
+      <value>Ihr Resx Exportmodus ist &lt;b&gt;Projekt&lt;/ b&gt;, also werden ihre Ressourcendateien recursiv mit Pfaden und Web-basierter Pfadsyntax importiert, die sich in dem RessourceSet Namen widerspiegelt.</value>
+   </data>
+   <data name="ResxExportInfo.Project" xml:space="preserve">
+      <value>Ihr Resx Exportmodus ist &lt;b&gt;Projekt&lt;/ b&gt;, und so werden Ressourcendateien diesem Ordner als separate RESX-Dateien erstellt, eine für jeden ResourceSet.</value>
+   </data>
+   <data name="Folder" xml:space="preserve">
+      <value>Ordner</value>
+   </data>
+   <data name="ImportOrExportResxResources" xml:space="preserve">
+      <value>Resx Ressourcen Importieren oder Exportieren</value>
+   </data>
+   <data name="ResxExportInfo" xml:space="preserve">
+      <value>Der Ressourcen-Export exportiert alle Ressourcen auf den angegebenen Ressource Ordner.</value>
    </data>
    <data name="LocalizationTableNotCreated" xml:space="preserve">
       <value>Lokalisierungs Tabelle konnte nicht erstellt werden.</value>
@@ -155,7 +179,7 @@
       <value>Ressourcen aus Resx dateien importieren or exportieren.</value>
    </data>
    <data name="ImportExportResx" xml:space="preserve">
-      <value>Resx importieren oder exportieren</value>
+      <value>Resx Import Export</value>
    </data>
    <data name="Delete.ResourceSet.Title" xml:space="preserve">
       <value>Alle Ressourcen in diesem ResourceSet löschen.</value>

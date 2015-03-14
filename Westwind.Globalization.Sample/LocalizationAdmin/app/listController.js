@@ -9,31 +9,32 @@
 
    listController.$inject = [ '$scope','$timeout','localizationService'];
 
-   function listController( $scope,$timeout,localizationService) {
-       console.log('list controller');
+    function listController($scope, $timeout, localizationService) {
+        console.log('list controller');
 
-       var vm = this;
-       vm.resources = resources;
-       vm.dbRes = resources.dbRes;
-       vm.listVisible = true;
+        var vm = this;
+        vm.resources = resources;
+        vm.dbRes = resources.dbRes;
+        vm.listVisible = true;
         vm.searchText = null;
         vm.resourceSet = null;
         vm.resourceSets = [];
         vm.resourceList = [];
         vm.resourceId = null;
         vm.activeResource = null;
-        vm.localeIds = [];        
+        vm.localeIds = [];
         vm.resourceItems = [];
         vm.resourceItemIndex = 0;
-       vm.newResourceId = null;
-       vm.editedResource = null,
-           vm.error = {
-               message: null,
-               icon: "info-circle",
-               cssClass: "info"
-           };
+        vm.newResourceId = null;
+        vm.editedResource = null,
+            vm.error = {
+            message: null,
+            icon: "info-circle",
+            cssClass: "info"
 
-       vm.newResource = function() {
+        }
+
+        vm.newResource = function() {
            return {
                "ResourceId": null,
                "Value": null,

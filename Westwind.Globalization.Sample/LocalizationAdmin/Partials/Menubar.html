@@ -21,13 +21,6 @@
             </a>
         </li>
         <li>
-            <a ng-show="view.resourceSets && view.resourceSets.length > 0"
-               ng-click="view.onImportResxResourcesClick()"
-               title="{{view.dbRes('ImportResx_Title')}}">
-                <i class="fa fa-upload"></i> {{view.dbRes('ImportResx')}}
-            </a>
-        </li>
-        <li>
             <a ng-click="view.onCreateClassClick()"
                ng-show="view.resourceSets && view.resourceSets.length > 0"
                title="{{view.resources.CreateClass_Title}}">
@@ -46,7 +39,7 @@
             <a ng-show="!view.resourceSets || view.resourceSets.length < 1"
                ng-click="view.onCreateTableClick()"
                title=" {{view.dbRes('CreateTable_Title')}} ">
-                <i class=" fa fa-plus-square">
+                <i class="fa fa-plus-square">
                 </i> {{view.dbRes('CreateTable')}}
             </a>
 

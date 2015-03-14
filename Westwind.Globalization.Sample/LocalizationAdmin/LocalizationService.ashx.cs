@@ -384,7 +384,6 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
 
             outputBasePath = outputBasePath.Replace("/", "\\").Replace("\\\\", "\\");
 
-
             DbResXConverter exporter = new DbResXConverter(outputBasePath);
 
             if (DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.WebForms)

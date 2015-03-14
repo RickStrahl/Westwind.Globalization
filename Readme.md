@@ -15,7 +15,7 @@ Requirements:
 
 ### Resources:
 * [Westwind.Globalization Home Page](http://west-wind.com/westwind.globalization/)
-* [Nuget Package](https://www.nuget.org/packages/Westwind.Globalization/)
+* [Nuget Package](https://www.nuget.org/packages?q=westwind.globalization)
 * [Getting Started Video](https://www.youtube.com/watch?v=jHg4hlnZNoA)
 * [Original Article for Database Driven Resource Provider](http://www.west-wind.com/presentations/wwdbresourceprovider/)
 * [Wiki Documentation and FAQ](http://west-wind.com/westwind.globalization/docs/)
@@ -127,10 +127,15 @@ The easiest way to use data driven resources with this library is to install the
 package into an ASP.NET application.
 
 ```
+pm> Install-Package Westwind.Globalization.Web
+```
+If you're not using a Web Project you can also use:
+```
 pm> Install-Package Westwind.Globalization
 ```
+which doesn't install the web related components and HTML resources.
 
-This installs the required assemblies, adds a few configuration entries in
+The .Web version installs the required assemblies, adds a few configuration entries in
 web.config and enables the resource provider by default. It also installs
 the localization administration form shown above, so you can create the
 resource table and manage resources in it.

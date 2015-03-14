@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 	ProjectSection(SolutionItems) = preProject
 		ChangeLog.md = ChangeLog.md
 		Readme.md = Readme.md
+		TextFile1.txt = TextFile1.txt
+		TextFile2.txt = TextFile2.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Westwind.Globalization", "Westwind.Globalization\Westwind.Globalization.csproj", "{51DECE39-764C-4C32-A57A-D93A5FD9BD6A}"

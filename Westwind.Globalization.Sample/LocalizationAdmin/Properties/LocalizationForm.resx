@@ -130,9 +130,6 @@
    <data name="Backup.Title" xml:space="preserve">
       <value>Backup resources to a backup table in the database.</value>
    </data>
-   <data name="Another Long Test Message" xml:space="preserve">
-      <value>Another Long Test Message</value>
-   </data>
    <data name="AreYouSureYouWantToDoThis" xml:space="preserve">
       <value>Are you sure you want to do this?</value>
    </data>
@@ -181,22 +178,49 @@
    <data name="ResourceGenerationFailed" xml:space="preserve">
       <value>Resource generation failed.</value>
    </data>
+   <data name="ImportOrExportResxResources" xml:space="preserve">
+      <value>Import or Export Resx Resources</value>
+   </data>
    <data name="ExportResx.Title" xml:space="preserve">
       <value>Import or export resources to and from Resx file(s).</value>
    </data>
+   <data name="ResxExportInfo" xml:space="preserve">
+      <value>The resource export will export all resources to the specified resource folder below.</value>
+   </data>
+   <data name="ResxImportInfo" xml:space="preserve">
+      <value>The resource import will import all .Resx resources from the specified resource folder below recursively.</value>
+   </data>
+   <data name="Folder" xml:space="preserve">
+      <value>Folder</value>
+   </data>
+   <data name="Resources" xml:space="preserve">
+      <value>Resources</value>
+   </data>
+   <data name="ResxExportInfo.Project" xml:space="preserve">
+      <value>Your Resx Export Mode is &lt;b&gt;Project&lt;/b&gt;, so resource files are  created in this folder as seperate .resx files, one per resource set.</value>
+   </data>
+   <data name="ResxExportInfo.WebForms" xml:space="preserve">
+      <value>Your Resx Export Mode is &lt;b&gt;WebForms&lt;/b&gt;, so .Resx resources are created  in the appropriate App_GlobalResource and App_LocalResources. It's highly recommended you export only to the project root folder (~/).</value>
+   </data>
+   <data name="ResxImportInfo.Project" xml:space="preserve">
+      <value>Your Resx Export Mode is &lt;b&gt;Project&lt;/b&gt;, so resource files are imported hierarically with paths prefixed using web based path syntax that is reflected in the resource set name.</value>
+   </data>
+   <data name="ResxImportInfo.WebForms" xml:space="preserve">
+      <value>Your Resx Export Mode is &lt;b&gt;WebForms&lt;/b&gt;, so .Resx resources are imported from the appropriate App_GlobalResources and App_LocalResources folders. Loose .Resx files are also imported. Global resources are mapped without a path, local resources contain the relative path and local resource control page/control they map.</value>
+   </data>
    <data name="CreateTable.Title" xml:space="preserve">
       <value>Create the Localization table as defined in the configuration file.</value>
-   </data>
-   <data name="LocalizationTableNotCreated" xml:space="preserve">
-      <value>Localization table has not been created.</value>
-   </data>
-   <data name="StronglyTypedGlobalResourcesFailed" xml:space="preserve">
-      <value>Failed to create strongly typed resources.</value>
    </data>
    <data name="LocaleIdsFailedToLoad" xml:space="preserve">
       <value>Locale Ids failed to load.</value>
    </data>
    <data name="ResourceUpdateFailed" xml:space="preserve">
       <value>Resource update failed.</value>
+   </data>
+   <data name="LocalizationTableNotCreated" xml:space="preserve">
+      <value>Localization table has not been created.</value>
+   </data>
+   <data name="StronglyTypedGlobalResourcesFailed" xml:space="preserve">
+      <value>Failed to create strongly typed resources.</value>
    </data>
 </root>

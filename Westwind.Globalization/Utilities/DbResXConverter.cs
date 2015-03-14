@@ -1,11 +1,16 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Resources;
 using System.Text;
+using System.Threading;
 using System.Web;
 using System.Xml;
+using Westwind.Utilities;
 
 namespace Westwind.Globalization
 {
@@ -829,6 +834,52 @@ namespace Westwind.Globalization
         }
         
         return resxDict;
+    }
+
+    public Dictionary<string, object> GetCompiledResourcesNormalizedForLocale(string resourceSet, string baseNamespace, string localeId)
+    {
+        if (string.IsNullOrEmpty(baseNamespace))
+            baseNamespace = DbResourceConfiguration.Current.ResourceBaseNamespace;
+
+        var resourceSetName = baseNamespace + "." + resourceSet.Replace("/", ".").Replace("\\", ".");
+        var type = ReflectionUtils.GetTypeFromName(resourceSetName);
+        if (type == null)
+            return null;
+
+        var resMan = new ResourceManager(resourceSetName, type.Assembly);
+        if (resMan == null)
+            return null;
+
+        return GetCompiledResourcesNormalizedForLocale(resMan, localeId);
+    }
+
+    public Dictionary<string, object> GetCompiledResourcesNormalizedForLocale(ResourceManager resourceManager, string localeId)
+    {        
+        var resDict = new Dictionary<string, object>();
+
+        var culture = Thread.CurrentThread.CurrentUICulture;
+        if (culture.IetfLanguageTag != localeId)
+            culture = CultureInfo.GetCultureInfoByIetfLanguageTag(localeId);
+
+        try
+        {
+            IDictionaryEnumerator enumerator;
+            using (var resSet = resourceManager.GetResourceSet(culture, true, true))
+            {
+                enumerator = resSet.GetEnumerator();
+                while (enumerator.MoveNext())
+                {
+                    var resItem = (DictionaryEntry)enumerator.Current;
+                    resDict.Add((string)resItem.Key, resItem.Value);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+
+        return resDict;
     }
 
 

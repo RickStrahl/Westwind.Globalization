@@ -21,17 +21,18 @@
                 vm.importResources();
         };
 
-        vm.exportResources = function () {
-            console.log('exportresources');
+        vm.exportResources = function() {
             localizationService.exportResxResources(vm.info.ResxBaseFolder)
-                .success(function () {
-                    console.log('done');
-                    $("#ImportExportResxDialog").modal('hide')
+                .success(function() {
+                    $("#ImportExportResxDialog").modal('hide');
                 });
         };
 
-        vm.importResources = function () {
-
+        vm.importResources = function() {
+            localizationService.importResxResources(vm.info.ResxBaseFolder)
+                .success(function() {
+                    $("#ImportExportResxDialog").modal('hide');
+                });
         };
 
         initialize();
