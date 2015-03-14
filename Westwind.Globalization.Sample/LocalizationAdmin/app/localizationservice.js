@@ -159,12 +159,14 @@
             return $http.get("localizationService.ashx?method=CreateClass")
                     .error(parseHttpError);
         }
-        function exportResxResources() {
-            return $http.get("localizationService.ashx?method=ExportResxResources")
+        function exportResxResources(path) {
+            path = path || "";
+            return $http.get("localizationService.ashx?method=ExportResxResources&outputBasePath=" + encodeURIComponent(path))
                     .error(parseHttpError);
         }
-        function importResxResources() {
-            return $http.get("localizationService.ashx?method=ImportResxResources")
+        function importResxResources(path) {
+            path = path || "";
+            return $http.get("localizationService.ashx?method=ImportResxResources&outputBasePath=" + encodeURIComponent(path))
                     .error(parseHttpError);
         }
         function getLocalizationInfo() {

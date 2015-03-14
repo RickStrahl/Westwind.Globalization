@@ -130,7 +130,7 @@ namespace Westwind.Globalization
             get { return _resxBaseFolder; }
             set { _resxBaseFolder = value; }
         }
-        private string _resxBaseFolder = "~/";
+        private string _resxBaseFolder = "~/Properties/";
 
         /// <summary>
         /// Determines whether any resources that are not found are automatically

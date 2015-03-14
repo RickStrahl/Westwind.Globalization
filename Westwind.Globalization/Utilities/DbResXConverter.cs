@@ -462,23 +462,22 @@ namespace Westwind.Globalization
         /// <returns></returns>
         public string FormatResourceSetPath(string resourceSet)
         {
-            if (DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.Project)
-            {
-                var path = DbResourceConfiguration.Current.ResxBaseFolder;
-                if (path.StartsWith("~"))
-                    path = path.Replace("~", BasePhysicalPath).Replace(@"\/","\\").Replace("/","\\");
+            string path;
 
-                resourceSet = resourceSet.Replace("/", "\\"); 
-                resourceSet = Path.Combine(path, resourceSet);
-                
+            if (string.IsNullOrEmpty(BasePhysicalPath) &&
+                DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.Project)
+            {
+                path = DbResourceConfiguration.Current.ResxBaseFolder;
+                if (path.StartsWith("~"))
+                    path = path.Replace("~", BasePhysicalPath).Replace(@"\/", "\\").Replace("/", "\\");
             }
             else
-            {
-                // Make sure our slashes are right
-                resourceSet = BasePhysicalPath + resourceSet;
-                resourceSet = resourceSet.Replace("/", "\\");
-            }
+                path = BasePhysicalPath;
 
+            resourceSet = resourceSet.Replace("/", "\\"); 
+            resourceSet = Path.Combine(path, resourceSet);
+                
+            
             if (IsLocalResourceSet(resourceSet) && !resourceSet.Contains("App_LocalResources"))
             {
                 string pathOnly = Path.GetDirectoryName(resourceSet);

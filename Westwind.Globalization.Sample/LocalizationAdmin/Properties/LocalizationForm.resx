@@ -100,11 +100,11 @@
    <data name="Rename" xml:space="preserve">
       <value>Rename</value>
    </data>
-   <data name="ExportResx" xml:space="preserve">
-      <value>Export Resx</value>
+   <data name="ImportExportResx" xml:space="preserve">
+      <value>Import or Export Resx</value>
    </data>
-   <data name="ExportResx.Title" xml:space="preserve">
-      <value>Export resources to Resx file(s).</value>
+   <data name="ImportExportResx.Title" xml:space="preserve">
+      <value>Import or export resources to and from Resx file(s).</value>
    </data>
    <data name="ImportResx" xml:space="preserve">
       <value>Import Resx</value>
@@ -180,6 +180,9 @@
    </data>
    <data name="ResourceGenerationFailed" xml:space="preserve">
       <value>Resource generation failed.</value>
+   </data>
+   <data name="ExportResx.Title" xml:space="preserve">
+      <value>Import or export resources to and from Resx file(s).</value>
    </data>
    <data name="CreateTable.Title" xml:space="preserve">
       <value>Create the Localization table as defined in the configuration file.</value>

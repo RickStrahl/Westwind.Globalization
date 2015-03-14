@@ -159,6 +159,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="LocalizationAdmin\app\importExportResxController.js" />
     <Content Include="LocalizationAdmin\app\resourceProviderController.js" />
     <Content Include="LocalizationAdmin\bower_components\angular-sanitize\angular-sanitize.js" />
     <Content Include="LocalizationAdmin\bower_components\angular-sanitize\angular-sanitize.min.js" />
@@ -181,6 +182,7 @@
     <Content Include="LocalizationAdmin\bower_components\fontawesome\fonts\fontawesome-webfont.svg" />
     <Content Include="LocalizationAdmin\Partials\Menubar.html" />
     <Content Include="LocalizationAdmin\index.html" />
+    <Content Include="LocalizationAdmin\Partials\ImportExportResxDialog.html" />
     <Content Include="LocalizationAdmin\Partials\ResourceProviderInfoDialog.html" />
     <Content Include="LocalizationAdmin\Partials\RenameResourceDialog.html" />
     <Content Include="LocalizationAdmin\Partials\ResourceSetList.html" />
@@ -314,15 +316,6 @@
       <Project>{51dece39-764c-4c32-a57a-d93a5fd9bd6a}</Project>
       <Name>Westwind.Globalization</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="LocalizationAdmin\Properties\LocalizationForm.de.resx" />
-    <EmbeddedResource Include="LocalizationAdmin\Properties\LocalizationForm.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LocalizationAdmin\Properties\Resources.de.resx" />
-    <EmbeddedResource Include="LocalizationAdmin\Properties\Resources.fr.resx" />
-    <EmbeddedResource Include="LocalizationAdmin\Properties\Resources.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

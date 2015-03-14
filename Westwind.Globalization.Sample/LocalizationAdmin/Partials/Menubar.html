@@ -14,9 +14,10 @@
     <ul id="MenuButtons" class="nav navbar-nav pull-right navbar">
         <li>
             <a ng-show="view.resourceSets && view.resourceSets.length > 0"
-               ng-click="view.onExportResxResourcesClick()"
+               xng-click="view.onExportResxResourcesClick()"
+               data-toggle="modal" data-target="#ImportExportResxDialog"
                title="{{view.dbRes('ExportResx_Title')}}">
-                <i class="fa fa-download"></i> {{view.dbRes('ExportResx')}}
+                <i class="fa fa-download"></i> {{view.dbRes('ImportExportResx')}}
             </a>
         </li>
         <li>

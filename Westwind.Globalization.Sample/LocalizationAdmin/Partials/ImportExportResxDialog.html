@@ -1,0 +1,94 @@
+﻿<div id="ImportExportResxDialog"
+     class="modal fade"
+     tabindex="-1" role="dialog"
+     aria-labelledby="myModal-label"
+     aria-hidden="true"
+     ng-controller="importExportResxController as view"
+     >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form name="renameResourceForm" id="renameResourceForm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 class="modal-title" id="TranslateTitle">Import or Export Resx Resources</h3>
+                </div>
+                <div class="modal-body">
+
+                    <div class="alert alert-info"
+                         ng-show="view.importExportType=='Export'">
+                        <i class="fa fa-info-circle fa-2x pull-left;"></i>
+                        <div style="margin-left: 40px; margin-top: -30px;">
+                            <p>
+                                The resource export will export all resources to the specified resource
+                                folder below.
+                            </p>
+                            <p ng-show="view.info.ResxExportProjectType=='Project'">
+                                Your Resx Export Mode is <b>Project</b>, so resource files are
+                                created in this folder as seperate .resx files, one per resource set.
+                            </p>
+                            <p ng-show="view.info.ResxExportProjectType=='WebForms'">
+                                Your Resx Export Mode is <b>WebForms</b>, so .Resx resources are created
+                                in the appropriate App_GlobalResource and App_LocalResources. It's highly
+                                recommended you export only to the project root folder (~/).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info"
+                         ng-show="view.importExportType=='Import'">
+                        <i class="fa fa-info-circle fa-2x pull-left;"></i>
+                        <div style="margin-left: 40px; margin-top: -30px;">
+                            <p>
+                                The resource import will import all .Resx resources from the
+                                specified resource folder below recursively.
+                            </p>
+                            <p ng-show="view.info.ResxExportProjectType=='Project'">
+                                Your Resx Export Mode is <b>Project</b>, so resource files
+                                are imported hierarically with paths prefixed using
+                                web based path syntax that is reflected in the resource
+                                set name.
+                            </p>
+                            <p ng-show="view.info.ResxExportProjectType=='WebForms'">
+                                Your Resx Export Mode is <b>WebForms</b>, so .Resx resources are
+                                imported from the appropriate App_GlobalResources and App_LocalResources
+                                folders. Loose .Resx files are also imported. Global resources are mapped
+                                without a path, local resources contain the relative path and local resource
+                                control page/control they map.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <select id="typeImportExport" class="form-control"
+                                ng-model="view.importExportType" style="font-weight: bold;">
+                            <option value="Export">Export Resources</option>
+                            <option value="Import">Import Resource</option>
+                        </select>
+                    </div>
+
+                    <p ng-show="view.importExportType=='Import'">
+                        Import Text
+                    </p>
+
+
+                    <div class="form-group ">
+                        <label>Resx {{view.importExportType}} Folder:</label>
+                        <input ng-model="view.info.ResxBaseFolder" class="form-control" />
+                    </div>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-remove"></i> Cancel</button>
+                    <button type="submit"
+                            ng-click="view.onSubmitClick()"
+                            class="btn btn-primary">
+                        <i class="fa fa-check"></i> {{ view.importExportType }} Resources
+                    </button>
+
+                </div>
+            </form>   
+        </div>
+    </div>
+</div>

@@ -378,7 +378,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
 #endif
             if (string.IsNullOrEmpty(outputBasePath))
-                outputBasePath = Context.Server.MapPath("~/");
+                outputBasePath = DbResourceConfiguration.Current.ResxBaseFolder;
             else if(outputBasePath.StartsWith("~"))
                 outputBasePath = Context.Server.MapPath(outputBasePath);
 
@@ -452,11 +452,14 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
 
             return new
             {
-                ProviderUsed = providerFactory,
-                Connection = config.ConnectionString,
-                ResourceTableName = config.ResourceTableName,
+                ProviderFactory = providerFactory,
+                config.ConnectionString,
+                config.ResourceTableName,
                 DbResourceProviderType = config.DbResourceDataManagerType.Name,
-                ResxExportMode = config.ResxExportProjectType
+                config.ResxExportProjectType,
+                config.ResxBaseFolder,
+                config.ResourceBaseNamespace,
+                config.StronglyTypedGlobalResource
             };
         }
 
@@ -484,7 +487,6 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
                 TextFile = item.TextFile;
                 BinFile = item.BinFile;
                 Comment = item.Comment;
-
             }
 
             public List<ResourceString> ResourceList { get; set; }
