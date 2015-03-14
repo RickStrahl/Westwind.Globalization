@@ -17,16 +17,19 @@
                     <div class="alert alert-info"
                          ng-show="view.importExportType=='Export'">
                         <i class="fa fa-info-circle fa-2x pull-left;"></i>
-                        <div style="margin-left: 40px; margin-top: -30px;">
-                            <p>
+                        <div style="margin-left: 40px; margin-top: -30px;">                            
+                            <p ng-bind="view.resources.ResxExportInfo">
                                 The resource export will export all resources to the specified resource
                                 folder below.
                             </p>
-                            <p ng-show="view.info.ResxExportProjectType=='Project'">
+                            <p ng-show="view.info.ResxExportProjectType=='Project'"
+                               ng-bind-html="view.resources.ResxExportInfo_Project">
                                 Your Resx Export Mode is <b>Project</b>, so resource files are
                                 created in this folder as seperate .resx files, one per resource set.
                             </p>
-                            <p ng-show="view.info.ResxExportProjectType=='WebForms'">
+                            <p ng-show="view.info.ResxExportProjectType=='WebForms'"
+                               ng-bind-html="view.resources.ResxExportInfo_WebForms">
+                                >
                                 Your Resx Export Mode is <b>WebForms</b>, so .Resx resources are created
                                 in the appropriate App_GlobalResource and App_LocalResources. It's highly
                                 recommended you export only to the project root folder (~/).

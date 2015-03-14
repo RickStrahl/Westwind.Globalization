@@ -8,9 +8,11 @@
 
     function importExportResxController(localizationService) {        
         var vm = this;
-        vm.info = null;        
-        vm.importExportType = "Export";
+        vm.resources = resources;
+        vm.dbRes = resources.dbRes;
         
+        vm.info = null;        
+        vm.importExportType = "Export";        
         vm.onSubmitClick = function () {
             
             if (vm.importExportType === "Export")
