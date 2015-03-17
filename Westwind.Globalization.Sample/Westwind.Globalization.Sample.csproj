@@ -140,7 +140,7 @@
     <Compile Include="LocalizationAdmin\LocalizationService.ashx.cs">
       <DependentUpon>LocalizationService.ashx</DependentUpon>
     </Compile>
-    <Compile Include="LocalizationAdmin\Properties\Resources.cs" />
+    <Compile Include="Properties\Resources.cs" />
     <Compile Include="Views\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -150,15 +150,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\localizations.sdf" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Images\Westwind.Localization.png" />
-    <Content Include="Content\Images\Westwind.Localization_128.png" />
-    <Content Include="Content\Images\Westwind.Localization_50.png" />
+    <Content Include="images\Westwind.Localization.png" />
+    <Content Include="images\Westwind.Localization_128.png" />
+    <Content Include="images\Westwind.Localization_50.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="LocalizationAdmin\app\createClassController.js" />
     <Content Include="LocalizationAdmin\app\importExportResxController.js" />
     <Content Include="LocalizationAdmin\app\resourceProviderController.js" />
@@ -208,7 +205,6 @@
     <Content Include="LocalizationAdmin\images\Westwind.Localization_128.png" />
     <Content Include="LocalizationAdmin\Partials\AddResourceDialog.html" />
     <Content Include="LocalizationAdmin\Partials\TranslateDialog.html" />
-    <Content Include="LocalizationAdmin\Properties\_Readme_LocalizationResources.txt" />
     <Content Include="LocalizationAdmin\scripts\ww.angular.js" />
     <Content Include="LocalizationAdmin\scripts\ww.jquery.js" />
     <Content Include="LocalizationAdmin\bower_components\bootstrap\.bower.json" />
@@ -287,10 +283,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\ModelAttributesFromResources.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\Controllers\" />
-    <Folder Include="images\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -320,13 +313,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="LocalizationAdmin\Properties\LocalizationForm.de.resx">
-      <DependentUpon>LocalizationForm.resx</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LocalizationAdmin\Properties\LocalizationForm.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>LocalizationForm.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\LocalizationForm.de.resx" />
+    <EmbeddedResource Include="Properties\LocalizationForm.resx" />
+    <EmbeddedResource Include="Properties\Resources.de.resx" />
+    <EmbeddedResource Include="Properties\Resources.fr.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -61,11 +61,26 @@
    <data name="InvalidResourceId" xml:space="preserve">
       <value>Ungültige Ressourcen-ID.</value>
    </data>
-   <data name="ResourceGenerationFailed" xml:space="preserve">
-      <value>Ressourcengenerierung fehlgeschlagen.</value>
+   <data name="ResxResourcesHaveBeenImported" xml:space="preserve">
+      <value>Resx Ressourcen wurden importiert.</value>
+   </data>
+   <data name="ResxImportInfo.WebForms" xml:space="preserve">
+      <value>Ihr Resx Exportmodus ist &lt;b&gt; WebForms &lt;/ b&gt;, also werden RESX-Ressourcen aus den entsprechenden App_GlobalResources und App_LocalResources Ordner importiert.</value>
    </data>
    <data name="CreateTable" xml:space="preserve">
       <value>Tabelle erstellen</value>
+   </data>
+   <data name="ResourceGenerationFailed" xml:space="preserve">
+      <value>Ressourcengenerierung fehlgeschlagen.</value>
+   </data>
+   <data name="ResxImportInfo" xml:space="preserve">
+      <value>Der Ressourcen-Import wird alle Resx Ressourcen aus dem angegebenen Ressourcen Ordner rekursiv importieren.</value>
+   </data>
+   <data name="Resources" xml:space="preserve">
+      <value>Ressourcen</value>
+   </data>
+   <data name="CreateStronglyTypedClasses" xml:space="preserve">
+      <value>Erstellung von Stark typisierten Klassen</value>
    </data>
    <data name="CreateTable.Title" xml:space="preserve">
       <value>Neue Tabelle erstellen, wie definiert in der Konfigurationsdatei.</value>
@@ -75,6 +90,27 @@
    </data>
    <data name="ResourceSetLoadingFailed" xml:space="preserve">
       <value>ResourceSet konnte nicht geladen werden.</value>
+   </data>
+   <data name="ResxImportInfo.Project" xml:space="preserve">
+      <value>Ihr Resx Exportmodus ist &lt;b&gt;Projekt&lt;/ b&gt;, also werden ihre Ressourcendateien recursiv mit Pfaden und Web-basierter Pfadsyntax importiert, die sich in dem RessourceSet Namen widerspiegelt.</value>
+   </data>
+   <data name="ResxExportInfo.Project" xml:space="preserve">
+      <value>Ihr Resx Exportmodus ist &lt;b&gt;Projekt&lt;/ b&gt;, und so werden Ressourcendateien diesem Ordner als separate RESX-Dateien erstellt, eine für jeden ResourceSet.</value>
+   </data>
+   <data name="Filename" xml:space="preserve">
+      <value>Datei</value>
+   </data>
+   <data name="ResxResourcesHaveBeenCreated" xml:space="preserve">
+      <value>Resx Ressourcen sind in Ihrem Web-Projekt erstellt worden.</value>
+   </data>
+   <data name="Folder" xml:space="preserve">
+      <value>Ordner</value>
+   </data>
+   <data name="ImportOrExportResxResources" xml:space="preserve">
+      <value>Resx Ressourcen Importieren oder Exportieren</value>
+   </data>
+   <data name="ResxExportInfo" xml:space="preserve">
+      <value>Der Ressourcen-Export exportiert alle Ressourcen auf den angegebenen Ressource Ordner.</value>
    </data>
    <data name="LocalizationTableNotCreated" xml:space="preserve">
       <value>Lokalisierungs Tabelle konnte nicht erstellt werden.</value>
@@ -92,7 +128,7 @@
       <value>Locale-IDs konnten nicht geladen werden.</value>
    </data>
    <data name="StronglyTypedClassCreated" xml:space="preserve">
-      <value>Stark typisierte Klasse wurde erstellt. Sie müssen in Ihrer Anwendung  zusätzliche Ressourcen neu kompilieren.</value>
+      <value>Stark typisierte Klassen wurden erstellt. Sie müssen in Ihrer Anwendung  zusätzliche Ressourcen neu kompilieren.</value>
    </data>
    <data name="NoProviderConfigured" xml:space="preserve">
       <value>Kein Provider konfiguriert (Resx)</value>
@@ -140,10 +176,10 @@
       <value>Ressourcen neu laden</value>
    </data>
    <data name="CreateClass.Title" xml:space="preserve">
-      <value>Klasse von stark typisierten Ressourcen erstellen.</value>
+      <value>Erstellt stark typisierte Klassen von  Datenbank Ressourcen.</value>
    </data>
    <data name="CreateClass" xml:space="preserve">
-      <value>Klasse erstellen</value>
+      <value>Klassen erstellen</value>
    </data>
    <data name="ImportResx.Title" xml:space="preserve">
       <value>Ressourcen aus Resx-Dateien importieren.</value>
@@ -151,11 +187,11 @@
    <data name="ImportResx" xml:space="preserve">
       <value>Resx Importieren</value>
    </data>
-   <data name="ExportResx.Title" xml:space="preserve">
-      <value>Export Ressourcen zu Resx Dateien.</value>
+   <data name="ImportExportResx.Title" xml:space="preserve">
+      <value>Ressourcen aus Resx dateien importieren or exportieren.</value>
    </data>
-   <data name="ExportResx" xml:space="preserve">
-      <value>Resx exportieren</value>
+   <data name="ImportExportResx" xml:space="preserve">
+      <value>Resx Import Export</value>
    </data>
    <data name="Delete.ResourceSet.Title" xml:space="preserve">
       <value>Alle Ressourcen in diesem ResourceSet löschen.</value>

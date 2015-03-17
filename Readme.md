@@ -156,13 +156,13 @@ resources:
   <DbResourceConfiguration>
     <add key="ConnectionString" value="server=.;database=Localizations;integrated security=true;" />
     <add key="ResourceTableName" value="Localizations" />
-    <add key="AddMissingResources" value="True" />
+    <add key="AddMissingResources" value="False" />
 
     <!-- Resource Imports and Exports -->
     <add key="ResxExportProjectType" value="Project" />
-    <add key="StronglyTypedGlobalResource" value="~/App_Code/Resources.cs" />
-    <add key="ResourceBaseNamespace" value="AppResources" />    
-    <add key="ResxBaseFolder" value="~/" />
+    <add key="StronglyTypedGlobalResource" value="~/Properties/Resources.cs" />
+    <add key="ResourceBaseNamespace" value="WebApplication1.Properties" />    
+    <add key="ResxBaseFolder" value="~/Properties" />
 
     <!-- WebForms specific only -->
     <add key="LocalizationFormWebPath" value="~/LocalizationAdmin/" />

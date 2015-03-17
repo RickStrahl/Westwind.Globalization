@@ -3,7 +3,7 @@ using System.Web;
 using System.Resources;
 using Westwind.Globalization;
 
-namespace Westwind.Globalization.Sample.LocalizationAdmin.Properties
+namespace Westwind.Globalization.Sample.Properties
 {
     public class GeneratedResourceSettings
     {
@@ -11,7 +11,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdmin.Properties
         public static ResourceAccessMode ResourceAccessMode = ResourceAccessMode.AspNetResourceProvider;
     }
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Westwind.Globalization.StronglyTypedResources", "2.0")]
+  [System.CodeDom.Compiler.GeneratedCodeAttribute("Westwind.Globalization.StronglyTypedResources", "2.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class LocalizationForm
@@ -22,7 +22,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdmin.Properties
             {
                 if (object.ReferenceEquals(resourceMan, null))
                 {
-                    var temp = new ResourceManager("Westwind.Globalization.Sample.LocalizationAdmin.Properties.LocalizationForm", typeof(LocalizationForm).Assembly);
+                    var temp = new ResourceManager("Westwind.Globalization.Sample.Properties.LocalizationForm", typeof(LocalizationForm).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -66,6 +66,19 @@ namespace Westwind.Globalization.Sample.LocalizationAdmin.Properties
 					return ResourceManager.GetString("ResourceProviderInfo");
 
 				return DbRes.T("ResourceProviderInfo","LocalizationForm");
+			}
+		}
+
+		public static System.String ResxResourcesHaveBeenImported
+		{
+			get
+			{
+				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
+					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","ResxResourcesHaveBeenImported");
+				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.Resx)
+					return ResourceManager.GetString("ResxResourcesHaveBeenImported");
+
+				return DbRes.T("ResxResourcesHaveBeenImported","LocalizationForm");
 			}
 		}
 
@@ -812,7 +825,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdmin.Properties
 
 	}
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Westwind.Globalization.StronglyTypedResources", "2.0")]
+  [System.CodeDom.Compiler.GeneratedCodeAttribute("Westwind.Globalization.StronglyTypedResources", "2.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources
@@ -823,7 +836,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdmin.Properties
             {
                 if (object.ReferenceEquals(resourceMan, null))
                 {
-                    var temp = new ResourceManager("Westwind.Globalization.Sample.LocalizationAdmin.Properties.Resources", typeof(Resources).Assembly);
+                    var temp = new ResourceManager("Westwind.Globalization.Sample.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

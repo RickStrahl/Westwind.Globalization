@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using Westwind.Globalization.Sample.LocalizationAdmin.Properties;
+using Westwind.Globalization.Sample.Properties;
 using Westwind.Globalization.Web;
 
 
