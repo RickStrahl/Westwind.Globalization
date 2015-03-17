@@ -1025,7 +1025,51 @@
             This value *always* returns a string unless you pass in null.
             </returns>
         </member>
-        <member name="M:Westwind.Globalization.DbRes.TO(System.String,System.String,System.String,System.Boolean)">
+        <member name="M:Westwind.Globalization.DbRes.THtml(System.String,System.String,System.String)">
+            <summary>
+            Localization helper function that Translates a resource
+            Id to a resource value to an HtmlStringg. Easy access that allows full
+            control over the resource to retrieve or default UiCulture
+            locale retrieval.
+            
+            Use this version for HTML content that needs to be embedded in Razor
+            views or other server tools that can use pre-encoded HTML content.
+            </summary>
+            <param name="resId">The Resource Id to retrieve
+            Note resource Ids can be *any* string and if no
+            matching resource is found the id is returned.
+            </param>
+            <param name="resourceSet">Name of the ResourceSet that houses this resource. If null or empty resources are used.</param>
+            <param name="lang">5 letter or 2 letter language ieetf code: en-US, de-DE or en, de etc.</param>
+            <returns>
+            Localized resource or the resource Id if no match is found. 
+            This value *always* returns a string unless you pass in null.
+            </returns>
+        </member>
+        <member name="M:Westwind.Globalization.DbRes.TFormat(System.String,System.String,System.String,System.Object[])">
+            <summary>
+            Creates a localized format string that is transformed using the 
+            specified resource id.
+            </summary>
+            <param name="format">Format string that is to be localized</param>
+            <param name="resId">Resource id to localize from</param>
+            <param name="resourceSet">Resource set to localize from</param>        
+            <param name="args">Any arguments for the format string</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.DbRes.TFormat(System.String,System.String,System.String,System.String,System.Object[])">
+            <summary>
+            Creates a localized format string that is transformed using the 
+            specified resource id.
+            </summary>
+            <param name="format">Format string that is to be localized</param>
+            <param name="resId">Resource id to localize from</param>
+            <param name="resourceSet">Resource set to localize from</param>
+            <param name="lang">Language code</param>
+            <param name="args">Any arguments for the format string</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.DbRes.TObject(System.String,System.String,System.String,System.Boolean)">
             <summary>
             Localization helper function that Translates a resource
             Id to a resource value object. Use this function if you're
@@ -1204,6 +1248,33 @@
             <summary>
             Interface method used to force providers to register themselves
             with DbResourceConfiguration.
+            </summary>
+        </member>
+        <member name="T:Westwind.Globalization.JavaScriptResources">
+            <summary>
+            Class that handles generating strongly typed resources 
+            for global Web resource files. This feature is not supported
+            in ASP.NET stock projects and doesn't support custom resource
+            providers in WAP.
+            </summary>
+        </member>
+        <member name="M:Westwind.Globalization.JavaScriptResources.SerializeResourceDictionary(System.Collections.Generic.Dictionary{System.String,System.Object},System.String,System.String)">
+            <summary>
+            Generates the actual JavaScript object map string makes up the
+            handler's result content.
+            </summary>
+            <param name="resxDict"></param>
+            <param name="resourceSetName"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Westwind.Globalization.JavaScriptResources.OutputPath">
+            <summary>
+            The physical path for the Web application
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.JavaScriptResources.ErrorMessage">
+            <summary>
+            An error message set on a failure result
             </summary>
         </member>
         <member name="T:Westwind.Globalization.StronglyTypedResources">
@@ -1544,6 +1615,15 @@
             <param name="baseFile">The base Resource file without .resx and locale extensions</param>
             <param name="LocaleId"></param>
             <returns>Dictionary of resource keys and values</returns>
+        </member>
+        <member name="M:Westwind.Globalization.DbResXConverter.GetCompiledResourcesNormalizedForLocale(System.String,System.String,System.String)">
+            <summary>
+            Returns resources for a given resource set in a specific locale        
+            </summary>
+            <param name="resourceSet"></param>
+            <param name="baseNamespace"></param>
+            <param name="localeId"></param>
+            <returns></returns>
         </member>
         <member name="P:Westwind.Globalization.DbResXConverter.BasePhysicalPath">
             <summary>

@@ -8,7 +8,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Westwind.Globalization.Sample.LocalizationAdmin.Properties;
+using Westwind.Globalization.Sample.Properties;
 using Westwind.Utilities;
 using Westwind.Web;
 
@@ -23,10 +23,8 @@ namespace Westwind.Globalization.Sample
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            // Set Strongly Typed Resource Mode to direct resource manager access rather than WebForms mode
-            //Westwind.Globalization.Sample.LocalizationAdmin.Properties.
-            GeneratedResourceSettings.ResourceAccessMode = ResourceAccessMode.DbResourceManager;
 
+            
             // Specify where config information comes from (config file is default - can be separate Json/Xml)
             //DbResourceConfiguration.ConfigurationMode = ConfigurationModes.ConfigFile;
             
@@ -41,17 +39,21 @@ namespace Westwind.Globalization.Sample
             //DbResourceConfiguration.Current.ConnectionString = "MySqlLocalizations";
             //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceMySqlDataManager);
 
-            DbResourceConfiguration.Current.ConnectionString = "SqLiteLocalizations";
-            DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);
+            //DbResourceConfiguration.Current.ConnectionString = "SqLiteLocalizations";
+            //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);
 
             // for all other providers explicitly override the DbResourceDataManagerType
             //DbResourceConfiguration.Current.ConnectionString = "SqlServerCeLocalizations";
-            //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerCeDataManager);
+            //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerCeDataManager);            
+
+            // force ResourceMode explicitly. Default is AspNetResourceProvider
+            //GeneratedResourceSettings.ResourceAccessMode = ResourceAccessMode.DbResourceManager;
+            //GeneratedResourceSettings.ResourceAccessMode = ResourceAccessMode.Resx;
         }
 
         protected void Application_BeginRequest()
         {
-            WebUtils.SetUserLocale(currencySymbol: "$");
+            WebUtils.SetUserLocale(currencySymbol: "$"); //,allowedLocales: "en,de,fr");
             Trace.WriteLine("App_BeginRequest - Culture: " + Thread.CurrentThread.CurrentCulture.IetfLanguageTag);
         }
   

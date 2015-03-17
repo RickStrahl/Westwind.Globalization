@@ -53,7 +53,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
 
         [CallbackMethod]
         public IEnumerable<string> GetResourceSets()
-        {
+        {            
             return Manager.GetAllResourceSets(ResourceListingTypes.AllResources);
         }
 
@@ -244,7 +244,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
 
 
             if (!Manager.RenameResource(resourceId, newResourceId, resourceSet))
-                throw new ApplicationException(WebUtils.GRes("localizationadmin/LocalizationAdmin.aspx",
+                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET,
                     "InvalidResourceId"));
 
             return true;
@@ -263,7 +263,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         public bool RenameResourceProperty(string Property, string NewProperty, string ResourceSet)
         {
             if (!Manager.RenameResourceProperty(Property, NewProperty, ResourceSet))
-                throw new ApplicationException(WebUtils.GRes("InvalidResourceId"));
+                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET,"InvalidResourceId"));
 
             return true;
         }
@@ -354,17 +354,24 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         }
 
         [CallbackMethod]
-        public bool CreateClass()
+        public bool CreateClass(string filename = null, string nameSpace = null)
         {
+        #if OnlineDemo
+            throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
+        #endif
             var config = DbResourceConfiguration.Current;
 
             StronglyTypedResources strongTypes =
                 new StronglyTypedResources(Context.Request.PhysicalApplicationPath);
 
-            strongTypes.CreateClassFromAllDatabaseResources(config.ResourceBaseNamespace,
-                HttpContext.Current.Server.MapPath(config.StronglyTypedGlobalResource));
+            if (string.IsNullOrEmpty(filename))
+                filename = HttpContext.Current.Server.MapPath(config.StronglyTypedGlobalResource);
 
+            if (string.IsNullOrEmpty(nameSpace))
+                nameSpace = config.ResourceBaseNamespace;
 
+            strongTypes.CreateClassFromAllDatabaseResources(nameSpace, filename);
+            
             if (!string.IsNullOrEmpty(strongTypes.ErrorMessage))
                 throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "StronglyTypedGlobalResourcesFailed"));
 
@@ -378,12 +385,11 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
 #endif
             if (string.IsNullOrEmpty(outputBasePath))
-                outputBasePath = Context.Server.MapPath("~/");
+                outputBasePath = DbResourceConfiguration.Current.ResxBaseFolder;
             else if(outputBasePath.StartsWith("~"))
                 outputBasePath = Context.Server.MapPath(outputBasePath);
 
             outputBasePath = outputBasePath.Replace("/", "\\").Replace("\\\\", "\\");
-
 
             DbResXConverter exporter = new DbResXConverter(outputBasePath);
 
@@ -452,11 +458,14 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
 
             return new
             {
-                ProviderUsed = providerFactory,
-                Connection = config.ConnectionString,
-                ResourceTableName = config.ResourceTableName,
+                ProviderFactory = providerFactory,
+                config.ConnectionString,
+                config.ResourceTableName,
                 DbResourceProviderType = config.DbResourceDataManagerType.Name,
-                ResxExportMode = config.ResxExportProjectType
+                config.ResxExportProjectType,
+                config.ResxBaseFolder,
+                config.ResourceBaseNamespace,
+                config.StronglyTypedGlobalResource
             };
         }
 
@@ -469,8 +478,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         public class ResourceItemEx : ResourceItem
         {
             public ResourceItemEx()
-            {
-
+            {                
             }
 
             public ResourceItemEx(ResourceItem item)
@@ -484,10 +492,10 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
                 TextFile = item.TextFile;
                 BinFile = item.BinFile;
                 Comment = item.Comment;
-
             }
 
             public List<ResourceString> ResourceList { get; set; }
         }
     }
 }
+

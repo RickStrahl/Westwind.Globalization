@@ -35,10 +35,6 @@
             margin-top: 10px;
             margin-bottom: 0;
         }
-
-        hr {
-            margin: 10px 0 -10px;
-        }
     </style>
     <script src="LocalizationAdmin/bower_components/jquery/dist/jquery.min.js"></script>
     @RenderSection("header", required: false)
@@ -82,9 +78,12 @@
 
         <div class="container body-content">
             @RenderBody()
-            <hr />
+
+
+            <hr/>
+
             <footer>
-                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+                <p>&copy; @DateTime.Now.Year, <a href="http://weblog.west-wind.com">Rick Strahl, West Wind Technologies</a></p>
             </footer>
         </div>
 

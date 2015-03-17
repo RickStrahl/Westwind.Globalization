@@ -155,16 +155,20 @@
             return $http.get("localizationService.ashx?method=CreateTable")
                  .error(parseHttpError);
         }
-        function createClass() {
-            return $http.get("localizationService.ashx?method=CreateClass")
+        function createClass(file, namespace) {
+            return $http.get("localizationService.ashx?method=CreateClass" +
+                "&file=" + encodeURIComponent(file) +
+                "&namespace=" + encodeURIComponent(namespace))
                     .error(parseHttpError);
         }
-        function exportResxResources() {
-            return $http.get("localizationService.ashx?method=ExportResxResources")
+        function exportResxResources(path) {
+            path = path || "";
+            return $http.get("localizationService.ashx?method=ExportResxResources&outputBasePath=" + encodeURIComponent(path))
                     .error(parseHttpError);
         }
-        function importResxResources() {
-            return $http.get("localizationService.ashx?method=ImportResxResources")
+        function importResxResources(path) {
+            path = path || "";
+            return $http.get("localizationService.ashx?method=ImportResxResources&outputBasePath=" + encodeURIComponent(path))
                     .error(parseHttpError);
         }
         function getLocalizationInfo() {

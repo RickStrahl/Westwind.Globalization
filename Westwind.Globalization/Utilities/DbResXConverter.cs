@@ -1,11 +1,16 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Resources;
 using System.Text;
+using System.Threading;
 using System.Web;
 using System.Xml;
+using Westwind.Utilities;
 
 namespace Westwind.Globalization
 {
@@ -462,23 +467,22 @@ namespace Westwind.Globalization
         /// <returns></returns>
         public string FormatResourceSetPath(string resourceSet)
         {
-            if (DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.Project)
-            {
-                var path = DbResourceConfiguration.Current.ResxBaseFolder;
-                if (path.StartsWith("~"))
-                    path = path.Replace("~", BasePhysicalPath).Replace(@"\/","\\").Replace("/","\\");
+            string path;
 
-                resourceSet = resourceSet.Replace("/", "\\"); 
-                resourceSet = Path.Combine(path, resourceSet);
-                
+            if (string.IsNullOrEmpty(BasePhysicalPath) &&
+                DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.Project)
+            {
+                path = DbResourceConfiguration.Current.ResxBaseFolder;
+                if (path.StartsWith("~"))
+                    path = path.Replace("~", BasePhysicalPath).Replace(@"\/", "\\").Replace("/", "\\");
             }
             else
-            {
-                // Make sure our slashes are right
-                resourceSet = BasePhysicalPath + resourceSet;
-                resourceSet = resourceSet.Replace("/", "\\");
-            }
+                path = BasePhysicalPath;
 
+            resourceSet = resourceSet.Replace("/", "\\"); 
+            resourceSet = Path.Combine(path, resourceSet);
+                
+            
             if (IsLocalResourceSet(resourceSet) && !resourceSet.Contains("App_LocalResources"))
             {
                 string pathOnly = Path.GetDirectoryName(resourceSet);
@@ -830,6 +834,65 @@ namespace Westwind.Globalization
         }
         
         return resxDict;
+    }
+
+        /// <summary>
+        /// Returns resources for a given resource set in a specific locale        
+        /// </summary>
+        /// <param name="resourceSet"></param>
+        /// <param name="baseNamespace"></param>
+        /// <param name="localeId"></param>
+        /// <returns></returns>
+    public Dictionary<string, object> GetCompiledResourcesNormalizedForLocale(string resourceSet, string baseNamespace, string localeId)
+    {
+        if (string.IsNullOrEmpty(baseNamespace))
+            baseNamespace = DbResourceConfiguration.Current.ResourceBaseNamespace;
+
+        var resourceSetName = baseNamespace + "." + resourceSet.Replace("/", ".").Replace("\\", ".");
+        var type = ReflectionUtils.GetTypeFromName(resourceSetName);
+        if (type == null)
+            return null;
+
+        var resMan = new ResourceManager(resourceSetName, type.Assembly);
+        if (resMan == null)
+            return null;
+
+        return GetCompiledResourcesNormalizedForLocale(resMan, localeId);
+    }
+
+
+    public Dictionary<string, object> GetCompiledResourcesNormalizedForLocale(ResourceManager resourceManager, string localeId)
+    {        
+        var resDict = new Dictionary<string, object>();
+
+        var culture = Thread.CurrentThread.CurrentUICulture;
+        if (culture.IetfLanguageTag != localeId)
+            culture = CultureInfo.GetCultureInfoByIetfLanguageTag(localeId);
+
+        try
+        {
+            IDictionaryEnumerator enumerator;
+            using (var resSet = resourceManager.GetResourceSet(CultureInfo.InvariantCulture, true, true))
+            {
+                enumerator = resSet.GetEnumerator();
+                while (enumerator.MoveNext())
+                {
+                    var resItem = (DictionaryEntry)enumerator.Current;
+                    resDict.Add((string)resItem.Key, null);
+                }
+                var keys = resDict.Keys.ToList();
+                foreach (var key in keys)
+                {
+                    resDict[key] = resourceManager.GetObject(key);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+
+        return resDict;
     }
 
 

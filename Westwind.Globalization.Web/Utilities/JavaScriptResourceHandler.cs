@@ -30,6 +30,7 @@
 #endregion
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,6 +38,7 @@ using System.Web;
 using System.Text.RegularExpressions;
 using System.Web.UI;
 using System.Globalization;
+using System.Resources;
 using System.Threading;
 using Westwind.Web;
 using Westwind.Utilities;
@@ -120,16 +122,28 @@ namespace Westwind.Globalization
                 if (resDict == null || resDict.Keys.Count < 1)
                 {
                     // try resx instead
-                    DbResXConverter converter = new DbResXConverter();
+                    DbResXConverter converter = new DbResXConverter(context.Server.MapPath(DbResourceConfiguration.Current.ResxBaseFolder));
                     string resxPath = converter.FormatResourceSetPath(resourceSet);
                     resDict = converter.GetResXResourcesNormalizedForLocale(resxPath, localeId);
                 }
             }
             else  // Resx Resources
             {
-                DbResXConverter converter = new DbResXConverter();                
-                string resxPath = converter.FormatResourceSetPath(resourceSet);
-                resDict = converter.GetResXResourcesNormalizedForLocale(resxPath, localeId);
+                string basePath = context.Server.MapPath(DbResourceConfiguration.Current.ResxBaseFolder);
+                DbResXConverter converter = new DbResXConverter(basePath);
+
+                resDict = converter.GetCompiledResourcesNormalizedForLocale(resourceSet, 
+                    DbResourceConfiguration.Current.ResourceBaseNamespace, 
+                    localeId);
+
+                if (resDict == null)
+                {
+                    // check for .resx disk resources
+                    string resxPath = converter.FormatResourceSetPath(resourceSet);
+                    resDict = converter.GetResXResourcesNormalizedForLocale(resxPath, localeId);
+                }
+                else
+                    resDict = resDict.OrderBy(kv => kv.Key).ToDictionary(k => k.Key, v => v.Value);
             }
 
 
@@ -178,6 +192,38 @@ namespace Westwind.Globalization
             }
 
             SendTextOutput(javaScript, "text/javascript");
+        }
+
+        public Dictionary<string, object> GetResourceSetFromCompiledResources(string resourceSet, string baseNamespace)
+        {
+            if (string.IsNullOrEmpty(baseNamespace))
+                baseNamespace = DbResourceConfiguration.Current.ResourceBaseNamespace;
+
+            var resourceSetName = baseNamespace + "." + resourceSet.Replace("/", ".").Replace("\\", ".");
+            var type = ReflectionUtils.GetTypeFromName(resourceSetName);
+            var resMan = new ResourceManager(resourceSetName, type.Assembly);
+            var resDict = new Dictionary<string, object>();
+
+            try
+            {
+                IDictionaryEnumerator enumerator;
+                using (var resSet = resMan.GetResourceSet(Thread.CurrentThread.CurrentUICulture, true, true))
+                {
+                    enumerator = resSet.GetEnumerator();
+
+                    while (enumerator.MoveNext())
+                    {
+                        var resItem = (DictionaryEntry) enumerator.Current;
+                        resDict.Add((string) resItem.Key, resItem.Value);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {                
+                return null;
+            }
+
+            return resDict;
         }
 
         /// <summary>

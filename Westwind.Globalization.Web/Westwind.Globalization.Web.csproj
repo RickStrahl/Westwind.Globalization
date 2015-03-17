@@ -71,8 +71,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SupportClasses\DbResourceControl.cs" />
-    <Compile Include="SupportClasses\JavaScriptResourceHandler.cs" />
+    <Compile Include="Utilities\DbResourceControl.cs" />
+    <Compile Include="Utilities\JavaScriptResourceHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DbResourceProvider\DbResourceProviderHierarchy.cd" />

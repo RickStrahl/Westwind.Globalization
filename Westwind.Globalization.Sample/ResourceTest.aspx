@@ -3,7 +3,7 @@
 <%@ Import Namespace="System.Threading" %>
 
 <%--Import the strongly typed resource namespace - if this fails strongly typed resources don't exist--%>
-<%@ Import Namespace="Westwind.Globalization.Sample.LocalizationAdmin.Properties" %>
+<%@ Import Namespace="Westwind.Globalization.Sample.Properties" %>
 
 <script runat="server">
     private string LocaleId;    

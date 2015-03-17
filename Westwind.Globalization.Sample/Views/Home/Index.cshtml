@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Localizations Samples";
+    ViewBag.Title = "Localization Samples";
 }
 @section header{
     <style>
@@ -8,13 +8,16 @@
              font-size: 220%;
              line-height: 1.3em;
          }
+         .btn {
+             min-width: 130px;
+         }
     </style>
 }
 <div class="jumbotron">    
     
-    <header class="header">Westwind.Globalization Samples</header>
+    <h2 class="headerss">Westwind.Globalization Samples</h2>
 
-    <img src="~/Content/Images/Westwind.Localization_128.png" class="pull-left"/>
+    <img src="~/Images/Westwind.Localization_128.png" style="margin-right: 10px;" class="pull-left"/>
 
     <p class="lead">
         The Westwind.Globalization ASP.NET components provide the abillity to easily create
@@ -30,17 +33,20 @@
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Documentation</h2>
+        <h3>Documentation</h3>
         <p>
             Check out the documentation to understand how to setup the provider and get it
             up and running in your ASP.NET projects.
         </p>
         <p>
-            <a class="btn btn-default" href="http://west-wind.com/Westwind.Globalization/docs/?page=_3bl0s6s6t.htm">Learn more &raquo;</a>
+            <a class="btn btn-default" href="https://github.com/RickStrahl/Westwind.Globalization">Getting started &raquo;</a>
+        </p>
+        <p>
+            <a class="btn btn-default" href="https://github.com/RickStrahl/Westwind.Globalization/wiki">Documentation &raquo;</a>
         </p>
     </div>
     <div class="col-md-4">
-        <h2>Verify Provider</h2>
+        <h3>Verify Provider</h3>
         <p>
             This page ensures that the Localization provider and database are working. If this page comes up
             and properly displays text the provider is running and translating values properly.
@@ -49,7 +55,7 @@
         <p><a class="btn btn-default" href="~/ResourceTest.cshtml">Try it (cshtml) &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Localization Administration</h2>
+        <h3>Resource Administration</h3>
         <p>Hit the localization admin page to dynamically modify your Database Resources while the application is running.</p>
         <p><a class="btn btn-default" href="~/LocalizationAdmin/">Edit &raquo;</a></p>
     </div>

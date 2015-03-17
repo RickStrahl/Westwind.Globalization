@@ -14,21 +14,15 @@
     <ul id="MenuButtons" class="nav navbar-nav pull-right navbar">
         <li>
             <a ng-show="view.resourceSets && view.resourceSets.length > 0"
-               ng-click="view.onExportResxResourcesClick()"
+               xng-click="view.onExportResxResourcesClick()"
+               data-toggle="modal" data-target="#ImportExportResxDialog"
                title="{{view.dbRes('ExportResx_Title')}}">
-                <i class="fa fa-download"></i> {{view.dbRes('ExportResx')}}
+                <i class="fa fa-download"></i> {{view.dbRes('ImportExportResx')}}
             </a>
         </li>
         <li>
             <a ng-show="view.resourceSets && view.resourceSets.length > 0"
-               ng-click="view.onImportResxResourcesClick()"
-               title="{{view.dbRes('ImportResx_Title')}}">
-                <i class="fa fa-upload"></i> {{view.dbRes('ImportResx')}}
-            </a>
-        </li>
-        <li>
-            <a ng-click="view.onCreateClassClick()"
-               ng-show="view.resourceSets && view.resourceSets.length > 0"
+               data-toggle="modal" data-target="#CreateClassDialog"
                title="{{view.resources.CreateClass_Title}}">
                 <i class="fa fa-code" style="font-weight: bold;"></i> {{view.dbRes('CreateClass')}}
             </a>
@@ -45,7 +39,7 @@
             <a ng-show="!view.resourceSets || view.resourceSets.length < 1"
                ng-click="view.onCreateTableClick()"
                title=" {{view.dbRes('CreateTable_Title')}} ">
-                <i class=" fa fa-plus-square">
+                <i class="fa fa-plus-square">
                 </i> {{view.dbRes('CreateTable')}}
             </a>
 
