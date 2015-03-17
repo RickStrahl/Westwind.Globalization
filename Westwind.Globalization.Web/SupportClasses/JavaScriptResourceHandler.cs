@@ -135,13 +135,15 @@ namespace Westwind.Globalization
                 resDict = converter.GetCompiledResourcesNormalizedForLocale(resourceSet, 
                     DbResourceConfiguration.Current.ResourceBaseNamespace, 
                     localeId);
-                
+
                 if (resDict == null)
                 {
                     // check for .resx disk resources
                     string resxPath = converter.FormatResourceSetPath(resourceSet);
-                    resDict = converter.GetResXResourcesNormalizedForLocale(resxPath, localeId);                    
+                    resDict = converter.GetResXResourcesNormalizedForLocale(resxPath, localeId);
                 }
+                else
+                    resDict = resDict.OrderBy(kv => kv.Key).ToDictionary(k => k.Key, v => v.Value);
             }
 
 

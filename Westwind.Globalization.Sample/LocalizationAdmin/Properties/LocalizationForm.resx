@@ -113,10 +113,10 @@
       <value>Import resources from Resx files.</value>
    </data>
    <data name="CreateClass" xml:space="preserve">
-      <value>Create Class</value>
+      <value>Create Classes</value>
    </data>
    <data name="CreateClass.Title" xml:space="preserve">
-      <value>Create class of strongly typed resources from resources.</value>
+      <value>Create strongly typed classes from database resources.</value>
    </data>
    <data name="ReloadResources" xml:space="preserve">
       <value>Reload Resources</value>

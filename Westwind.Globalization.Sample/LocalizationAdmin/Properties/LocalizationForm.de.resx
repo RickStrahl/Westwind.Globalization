@@ -164,10 +164,10 @@
       <value>Ressourcen neu laden</value>
    </data>
    <data name="CreateClass.Title" xml:space="preserve">
-      <value>Klasse von stark typisierten Ressourcen erstellen.</value>
+      <value>Erstellt stark typisierte Klassen von  Datenbank Ressourcen.</value>
    </data>
    <data name="CreateClass" xml:space="preserve">
-      <value>Klasse erstellen</value>
+      <value>Klassen erstellen</value>
    </data>
    <data name="ImportResx.Title" xml:space="preserve">
       <value>Ressourcen aus Resx-Dateien importieren.</value>

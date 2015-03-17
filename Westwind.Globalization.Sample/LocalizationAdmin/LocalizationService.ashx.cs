@@ -53,7 +53,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
 
         [CallbackMethod]
         public IEnumerable<string> GetResourceSets()
-        {
+        {            
             return Manager.GetAllResourceSets(ResourceListingTypes.AllResources);
         }
 
@@ -244,7 +244,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
 
 
             if (!Manager.RenameResource(resourceId, newResourceId, resourceSet))
-                throw new ApplicationException(WebUtils.GRes("localizationadmin/LocalizationAdmin.aspx",
+                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET,
                     "InvalidResourceId"));
 
             return true;
@@ -263,7 +263,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         public bool RenameResourceProperty(string Property, string NewProperty, string ResourceSet)
         {
             if (!Manager.RenameResourceProperty(Property, NewProperty, ResourceSet))
-                throw new ApplicationException(WebUtils.GRes("InvalidResourceId"));
+                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET,"InvalidResourceId"));
 
             return true;
         }
@@ -356,6 +356,9 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         [CallbackMethod]
         public bool CreateClass()
         {
+        #if OnlineDemo
+            throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
+        #endif
             var config = DbResourceConfiguration.Current;
 
             StronglyTypedResources strongTypes =
@@ -471,8 +474,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         public class ResourceItemEx : ResourceItem
         {
             public ResourceItemEx()
-            {
-
+            {                
             }
 
             public ResourceItemEx(ResourceItem item)
@@ -492,3 +494,4 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         }
     }
 }
+

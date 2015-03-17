@@ -836,6 +836,13 @@ namespace Westwind.Globalization
         return resxDict;
     }
 
+        /// <summary>
+        /// Returns resources for a given resource set in a specific locale        
+        /// </summary>
+        /// <param name="resourceSet"></param>
+        /// <param name="baseNamespace"></param>
+        /// <param name="localeId"></param>
+        /// <returns></returns>
     public Dictionary<string, object> GetCompiledResourcesNormalizedForLocale(string resourceSet, string baseNamespace, string localeId)
     {
         if (string.IsNullOrEmpty(baseNamespace))
@@ -853,6 +860,7 @@ namespace Westwind.Globalization
         return GetCompiledResourcesNormalizedForLocale(resMan, localeId);
     }
 
+
     public Dictionary<string, object> GetCompiledResourcesNormalizedForLocale(ResourceManager resourceManager, string localeId)
     {        
         var resDict = new Dictionary<string, object>();
@@ -864,13 +872,18 @@ namespace Westwind.Globalization
         try
         {
             IDictionaryEnumerator enumerator;
-            using (var resSet = resourceManager.GetResourceSet(culture, true, true))
+            using (var resSet = resourceManager.GetResourceSet(CultureInfo.InvariantCulture, true, true))
             {
                 enumerator = resSet.GetEnumerator();
                 while (enumerator.MoveNext())
                 {
                     var resItem = (DictionaryEntry)enumerator.Current;
-                    resDict.Add((string)resItem.Key, resItem.Value);
+                    resDict.Add((string)resItem.Key, null);
+                }
+                var keys = resDict.Keys.ToList();
+                foreach (var key in keys)
+                {
+                    resDict[key] = resourceManager.GetObject(key);
                 }
             }
         }

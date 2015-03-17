@@ -19,25 +19,26 @@ Requirements:
 * [Getting Started Video](https://www.youtube.com/watch?v=jHg4hlnZNoA)
 * [Original Article for Database Driven Resource Provider](http://www.west-wind.com/presentations/wwdbresourceprovider/)
 * [Wiki Documentation and FAQ](http://west-wind.com/westwind.globalization/docs/)
+* [Westwind-Globalization on StackOverFlow](http://stackoverflow.com/questions/tagged/westwind-globalization)
 * [Class Reference](http://west-wind.com/westwind.globalization/docs/?page=_40y0vh66q.htm)
 * [Change Log](ChangeLog.md)
-* [License](http://west-wind.com/Westwind.Globalization/docs/_2lp0u0i9b.htm)
+* [License](#license)
 
 
 ### Features
 * .NET Resources in Sql Server, Sql Server Compact, MySql and SqLite   
-* Two Database ASP.NET ResourceProviders (ASP.NET,WebForms) 
 * Database .NET  ResourceManager (MVC,non-Web apps)
-* Uses standard .NET Resource Management and Caching - no code changes
+* Two Database ASP.NET ResourceProviders (ASP.NET,WebForms) 
+* Uses standard, efficent .NET Resource management and caching
+* Use standard .NET/ASP.NET syntax to access resources
 * Or: Use our dynamic DbRes string based helper (works anywhere)
 * Interactive, live Web Resource Editor to edit Resources
+* Live Reloading of edited Resources in Web apps
 * DbResourceManagers let you manage resources with code
 * Extensible DbResourceManager interface to create custom Providers
 * Import and Export Resx resources 
-* Generate strongly typed resource classes from the Db provider
+* Generate strongly typed resource classes from the Db resources
 * Serve .NET Resources to JavaScript as JSON
-* Release and reload resources at runtime
-* DbRes helper to easily embed resources into markup and code
 
 To use the DbResourceProvider or DbResourceManager requires no code changes 
 from ResX resources, other than a few lines of provider configuration. 
@@ -301,6 +302,8 @@ Say Hello: <%: DbRes.T("HelloWorld") %> at <%= DateTime.Now %>
 string value = DbRes.T("HelloWorld");
 ```
 
+The `DbRes.T()` method returns the ResourceId passed in if a resource is missing in the ResourceSet which can be useful for providing 'default' text. Some people like to use full resource strings as their resource Ids so default values are always available even if a resource is missing or the provider is not available. 
+
 ## Using the ASP.NET Resource Provider 
 If you're using an existing WebForms application or you want to
 use the ASP.NET based Resource Provider model for accessing resources
@@ -354,16 +357,18 @@ features:
 ```
 
 
-### Strongly typed Resources
+## Strongly typed Resources
 The Web Resource Editor form allows you to create strongly typed resources
 for any global resources in your application. Basically it'll go through all the 
 non-local resources in your file and create strongly type .NET classes in a file that
 is specified in the DbResourceProvider configuration settings.
 
 ```
-stronglyTypedGlobalResource="~/Properties/Resources.cs,WebApplication1"
+<add key="StronglyTypedGlobalResource" value="~/Properties/Resources.cs" />
+<add key="ResourceBaseNamespace" value="WebApplication1.Properties" />
 ```
-You specify the filename in your project and the namespace to generate it to. 
+You specify the namespace and filename to generate it to. Once you've generated the strongly typed resource file with the embedded resource class(es), you need to recompile your application to make the resource properties available to it.
+ 
 The generated resources can use either the ASP.NET resource provider (which uses
 whatever provider is configured - Resx or DbResourceProvider) or the 
 DbResourceManager which only uses the DbResourceManager. Using the latter allows
@@ -371,7 +376,7 @@ you to also generate resources for use in non-Web applications.
 
 Here's what generated resources look like:
 ```C#
-namespace WebApplication1
+namespace WebApplication1.Properties
 {
     public class GeneratedResourceSettings
     {
@@ -407,24 +412,28 @@ namespace WebApplication1
 
 These can then be used in any ASP.NET application:
 
-### ASP.NET MVC or WebPages
+##### ASP.NET MVC or WebPages
 ```HTML
 <div class="statusbar">@CommonWords.Ready</div>
 ```
 
-### ASP.NET WebForms
+##### ASP.NET WebForms
 ```HTML
-<div class="statusbar"><%: WebApplication2.CommonWords.Ready %></div>
+<div class="statusbar"><%: WebApplication1.CommonWords.Ready %></div>
+```
+#### .NET Code
+```C#
+string ready = CommonWords.Ready;
 ```
 
-Note that strongly typed resources must be recreated whenever you add new
+Note that strongly typed resources must be re-generated whenever you add new
 resources, so this is an ongoing process. As with the Resx Generator if
-you remove or rename a resource you may break your code. This is the 
-reason we use a single file, rather than a file per resource set to 
-keep the file management as simple as possible.
+you remove or rename a resource you may break your code. 
+
+Strongly typed resources are generated into a single file for all the resource sets exported in order to not clutter up your application with unnecessary generated files.  
 
 ## ASP.NET MVC ModelValidation
-ASP.NET and Entity Framework support model validation and you can also use the database provider to localize these validation messages. To do so **you have to generate strongly typed resources** or export to Resx and then enable strong resource typing. Model validation works of object properties so in order to use it a type has to exist.
+ASP.NET and Entity Framework support model validation and you can also use the database provider to localize these validation messages. To do so **you have to generate strongly typed resources**, or export to Resx and then enable strong resource typing. ASP.NET/EntityFramework Model validation works based on class property access so in order to use it a type has to exist.
 
 To do this:
 
@@ -450,7 +459,6 @@ The type will be your exported class or generated Resx class and the name is the
 
 * Make sure the property name is typed correctly and matches a property name.
 * Try writing out the actual property using @Resources.AddressIsRequired to ensure the value is valid (on a simple test page perferrably). 
-
 
 
 ## Non Sql Server Database Providers

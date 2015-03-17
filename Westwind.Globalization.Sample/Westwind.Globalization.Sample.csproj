@@ -180,6 +180,7 @@
     <Content Include="LocalizationAdmin\bower_components\fontawesome\css\font-awesome.css" />
     <Content Include="LocalizationAdmin\bower_components\fontawesome\css\font-awesome.min.css" />
     <Content Include="LocalizationAdmin\bower_components\fontawesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="LocalizationAdmin\Partials\CreateClassDialog.html" />
     <Content Include="LocalizationAdmin\Partials\Menubar.html" />
     <Content Include="LocalizationAdmin\index.html" />
     <Content Include="LocalizationAdmin\Partials\ImportExportResxDialog.html" />
@@ -318,8 +319,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="LocalizationAdmin\Properties\LocalizationForm.de.resx" />
-    <EmbeddedResource Include="LocalizationAdmin\Properties\LocalizationForm.resx" />
+    <EmbeddedResource Include="LocalizationAdmin\Properties\LocalizationForm.de.resx">
+      <DependentUpon>LocalizationForm.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalizationAdmin\Properties\LocalizationForm.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LocalizationForm.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
