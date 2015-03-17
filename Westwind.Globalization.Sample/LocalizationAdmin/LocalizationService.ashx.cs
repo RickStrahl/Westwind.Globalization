@@ -354,7 +354,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         }
 
         [CallbackMethod]
-        public bool CreateClass()
+        public bool CreateClass(string filename = null, string nameSpace = null)
         {
         #if OnlineDemo
             throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
@@ -364,10 +364,14 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             StronglyTypedResources strongTypes =
                 new StronglyTypedResources(Context.Request.PhysicalApplicationPath);
 
-            strongTypes.CreateClassFromAllDatabaseResources(config.ResourceBaseNamespace,
-                HttpContext.Current.Server.MapPath(config.StronglyTypedGlobalResource));
+            if (string.IsNullOrEmpty(filename))
+                filename = HttpContext.Current.Server.MapPath(config.StronglyTypedGlobalResource);
 
+            if (string.IsNullOrEmpty(nameSpace))
+                nameSpace = config.ResourceBaseNamespace;
 
+            strongTypes.CreateClassFromAllDatabaseResources(nameSpace, filename);
+            
             if (!string.IsNullOrEmpty(strongTypes.ErrorMessage))
                 throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "StronglyTypedGlobalResourcesFailed"));
 

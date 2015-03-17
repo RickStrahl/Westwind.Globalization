@@ -4,9 +4,9 @@
     angular
         .module('app')
         .controller('importExportResxController', importExportResxController);
-    importExportResxController.$inject = ['localizationService'];
+    importExportResxController.$inject = ['$scope','localizationService'];
 
-    function importExportResxController(localizationService) {        
+    function importExportResxController($scope, localizationService) {        
         var vm = this;
         vm.resources = resources;
         vm.dbRes = resources.dbRes;
@@ -21,10 +21,12 @@
                 vm.importResources();
         };
 
-        vm.exportResources = function() {
+        vm.exportResources = function () {
+            var parentView = $scope.$parent.view;
             localizationService.exportResxResources(vm.info.ResxBaseFolder)
                 .success(function() {
                     $("#ImportExportResxDialog").modal('hide');
+                    parentView.showMessage(vm.dbRes("ResxResourcesHaveBeenCreated"));
                 });
         };
 
@@ -32,7 +34,9 @@
             localizationService.importResxResources(vm.info.ResxBaseFolder)
                 .success(function() {
                     $("#ImportExportResxDialog").modal('hide');
-                });
+                    parentView.showMessage(vm.dbRes("ResxResourcesHaveBeenImported"));
+                })
+                .error(parentView.parseError);
         };
 
         initialize();

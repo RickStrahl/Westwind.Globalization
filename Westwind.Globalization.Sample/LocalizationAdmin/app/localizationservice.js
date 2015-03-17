@@ -155,8 +155,10 @@
             return $http.get("localizationService.ashx?method=CreateTable")
                  .error(parseHttpError);
         }
-        function createClass() {
-            return $http.get("localizationService.ashx?method=CreateClass")
+        function createClass(file, namespace) {
+            return $http.get("localizationService.ashx?method=CreateClass" +
+                "&file=" + encodeURIComponent(file) +
+                "&namespace=" + encodeURIComponent(namespace))
                     .error(parseHttpError);
         }
         function exportResxResources(path) {

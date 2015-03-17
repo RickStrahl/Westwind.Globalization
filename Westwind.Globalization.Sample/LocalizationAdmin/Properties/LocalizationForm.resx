@@ -161,7 +161,7 @@
       <value>No Provider configured (Resx)</value>
    </data>
    <data name="StronglyTypedClassCreated" xml:space="preserve">
-      <value>Strongly typed class has been created. You'll have to re-compile your application to use any added resources.</value>
+      <value>Strongly typed classes have been created. You'll have to re-compile your application to use any added resources.</value>
    </data>
    <data name="ResourceImportFailed" xml:space="preserve">
       <value>Resource import failed.</value>
@@ -196,6 +196,15 @@
    <data name="Resources" xml:space="preserve">
       <value>Resources</value>
    </data>
+   <data name="CreateStronglyTypedClasses" xml:space="preserve">
+      <value>Create Strongly Typed Classes</value>
+   </data>
+   <data name="Export" xml:space="preserve">
+      <value>Export</value>
+   </data>
+   <data name="Filename" xml:space="preserve">
+      <value>Filename</value>
+   </data>
    <data name="ResxExportInfo.Project" xml:space="preserve">
       <value>Your Resx Export Mode is &lt;b&gt;Project&lt;/b&gt;, so resource files are  created in this folder as seperate .resx files, one per resource set.</value>
    </data>
@@ -208,19 +217,28 @@
    <data name="ResxImportInfo.WebForms" xml:space="preserve">
       <value>Your Resx Export Mode is &lt;b&gt;WebForms&lt;/b&gt;, so .Resx resources are imported from the appropriate App_GlobalResources and App_LocalResources folders. Loose .Resx files are also imported. Global resources are mapped without a path, local resources contain the relative path and local resource control page/control they map.</value>
    </data>
+   <data name="CreateClassInfo" xml:space="preserve">
+      <value>This operation allows you to export your ResourceSets as strongly typed classes in a single source file. Each ResourceSet is transformed into a class with properties for each resource Id.</value>
+   </data>
+   <data name="CreateClassInfo2" xml:space="preserve">
+      <value>Below you can specify the filename and a namespace for the generated class. It's recommended you match the namespace of the class to the relative folder structure of the project replacing . for \ in order to support switching resources between database and Resx resources more easily.</value>
+   </data>
+   <data name="ResxResourcesHaveBeenImported" xml:space="preserve">
+      <value>Resx Resources have been imported.</value>
+   </data>
    <data name="CreateTable.Title" xml:space="preserve">
       <value>Create the Localization table as defined in the configuration file.</value>
-   </data>
-   <data name="LocaleIdsFailedToLoad" xml:space="preserve">
-      <value>Locale Ids failed to load.</value>
-   </data>
-   <data name="ResourceUpdateFailed" xml:space="preserve">
-      <value>Resource update failed.</value>
    </data>
    <data name="LocalizationTableNotCreated" xml:space="preserve">
       <value>Localization table has not been created.</value>
    </data>
    <data name="StronglyTypedGlobalResourcesFailed" xml:space="preserve">
       <value>Failed to create strongly typed resources.</value>
+   </data>
+   <data name="LocaleIdsFailedToLoad" xml:space="preserve">
+      <value>Locale Ids failed to load.</value>
+   </data>
+   <data name="ResourceUpdateFailed" xml:space="preserve">
+      <value>Resource update failed.</value>
    </data>
 </root>

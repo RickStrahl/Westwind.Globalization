@@ -43,16 +43,16 @@ namespace Westwind.Globalization.Sample.LocalizationAdmin.Properties
 			}
 		}
 
-		public static System.String NoProviderConfigured
+		public static System.String CreateClassInfo2
 		{
 			get
 			{
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
-					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","NoProviderConfigured");
+					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","CreateClassInfo2");
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.Resx)
-					return ResourceManager.GetString("NoProviderConfigured");
+					return ResourceManager.GetString("CreateClassInfo2");
 
-				return DbRes.T("NoProviderConfigured","LocalizationForm");
+				return DbRes.T("CreateClassInfo2","LocalizationForm");
 			}
 		}
 
@@ -95,16 +95,16 @@ namespace Westwind.Globalization.Sample.LocalizationAdmin.Properties
 			}
 		}
 
-		public static System.String ResxImportInfoWebForms
+		public static System.String ImportOrExportResxResources
 		{
 			get
 			{
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
-					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","ResxImportInfo.WebForms");
+					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","ImportOrExportResxResources");
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.Resx)
-					return ResourceManager.GetString("ResxImportInfo.WebForms");
+					return ResourceManager.GetString("ImportOrExportResxResources");
 
-				return DbRes.T("ResxImportInfo.WebForms","LocalizationForm");
+				return DbRes.T("ImportOrExportResxResources","LocalizationForm");
 			}
 		}
 
@@ -173,16 +173,16 @@ namespace Westwind.Globalization.Sample.LocalizationAdmin.Properties
 			}
 		}
 
-		public static System.String ImportOrExportResxResources
+		public static System.String ExportResxTitle
 		{
 			get
 			{
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
-					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","ImportOrExportResxResources");
+					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","ExportResx.Title");
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.Resx)
-					return ResourceManager.GetString("ImportOrExportResxResources");
+					return ResourceManager.GetString("ExportResx.Title");
 
-				return DbRes.T("ImportOrExportResxResources","LocalizationForm");
+				return DbRes.T("ExportResx.Title","LocalizationForm");
 			}
 		}
 
@@ -238,16 +238,16 @@ namespace Westwind.Globalization.Sample.LocalizationAdmin.Properties
 			}
 		}
 
-		public static System.String InvalidResourceId
+		public static System.String CreateClassInfo
 		{
 			get
 			{
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
-					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","InvalidResourceId");
+					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","CreateClassInfo");
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.Resx)
-					return ResourceManager.GetString("InvalidResourceId");
+					return ResourceManager.GetString("CreateClassInfo");
 
-				return DbRes.T("InvalidResourceId","LocalizationForm");
+				return DbRes.T("CreateClassInfo","LocalizationForm");
 			}
 		}
 
@@ -303,16 +303,16 @@ namespace Westwind.Globalization.Sample.LocalizationAdmin.Properties
 			}
 		}
 
-		public static System.String ExportResxTitle
+		public static System.String Resources
 		{
 			get
 			{
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
-					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","ExportResx.Title");
+					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","Resources");
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.Resx)
-					return ResourceManager.GetString("ExportResx.Title");
+					return ResourceManager.GetString("Resources");
 
-				return DbRes.T("ExportResx.Title","LocalizationForm");
+				return DbRes.T("Resources","LocalizationForm");
 			}
 		}
 
@@ -365,6 +365,19 @@ namespace Westwind.Globalization.Sample.LocalizationAdmin.Properties
 					return ResourceManager.GetString("StronglyTypedClassCreated");
 
 				return DbRes.T("StronglyTypedClassCreated","LocalizationForm");
+			}
+		}
+
+		public static System.String ReloadResources
+		{
+			get
+			{
+				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
+					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","ReloadResources");
+				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.Resx)
+					return ResourceManager.GetString("ReloadResources");
+
+				return DbRes.T("ReloadResources","LocalizationForm");
 			}
 		}
 
@@ -433,42 +446,42 @@ namespace Westwind.Globalization.Sample.LocalizationAdmin.Properties
 			}
 		}
 
-		public static System.String ResourcesHaveBeenReloaded
+		public static System.String Filename
 		{
 			get
 			{
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
-					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","ResourcesHaveBeenReloaded");
+					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","Filename");
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.Resx)
-					return ResourceManager.GetString("ResourcesHaveBeenReloaded");
+					return ResourceManager.GetString("Filename");
 
-				return DbRes.T("ResourcesHaveBeenReloaded","LocalizationForm");
+				return DbRes.T("Filename","LocalizationForm");
 			}
 		}
 
-		public static System.String ReloadResources
+		public static System.String NoProviderConfigured
 		{
 			get
 			{
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
-					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","ReloadResources");
+					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","NoProviderConfigured");
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.Resx)
-					return ResourceManager.GetString("ReloadResources");
+					return ResourceManager.GetString("NoProviderConfigured");
 
-				return DbRes.T("ReloadResources","LocalizationForm");
+				return DbRes.T("NoProviderConfigured","LocalizationForm");
 			}
 		}
 
-		public static System.String LocalizationAdministration
+		public static System.String Export
 		{
 			get
 			{
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
-					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","LocalizationAdministration");
+					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","Export");
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.Resx)
-					return ResourceManager.GetString("LocalizationAdministration");
+					return ResourceManager.GetString("Export");
 
-				return DbRes.T("LocalizationAdministration","LocalizationForm");
+				return DbRes.T("Export","LocalizationForm");
 			}
 		}
 
@@ -495,6 +508,32 @@ namespace Westwind.Globalization.Sample.LocalizationAdmin.Properties
 					return ResourceManager.GetString("LocaleIdsFailedToLoad");
 
 				return DbRes.T("LocaleIdsFailedToLoad","LocalizationForm");
+			}
+		}
+
+		public static System.String CreateStronglyTypedClasses
+		{
+			get
+			{
+				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
+					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","CreateStronglyTypedClasses");
+				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.Resx)
+					return ResourceManager.GetString("CreateStronglyTypedClasses");
+
+				return DbRes.T("CreateStronglyTypedClasses","LocalizationForm");
+			}
+		}
+
+		public static System.String ResourcesHaveBeenReloaded
+		{
+			get
+			{
+				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
+					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","ResourcesHaveBeenReloaded");
+				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.Resx)
+					return ResourceManager.GetString("ResourcesHaveBeenReloaded");
+
+				return DbRes.T("ResourcesHaveBeenReloaded","LocalizationForm");
 			}
 		}
 
@@ -586,6 +625,19 @@ namespace Westwind.Globalization.Sample.LocalizationAdmin.Properties
 					return ResourceManager.GetString("ResourceGenerationFailed");
 
 				return DbRes.T("ResourceGenerationFailed","LocalizationForm");
+			}
+		}
+
+		public static System.String ResxImportInfoWebForms
+		{
+			get
+			{
+				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
+					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","ResxImportInfo.WebForms");
+				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.Resx)
+					return ResourceManager.GetString("ResxImportInfo.WebForms");
+
+				return DbRes.T("ResxImportInfo.WebForms","LocalizationForm");
 			}
 		}
 
@@ -693,16 +745,16 @@ namespace Westwind.Globalization.Sample.LocalizationAdmin.Properties
 			}
 		}
 
-		public static System.String Resources
+		public static System.String InvalidResourceId
 		{
 			get
 			{
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
-					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","Resources");
+					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","InvalidResourceId");
 				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.Resx)
-					return ResourceManager.GetString("Resources");
+					return ResourceManager.GetString("InvalidResourceId");
 
-				return DbRes.T("Resources","LocalizationForm");
+				return DbRes.T("InvalidResourceId","LocalizationForm");
 			}
 		}
 
@@ -716,6 +768,19 @@ namespace Westwind.Globalization.Sample.LocalizationAdmin.Properties
 					return ResourceManager.GetString("ResxExportInfo.WebForms");
 
 				return DbRes.T("ResxExportInfo.WebForms","LocalizationForm");
+			}
+		}
+
+		public static System.String LocalizationAdministration
+		{
+			get
+			{
+				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)
+					return (System.String) HttpContext.GetGlobalResourceObject("LocalizationForm","LocalizationAdministration");
+				if (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.Resx)
+					return ResourceManager.GetString("LocalizationAdministration");
+
+				return DbRes.T("LocalizationAdministration","LocalizationForm");
 			}
 		}
 

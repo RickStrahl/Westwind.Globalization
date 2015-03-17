@@ -159,6 +159,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="LocalizationAdmin\app\createClassController.js" />
     <Content Include="LocalizationAdmin\app\importExportResxController.js" />
     <Content Include="LocalizationAdmin\app\resourceProviderController.js" />
     <Content Include="LocalizationAdmin\bower_components\angular-sanitize\angular-sanitize.js" />
