@@ -121,10 +121,39 @@ namespace Westwind.Globalization
         /// Localized resource or the resource Id if no match is found. 
         /// This value *always* returns a string unless you pass in null.
         /// </returns>
-        //public static HtmlString THtml(string resId, string resourceSet = null, string lang = null)
-        //{
-        //    return new HtmlString( T(resId,resourceSet,lang) );
-        //}
+        public static HtmlString THtml(string resId, string resourceSet = null, string lang = null)
+        {
+            return new HtmlString(T(resId, resourceSet, lang));
+        }
+
+        /// <summary>
+        /// Creates a localized format string that is transformed using the 
+        /// specified resource id.
+        /// </summary>
+        /// <param name="format">Format string that is to be localized</param>
+        /// <param name="resId">Resource id to localize from</param>
+        /// <param name="resourceSet">Resource set to localize from</param>        
+        /// <param name="args">Any arguments for the format string</param>
+        /// <returns></returns>
+        public static string TFormat(string format, string resId, string resourceSet, params object[] args)
+        {
+            return TFormat(resId, resourceSet, string.Empty, args);
+        }
+
+        /// <summary>
+        /// Creates a localized format string that is transformed using the 
+        /// specified resource id.
+        /// </summary>
+        /// <param name="format">Format string that is to be localized</param>
+        /// <param name="resId">Resource id to localize from</param>
+        /// <param name="resourceSet">Resource set to localize from</param>
+        /// <param name="lang">Language code</param>
+        /// <param name="args">Any arguments for the format string</param>
+        /// <returns></returns>
+        public static string TFormat(string format, string resId, string resourceSet, string lang, params object[] args)
+        {
+            return string.Format(T(resId, resourceSet, lang), args);
+        }
 
 
         /// <summary>
@@ -142,7 +171,7 @@ namespace Westwind.Globalization
         /// <returns>
         /// The resource as an object.    
         /// </returns>
-        public static object TO(string resId, string resourceSet = null, string lang = null, bool autoAdd = false)
+        public static object TObject(string resId, string resourceSet = null, string lang = null, bool autoAdd = false)
         {
             if (string.IsNullOrEmpty(resId))
                 return resId;
