@@ -27,6 +27,7 @@ Requirements:
 
 ### Features
 * .NET Resources in Sql Server, Sql Server Compact, MySql and SqLite   
+* Two Database ASP.NET ResourceProviders (ASP.NET,WebForms) 
 * Database .NET  ResourceManager (MVC,non-Web apps)
 * Two Database ASP.NET ResourceProviders (ASP.NET,WebForms) 
 * Uses standard, efficent .NET Resource management and caching
@@ -459,7 +460,6 @@ The type will be your exported class or generated Resx class and the name is the
 
 * Make sure the property name is typed correctly and matches a property name.
 * Try writing out the actual property using @Resources.AddressIsRequired to ensure the value is valid (on a simple test page perferrably). 
-
 
 ## Non Sql Server Database Providers
 By default the resource providers and manager use SQL Server to hold the database resources. If you don't do any custom configuration in code to specify the Configuration.DbResourceDataManagerType you'll get the Sql Server provider/manager. 
