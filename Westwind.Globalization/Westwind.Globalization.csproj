@@ -115,6 +115,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="DbResourceSupportClasses\IWestWindResourceProvider.cs" />
+    <Compile Include="Utilities\JavaScriptResources.cs" />
     <Compile Include="Utilities\StronglyTypedResources.cs" />
     <Compile Include="Utilities\TranslationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -25,8 +25,8 @@ namespace Westwind.Globalization.Sample
 
             // Set Strongly Typed Resource Mode to direct resource manager access rather than WebForms mode
             //Westwind.Globalization.Sample.LocalizationAdmin.Properties.
-            GeneratedResourceSettings.ResourceAccessMode = ResourceAccessMode.DbResourceManager;
-
+            //GeneratedResourceSettings.ResourceAccessMode = ResourceAccessMode.DbResourceManager;
+            
             // Specify where config information comes from (config file is default - can be separate Json/Xml)
             //DbResourceConfiguration.ConfigurationMode = ConfigurationModes.ConfigFile;
             
@@ -46,7 +46,8 @@ namespace Westwind.Globalization.Sample
 
             // for all other providers explicitly override the DbResourceDataManagerType
             //DbResourceConfiguration.Current.ConnectionString = "SqlServerCeLocalizations";
-            //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerCeDataManager);
+            //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerCeDataManager);            
+            
         }
 
         protected void Application_BeginRequest()
