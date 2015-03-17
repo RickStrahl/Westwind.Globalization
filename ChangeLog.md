@@ -1,7 +1,7 @@
 # West Wind Globalization Changelog
 
 ### Version 2.0
-<small><i>not released yet</i></small>
+<small><i>currently in Beta</i></small>
 
 * **New DbResourceDataManager Model to allow for pluggable Data Providers**<br/>
 New DbResourceDataManager interface and adpater model for supporting multiple data providers. You can easily implement new DataManager implementations to handle the data access to read and write data into the provider for all supported features.
@@ -13,9 +13,20 @@ Added custom DbResourceDataManager implementations for each of these data engine
 Complete rewrote the Administration form using a pure client side model using Angular JS and a CallbackHandler service on the backend. The new UI provides much easier navigation of resources and shows all resources available for a resource key for easy editing. The editing UI is also keyboard friendly to allow for quick hands on the keyboard editing of resources.
 
 * **Improved Resource Import and Export**<br/>
-The Web Interface now supports importing and exportnig resources optionally from virtually any path, not just the path of the actual Web application. this means you can now easily edit resources from any project and write them back out using the Web project. Configuration is done via a configuration setting in a config file.
+The Web Interface now supports importing and exporting resources optionally from virtually any path, not just the path of the actual Web application. This means you can now easily edit and update resources from any project on your local machine.
+
+* **Strongly Typed Class Export Improvements**
+The Web interface now allows you to choose the output path and namespace for strongly typed resource exports as part of the export process. The values default to configured values, but you can override the behavior.
+
+* **Export JavaScript Resource files from Server Resources**
+There's a new JavaScriptResources class that can export server resources as JavaScript files.
+
 * **DbRes.THtml() Method**<br/>
 Added DbRes.THtml() method in addition to DbRes.T() to allow for creating HTML pre-encoded content with less typing and function nesting (`@Html.Raw(DbRes.T(...))`) in Razor code.
+
+* **DbRes.TFormat() Method**<br/>
+Added DbRes.TFormat() to allow formatting of strings with fewer nested functions when using in Razor markup.
+
 
 ### Version 1.998
 <small><i>January 26, 2015</i></small>
