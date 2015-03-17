@@ -6,125 +6,128 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="Localization Administration Form">
 
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <link rel="apple-touch-icon" href="touch-icon.png" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <link rel="apple-touch-icon" href="touch-icon.png"/>
 
-    <link rel="icon" href="touch-icon.png" />
+    <link rel="icon" href="touch-icon.png"/>
     <meta name="msapplication-TileImage" content="touch-icon.png">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-     <![endif]-->
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
     <title>Localization Administration</title>
 
     <!-- combined CSS file - build with gulp -->
-    <!--<link href="build/app.min.css" rel="stylesheet" />-->
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />-->
+    <!--<link href="build/app.min.css" rel="stylesheet"/>-->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>-->
 
 
-    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!--<link href="LocalizationAdministration/css/bootstrap-theme.css" rel="stylesheet" />-->
-    <link href="bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <!--<link href="LocalizationAdministration/css/bootstrap-theme.css" rel="stylesheet"/>-->
+    <link href="bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
 
-    <link href="css/localizationAdmin.css" rel="stylesheet" />
+    <link href="css/localizationAdmin.css" rel="stylesheet"/>
 </head>
 <body ng-app="app" ng-controller="listController as view" ng-cloak>
 
-    <div class="banner">
-        <div id="TitleBar">
-            <a href="index.html">
-                <img src="images/Westwind.Localization_128.png"
-                     style="height: 35px; float: left" />
-                <div style="float: left; margin-left: 5px; line-height: 1.2">
-                    <i style="color: steelblue; font-size: 0.8em; font-weight: bold;">West Wind Globalization</i><br />
-                    <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;">{{::view.dbRes('LocalizationAdministration')}}</i>
-                </div>
-            </a>
-        </div>
-    </div>
-
-    <div ng-include="'Partials/Menubar.html'"></div>
-
-    <div id="ContentContainer"
-         ng-cloak>
-
-        <div id="ListPanel"
-             ng-class="{ collapsed: !view.listVisible}"
-             class="col-sm-3"
-             style="padding-right: 1px;border-right: 1px solid silver;">
-            <div class="input-group">
-                <span class="input-group-addon" style="border-radius: 0"><i class="fa fa-search"></i></span>
-                <input id="SearchResources"
-                       class="form-control"
-                       placeholder="{{::view.dbRes('SearchResources')}}"
-                       ng-model="view.searchText"
-                       style="border-radius: 0;margin:0"
-                       type="search"
-                       accesskey="E" />
+<div class="banner">
+    <div id="TitleBar">
+        <a href="index.html">
+            <img src="images/Westwind.Localization_128.png"
+                 style="height: 35px; float: left"/>
+            <div style="float: left; margin-left: 5px; line-height: 1.2">
+                <i style="color: steelblue; font-size: 0.8em; font-weight: bold;">West Wind Globalization</i><br/>
+                <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;">{{::view.dbRes('LocalizationAdministration')}}</i>
             </div>
+        </a>
+    </div>
+</div>
 
+<div ng-include="'Partials/Menubar.html'"></div>
 
-            <div class="form-group">
-                <select id="ResourceIdList" ng-model="view.resourceId"
-                        ng-change="view.onResourceIdChange(resource)"
-                        size="2" class="form-control">
-                    <option ng-repeat="resource in view.resourceList | filter:view.searchText"
-                            value="{{resource.ResourceId}}"
-                            style="{{resource.Style}}">
-                        {{resource.ResourceId}}
-                    </option>
-                </select>
-            </div>
+<div id="ContentContainer"
+     ng-cloak>
+
+    <div id="ListPanel"
+         ng-class="{ collapsed: !view.listVisible}"
+         class="col-sm-3"
+         style="padding-right: 1px; border-right: 1px solid silver;">
+        <div class="input-group">
+            <span class="input-group-addon" style="border-radius: 0"><i class="fa fa-search"></i></span>
+            <input id="SearchResources"
+                   class="form-control"
+                   placeholder="{{::view.dbRes('SearchResources')}}"
+                   ng-model="view.searchText"
+                   style="border-radius: 0; margin: 0"
+                   type="search"
+                   accesskey="E"/>
         </div>
 
-        <div id="ContentPanel" class="col-sm-8" ng-class="{expanded: !view.listVisible }">
 
-            <div ng-include src="'partials/ResourceList.html'"></div>
-
-            <div ng-include src="'partials/ResourceSetList.html'"></div>
+        <div class="form-group">
+            <select id="ResourceIdList" ng-model="view.resourceId"
+                    ng-change="view.onResourceIdChange(resource)"
+                    size="2" class="form-control">
+                <option ng-repeat="resource in view.resourceList | filter:view.searchText"
+                        value="{{resource.ResourceId}}"
+                        style=" { {resource.Style}}">
+                    {{resource.ResourceId}}
+                </option>
+            </select>
         </div>
     </div>
 
+    <div id="ContentPanel" class="col-sm-8" ng-class="{expanded: !view.listVisible }">
 
-    <div id="ErrorMessage" class="alert alert-{{view.error.cssClass}} alert-dismissable"
-         ng-show="view.error.message">
-        <!--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>-->
-        <i class="fa fa-{{view.error.icon}}"></i> &nbsp;&nbsp;<strong>{{view.error.message}}</strong>
+        <div ng-include src="'partials/ResourceList.html'"></div>
+
+        <div ng-include src="'partials/ResourceSetList.html'"></div>
     </div>
-
-    <div ng-include src="'partials/TranslateDialog.html'"></div>
-
-    <div ng-include src="'partials/AddResourceDialog.html'"></div>
-
-    <div ng-include src="'partials/RenameResourceDialog.html'"></div>
-
-    <div ng-include src="'partials/ResourceProviderInfoDialog.html'"></div>
+</div>
 
 
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="scripts/ww.jquery.min.js"></script>
-    <script src="bower_components/lodash/lodash.min.js"></script>
-    <script src="../JavaScriptResourceHandler.axd?ResourceSet=LocalizationForm&LocaleId=auto&VarName=resources&ResourceType=auto&ResourceMode=1"></script>
-    <script src="bower_components/angular/angular.min.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-    <script src="scripts/ww.angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<div id="ErrorMessage" class="alert alert-{{view.error.cssClass}} alert-dismissable"
+     ng-show="view.error.message">
+    <!--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>-->
+    <i class="fa fa-{{view.error.icon}}"></i> &nbsp;&nbsp;<strong>{{view.error.message}}</strong>
+</div>
+
+<div ng-include src="'partials/TranslateDialog.html'"></div>
+<div ng-include src="'partials/AddResourceDialog.html'"></div>
+<div ng-include src="'partials/RenameResourceDialog.html'"></div>
+<div ng-include src="'partials/ResourceProviderInfoDialog.html'"></div>
+<div ng-include src="'partials/ImportExportResxDialog.html'"></div>
+<div ng-include src="'partials/CreateClassDialog.html'"></div>
 
 
-    <!-- combined app scripts - build with gulp -->
-    <!--<script src="js/app.min.js"></script>-->
 
-    <script src="app/app.js"></script>
-    <script src="app/localizationService.js"></script>
-    <script src="app/listController.js"></script>
-    <script src="app/translateController.js"></script>
-    <script src="app/resourceProviderController.js"></script>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="scripts/ww.jquery.min.js"></script>
+<script src="bower_components/lodash/lodash.min.js"></script>
+<script src="../JavaScriptResourceHandler.axd?ResourceSet=LocalizationForm&LocaleId=auto&VarName=resources&ResourceType=auto&ResourceMode=1"></script>
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="scripts/ww.angular.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+<!-- combined app scripts - build with gulp -->
+<!--<script src="js/app.min.js"></script>-->
+
+<script src="app/app.js"></script>
+
+<script src="app/localizationService.js"></script>
+<script src="app/listController.js"></script>
+<script src="app/translateController.js"></script>
+<script src="app/resourceProviderController.js"></script>
+<script src="app/importExportResxController.js"></script>
+<script src="app/createClassController.js"></script>
 
 </body>
 </html>

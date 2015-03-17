@@ -27,10 +27,9 @@ Requirements:
 
 ### Features
 * .NET Resources in Sql Server, Sql Server Compact, MySql and SqLite   
-* Two Database ASP.NET ResourceProviders (ASP.NET,WebForms) 
-* Database .NET  ResourceManager (MVC,non-Web apps)
-* Two Database ASP.NET ResourceProviders (ASP.NET,WebForms) 
-* Uses standard, efficent .NET Resource management and caching
+* Two Database ASP.NET ResourceProviders (ASP.NET/WebForms) 
+* Database .NET  ResourceManager (ASP.NET MVC,non-Web apps)
+* Uses standard, efficient .NET Resource management and caching
 * Use standard .NET/ASP.NET syntax to access resources
 * Or: Use our dynamic DbRes string based helper (works anywhere)
 * Interactive, live Web Resource Editor to edit Resources

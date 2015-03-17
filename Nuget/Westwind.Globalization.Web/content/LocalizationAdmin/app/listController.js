@@ -9,31 +9,32 @@
 
    listController.$inject = [ '$scope','$timeout','localizationService'];
 
-   function listController( $scope,$timeout,localizationService) {
-       console.log('list controller');
+    function listController($scope, $timeout, localizationService) {
+        console.log('list controller');
 
-       var vm = this;
-       vm.resources = resources;
-       vm.dbRes = resources.dbRes;
-       vm.listVisible = true;
+        var vm = this;
+
+        vm.resources = resources;
+        vm.dbRes = resources.dbRes;
+        vm.listVisible = true;
         vm.searchText = null;
         vm.resourceSet = null;
         vm.resourceSets = [];
         vm.resourceList = [];
         vm.resourceId = null;
         vm.activeResource = null;
-        vm.localeIds = [];        
+        vm.localeIds = [];
         vm.resourceItems = [];
         vm.resourceItemIndex = 0;
-       vm.newResourceId = null;
-       vm.editedResource = null,
-           vm.error = {
-               message: null,
-               icon: "info-circle",
-               cssClass: "info"
-           };
+        vm.newResourceId = null;
+        vm.editedResource = null,
+            vm.error = {
+            message: null,
+            icon: "info-circle",
+            cssClass: "info"
+        }
 
-       vm.newResource = function() {
+        vm.newResource = function() {
            return {
                "ResourceId": null,
                "Value": null,
@@ -360,32 +361,8 @@
                })
                .error(parseError);
        };
-       vm.onCreateClassClick = function () {
-           localizationService.createClass()
-               .success(function () {
-                   showMessage(vm.dbRes("StronglyTypedClassCreated"));
-               })
-               .error(parseError);
-       };
-       vm.onExportResxResourcesClick = function () {
-           localizationService.exportResxResources()
-               .success(function () {
-                   showMessage("Resx Resources have been created in your Web project.");
-               })
-               .error(parseError);
-       };
-       vm.onImportResxResourcesClick = function () {
-           localizationService.importResxResources()
-               .success(function() {
-                   vm.getResourceSets();
-                   showMessage("Resx Resources have been imported in your Web project. Make sure to recompile your application and turn on code generation on any Resx resources for stronly typed Resx resources.");
-               })
-               .error(function() {
-                   vm.getResourceSets();
-                   parseError(arguments);
-               });
-       };
-
+       vm.showMessage = showMessage;
+        vm.parseError = parseError;
 
        function parseError(args) {           
            var err = ww.angular.parseHttpError(args || arguments);           
