@@ -67,23 +67,14 @@
    <data name="SearchResources" xml:space="preserve">
       <value>Search Resources</value>
    </data>
-   <data name="Add" xml:space="preserve">
-      <value>Add</value>
-   </data>
    <data name="Delete" xml:space="preserve">
       <value>Delete</value>
    </data>
    <data name="Comment" xml:space="preserve">
       <value>Comment</value>
    </data>
-   <data name="Add.Title" xml:space="preserve">
-      <value>Add a new individual resource.</value>
-   </data>
    <data name="ResourceSaved" xml:space="preserve">
       <value>Resource has been saved.</value>
-   </data>
-   <data name="ResourceSetRenamed" xml:space="preserve">
-      <value>ResourceSet renamed.</value>
    </data>
    <data name="ResourcesHaveBeenReloaded" xml:space="preserve">
       <value>Resources have been reloaded.</value>
@@ -93,6 +84,9 @@
    </data>
    <data name="Delete.Title" xml:space="preserve">
       <value>Delete all resources for this resource id.</value>
+   </data>
+   <data name="ResourceSetRenamed" xml:space="preserve">
+      <value>ResourceSet renamed.</value>
    </data>
    <data name="Delete.ResourceSet.Title" xml:space="preserve">
       <value>Delete all resources in this ResourceSet.</value>
@@ -129,9 +123,6 @@
    </data>
    <data name="Backup.Title" xml:space="preserve">
       <value>Backup resources to a backup table in the database.</value>
-   </data>
-   <data name="AreYouSureYouWantToDoThis" xml:space="preserve">
-      <value>Are you sure you want to do this?</value>
    </data>
    <data name="YouAreAboutToDeleteThisResourceSet" xml:space="preserve">
       <value>You are about to delete this resource set.</value>
@@ -226,19 +217,22 @@
    <data name="ResxResourcesHaveBeenImported" xml:space="preserve">
       <value>Resx Resources have been imported.</value>
    </data>
+   <data name="AreYouSureYouWantToDoThis" xml:space="preserve">
+      <value>Are you sure you want to do this?</value>
+   </data>
    <data name="CreateTable.Title" xml:space="preserve">
       <value>Create the Localization table as defined in the configuration file.</value>
-   </data>
-   <data name="LocalizationTableNotCreated" xml:space="preserve">
-      <value>Localization table has not been created.</value>
-   </data>
-   <data name="StronglyTypedGlobalResourcesFailed" xml:space="preserve">
-      <value>Failed to create strongly typed resources.</value>
    </data>
    <data name="LocaleIdsFailedToLoad" xml:space="preserve">
       <value>Locale Ids failed to load.</value>
    </data>
    <data name="ResourceUpdateFailed" xml:space="preserve">
       <value>Resource update failed.</value>
+   </data>
+   <data name="LocalizationTableNotCreated" xml:space="preserve">
+      <value>Localization table has not been created.</value>
+   </data>
+   <data name="StronglyTypedGlobalResourcesFailed" xml:space="preserve">
+      <value>Failed to create strongly typed resources.</value>
    </data>
 </root>

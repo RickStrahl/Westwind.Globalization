@@ -1,53 +1,79 @@
 /// <reference path="localizationservice.js" />
 /// <reference path="../bower_components/lodash/lodash.js" />
-(function (undefined) {
-    'use strict';
-    
-    var app = angular
-        .module('app')
-        .controller('listController', listController);
+(function(undefined) {
+        'use strict';
 
-   listController.$inject = [ '$scope','$timeout','localizationService'];
+        var app = angular
+            .module('app')
+            .controller('listController', listController);
 
-    function listController($scope, $timeout, localizationService) {
-        console.log('list controller');
+        listController.$inject = ['$scope', '$timeout', '$upload', 'localizationService'];
 
-        var vm = this;
+        function listController($scope, $timeout, $upload, localizationService) {
+            console.log('list controller');
 
-        vm.resources = resources;
-        vm.dbRes = resources.dbRes;
-        vm.listVisible = true;
-        vm.searchText = null;
-        vm.resourceSet = null;
-        vm.resourceSets = [];
-        vm.resourceList = [];
-        vm.resourceId = null;
-        vm.activeResource = null;
-        vm.localeIds = [];
-        vm.resourceItems = [];
-        vm.resourceItemIndex = 0;
-        vm.newResourceId = null;
-        vm.editedResource = null,
-            vm.error = {
-            message: null,
-            icon: "info-circle",
-            cssClass: "info"
-        }
+            var vm = this;
 
-        vm.newResource = function() {
-           return {
-               "ResourceId": null,
-               "Value": null,
-               "Comment": null,
-               "Type": "",
-               "LocaleId": "",
-               "ResourceSet": "",
-               "TextFile": null,
-               "BinFile": null,
-               "FileName": ""
-           };
-       };
+            vm.resources = resources;
+            vm.dbRes = resources.dbRes;
+            vm.listVisible = true;
+            vm.searchText = null;
+            vm.resourceSet = null;
+            vm.resourceSets = [];
+            vm.resourceList = [];
+            vm.resourceId = null;
+            vm.activeResource = null;
+            vm.localeIds = [];
+            vm.resourceItems = [];
+            vm.resourceItemIndex = 0;
+            vm.newResourceId = null;
+            vm.uploadProgress = null;
+            vm.editedResource = null,
+                vm.error = {
+                    message: null,
+                    icon: "info-circle",
+                    cssClass: "info"
+                }
 
+            vm.newResource = function() {
+                return {
+                    "ResourceId": null,
+                    "Value": null,
+                    "Comment": null,
+                    "Type": "",
+                    "LocaleId": "",
+                    "ResourceSet": "",
+                    "TextFile": null,
+                    "BinFile": null,
+                    "FileName": ""
+                };
+            };
+
+
+            vm.onResourceUpload = function(files) {
+                if (files && files.length) {
+                    for (var i = 0; i < files.length; i++) {
+                        var file = files[i];
+                        $upload.upload({
+                                url: 'LocalizationService.ashx?method=UploadResource',
+                                fields: { 'resourceset': vm.resourceSet, 'resourceid': vm.resourceId, "localeid": vm.activeResource.LocaleId },
+                                file: file
+                            }).progress(function(evt) {
+                                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                                vm.uploadProgress = progressPercentage + '% ' + evt.config.file.name;
+                            }).success(function(data, status, headers, config) {
+                                $("#AddResourceDialog").modal('hide');
+                                vm.getResourceItems();
+                                showMessage(vm.dbRes('ResourceSaved'));
+                                vm.uploadProgress = null;
+                            })
+                            .error(function() {
+                                parseError(arguments);
+                                vm.uploadProgress = null;
+                            });
+                    }
+            }
+        };
 
        vm.collapseList = function () {           
            vm.listVisible = !vm.listVisible;
@@ -101,10 +127,19 @@
         vm.getResourceItems = function getResourceItems() {
 
             localizationService.getResourceItems(vm.resourceId, vm.resourceSet)
-                .success(function(resourceItems) {
+                .success(function (resourceItems) {                    
                     vm.resourceItems = resourceItems;
-                    if (vm.resourceItems.length > 0)
+                    if (vm.resourceItems.length > 0) {
                         vm.activeResource = vm.resourceItems[0];
+                        for (var i = 0; i < vm.resourceItems.length; i++) {
+                            var resource = vm.resourceItems[i];
+                            if (!resource.Value) {
+                                resource.Value = !resource.Type
+                                    ? resource.Value
+                                    : 'binary: ' + resource.Type + ':' + resource.FileName;
+                            }
+                        }
+                    }
                 })
                 .error(parseError);
         };
@@ -209,6 +244,9 @@
            res.ResourceId = vm.activeResource.ResourceId;
            vm.activeResource = res;
 
+           $("#AddResourceDialog").modal();
+       };
+       vm.onEditResourceClick = function () {
            $("#AddResourceDialog").modal();
        };
 

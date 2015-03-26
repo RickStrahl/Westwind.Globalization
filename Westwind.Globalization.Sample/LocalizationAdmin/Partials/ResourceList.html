@@ -38,13 +38,16 @@
 
     </div>
 
-    <!--<div class="separator" style="margin-top: 10px;margin-bottom:10px"></div>-->
-
+    <!--<div class="separator" style="margin-top: 10px;margin-bottom:10px"></div>-->    
     <div class="btn-group" style="margin-top: 12px;">
         <button ng-click="view.onAddResourceClick()" class="btn btn-sm btn-default"
                 title="{{::view.resources.Add_Title}}"
                 accesskey="A">
             <i class="fa fa-plus"></i> {{::view.dbRes('Add')}}
+        </button>
+        <button ng-click="view.onEditResourceClick()" class="btn btn-sm btn-default"
+                title="{{::view.resources.Add_Title}}">
+            <i class="fa fa-edit"></i> {{::view.dbRes('Edit') }} {{view.activeResource.LocaleId ? '(' + view.activeResource.LocaleId + ')' : ''}}
         </button>
         <button class="btn btn-sm btn-default"
                 title="{{::view.dbRes('Delete_Title')}}"

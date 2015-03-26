@@ -325,7 +325,7 @@ namespace Westwind.Globalization
                     continue;
 
                 string varName = SafeVarName(key);
-
+                
                 // It's a string
                 if (!IsVb)
                 {
@@ -333,17 +333,10 @@ namespace Westwind.Globalization
                     sbClass.AppendFormat(indent + "\tget\r\n" +
                                          indent + "\t{{\r\n" +
                                          indent +
-                                         "\t\tif (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider)\r\n" +
-                                         indent +
-                                         "\t\t\treturn ({2}) HttpContext.GetGlobalResourceObject(\"{0}\",\"{1}\");\r\n" +
-
-                                         indent +
-                                         "\t\tif (GeneratedResourceSettings.ResourceAccessMode == ResourceAccessMode.Resx)\r\n" +
-                                         indent + "\t\t\t" +
-                                         "return ResourceManager.GetString(\"{1}\");\r\n\r\n" +
-
-                                         indent + "\t\treturn " +
-                                         (typeName == "System.String" ? "DbRes.T(\"{1}\",\"{0}\");" : "({2}) DbRes.TO(\"{1}\",\"{0}\");") + "\r\n" +
+                                         (string.IsNullOrEmpty(typeName) || typeName == "System.String" 
+                                         ? "\t\t" + @"return GeneratedResourceHelper.GetResourceString(""{1}"",""{0}"",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);" + "\r\n"
+                                         : "\t\t" + @"return ({{2}}) GeneratedResourceHelper.GetResourceObject(""{1}"",""{0}"",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);" + "\r\n") 
+                                         +
                                          indent + "\t}}\r\n",
                                          classname, key,typeName);
                     sbClass.Append(indent + "}\r\n\r\n");                    

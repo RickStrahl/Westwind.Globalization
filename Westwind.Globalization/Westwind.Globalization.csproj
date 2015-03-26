@@ -109,12 +109,13 @@
     <Compile Include="DbResourceSupportClasses\DbResourceProviderSection.cs" />
     <Compile Include="DbResourceManager\DbRes.cs" />
     <Compile Include="DbResourceDataManager\ResourceItem.cs" />
+    <Compile Include="DbResourceSupportClasses\IWestWindResourceProvider.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="DbResourceSupportClasses\IWestWindResourceProvider.cs" />
+    <Compile Include="Utilities\GeneratedResourceHelper.cs" />
     <Compile Include="Utilities\JavaScriptResources.cs" />
     <Compile Include="Utilities\StronglyTypedResources.cs" />
     <Compile Include="Utilities\TranslationService.cs" />
@@ -130,9 +131,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

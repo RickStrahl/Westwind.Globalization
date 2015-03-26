@@ -106,14 +106,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Westwind.Utilities, Version=2.61.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Westwind.Utilities.2.61\lib\net45\Westwind.Utilities.dll</HintPath>
-    </Reference>
-    <Reference Include="Westwind.Web, Version=2.61.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Westwind.Web.2.61\lib\net45\Westwind.Web.dll</HintPath>
-    </Reference>
     <Reference Include="Westwind.Web.WebForms, Version=2.59.5500.1075, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Westwind.Web.WebForms.2.59\lib\net45\Westwind.Web.WebForms.dll</HintPath>
@@ -159,9 +151,14 @@
     <Content Include="LocalizationAdmin\app\createClassController.js" />
     <Content Include="LocalizationAdmin\app\importExportResxController.js" />
     <Content Include="LocalizationAdmin\app\resourceProviderController.js" />
+    <Content Include="LocalizationAdmin\bower_components\angular-sanitize\.bower.json" />
     <Content Include="LocalizationAdmin\bower_components\angular-sanitize\angular-sanitize.js" />
     <Content Include="LocalizationAdmin\bower_components\angular-sanitize\angular-sanitize.min.js" />
+    <Content Include="LocalizationAdmin\bower_components\angular-sanitize\angular-sanitize.min.js.map" />
+    <Content Include="LocalizationAdmin\bower_components\angular-sanitize\bower.json" />
     <Content Include="LocalizationAdmin\bower_components\angular-sanitize\index.js" />
+    <Content Include="LocalizationAdmin\bower_components\angular-sanitize\package.json" />
+    <Content Include="LocalizationAdmin\bower_components\angular-sanitize\README.md" />
     <Content Include="LocalizationAdmin\bower_components\angular\angular-csp.css" />
     <Content Include="LocalizationAdmin\bower_components\angular\angular.js" />
     <Content Include="LocalizationAdmin\bower_components\angular\angular.min.js" />
@@ -178,6 +175,16 @@
     <Content Include="LocalizationAdmin\bower_components\fontawesome\css\font-awesome.css" />
     <Content Include="LocalizationAdmin\bower_components\fontawesome\css\font-awesome.min.css" />
     <Content Include="LocalizationAdmin\bower_components\fontawesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="LocalizationAdmin\bower_components\ng-file-upload\angular-file-upload-all.js" />
+    <Content Include="LocalizationAdmin\bower_components\ng-file-upload\angular-file-upload-all.min.js" />
+    <Content Include="LocalizationAdmin\bower_components\ng-file-upload\angular-file-upload-shim.js" />
+    <Content Include="LocalizationAdmin\bower_components\ng-file-upload\angular-file-upload-shim.min.js" />
+    <Content Include="LocalizationAdmin\bower_components\ng-file-upload\angular-file-upload.js" />
+    <Content Include="LocalizationAdmin\bower_components\ng-file-upload\angular-file-upload.min.js" />
+    <Content Include="LocalizationAdmin\bower_components\ng-file-upload\FileAPI.flash.swf" />
+    <Content Include="LocalizationAdmin\bower_components\ng-file-upload\FileAPI.min.js" />
+    <Content Include="LocalizationAdmin\bower_components\ng-file-upload\ng-file-upload-all.js" />
+    <Content Include="LocalizationAdmin\bower_components\ng-file-upload\ng-file-upload-all.min.js" />
     <Content Include="LocalizationAdmin\Partials\CreateClassDialog.html" />
     <Content Include="LocalizationAdmin\Partials\Menubar.html" />
     <Content Include="LocalizationAdmin\index.html" />
@@ -218,11 +225,6 @@
     <Content Include="LocalizationAdmin\bower_components\bootstrap\LICENSE" />
     <Content Include="LocalizationAdmin\bower_components\bootstrap\package.json" />
     <Content Include="LocalizationAdmin\bower_components\bootstrap\README.md" />
-    <Content Include="LocalizationAdmin\bower_components\angular-sanitize\.bower.json" />
-    <Content Include="LocalizationAdmin\bower_components\angular-sanitize\angular-sanitize.min.js.map" />
-    <Content Include="LocalizationAdmin\bower_components\angular-sanitize\bower.json" />
-    <Content Include="LocalizationAdmin\bower_components\angular-sanitize\package.json" />
-    <Content Include="LocalizationAdmin\bower_components\angular-sanitize\README.md" />
     <Content Include="LocalizationAdmin\bower_components\angular\.bower.json" />
     <Content Include="LocalizationAdmin\bower_components\angular\angular.min.js.gzip" />
     <Content Include="LocalizationAdmin\bower_components\angular\angular.min.js.map" />
@@ -241,6 +243,9 @@
     <Content Include="LocalizationAdmin\scripts\ww.jquery.min.js">
       <DependentUpon>ww.jquery.js</DependentUpon>
     </Content>
+    <Content Include="LocalizationAdmin\touch-icon.png" />
+    <None Include="Resources\Image1.png" />
+    <None Include="Resources\Icon1.ico" />
     <Content Include="Scripts\ww.jquery.js" />
     <Content Include="Scripts\ww.jquery.min.js" />
     <Content Include="_readme.Westwind.Globalization.html" />
@@ -248,6 +253,11 @@
       <DependentUpon>ww.jquery.min.js</DependentUpon>
     </Content>
     <Content Include="App_Data\SqLiteLocalizations.db" />
+    <Content Include="LocalizationAdmin\bower_components\ng-file-upload\.bower.json" />
+    <Content Include="LocalizationAdmin\bower_components\ng-file-upload\bower.json" />
+    <Content Include="LocalizationAdmin\bower_components\ng-file-upload\LICENSE" />
+    <Content Include="LocalizationAdmin\bower_components\ng-file-upload\npm-debug.log" />
+    <Content Include="LocalizationAdmin\bower_components\ng-file-upload\README.md" />
     <None Include="LocalizationAdmin\scripts\_references.js" />
     <Content Include="LocalizationAdmin\bower_components\jquery\.bower.json" />
     <Content Include="LocalizationAdmin\bower_components\jquery\bower.json" />
@@ -291,6 +301,14 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\WestwindToolkit\Westwind.Utilities\Westwind.Utilities.csproj">
+      <Project>{1c9829a8-8979-4493-863c-635726f8a61c}</Project>
+      <Name>Westwind.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\WestwindToolkit\Westwind.Web\Westwind.Web.csproj">
+      <Project>{0c38b4e1-0c87-4289-a57b-87c1b5be3bbe}</Project>
+      <Name>Westwind.Web</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Westwind.Globalization.MySql\Westwind.Globalization.MySql.csproj">
       <Project>{9d405441-66d4-45d0-8832-9e17587ba921}</Project>
       <Name>Westwind.Globalization.MySql</Name>
@@ -317,7 +335,10 @@
     <EmbeddedResource Include="Properties\LocalizationForm.resx" />
     <EmbeddedResource Include="Properties\Resources.de.resx" />
     <EmbeddedResource Include="Properties\Resources.fr.resx" />
-    <EmbeddedResource Include="Properties\Resources.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

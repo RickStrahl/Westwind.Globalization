@@ -860,12 +860,26 @@ namespace Westwind.Globalization
         /// <param name="resource">Resource to update</param>
         public virtual int UpdateOrAddResource(ResourceItem resource)
         {
-            if (resource == null)
+            if (!IsValidCulture(resource.LocaleId))
             {
-                SetError("Resource passed cannot be null.");
+                ErrorMessage = string.Format(Resources.Can_t_save_resource__Invalid_culture_id_passed, resource.LocaleId);
                 return -1;
             }
-            return UpdateOrAddResource(resource.ResourceId, resource.Value, resource.LocaleId, resource.ResourceSet, resource.Comment,false);
+
+            int result = 0;
+            result = UpdateResource(resource);
+
+            // We either failed or we updated
+            if (result != 0)
+                return result;
+
+            // We have no records matched in the Update - Add instead
+            result = AddResource(resource);
+
+            if (result == -1)
+                return -1;
+
+            return 1;
         }
 
         /// <summary>
@@ -905,16 +919,69 @@ namespace Westwind.Globalization
         /// <summary>
         /// Adds a resource to the Localization Table
         /// </summary>
-        /// <param name="resource">Resource to update</param>
+        /// <param name="resource">Resource to update</param>        
         public virtual int AddResource(ResourceItem resource)
         {
-            if (resource == null)
+            string Type = string.Empty;
+
+            if (resource.LocaleId == null)
+                resource.LocaleId = string.Empty;
+
+            if (string.IsNullOrEmpty(resource.ResourceId))
             {
-                SetError("Resource passed cannot be null.");
+                ErrorMessage = Resources.NoResourceIdSpecifiedCantAddResource;
                 return -1;
             }
-            return AddResource(resource.ResourceId, resource.Value, resource.LocaleId, resource.ResourceSet, resource.Comment, false);
+
+            if (resource.Value != null && !(resource.Value is string))
+            {
+                Type = resource.Value.GetType().AssemblyQualifiedName;
+                try
+                {
+                    SerializeValue(resource.Value);
+                }
+                catch (Exception ex)
+                {
+                    ErrorMessage = ex.Message;
+                    return -1;
+                }
+            }
+            else
+                Type = string.Empty;
+
+
+            if (resource.Value == null)
+                resource.Value = string.Empty;
+
+            using (var data = GetDb())
+            {
+                if (Transaction != null)
+                    data.Transaction = Transaction;
+
+                DbParameter BinFileParm = data.CreateParameter("@BinFile", resource.BinFile, DbType.Binary);
+                DbParameter TextFileParm = data.CreateParameter("@TextFile", resource.TextFile);
+
+                string Sql = "insert into " + Configuration.ResourceTableName +
+                             " (ResourceId,Value,LocaleId,Type,Resourceset,BinFile,TextFile,Filename,Comment,Updated) Values (@ResourceID,@Value,@LocaleId,@Type,@ResourceSet,@BinFile,@TextFile,@FileName,@Comment,@Updated)";
+                if (data.ExecuteNonQuery(Sql,
+                    data.CreateParameter("@ResourceId", resource.ResourceId),
+                    data.CreateParameter("@Value", resource.Value),
+                    data.CreateParameter("@LocaleId", resource.LocaleId),
+                    data.CreateParameter("@Type", resource.Type),
+                    data.CreateParameter("@ResourceSet", resource.ResourceSet),
+                    BinFileParm, TextFileParm,
+                    data.CreateParameter("@FileName", resource.FileName),
+                    data.CreateParameter("@Comment", resource.Comment),
+                    data.CreateParameter("@Updated", DateTime.UtcNow)) == -1)
+                {
+                    ErrorMessage = data.ErrorMessage;
+                    return -1;
+                }
+            }
+
+            return 1;
         }
+
 
         /// <summary>
         /// Adds a resource to the Localization Table
@@ -1014,7 +1081,6 @@ namespace Westwind.Globalization
 
             return 1;
         }
-
 
 
         ///// <summary>
@@ -1146,7 +1212,76 @@ namespace Westwind.Globalization
                 SetError("Resource passed cannot be null.");
                 return -1;
             }
-            return UpdateResource(resource.ResourceId, resource.Value, resource.LocaleId, resource.ResourceSet, resource.Comment, false);
+
+            string type = null;
+
+            if (resource.LocaleId == null)
+                resource.LocaleId = string.Empty;
+
+
+            if (resource.Value != null && !(resource.Value is string))
+            {
+                type = resource.Value.GetType().AssemblyQualifiedName;
+                try
+                {
+                    resource.Value = SerializeValue(resource.Value);
+                }
+                catch (Exception ex)
+                {
+                    ErrorMessage = ex.Message;
+                    return -1;
+                }
+            }
+            else if (resource.BinFile != null && string.IsNullOrEmpty(resource.Type))
+                type = "FileResource";
+            else
+            {
+                type = string.Empty;
+
+                if (resource.Value == null)
+                    resource.Value = string.Empty;
+            }
+
+
+          
+            if (resource.Value == null)
+                resource.Value = string.Empty;
+
+
+            int result;
+            using (var data = GetDb())
+            {
+                if (Transaction != null)
+                    data.Transaction = Transaction;
+
+                // Set up Binfile and TextFile parameters which are set only for
+                // file values - otherwise they'll pass as Null values.
+                var binFileParm = data.CreateParameter("@BinFile", resource.BinFile, DbType.Binary);
+                var textFileParm = data.CreateParameter("@TextFile", resource.TextFile);
+
+                string sql = "update " + Configuration.ResourceTableName +
+                             " set Value=@Value, Type=@Type, BinFile=@BinFile,TextFile=@TextFile,FileName=@FileName, Comment=@Comment, updated=@Updated " +
+                             "where LocaleId=@LocaleId AND ResourceSet=@ResourceSet and ResourceId=@ResourceId";
+                result = data.ExecuteNonQuery(sql,
+                    data.CreateParameter("@ResourceId", resource.ResourceId),
+                    data.CreateParameter("@Value", resource.Value),
+                    data.CreateParameter("@Type", resource.Type),
+                    data.CreateParameter("@LocaleId", resource.LocaleId),
+                    data.CreateParameter("@ResourceSet", resource.ResourceSet),
+                    binFileParm, textFileParm,
+                    data.CreateParameter("@FileName", resource.FileName),
+                    data.CreateParameter("@Comment", resource.Comment),
+                    data.CreateParameter("@Updated", DateTime.UtcNow)
+                    );
+                if (result == -1)
+                {
+                    ErrorMessage = data.ErrorMessage;
+                    return -1;
+                }
+            }
+
+            return result;
+
         }
 
         /// <summary>

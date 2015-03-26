@@ -6,11 +6,10 @@
         // ngAnimate',
         //'ngRoute',
         'ngSanitize'
-
-
         // Custom modules 
 
-        // 3rd Party Modules
+        // 3rd Party Modules    
+        ,'angularFileUpload'
     ]);
 
     // config settings

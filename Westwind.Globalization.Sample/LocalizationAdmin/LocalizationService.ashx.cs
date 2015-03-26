@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Resources;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Routing;
+using System.Web.UI.WebControls;
 using Newtonsoft.Json;
 using Westwind.Utilities;
 using Westwind.Web;
+using Westwind.Web.Controls;
 using Westwind.Web.JsonSerializers;
 
 namespace Westwind.Globalization.Sample.LocalizationAdministration
@@ -110,6 +114,14 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
                 return null;
             }
 
+            // strip file data for size
+            for (int i = 0; i < items.Count; i++)
+            {
+                var item = items[i];
+                item.BinFile = null;
+                item.TextFile = null;
+            }
+
             return items;
         }
 
@@ -160,11 +172,27 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             string resourceId = parm.resourceId;
             string resourceSet = parm.resourceSet;
             string localeId = parm.localeId;
+            
+            var item = Manager.GetResourceItem(resourceId,resourceSet,localeId);
+            if (item == null)
+            {    item = new ResourceItem()
+                {
+                    ResourceId = resourceId,
+                    LocaleId = localeId,
+                    ResourceSet = resourceSet
+                };
+            }
 
             if (string.IsNullOrEmpty(value))
                 return Manager.DeleteResource(resourceId, resourceSet: resourceSet, cultureName: localeId);
 
-            if (Manager.UpdateOrAddResource(resourceId, value, localeId, resourceSet, null) == -1)
+            item.Value = value;
+            item.Type = null;
+            item.FileName = null;
+            item.BinFile = null;
+            item.TextFile = null;
+
+            if (Manager.UpdateOrAddResource(item) < 0)
                 return false;
 
             return true;
@@ -190,6 +218,55 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             int result = Manager.UpdateOrAddResource(resource);
             if (result == -1)
                 throw new InvalidOperationException(Manager.ErrorMessage);
+
+            return true;
+        }
+
+
+        [CallbackMethod]
+        public bool UploadResource()
+        {
+            if (Request.Files.Count < 1)
+                return false;
+
+            var file = Request.Files[0];
+            var resourceId = Request.Form["ResourceId"];
+            var resourceSet = Request.Form["ResourceSet"];
+            var localeId = Request.Form["LocaleId"];
+
+            if (string.IsNullOrEmpty(resourceId) || string.IsNullOrEmpty(resourceSet))
+                throw new ApplicationException("Resourceset or ResourceId are not provided for upload.");
+
+            //FileInfo fi = new FileInfo(this.FileUpload.FileName);
+            string extension = Path.GetExtension(file.FileName).TrimStart('.').ToLower();  // fi.Extension.TrimStart('.');
+            const string filter = ",bmp,ico,gif,jpg,png,css,js,txt,html,xml,wav,mp3,";
+            if (filter.IndexOf("," + extension + ",") == -1)
+                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "InvalidFileUploaded"));
+
+            using (var ms = new MemoryStream())
+            {
+                file.InputStream.CopyTo(ms);
+                file.InputStream.Close();
+                ms.Flush();
+
+                var item = Manager.GetResourceItem(resourceId, resourceSet, localeId);
+                if (item == null)
+                {
+                    item = new ResourceItem()
+                    {
+                        ResourceId = resourceId,
+                        ResourceSet = resourceSet,
+                        LocaleId = localeId
+                    };
+                }
+
+                item.BinFile = ms.ToArray();
+                item.Type = "System.Byte[]";
+                item.FileName = file.FileName;
+                item.Value = null;
+
+                int res = Manager.UpdateOrAddResource(item);
+            }
 
             return true;
         }
@@ -440,7 +517,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         }
 
 
-        [CallbackMethod()]
+        [CallbackMethod]
         public object GetLocalizationInfo()
         {
             // Get the Web application configuration object.
@@ -469,33 +546,35 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             };
         }
 
-        public class ResourceString
+        
+    }
+
+    public class ResourceString
+    {
+        public string LocaleId { get; set; }
+        public string Value { get; set; }
+    }
+
+    public class ResourceItemEx : ResourceItem
+    {
+        public ResourceItemEx()
         {
-            public string LocaleId { get; set; }
-            public string Value { get; set; }
         }
 
-        public class ResourceItemEx : ResourceItem
+        public ResourceItemEx(ResourceItem item)
         {
-            public ResourceItemEx()
-            {                
-            }
-
-            public ResourceItemEx(ResourceItem item)
-            {
-                ResourceId = item.ResourceId;
-                LocaleId = item.LocaleId;
-                Value = item.Value;
-                ResourceSet = item.ResourceSet;
-                Type = item.Type;
-                FileName = item.FileName;
-                TextFile = item.TextFile;
-                BinFile = item.BinFile;
-                Comment = item.Comment;
-            }
-
-            public List<ResourceString> ResourceList { get; set; }
+            ResourceId = item.ResourceId;
+            LocaleId = item.LocaleId;
+            Value = item.Value;
+            ResourceSet = item.ResourceSet;
+            Type = item.Type;
+            FileName = item.FileName;
+            TextFile = item.TextFile;
+            BinFile = item.BinFile;
+            Comment = item.Comment;
         }
+
+        public List<ResourceString> ResourceList { get; set; }
     }
 }
 
