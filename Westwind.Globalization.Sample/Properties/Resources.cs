@@ -539,11 +539,11 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String PingPongImage
+		public static System.Byte[] PingPongImage
 		{
 			get
 			{
-				return GeneratedResourceHelper.GetResourceString("PingPongImage","Resources",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+				return (System.Byte[]) GeneratedResourceHelper.GetResourceObject("PingPongImage","Resources",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 

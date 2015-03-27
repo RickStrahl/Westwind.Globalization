@@ -335,7 +335,7 @@ namespace Westwind.Globalization
                                          indent +
                                          (string.IsNullOrEmpty(typeName) || typeName == "System.String" 
                                          ? "\t\t" + @"return GeneratedResourceHelper.GetResourceString(""{1}"",""{0}"",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);" + "\r\n"
-                                         : "\t\t" + @"return ({{2}}) GeneratedResourceHelper.GetResourceObject(""{1}"",""{0}"",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);" + "\r\n") 
+                                         : "\t\t" + @"return ({2}) GeneratedResourceHelper.GetResourceObject(""{1}"",""{0}"",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);" + "\r\n") 
                                          +
                                          indent + "\t}}\r\n",
                                          classname, key,typeName);

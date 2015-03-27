@@ -260,10 +260,10 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
                     };
                 }
 
+                item.Value = file.FileName + ";System.Byte[]";
                 item.BinFile = ms.ToArray();
-                item.Type = "System.Byte[]";
-                item.FileName = file.FileName;
-                item.Value = null;
+                item.Type = "FileResource";
+                item.FileName = file.FileName;                
 
                 int res = Manager.UpdateOrAddResource(item);
             }

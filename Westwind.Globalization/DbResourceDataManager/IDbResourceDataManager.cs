@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Westwind.Utilities.Data;
@@ -143,8 +144,9 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="resourceId">The resource Id to return for</param>
         /// <param name="resourceSet">Resourceset to look in</param>
+        /// <param name="forAllResourceSetLocales">When true returns empty entries for missing resources of locales in this resource set</param>
         /// <returns>List of resource items or null</returns>
-        IEnumerable<ResourceItem> GetResourceItems(string resourceId, string resourceSet, bool forAllResourcesetLocales = false);
+        IEnumerable<ResourceItem> GetResourceItems(string resourceId, string resourceSet, bool forAllResourceSetLocales = false);
 
         /// <summary>
         /// Returns all the resource strings for all cultures for a specific resource Id.
@@ -155,6 +157,8 @@ namespace Westwind.Globalization
         /// <param name="forAllResourceSetLocales">If true returns empty entries for each locale that exists but has no value in this resource set</param>
         /// <returns></returns>
         Dictionary<string, string> GetResourceStrings(string resourceId, string resourceSet, bool forAllResourceSetLocales = false);
+
+        List<string> GetAllLocalesForResourceSet(string resourceSet);
 
         /// <summary>
         /// Updates a resource if it exists, if it doesn't one is created
@@ -176,7 +180,7 @@ namespace Westwind.Globalization
         /// <summary>
         /// Adds a resource to the Localization Table
         /// </summary>
-        /// <param name="resource">Resource to update</param>
+        /// <param name="resource">Resource to update</param>        
         int AddResource(ResourceItem resource);
 
         /// <summary>
@@ -216,8 +220,9 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="resourceId">Resource Id to delete</param>
         /// <param name="resourceSet">The resource set to remove</param>
-        /// <param name="cultureName">language ID - if empty all languages are deleted</param>       
-        /// <returns>true or false</returns>
+        /// <param name="cultureName">language ID - if empty all languages are deleted</param>
+        /// e
+        /// <returns></returns>
         bool DeleteResource(string resourceId, string resourceSet = null, string cultureName = null);
 
         /// <summary>
@@ -330,6 +335,8 @@ namespace Westwind.Globalization
         /// <returns></returns>
         bool CreateLocalizationTable(string tableName = null);
 
+        void SetError();
         void SetError(string message);
+        void SetError(Exception ex);
     }
 }

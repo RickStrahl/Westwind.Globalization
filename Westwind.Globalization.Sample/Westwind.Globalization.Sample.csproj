@@ -246,6 +246,7 @@
     <Content Include="LocalizationAdmin\touch-icon.png" />
     <None Include="Resources\Image1.png" />
     <None Include="Resources\Icon1.ico" />
+    <None Include="Resources\Image2.png" />
     <Content Include="Scripts\ww.jquery.js" />
     <Content Include="Scripts\ww.jquery.min.js" />
     <Content Include="_readme.Westwind.Globalization.html" />

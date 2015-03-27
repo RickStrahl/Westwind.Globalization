@@ -111,8 +111,6 @@ namespace Westwind.Globalization
         {
             if (connectionString == null)
                 connectionString = Configuration.ConnectionString;
-            if (connectionString == null)
-                connectionString = Configuration.ConnectionString;
 
             return new SqlDataAccess(connectionString);
         }
@@ -830,7 +828,7 @@ namespace Westwind.Globalization
             return Resources;
         }
 
-        protected virtual List<string> GetAllLocalesForResourceSet(string resourceSet)
+        public virtual List<string> GetAllLocalesForResourceSet(string resourceSet)
         {
             var locales = new List<string>();
 
@@ -1283,6 +1281,7 @@ namespace Westwind.Globalization
             return result;
 
         }
+        
 
         /// <summary>
         /// Internal routine that looks at a file and based on its
@@ -1291,39 +1290,49 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="FileName"></param>
         /// <returns></returns>
-        private FileInfoFormat GetFileInfo(string FileName)
+        public static FileInfoFormat GetFileInfo(string FileName, bool noPhysicalFile = false)
         {
-            FileInfoFormat Details = new FileInfoFormat();
+            FileInfoFormat fileInfo = new FileInfoFormat();
 
             FileInfo fi = new FileInfo(FileName);
-            if (!fi.Exists)
+            if (!noPhysicalFile && !fi.Exists)
                 throw new InvalidOperationException("Invalid Filename");
 
             string Extension = fi.Extension.ToLower().TrimStart('.');
-            Details.FileName = fi.Name;
+            fileInfo.FileName = fi.Name;
 
             if (Extension == "txt" || Extension == "css" || Extension == "js" || Extension.StartsWith("htm") || Extension == "xml")
             {
-                Details.FileFormatType = FileFormatTypes.Text;
-                using (StreamReader sr = new StreamReader(FileName, Encoding.Default, true))
+                fileInfo.FileFormatType = FileFormatTypes.Text;
+                fileInfo.Type = "System.String";
+
+                if (!noPhysicalFile)
                 {
-                    Details.TextContent = sr.ReadToEnd();
+                    using (StreamReader sr = new StreamReader(FileName, Encoding.Default, true))
+                    {
+                        fileInfo.TextContent = sr.ReadToEnd();
+                    }
                 }
-                Details.ValueString = Details.FileName + ";" + typeof(string).AssemblyQualifiedName + ";" + Encoding.Default.HeaderName;
+                fileInfo.ValueString = fileInfo.FileName + ";" + typeof(string).AssemblyQualifiedName + ";" + Encoding.Default.HeaderName;
             }
             else if (Extension == "gif" || Extension == "jpg" || Extension == "bmp" || Extension == "png")
             {
-                Details.FileFormatType = FileFormatTypes.Image;
-                Details.BinContent = File.ReadAllBytes(FileName);
-                Details.ValueString = Details.FileName + ";" + typeof(Bitmap).AssemblyQualifiedName;
+                fileInfo.FileFormatType = FileFormatTypes.Image;
+                fileInfo.Type = "System.Drawing.Bitmap";
+                if(!noPhysicalFile)
+                    fileInfo.BinContent = File.ReadAllBytes(FileName);
+                fileInfo.ValueString = fileInfo.FileName + ";" + typeof(Bitmap).AssemblyQualifiedName;
             }
             else
             {
-                Details.BinContent = File.ReadAllBytes(FileName);
-                Details.ValueString = Details.FileName + ";" + typeof(Byte[]).AssemblyQualifiedName;
+                fileInfo.FileFormatType = FileFormatTypes.Binary;
+                fileInfo.Type = "System.Byte[]"; 
+                if (!noPhysicalFile)
+                    fileInfo.BinContent = File.ReadAllBytes(FileName);                
+                fileInfo.ValueString = fileInfo.FileName + ";" + typeof(Byte[]).AssemblyQualifiedName;
             }
 
-            return Details;
+            return fileInfo;
         }
 
     
@@ -1806,7 +1815,7 @@ namespace Westwind.Globalization
             return JsonConvert.DeserializeObject(serializedValue,type);
         }
        
-        protected void SetError()
+        public void SetError()
         {
             SetError("CLEAR");
         }
@@ -1821,21 +1830,15 @@ namespace Westwind.Globalization
             ErrorMessage += message;
         }
 
-        protected void SetError(Exception ex, bool checkInner = false)
+        public void SetError(Exception ex)
         {
             if (ex == null)
+            {
                 ErrorMessage = string.Empty;
+                return;
+            }
 
-            Exception e = ex;
-            if (checkInner)
-                e = e.GetBaseException();
-
-            ErrorMessage = e.Message;
-        }
-
-        protected void SetError(Exception ex)
-        {
-            SetError(ex, false);
+            ErrorMessage = ex.GetBaseException().Message;
         }
 
 
@@ -1881,7 +1884,7 @@ namespace Westwind.Globalization
         AllResources
     }
 
-    internal enum FileFormatTypes
+    public enum FileFormatTypes
     {
         Text,
         Image,
@@ -1893,7 +1896,7 @@ namespace Westwind.Globalization
     /// resource. Used internally to figure out how to write 
     /// a resource into the database
     /// </summary>
-    internal class FileInfoFormat
+    public class FileInfoFormat
     {
         public string FileName = string.Empty;
         public string Encoding = string.Empty;
