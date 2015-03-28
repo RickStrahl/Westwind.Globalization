@@ -314,6 +314,37 @@ namespace Westwind.Globalization
             return resDictionary;
         }
 
+        public static ResourceItem  SetFileDataOnResourceItem(ResourceItem item, byte[] data, string fileName)
+        {
+            if (data == null || item == null || string.IsNullOrEmpty(fileName))
+                throw new ArgumentException(Resources.ResourceItemMissingFileUploadData);
+
+            string ext = Path.GetExtension(fileName).TrimStart('.').ToLower();
+            const string filter = ",bmp,ico,gif,jpg,jpeg,png,css,js,txt,html,htm,xml,wav,mp3,";
+            if (!filter.Contains("," + ext + ","))
+                throw new ArgumentException(Resources.InvalidFileExtensionForFileResource);
+
+            string type;
+            if ("jpg,jpeg,png,gif,bmp".Contains(ext))
+                type = typeof (Bitmap).AssemblyQualifiedName;
+            else if("ico" == ext)
+                type = typeof(Icon).AssemblyQualifiedName;
+            else if ("txt,css,htm,html,xml,js".Contains(ext))
+                type = typeof (string).AssemblyQualifiedName;
+            else
+                type = typeof (byte[]).AssemblyQualifiedName;
+
+            using (var ms = new MemoryStream())
+            {
+                item.Value = fileName + ";" + type;
+                item.BinFile = data;
+                item.Type = "FileResource";
+                item.FileName = fileName;
+            }
+
+            return item;
+        }
+
 
         /// <summary>
         /// Internal method used to parse the data in the database into a 'real' value.
@@ -334,12 +365,31 @@ namespace Westwind.Globalization
                 if (TypeInfo.IndexOf("System.String") > -1)
                 {
                     value = reader["TextFile"] as string;
-                }
-                else if (TypeInfo.IndexOf("System.Drawing.Bitmap") > -1)
+                }                
+                else if (TypeInfo.Contains("System.Drawing.Bitmap"))
                 {
-                    MemoryStream ms = new MemoryStream(reader["BinFile"] as byte[]);
-                    value = new Bitmap(ms);
-                    ms.Close();
+                    // IMPORTANT: don't release the mem stream or Jpegs won't render/save
+                    if (TypeInfo.Contains(".jpg") || TypeInfo.Contains(".jpeg"))
+                    {
+                        // Some JPEGs require that the memory stream stays open in order
+                        // to use the Bitmap later. Let CLR worry about garbage collection
+                        // Prefer: Don't store jpegs
+                        var ms = new MemoryStream(reader["BinFile"] as byte[]);
+                        value = new Bitmap(ms);                        
+                    }
+                    else
+                    {
+                        using (var ms = new MemoryStream(reader["BinFile"] as byte[]))
+                        {
+                            value = new Bitmap(ms);
+                        }
+                    }
+                }
+                else if (TypeInfo.Contains("System.Drawing.Icon"))
+                {
+                    // IMPORTANT: don't release the mem stream 
+                    var ms = new MemoryStream(reader["BinFile"] as byte[]);
+                    value = new Icon(ms);
                 }
                 else
                 {
@@ -1288,13 +1338,13 @@ namespace Westwind.Globalization
         /// extension determines how that file needs to be stored in the
         /// database. Returns FileInfoFormat structure
         /// </summary>
-        /// <param name="FileName"></param>
+        /// <param name="fileName"></param>
         /// <returns></returns>
-        public static FileInfoFormat GetFileInfo(string FileName, bool noPhysicalFile = false)
+        public static FileInfoFormat GetFileInfo(string fileName, bool noPhysicalFile = false)
         {
             FileInfoFormat fileInfo = new FileInfoFormat();
 
-            FileInfo fi = new FileInfo(FileName);
+            FileInfo fi = new FileInfo(fileName);
             if (!noPhysicalFile && !fi.Exists)
                 throw new InvalidOperationException("Invalid Filename");
 
@@ -1304,31 +1354,39 @@ namespace Westwind.Globalization
             if (Extension == "txt" || Extension == "css" || Extension == "js" || Extension.StartsWith("htm") || Extension == "xml")
             {
                 fileInfo.FileFormatType = FileFormatTypes.Text;
-                fileInfo.Type = "System.String";
+                fileInfo.Type = "FileResource";
 
                 if (!noPhysicalFile)
                 {
-                    using (StreamReader sr = new StreamReader(FileName, Encoding.Default, true))
+                    using (StreamReader sr = new StreamReader(fileName, Encoding.Default, true))
                     {
                         fileInfo.TextContent = sr.ReadToEnd();
                     }
                 }
                 fileInfo.ValueString = fileInfo.FileName + ";" + typeof(string).AssemblyQualifiedName + ";" + Encoding.Default.HeaderName;
             }
-            else if (Extension == "gif" || Extension == "jpg" || Extension == "bmp" || Extension == "png")
+            else if (Extension == "gif" || Extension == "jpg" || Extension == "jpeg" || Extension == "bmp" || Extension == "png")
             {
                 fileInfo.FileFormatType = FileFormatTypes.Image;
-                fileInfo.Type = "System.Drawing.Bitmap";
+                fileInfo.Type = "FileResource";
                 if(!noPhysicalFile)
-                    fileInfo.BinContent = File.ReadAllBytes(FileName);
+                    fileInfo.BinContent = File.ReadAllBytes(fileName);
                 fileInfo.ValueString = fileInfo.FileName + ";" + typeof(Bitmap).AssemblyQualifiedName;
+            }
+            else if (Extension == "ico")
+            {
+                fileInfo.FileFormatType = FileFormatTypes.Image;
+                fileInfo.Type = "System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a";
+                if (!noPhysicalFile)
+                    fileInfo.BinContent = File.ReadAllBytes(fileName);
+                fileInfo.ValueString = fileInfo.FileName + ";" + typeof(Icon).AssemblyQualifiedName;
             }
             else
             {
                 fileInfo.FileFormatType = FileFormatTypes.Binary;
-                fileInfo.Type = "System.Byte[]"; 
+                fileInfo.Type = "FileResource"; 
                 if (!noPhysicalFile)
-                    fileInfo.BinContent = File.ReadAllBytes(FileName);                
+                    fileInfo.BinContent = File.ReadAllBytes(fileName);                
                 fileInfo.ValueString = fileInfo.FileName + ";" + typeof(Byte[]).AssemblyQualifiedName;
             }
 

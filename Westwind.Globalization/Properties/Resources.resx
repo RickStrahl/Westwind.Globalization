@@ -153,4 +153,10 @@
   <data name="NoResourceIdSpecifiedCantAddResource" xml:space="preserve">
     <value>No ResourceId specified. Can't add resource</value>
   </data>
+  <data name="ResourceItemMissingFileUploadData" xml:space="preserve">
+    <value>Missing file upload data</value>
+  </data>
+  <data name="InvalidFileExtensionForFileResource" xml:space="preserve">
+    <value>Invalid file extension for file resource.</value>
+  </data>
 </root>

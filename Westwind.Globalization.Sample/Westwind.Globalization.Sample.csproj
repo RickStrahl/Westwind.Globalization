@@ -244,9 +244,7 @@
       <DependentUpon>ww.jquery.js</DependentUpon>
     </Content>
     <Content Include="LocalizationAdmin\touch-icon.png" />
-    <None Include="Resources\Image1.png" />
-    <None Include="Resources\Icon1.ico" />
-    <None Include="Resources\Image2.png" />
+    <Content Include="Properties\Westwind.Localization_50.png" />
     <Content Include="Scripts\ww.jquery.js" />
     <Content Include="Scripts\ww.jquery.min.js" />
     <Content Include="_readme.Westwind.Globalization.html" />
@@ -334,8 +332,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Properties\LocalizationForm.de.resx" />
     <EmbeddedResource Include="Properties\LocalizationForm.resx" />
-    <EmbeddedResource Include="Properties\Resources.de.resx" />
-    <EmbeddedResource Include="Properties\Resources.fr.resx" />
+    <EmbeddedResource Include="Properties\Resources.de.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.fr.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

@@ -115,6 +115,15 @@ namespace Westwind.Globalization.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid file extension for file resource..
+        /// </summary>
+        public static string InvalidFileExtensionForFileResource {
+            get {
+                return ResourceManager.GetString("InvalidFileExtensionForFileResource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid search result..
         /// </summary>
         public static string InvalidSearchResult {
@@ -156,6 +165,15 @@ namespace Westwind.Globalization.Properties {
         public static string NoResourceIdSpecifiedCantAddResource {
             get {
                 return ResourceManager.GetString("NoResourceIdSpecifiedCantAddResource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing file upload data.
+        /// </summary>
+        public static string ResourceItemMissingFileUploadData {
+            get {
+                return ResourceManager.GetString("ResourceItemMissingFileUploadData", resourceCulture);
             }
         }
         

@@ -223,16 +223,16 @@
    <data name="CreateTable.Title" xml:space="preserve">
       <value>Create the Localization table as defined in the configuration file.</value>
    </data>
-   <data name="LocaleIdsFailedToLoad" xml:space="preserve">
-      <value>Locale Ids failed to load.</value>
-   </data>
-   <data name="ResourceUpdateFailed" xml:space="preserve">
-      <value>Resource update failed.</value>
-   </data>
    <data name="LocalizationTableNotCreated" xml:space="preserve">
       <value>Localization table has not been created.</value>
    </data>
    <data name="StronglyTypedGlobalResourcesFailed" xml:space="preserve">
       <value>Failed to create strongly typed resources.</value>
+   </data>
+   <data name="LocaleIdsFailedToLoad" xml:space="preserve">
+      <value>Locale Ids failed to load.</value>
+   </data>
+   <data name="ResourceUpdateFailed" xml:space="preserve">
+      <value>Resource update failed.</value>
    </data>
 </root>

@@ -58,6 +58,15 @@
    <resheader name="writer">
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
+   <data name="InvalidResourceId" xml:space="preserve">
+      <value>Ungültige Ressourcen-ID.</value>
+   </data>
+   <data name="AreYouSureYouWantToDoThis" xml:space="preserve">
+      <value>Sind Sie sicher, dass Sie dies tun wollen?</value>
+   </data>
+   <data name="CreateTable" xml:space="preserve">
+      <value>Tabelle erstellen</value>
+   </data>
    <data name="ResourceGenerationFailed" xml:space="preserve">
       <value>Ressourcengenerierung fehlgeschlagen.</value>
    </data>
@@ -70,18 +79,6 @@
    <data name="CreateStronglyTypedClasses" xml:space="preserve">
       <value>Erstellung von Stark typisierten Klassen</value>
    </data>
-   <data name="InvalidResourceId" xml:space="preserve">
-      <value>Ungültige Ressourcen-ID.</value>
-   </data>
-   <data name="ResxResourcesHaveBeenImported" xml:space="preserve">
-      <value>Resx Ressourcen wurden importiert.</value>
-   </data>
-   <data name="ResxImportInfo.WebForms" xml:space="preserve">
-      <value>Ihr Resx Exportmodus ist &lt;b&gt; WebForms &lt;/ b&gt;, also werden RESX-Ressourcen aus den entsprechenden App_GlobalResources und App_LocalResources Ordner importiert.</value>
-   </data>
-   <data name="CreateTable" xml:space="preserve">
-      <value>Tabelle erstellen</value>
-   </data>
    <data name="CreateTable.Title" xml:space="preserve">
       <value>Neue Tabelle erstellen, wie definiert in der Konfigurationsdatei.</value>
    </data>
@@ -90,6 +87,12 @@
    </data>
    <data name="ResourceSetLoadingFailed" xml:space="preserve">
       <value>ResourceSet konnte nicht geladen werden.</value>
+   </data>
+   <data name="ResxResourcesHaveBeenImported" xml:space="preserve">
+      <value>Resx Ressourcen wurden importiert.</value>
+   </data>
+   <data name="ResxImportInfo.WebForms" xml:space="preserve">
+      <value>Ihr Resx Exportmodus ist &lt;b&gt; WebForms &lt;/ b&gt;, also werden RESX-Ressourcen aus den entsprechenden App_GlobalResources und App_LocalResources Ordner importiert.</value>
    </data>
    <data name="ResxImportInfo.Project" xml:space="preserve">
       <value>Ihr Resx Exportmodus ist &lt;b&gt;Projekt&lt;/ b&gt;, also werden ihre Ressourcendateien recursiv mit Pfaden und Web-basierter Pfadsyntax importiert, die sich in dem RessourceSet Namen widerspiegelt.</value>

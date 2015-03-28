@@ -236,20 +236,8 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
 
             if (string.IsNullOrEmpty(resourceId) || string.IsNullOrEmpty(resourceSet))
                 throw new ApplicationException("Resourceset or ResourceId are not provided for upload.");
-
-            //FileInfo fi = new FileInfo(this.FileUpload.FileName);
-            string extension = Path.GetExtension(file.FileName).TrimStart('.').ToLower();  // fi.Extension.TrimStart('.');
-            const string filter = ",bmp,ico,gif,jpg,png,css,js,txt,html,xml,wav,mp3,";
-            if (filter.IndexOf("," + extension + ",") == -1)
-                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "InvalidFileUploaded"));
-
-            using (var ms = new MemoryStream())
-            {
-                file.InputStream.CopyTo(ms);
-                file.InputStream.Close();
-                ms.Flush();
-
-                var item = Manager.GetResourceItem(resourceId, resourceSet, localeId);
+            
+             var item = Manager.GetResourceItem(resourceId, resourceSet, localeId);
                 if (item == null)
                 {
                     item = new ResourceItem()
@@ -260,10 +248,14 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
                     };
                 }
 
-                item.Value = file.FileName + ";System.Byte[]";
-                item.BinFile = ms.ToArray();
-                item.Type = "FileResource";
-                item.FileName = file.FileName;                
+            using (var ms = new MemoryStream())
+            {
+                file.InputStream.CopyTo(ms);
+                file.InputStream.Close();
+                ms.Flush();
+
+                if (DbResourceDataManager.SetFileDataOnResourceItem(item, ms.ToArray(), file.FileName) == null)
+                    return false;
 
                 int res = Manager.UpdateOrAddResource(item);
             }
@@ -271,6 +263,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             return true;
         }
 
+    
 
         [CallbackMethod]
         public bool DeleteResource(dynamic parm)

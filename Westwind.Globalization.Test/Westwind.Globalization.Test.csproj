@@ -75,6 +75,7 @@
     <Reference Include="System.Data.SQLite">
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.94.0\lib\net45\System.Data.SQLite.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.XML" />
     <Reference Include="Westwind.Utilities, Version=2.61.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -105,6 +106,7 @@
     <Compile Include="DbResTests.cs" />
     <Compile Include="DbSimpleResourceProviderTests.cs" />
     <Compile Include="DbResourceSqlServerDataManagerTests.cs" />
+    <Compile Include="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -136,7 +138,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="data\GermanFlag.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="data\localizations.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\snail.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="scripts\ww.jquery.js" />
@@ -147,10 +155,6 @@
     <ProjectReference Include="..\Westwind.Globalization.MySql\Westwind.Globalization.MySql.csproj">
       <Project>{9d405441-66d4-45d0-8832-9e17587ba921}</Project>
       <Name>Westwind.Globalization.MySql</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Westwind.Globalization.Sample\Westwind.Globalization.Sample.csproj">
-      <Project>{1e36a3c9-2f87-407a-b568-ebf336061a06}</Project>
-      <Name>Westwind.Globalization.Sample</Name>
     </ProjectReference>
     <ProjectReference Include="..\Westwind.Globalization.SqLite\Westwind.Globalization.SqLite.csproj">
       <Project>{4C74DAE9-4F4D-4D94-B3CA-783ACEF494F2}</Project>

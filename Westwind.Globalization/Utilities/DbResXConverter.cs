@@ -227,15 +227,17 @@ namespace Westwind.Globalization
                                 Encode = Encoding.GetEncoding(Tokens[2]);
 
                             // Write out the file to disk
+                            
                             File.WriteAllText(resourcePath + "\\" + FileName, TextFile, Encode);
                         }
-                        catch
+                        catch(Exception ex)
                         {
+                            string msg = ex.Message;
                         }
                     }
                     else
                     {
-                        File.WriteAllBytes(resourcePath + "\\" + FileName, BinFile);
+                        File.WriteAllBytes(Path.Combine(resourcePath,FileName), BinFile);
                     }
 
                     //<data name="Scratch" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -374,7 +376,9 @@ namespace Westwind.Globalization
                                 Encode = Encoding.GetEncoding(Tokens[2]);
 
                             // Write out the file to disk
-                            File.WriteAllText(ResourcePath + "\\" + res.FileName, res.TextFile, Encode);
+                            var file = Path.Combine(ResourcePath, res.FileName);
+                            File.Delete(file);
+                            File.WriteAllText(file, res.TextFile, Encode);                            
                         }
                         catch
                         {
@@ -382,7 +386,9 @@ namespace Westwind.Globalization
                     }
                     else
                     {
-                        File.WriteAllBytes(ResourcePath + "\\" + res.FileName, res.BinFile);
+                        var file = Path.Combine(ResourcePath, res.FileName);
+                        File.Delete(file); // overwrite doesn't appear to work so explicitly delete
+                        File.WriteAllBytes(file, res.BinFile); 
                     }
 
                     //<data name="Scratch" type="System.Resources.ResXFileRef, System.Windows.Forms">

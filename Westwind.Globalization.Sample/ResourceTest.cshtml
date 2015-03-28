@@ -1,4 +1,5 @@
-﻿@using System.Threading
+﻿@using System.Drawing.Imaging
+@using System.Threading
 @using Westwind.Globalization
 @using Westwind.Globalization.Sample.Properties
 @{    
@@ -6,7 +7,7 @@
     if (!string.IsNullOrEmpty(localeId))
     {
         Westwind.Utilities.WebUtils.SetUserLocale(localeId, localeId, "$", true, "en,de,fr");
-    }
+    }  
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -85,82 +86,85 @@
     </nav>
 
 
-    <div class="well container" style="margin-top: 30px;">
-        <section class="pull-right" style="text-align: right">
-            <div>
-                Current Culture: <b>@Thread.CurrentThread.CurrentCulture.IetfLanguageTag</b>
-            </div>
-            <div>
-                Current UI Culture: <b>@Thread.CurrentThread.CurrentUICulture.IetfLanguageTag</b>
-            </div>
-            <div>
-                <form id="form1" name="form1" action="ResourceTest.cshtml" method="GET">
-                    <select id="localeId" name="localeId"                                                      
-                            onchange="document.forms['form1'].submit();"
-                            class="form-control">
-                        <option value="">Browser Default</option>
-                        <option value="en">English</option>
-                        <option value="de">German</option>
-                        <option value="fr">French</option>
-                    </select>
-                    <script>
-                        var localeId = '@localeId';
-                        if (localeId) {
-                            var el = document.getElementById("localeId");
-                            for (var i = 0; i < el.options.length; i++) {
-                                var opt = el.options[i];
-                                if (opt.value === localeId)
-                                    opt.selected = true;
-                                else
-                                    opt.selected = false;
-                            }
-                        }
-                    </script>
-                </form>
-            </div>
-        </section>
-
-       
-            <div class="container">
-                
-                    <h3>DbRes</h3>
-
-                    <label>Using DbRes Direct Access Provider (default locale):</label>
-                    @DbRes.T("HelloWorld", "Resources")
-
-                    <label>Using DbRes Force to German:</label>
-                    @DbRes.T("HelloWorld", "Resources", "de")                
-            </div>
-
-            <div class="container">
-                
-                    <h3>ASP.NET ResourceProvider</h3>
-                    <label>Get GlobalResource Object (default locale):</label>
-                    @HttpContext.GetGlobalResourceObject("Resources", "HelloWorld")                
-            </div>
-
-            <div class="container">
-                
-                    <h3>Strongly Typed Resource (generated)</h3>
-
-                    <label>Strongly typed Resource Generated from Db (uses ASP.NET ResourceProvider)</label>
-                    @Resources.HelloWorld                
-            </div>
-
-            <div class="container">                
-                    <h3>JavaScript Resource Handler</h3>
-
-                    <label>Localized JavaScript Variable (assigned in JavaScript code from resources.HelloWorld):</label>
-                    <div id="JavaScriptHelloWorld"></div>
-                </fieldset>
-            </div>
-
+<div class="well container" style="margin-top: 30px;">
+    <section class="pull-right" style="text-align: right">
+        <div>
+            Current Culture: <b>@Thread.CurrentThread.CurrentCulture.IetfLanguageTag</b>
         </div>
+        <div>
+            Current UI Culture: <b>@Thread.CurrentThread.CurrentUICulture.IetfLanguageTag</b>
+        </div>
+        <div>
+            <form id="form1" name="form1" action="ResourceTest.cshtml" method="GET">
+                <select id="localeId" name="localeId"
+                        onchange=" document.forms['form1'].submit(); "
+                        class="form-control">
+                    <option value="">Browser Default</option>
+                    <option value="en">English</option>
+                    <option value="de">German</option>
+                    <option value="fr">French</option>
+                </select>
+                <script>
+                    var localeId = '@localeId';
+                    if (localeId) {
+                        var el = document.getElementById("localeId");
+                        for (var i = 0; i < el.options.length; i++) {
+                            var opt = el.options[i];
+                            if (opt.value === localeId)
+                                opt.selected = true;
+                            else
+                                opt.selected = false;
+                        }
+                    }
+                </script>
+            </form>
+        </div>
+    </section>
 
-        <!-- Generates a resources variable that contains all server side resources translated for this resource set-->
-        <script src="@JavaScriptResourceHandler.GetJavaScriptResourcesUrl("resources","Resources")"></script>
-        <script>
-            document.querySelector("#JavaScriptHelloWorld").innerText = resources.HelloWorld;
-        </script>        
+
+    <div class="container">
+
+        <h3>DbRes</h3>
+
+        <label>Using DbRes Direct Access Provider (default locale):</label>
+        @DbRes.T("HelloWorld", "Resources")
+
+        <label>Using DbRes Force to German:</label>
+        @DbRes.T("HelloWorld", "Resources", "de")
+    </div>
+
+    <div class="container">
+
+        <h3>ASP.NET ResourceProvider</h3>
+        <label>Get GlobalResource Object (default locale):</label>
+        @HttpContext.GetGlobalResourceObject("Resources", "HelloWorld")
+    </div>
+
+    <div class="container">
+
+        <h3>Strongly Typed Resource (generated)</h3>
+
+        <label>Strongly typed Resource Generated from Db (uses ASP.NET ResourceProvider)</label>
+        @Resources.HelloWorld
+
+        <label>Strongly typed image resource:</label>
+        <div>@Html.Raw(GeneratedResourceHelper.BitmapToEmbeddedHtmlImage(Resources.FlagPng, ImageFormat.Png))</div>
+
+    </div>
+
+    <div class="container">
+        <h3>JavaScript Resource Handler</h3>
+        <label>Localized JavaScript Variable (assigned in JavaScript code from resources.HelloWorld):</label>
+        <div id="JavaScriptHelloWorld"></div>
+    </div>
+</div>
+
+    @Html.Raw(GeneratedResourceHelper.BitmapToEmbeddedHtmlImage(Resources.SailBigJpg,ImageFormat.Jpeg))
+
+<!-- Generates a resources = { "HelloWorld": "Hello World", "Today": "Today" } style variable that contains all server side resources translated for this resource set-->
+    <script src="@JavaScriptResourceHandler.GetJavaScriptResourcesUrl("resources","Resources")"></script>
+    <script>
+        document.querySelector("#JavaScriptHelloWorld").innerText = resources.HelloWorld;
+    </script>        
 </body>
 </html>
