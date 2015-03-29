@@ -1595,6 +1595,33 @@
             </param>
             <returns>deserialized value/object from returned JSON data</returns>
         </member>
+        <member name="M:Westwind.Utilities.HttpUtils.HttpRequestStringAsync(System.String)">
+            <summary>
+            Retrieves and Http request and returns data as a string.
+            </summary>
+            <param name="url">The Url to access</param>
+            <returns>string of HTTP response</returns>
+        </member>
+        <member name="M:Westwind.Utilities.HttpUtils.HttpRequestStringAsync(Westwind.Utilities.HttpRequestSettings)">
+            <summary>
+            Retrieves and Http request and returns data as a string.
+            </summary>
+            <param name="settings">Pass HTTP request configuration parameters object to set the URL, Verb, Headers, content and more</param>
+            <returns>string of HTTP response</returns>
+        </member>
+        <member name="M:Westwind.Utilities.HttpUtils.JsonRequestAsync``1(Westwind.Utilities.HttpRequestSettings)">
+            <summary>
+            Makes an HTTP with option JSON data serialized from an object
+            and parses the result from JSON back into an object.
+            Assumes that the service returns a JSON response and that
+            any data sent is json.
+            </summary>
+            <typeparam name="TResultType">The type of the object returned</typeparam>
+            <param name="settings"><see cref="T:Westwind.Utilities.HttpRequestSettings"/>
+            Configuration object for the HTTP request made to the server.
+            </param>
+            <returns>deserialized value/object from returned JSON data</returns>
+        </member>
         <member name="T:Westwind.Utilities.HttpRequestSettings">
             <summary>
             Configuration object for Http Requests used by the HttpUtils

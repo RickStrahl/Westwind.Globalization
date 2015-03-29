@@ -338,7 +338,7 @@
             </summary>
             <param name="target">The target object that is to be called. If null this is used</param>
         </member>
-        <member name="M:Westwind.Web.ICallbackMethodProcessor.WriteErrorResponse(System.String,System.String)">
+        <member name="M:Westwind.Web.ICallbackMethodProcessor.WriteErrorResponse(System.String,System.String,System.Int32)">
             <summary>
             Returns an error response to the client from a callback. Code
             should exit after this call.
@@ -405,7 +405,7 @@
             </summary>
             <param name="target"></param>
         </member>
-        <member name="M:Westwind.Web.JsonCallbackMethodProcessor.WriteErrorResponse(System.String,System.String)">
+        <member name="M:Westwind.Web.JsonCallbackMethodProcessor.WriteErrorResponse(System.String,System.String,System.Int32)">
             <summary>
             Returns an error response to the client from a callback. Code
             should exit after this call.
@@ -477,7 +477,7 @@
             </summary>
             <param name="target"></param>
         </member>
-        <member name="M:Westwind.Web.XmlCallbackMethodProcessor.WriteErrorResponse(System.String,System.String)">
+        <member name="M:Westwind.Web.XmlCallbackMethodProcessor.WriteErrorResponse(System.String,System.String,System.Int32)">
             <summary>
             Returns an error response to the client from a callback. Code
             should exit after this call.
