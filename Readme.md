@@ -123,9 +123,22 @@ There are three distinct resource access mechanisms supported:
   (Non-Web apps, and or MVC apps where you already use Resx)
 * Direct Db Provider access using DbRes helper (easiest overall - works everywhere)
 
+## Running the Sample Application
+To run the sample application you have to set up a database to provide the resources. The following assumes you are using the default configuration which uses SQL Server and a database named *Localizations* - you can  change this via web.config settings (see the following section for more details). 
+ 
+* Create a SQL Server/Express Database called `Localizations`
+* Make sure the IIS Web User using has rights to create a Database in this DB
+* Open http://localhost:xxxxx/LocalizationAdmin/ in your browser
+* You'll get an error message like: <br/>
+  *ResourceLoadingFailed: Invalid Object Name Localizations*
+* Use the `Create Table` button to create the *Localizations* table
+* Use `Import or Export Resx` button to import resources from the project into the db
+* Select `Import Resources`	from the dropdown
+* You should now have all the sample and LocalizationForm resources in the db
+* Open the `ResourceTest.cshtml` to test resource operation
+
 ## Installation and Configuration
-The easiest way to use data driven resources with this library is to install the NuGet
-package into an ASP.NET application.
+The easiest way to use this library in your own applications is to install the NuGet package into an ASP.NET application.
 
 ```
 pm> Install-Package Westwind.Globalization.Web
