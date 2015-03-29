@@ -11,6 +11,7 @@ using System.Collections;
 using System.CodeDom.Compiler;
 using System.Resources.Tools;
 using System.CodeDom;
+using Newtonsoft.Json;
 using Westwind.Utilities;
 
 
@@ -108,7 +109,7 @@ namespace Westwind.Globalization
                     key = StringUtils.ToCamelCase(key);
 
                 sb.Append("\t\"" + key + "\": ");
-                sb.Append(WebUtils.EncodeJsString(value));
+                sb.Append(JsonConvert.SerializeObject(value));
                 sb.Append(",\r\n");
             }
 
