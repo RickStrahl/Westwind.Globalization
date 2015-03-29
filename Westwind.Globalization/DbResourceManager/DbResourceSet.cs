@@ -56,5 +56,10 @@ namespace Westwind.Globalization
         {
             return typeof(DbResourceWriter);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+        }
     }
 }

@@ -115,14 +115,19 @@ namespace Westwind.Globalization
             }
 
 
-            if (resourceType.ToLower() == "resdb") 
-            {
-                var manager = DbResourceDataManager.CreateDbResourceDataManager();
-                resDict = manager.GetResourceSetNormalizedForLocaleId(localeId, resourceSet);
+            if (resourceType.ToLower() == "resdb")
+            {                
+                // use existing/cached resource manager if previously used
+                // so database is accessed only on first hit
+                var resManager = DbRes.GetResourceManager(resourceSet);
+
+                DbResXConverter converter = new DbResXConverter(context.Server.MapPath(DbResourceConfiguration.Current.ResxBaseFolder));
+                resDict = converter.GetResourcesNormalizedForLocale(resManager, localeId);
+
+                //resDict = manager.GetResourceSetNormalizedForLocaleId(localeId, resourceSet);
                 if (resDict == null || resDict.Keys.Count < 1)
                 {
                     // try resx instead
-                    DbResXConverter converter = new DbResXConverter(context.Server.MapPath(DbResourceConfiguration.Current.ResxBaseFolder));
                     string resxPath = converter.FormatResourceSetPath(resourceSet);
                     resDict = converter.GetResXResourcesNormalizedForLocale(resxPath, localeId);
                 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
+using System.Resources;
 using System.Web;
 
 namespace Westwind.Globalization
@@ -65,26 +66,7 @@ namespace Westwind.Globalization
             if (resourceSet == null)
                 resourceSet = string.Empty;
 
-            // check if the res manager exists
-            DbResourceManager manager;
-            ResourceManagers.TryGetValue(resourceSet, out manager);
-
-            // if not we have to create it and add it to static collection
-            if (manager == null)
-            {
-                lock (ResourceManagers)
-                {
-                    ResourceManagers.TryGetValue(resourceSet, out manager);
-                    if (manager == null)
-                    {
-                        manager = new DbResourceManager(resourceSet);
-                        ResourceManagers.Add(resourceSet, manager);
-                        manager.AutoAddMissingEntries = AutoAddResources;
-                    }
-                }
-            }
-
-            // no manager no resources
+            var manager = GetResourceManager(resourceSet);                            
             if (manager == null)
                 return resId;
 
@@ -180,23 +162,8 @@ namespace Westwind.Globalization
                 resourceSet = string.Empty;
 
             // check if the res manager exists
-            DbResourceManager manager = null;
-            ResourceManagers.TryGetValue(resourceSet, out manager);
-
-            // if not we have to create it and add it to static collection
-            if (manager == null)
-            {
-                lock (ResourceManagers)
-                {
-                    ResourceManagers.TryGetValue(resourceSet, out manager);
-                    if (manager == null)
-                    {
-                        manager = new DbResourceManager(resourceSet);
-                        ResourceManagers.Add(resourceSet, manager);
-                    }
-                }
-            }
-
+            DbResourceManager manager = GetResourceManager(resourceSet);
+            
             // no manager no resources
             if (manager == null)
                 return resId;
@@ -252,6 +219,57 @@ namespace Westwind.Globalization
         {
             var db = DbResourceDataManager.CreateDbResourceDataManager();  
             return db.DeleteResource(resourceId, resourceSet: resourceSet, cultureName: lang);
+        }
+
+        /// <summary>
+        /// Returns an instance of a DbResourceManager
+        /// </summary>
+        /// <param name="resourceSet"></param>
+        /// <returns></returns>
+        public static DbResourceManager GetResourceManager(string resourceSet)
+        {            
+            // check if the res manager exists
+            DbResourceManager manager = null;
+            ResourceManagers.TryGetValue(resourceSet, out manager);
+
+            // if not we have to create it and add it to static collection
+            if (manager == null)
+            {
+                lock (ResourceManagers)
+                {
+                    ResourceManagers.TryGetValue(resourceSet, out manager);
+                    if (manager == null)
+                    {
+                        manager = new DbResourceManager(resourceSet);
+                        ResourceManagers.Add(resourceSet, manager);
+                    }
+                }
+            }
+
+            return manager;
+        }
+
+        /// <summary>
+        /// Returns a resource set for a given resource
+        /// </summary>
+        /// <param name="resourceSet">The name of the resource set to return.</param>
+        /// <param name="lang">The language code (en-US,de-DE). Pass null to use the current ui culture</param>
+        /// <returns></returns>
+        public static ResourceSet GetResourceSet(string resourceSet, string lang = null)
+        {
+            var manager = GetResourceManager(resourceSet);
+            if (manager == null)
+                return null;
+
+            CultureInfo ci = null;
+            if (lang == null)
+                ci = CultureInfo.CurrentUICulture;
+            else if (lang == string.Empty)
+                ci = CultureInfo.InvariantCulture;
+            else
+                ci = new CultureInfo(lang);
+
+            return manager.GetResourceSet(ci, false, true);
         }
 
         /// <summary>

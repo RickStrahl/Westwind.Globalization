@@ -865,35 +865,37 @@ namespace Westwind.Globalization
         if (resMan == null)
             return null;
 
-        return GetCompiledResourcesNormalizedForLocale(resMan, localeId);
+        return GetResourcesNormalizedForLocale(resMan, localeId);
     }
 
 
-    public Dictionary<string, object> GetCompiledResourcesNormalizedForLocale(ResourceManager resourceManager, string localeId)
+    public Dictionary<string, object> GetResourcesNormalizedForLocale(ResourceManager resourceManager, string localeId)
     {        
         var resDict = new Dictionary<string, object>();
 
         var culture = Thread.CurrentThread.CurrentUICulture;
-        if (culture.IetfLanguageTag != localeId)
+        if (localeId == null)
+            culture = CultureInfo.CurrentUICulture;
+        else if(localeId == string.Empty)
+            culture = CultureInfo.InvariantCulture;
+        else if (culture.IetfLanguageTag != localeId)
             culture = CultureInfo.GetCultureInfoByIetfLanguageTag(localeId);
-
+        
         try
         {
             IDictionaryEnumerator enumerator;
-            using (var resSet = resourceManager.GetResourceSet(CultureInfo.InvariantCulture, true, true))
+            var resSet = resourceManager.GetResourceSet(CultureInfo.InvariantCulture, true, true);            
+            enumerator = resSet.GetEnumerator();
+            while (enumerator.MoveNext())
             {
-                enumerator = resSet.GetEnumerator();
-                while (enumerator.MoveNext())
-                {
-                    var resItem = (DictionaryEntry)enumerator.Current;
-                    resDict.Add((string)resItem.Key, null);
-                }
-                var keys = resDict.Keys.ToList();
-                foreach (var key in keys)
-                {
-                    resDict[key] = resourceManager.GetObject(key);
-                }
+                var resItem = (DictionaryEntry)enumerator.Current;
+                resDict.Add((string)resItem.Key, null);
             }
+            var keys = resDict.Keys.ToList();
+            foreach (var key in keys)
+            {
+                resDict[key] = resourceManager.GetObject(key,culture);
+            }            
         }
         catch (Exception ex)
         {

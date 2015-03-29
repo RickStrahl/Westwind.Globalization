@@ -106,6 +106,14 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Westwind.Utilities, Version=2.62.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Westwind.Utilities.2.62\lib\net45\Westwind.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Westwind.Web, Version=2.62.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Westwind.Web.2.62\lib\net45\Westwind.Web.dll</HintPath>
+    </Reference>
     <Reference Include="Westwind.Web.WebForms, Version=2.59.5500.1075, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Westwind.Web.WebForms.2.59\lib\net45\Westwind.Web.WebForms.dll</HintPath>
@@ -141,7 +149,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\localizations.sdf" />
     <Content Include="images\Westwind.Localization.png" />
     <Content Include="images\Westwind.Localization_128.png" />
     <Content Include="images\Westwind.Localization_50.png" />
@@ -251,7 +258,6 @@
     <Content Include="LocalizationAdmin\scripts\ww.jquery.min.js.map">
       <DependentUpon>ww.jquery.min.js</DependentUpon>
     </Content>
-    <Content Include="App_Data\SqLiteLocalizations.db" />
     <Content Include="LocalizationAdmin\bower_components\ng-file-upload\.bower.json" />
     <Content Include="LocalizationAdmin\bower_components\ng-file-upload\bower.json" />
     <Content Include="LocalizationAdmin\bower_components\ng-file-upload\LICENSE" />
@@ -292,7 +298,9 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\ModelAttributesFromResources.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -300,14 +308,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\WestwindToolkit\Westwind.Utilities\Westwind.Utilities.csproj">
-      <Project>{1c9829a8-8979-4493-863c-635726f8a61c}</Project>
-      <Name>Westwind.Utilities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\WestwindToolkit\Westwind.Web\Westwind.Web.csproj">
-      <Project>{0c38b4e1-0c87-4289-a57b-87c1b5be3bbe}</Project>
-      <Name>Westwind.Web</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Westwind.Globalization.MySql\Westwind.Globalization.MySql.csproj">
       <Project>{9d405441-66d4-45d0-8832-9e17587ba921}</Project>
       <Name>Westwind.Globalization.MySql</Name>

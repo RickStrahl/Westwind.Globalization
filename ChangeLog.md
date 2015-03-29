@@ -12,6 +12,9 @@ Added custom DbResourceDataManager implementations for each of these data engine
 * **New Administration Form**<br/>
 Complete rewrote the Administration form using a pure client side model using Angular JS and a CallbackHandler service on the backend. The new UI provides much easier navigation of resources and shows all resources available for a resource key for easy editing. The editing UI is also keyboard friendly to allow for quick hands on the keyboard editing of resources.
 
+* **Improved support for Resource File Uploads**<br/>
+You can now more easily import and export file resoures from and to Resx files and also create new file resources for things like images and other non-plain string items. When exporting Resources are created in the same folder as the Resx files generated.
+
 * **Improved Resource Import and Export**<br/>
 The Web Interface now supports importing and exporting resources optionally from virtually any path, not just the path of the actual Web application. This means you can now easily edit and update resources from any project on your local machine.
 
