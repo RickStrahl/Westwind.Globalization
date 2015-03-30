@@ -94,6 +94,14 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
+		public static System.String BackupComplete
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("LocalizationForm","BackupComplete",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
 		public static System.String Delete
 		{
 			get
@@ -166,11 +174,11 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String ResxExportInfoProject
+		public static System.String InvalidResourceId
 		{
 			get
 			{
-				return GeneratedResourceHelper.GetResourceString("LocalizationForm","ResxExportInfo.Project",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+				return GeneratedResourceHelper.GetResourceString("LocalizationForm","InvalidResourceId",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 
@@ -238,6 +246,14 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
+		public static System.String ReloadResources
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("LocalizationForm","ReloadResources",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
 		public static System.String DeleteTitle
 		{
 			get
@@ -294,11 +310,11 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String LocalizationAdministration
+		public static System.String Export
 		{
 			get
 			{
-				return GeneratedResourceHelper.GetResourceString("LocalizationForm","LocalizationAdministration",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+				return GeneratedResourceHelper.GetResourceString("LocalizationForm","Export",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 
@@ -342,11 +358,11 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String Export
+		public static System.String CreateClassTitle
 		{
 			get
 			{
-				return GeneratedResourceHelper.GetResourceString("LocalizationForm","Export",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+				return GeneratedResourceHelper.GetResourceString("LocalizationForm","CreateClass.Title",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 
@@ -414,6 +430,14 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
+		public static System.String Refresh
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("LocalizationForm","Refresh",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
 		public static System.String Backup
 		{
 			get
@@ -462,11 +486,27 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String InvalidResourceId
+		public static System.String ResxExportInfoProject
 		{
 			get
 			{
-				return GeneratedResourceHelper.GetResourceString("LocalizationForm","InvalidResourceId",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+				return GeneratedResourceHelper.GetResourceString("LocalizationForm","ResxExportInfo.Project",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String BackupFailed
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("LocalizationForm","BackupFailed",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String Edit
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("LocalizationForm","Edit",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 
@@ -478,19 +518,19 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String ReloadResources
+		public static System.String LocalizationAdministration
 		{
 			get
 			{
-				return GeneratedResourceHelper.GetResourceString("LocalizationForm","ReloadResources",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+				return GeneratedResourceHelper.GetResourceString("LocalizationForm","LocalizationAdministration",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 
-		public static System.String CreateClassTitle
+		public static System.String Add
 		{
 			get
 			{
-				return GeneratedResourceHelper.GetResourceString("LocalizationForm","CreateClass.Title",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+				return GeneratedResourceHelper.GetResourceString("LocalizationForm","Add",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 

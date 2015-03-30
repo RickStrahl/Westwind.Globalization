@@ -1,12 +1,11 @@
 # West Wind Globalization
 ### Database Resource Localization for .NET
-Easily create ASP.NET resources stored in a Sql database for editing and updating 
+Easily create .NET resources stored in a Sql database for editing and updating 
 at runtime using an interactive editor or programmatically using code.
-The library uses the standard .NET and ASP.NET infrastructure of ResourceSets and 
-ResourceManagers with a generic data backend to feed resource sets and provide 
-edit and update capabilities to  localization resources stored in a database.
+The library uses the standard .NET and ASP.NET infrastructure of ResourceSets, 
+ResourceManagers and ResourceProviders with a generic data backend to feed resource sets and provide edit and update capabilities to  localization resources stored in a database. You can also extend and create your own providers using either SQL data sources or any other data store.
 
-Additional tools provide the ability to import and export Resx resources and
+Additional components provide the ability to import and export Resx resources and
 the ability to serve server side resources as JSON resources to JavaScript clients.
 
 Requirements:

@@ -27,11 +27,17 @@ namespace Westwind.Globalization.Test
             var data = File.ReadAllBytes(JpgBitMapPath);
 
             Bitmap bitmap;
+
+            // THIS FAILS on some jpeg files
             using (var ms = new MemoryStream(data))
             {
                 bitmap = new Bitmap(ms);
             }
 
+            // THIS WORKS - but causes extra memory usage
+            // var ms = new MemoryStream(data);
+            // bitmap = new Bitmap(ms);
+            
             string output = GeneratedResourceHelper.BitmapToEmbeddedHtmlImage(bitmap, ImageFormat.Jpeg);
             Assert.IsNotNull(output);
             Console.WriteLine(output);
