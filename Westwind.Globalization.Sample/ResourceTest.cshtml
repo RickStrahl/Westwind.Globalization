@@ -48,7 +48,7 @@
     </style>
     <script src="LocalizationAdmin/bower_components/jquery/dist/jquery.min.js"></script>
 </head>
-<body>
+<body data-resource-set="Resources">
     <div class="banner">
         <div id="TitleBar">
             <a href="./">
@@ -127,11 +127,11 @@
         <h3>DbRes</h3>
 
         <label>Using DbRes Direct Access Provider (default locale):</label>
-        @DbRes.T("HelloWorld", "Resources")
+        <span data-resource-id="HelloWorld">@DbRes.T("HelloWorld", "Resources")</span>
 
         <label>Using DbRes Force to German:</label>
         @DbRes.T("HelloWorld", "Resources", "de")
-    </div>
+</div>
 
     <div class="container">
 
@@ -163,8 +163,14 @@
 
 <!-- Generates a resources = { "HelloWorld": "Hello World", "Today": "Today" } style variable that contains all server side resources translated for this resource set-->
     <script src="@JavaScriptResourceHandler.GetJavaScriptResourcesUrl("resources","Resources")"></script>
-    <script>
-        document.querySelector("#JavaScriptHelloWorld").innerText = resources.HelloWorld;
-    </script>        
+<script>
+    document.querySelector("#JavaScriptHelloWorld").innerText = resources.HelloWorld;
+</script>
+
+
+<script src="~/LocalizationAdmin/scripts/ww.resourceEditor.js"></script>
+<script>
+    ww.resourceEditor.showResourceIcons();
+</script>
 </body>
 </html>

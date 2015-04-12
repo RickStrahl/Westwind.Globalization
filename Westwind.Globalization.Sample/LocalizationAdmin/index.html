@@ -34,7 +34,8 @@
 
     <link href="css/localizationAdmin.css" rel="stylesheet"/>
 </head>
-<body ng-app="app" ng-controller="listController as view" ng-cloak>
+<body ng-app="app" ng-controller="listController as view" 
+      ng-cloak data-resource-set="LocalizationForm">
 
 <div class="banner">
     <div id="TitleBar">
@@ -43,7 +44,7 @@
                  style="height: 35px; float: left"/>
             <div style="float: left; margin-left: 5px; line-height: 1.2">
                 <i style="color: steelblue; font-size: 0.8em; font-weight: bold;">West Wind Globalization</i><br/>
-                <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;">{{::view.dbRes('LocalizationAdministration')}}</i>
+                <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;" data-resource-id="LocalizationAdministration">{{::view.dbRes('LocalizationAdministration')}}</i>
             </div>
         </a>
     </div>
@@ -65,7 +66,7 @@
                    placeholder="{{::view.dbRes('SearchResources')}}"
                    ng-model="view.searchText"
                    style="border-radius: 0; margin: 0"
-                   type="search"
+                   type="search" data-resource-id="SearchResources"
                    accesskey="E"/>
         </div>
 
@@ -76,7 +77,7 @@
                     size="2" class="form-control">
                 <option ng-repeat="resource in view.resourceList | filter:view.searchText"
                         value="{{resource.ResourceId}}"
-                        style=" { {resource.Style}}">
+                        style=" {{resource.Style}}">
                     {{resource.ResourceId}}
                 </option>
             </select>
@@ -132,8 +133,7 @@
 <script src="app/importExportResxController.js"></script>
 <script src="app/createClassController.js"></script>
 
-
-    
+<script src="scripts/ww.resourceEditor.js"></script>
 
 </body>
 </html>

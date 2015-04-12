@@ -16,39 +16,45 @@
             <a ng-show="view.resourceSets && view.resourceSets.length > 0"
                xng-click="view.onExportResxResourcesClick()"
                data-toggle="modal" data-target="#ImportExportResxDialog"
-               title="{{view.dbRes('ExportResx_Title')}}">
-                <i class="fa fa-download"></i> {{view.dbRes('ImportExportResx')}}
+               title="{{view.dbRes('ExportResx_Title')}}"
+               data-resource-id="ImportExportResx"
+               >
+                <i class="fa fa-download"></i> {{::view.dbRes('ImportExportResx')}}
             </a>
         </li>
         <li>
             <a ng-show="view.resourceSets && view.resourceSets.length > 0"
-               data-toggle="modal" data-target="#CreateClassDialog"
-               title="{{view.resources.CreateClass_Title}}">
-                <i class="fa fa-code" style="font-weight: bold;"></i> {{view.dbRes('CreateClass')}}
+                data-toggle="modal" data-target="#CreateClassDialog"
+                title="{{view.resources.CreateClass_Title}}"
+                data-resource-id="CreateClass">
+                <i class="fa fa-code" style="font-weight: bold;"></i> {{::view.dbRes('CreateClass')}}
             </a>
         </li>
         <li>
             <a ng-show="view.resourceSets && view.resourceSets.length > 0"
-               ng-click="view.onReloadResourcesClick()"
-               title="{{view.dbRes('ReloadResources_Title')}}">
-                <i class="fa fa-refresh"></i> {{view.dbRes('ReloadResources')}}
+                ng-click="view.onReloadResourcesClick()"
+                title="{{view.dbRes('ReloadResources_Title')}}"
+                data-resource-id="ReloadResources">
+                <i class="fa fa-refresh"></i> {{::view.dbRes('ReloadResources')}}
             </a>
         </li>
         <li>
                         
             <a ng-show="!view.resourceSets || view.resourceSets.length < 1"
                ng-click="view.onCreateTableClick()"
-               title=" {{view.dbRes('CreateTable_Title')}} ">
+               title=" {{::view.dbRes('CreateTable_Title')}} "
+               data-resource-id="CreateTable">
                 <i class="fa fa-plus-square">
-                </i> {{view.dbRes('CreateTable')}}
+                </i> {{::view.dbRes('CreateTable')}}
             </a>
 
         </li>
         <li>
             <a ng-show="view.resourceSets && view.resourceSets.length > 0"
                ng-click="view.onBackupClick()"
-               title="{{view.dbRes('Backup_Title')}}">
-                <i class="fa fa-save"></i> {{view.dbRes('Backup')}}
+               title="{{::view.dbRes('Backup_Title')}}"
+               data-resource-id="Backup">
+                <i class="fa fa-save"></i> {{::view.dbRes('Backup')}}
             </a>
         </li>        
         <li role="presentation" class="dropdown">
@@ -57,8 +63,17 @@
             </a>
             <ul class="dropdown-menu" role="menu">
                 <li class="dropdown-submenu pull-right">
-                    <a href="javascript:{}" data-toggle="modal" data-target="#ResourceProviderInfoDialog">
+                    <a href="javascript:{}" data-toggle="modal" data-target="#ResourceProviderInfoDialog"
+                       data-resource-id="ResourceProviderInfo">
                         <i class="fa fa-info-circle"></i> {{::view.dbRes('ResourceProviderInfo')}}
+                    </a>
+                    <a href="javascript:{}" ng-click="view.showResourceIcons()" ng-show="!view.resourceEditMode"
+                       data-resource-id="EnableResourceEditing">
+                        <i class="fa fa-flag"></i> {{::view.dbRes("EnableResourceEditing")}}
+                    </a>
+                    <a href="javascript:{}" ng-click="view.showResourceIcons()" ng-show="view.resourceEditMode"
+                       data-resource-id="DisableResourceEditing">
+                        <i class="fa fa-flag"></i> {{::view.dbRes("DisableResourceEditing")}}
                     </a>
                 </li>
             </ul>
@@ -66,7 +81,8 @@
 
         <li>
             <a href="../"
-               title="{{view.dbRes('Home_Title')}}">
+               title="{{view.dbRes('Home_Title')}}" 
+               data-resource-id="Home.Title">
                 <i class="fa fa-home"></i>
             </a>
         </li>

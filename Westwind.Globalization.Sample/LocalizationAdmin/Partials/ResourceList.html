@@ -25,15 +25,19 @@
                           ng-keydown="view.onResourceKeyDown($event,resource,resourceForm)">                    
                 </textarea>
             </form>
-            <span class="input-group-addon" title="Save resource (Ctrl-Enter)"
-                  tabindex="0" role="button" aria-label="Save resource (Ctrl-Enter)"
+            <span class="input-group-addon"
+                  title="{{::view.dbRes('SaveResource')}}"
+                  aria-label="{{::view.dbRes('SaveResource')}}"
+                  tabindex="0" role="button"
                   ng-class="{'color-check': resourceForm.$dirty, 'color-disabled': !resourceForm.$dirty }"
                   ng-enabled="resourceForm.$dirty"
-                  ng-click="view.onStringUpdate(resource)"><i class="fa fa-check"></i></span>
+                  ng-click="view.onStringUpdate(resource)"
+                  data-resource-id="SaveResource"><i class="fa fa-check"></i></span>
             <span class="input-group-addon"
                   tabindex="-1" role="button" aria-label="Translate resource"
                   title="Translate Resource"
-                  ng-click="view.onTranslateClick($event,resource)"><i class="fa fa-flag-o"></i></span>
+                  ng-click="view.onTranslateClick($event,resource)"
+                  data-resource-id="TranslateResource"><i class="fa fa-flag-o"></i></span>
         </div>
 
     </div>
@@ -42,23 +46,28 @@
     <div class="btn-group" style="margin-top: 12px;">
         <button ng-click="view.onAddResourceClick()" class="btn btn-sm btn-default"
                 title="{{::view.resources.Add_Title}}"
-                accesskey="A">
+                accesskey="A"
+                data-resource-id="Add">
             <i class="fa fa-plus"></i> {{::view.dbRes('Add')}}
         </button>
         <button ng-click="view.onEditResourceClick()" class="btn btn-sm btn-default"
-                title="{{::view.resources.Add_Title}}">
+                title="{{::view.resources.Edit_Title}}"
+                data-resource-id="Edit">
             <i class="fa fa-edit"></i> {{::view.dbRes('Edit') }} {{view.activeResource.LocaleId ? '(' + view.activeResource.LocaleId + ')' : ''}}
         </button>
         <button class="btn btn-sm btn-default"
                 title="{{::view.dbRes('Delete_Title')}}"
-                ng-click="view.onDeleteResourceClick()">
+                ng-click="view.onDeleteResourceClick()"
+                data-resource-id="Delete">
             <i class="fa fa-remove"></i> {{::view.dbRes('Delete')}}
         </button>
         <button class="btn btn-sm btn-default" title="{{::view.dbRes('Rename_Title')}}"
-                ng-click="view.onRenameResourceClick()">
+                ng-click="view.onRenameResourceClick()"
+                data-resource-id="Rename">
             <i class="fa fa-exchange"></i> {{::view.dbRes('Rename')}}
         </button>
-        <button class="btn btn-sm btn-default" title="Comment" disabled="disabled">
+        <button class="btn btn-sm btn-default" title="Comment" disabled="disabled"
+                data-resource-id="Comment">
             <i class="fa fa-comment-o"></i> {{::view.dbRes('Comment')}}
         </button>
     </div>

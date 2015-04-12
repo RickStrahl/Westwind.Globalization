@@ -18,11 +18,10 @@
     };
 
     app.config([
-            function() {
-                resizeControls();
-                $(window).resize(resizeControls);
-            }
-        ])
+        function () {
+            $(window).resize(resizeControls);            
+            setTimeout(resizeControls, 90);
+        }])
         .filter('linebreakFilter', function() {
             return function(text) {
                 if (text !== undefined)

@@ -1,5 +1,6 @@
 /// <reference path="localizationservice.js" />
 /// <reference path="../bower_components/lodash/lodash.js" />
+/// <reference path="../scripts/ww.resourceEditor.js" />
 (function(undefined) {
         'use strict';
 
@@ -28,8 +29,9 @@
             vm.resourceItemIndex = 0;
             vm.newResourceId = null;
             vm.uploadProgress = null;
-            vm.editedResource = null,
-                vm.error = {
+            vm.resourceEditMode = false;
+            vm.editedResource = null;
+            vm.error = {
                     message: null,
                     icon: "info-circle",
                     cssClass: "info"
@@ -399,6 +401,15 @@
                })
                .error(parseError);
        };
+       vm.showResourceIcons = function () {
+           vm.resourceEditMode = !vm.resourceEditMode;
+           if (vm.resourceEditMode)
+               ww.resourceEditor.showResourceIcons({ adminUrl: "./" });
+           else
+               ww.resourceEditor.removeResourceIcons();
+       };
+
+
        vm.showMessage = showMessage;
         vm.parseError = parseError;
 

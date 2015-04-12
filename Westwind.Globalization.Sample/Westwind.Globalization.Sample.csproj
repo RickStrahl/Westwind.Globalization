@@ -219,6 +219,7 @@
     <Content Include="LocalizationAdmin\images\Westwind.Localization_128.png" />
     <Content Include="LocalizationAdmin\Partials\AddResourceDialog.html" />
     <Content Include="LocalizationAdmin\Partials\TranslateDialog.html" />
+    <Content Include="LocalizationAdmin\scripts\ww.resourceEditor.js" />
     <Content Include="LocalizationAdmin\scripts\ww.angular.js" />
     <Content Include="LocalizationAdmin\scripts\ww.jquery.js" />
     <Content Include="LocalizationAdmin\bower_components\bootstrap\.bower.json" />
