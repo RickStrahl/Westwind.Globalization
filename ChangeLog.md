@@ -12,6 +12,9 @@ Refactored `DbResourceDataManagers` so that no separate assemblies are required 
 * **Improved support for Resource File Uploads**<br/>
 You can now more easily import and export file resoures from and to Resx files and also create new file resources for things like images and other non-plain string items. When exporting Resources are created in the same folder as the Resx files generated.
 
+* **[Wiki Documentation](https://github.com/RickStrahl/Westwind.Globalization/wiki)**<br/>
+Moved over legacy operational documentation to the GitHub Wiki for easier access and common interface on GitHub.  
+
 ### Version 2.0 Beta4
 <small><i>currently in Beta</i></small>
 
