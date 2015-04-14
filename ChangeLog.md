@@ -1,7 +1,7 @@
 # West Wind Globalization Changelog
 
-### Version 2.0 Beta5
-<small><i>currently in Beta</i></small>
+### [Version 2.0 Beta5](http://www.nuget.org/packages/Westwind.Globalization.Web/2.0.20-beta5)
+<small><i>April 14th, 2015/i></small>
 
 * **[Add support for Resource Editing to HTML/MVC Projects](https://github.com/RickStrahl/Westwind.Globalization/wiki/Interactive-Resource-Editing)**<br/>
 You can now set up resource editing for plain HTML pages by adding resource attributes to DOM elements. Using `data-resource-id` at the element level and `data-resource-set` at the element or parent container level, elements are marked up with clickable links that jump to the resource editor for those items. 
@@ -16,7 +16,7 @@ You can now more easily import and export file resoures from and to Resx files a
 Moved over legacy operational documentation to the GitHub Wiki for easier access and common interface on GitHub.  
 
 ### Version 2.0 Beta4
-<small><i>currently in Beta</i></small>
+<small><i>March 27th, 2015</i></small>
 
 * **New DbResourceDataManager Model to allow for pluggable Data Providers**<br/>
 New DbResourceDataManager interface and adpater model for supporting multiple data providers. You can easily implement new DataManager implementations to handle the data access to read and write data into the provider for all supported features.
