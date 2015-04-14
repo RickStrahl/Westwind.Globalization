@@ -3,7 +3,7 @@
 ### Version 2.0 Beta5
 <small><i>currently in Beta</i></small>
 
-* **Add support for Resource Editing to HTML/MVC Projects**<br/>
+* **[Add support for Resource Editing to HTML/MVC Projects](https://github.com/RickStrahl/Westwind.Globalization/wiki/Interactive-Resource-Editing)**<br/>
 You can now set up resource editing for plain HTML pages by adding resource attributes to DOM elements. Using `data-resource-id` at the element level and `data-resource-set` at the element or parent container level, elements are marked up with clickable links that jump to the resource editor for those items. 
 
 * **Refactor Non Sql Server Providers into the Main Assembly**<br/>
