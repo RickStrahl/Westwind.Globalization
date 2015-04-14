@@ -140,13 +140,13 @@ To run the sample application you have to set up a database to provide the resou
 The easiest way to use this library in your own applications is to install the NuGet package into an ASP.NET application.
 
 ```
-pm> Install-Package Westwind.Globalization.Web
+pm> Install-Package Westwind.Globalization.Web -pre
 ```
 If you're not using a Web Project you can also use:
 ```
-pm> Install-Package Westwind.Globalization
+pm> Install-Package Westwind.Globalization -pre
 ```
-which doesn't install the web related components and HTML resources.
+which doesn't install the web related components and HTML resources. Version 2.0 is currently in beta so you need to use the `-pre` for the latest versions.
 
 The .Web version installs the required assemblies, adds a few configuration entries in
 web.config and enables the resource provider by default. It also installs
