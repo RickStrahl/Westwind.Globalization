@@ -64,40 +64,47 @@ namespace Westwind.Globalization
             tokens = toCulture.Split('-');
             if (tokens.Length > 1)
                 toCulture = tokens[0];
-            
-            string url = string.Format(@"http://translate.google.com/translate_a/t?client=j&text={0}&hl=en&sl={1}&tl={2}",                                     
+
+            string format =
+                "https://translate.google.com/translate_a/single?client=t&sl={1}&tl={2}&hl=en&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&dt=at&ie=UTF-8&oe=UTF-8&ssel=0&tsel=4&tk=519371|510563&q={0}";
+            //@"https://translate.google.com/translate_a/t?client=j&text={0}&hl=en&sl={1}&tl={2}
+
+            string url = string.Format(format,                                     
                                        StringUtils.UrlEncode(text),fromCulture,toCulture);
 
             // Retrieve Translation with HTTP GET call
-            string html = null;
+            string json;
             try
             {
                 WebClient web = new WebClient();
 
                 // MUST add a known browser user agent or else response encoding doen't return UTF-8 (WTF Google?)
-                web.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/5.0");
+                web.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla /5.0");
                 web.Headers.Add(HttpRequestHeader.AcceptCharset, "UTF-8");
 
                 // Make sure we have response encoding to UTF-8
                 web.Encoding = Encoding.UTF8;
-                html = web.DownloadString(url);
+                json = web.DownloadString(url);
             }
             catch (Exception ex)
             {
-                this.ErrorMessage = Resources.ConnectionFailed + ": " +
+                ErrorMessage = Resources.ConnectionFailed + ": " +
                                     ex.GetBaseException().Message;
                 return null;
             }
 
-            // Extract out trans":"...[Extracted]...","from the JSON string
-            string result = Regex.Match(html, "trans\":(\".*?\"),\"", RegexOptions.IgnoreCase).Groups[1].Value;            
-
+            // Extract out nested arrays - nasty stuff string parsing is easier
+            string result = StringUtils.ExtractString(json, "[[[\"", "\",");
+            
             if (string.IsNullOrEmpty(result))
             {
-                this.ErrorMessage = Resources.InvalidSearchResult;
+                ErrorMessage = Resources.InvalidSearchResult;
                 return null;
-            }        
-           
+            }
+
+            // turn back into a JSON string to decode JSON encoding
+            result = "\"" + result + "\"";
+
             // result string must be JSON decoded
             return JsonConvert.DeserializeObject(result,typeof(string)) as string;            
         }

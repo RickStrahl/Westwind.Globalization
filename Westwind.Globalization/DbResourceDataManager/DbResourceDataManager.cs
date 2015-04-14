@@ -76,6 +76,7 @@ namespace Westwind.Globalization
 
         protected DbResourceDataManager()
         {
+            // assign default configuration from configuration file
             Configuration = DbResourceConfiguration.Current;
         }
 
@@ -94,12 +95,23 @@ namespace Westwind.Globalization
         }
 
         /// <summary>
-        /// TODO: figure out how to instantiate different providers
+        /// Create an instance of the provider based on the resource type
         /// </summary>
         /// <returns></returns>
-        public static IDbResourceDataManager GetDataManager()
-        {            
-            throw new NotImplementedException();
+        public static DbResourceDataManager CreateDbResourceDataManager(DbResourceProviderTypes type)
+        {
+            DbResourceDataManager manager;
+
+            if (type == DbResourceProviderTypes.SqlServer)
+                manager = new DbResourceSqlServerDataManager();
+            else if (type == DbResourceProviderTypes.MySql)
+                manager = new DbResourceMySqlDataManager();
+            else if (type == DbResourceProviderTypes.SqLite)
+                manager = new DbResourceSqLiteDataManager();
+            else
+                return null;
+
+            return manager;
         }
 
         /// <summary>
@@ -481,7 +493,7 @@ namespace Westwind.Globalization
         }
 
         /// <summary>
-        /// Returns an DataTable called TResourceIds with ResourceId and HasValues fields
+        /// Returns a list with ResourceId and HasValues fields
         /// where the ResourceId is formatted for HTML display.
         /// </summary>
         /// <param name="resourceSet"></param>
@@ -1949,6 +1961,13 @@ namespace Westwind.Globalization
         Binary
     }
 
+    public enum DbResourceProviderTypes
+    {
+        SqlServer,
+        MySql,
+        SqLite
+    }
+
     /// <summary>
     /// Internal structure that contains format information about a file
     /// resource. Used internally to figure out how to write 
@@ -1964,4 +1983,6 @@ namespace Westwind.Globalization
         public string ValueString = string.Empty;
         public string Type = "File";
     }
+
+
 }

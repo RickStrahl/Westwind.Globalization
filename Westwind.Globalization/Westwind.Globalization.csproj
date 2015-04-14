@@ -77,6 +77,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -97,12 +98,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbResourceDataManager\DbResourceDataManager.cs" />
+    <Compile Include="DbResourceDataManager\DbResourceDataManagers\DbResourceMySqlDataManager.cs" />
+    <Compile Include="DbResourceDataManager\DbResourceDataManagers\DbResourceSqLiteDataManager.cs" />
+    <Compile Include="DbResourceDataManager\DbResourceDataManagers\DbResourceSqlServerCeDataManager.cs" />
     <Compile Include="DbResourceDataManager\IDbResourceDataManager.cs" />
     <Compile Include="DbResourceDataManager\IDbResourceSetDataManager.cs" />
     <Compile Include="DbResourceManager\DbResourceReader.cs" />
     <Compile Include="DbResourceManager\DbResourceSet.cs" />
     <Compile Include="DbResourceManager\DbResourceWriter.cs" />
-    <Compile Include="DbResourceDataManager\DbResourceSqlServerDataManager.cs" />
+    <Compile Include="DbResourceDataManager\DbResourceDataManagers\DbResourceSqlServerDataManager.cs" />
     <Compile Include="DbResourceSupportClasses\DbResourceProviderSection.cs" />
     <Compile Include="DbResourceManager\DbRes.cs" />
     <Compile Include="DbResourceDataManager\ResourceItem.cs" />
@@ -162,6 +166,7 @@
     <Content Include="scripts\ww.jquery.js" />
     <Content Include="scripts\ww.jquery.min.js" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

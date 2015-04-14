@@ -331,9 +331,9 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Westwind.Globalization.DbResourceDataManager.GetDataManager">
+        <member name="M:Westwind.Globalization.DbResourceDataManager.CreateDbResourceDataManager(Westwind.Globalization.DbResourceProviderTypes)">
             <summary>
-            TODO: figure out how to instantiate different providers
+            Create an instance of the provider based on the resource type
             </summary>
             <returns></returns>
         </member>
@@ -402,7 +402,7 @@
         </member>
         <member name="M:Westwind.Globalization.DbResourceDataManager.GetAllResourceIdListItems(System.String)">
             <summary>
-            Returns an DataTable called TResourceIds with ResourceId and HasValues fields
+            Returns a list with ResourceId and HasValues fields
             where the ResourceId is formatted for HTML display.
             </summary>
             <param name="resourceSet"></param>
@@ -726,6 +726,61 @@
             Internal structure that contains format information about a file
             resource. Used internally to figure out how to write 
             a resource into the database
+            </summary>
+        </member>
+        <member name="T:Westwind.Globalization.DbResourceMySqlDataManager">
+            <summary>
+            MySql implementation of the Db SQL data resource provider.
+            </summary>
+            <remarks>
+            IMPORTANT: In order to use this provider make sure you add
+            the MySql.Data NuGet Package to your project.
+            </remarks>
+        </member>
+        <member name="M:Westwind.Globalization.DbResourceMySqlDataManager.GetAllResourceIds(System.String)">
+            <summary>
+            Returns all available resource ids for a given resource set in all languages.
+            
+            Returns a ResourceIdItem object with ResourecId and HasValue fields.
+            HasValue returns whether there are any entries in any culture for this
+            resourceId
+            </summary>
+            <param name="resourceSet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.DbResourceMySqlDataManager.CreateBackupTable(System.String)">
+            <summary>
+            Create a backup of the localization database.
+            
+            Note the table used is the one specified in the Configuration.ResourceTableName
+            </summary>
+            <param name="BackupTableName">Table of the backup table. Null creates a _Backup table.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Westwind.Globalization.DbResourceSqLiteDataManager">
+            <summary>
+            Sql CE implementation of the Db SQL data provider
+            </summary>
+            <remarks>
+            IMPORTANT: Make sure you add the System.Data.SQLite.Core
+            NuGet Package to your project in order to have access 
+            SqlLite
+            </remarks>
+        </member>
+        <member name="M:Westwind.Globalization.DbResourceSqLiteDataManager.GetAllResourceIds(System.String)">
+            <summary>
+            Returns all available resource ids for a given resource set in all languages.
+            
+            Returns a ResourceIdItem object with ResourecId and HasValue fields.
+            HasValue returns whether there are any entries in any culture for this
+            resourceId
+            </summary>
+            <param name="resourceSet"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Westwind.Globalization.DbResourceSqlServerCeDataManager">
+            <summary>
+            Sql CE implementation of the Db SQL data provider
             </summary>
         </member>
         <member name="T:Westwind.Globalization.IDbResourceSetDataManager">

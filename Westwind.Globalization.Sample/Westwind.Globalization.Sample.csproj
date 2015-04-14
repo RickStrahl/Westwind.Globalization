@@ -43,6 +43,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MySql.Data, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MySql.Data.6.9.6\lib\net45\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -52,6 +56,10 @@
     <Reference Include="System.Data.SQLite, Version=1.0.94.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.94.0\lib\net45\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -178,6 +186,10 @@
     <Content Include="LocalizationAdmin\bower_components\bootstrap\dist\js\bootstrap.js" />
     <Content Include="LocalizationAdmin\bower_components\bootstrap\dist\js\bootstrap.min.js" />
     <Content Include="LocalizationAdmin\bower_components\bootstrap\dist\js\npm.js" />
+    <Content Include="LocalizationAdmin\bower_components\es5-shim\es5-sham.js" />
+    <Content Include="LocalizationAdmin\bower_components\es5-shim\es5-sham.min.js" />
+    <Content Include="LocalizationAdmin\bower_components\es5-shim\es5-shim.js" />
+    <Content Include="LocalizationAdmin\bower_components\es5-shim\es5-shim.min.js" />
     <Content Include="LocalizationAdmin\bower_components\fontawesome\.gitignore" />
     <Content Include="LocalizationAdmin\bower_components\fontawesome\css\font-awesome.css" />
     <Content Include="LocalizationAdmin\bower_components\fontawesome\css\font-awesome.min.css" />
@@ -264,6 +276,19 @@
     <Content Include="LocalizationAdmin\bower_components\ng-file-upload\LICENSE" />
     <Content Include="LocalizationAdmin\bower_components\ng-file-upload\npm-debug.log" />
     <Content Include="LocalizationAdmin\bower_components\ng-file-upload\README.md" />
+    <Content Include="LocalizationAdmin\bower.json" />
+    <Content Include="LocalizationAdmin\bower_components\es5-shim\.bower.json" />
+    <Content Include="LocalizationAdmin\bower_components\es5-shim\bower.json" />
+    <Content Include="LocalizationAdmin\bower_components\es5-shim\CHANGES" />
+    <Content Include="LocalizationAdmin\bower_components\es5-shim\component.json" />
+    <Content Include="LocalizationAdmin\bower_components\es5-shim\CONTRIBUTORS.md" />
+    <Content Include="LocalizationAdmin\bower_components\es5-shim\es5-sham.map" />
+    <Content Include="LocalizationAdmin\bower_components\es5-shim\es5-shim.map" />
+    <Content Include="LocalizationAdmin\bower_components\es5-shim\LICENSE" />
+    <Content Include="LocalizationAdmin\bower_components\es5-shim\Makefile" />
+    <Content Include="LocalizationAdmin\bower_components\es5-shim\package.json" />
+    <Content Include="LocalizationAdmin\bower_components\es5-shim\README.md" />
+    <Content Include="LocalizationAdmin\bower_components\es5-shim\shims.json" />
     <None Include="LocalizationAdmin\scripts\_references.js" />
     <Content Include="LocalizationAdmin\bower_components\jquery\.bower.json" />
     <Content Include="LocalizationAdmin\bower_components\jquery\bower.json" />
@@ -306,21 +331,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Westwind.Globalization.MySql\Westwind.Globalization.MySql.csproj">
-      <Project>{9d405441-66d4-45d0-8832-9e17587ba921}</Project>
-      <Name>Westwind.Globalization.MySql</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Westwind.Globalization.SqLite\Westwind.Globalization.SqLite.csproj">
-      <Project>{4C74DAE9-4F4D-4D94-B3CA-783ACEF494F2}</Project>
-      <Name>Westwind.Globalization.SqLite</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Westwind.Globalization.SqlServerCe\Westwind.Globalization.SqlServerCe.csproj">
-      <Project>{1324112a-7929-4246-abcc-dfe51f755681}</Project>
-      <Name>Westwind.Globalization.SqlServerCe</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Westwind.Globalization.Web\Westwind.Globalization.Web.csproj">
       <Project>{d827f9a2-12e0-436c-b986-8589ed643481}</Project>
       <Name>Westwind.Globalization.Web</Name>

@@ -6,11 +6,10 @@
         // ngAnimate',
         //'ngRoute',
         'ngSanitize'
-
-
         // Custom modules 
 
-        // 3rd Party Modules
+        // 3rd Party Modules    
+        ,'angularFileUpload'
     ]);
 
     // config settings
@@ -19,11 +18,10 @@
     };
 
     app.config([
-            function() {
-                resizeControls();
-                $(window).resize(resizeControls);
-            }
-        ])
+        function () {
+            $(window).resize(resizeControls);            
+            setTimeout(resizeControls, 90);
+        }])
         .filter('linebreakFilter', function() {
             return function(text) {
                 if (text !== undefined)

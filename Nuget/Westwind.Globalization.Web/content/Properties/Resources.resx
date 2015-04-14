@@ -58,11 +58,14 @@
    <resheader name="writer">
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
-   <data name="HelloWorld" xml:space="preserve">
-      <value>Hello Cruel World</value>
+   <data name="FlagPng" type="System.Resources.ResXFileRef, System.Windows.Forms">
+      <value>AmericanFlag.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
    </data>
    <data name="Yesterday" xml:space="preserve">
       <value>Yesterday</value>
+   </data>
+   <data name="HelloWorld" xml:space="preserve">
+      <value>Hello Cruel World</value>
    </data>
    <data name="Today" xml:space="preserve">
       <value>Aujourd'hui 2</value>
@@ -71,6 +74,6 @@
       <value>A name must be provided.</value>
    </data>
    <data name="AddressIsRequired" xml:space="preserve">
-      <value>An address has to be entered.</value>
+      <value>An address is required.</value>
    </data>
 </root>

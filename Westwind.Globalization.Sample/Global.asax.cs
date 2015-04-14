@@ -23,8 +23,6 @@ namespace Westwind.Globalization.Sample
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-
-            
             // Specify where config information comes from (config file is default - can be separate Json/Xml)
             //DbResourceConfiguration.ConfigurationMode = ConfigurationModes.ConfigFile;
             

@@ -67,10 +67,13 @@
    <data name="Today" xml:space="preserve">
       <value>Heute</value>
    </data>
-   <data name="Yesterday" xml:space="preserve">
-      <value>Gestern</value>
+   <data name="FlagPng" type="System.Resources.ResXFileRef, System.Windows.Forms">
+      <value>GermanFlag.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
    </data>
    <data name="HelloWorld" xml:space="preserve">
       <value>Hallo schnöde Welt</value>
+   </data>
+   <data name="Yesterday" xml:space="preserve">
+      <value>Gestern</value>
    </data>
 </root>

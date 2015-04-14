@@ -169,6 +169,13 @@
 
             <label>Strongly typed Resource Generated from Db (uses ASP.NET ResourceProvider)</label>
             <%= Resources.HelloWorld %>
+            
+                        <label>Strongly typed image resource:</label>
+            <div>
+                <% try { %>
+                <%= GeneratedResourceHelper.BitmapToEmbeddedHtmlImage(Resources.FlagPng, System.Drawing.Imaging.ImageFormat.Png) %>&nbsp;
+                <% } catch {} %>
+            </div>
         </div>
 
         <hr />

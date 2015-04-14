@@ -17,6 +17,8 @@ namespace Westwind.Globalization.Test
 
             string result = service.TranslateGoogle("Life is great and one is spoiled when it goes on and on and on", "en", "de");
             Console.WriteLine(result);
+            Console.WriteLine(service.ErrorMessage);
+            
 
             string result2 = service.TranslateGoogle(result, "de", "en");
             Console.WriteLine(result2);

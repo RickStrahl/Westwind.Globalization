@@ -473,7 +473,7 @@ The type will be your exported class or generated Resx class and the name is the
 * Try writing out the actual property using @Resources.AddressIsRequired to ensure the value is valid (on a simple test page perferrably). 
 
 ## Non Sql Server Database Providers
-By default the resource providers and manager use SQL Server to hold the database resources. If you don't do any custom configuration in code to specify the Configuration.DbResourceDataManagerType you'll get the Sql Server provider/manager. 
+By default the resource providers and manager use **SQL Server** to hold the database resources. If you don't do any custom configuration in code to specify the Configuration.DbResourceDataManagerType you'll get the Sql Server provider/manager. 
 
 However, all of the following providers are supported:
 
@@ -501,7 +501,7 @@ DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSql
 
 
 ### Sql Server Compact
-*add NuGet Package:* **Westwind.Globalization.SqlServerCe**
+*add NuGet Package: **Microsoft.SqlServer.Compact***
 
 ```c#
 DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerCeDataManager);
@@ -511,7 +511,7 @@ DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSql
 	<add name="Localizations" connectionString="server=.;database=localizations;integrated security=true;" providerName="System.Data.SqlClient" />
 
 ### MySql
-*add NuGet Package: Westwind.Globalization.MySql*
+*add NuGet Package: **MySql.Data***
 ```c#
 DbResourceConfiguration.Current.DbResourceDataManagerType = typeof (DbResourceMySqlDataManager);
 ```
@@ -521,7 +521,7 @@ DbResourceConfiguration.Current.DbResourceDataManagerType = typeof (DbResourceMy
 
 
 ### SqLite
-*add NuGet Package: Westwind.Globalization.SqLite*
+*add NuGet Package: **System.Data.SQLite.Core*** 
 ```c#
 DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);
 ```  

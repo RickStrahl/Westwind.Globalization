@@ -152,18 +152,6 @@
     <Content Include="_readme.Westwind.Globalization.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Westwind.Globalization.MySql\Westwind.Globalization.MySql.csproj">
-      <Project>{9d405441-66d4-45d0-8832-9e17587ba921}</Project>
-      <Name>Westwind.Globalization.MySql</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Westwind.Globalization.SqLite\Westwind.Globalization.SqLite.csproj">
-      <Project>{4C74DAE9-4F4D-4D94-B3CA-783ACEF494F2}</Project>
-      <Name>Westwind.Globalization.SqLite</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Westwind.Globalization.SqlServerCe\Westwind.Globalization.SqlServerCe.csproj">
-      <Project>{1324112A-7929-4246-ABCC-DFE51F755681}</Project>
-      <Name>Westwind.Globalization.SqlServerCe</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Westwind.Globalization.Web\Westwind.Globalization.Web.csproj">
       <Project>{d827f9a2-12e0-436c-b986-8589ed643481}</Project>
       <Name>Westwind.Globalization.Web</Name>

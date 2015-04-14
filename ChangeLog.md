@@ -1,6 +1,18 @@
 # West Wind Globalization Changelog
 
-### Version 2.0
+### Version 2.0 Beta5
+<small><i>currently in Beta</i></small>
+
+* **Add support for Resource Editing to HTML/MVC Projects**<br/>
+You can now set up resource editing for plain HTML pages by adding resource attributes to DOM elements. Using `data-resource-id` at the element level and `data-resource-set` at the element or parent container level, elements are marked up with clickable links that jump to the resource editor for those items. 
+
+* **Refactor Non Sql Server Providers into the Main Assembly**<br/>
+Refactored `DbResourceDataManagers` so that no separate assemblies are required for other database providers any longer. All providers are now dynamically loaded so Westwind.Globalization doesn't have direct dependencies on any data providers. Dependencies have to be loaded explicitly via NuGet as described in the documentation.
+
+* **Improved support for Resource File Uploads**<br/>
+You can now more easily import and export file resoures from and to Resx files and also create new file resources for things like images and other non-plain string items. When exporting Resources are created in the same folder as the Resx files generated.
+
+### Version 2.0 Beta4
 <small><i>currently in Beta</i></small>
 
 * **New DbResourceDataManager Model to allow for pluggable Data Providers**<br/>
@@ -12,13 +24,10 @@ Added custom DbResourceDataManager implementations for each of these data engine
 * **New Administration Form**<br/>
 Complete rewrote the Administration form using a pure client side model using Angular JS and a CallbackHandler service on the backend. The new UI provides much easier navigation of resources and shows all resources available for a resource key for easy editing. The editing UI is also keyboard friendly to allow for quick hands on the keyboard editing of resources.
 
-* **Improved support for Resource File Uploads**<br/>
-You can now more easily import and export file resoures from and to Resx files and also create new file resources for things like images and other non-plain string items. When exporting Resources are created in the same folder as the Resx files generated.
-
 * **Improved Resource Import and Export**<br/>
 The Web Interface now supports importing and exporting resources optionally from virtually any path, not just the path of the actual Web application. This means you can now easily edit and update resources from any project on your local machine.
 
-* **Strongly Typed Class Export Improvements**
+* **Strongly Typed Class Export Improvements**<br/>
 The Web interface now allows you to choose the output path and namespace for strongly typed resource exports as part of the export process. The values default to configured values, but you can override the behavior.
 
 * **Export JavaScript Resource files from Server Resources**

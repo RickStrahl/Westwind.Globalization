@@ -168,7 +168,7 @@
         }
         function importResxResources(path) {
             path = path || "";
-            return $http.get("localizationService.ashx?method=ImportResxResources&outputBasePath=" + encodeURIComponent(path))
+            return $http.get("localizationService.ashx?method=ImportResxResources&inputBasePath=" + encodeURIComponent(path))
                     .error(parseHttpError);
         }
         function getLocalizationInfo() {

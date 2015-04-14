@@ -34,7 +34,8 @@
 
     <link href="css/localizationAdmin.css" rel="stylesheet"/>
 </head>
-<body ng-app="app" ng-controller="listController as view" ng-cloak>
+<body ng-app="app" ng-controller="listController as view" 
+      ng-cloak data-resource-set="LocalizationForm">
 
 <div class="banner">
     <div id="TitleBar">
@@ -43,7 +44,7 @@
                  style="height: 35px; float: left"/>
             <div style="float: left; margin-left: 5px; line-height: 1.2">
                 <i style="color: steelblue; font-size: 0.8em; font-weight: bold;">West Wind Globalization</i><br/>
-                <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;">{{::view.dbRes('LocalizationAdministration')}}</i>
+                <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;" data-resource-id="LocalizationAdministration">{{::view.dbRes('LocalizationAdministration')}}</i>
             </div>
         </a>
     </div>
@@ -65,18 +66,18 @@
                    placeholder="{{::view.dbRes('SearchResources')}}"
                    ng-model="view.searchText"
                    style="border-radius: 0; margin: 0"
-                   type="search"
-                   accesskey="E"/>
+                   type="search" data-resource-id="SearchResources"
+                   accesskey="E"/>            
         </div>
-
-
+        
+        
         <div class="form-group">
             <select id="ResourceIdList" ng-model="view.resourceId"
                     ng-change="view.onResourceIdChange(resource)"
                     size="2" class="form-control">
                 <option ng-repeat="resource in view.resourceList | filter:view.searchText"
                         value="{{resource.ResourceId}}"
-                        style=" { {resource.Style}}">
+                        style="{{resource.Style}}">
                     {{resource.ResourceId}}
                 </option>
             </select>
@@ -84,7 +85,6 @@
     </div>
 
     <div id="ContentPanel" class="col-sm-8" ng-class="{expanded: !view.listVisible }">
-
         <div ng-include src="'partials/ResourceList.html'"></div>
 
         <div ng-include src="'partials/ResourceSetList.html'"></div>
@@ -110,15 +110,18 @@
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="scripts/ww.jquery.min.js"></script>
 <script src="bower_components/lodash/lodash.min.js"></script>
-<script src="../JavaScriptResourceHandler.axd?ResourceSet=LocalizationForm&LocaleId=auto&VarName=resources&ResourceType=auto&ResourceMode=1"></script>
+<script src="../JavaScriptResourceHandler.axd?ResourceSet=LocalizationForm&LocaleId=auto&VarName=resources&ResourceType=resdb&ResourceMode=1"></script>
 <script src="bower_components/angular/angular.min.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 <script src="scripts/ww.angular.js"></script>
+    <script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
+
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 
 <!-- combined app scripts - build with gulp -->
 <!--<script src="js/app.min.js"></script>-->
+
 
 <script src="app/app.js"></script>
 
@@ -128,6 +131,8 @@
 <script src="app/resourceProviderController.js"></script>
 <script src="app/importExportResxController.js"></script>
 <script src="app/createClassController.js"></script>
+
+<script src="scripts/ww.resourceEditor.js"></script>
 
 </body>
 </html>

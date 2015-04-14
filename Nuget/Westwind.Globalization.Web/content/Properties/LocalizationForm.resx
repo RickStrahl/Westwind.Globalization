@@ -67,17 +67,11 @@
    <data name="SearchResources" xml:space="preserve">
       <value>Search Resources</value>
    </data>
-   <data name="Add" xml:space="preserve">
-      <value>Add</value>
-   </data>
    <data name="Delete" xml:space="preserve">
       <value>Delete</value>
    </data>
    <data name="Comment" xml:space="preserve">
       <value>Comment</value>
-   </data>
-   <data name="Add.Title" xml:space="preserve">
-      <value>Add a new individual resource.</value>
    </data>
    <data name="ResourceSaved" xml:space="preserve">
       <value>Resource has been saved.</value>
@@ -130,9 +124,6 @@
    <data name="Backup.Title" xml:space="preserve">
       <value>Backup resources to a backup table in the database.</value>
    </data>
-   <data name="AreYouSureYouWantToDoThis" xml:space="preserve">
-      <value>Are you sure you want to do this?</value>
-   </data>
    <data name="YouAreAboutToDeleteThisResourceSet" xml:space="preserve">
       <value>You are about to delete this resource set.</value>
    </data>
@@ -151,6 +142,9 @@
    <data name="Cancel" xml:space="preserve">
       <value>Cancel</value>
    </data>
+   <data name="StronglyTypedClassCreated" xml:space="preserve">
+      <value>Strongly typed classes have been created. You'll have to re-compile your application to use any added resources.</value>
+   </data>
    <data name="ResxResourcesHaveBeenCreated" xml:space="preserve">
       <value>Resx Resources have been created in your Web project.</value>
    </data>
@@ -160,9 +154,6 @@
    <data name="NoProviderConfigured" xml:space="preserve">
       <value>No Provider configured (Resx)</value>
    </data>
-   <data name="StronglyTypedClassCreated" xml:space="preserve">
-      <value>Strongly typed classes have been created. You'll have to re-compile your application to use any added resources.</value>
-   </data>
    <data name="ResourceImportFailed" xml:space="preserve">
       <value>Resource import failed.</value>
    </data>
@@ -171,9 +162,6 @@
    </data>
    <data name="NoResourcePassedToAddOrUpdate" xml:space="preserve">
       <value>No resource passed to add or update.</value>
-   </data>
-   <data name="InvalidResourceId" xml:space="preserve">
-      <value>Invalid Resource Id.</value>
    </data>
    <data name="ResourceGenerationFailed" xml:space="preserve">
       <value>Resource generation failed.</value>
@@ -187,11 +175,11 @@
    <data name="ResxExportInfo" xml:space="preserve">
       <value>The resource export will export all resources to the specified resource folder below.</value>
    </data>
+   <data name="InvalidResourceId" xml:space="preserve">
+      <value>Invalid Resource Id.</value>
+   </data>
    <data name="ResxImportInfo" xml:space="preserve">
       <value>The resource import will import all .Resx resources from the specified resource folder below recursively.</value>
-   </data>
-   <data name="Folder" xml:space="preserve">
-      <value>Folder</value>
    </data>
    <data name="Resources" xml:space="preserve">
       <value>Resources</value>
@@ -205,17 +193,14 @@
    <data name="Filename" xml:space="preserve">
       <value>Filename</value>
    </data>
+   <data name="Folder" xml:space="preserve">
+      <value>Folder</value>
+   </data>
    <data name="ResxExportInfo.Project" xml:space="preserve">
       <value>Your Resx Export Mode is &lt;b&gt;Project&lt;/b&gt;, so resource files are  created in this folder as seperate .resx files, one per resource set.</value>
    </data>
    <data name="ResxExportInfo.WebForms" xml:space="preserve">
       <value>Your Resx Export Mode is &lt;b&gt;WebForms&lt;/b&gt;, so .Resx resources are created  in the appropriate App_GlobalResource and App_LocalResources. It's highly recommended you export only to the project root folder (~/).</value>
-   </data>
-   <data name="ResxImportInfo.Project" xml:space="preserve">
-      <value>Your Resx Export Mode is &lt;b&gt;Project&lt;/b&gt;, so resource files are imported hierarically with paths prefixed using web based path syntax that is reflected in the resource set name.</value>
-   </data>
-   <data name="ResxImportInfo.WebForms" xml:space="preserve">
-      <value>Your Resx Export Mode is &lt;b&gt;WebForms&lt;/b&gt;, so .Resx resources are imported from the appropriate App_GlobalResources and App_LocalResources folders. Loose .Resx files are also imported. Global resources are mapped without a path, local resources contain the relative path and local resource control page/control they map.</value>
    </data>
    <data name="CreateClassInfo" xml:space="preserve">
       <value>This operation allows you to export your ResourceSets as strongly typed classes in a single source file. Each ResourceSet is transformed into a class with properties for each resource Id.</value>
@@ -225,6 +210,42 @@
    </data>
    <data name="ResxResourcesHaveBeenImported" xml:space="preserve">
       <value>Resx Resources have been imported.</value>
+   </data>
+   <data name="AreYouSureYouWantToDoThis" xml:space="preserve">
+      <value>Are you sure you want to do this?</value>
+   </data>
+   <data name="ResxImportInfo.Project" xml:space="preserve">
+      <value>Your Resx Export Mode is &lt;b&gt;Project&lt;/b&gt;, so resource files are imported hierarically with paths prefixed using web based path syntax that is reflected in the resource set name.</value>
+   </data>
+   <data name="ResxImportInfo.WebForms" xml:space="preserve">
+      <value>Your Resx Export Mode is &lt;b&gt;WebForms&lt;/b&gt;, so .Resx resources are imported from the appropriate App_GlobalResources and App_LocalResources folders. Loose .Resx files are also imported. Global resources are mapped without a path, local resources contain the relative path and local resource control page/control they map.</value>
+   </data>
+   <data name="BackupFailed" xml:space="preserve">
+      <value>The backup failed.</value>
+   </data>
+   <data name="BackupComplete" xml:space="preserve">
+      <value>Backup is complete.</value>
+   </data>
+   <data name="EnableResourceEditing" xml:space="preserve">
+      <value>Enable Resource Editing</value>
+   </data>
+   <data name="DisableResourceEditing" xml:space="preserve">
+      <value>Disable Resource Editing</value>
+   </data>
+   <data name="SaveResource" xml:space="preserve">
+      <value>Save resource (Ctrl-Enter)</value>
+   </data>
+   <data name="Edit" xml:space="preserve">
+      <value>Edit</value>
+   </data>
+   <data name="TranslateResource" xml:space="preserve">
+      <value>Translate Resource</value>
+   </data>
+   <data name="Refresh" xml:space="preserve">
+      <value>Refresh</value>
+   </data>
+   <data name="Add" xml:space="preserve">
+      <value>Add</value>
    </data>
    <data name="CreateTable.Title" xml:space="preserve">
       <value>Create the Localization table as defined in the configuration file.</value>

@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     'use strict';
 
     angular
@@ -31,10 +31,12 @@
         };
 
         vm.importResources = function() {
+            var parentView = $scope.$parent.view;
             localizationService.importResxResources(vm.info.ResxBaseFolder)
                 .success(function() {
-                    $("#ImportExportResxDialog").modal('hide');
+                    $("#ImportExportResxDialog").modal('hide');                    
                     parentView.showMessage(vm.dbRes("ResxResourcesHaveBeenImported"));
+                    parentView.getResourceSets();
                 })
                 .error(parentView.parseError);
         };

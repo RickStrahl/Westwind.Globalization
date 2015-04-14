@@ -18,7 +18,7 @@
             vm.resources = resources;
             vm.dbRes = resources.dbRes;
             vm.listVisible = true;
-            vm.searchText = null;
+            vm.searchText = "";
             vm.resourceSet = null;
             vm.resourceSets = [];
             vm.resourceList = [];
@@ -52,30 +52,7 @@
             };
 
 
-            vm.onResourceUpload = function(files) {
-                if (files && files.length) {
-                    for (var i = 0; i < files.length; i++) {
-                        var file = files[i];
-                        $upload.upload({
-                                url: 'LocalizationService.ashx?method=UploadResource',
-                                fields: { 'resourceset': vm.resourceSet, 'resourceid': vm.resourceId, "localeid": vm.activeResource.LocaleId },
-                                file: file
-                            }).progress(function(evt) {
-                                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                                vm.uploadProgress = progressPercentage + '% ' + evt.config.file.name;
-                            }).success(function(data, status, headers, config) {
-                                $("#AddResourceDialog").modal('hide');
-                                vm.getResourceItems();
-                                showMessage(vm.dbRes('ResourceSaved'));
-                                vm.uploadProgress = null;
-                            })
-                            .error(function() {
-                                parseError(arguments);
-                                vm.uploadProgress = null;
-                            });
-                    }
-            }
-        };
+          
 
        vm.collapseList = function () {           
            vm.listVisible = !vm.listVisible;
@@ -117,7 +94,7 @@
         vm.getResourceList = function getResourceList() {
             return localizationService.getResourceList(vm.resourceSet)
                 .success(function(resourceList) {
-                    vm.resourceList = resourceList;
+                    vm.resourceList = resourceList;                    
                     if (resourceList.length > 0) {
                         vm.resourceId = vm.resourceList[0].ResourceId;
                         setTimeout(function() { vm.onResourceIdChange(); }, 10);
@@ -379,6 +356,30 @@
                })
                .error(parseError);
        }
+       vm.onResourceUpload = function (files) {
+           if (files && files.length) {
+               for (var i = 0; i < files.length; i++) {
+                   var file = files[i];
+                   $upload.upload({
+                       url: 'LocalizationService.ashx?method=UploadResource',
+                       fields: { 'resourceset': vm.resourceSet, 'resourceid': vm.resourceId, "localeid": vm.activeResource.LocaleId },
+                       file: file
+                   }).progress(function (evt) {
+                       var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                       vm.uploadProgress = progressPercentage + '% ' + evt.config.file.name;
+                   }).success(function (data, status, headers, config) {
+                       $("#AddResourceDialog").modal('hide');
+                       vm.getResourceItems();
+                       showMessage(vm.dbRes('ResourceSaved'));
+                       vm.uploadProgress = null;
+                   })
+                       .error(function () {
+                           parseError(arguments);
+                           vm.uploadProgress = null;
+                       });
+               }
+           }
+       };
        vm.onReloadResourcesClick = function() {
            localizationService.reloadResources()
                .success(function() {
@@ -401,13 +402,13 @@
                })
                .error(parseError);
        };
-       vm.showResourceIcons = function () {
-           vm.resourceEditMode = !vm.resourceEditMode;
-           if (vm.resourceEditMode)
-               ww.resourceEditor.showResourceIcons({ adminUrl: "./" });
-           else
-               ww.resourceEditor.removeResourceIcons();
-       };
+        vm.showResourceIcons = function () {
+            vm.resourceEditMode = !vm.resourceEditMode;
+            if (vm.resourceEditMode)
+                ww.resourceEditor.showResourceIcons({ adminUrl: "./" });
+            else
+                ww.resourceEditor.removeResourceIcons();
+        };
 
 
        vm.showMessage = showMessage;
