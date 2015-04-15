@@ -215,13 +215,29 @@
                vm.activeResource.Value = vm.activeResource.ResourceId;
 
        }
-       vm.onAddResourceClick = function() {
+       vm.onAddResourceClick = function(resourceId,resourceSet) {
+           if (!resourceId) {
+               if (vm.activeResource)
+                   resourceId = vm.activeResource.ResourceId;
+               else
+                   resourceId = "";
+           }
+           if (!resourceSet) {
+               if (vm.activeResource)
+                   resourceSet = vm.activeResource.ResourceSet;
+               else
+                   resourceSet = "";
+           }
+           var localeId = "";
+           if (vm.activeResource)
+               localeId = vm.activeResource.LocaleId;
            
            var res = vm.newResource();           
-           res.ResourceSet = vm.activeResource.ResourceSet;
-           res.LocaleId = vm.activeResource.LocaleId;
-           res.ResourceId = vm.activeResource.ResourceId;
+           res.ResourceSet = resourceSet;
+           res.LocaleId = localeId;
+           res.ResourceId = resourceId;
            vm.activeResource = res;
+           console.log(vm.activeResource);
 
            $("#AddResourceDialog").modal();
        };
@@ -467,15 +483,23 @@
         
            function selectResourceId(query) {
                vm.getResourceList()                         
-               .success(function() {
-                   for (var i = 0; i < vm.resourceList.length; i++) {
+               .success(function () {
+                   
+                   var found = false;
+                   for (var i = 0; i < vm.resourceList.length; i++) {                       
                        if (vm.resourceList[i].ResourceId === query.resourceId) {
                            vm.resourceId = vm.resourceList[i].ResourceId;
                            vm.onResourceIdChange();
+                           found = true;
                            break;
                        }
                    }
-               });
+
+                       if (!found)
+                           $timeout(function() {
+                               vm.onAddResourceClick(query.resourceId, query.resourceSet);
+                           }, 100);
+                   });
            }
 
        }
