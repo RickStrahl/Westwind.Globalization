@@ -62,3 +62,15 @@
 
     self = ww.resourceEditor;
 })();
+
+(function() {
+    if (typeof (ww) == 'undefined')
+        ww = {};
+    var self = null;
+    ww.resourceEditorControl = {
+        
+    };
+
+    self = ww.resourceEditorControl;
+})();
+    

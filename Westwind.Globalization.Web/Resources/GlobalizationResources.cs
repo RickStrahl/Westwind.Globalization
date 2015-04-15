@@ -6,8 +6,8 @@ using System.ComponentModel;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-[assembly: WebResource("Westwind.Globalization.Resources.editresources.png", "image/png")]
-[assembly: WebResource("Westwind.Globalization.Resources.localize.png", "image/png")]
+[assembly: WebResource("Westwind.Globalization.Web.Resources.editresources.png", "image/png")]
+[assembly: WebResource("Westwind.Globalization.Web.Resources.localize.png", "image/png")]
 
 namespace Westwind.Globalization
 {
@@ -16,8 +16,8 @@ namespace Westwind.Globalization
     /// </summary>
     public class GlobalizationResources
     {
-        public const string INFO_ICON_EDITRESOURCES = "Westwind.Globalization.Resources.editresources.png";
-        public const string INFO_ICON_LOCALIZE = "Westwind.Globalization.Resources.localize.png";
+        public const string INFO_ICON_EDITRESOURCES = "Westwind.Globalization.Web.Resources.editresources.png";
+        public const string INFO_ICON_LOCALIZE =      "Westwind.Globalization.Web.Resources.localize.png";
     }
 
 }

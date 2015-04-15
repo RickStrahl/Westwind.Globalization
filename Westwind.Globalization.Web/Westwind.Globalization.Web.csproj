@@ -89,7 +89,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\localize.png" />
+    <EmbeddedResource Include="Resources\localize.png" />
     <Content Include="scripts\ww.jquery.js" />
     <Content Include="scripts\ww.jquery.min.js" />
   </ItemGroup>
