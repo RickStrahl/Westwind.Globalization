@@ -215,7 +215,8 @@
                vm.activeResource.Value = vm.activeResource.ResourceId;
 
        }
-       vm.onAddResourceClick = function(resourceId,resourceSet) {
+       vm.onAddResourceClick = function(resourceId,resourceSet,content) {
+           
            if (!resourceId) {
                if (vm.activeResource)
                    resourceId = vm.activeResource.ResourceId;
@@ -236,6 +237,7 @@
            res.ResourceSet = resourceSet;
            res.LocaleId = localeId;
            res.ResourceId = resourceId;
+           res.Value = content;
            vm.activeResource = res;
            console.log(vm.activeResource);
 
@@ -458,12 +460,13 @@
         }
 
         function parseQueryString() {
-            var query = window.location.search;
+            var query = window.location.search;            
             var res = {
                 isEmpty: !query,
                 query: query,
                 resourceId: getUrlEncodedKey("ResourceId", query),
-                resourceSet: getUrlEncodedKey("ResourceSet", query)
+                resourceSet: getUrlEncodedKey("ResourceSet", query),
+                content: getUrlEncodedKey("Content", query)
             }
 
             return res;
@@ -472,32 +475,32 @@
        function selectResourceSet(query) {           
            if(!query.resourceSet)
                 return;
-
+           
            for (var i = 0; i < vm.resourceSets.length; i++) {
                if (vm.resourceSets[i] == query.resourceSet) {                       
                    vm.resourceSet = vm.resourceSets[i];
-                   $timeout(function() { selectResourceId(query) });
+                   $timeout(function() { selectResourceIdWithQuery(query) },50);
                    break;
                }                   
            }
         
-           function selectResourceId(query) {
-               vm.getResourceList()                         
-               .success(function () {
-                   
-                   var found = false;
-                   for (var i = 0; i < vm.resourceList.length; i++) {                       
-                       if (vm.resourceList[i].ResourceId === query.resourceId) {
-                           vm.resourceId = vm.resourceList[i].ResourceId;
-                           vm.onResourceIdChange();
-                           found = true;
-                           break;
+           function selectResourceIdWithQuery(query) {               
+               vm.getResourceList()
+                   .success(function() {
+                       var found = false;
+                       debugger;
+                       for (var i = 0; i < vm.resourceList.length; i++) {
+                           if (vm.resourceList[i].ResourceId === query.resourceId) {
+                               vm.resourceId = vm.resourceList[i].ResourceId;                               
+                               vm.onResourceIdChange();
+                               found = true;
+                               break;
+                           }
                        }
-                   }
 
                        if (!found)
                            $timeout(function() {
-                               vm.onAddResourceClick(query.resourceId, query.resourceSet);
+                               vm.onAddResourceClick(query.resourceId, query.resourceSet, query.content);
                            }, 100);
                    });
            }
@@ -529,7 +532,7 @@
                var query = parseQueryString();
                if (query.isEmpty)
                    return;
-           console.log(query);
+               console.log(query);
                selectResourceSet(query);
            });
    }

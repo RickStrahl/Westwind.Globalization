@@ -149,12 +149,12 @@
       <DependentUpon>LocalizationService.ashx</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.cs" />
-    <Compile Include="ResourceEditingTest.aspx.cs">
-      <DependentUpon>ResourceEditingTest.aspx</DependentUpon>
+    <Compile Include="ResourceEditingWebForms.aspx.cs">
+      <DependentUpon>ResourceEditingWebForms.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ResourceEditingTest.aspx.designer.cs">
-      <DependentUpon>ResourceEditingTest.aspx</DependentUpon>
+    <Compile Include="ResourceEditingWebForms.aspx.designer.cs">
+      <DependentUpon>ResourceEditingWebForms.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -272,7 +272,7 @@
     </Content>
     <Content Include="LocalizationAdmin\touch-icon.png" />
     <Content Include="Properties\Westwind.Localization_50.png" />
-    <Content Include="ResourceEditingTest.aspx" />
+    <Content Include="ResourceEditingWebForms.aspx" />
     <Content Include="Scripts\ww.jquery.js" />
     <Content Include="Scripts\ww.jquery.min.js" />
     <Content Include="_readme.Westwind.Globalization.html" />

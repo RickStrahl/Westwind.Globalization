@@ -45,12 +45,9 @@ namespace Westwind.Globalization
     /// </summary>
     [ToolboxData("<{0}:DbResourceControl runat=server />")]
     [Localizable(false)]
-    public class DbResourceControl : CompositeControl
-    {
-        protected LinkButton btnEditResources = new LinkButton();
-        protected CheckBox chkShowIcons = new CheckBox();
-
-        protected bool ShowIcons = true;
+    public class DbResourceControl : Control
+    {        
+        
 
         /// <summary>
         /// The default control constructor.
@@ -59,46 +56,16 @@ namespace Westwind.Globalization
         {
         }
 
-        protected new bool DesignMode
-        {
-            get { return (HttpContext.Current == null); }
-        }
+        //protected new bool DesignMode
+        //{
+        //    get { return (HttpContext.Current == null); }
+        //}
 
-
-        /// <summary>
-        ///  Determines the initial state of the ShowLocalization Icons Text box.
-        /// </summary>
-        [Description("Determines the initial state of the ShowLocalization Icons Text box.")]
-        [Category("Localization"), DefaultValue(typeof(ShowLocalizationStates), "InheritFromProvider")]
-        public ShowLocalizationStates ShowIconsInitially
-        {
-            get { return _ShowLocalizationIcons; }
-            set { _ShowLocalizationIcons = value; }
-        }
-        private ShowLocalizationStates _ShowLocalizationIcons = ShowLocalizationStates.InheritFromProvider;
-
-        /// <summary>
-        /// Optional override for Client OnLocalization Handler that when set is fired
-        /// in response to a click on one of the localization icons. Gets passed
-        /// an event object plus the resource name and resource set name.
-        /// 
-        /// If set OnLocalization is called first which in turn fires the handler
-        /// of your choice.
-        /// </summary>
-        public string ClientOnLocalizationIconHandler
-        {
-            get { return _ClientOnLocalizationIconHandler; }
-            set { 
-                _ClientOnLocalizationIconHandler = value;
-                // Don't allow OnLocalization which is the default handler
-                // otherwise we end up with recursion
-                if (_ClientOnLocalizationIconHandler == "OnLocalization")
-                    _ClientOnLocalizationIconHandler = string.Empty;
-            }
-        }
-        private string _ClientOnLocalizationIconHandler = string.Empty;
-
+        [Description("Determines whether localization icon logic is rendered into the page. Use this property this property to dynamically determine whether resource editing is enabled on the form or not.")]
+        [Category("Localization"),DefaultValue(false)]
+        public bool EnableResourceLinking { get; set; }
         
+
         protected override void OnInit(EventArgs e)
         {
             
@@ -109,29 +76,6 @@ namespace Westwind.Globalization
             Page.PreRender += Page_PreRender;
         }
 
-        
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-
-            if (!Page.IsPostBack)
-            {
-                if (ShowIconsInitially == ShowLocalizationStates.DontShow)
-                    ShowIcons = false;
-                else if (ShowIconsInitially == ShowLocalizationStates.Show)
-                    ShowIcons = true;
-                else if (ShowIconsInitially == ShowLocalizationStates.InheritFromProvider)
-                    ShowIcons = DbResourceConfiguration.Current.ShowControlIcons &&
-                                DbResourceConfiguration.Current.ShowLocalizationControlOptions;
-
-                if (ShowIcons)
-                    chkShowIcons.Checked = true;
-            }
-            else
-            {
-                ShowIcons = chkShowIcons.Checked;
-            }
-        }
 
         /// <summary>
         /// Hook to Page Pre-Render to allow injecting controls at runtime
@@ -140,7 +84,7 @@ namespace Westwind.Globalization
         /// <param name="e"></param>
         void Page_PreRender(object sender, EventArgs e)
         {
-            if (ShowIcons && Visible)
+            if (EnableResourceLinking)
                 AddLocalizationIcons(Page, true);
         }
 
@@ -232,10 +176,6 @@ namespace Westwind.Globalization
         }
 
 
-
- 
-
-
         /// <summary>
         /// This method is responsible for showing localization icons next to every control
         /// that has localizable properties.
@@ -298,7 +238,7 @@ namespace Westwind.Globalization
                     else if (control is Literal)  // literal and localize don't have wrapping tags so add them
                     {
                         var ctl = control as Literal;                        
-                        ctl.Text = string.Format("<span data-resource-id=\"{0}\" data-resoure-set=\"{1}\">" +
+                        ctl.Text = string.Format("<span data-resource-id=\"{0}\" data-resource-set=\"{1}\">" +
                                    ctl.Text +
                                    "</span>", control.ID + "." + property, resourceSet);
                     }
@@ -308,6 +248,7 @@ namespace Westwind.Globalization
                         ctl.Attributes["data-resource-id"] = control.ID + "." + property;
                         ctl.Attributes["data-resource-set"] = resourceSet;
                     }
+     
                     else
                     {
                         if (control.HasControls() && !(control is Page || control is HtmlForm))

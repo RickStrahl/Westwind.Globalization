@@ -10,7 +10,7 @@
 namespace Westwind.Globalization.Sample {
     
     
-    public partial class ResourceEditingTest {
+    public partial class ResourceEditingWebForms {
         
         /// <summary>
         /// form1 control.
@@ -31,6 +31,15 @@ namespace Westwind.Globalization.Sample {
         protected global::System.Web.UI.WebControls.Label lblHelloWorldLabel;
         
         /// <summary>
+        /// localizeControl_Label control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl localizeControl_Label;
+        
+        /// <summary>
         /// localizeControl control.
         /// </summary>
         /// <remarks>
@@ -40,6 +49,15 @@ namespace Westwind.Globalization.Sample {
         protected global::System.Web.UI.WebControls.Localize localizeControl;
         
         /// <summary>
+        /// literalControl_Label control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl literalControl_Label;
+        
+        /// <summary>
         /// literalControl control.
         /// </summary>
         /// <remarks>
@@ -47,6 +65,15 @@ namespace Westwind.Globalization.Sample {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal literalControl;
+        
+        /// <summary>
+        /// btnSubmit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSubmit;
         
         /// <summary>
         /// dgResources control.

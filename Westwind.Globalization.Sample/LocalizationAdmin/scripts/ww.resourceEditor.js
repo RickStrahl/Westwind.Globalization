@@ -31,19 +31,26 @@
                 var $el = $(this);
                 var resId = $el.data("resource-id");
                 var resSet = $el.data("resource-set");
+
+                var content = $el.text() || $el.val();
+                
+                if (content && content.length > 600)
+                    content = "";
+                
                 if (!resSet) {
                     var $resSets = $el.parents("[data-resource-set]");                    
                     if ($resSets.length > 0)
-                        resourceSet = $resSets.eq(0).data("resource-set");
+                        resSet = $resSets.eq(0).data("resource-set");
                 }
                 var pos = $el.position();
 
+                console.log("Url: " + encodeURIComponent(resSet)); 
                 var $new = $("<res-edit>")
                     .addClass("resource-editor-icon")
                     .css(pos)
                     .attr("target", "resourceEditor")
                     .attr("title","Edit resource: " + resId )
-                    .attr("onclick","window.open('" + opt.adminUrl + "?ResourceSet=" + encodeURIComponent(resourceSet) + "&ResourceId=" +  resId + "','resourceEdit')");
+                    .attr("onclick","window.open('" + opt.adminUrl + "?ResourceSet=" + resSet + "&ResourceId=" +  resId + "&Content=" +  encodeURIComponent(content) + "','resourceEdit')");
                     
                 $new.insertBefore($el);
 
