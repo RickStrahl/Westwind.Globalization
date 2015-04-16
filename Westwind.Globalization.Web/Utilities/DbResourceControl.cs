@@ -13,7 +13,7 @@ using Westwind.Globalization.Properties;
 using Westwind.Utilities;
 using Westwind.Web;
 using Westwind.Web.Controls;
-
+using System.Linq;
 
 namespace Westwind.Globalization
 {
@@ -133,27 +133,17 @@ namespace Westwind.Globalization
             }
         }
 
-        protected override void OnPreRender(EventArgs e)
+        /// <summary>
+        /// Hook to Page Pre-Render to allow injecting controls at runtime
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void Page_PreRender(object sender, EventArgs e)
         {
-            base.OnPreRender(e);
-
             if (ShowIcons && Visible)
                 AddLocalizationIcons(Page, true);
         }
 
-        protected override void Render(HtmlTextWriter writer)
-        {
-            if (HttpContext.Current != null &&
-                !DbResourceConfiguration.Current.ShowLocalizationControlOptions)
-                return;
-
-            if (Width == Unit.Empty)
-                Width = Unit.Pixel(250);
-
-            base.Render(writer);
-        }
-
-     
 
         /// <summary>
         /// Goes through the form and returns a list of all control on a form
@@ -225,9 +215,6 @@ namespace Westwind.Globalization
 
                     ResourceList.Add(lp);
                 }
-
-                /// Check for special controls and properties that not marked as [Localizable]
-                GetNonLocalizableControlProperties(control, ResourceList);
             }
 
             if (!noControlRecursion)
@@ -246,48 +233,7 @@ namespace Westwind.Globalization
 
 
 
-        /// <summary>
-        /// This method is used to override special controls that don't
-        /// have LocalizableProperties but in fact should have them by
-        /// explicitly marking certain properties as overridable.
-        /// </summary>
-        /// <param name="control">The control </param>
-        /// <param name="ResourceList"></param>        
-        protected virtual void GetNonLocalizableControlProperties(Control control, List<LocalizableProperty> ResourceList)
-        {            
-
-            string resourceSet = control.TemplateControl.AppRelativeVirtualPath.Replace("~/", "");
-
-            // The following have no effect because Literal and Localize don't render control ids
-            if (control is Localize)
-            {
-                var ctl = control as Localize;
-                ctl.Text = string.Format("<span data-resource-id=\"{0}\" data-resoure-set=\"{1}\">" +
-                           ctl.Text + 
-                           "</span>",control.ID,resourceSet);
-            }
-            //    LocalizableProperty lp = new LocalizableProperty();
-            //    Localize lc = (Localize)control;
-            //    lp.ControlId = lc.ID;
-            //    lp.Property = "Text";
-            //    lp.Value = lc.Text;
-            //    ResourceList.Add(lp);
-            //}
-            else if (control is Literal)
-            {
-                var ctl = control as Literal;
-                ctl.Text = string.Format("<span data-resource-id=\"{0}\" data-resoure-set=\"{1}\">" +
-                           ctl.Text + 
-                           "</span>",control.ID,resourceSet);                
-            }
-            //    LocalizableProperty lp = new LocalizableProperty();
-            //    Literal lc = (Literal)control;
-            //    lp.ControlId = lc.ID;
-            //    lp.Property = "Text";
-            //    lp.Value = lc.Text;
-            //    ResourceList.Add(lp);
-            //}
-        }
+ 
 
 
         /// <summary>
@@ -309,60 +255,25 @@ namespace Westwind.Globalization
 
             string localizationAdminPath = ResolveUrl(DbResourceConfiguration.Current.LocalizationFormWebPath);            
  
-            if (TopLevel) // first time
-            {
-            }
-
             // Don't localize ourselves
             if (control is DbResourceControl)
                 return;
             
-            
-            
-                        
+            string resourceSet = control.TemplateControl.AppRelativeVirtualPath.Replace("~/", "");
+
             // 'generated' controls don't have an ID and don't need to be localized
             if (control.ID != null)
             {
                 // Get all Localizable properties for the current control
                 List<LocalizableProperty> properties = GetAllLocalizableControls(control, null, true);
-                if (properties == null)
-                    return;
-                
-
-                foreach (LocalizableProperty lp in properties)
+                if (properties == null || properties.Count < 1)
                 {
-                    string resourceSet = control.TemplateControl.AppRelativeVirtualPath.Replace("~/", "");
-
-                    if (control is WebControl)
-                    {
-                        var ctl = control as WebControl;
-                        ctl.Attributes["data-resource-id"] = control.ID + "." + lp.Property;
-                        ctl.Attributes["data-resource-set"] = resourceSet;
-                    }
-                    else if (control is Localize)
-                    {
-                        var ctl = control as Localize;                        
-                        ctl.Text = string.Format("<span data-resource-id=\"{0}\" data-resoure-set=\"{1}\">" +
-                                   ctl.Text +
-                                   "</span>", control.ID, resourceSet);
-                    }
-                    else if (control is Literal)
-                    {
-                        var ctl = control as Literal;                        
-                        ctl.Text = string.Format("<span data-resource-id=\"{0}\" data-resoure-set=\"{1}\">" +
-                                   ctl.Text +
-                                   "</span>", control.ID, resourceSet);
-                    }
-                    else if (control is HtmlControl)
-                    {
-                        var ctl = control as HtmlControl;
-                        ctl.Attributes["data-resource-id"] = control.ID + "." + lp.Property;
-                        ctl.Attributes["data-resource-set"] = resourceSet;
-                    }
-
-                    break;
+                    // do nothing
                 }
-
+                else if (properties.Where(itm => itm.Property == "Text").Any())
+                    AddResourceAttributesToControl(control, "Text",resourceSet);
+                else
+                    AddResourceAttributesToControl(control, properties.First().Property,resourceSet);
             }
 
             // Now loop through all child controls
@@ -373,38 +284,44 @@ namespace Westwind.Globalization
                     AddLocalizationIcons(ctl, false);
             }
 
-           
-
-
         }
 
-        void Page_PreRender(object sender, EventArgs e)
+        void AddResourceAttributesToControl(Control control, string property, string resourceSet)
         {
 
-            //this.Page.ClientScript.RegisterClientScriptInclude("ww.resourceEditor",
-            //    localizationAdminPath + "scripts/ww.resourceEditor.js");
+                    if (control is WebControl)
+                    {
+                        var ctl = control as WebControl;
+                        ctl.Attributes["data-resource-id"] = control.ID + "." + property;
+                        ctl.Attributes["data-resource-set"] = resourceSet;
+                    }
+                    else if (control is Literal)  // literal and localize don't have wrapping tags so add them
+                    {
+                        var ctl = control as Literal;                        
+                        ctl.Text = string.Format("<span data-resource-id=\"{0}\" data-resoure-set=\"{1}\">" +
+                                   ctl.Text +
+                                   "</span>", control.ID + "." + property, resourceSet);
+                    }
+                    else if (control is HtmlControl)
+                    {
+                        var ctl = control as HtmlControl;
+                        ctl.Attributes["data-resource-id"] = control.ID + "." + property;
+                        ctl.Attributes["data-resource-set"] = resourceSet;
+                    }
+                    else
+                    {
+                        if (control.HasControls() && !(control is Page || control is HtmlForm))
+                        {
+                            control.Controls.AddAt(0, new Literal()
+                            {
+                                Text = string.Format("<span data-resource-id=\"{0}\" data-resoure-set=\"{1}\">",control.ID + "." + property, resourceSet)                            
+                            });
+                            control.Controls.Add(new Literal() {Text = "</span>" });
+                        }
+                    }
 
-
-//            if (ShowIconsInitially != ShowLocalizationStates.DontShow ||
-//               (ShowIconsInitially == ShowLocalizationStates.InheritFromProvider &&
-//                DbResourceConfiguration.Current.ShowControlIcons))
-//            {
-//                var ctrl = new Literal();
-//                ctrl.Text = string.Format(
-//@"<script>
-//ww.resourceEditor.showResourceIcons({{ adminUrl: '{0}' }});
-//</script>", ResolveUrl(DbResourceConfiguration.Current.LocalizationFormWebPath));
-
-//                ctrl.Visible = true;
-//                // add at bottom of page
-//                if (Page.Form != null)
-//                    Page.Form.Controls.Add(ctrl);
-//                else
-//                    Page.Controls.Add(ctrl);
-//            }
-
-            
         }
+
 
 #if false
         protected override void CreateChildControls()

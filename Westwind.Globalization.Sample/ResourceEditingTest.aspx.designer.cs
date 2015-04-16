@@ -40,6 +40,24 @@ namespace Westwind.Globalization.Sample {
         protected global::System.Web.UI.WebControls.Localize localizeControl;
         
         /// <summary>
+        /// literalControl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal literalControl;
+        
+        /// <summary>
+        /// dgResources control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView dgResources;
+        
+        /// <summary>
         /// DbResourceControl1 control.
         /// </summary>
         /// <remarks>

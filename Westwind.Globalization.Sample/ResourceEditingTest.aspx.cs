@@ -11,7 +11,12 @@ namespace Westwind.Globalization.Sample
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            var manager = DbResourceDataManager.CreateDbResourceDataManager();
 
+            var resources = manager.GetAllResources();
+
+            this.dgResources.DataSource = resources;
+            this.dgResources.DataBind();
         }
     }
 }

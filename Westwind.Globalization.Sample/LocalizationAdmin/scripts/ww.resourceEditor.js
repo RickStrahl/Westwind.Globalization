@@ -48,6 +48,11 @@
                 $new.insertBefore($el);
 
             });
+
+            $(window).resize(function() {
+                ww.resourceEditor.removeResourceIcons();
+                ww.resourceEditor.showResourceIcons(options);
+            });
         },
         removeResourceIcons: function() {
             $(".resource-editor-icon").remove();
