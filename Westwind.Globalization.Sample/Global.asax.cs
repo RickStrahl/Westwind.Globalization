@@ -42,7 +42,7 @@ namespace Westwind.Globalization.Sample
 
             // for all other providers explicitly override the DbResourceDataManagerType
             //DbResourceConfiguration.Current.ConnectionString = "SqlServerCeLocalizations";
-            DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerCeDataManager);            
+            //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerCeDataManager);            
 
             // force ResourceMode explicitly. Default is AspNetResourceProvider
             //GeneratedResourceSettings.ResourceAccessMode = ResourceAccessMode.DbResourceManager;

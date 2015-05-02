@@ -46,7 +46,7 @@
             margin: 10px 0 -10px;
         }
     </style>
-    <script src="LocalizationAdmin/bower_components/jquery/dist/jquery.min.js"></script>
+    
 </head>
 <body data-resource-set="Resources">
     <div class="banner">
@@ -147,9 +147,23 @@
         <label>Strongly typed Resource Generated from Db (uses ASP.NET ResourceProvider)</label>
         @Resources.HelloWorld
 
-        <label>Strongly typed image resource:</label>
-        <div>@Html.Raw(GeneratedResourceHelper.BitmapToEmbeddedHtmlImage(Resources.FlagPng, ImageFormat.Png))</div>
+        
+            <label>Strongly typed image resource: <small>(if available)</small></label> 
+        <div>
+            @try
+            {
+                @Html.Raw(GeneratedResourceHelper.BitmapToEmbeddedHtmlImage(Resources.FlagPng, ImageFormat.Png))
+            }
+            catch { }
+        </div>
 
+    </div>
+
+    <div class="container">
+        <h3>Expanded Markdown Text</h3>
+
+        <label>Auto Expanded Markdown text:</label>
+        @DbRes.THtml("MarkdownText","Resources")
     </div>
 
     <div class="container">
@@ -159,18 +173,18 @@
     </div>
 </div>
 
-    
 
+    
 <!-- Generates a resources = { "HelloWorld": "Hello World", "Today": "Today" } style variable that contains all server side resources translated for this resource set-->
     <script src="@JavaScriptResourceHandler.GetJavaScriptResourcesUrl("resources","Resources")"></script>
 <script>
     document.querySelector("#JavaScriptHelloWorld").innerText = resources.HelloWorld;
 </script>
 
-
-<script src="~/LocalizationAdmin/scripts/ww.resourceEditor.js"></script>
+    <script src="LocalizationAdmin/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="~/LocalizationAdmin/scripts/ww.resourceEditor.js"></script>
 <script>
-    ww.resourceEditor.showResourceIcons();
+    //ww.resourceEditor.showResourceIcons();
 </script>
 </body>
 </html>

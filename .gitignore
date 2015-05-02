@@ -32,3 +32,4 @@ $tf*/
 node_modules/
 .idea/
 /Westwind.ApplicationConfiguration.WebSample/Properties/PublishProfiles/*.pubxml
+.vs/config/applicationhost.config

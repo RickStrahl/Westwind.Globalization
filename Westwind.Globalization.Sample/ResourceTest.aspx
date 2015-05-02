@@ -171,12 +171,19 @@
             <label>Strongly typed Resource Generated from Db (uses ASP.NET ResourceProvider)</label>
             <%: Resources.HelloWorld %>
             
-                        <label>Strongly typed image resource:</label>
+            <label>Strongly typed image resource:  <small>(if available)</small></label>
             <div>
                 <% try { %>
                 <%= GeneratedResourceHelper.BitmapToEmbeddedHtmlImage(Resources.FlagPng, System.Drawing.Imaging.ImageFormat.Png) %>&nbsp;
                 <% } catch {} %>
             </div>
+        </div>
+        
+        <div class="container">
+            <h3>Expanded Markdown Text</h3>
+            
+            <label>Auto Expanded Markdown text:</label>
+            <%= DbRes.T("MarkdownText","Resources") %>
         </div>
 
         <hr />
@@ -190,12 +197,7 @@
 
         </div>
         
-        <div class="container">
-            <h3>Expanded Markdown Text</h3>
-            
-            <label>Auto Expanded Markdown text:</label>
-            <%= DbRes.T("MarkdownText","Resources") %>
-        </div>
+        
     </div>
 
     <!-- Generates a resources variable that contains all server side resources translated for this resource set-->
