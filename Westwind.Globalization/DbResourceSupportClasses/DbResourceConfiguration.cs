@@ -4,7 +4,6 @@ using System;
 using System.Configuration;
 using System.Collections.Generic;
 using System.IO;
-using System.Web.UI.Design;
 using System.Xml.Serialization;
 using Westwind.Utilities;
 using Westwind.Utilities.Configuration;
@@ -197,6 +196,8 @@ namespace Westwind.Globalization
         public string BingClientSecret { get; set; }
 
 
+        public List<IResourceSetValueConverter> ResourceSetValueConverters = new List<IResourceSetValueConverter>();
+
 
         /// <summary>
         /// Allows you to override the data provider used to access resources.
@@ -217,8 +218,13 @@ namespace Westwind.Globalization
         /// </summary>
         public DbResourceConfiguration()
         {
-            
+            AddResourceSetValueConverter(new MarkdownResourceSetValueConverter());
         }
+
+        public void AddResourceSetValueConverter(IResourceSetValueConverter converter)
+        {
+            ResourceSetValueConverters.Add(converter);
+        }        
 
         /// <summary>
         /// Override this method to create the custom default provider. Here we allow for different 

@@ -137,10 +137,12 @@
             <h3>DbRes</h3>
 
             <label>Using DbRes Direct Access Provider (default locale):</label>
-            <%= DbRes.T("HelloWorld","Resources") %>
+            <%: DbRes.T("HelloWorld","Resources") %>
+            
+            
 
             <label>Using DbRes Force to German:</label>
-            <%= DbRes.T("HelloWorld","Resources","de") %>
+            <%: DbRes.T("HelloWorld","Resources","de") %>
         </div>
 
         <hr />
@@ -149,7 +151,7 @@
 
             <h3>ASP.NET ResourceProvider</h3>
             <label>Get GlobalResource Object (default locale):</label>
-            <%= GetGlobalResourceObject("Resources","HelloWorld") %>
+            <%: GetGlobalResourceObject("Resources","HelloWorld") %>
 
             <label>Meta Tag (key lblHelloWorldLabel.Text):</label>
             <asp:Label ID="lblHelloWorldLabel" runat="server" meta:resourcekey="lblHelloWorldLabel"></asp:Label>
@@ -157,7 +159,7 @@
             <label>Resource Expressions (Global Resources):</label>
             <asp:Label ID="Label1"  runat="server" Text="<%$ Resources:Resources,HelloWorld %>"></asp:Label>
             <label>GetLocalResourceObject via Expression:</label>
-            <%= GetLocalResourceObject("lblHelloWorldLabel.Text") %>
+            <%: GetLocalResourceObject("lblHelloWorldLabel.Text") %>
         </div>
 
         <hr />
@@ -167,7 +169,7 @@
             <h3>Strongly Typed Resource (generated)</h3>
 
             <label>Strongly typed Resource Generated from Db (uses ASP.NET ResourceProvider)</label>
-            <%= Resources.HelloWorld %>
+            <%: Resources.HelloWorld %>
             
                         <label>Strongly typed image resource:</label>
             <div>
@@ -187,7 +189,13 @@
             <div id="JavaScriptHelloWorld"></div>
 
         </div>
-
+        
+        <div class="container">
+            <h3>Expanded Markdown Text</h3>
+            
+            <label>Auto Expanded Markdown text:</label>
+            <%= DbRes.T("MarkdownText","Resources") %>
+        </div>
     </div>
 
     <!-- Generates a resources variable that contains all server side resources translated for this resource set-->

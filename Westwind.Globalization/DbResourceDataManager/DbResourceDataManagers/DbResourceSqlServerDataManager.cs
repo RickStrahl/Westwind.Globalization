@@ -34,6 +34,7 @@ CREATE TABLE [{0}] (
 		TextFile        nvarchar(max) NULL,
 		Filename        nvarchar(128) NULL,
         Comment         nvarchar(512) NULL,
+        ValueType       int NOT NULL,
         Updated         datetime
 )
 GO
@@ -67,6 +68,11 @@ ALTER TABLE [{0}]
 	ADD
 	CONSTRAINT [DF_{0}_Type]
 	DEFAULT ('') FOR [Type]
+GO
+ALTER TABLE [{0}]
+	ADD
+	CONSTRAINT [DF_{0}_ValueType]
+	DEFAULT (0) FOR [ValueType]
 GO
 ALTER TABLE [{0}]
 	ADD

@@ -1,15 +1,23 @@
 # West Wind Globalization Changelog
 
-### Version 2.1 RTM
+### Version 2.0 Beta6
 
-* **Rework WebForms Resource Editing Links**
+* **Rework WebForms Resource Editing Links**<br/>
 Updated the DbResourceControl to automatically generate resource editing icons for WebForms pages using the new client side resource icon logic. The control now generates icons from most Web Controls automatically. Removed logic for auto-embedding of scripts - Webforms now manaully have to add the styles and scripts just like any other HTML platform, but using the control provides the automatic linking without additional markup. 
 
-* **Web Resource Editor pops up Add Resource Dialog on new Resource Queries**
+* **Web Resource Editor pops up Add Resource Dialog on new Resource Queries**<br/>
 This is a small but very productive enhancement - when you access the resource editor via page resource links and a resource doesn't exist, the Add Resource dialog now pops up with the resourceset/resourceid preset. This makes it quick and easy to add new resources to your resource file. Existing resources are still shown in the standard modeless interface as usual.
 
-* **QueryString based Resource Display for Resource Editor**
+* **QueryString based Resource Display for Resource Editor**<br/>
 You can now use query strings (ResourceSet and ResourceId) to 'jump' to a specific id in the resource editor. This allows direct linking to resources for editing or adding of new resources.
+
+* **Add ValueType field to Database Tables**<br/>
+Added a `int` `ValueType` field to the database and ResourceItem class that allows specifying what type of content is stored in the value field. Added to allow for value transformations. One transformation provided is MarkDown conversion.
+
+> This is a breaking change if you have an existing localization resource table. You need to add a `ValueType` field of type `INTEGER` to any existing localization tables.
+
+* **Add Support for ResourceSetValueConverters**<br/>
+Add the ability to transform resource set values as they are assigned to a resource set. By creating a ResourceSetValueConverter you can essentially transform a value from one value to another. One example is a MarkDown converter which converts the translated text from markdown to plain HTML.
 
 ### [Version 2.0 Beta5](http://www.nuget.org/packages/Westwind.Globalization.Web/2.0.20-beta5)
 <small><i>April 14th, 2015</i></small>

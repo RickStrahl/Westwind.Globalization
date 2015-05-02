@@ -95,6 +95,7 @@ namespace Westwind.Globalization
 , [TextFile] ntext NULL
 , [Filename] nvarchar(128) NULL
 , [Comment] nvarchar(512) NULL
+, [ValueType] unsigned integer(2) DEFAULT 0
 , [Updated] datetime NULL
 );
 

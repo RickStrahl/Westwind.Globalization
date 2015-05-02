@@ -91,7 +91,7 @@ namespace Westwind.Globalization
             if (managerType == null)
                 managerType = typeof (DbResourceSqlServerDataManager);
 
-            return ReflectionUtils.CreateInstanceFromType(managerType) as DbResourceDataManager;
+            return ReflectionUtils.CreateInstanceFromType(managerType) as DbResourceDataManager;            
         }
 
         /// <summary>
@@ -151,10 +151,10 @@ namespace Westwind.Globalization
                 DbDataReader reader;
 
                 if (string.IsNullOrEmpty(cultureName))
-                    reader = data.ExecuteReader("select ResourceId,Value,Type,BinFile,TextFile,FileName from " + Configuration.ResourceTableName + " where " + resourceFilter + " and (LocaleId is null OR LocaleId = '') order by ResourceId",
+                    reader = data.ExecuteReader("select ResourceId,Value,Type,BinFile,TextFile,FileName,ValueType from " + Configuration.ResourceTableName + " where " + resourceFilter + " and (LocaleId is null OR LocaleId = '') order by ResourceId",
                         data.CreateParameter("@ResourceSet", resourceSet));
                 else
-                    reader = data.ExecuteReader("select ResourceId,Value,Type,BinFile,TextFile,FileName from " + Configuration.ResourceTableName + " where " + resourceFilter + " and LocaleId=@LocaleId order by ResourceId",
+                    reader = data.ExecuteReader("select ResourceId,Value,Type,BinFile,TextFile,FileName,ValueType from " + Configuration.ResourceTableName + " where " + resourceFilter + " and LocaleId=@LocaleId order by ResourceId",
                         data.CreateParameter("@ResourceSet", resourceSet),
                         data.CreateParameter("@LocaleId", cultureName));
 
@@ -170,7 +170,10 @@ namespace Westwind.Globalization
                     {
                         object resourceValue = reader["Value"] as string;
                         string resourceType = reader["Type"] as string;
-
+                        int valueType = 0;
+                        
+                        valueType = Convert.ToInt32(reader["ValueType"]);                           
+                        
                         if (!string.IsNullOrWhiteSpace(resourceType))
                         {
                             try
@@ -197,8 +200,11 @@ namespace Westwind.Globalization
                             if (resourceValue == null)
                                 resourceValue = string.Empty;
                         }
-
                         var key = reader["ResourceId"].ToString();
+
+
+                        OnResourceSetValueConvert(ref resourceValue, key, valueType);
+
                         if (!resources.ContainsKey(key))
                             resources.Add(key, resourceValue);
                     }
@@ -217,6 +223,16 @@ namespace Westwind.Globalization
 
             return resources;
         }
+
+        protected virtual void OnResourceSetValueConvert(ref object resourceValue, string key, int valueType)
+        {
+            foreach(var resourceSetValueConverter in DbResourceConfiguration.Current.ResourceSetValueConverters)
+            {
+                if (valueType == resourceSetValueConverter.ValueType)
+                    resourceValue = resourceSetValueConverter.Convert(resourceValue, key);
+            }            
+        }
+
 
         /// <summary>
         /// Returns a fully normalized list of resources that contains the most specific
@@ -951,7 +967,7 @@ namespace Westwind.Globalization
         /// <param name="resourceSet"></param>
         /// <param name="Type"></param>        
         public virtual int UpdateOrAddResource(string resourceId, object value, string cultureName, string resourceSet,
-            string comment = null, bool valueIsFileName = false)
+            string comment = null, bool valueIsFileName = false, int valueType = 0)
         {
             if (!IsValidCulture(cultureName))
             {
@@ -1022,7 +1038,7 @@ namespace Westwind.Globalization
                 DbParameter TextFileParm = data.CreateParameter("@TextFile", resource.TextFile);
 
                 string Sql = "insert into " + Configuration.ResourceTableName +
-                             " (ResourceId,Value,LocaleId,Type,Resourceset,BinFile,TextFile,Filename,Comment,Updated) Values (@ResourceID,@Value,@LocaleId,@Type,@ResourceSet,@BinFile,@TextFile,@FileName,@Comment,@Updated)";
+                             " (ResourceId,Value,LocaleId,Type,Resourceset,BinFile,TextFile,Filename,Comment,ValueType,Updated) Values (@ResourceID,@Value,@LocaleId,@Type,@ResourceSet,@BinFile,@TextFile,@FileName,@Comment,@ValueType,@Updated)";
                 if (data.ExecuteNonQuery(Sql,
                     data.CreateParameter("@ResourceId", resource.ResourceId),
                     data.CreateParameter("@Value", resource.Value),
@@ -1032,6 +1048,7 @@ namespace Westwind.Globalization
                     BinFileParm, TextFileParm,
                     data.CreateParameter("@FileName", resource.FileName),
                     data.CreateParameter("@Comment", resource.Comment),
+                    data.CreateParameter("@ValueType", resource.ValueType),
                     data.CreateParameter("@Updated", DateTime.UtcNow)) == -1)
                 {
                     ErrorMessage = data.ErrorMessage;
@@ -1054,7 +1071,8 @@ namespace Westwind.Globalization
         /// <param name="valueIsFileName">if true the Value property is a filename to import</param>
         public virtual int AddResource(string resourceId, object value,
                                        string cultureName, string resourceSet,
-                                       string comment = null, bool valueIsFileName = false)
+                                       string comment = null, bool valueIsFileName = false, 
+                                       int valueType = 0)
         {
             string Type = string.Empty;
 
@@ -1122,7 +1140,7 @@ namespace Westwind.Globalization
                 DbParameter TextFileParm = data.CreateParameter("@TextFile", TextFile);
 
                 string Sql = "insert into " + Configuration.ResourceTableName +
-                             " (ResourceId,Value,LocaleId,Type,Resourceset,BinFile,TextFile,Filename,Comment,Updated) Values (@ResourceID,@Value,@LocaleId,@Type,@ResourceSet,@BinFile,@TextFile,@FileName,@Comment,@Updated)";
+                             " (ResourceId,Value,LocaleId,Type,Resourceset,BinFile,TextFile,Filename,Comment,ValueType,Updated) Values (@ResourceID,@Value,@LocaleId,@Type,@ResourceSet,@BinFile,@TextFile,@FileName,@Comment,@ValueType,@Updated)";
                 if (data.ExecuteNonQuery(Sql,
                     data.CreateParameter("@ResourceId", resourceId),
                     data.CreateParameter("@Value", value),
@@ -1132,6 +1150,7 @@ namespace Westwind.Globalization
                     BinFileParm, TextFileParm,
                     data.CreateParameter("@FileName", FileName),
                     data.CreateParameter("@Comment", comment),
+                    data.CreateParameter("@ValueType",valueType),
                     data.CreateParameter("@Updated", DateTime.UtcNow)) == -1)
                 {
                     ErrorMessage = data.ErrorMessage;
@@ -1167,7 +1186,8 @@ namespace Westwind.Globalization
         /// <param name="Type"></param>
         public virtual int UpdateResource(string resourceId, object value, 
                                           string cultureName, string resourceSet,
-                                          string comment = null, bool valueIsFileName = false)
+                                          string comment = null, bool valueIsFileName = false,
+                                          int valueType = 0)
         {
             string type;
             if (cultureName == null)
@@ -1238,7 +1258,7 @@ namespace Westwind.Globalization
                 var textFileParm = data.CreateParameter("@TextFile", TextFile);
 
                 string sql = "update " + Configuration.ResourceTableName +
-                             " set Value=@Value, Type=@Type, BinFile=@BinFile,TextFile=@TextFile,FileName=@FileName, Comment=@Comment, updated=@Updated " +
+                             " set Value=@Value, Type=@Type, BinFile=@BinFile,TextFile=@TextFile,FileName=@FileName, Comment=@Comment, ValueType=@ValueType, updated=@Updated " +
                              "where LocaleId=@LocaleId AND ResourceSet=@ResourceSet and ResourceId=@ResourceId";
                 result = data.ExecuteNonQuery(sql,
                     data.CreateParameter("@ResourceId", resourceId),
@@ -1249,6 +1269,7 @@ namespace Westwind.Globalization
                     binFileParm, textFileParm,
                     data.CreateParameter("@FileName", FileName),
                     data.CreateParameter("@Comment", comment),
+                    data.CreateParameter("@ValueType", valueType),
                     data.CreateParameter("@Updated",DateTime.UtcNow)
                     );
                 if (result == -1)
@@ -1320,7 +1341,7 @@ namespace Westwind.Globalization
                 var textFileParm = data.CreateParameter("@TextFile", resource.TextFile);
 
                 string sql = "update " + Configuration.ResourceTableName +
-                             " set Value=@Value, Type=@Type, BinFile=@BinFile,TextFile=@TextFile,FileName=@FileName, Comment=@Comment, updated=@Updated " +
+                             " set Value=@Value, Type=@Type, BinFile=@BinFile,TextFile=@TextFile,FileName=@FileName, Comment=@Comment, ValueType=@ValueType, updated=@Updated " +
                              "where LocaleId=@LocaleId AND ResourceSet=@ResourceSet and ResourceId=@ResourceId";
                 result = data.ExecuteNonQuery(sql,
                     data.CreateParameter("@ResourceId", resource.ResourceId),
@@ -1331,6 +1352,7 @@ namespace Westwind.Globalization
                     binFileParm, textFileParm,
                     data.CreateParameter("@FileName", resource.FileName),
                     data.CreateParameter("@Comment", resource.Comment),
+                    data.CreateParameter("@ValueType", resource.ValueType),
                     data.CreateParameter("@Updated", DateTime.UtcNow)
                     );
                 if (result == -1)

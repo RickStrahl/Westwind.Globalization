@@ -175,7 +175,7 @@ namespace Westwind.Globalization
         /// <param name="resourceSet"></param>
         /// <param name="Type"></param>        
         int UpdateOrAddResource(string resourceId, object value, string cultureName, string resourceSet,
-            string comment = null, bool valueIsFileName = false);
+            string comment = null, bool valueIsFileName = false, int valueType = 0);
 
         /// <summary>
         /// Adds a resource to the Localization Table
@@ -194,7 +194,7 @@ namespace Westwind.Globalization
         /// <param name="valueIsFileName">if true the Value property is a filename to import</param>
         int AddResource(string resourceId, object value,
             string cultureName, string resourceSet,
-            string comment = null, bool valueIsFileName = false);
+            string comment = null, bool valueIsFileName = false, int valueType = 0);
 
         /// <summary>
         /// Updates an existing resource in the Localization table
@@ -206,7 +206,7 @@ namespace Westwind.Globalization
         /// <param name="Type"></param>
         int UpdateResource(string resourceId, object value, 
             string cultureName, string resourceSet,
-            string comment = null, bool valueIsFileName = false);
+            string comment = null, bool valueIsFileName = false, int valueType=0);
 
         /// <summary>
         /// Updates a resource if it exists, if it doesn't one is created

@@ -42,11 +42,16 @@ namespace Westwind.Globalization.Sample
 
             // for all other providers explicitly override the DbResourceDataManagerType
             //DbResourceConfiguration.Current.ConnectionString = "SqlServerCeLocalizations";
-            //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerCeDataManager);            
+            DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerCeDataManager);            
 
             // force ResourceMode explicitly. Default is AspNetResourceProvider
             //GeneratedResourceSettings.ResourceAccessMode = ResourceAccessMode.DbResourceManager;
             //GeneratedResourceSettings.ResourceAccessMode = ResourceAccessMode.Resx;
+
+            // *** Remove or Add custom resource converters
+            // *** By default the MarkdownResourceConverter is provided
+            //DbResourceConfiguration.Current.ResourceSetValueConverters.Clear();
+            //DbResourceConfiguration.Current.ResourceSetValueConverters.Add(new MarkdownResourceSetValueConverter());
         }
 
         protected void Application_BeginRequest()

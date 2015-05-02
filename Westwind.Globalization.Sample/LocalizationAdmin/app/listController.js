@@ -487,8 +487,7 @@
            function selectResourceIdWithQuery(query) {               
                vm.getResourceList()
                    .success(function() {
-                       var found = false;
-                       debugger;
+                       var found = false;                       
                        for (var i = 0; i < vm.resourceList.length; i++) {
                            if (vm.resourceList[i].ResourceId === query.resourceId) {
                                vm.resourceId = vm.resourceList[i].ResourceId;                               

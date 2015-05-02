@@ -77,6 +77,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonMark, Version=0.1.0.0, Culture=neutral, PublicKeyToken=001ef8810438905d, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonMark.NET.0.8.5\lib\net45\CommonMark.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -87,7 +91,6 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.XML" />
@@ -103,6 +106,8 @@
     <Compile Include="DbResourceDataManager\DbResourceDataManagers\DbResourceSqlServerCeDataManager.cs" />
     <Compile Include="DbResourceDataManager\IDbResourceDataManager.cs" />
     <Compile Include="DbResourceDataManager\IDbResourceSetDataManager.cs" />
+    <Compile Include="DbResourceDataManager\ResourceSetValueConverters\MarkdownResourceSetValueConverter.cs" />
+    <Compile Include="DbResourceDataManager\ResourceSetValueConverters\IResourceSetValueConverter.cs" />
     <Compile Include="DbResourceManager\DbResourceReader.cs" />
     <Compile Include="DbResourceManager\DbResourceSet.cs" />
     <Compile Include="DbResourceManager\DbResourceWriter.cs" />
@@ -160,9 +165,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ResourceTest.aspx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
     <Content Include="scripts\ww.jquery.js" />
     <Content Include="scripts\ww.jquery.min.js" />
   </ItemGroup>

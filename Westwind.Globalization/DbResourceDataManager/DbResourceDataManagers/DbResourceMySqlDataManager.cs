@@ -134,6 +134,7 @@ namespace Westwind.Globalization
   TextFile text,
   Filename varchar(128) DEFAULT NULL,
   Comment varchar(512) DEFAULT NULL,
+  ValueType int(2) DEFAULT 0,
   Updated datetime NULL,
   PRIMARY KEY (`pk`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

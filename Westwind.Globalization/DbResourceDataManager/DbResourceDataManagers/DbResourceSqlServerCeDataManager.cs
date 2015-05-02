@@ -82,6 +82,7 @@ CREATE TABLE [{0}] (
 , [TextFile] ntext NULL
 , [Filename] nvarchar(128) DEFAULT ('') NULL
 , [Comment] nvarchar(512) NULL
+, [ValueType] int DEFAULT(0) NOT NULL
 , [Updated] datetime DEFAULT(getDate()) NULL
 );
 GO

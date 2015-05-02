@@ -29,6 +29,7 @@ namespace Westwind.Globalization
                 SendPropertyChanged("ResourceId");
             }
         }
+
         private string _ResourceId = null;
 
         /// <summary>
@@ -43,6 +44,7 @@ namespace Westwind.Globalization
                 SendPropertyChanged("Value");
             }
         }
+
         private object _Value = null;
 
 
@@ -58,6 +60,7 @@ namespace Westwind.Globalization
                 SendPropertyChanged("Comment");
             }
         }
+
         private string _Comment = null;
 
         /// <summary>
@@ -78,7 +81,15 @@ namespace Westwind.Globalization
                 SendPropertyChanged("LocaleId");
             }
         }
+
         private string _LocaleId = string.Empty;
+
+
+        /// <summary>
+        /// Determines what type of value the Value field represents
+        /// Mainly used to differentiate between text and Markdown text
+        /// </summary>
+        public int ValueType = (int) ValueTypes.Text;
 
         public DateTime Updated
         {
@@ -89,6 +100,7 @@ namespace Westwind.Globalization
                 SendPropertyChanged("Updated");
             }
         }
+
         private DateTime _Updated = DateTime.UtcNow;
 
 
@@ -111,7 +123,6 @@ namespace Westwind.Globalization
 
 
         private string _ResourceSet = string.Empty;
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -139,18 +150,20 @@ namespace Westwind.Globalization
             TextFile = reader["TextFile"] as string;
             BinFile = reader["BinFile"] as byte[];
             Comment = reader["Comment"] as string;
-            
-            // TODO: Phase this out after 2.0 takes hold
-            //       for a while. This will prevent errors
-            //       erros if the field doesn't exist or is null
+            ValueType = Convert.ToInt32(reader["ValueType"]);
             try
             {
                 Updated = (DateTime) reader["Updated"];
             }
-            catch
-            {
-                Updated = DateTime.Now; 
-            }
-        }
+            catch { }
+            
+        }    
+    }
+
+    public enum ValueTypes
+    {
+        Text = 0,
+        Binary = 1,
+        MarkDown = 2
     }
 }
