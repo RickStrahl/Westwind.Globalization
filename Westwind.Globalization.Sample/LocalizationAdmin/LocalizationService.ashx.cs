@@ -244,7 +244,8 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
                     {
                         ResourceId = resourceId,
                         ResourceSet = resourceSet,
-                        LocaleId = localeId
+                        LocaleId = localeId,
+                        ValueType = (int)ValueTypes.Binary
                     };
                 }
 

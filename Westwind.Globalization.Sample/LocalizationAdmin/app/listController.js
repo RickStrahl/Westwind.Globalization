@@ -47,6 +47,7 @@
                     "ResourceSet": "",
                     "TextFile": null,
                     "BinFile": null,
+                    "ValueType": 0,
                     "FileName": ""
                 };
             };
@@ -273,14 +274,48 @@
                    vm.resourceId = id;
                    vm.onResourceIdChange();
 
-                   
-
                    $("#AddResourceDialog").modal('hide');
                })
                .error(function() {
                    var err = ww.angular.parseHttpError(arguments);
                    alert(err.message);
                });
+       };
+       vm.onResourceUpload = function (files) {
+           if (files && files.length) {
+               for (var i = 0; i < files.length; i++) {
+                   var file = files[i];
+                   debugger;
+                   $upload.upload({
+                       url: 'LocalizationService.ashx?method=UploadResource',
+                       fields: { 'resourceset': vm.activeResource.ResourceSet, 'resourceid': vm.activeResource.ResourceId, "localeid": vm.activeResource.LocaleId },
+                       file: file
+                   }).progress(function (evt) {
+                       var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                       vm.uploadProgress = progressPercentage + '% ' + evt.config.file.name;
+                   }).success(function (data, status, headers, config) {
+                       $("#AddResourceDialog").modal('hide');
+                       var id = vm.activeResource.ResourceId;
+                       
+                       // check if resourceId exists
+                       var i = _.findIndex(vm.resourceList, function (res) {
+                           return res.ResourceId === id;
+                       });
+                       if (i < 0)
+                           vm.resourceList.unshift(vm.activeResource);
+
+                       vm.resourceId = id;
+                       vm.onResourceIdChange();
+
+                       showMessage(vm.dbRes('ResourceSaved'));
+                       vm.uploadProgress = null;
+                   })
+                       .error(function () {
+                           parseError(arguments);
+                           vm.uploadProgress = null;
+                       });
+               }
+           }
        };
        vm.onDeleteResourceClick = function() {
            var id = vm.activeResource.ResourceId;
@@ -374,30 +409,6 @@
                })
                .error(parseError);
        }
-       vm.onResourceUpload = function (files) {
-           if (files && files.length) {
-               for (var i = 0; i < files.length; i++) {
-                   var file = files[i];
-                   $upload.upload({
-                       url: 'LocalizationService.ashx?method=UploadResource',
-                       fields: { 'resourceset': vm.resourceSet, 'resourceid': vm.resourceId, "localeid": vm.activeResource.LocaleId },
-                       file: file
-                   }).progress(function (evt) {
-                       var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                       vm.uploadProgress = progressPercentage + '% ' + evt.config.file.name;
-                   }).success(function (data, status, headers, config) {
-                       $("#AddResourceDialog").modal('hide');
-                       vm.getResourceItems();
-                       showMessage(vm.dbRes('ResourceSaved'));
-                       vm.uploadProgress = null;
-                   })
-                       .error(function () {
-                           parseError(arguments);
-                           vm.uploadProgress = null;
-                       });
-               }
-           }
-       };
        vm.onReloadResourcesClick = function() {
            localizationService.reloadResources()
                .success(function() {

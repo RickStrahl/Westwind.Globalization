@@ -49,6 +49,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Westwind.Utilities, Version=2.63.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Westwind.Utilities.2.63\lib\net45\Westwind.Utilities.dll</HintPath>
+    </Reference>
     <Reference Include="Westwind.Web">
       <HintPath>..\packages\Westwind.Web.2.62\lib\net45\Westwind.Web.dll</HintPath>
       <Private>True</Private>
