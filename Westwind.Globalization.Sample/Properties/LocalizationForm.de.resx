@@ -61,9 +61,6 @@
    <data name="InvalidResourceId" xml:space="preserve">
       <value>Ungültige Ressourcen-ID.</value>
    </data>
-   <data name="ResourceGenerationFailed" xml:space="preserve">
-      <value>Ressourcengenerierung fehlgeschlagen.</value>
-   </data>
    <data name="ResxImportInfo" xml:space="preserve">
       <value>Der Ressourcen-Import wird alle Resx Ressourcen aus dem angegebenen Ressourcen Ordner rekursiv importieren.</value>
    </data>
@@ -111,6 +108,9 @@
    </data>
    <data name="BackupComplete" xml:space="preserve">
       <value>Backup wurde durchgeführt.</value>
+   </data>
+   <data name="ResourceGenerationFailed" xml:space="preserve">
+      <value>Ressourcengenerierung fehlgeschlagen.</value>
    </data>
    <data name="ResxImportInfo.Project" xml:space="preserve">
       <value>Ihr Resx Exportmodus ist &lt;b&gt;Projekt&lt;/ b&gt;, also werden ihre Ressourcendateien recursiv mit Pfaden und Web-basierter Pfadsyntax importiert, die sich in dem RessourceSet Namen widerspiegelt.</value>

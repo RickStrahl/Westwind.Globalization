@@ -68,12 +68,17 @@
       <value>Yesterday</value>
    </data>
    <data name="Today" xml:space="preserve">
-      <value>Aujourd'hui 2</value>
+      <value>Today</value>
    </data>
    <data name="NameIsRequired" xml:space="preserve">
       <value>A name must be provided.</value>
    </data>
    <data name="AddressIsRequired" xml:space="preserve">
       <value>An address is required.</value>
+   </data>
+   <data name="MarkdownText" xml:space="preserve">
+      <value>&lt;p&gt;This is &lt;strong&gt;Markdown&lt;/strong&gt; text that is &lt;em&gt;formatted to HTML&lt;/em&gt; when rendered as a resource.&lt;/p&gt;
+
+</value>
    </data>
 </root>

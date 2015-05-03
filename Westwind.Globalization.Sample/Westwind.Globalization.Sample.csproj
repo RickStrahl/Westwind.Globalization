@@ -271,7 +271,9 @@
       <DependentUpon>ww.jquery.js</DependentUpon>
     </Content>
     <Content Include="LocalizationAdmin\touch-icon.png" />
-    <Content Include="Properties\Westwind.Localization_50.png" />
+    <Content Include="Properties\AmericanFlag.png" />
+    <Content Include="Properties\FrenchFlag.png" />
+    <Content Include="Properties\GermanFlag.png" />
     <Content Include="ResourceEditingWebForms.aspx" />
     <Content Include="Scripts\ww.jquery.js" />
     <Content Include="Scripts\ww.jquery.min.js" />

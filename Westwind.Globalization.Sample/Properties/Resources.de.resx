@@ -58,6 +58,11 @@
    <resheader name="writer">
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
+   <data name="MarkdownText" xml:space="preserve">
+      <value>&lt;p&gt;Dies ist &lt;strong&gt;Markdown Text&lt;/strong&gt; der &lt;em&gt;als HTML formatiert ist&lt;/em&gt;, wenn es gerendert wird.&lt;/p&gt;
+
+</value>
+   </data>
    <data name="NameIsRequired" xml:space="preserve">
       <value>Ein Name muss angegeben werden.</value>
    </data>

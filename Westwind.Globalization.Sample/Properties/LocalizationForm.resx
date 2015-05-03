@@ -220,6 +220,9 @@
    <data name="AreYouSureYouWantToDoThis" xml:space="preserve">
       <value>Are you sure you want to do this?</value>
    </data>
+   <data name="StronglyTypedGlobalResourcesFailed" xml:space="preserve">
+      <value>Failed to create strongly typed resources.</value>
+   </data>
    <data name="BackupFailed" xml:space="preserve">
       <value>The backup failed.</value>
    </data>
@@ -252,9 +255,6 @@
    </data>
    <data name="LocalizationTableNotCreated" xml:space="preserve">
       <value>Localization table has not been created.</value>
-   </data>
-   <data name="StronglyTypedGlobalResourcesFailed" xml:space="preserve">
-      <value>Failed to create strongly typed resources.</value>
    </data>
    <data name="LocaleIdsFailedToLoad" xml:space="preserve">
       <value>Locale Ids failed to load.</value>
