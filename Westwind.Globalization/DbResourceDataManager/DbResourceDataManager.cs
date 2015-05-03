@@ -444,13 +444,13 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="localResources">return local resources if true</param>        
         /// <returns></returns>
-        public virtual List<ResourceItem> GetAllResources(bool localResources = false)
+        public virtual List<ResourceItem> GetAllResources(bool localResources = false, bool applyValueConverters = false)
         {
             IEnumerable<ResourceItem> items;
             using (var data = GetDb())
             {
                 
-                string sql = "select ResourceId,Value,LocaleId,ResourceSet,Type,TextFile,BinFile,FileName,Comment,Updated from " + Configuration.ResourceTableName +
+                string sql = "select ResourceId,Value,LocaleId,ResourceSet,Type,TextFile,BinFile,FileName,Comment,ValueType,Updated from " + Configuration.ResourceTableName +
                              " where ResourceSet " +
                              (!localResources ? "not" : string.Empty) + " like @ResourceSet " +
                              "ORDER BY ResourceSet,LocaleId";
@@ -463,7 +463,21 @@ namespace Westwind.Globalization
                     return null;
                 }
 
-                return items.ToList();
+                var itemList = items.ToList();
+
+                if (applyValueConverters && DbResourceConfiguration.Current.ResourceSetValueConverters.Count > 0)
+                {
+                    foreach (var resourceItem in itemList)
+                    {
+                        foreach (var convert in DbResourceConfiguration.Current.ResourceSetValueConverters)
+                        {
+                            if (resourceItem.ValueType == convert.ValueType)
+                                resourceItem.Value = convert.Convert(resourceItem.Value, resourceItem.ResourceId);
+                        }
+                    }
+                }
+                
+                return itemList;
             }
         }
 

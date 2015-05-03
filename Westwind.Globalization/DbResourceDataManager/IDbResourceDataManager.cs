@@ -59,7 +59,7 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="localResources">return local resources if true</param>        
         /// <returns></returns>
-        List<ResourceItem> GetAllResources(bool localResources = false);
+        List<ResourceItem> GetAllResources(bool localResources = false, bool applyValueConverters = false);
 
         /// <summary>
         /// Returns all available resource ids for a given resource set in all languages.

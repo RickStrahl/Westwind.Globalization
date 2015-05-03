@@ -122,7 +122,7 @@ namespace Westwind.Globalization
             // Retrieve all resources for a ResourceSet for all cultures
             // The data is ordered by ResourceSet, LocaleId and resource ID as each
             // ResourceSet or Locale changes a new file is written
-            var resources = data.GetAllResources(localResources);
+            var resources = data.GetAllResources(localResources: localResources, applyValueConverters:true);
             
             if (resources == null)
                 return false;
@@ -154,6 +154,7 @@ namespace Westwind.Globalization
                 string TextFile = res.TextFile;
                 byte[] BinFile = res.BinFile;
                 string FileName = res.FileName;
+                int ValueType = res.ValueType;
 
                 string ResourceSet = res.ResourceSet;
 
@@ -283,7 +284,7 @@ namespace Westwind.Globalization
             // Retrieve all resources for a ResourceSet for all cultures
             // The data is ordered by ResourceSet, LocaleId and resource ID as each
             // ResourceSet or Locale changes a new file is written
-            var resources = data.GetAllResources();
+            var resources = data.GetAllResources(applyValueConverters: true);
 
             if (resources == null)
                 return false;

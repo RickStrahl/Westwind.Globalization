@@ -88,8 +88,18 @@ namespace Westwind.Globalization
         /// <summary>
         /// Determines what type of value the Value field represents
         /// Mainly used to differentiate between text and Markdown text
-        /// </summary>
-        public int ValueType = (int) ValueTypes.Text;
+        /// </summary> 
+        public int ValueType
+        {
+	        get { return _ValueType ; }
+            set
+            {
+                SendPropertyChanged("ValueType");
+                _ValueType = value;
+            }
+        }
+        private int _ValueType = (int) ValueTypes.Text;
+        
 
         public DateTime Updated
         {
