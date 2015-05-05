@@ -1,8 +1,8 @@
 ﻿<style>
     .dialog {
-        position: fixed;
+        position: absolute;
         top: 0;
-        bottom: 5px;
+        bottom: 0;
         left: 0;
         width: 100%;        
         z-index: 1001;
@@ -12,14 +12,14 @@
         box-shadow: 2px 2px 4px #535353;
         background: white;
         padding: 0;
-        margin: 0;        
+        margin: 0;       
         transition: width 0.5s;
         overflow-x: hidden;
     }
-    .dialog.editor-hidden {
-        width: 0;
-        border: 0;
-    }
+        .dialog.editor-hidden {
+            width: 0;
+            border: 0;
+        }
 
     .dialog-header {
         color: white;
@@ -51,7 +51,6 @@
         background: linear-gradient(#f3f3f3, #eee);
     }
 </style>
-source
 <div id="resource-editor" class="dialog editor-hidden">
     <div class="dialog-header">
         Edit Text
@@ -63,9 +62,7 @@ source
 
         <button class="btn btn-xs pull-right" id="editor-btn-close" title="Close window without saving"><i class="fa fa-remove"></i> Close</button>
     </div>
-    <div class="dialog-content">
-        <textarea id="editable-text"></textarea>
-    </div>
+    <div class="dialog-content"><textarea id="editable-text"></textarea></div>
 </div>
 
 <script>
@@ -164,7 +161,7 @@ source
             var $toolbar = $("#resource-editor .dialog-content");
             var toolTop = $toolbar.position().top;
 
-            $("#editable-text").height($(window).outerHeight() - toolTop);
+            $("#editable-text").height($(window).outerHeight() - toolTop - 12);
 
         }
 
