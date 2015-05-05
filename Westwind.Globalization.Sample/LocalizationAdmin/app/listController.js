@@ -162,6 +162,19 @@
 
             }
         };
+        vm.onResourceFullscreenEdit = function (ev, resource) {
+            
+
+            $("#resource-editor").fullScreenEditor('show', {
+                value: resource.Value,
+                onSave: function (value) {
+                    var $el = $("textarea[data-localeid='" + resource.LocaleId + "'");
+                    var id = $el.prop("id");
+                    vm.activeResource.Value = value;
+                    ww.angular.applyBindingValue("#" + id, value);
+                }
+        });
+        }
        vm.onTranslateClick = function(ev, resource) {           
            vm.editedResource = resource.Value;
            var id = $(ev.target).parent().find("textarea").prop("id");

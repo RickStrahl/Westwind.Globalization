@@ -22,6 +22,7 @@
                           ng-focus="view.onLocaleIdChanged(resource)"
                           data-localeid="{{resource.LocaleId}}"
                           ng-model="resource.Value"
+                          ng-dblclick="view.onResourceFullscreenEdit($event, resource, resourceForm)"
                           ng-keydown="view.onResourceKeyDown($event,resource,resourceForm)">                    
                 </textarea>
             </form>
@@ -42,7 +43,7 @@
 
     </div>
 
-    <!--<div class="separator" style="margin-top: 10px;margin-bottom:10px"></div>-->    
+    <!--<div class="separator" style="margin-top: 10px;margin-bottom:10px"></div>-->
     <div class="btn-group" style="margin-top: 12px;">
         <button ng-click="view.onAddResourceClick()" class="btn btn-sm btn-default"
                 title="{{::view.resources.Add_Title}}"
@@ -71,4 +72,8 @@
             <i class="fa fa-comment-o"></i> {{::view.dbRes('Comment')}}
         </button>
     </div>
+</div>
+
+<div class="resource-editor">
+    
 </div>

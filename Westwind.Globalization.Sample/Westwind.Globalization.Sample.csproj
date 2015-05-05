@@ -215,6 +215,7 @@
     <Content Include="LocalizationAdmin\Partials\Menubar.html" />
     <Content Include="LocalizationAdmin\index.html" />
     <Content Include="LocalizationAdmin\Partials\ImportExportResxDialog.html" />
+    <Content Include="LocalizationAdmin\Partials\ResourceEditor.html" />
     <Content Include="LocalizationAdmin\Partials\ResourceProviderInfoDialog.html" />
     <Content Include="LocalizationAdmin\Partials\RenameResourceDialog.html" />
     <Content Include="LocalizationAdmin\Partials\ResourceSetList.html" />
