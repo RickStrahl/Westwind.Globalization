@@ -106,7 +106,7 @@
     <Compile Include="DbResTests.cs" />
     <Compile Include="DbSimpleResourceProviderTests.cs" />
     <Compile Include="DbResourceSqlServerDataManagerTests.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="GeneratedResourceHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -152,6 +152,10 @@
     <Content Include="_readme.Westwind.Globalization.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Westwind.Globalization.Sample\Westwind.Globalization.Sample.csproj">
+      <Project>{1e36a3c9-2f87-407a-b568-ebf336061a06}</Project>
+      <Name>Westwind.Globalization.Sample</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Westwind.Globalization.Web\Westwind.Globalization.Web.csproj">
       <Project>{d827f9a2-12e0-436c-b986-8589ed643481}</Project>
       <Name>Westwind.Globalization.Web</Name>
@@ -160,6 +164,9 @@
       <Project>{51dece39-764c-4c32-a57a-d93a5fd9bd6a}</Project>
       <Name>Westwind.Globalization</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Samples\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

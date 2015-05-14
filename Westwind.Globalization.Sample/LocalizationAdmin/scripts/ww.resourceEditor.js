@@ -44,13 +44,13 @@
                 }
                 var pos = $el.position();
 
-                console.log("Url: " + encodeURIComponent(resSet)); 
+                
                 var $new = $("<res-edit>")
                     .addClass("resource-editor-icon")
                     .css(pos)
                     .attr("target", "resourceEditor")
                     .attr("title","Edit resource: " + resId )
-                    .attr("onclick","window.open('" + opt.adminUrl + "?ResourceSet=" + resSet + "&ResourceId=" +  resId + "&Content=" +  encodeURIComponent(content) + "','resourceEdit')");
+                    .attr("onclick","window.open('" + opt.adminUrl + "?ResourceSet=" + resSet + "&ResourceId=" +  resId + "&Content=" +  encodeURIComponent(content) + "','resourceEdit');return false;");
                     
                 $new.insertBefore($el);
 

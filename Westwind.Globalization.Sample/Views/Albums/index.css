@@ -1,0 +1,29 @@
+﻿.album-container {
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+}
+.album-container:hover {
+    background: khaki;
+    border-radius: 4px;
+}
+.album-image {
+    height: 85px;
+    width: 85px;
+    border-radius: 50px;
+    margin-right: 15px;
+    box-shadow: 2px 2px 3px #535353;
+}
+.album-artist {
+    font-size: 0.8em;
+    font-style: italic;
+}
+.album-content {
+    font-size: 0.8em;
+}
+#albumslist {
+    overflow-y: auto;   
+    border-right: 1px solid #eee
+}
+.displaymode-edit {
+    display: none;
+}

@@ -145,6 +145,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AlbumViewer\AlbumsBusiness.cs" />
+    <Compile Include="Controllers\AlbumsController.cs" />
     <Compile Include="LocalizationAdmin\LocalizationService.ashx.cs">
       <DependentUpon>LocalizationService.ashx</DependentUpon>
     </Compile>
@@ -156,7 +158,8 @@
     <Compile Include="ResourceEditingWebForms.aspx.designer.cs">
       <DependentUpon>ResourceEditingWebForms.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Views\HomeController.cs" />
+    <Compile Include="Controllers\AlbumViewer\AlbumViewerEntities.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -164,11 +167,33 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\albumviewer.min.css">
+      <DependentUpon>albumviewer.css</DependentUpon>
+    </Content>
+    <Content Include="css\bootstrap-theme.css" />
+    <Content Include="css\bootstrap-theme.min.css" />
+    <Content Include="css\bootstrap.css" />
+    <Content Include="css\bootstrap.js" />
+    <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\bootstrap.min.js" />
+    <Content Include="css\font-awesome.css" />
+    <Content Include="css\font-awesome.min.css" />
+    <Content Include="css\fonts\fontawesome-webfont.svg" />
+    <Content Include="css\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="css\albumviewer.css" />
+    <Content Include="images\AlbumViewer\artists.png" />
+    <Content Include="images\AlbumViewer\artists32.png" />
+    <Content Include="images\AlbumViewer\gear.png" />
+    <Content Include="images\AlbumViewer\headphone-head.png" />
+    <Content Include="images\AlbumViewer\record.png" />
+    <Content Include="images\AlbumViewer\RockLogo.png" />
+    <Content Include="images\AlbumViewer\search.png" />
+    <Content Include="App_Data\albums.js" />
+    <Content Include="App_Data\artists.js" />
     <Content Include="images\Westwind.Localization.png" />
     <Content Include="images\Westwind.Localization_128.png" />
     <Content Include="images\Westwind.Localization_50.png" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="LocalizationAdmin\app\createClassController.js" />
     <Content Include="LocalizationAdmin\app\importExportResxController.js" />
@@ -276,8 +301,6 @@
     <Content Include="Properties\FrenchFlag.png" />
     <Content Include="Properties\GermanFlag.png" />
     <Content Include="ResourceEditingWebForms.aspx" />
-    <Content Include="Scripts\ww.jquery.js" />
-    <Content Include="Scripts\ww.jquery.min.js" />
     <Content Include="_readme.Westwind.Globalization.html" />
     <Content Include="LocalizationAdmin\scripts\ww.jquery.min.js.map">
       <DependentUpon>ww.jquery.min.js</DependentUpon>
@@ -300,6 +323,16 @@
     <Content Include="LocalizationAdmin\bower_components\es5-shim\package.json" />
     <Content Include="LocalizationAdmin\bower_components\es5-shim\README.md" />
     <Content Include="LocalizationAdmin\bower_components\es5-shim\shims.json" />
+    <Content Include="css\bootstrap-theme.css.map" />
+    <Content Include="css\bootstrap.css.map" />
+    <Content Include="css\fonts\fontawesome-webfont.eot" />
+    <Content Include="css\fonts\fontawesome-webfont.ttf" />
+    <Content Include="css\fonts\fontawesome-webfont.woff" />
+    <Content Include="css\fonts\FontAwesome.otf" />
+    <Content Include="css\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="css\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="css\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Views\Albums\index.cshtml" />
     <None Include="LocalizationAdmin\scripts\_references.js" />
     <Content Include="LocalizationAdmin\bower_components\jquery\.bower.json" />
     <Content Include="LocalizationAdmin\bower_components\jquery\bower.json" />
@@ -309,13 +342,7 @@
     <Content Include="LocalizationAdmin\css\bootstrap-theme.css.map" />
     <Content Include="LocalizationAdmin\LocalizationService.ashx" />
     <None Include="ResourceTest.cshtml" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ResourceTest.aspx" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -332,16 +359,17 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\ModelAttributesFromResources.cshtml" />
+    <Content Include="Views\Albums\index.css">
+      <DependentUpon>index.cshtml</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="AlbumViewerSample\" />
+    <Folder Include="Controllers\AlbumViewer\SampleCode\" />
+    <Folder Include="Views\AlbumViewer\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

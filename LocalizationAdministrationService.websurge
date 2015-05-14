@@ -200,7 +200,7 @@ CultureName: "de"
   "WarmupSeconds": 2,
   "ReloadTemplates": false,
   "FormattedPreviewTheme": "visualstudio",
-  "LastThreads": 2,
+  "LastThreads": 10,
   "IgnoreCertificateErrors": false,
   "LastSecondsToRun": 10
 }

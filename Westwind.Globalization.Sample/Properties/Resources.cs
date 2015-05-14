@@ -14,6 +14,83 @@ namespace Westwind.Globalization.Sample.Properties
   [System.CodeDom.Compiler.GeneratedCodeAttribute("Westwind.Globalization.StronglyTypedResources", "2.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    public class AlbumViewerResources
+    {
+        public static ResourceManager ResourceManager
+        {
+            get
+            {
+                if (object.ReferenceEquals(resourceMan, null))
+                {
+                    var temp = new ResourceManager("Westwind.Globalization.Sample.Properties.AlbumViewerResources", typeof(AlbumViewerResources).Assembly);
+                    resourceMan = temp;
+                }
+                return resourceMan;
+            }
+        }
+        private static ResourceManager resourceMan = null;
+
+		public static System.String Albums
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","Albums",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String Show
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","Show",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String By
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","By",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String Edit
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","Edit",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String AddAlbum
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","AddAlbum",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String EditResources
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","EditResources",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String Artists
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","Artists",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+	}
+
+  [System.CodeDom.Compiler.GeneratedCodeAttribute("Westwind.Globalization.StronglyTypedResources", "2.0")]
+    [System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class LocalizationForm
     {
         public static ResourceManager ResourceManager
@@ -600,6 +677,14 @@ namespace Westwind.Globalization.Sample.Properties
 			get
 			{
 				return GeneratedResourceHelper.GetResourceString("Resources","NameIsRequired",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String MarkdownText
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("Resources","MarkdownText",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 
