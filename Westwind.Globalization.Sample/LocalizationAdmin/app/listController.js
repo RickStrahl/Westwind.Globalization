@@ -273,16 +273,18 @@
                    });
                    if (i < 0) {
                        vm.resourceSets.unshift(vm.activeResource.ResourceSet);
-                       vm.resourceSet = vm.activeResource.ResourceSet;
+                       vm.resourceSet = vm.resourceSets[0];
                        vm.onResourceSetChange();
                    }
 
                    // check if resourceId exists
                    var i = _.findIndex(vm.resourceList,function(res) {
                        return res.ResourceId === id;
-                   });                   
-                   if (i < 0)
+                   });
+                   if (i < 0) {
                        vm.resourceList.unshift(vm.activeResource);
+                       vm.activeResource = vm.resourceList[0];
+                   }
 
                    vm.resourceId = id;
                    vm.onResourceIdChange();
@@ -446,7 +448,10 @@
         vm.showResourceIcons = function () {
             vm.resourceEditMode = !vm.resourceEditMode;
             if (vm.resourceEditMode)
-                ww.resourceEditor.showResourceIcons({ adminUrl: "./" });
+                ww.resourceEditor.showResourceIcons({
+                    adminUrl: "./",
+                    editorWindowOpenOptions: "height=600, width=900, left=30, top=30"
+                });
             else
                 ww.resourceEditor.removeResourceIcons();
         };

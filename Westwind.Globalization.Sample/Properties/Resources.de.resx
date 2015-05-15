@@ -58,16 +58,11 @@
    <resheader name="writer">
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
-   <data name="MarkdownText" xml:space="preserve">
-      <value>&lt;p&gt;Dies ist &lt;strong&gt;Markdown Text&lt;/strong&gt; der &lt;em&gt;als HTML formatiert ist&lt;/em&gt;, wenn es gerendert wird.&lt;/p&gt;
-
-</value>
+   <data name="Save" xml:space="preserve">
+      <value>Speichern</value>
    </data>
-   <data name="NameIsRequired" xml:space="preserve">
-      <value>Ein Name muss angegeben werden.</value>
-   </data>
-   <data name="AddressIsRequired" xml:space="preserve">
-      <value>Eine Addresse muss angegeben werden.</value>
+   <data name="Cancel" xml:space="preserve">
+      <value>Abbrechen</value>
    </data>
    <data name="Today" xml:space="preserve">
       <value>Heute</value>
@@ -80,5 +75,16 @@
    </data>
    <data name="FlagPng" type="System.Resources.ResXFileRef, System.Windows.Forms">
       <value>GermanFlag.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+   </data>
+   <data name="MarkdownText" xml:space="preserve">
+      <value>&lt;p&gt;Dies ist &lt;strong&gt;Markdown Text&lt;/strong&gt; der &lt;em&gt;als HTML formatiert ist&lt;/em&gt;, wenn es gerendert wird.&lt;/p&gt;
+
+</value>
+   </data>
+   <data name="NameIsRequired" xml:space="preserve">
+      <value>Ein Name muss angegeben werden.</value>
+   </data>
+   <data name="AddressIsRequired" xml:space="preserve">
+      <value>Eine Addresse muss angegeben werden.</value>
    </data>
 </root>

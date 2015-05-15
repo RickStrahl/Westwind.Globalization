@@ -58,33 +58,40 @@
    <resheader name="writer">
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
-   <data name="NameIsRequired" xml:space="preserve">
-      <value>A name must be provided.</value>
+   <data name="YearReleased" xml:space="preserve">
+      <value>Erscheinungsjahr</value>
    </data>
-   <data name="AddressIsRequired" xml:space="preserve">
-      <value>An address is required.</value>
+   <data name="By" xml:space="preserve">
+      <value>von</value>
    </data>
-   <data name="MarkdownText" xml:space="preserve">
-      <value>&lt;p&gt;This is &lt;strong&gt;Markdown&lt;/strong&gt; text that is &lt;em&gt;formatted to HTML&lt;/em&gt; when rendered as a resource.&lt;/p&gt;
-
-</value>
+   <data name="AlbumDescription" xml:space="preserve">
+      <value>Beschreibung</value>
    </data>
-   <data name="HelloWorld" xml:space="preserve">
-      <value>Hello Cruel World</value>
+   <data name="MoreFrom" xml:space="preserve">
+      <value>Mehr von</value>
    </data>
-   <data name="Yesterday" xml:space="preserve">
-      <value>Yesterday</value>
+   <data name="ArtistName" xml:space="preserve">
+      <value>Name der Band</value>
    </data>
-   <data name="Today" xml:space="preserve">
-      <value>Aujourd'hui 2</value>
+   <data name="AlbumName" xml:space="preserve">
+      <value>Name des Albums</value>
    </data>
-   <data name="FlagPng" type="System.Resources.ResXFileRef, System.Windows.Forms">
-      <value>AmericanFlag.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+   <data name="Edit" xml:space="preserve">
+      <value>Bearbeiten</value>
    </data>
-   <data name="Save" xml:space="preserve">
-      <value>Save</value>
+   <data name="Show" xml:space="preserve">
+      <value>Anzeigen</value>
    </data>
-   <data name="Cancel" xml:space="preserve">
-      <value>Cancel</value>
+   <data name="EditResources" xml:space="preserve">
+      <value>Resourcen Bearbeiten</value>
+   </data>
+   <data name="AddAlbum" xml:space="preserve">
+      <value>Neues Album</value>
+   </data>
+   <data name="Artists" xml:space="preserve">
+      <value>Künstler</value>
+   </data>
+   <data name="Albums" xml:space="preserve">
+      <value>Alben</value>
    </data>
 </root>

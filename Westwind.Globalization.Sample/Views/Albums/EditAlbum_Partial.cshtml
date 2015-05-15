@@ -1,0 +1,138 @@
+﻿@using AlbumViewerBusiness
+@using Westwind.Globalization
+@using Westwind.Globalization.Sample.Properties
+@using Westwind.Utilities
+@model Album
+@{
+    Album Album = Model;
+}
+<div id="editalbum" class="displaymode-edit">
+    <div class="row">
+
+        <div class="col-sm-10">
+            <form name="form1" action="javascript:{}" novalidate>
+                <div class="form-group">                    
+                    <label for="AlbumName" data-resource-id="AlbumName">@AlbumViewerResources.AlbumName</label>
+                    <input id="AlbumName" type="text" class="form-control input-sm"
+                           placeholder="Album Name" required
+                           name="Title"
+                           value="@Album.Title" autofocus/>
+
+                </div>
+                <div class="form-group">
+                    <label for="BandName" data-resource-id="ArtistName">@AlbumViewerResources.ArtistName</label>
+                    <input type="text" class="form-control input-sm typeahead" id="BandName"
+                           name="Artist.ArtistName"
+                           required
+                           autocomplete="off"
+                           data-provide="typeahead"
+                           placeholder="Band Name"
+                           value="@Album.Artist.ArtistName" />
+                </div>
+                <div class="form-group">
+                    <label for="Description" data-resource-id="AlbumDescription">@DbRes.T("AlbumDescription","AlbumViewerResources")</label>
+                    <textarea class="form-control input-sm" id="Description"
+                              placeholder="@AlbumViewerResources.AlbumDescriptionPlaceholder"
+                              name="Description" data-resource-id="AlbumDescription.Placeholder"
+                              required
+                              style="height: 115px">@Album.Description</textarea>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon" title="Image Url"><i class="fa fa-image fa-fw"></i></span>
+                        <input type="text" class="form-control input-sm" id="ImageUrl"
+                               name="ImageUrl"
+                               required
+                               placeholder="Url for an image to display" value="@Album.ImageUrl" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon" title="Url where to buy"><i class="fa fa-dollar fa-fw"></i></span>
+                        <input type="text" class="form-control input-sm" id="AmazonUrl"
+                               name="AmazonUrl"
+                               required
+                               placeholder="Url where to buy this album" value="@Album.AmazonUrl" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="YearReleased" data-resource-id="YearReleased">@AlbumViewerResources.YearReleased</label>
+                    <input type="number" class="form-control input-sm"
+                           id="YearReleased" name="YearReleased"
+                           required
+                           placeholder="Year of album release" value="@Album.Year" />
+                </div>
+
+                <button ng-click="view.addSong()" accesskey="a"
+                        ng-show="!view.isSongVisible" title="Add Song (alt-a)"
+                        class="btn btn-info btn-xs" style="margin-bottom: 10px;" data-resource-id="AddSong">
+                    <i class="fa fa-plus-circle"></i> @AlbumViewerResources.AddSong
+                </button>
+
+                <div ng-show="view.isSongVisible" class="well well-sm">
+
+                    <div class="row">
+                        <div class=" col-sm-9">
+                            <input class="form-control input-sm" id="SongName"
+                                   placeholder="Name of the song"
+                                   ng-model="view.song.SongName" />
+
+                        </div>
+                        <div class="col-sm-3">
+                            <input class="form-control input-sm" id="Length"
+                                   ng-model="view.song.Length"
+                                   placeholder="0:00" />
+                        </div>
+                    </div>
+
+                    <button class="btn btn-success btn-xs"
+                            ng-click="view.saveSong(view.song)" data-reousrce-id="AddSong"
+                            ng-disabled="!view.song.SongName || !view.song.Length"
+                            style="margin-top: 8px;" accesskey="" data-resource-id="AddSong">
+                        <i class="fa fa-plus-circle"></i> @AlbumViewerResources.AddSong
+                    </button>
+                    <button class="btn btn-default btn-xs"
+                            ng-click="view.cancelSong()"
+                            style="margin-top: 8px;">
+                        <i class="fa fa-times"></i> @Resources.Cancel
+                    </button>
+                </div>
+
+                <table class=" table table-striped small">
+                    @foreach (var song in Album.Tracks)
+                    {
+                        <tr ng-repeat="song in view.album.Tracks">
+                            <td>@song.SongName</td>
+                            <td>@song.Length</td>
+                            <td>
+                                <button class="btn btn-xs btn-danger" data-resource-id="Remove">
+                                    <i class="fa fa-remove"></i> @DbRes.T("Remove","AlbumViewerResources")
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </table>
+
+
+                <div class="well well-sm">
+                    <button type="submit" ng-click="view.saveAlbum(view.album)"
+                            class="btn btn-success"
+                            data-resource-id="Save" data-resource-set="Resources"
+                            ng-disabled="form1.$invalid" accesskey="S">
+                        <i class="fa fa-check"></i> @DbRes.T("Save","Resources")
+                    </button>
+                    <a class="btn btn-default" data-resource-id="Cancel" data-resource-set="Resources">
+                        <i class="fa fa-remove"></i> @DbRes.T("Cancel", "Resources")
+                    </a>
+                </div>
+
+                <div class="separator"></div>
+
+            </form>
+        </div>
+    </div>
+
+</div>

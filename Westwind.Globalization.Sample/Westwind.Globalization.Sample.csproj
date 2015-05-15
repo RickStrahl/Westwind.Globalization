@@ -170,16 +170,6 @@
     <Content Include="css\albumviewer.min.css">
       <DependentUpon>albumviewer.css</DependentUpon>
     </Content>
-    <Content Include="css\bootstrap-theme.css" />
-    <Content Include="css\bootstrap-theme.min.css" />
-    <Content Include="css\bootstrap.css" />
-    <Content Include="css\bootstrap.js" />
-    <Content Include="css\bootstrap.min.css" />
-    <Content Include="css\bootstrap.min.js" />
-    <Content Include="css\font-awesome.css" />
-    <Content Include="css\font-awesome.min.css" />
-    <Content Include="css\fonts\fontawesome-webfont.svg" />
-    <Content Include="css\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="css\albumviewer.css" />
     <Content Include="images\AlbumViewer\artists.png" />
     <Content Include="images\AlbumViewer\artists32.png" />
@@ -323,15 +313,6 @@
     <Content Include="LocalizationAdmin\bower_components\es5-shim\package.json" />
     <Content Include="LocalizationAdmin\bower_components\es5-shim\README.md" />
     <Content Include="LocalizationAdmin\bower_components\es5-shim\shims.json" />
-    <Content Include="css\bootstrap-theme.css.map" />
-    <Content Include="css\bootstrap.css.map" />
-    <Content Include="css\fonts\fontawesome-webfont.eot" />
-    <Content Include="css\fonts\fontawesome-webfont.ttf" />
-    <Content Include="css\fonts\fontawesome-webfont.woff" />
-    <Content Include="css\fonts\FontAwesome.otf" />
-    <Content Include="css\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="css\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="css\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Views\Albums\index.cshtml" />
     <None Include="LocalizationAdmin\scripts\_references.js" />
     <Content Include="LocalizationAdmin\bower_components\jquery\.bower.json" />
@@ -363,6 +344,8 @@
     <Content Include="Views\Albums\index.css">
       <DependentUpon>index.cshtml</DependentUpon>
     </Content>
+    <Content Include="Views\Albums\ShowAlbum_Partial.cshtml" />
+    <Content Include="Views\Albums\EditAlbum_Partial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AlbumViewerSample\" />
@@ -385,6 +368,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\AlbumViewerResources.de.resx" />
+    <EmbeddedResource Include="Properties\AlbumViewerResources.resx" />
     <EmbeddedResource Include="Properties\LocalizationForm.de.resx" />
     <EmbeddedResource Include="Properties\LocalizationForm.resx" />
     <EmbeddedResource Include="Properties\Resources.de.resx">

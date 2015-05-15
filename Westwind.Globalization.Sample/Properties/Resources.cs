@@ -30,27 +30,51 @@ namespace Westwind.Globalization.Sample.Properties
         }
         private static ResourceManager resourceMan = null;
 
+		public static System.String AddSong
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","AddSong",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String ArtistName
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","ArtistName",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String YearReleased
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","YearReleased",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String AlbumDescriptionPlaceholder
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","AlbumDescription.Placeholder",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String AlbumViewer
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","AlbumViewer",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
 		public static System.String Albums
 		{
 			get
 			{
 				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","Albums",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
-			}
-		}
-
-		public static System.String Show
-		{
-			get
-			{
-				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","Show",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
-			}
-		}
-
-		public static System.String By
-		{
-			get
-			{
-				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","By",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 
@@ -62,11 +86,59 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
+		public static System.String Remove
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","Remove",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String By
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","By",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String AlbumName
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","AlbumName",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String AlbumDescription
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","AlbumDescription",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String Show
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","Show",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
 		public static System.String AddAlbum
 		{
 			get
 			{
 				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","AddAlbum",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String MoreFrom
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","MoreFrom",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 
@@ -672,11 +744,11 @@ namespace Westwind.Globalization.Sample.Properties
         }
         private static ResourceManager resourceMan = null;
 
-		public static System.String NameIsRequired
+		public static System.String Cancel
 		{
 			get
 			{
-				return GeneratedResourceHelper.GetResourceString("Resources","NameIsRequired",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+				return GeneratedResourceHelper.GetResourceString("Resources","Cancel",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 
@@ -696,6 +768,14 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
+		public static System.String NameIsRequired
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("Resources","NameIsRequired",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
 		public static System.String Yesterday
 		{
 			get
@@ -704,11 +784,19 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String AddressIsRequired
+		public static System.String Save
 		{
 			get
 			{
-				return GeneratedResourceHelper.GetResourceString("Resources","AddressIsRequired",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+				return GeneratedResourceHelper.GetResourceString("Resources","Save",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String HelloWorld
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("Resources","HelloWorld",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 
@@ -720,11 +808,11 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String HelloWorld
+		public static System.String AddressIsRequired
 		{
 			get
 			{
-				return GeneratedResourceHelper.GetResourceString("Resources","HelloWorld",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+				return GeneratedResourceHelper.GetResourceString("Resources","AddressIsRequired",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 

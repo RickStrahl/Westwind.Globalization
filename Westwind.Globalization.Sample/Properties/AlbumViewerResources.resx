@@ -58,33 +58,40 @@
    <resheader name="writer">
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
-   <data name="NameIsRequired" xml:space="preserve">
-      <value>A name must be provided.</value>
+   <data name="Albums" xml:space="preserve">
+      <value>Albums</value>
    </data>
-   <data name="AddressIsRequired" xml:space="preserve">
-      <value>An address is required.</value>
+   <data name="Artists" xml:space="preserve">
+      <value>Artists</value>
    </data>
-   <data name="MarkdownText" xml:space="preserve">
-      <value>&lt;p&gt;This is &lt;strong&gt;Markdown&lt;/strong&gt; text that is &lt;em&gt;formatted to HTML&lt;/em&gt; when rendered as a resource.&lt;/p&gt;
-
-</value>
+   <data name="AddAlbum" xml:space="preserve">
+      <value>Add  New Album</value>
    </data>
-   <data name="HelloWorld" xml:space="preserve">
-      <value>Hello Cruel World</value>
+   <data name="EditResources" xml:space="preserve">
+      <value>Edit Resources</value>
    </data>
-   <data name="Yesterday" xml:space="preserve">
-      <value>Yesterday</value>
+   <data name="Edit" xml:space="preserve">
+      <value>Edit</value>
    </data>
-   <data name="Today" xml:space="preserve">
-      <value>Aujourd'hui 2</value>
+   <data name="AlbumName" xml:space="preserve">
+      <value>Description</value>
    </data>
-   <data name="FlagPng" type="System.Resources.ResXFileRef, System.Windows.Forms">
-      <value>AmericanFlag.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+   <data name="ArtistName" xml:space="preserve">
+      <value>Band Name</value>
    </data>
-   <data name="Save" xml:space="preserve">
-      <value>Save</value>
+   <data name="MoreFrom" xml:space="preserve">
+      <value>More From</value>
    </data>
-   <data name="Cancel" xml:space="preserve">
-      <value>Cancel</value>
+   <data name="AlbumDescription" xml:space="preserve">
+      <value>Description</value>
+   </data>
+   <data name="Show" xml:space="preserve">
+      <value>Show</value>
+   </data>
+   <data name="By" xml:space="preserve">
+      <value>by</value>
+   </data>
+   <data name="YearReleased" xml:space="preserve">
+      <value>Year released</value>
    </data>
 </root>

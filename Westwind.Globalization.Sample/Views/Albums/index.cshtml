@@ -4,16 +4,15 @@
 @using Westwind.Utilities
 @model List<AlbumViewerBusiness.Album>
 @{
-    // Assign this from some application level setting
-    bool allowResourceEditing = true;  // user.IsAdmin && App.Configuration.AllowResourcEditing
-    
     Layout = null;
+    
+    // Assign this from some application level setting
+    bool allowResourceEditing = true;  // user.IsAdmin && App.Configuration.AllowResourcEditing        
 
     var id = Request.QueryString["id"];
     Album Album = null;
     if (!string.IsNullOrEmpty(id))
     {
-
         int intId = StringUtils.ParseInt(id, -1);
         Album = Model.FirstOrDefault(alb => alb.Id == intId);
     }
@@ -21,11 +20,8 @@
     {
         Album = Model[0];
     }  
-       
-      
 }
 <!DOCTYPE html>
-
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
@@ -33,336 +29,162 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="">
 
-    <link rel="shortcut icon" href="~/albumviewerSample/favicon.ico" type="image/x-icon" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <link rel="apple-touch-icon" href="touch-icon.png" />
+    <link rel="shortcut icon" href="~/albumviewerSample/favicon.ico" type="image/x-icon"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <link rel="apple-touch-icon" href="touch-icon.png"/>
 
-    <link rel="icon" href="~/albumviewerSample/touch-icon.png" />
+    <link rel="icon" href="~/albumviewerSample/touch-icon.png"/>
     <meta name="msapplication-TileImage" content="touch-icon.png">
 
-    <title>West Wind Album Viewer</title>    
+    <title>West Wind Album Viewer</title>
 
-    <link href="~/localizationAdmin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    @*link href="~/LocalizationAdmin/css/bootstrap-theme.css" rel="stylesheet" />*@    
-    <link href="~/LocalizationAdmin/bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/localizationAdmin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    @*link href="~/LocalizationAdmin/css/bootstrap-theme.css" rel="stylesheet" />*@
+    <link href="~/LocalizationAdmin/bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
 
     <link href="~/css/albumviewer.css" rel="stylesheet"/>
-    <link href="~/Views/Albums/index.css" rel="stylesheet" />
+    <link href="~/Views/Albums/index.css" rel="stylesheet"/>
 </head>
 <body data-resource-set="AlbumViewerResources">
 
-<div id="TitleBar">
-    <a href="~/albums">
-        <img src="~/images/AlbumViewer/headphone-head.png"
-             style="height: 35px; float: left"/>
-        <div style="float: left; margin-left: 5px; line-height: 1.2">
-            <i style="color: steelblue; font-size: 0.8em; font-weight: bold;">West Wind</i><br/>
-            <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;">AlbumViewer</i>
-        </div>
-    </a>
-</div>
-
-<div style="margin: 0; padding: 0; border: none;">
-<div class="banner">
-    <nav id="Toolbar-Top" class="pull-right">
+    <div id="TitleBar">
         <a href="~/albums">
-            <img src="~/images/AlbumViewer/record.png" title="Albums"/><span> <span data-resource-id="Albums">@AlbumViewerResources.Albums</span></span>
-        </a>
-        <a href="~/artists">
-            <img src="~/images/AlbumViewer/artists32.png" title="Artists"/> <span> <span data-resource-id="Artists"> @AlbumViewerResources.Artists</span></span>
-        </a>
-        @if (allowResourceEditing)
-        {
-            <a id="btnEditResources" href="javascript:{}">
-                <i class="fa fa-gear" data-resource-id="EditResources" title="@DbRes.T("EditResources", "AlbumViewerResources")"></i>
-            </a>
-        }
-    </nav>
-</div>
-
-<div id="MainView" class=" container-fluid"
-     style="width: 100%; padding-top: 10px">
-
-<div class="alert alert-info" data-resource-id="SampleNotice"> 
-    @DbRes.THtml("SampleNotice","AlbumViewerResources")
-</div>
-
-<button class="btn btn-sm btn-success pull-right"><i class="fa fa-plus"></i> <span data-resource-id="AddAlbum">@DbRes.T("AddAlbum", "AlbumViewerResources")</span></button>
-<div class="page-header-text"><i class="fa fa-list"></i> <span data-resource-id="Albums">@AlbumViewerResources.Albums</span> <span class="badge">@Model.Count</span></div>
-<hr/>
-
-<div class="row">
-
-<div id="albumslist" class="col-sm-5">
-    <div>
-        @foreach (var album in Model)
-        {
-            <div class="album-container">
-                <img src="@album.ImageUrl" class="album-image pull-left"/>
-                <div class="album-title">
-                    <a href="~/albums?id=@album.Id">@album.Title</a>
-                </div>
-                <div class="album-artist">by @album.Artist.ArtistName</div>
-                <div class="album-content small">
-                    @HtmlUtils.HtmlAbstract(@album.Description, 190)
-                </div>
-                <div class="clearfix"></div>
+            <img src="~/images/AlbumViewer/headphone-head.png"
+                 style="height: 35px; float: left" />
+            <div style="float: left; margin-left: 5px; line-height: 1.2">
+                <i style="color: steelblue; font-size: 0.8em; font-weight: bold;">West Wind</i><br />
+                <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;" data-resource-id="AlbumViewer">@AlbumViewerResources.AlbumViewer</i>
             </div>
-        }
-        <div class="clearfix"></div>
-    </div>
-</div>
-
-<div class="col-sm-7">
-    <div class="pull-right">
-        <button id="DisplayMode1" class="btn btn-default displaymode-show"><i class="fa fa-edit"></i> <span data-resource-id="Edit"> @AlbumViewerResources.Edit</span></button>
-        <button id="DisplayMode2" class="btn btn-default displaymode-edit"><i class="fa fa-eye"></i> <span data-resource-id="Show"> @AlbumViewerResources.Show</span></button>
+        </a>
     </div>
 
-
-    <div id="showalbum" class="displaymode-show">
-        <div class="row">
-            <div class="col-sm-3">
-                <img src="@Album.ImageUrl" class="album-image-big"/>
-            </div>
-            <div class="col-sm-9">
-                <h2 class="album-title-big">
-                    @Album.Title
-                </h2>
-
-                <div class="album-artist">
-                    <span data-resource-id="By">@AlbumViewerResources.By</span> <a href="#/artist/@Album.ArtistId">@Album.Artist.ArtistName</a>
-                    @(Album.Year > 0 ? "in " + Album.Year : "")
-                </div>
-                <div>@Html.Raw(HtmlUtils.DisplayMemo(@Album.Description))</div>
-
-                <div style="margin: 10px 0" class="pull-right">
-                    &nbsp;
-                    <a href="@Album.AmazonUrl" class="btn btn-link btn-sm" target="_amazon"><i class="fa fa-dollar"></i> Buy</a> &nbsp;&nbsp;
-                </div>
-
-                <table class=" table table-striped small">
-                    @foreach (var song in Album.Tracks)
-                    {
-                        <tr>
-                            <td>@song.SongName</td>
-                            <td>@song.Length</td>
-                        </tr>
-                    }
-                </table>
-
-                <hr/>
-                More from
-                <a href="~/artists/@Album.ArtistId">
-                    @Album.Artist.ArtistName<br/>
-                    <img src="@Album.Artist.ImageUrl" style="height: 100px; border-radius: 5px; box-shadow: 2px 2px 3px #535353"/>
+    <div style="margin: 0; padding: 0; border: none;">
+        <div class="banner">
+            <nav id="Toolbar-Top" class="pull-right">
+                <a href="~/albums">
+                    <img src="~/images/AlbumViewer/record.png" title="Albums" /><span> <span data-resource-id="Albums">@AlbumViewerResources.Albums</span></span>
                 </a>
+                <a href="~/artists">
+                    <img src="~/images/AlbumViewer/artists32.png" title="Artists" /> <span> <span data-resource-id="Artists"> @AlbumViewerResources.Artists</span></span>
+                </a>
+                @if (allowResourceEditing)
+                {
+                    <a id="btnEditResources" href="#">
+                        <i class="fa fa-flag" data-resource-id="EditResources" title="@AlbumViewerResources.EditResources"> </i> @AlbumViewerResources.EditResources
+                    </a>
+                }
+            </nav>
+        </div>
 
+        <div id="MainView" class=" container-fluid"
+             style="width: 100%; padding-top: 10px">
+
+            <div class="alert alert-info hidden" data-resource-id="SampleNotice">
+                Create Sample Notice Here
             </div>
 
-        </div>
-    </div>
 
-    <div id="editalbum" class="displaymode-edit">
-        <div class="row">
+            <button class="btn btn-sm btn-success pull-right"><i class="fa fa-plus"></i> <span data-resource-id="AddAlbum">@DbRes.T("AddAlbum", "AlbumViewerResources")</span></button>
+            <div class="page-header-text"><i class="fa fa-list"></i> <span data-resource-id="Albums">@AlbumViewerResources.Albums</span> <span class="badge">@Model.Count</span></div>
+            <hr />
 
-            <div class="col-sm-10">
-                <form name="form1" action="javascript:{}" novalidate>
-                    <div class="form-group">
-                        <label for="AlbumName">Album Name:</label>
-                        <input id="AlbumName" type="text" class="form-control input-sm"
-                               placeholder="Album Name" required
-                               name="Title"
-                               value="@Album.Title" autofocus/>
-
-                    </div>
-                    <div class="form-group">
-                        <label for="BandName">Band Name:</label>
-                        <input type="text" class="form-control input-sm typeahead" id="BandName"
-                               name="Artist.ArtistName"
-                               required
-                               autocomplete="off"
-                               data-provide="typeahead"
-                               placeholder="Band Name"
-                               value="@Album.Artist.ArtistName"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="Description">Album Description:</label>
-                        <textarea class="form-control input-sm" id="Description"
-                                  placeholder="Album description or review"
-                                  name="Description"
-                                  required
-                                  style="height: 115px">@Album.Description</textarea>
-
-                    </div>
-
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon" title="Image Url"><i class="fa fa-image fa-fw"></i></span>
-                            <input type="text" class="form-control input-sm" id="ImageUrl"
-                                   name="ImageUrl"
-                                   required
-                                   placeholder="Url for an image to display" value="@Album.ImageUrl"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon" title="Url where to buy"><i class="fa fa-dollar fa-fw"></i></span>
-                            <input type="text" class="form-control input-sm" id="AmazonUrl"
-                                   name="AmazonUrl"
-                                   required
-                                   placeholder="Url where to buy this album" value="@Album.AmazonUrl"/>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="YearReleased">Year released:</label>
-                        <input type="number" class="form-control input-sm"
-                               id="YearReleased" name="YearReleased"
-                               required
-                               placeholder="Year of album release" value="@Album.Year"/>
-                    </div>
-
-                    <button ng-click="view.addSong()" accesskey="a"
-                            ng-show="!view.isSongVisible" title="Add Song (alt-a)"
-                            class="btn btn-info btn-xs" style="margin-bottom: 10px;">
-                        <i class="fa fa-plus-circle"></i> Add Song
-                    </button>
-
-                    <div ng-show="view.isSongVisible" class="well well-sm">
-
-                        <div class="row">
-                            <div class=" col-sm-9">
-                                <input class="form-control input-sm" id="SongName"
-                                       placeholder="Name of the song"
-                                       ng-model="view.song.SongName"/>
-
-                            </div>
-                            <div class="col-sm-3">
-                                <input class="form-control input-sm" id="Length"
-                                       ng-model="view.song.Length"
-                                       placeholder="0:00"/>
-                            </div>
-                        </div>
-
-                        <button class="btn btn-success btn-xs"
-                                ng-click="view.saveSong(view.song)"
-                                ng-disabled="!view.song.SongName || !view.song.Length"
-                                style="margin-top: 8px;" accesskey="">
-                            <i class="fa fa-plus-circle"></i> Add Song
-                        </button>
-                        <button class="btn btn-default btn-xs"
-                                ng-click="view.cancelSong()"
-                                style="margin-top: 8px;">
-                            <i class="fa fa-times"></i> Cancel
-                        </button>
-                    </div>
-
-                    <table class=" table table-striped small">
-                        @foreach (var song in Album.Tracks)
+            <div class="row">
+                <div id="albumslist" class="col-sm-5">
+                    <div>
+                        @foreach (var album in Model)
                         {
-                            <tr ng-repeat="song in view.album.Tracks">
-                                <td>@song.SongName</td>
-                                <td>@song.Length</td>
-                                <td>
-                                    <button ng-click="view.removeSong(song)"
-                                            class="btn btn-xs btn-danger">
-                                        <i class="fa fa-remove"></i> Remove
-                                    </button>
-                                </td>
-                            </tr>
+                            <div class="album-container">
+                                <img src="@album.ImageUrl" class="album-image pull-left" />
+                                <div class="album-title">
+                                    <a href="~/albums?id=@album.Id">@album.Title</a>
+                                </div>
+                                <div class="album-artist">by @album.Artist.ArtistName</div>
+                                <div class="album-content small">
+                                    @HtmlUtils.HtmlAbstract(@album.Description, 190)
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
                         }
-                    </table>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
 
-
-                    <div class="well well-sm">
-                        <button type="submit" ng-click="view.saveAlbum(view.album)"
-                                class="btn btn-success"
-                                ng-disabled="form1.$invalid" accesskey="S">
-                            <i class="fa fa-check"></i> Save
-                        </button>
-                        <a ng-href="#/album/{{view.album.Id}}" class="btn btn-default">
-                            <i class="fa fa-remove"></i> Cancel
-                        </a>
+                <div class="col-sm-7">
+                    <div class="pull-right">
+                        <button id="DisplayMode1" class="btn btn-default displaymode-show"><i class="fa fa-edit"></i> <span data-resource-id="Edit"> @AlbumViewerResources.Edit</span></button>
+                        <button id="DisplayMode2" class="btn btn-default displaymode-edit"><i class="fa fa-eye"></i> <span data-resource-id="Show"> @AlbumViewerResources.Show</span></button>
                     </div>
 
-                    <div class="separator"></div>
+                    @Html.Partial("ShowAlbum_Partial", Album)
 
-                </form>
+                    @Html.Partial("EditAlbum_Partial", Album)
+                </div>
             </div>
         </div>
+
 
     </div>
 
 
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        if (typeof (jQuery) == 'undefined')
+            document.write(unescape("%3Cscript src='LocalizationAdmin/bower_components/jquery/dist/jquery.min.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script src="~/LocalizationAdmin/scripts/ww.jquery.min.js"></script>
 
 
+    <script>
+        // global script settings
+        globals = {
+            baseUrl: "./",
+            editResources: @(allowResourceEditing ? "true" : "false" )
+            };
 
-</div>
-</div>
+        var $albumList = $("#albumslist");
+        $albumList.on("click", ".album-container", function() {
+            var a = $(this).find("a");
+            window.location.href = a.prop('href');
+        });
+
+        function resizeList() {
+            $albumList.height($(window).height() - 145);
+        }
+
+        $(window).resize(resizeList);
+        resizeList();
 
 
+        $("#DisplayMode1,#DisplayMode2").click(function() {
+            if ($(this).hasClass('displaymode-show')) {
+                $(".displaymode-show").hide();
+                $(".displaymode-edit").show();
+            } else {
+                $(".displaymode-show").show();
+                $(".displaymode-edit").hide();
+            }
+        });
+    </script>
 
-</div>
-
-
-</div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" type="text/javascript"></script>
-<script type="text/javascript">
-    if (typeof (jQuery) == 'undefined')
-        document.write(unescape("%3Cscript src='scripts/jquery.min.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script src="~/LocalizationAdmin/scripts/ww.jquery.min.js"></script>
-
-
-<script>
-    // global script settings
-    globals = {
-        baseUrl: "./",
-        editResources: @(allowResourceEditing ? "true" : "false" )
-    };
-
-    var $albumList = $("#albumslist");
-    $albumList.on("click", ".album-container", function() {
-        var a = $(this).find("a");
-        window.location.href = a.prop('href');
-    });
-
-    function resizeList() {
-        $albumList.height($(window).height() - 145);
+    <!-- Enable resource editing -->
+    @if (allowResourceEditing)
+    {
+        <script src="~/localizationAdmin/scripts/ww.resourceEditor.js"></script>
+        <script>
+            var toggleEditMode = false;
+            $("#btnEditResources").click(function() {
+                toggleEditMode = !toggleEditMode;
+                if (toggleEditMode)
+                    ww.resourceEditor.showResourceIcons({
+                        adminUrl: "./localizationAdmin/",
+                        editorWindowOpenOptions: "height=600, width=900, left=30, top=30"
+                    });
+                else
+                    ww.resourceEditor.removeResourceIcons();
+            });
+        </script>
     }
 
-    $(window).resize(resizeList);
-    resizeList();
-
-
-    $("#DisplayMode1,#DisplayMode2").click(function() {
-        $el = $(this);
-        if ($el.hasClass('displaymode-show')) {
-            $(".displaymode-show").hide();
-            $(".displaymode-edit").show();
-        } else {
-            $(".displaymode-show").show();
-            $(".displaymode-edit").hide();
-        }
-    });
-</script>
-
-<script src="~/localizationAdmin/scripts/ww.resourceEditor.js"></script>
-<script>
-    $("#btnEditResources").click( function showResourceIcons() {
-
-        globals.editResources = !globals.editResources; // toggle mode
-        if (globals.editResources)
-            ww.resourceEditor.showResourceIcons({ adminUrl: "./localizationAdmin/" });
-        else
-            ww.resourceEditor.removeResourceIcons();
-    });
-</script>
-
-<script src="~/AlbumViewerSample/css/bootstrap.min.js"></script>
 </body>
 </html>

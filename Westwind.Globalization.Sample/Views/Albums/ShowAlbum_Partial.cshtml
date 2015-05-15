@@ -1,0 +1,50 @@
+﻿@using AlbumViewerBusiness
+@using Westwind.Globalization.Sample.Properties
+@using Westwind.Utilities
+@model AlbumViewerBusiness.Album
+@{
+    Album Album = Model;      
+}
+<div id="showalbum" class="displaymode-show">
+    <div class="row">
+        <div class="col-sm-3">
+            <img src="@Album.ImageUrl" class="album-image-big"/>
+        </div>
+        <div class="col-sm-9">
+            <h2 class="album-title-big">
+                @Album.Title
+            </h2>
+
+            <div class="album-artist">
+                <span data-resource-id="By">@AlbumViewerResources.By</span> <a href="#/artist/@Album.ArtistId">@Album.Artist.ArtistName</a>
+                @(Album.Year > 0 ? "in " + Album.Year : "")
+            </div>
+            <div>@Html.Raw(HtmlUtils.DisplayMemo(@Album.Description))</div>
+
+            <div style="margin: 10px 0" class="pull-right">
+                &nbsp;
+                <a href="@Album.AmazonUrl" class="btn btn-link btn-sm" target="_amazon"><i class="fa fa-dollar"></i> Buy</a> &nbsp;&nbsp;
+            </div>
+
+            <table class=" table table-striped small">
+                @foreach (var song in Album.Tracks)
+                {
+                    <tr>
+                        <td>@song.SongName</td>
+                        <td>@song.Length</td>
+                    </tr>
+                }
+            </table>
+
+            <hr/>
+            <span data-resource-id="MoreFrom">@AlbumViewerResources.MoreFrom</span>
+            <a href="~/artists/@Album.ArtistId">
+                @Album.Artist.ArtistName<br/>
+                <img src="@Album.Artist.ImageUrl" style="height: 100px; border-radius: 5px; box-shadow: 2px 2px 3px #535353"/>
+            </a>
+
+        </div>
+
+    </div>
+</div>
+
