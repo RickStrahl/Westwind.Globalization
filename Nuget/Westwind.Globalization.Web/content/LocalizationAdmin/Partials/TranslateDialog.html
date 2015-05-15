@@ -5,7 +5,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3 class="modal-title" id="TranslateTitle">Translate Resource</h3>
+                <h3 class="modal-title" id="TranslateTitle">{{::view.dbRes('TranslateResource')}}</h3>
             </div>
             <div class="modal-body">
 
@@ -15,18 +15,18 @@
 
                 <div class="form-inline form-group">
                     <div class="form-group">
-                        <label>From:</label>
+                        <label>{{::view.dbRes('From')}}</label>
                         <input type="text" class="form-control" ng-model="view.fromLang" placeholder="From"
                                style="width: 60px;"/>
                     </div>
                     <div class="form-group">
-                        <label> &nbsp;To:</label>
+                        <label> &nbsp;{{::view.dbRes('To')}}</label>
                         <input style="width: 60px;" type="text" class="form-control" ng-model="view.toLang" placeholder="To">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label" for="form-group-input">Text to translate</label>
+                    <label class="control-label" for="form-group-input">{{::view.dbRes('TextToTranslate')}}</label>
                     <textarea class="form-control" ng-model="view.inputText" placeholder="Text to translate"></textarea>
                 </div>
 
@@ -35,28 +35,28 @@
                 <hr class="hrstyle"/>
 
                 <div class="form-group">
-                    <label class="control-label" for="form-group-input">Google Translation:</label>
+                    <label class="control-label" for="form-group-input">Google {{::view.dbRes('Translation')}}</label>
                     <div class="input-group">
 
                         <textarea class="form-control" ng-model="view.googleTranslation" placeholder="Text to translate"></textarea>
                         <span class=" input-group-addon clickable"
-                              ng-click="view.useTranslateClick('google')"><i class="fa fa-check"></i> Use</span>
+                              ng-click="view.useTranslateClick('google')"><i class="fa fa-check"></i> {{::view.dbRes('Use')}}</span>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label" for="form-group-input">Bing Translation:</label>
+                    <label class="control-label" for="form-group-input">Bing {{::view.dbRes('Translation')}}</label>
                     <div class="input-group">
 
                         <textarea class="form-control" ng-model="view.bingTranslation" placeholder="Translated text"></textarea>
                         <span class=" input-group-addon"
-                              ng-click="view.useTranslateClick('bing')"><i class="fa fa-check"></i> Use</span>
+                              ng-click="view.useTranslateClick('bing')"><i class="fa fa-check"></i> {{::view.dbRes('Use')}}</span>
                     </div>
                 </div>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-remove"></i> Cancel</button>                
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-remove"></i> {{::view.dbRes('Cancel')}}</button>                
             </div>
         </div>
     </div>    

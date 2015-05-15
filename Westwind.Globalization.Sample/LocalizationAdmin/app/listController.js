@@ -15,8 +15,9 @@
 
             var vm = this;
 
-            vm.resources = resources;
+            vm.resources = resources; // global generated resources
             vm.dbRes = resources.dbRes;
+
             vm.listVisible = true;
             vm.searchText = "";
             vm.resourceSet = null;

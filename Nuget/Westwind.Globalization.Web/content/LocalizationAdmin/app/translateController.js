@@ -11,6 +11,10 @@
     function translateController($scope, $http, $timeout) {
         /* jshint validthis:true */          
         var vm = this;
+
+        vm.resources = resources;
+        vm.dbRes = resources.dbRes;
+
         vm.title = 'translateController';
         vm.invariantLanguage = "en";
 

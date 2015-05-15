@@ -18,7 +18,7 @@
     <iconUrl>http://west-wind.com/westwind.globalization/images/Westwind.Localization_128.png</iconUrl>
    	<dependencies>
 	  <!-- smaller than V3.0 -->
-	  <dependency id="Westwind.Utilities" version="2.62" />
+	  <dependency id="Westwind.Utilities" version="2.63" />
 	  <dependency id="Newtonsoft.Json" version="6.0.8"  />
     <dependency id="CommonMark.NET" version="0.8.5" />
 	</dependencies>

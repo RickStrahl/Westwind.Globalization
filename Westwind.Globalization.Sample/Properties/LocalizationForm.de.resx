@@ -58,6 +58,42 @@
    <resheader name="writer">
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
+   <data name="TextToTranslate" xml:space="preserve">
+      <value>Text zu übersetzen</value>
+   </data>
+   <data name="Translate" xml:space="preserve">
+      <value>Übersetzen</value>
+   </data>
+   <data name="From" xml:space="preserve">
+      <value>Von</value>
+   </data>
+   <data name="To" xml:space="preserve">
+      <value>Zu</value>
+   </data>
+   <data name="Use" xml:space="preserve">
+      <value>Anwenden</value>
+   </data>
+   <data name="Translation" xml:space="preserve">
+      <value>Übersetzung</value>
+   </data>
+   <data name="FileResourceUpload" xml:space="preserve">
+      <value>Dateien Ressource hochladen</value>
+   </data>
+   <data name="EnableResourceEditing" xml:space="preserve">
+      <value>Ressourcen Bearbeitung aktivieren</value>
+   </data>
+   <data name="Lang" xml:space="preserve">
+      <value>Sprache</value>
+   </data>
+   <data name="ResourceEditor" xml:space="preserve">
+      <value>Ressourcen Bearbeitung</value>
+   </data>
+   <data name="AreYouSureYouWantToDeleteThisResource" xml:space="preserve">
+      <value>Sind Sie sicher, dass Sie diese Ressource löschen wollen?</value>
+   </data>
+   <data name="Save" xml:space="preserve">
+      <value>Speichern</value>
+   </data>
    <data name="LocalizationTableNotCreated" xml:space="preserve">
       <value>Lokalisierungs Tabelle konnte nicht erstellt werden.</value>
    </data>
@@ -170,7 +206,7 @@
       <value>Bearbeiten</value>
    </data>
    <data name="TranslateResource" xml:space="preserve">
-      <value>Resource übersetzen</value>
+      <value>Resource Übersetzung</value>
    </data>
    <data name="SaveResource" xml:space="preserve">
       <value>Resource speichern (Ctrl-Enter)</value>

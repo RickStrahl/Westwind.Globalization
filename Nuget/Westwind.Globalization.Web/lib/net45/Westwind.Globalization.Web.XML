@@ -416,30 +416,12 @@
             The default control constructor.
             </summary>
         </member>
-        <member name="M:Westwind.Globalization.DbResourceControl.OnEditResources(System.Object,System.EventArgs)">
+        <member name="M:Westwind.Globalization.DbResourceControl.Page_PreRender(System.Object,System.EventArgs)">
             <summary>
-            Event handler that is called and can be hooked when the Edit Resources
-            option is clicked. This interface brings up the Administration form.
+            Hook to Page Pre-Render to allow injecting controls at runtime
             </summary>
             <param name="sender"></param>
             <param name="e"></param>
-        </member>
-        <member name="M:Westwind.Globalization.DbResourceControl.OnShowIcons(System.Object,System.EventArgs)">
-            <summary>
-            Event handler that is called when the Show Icons checkbox is
-            checked or unchecked. The default behavior sets the current
-            DbResourceConfiguration.ShowControlIcons setting which 
-            is global.
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:Westwind.Globalization.DbResourceControl.AddResourceToResourceFile(System.Web.UI.Control,System.String,System.String)">
-            <summary>
-            Generates the Database resources for a given form
-            </summary>
-            <param name="ParentControl"></param>
-            <param name="ResourcePrefix"></param>
         </member>
         <member name="M:Westwind.Globalization.DbResourceControl.GetAllLocalizableControls(System.Web.UI.Control)">
             <summary>
@@ -473,15 +455,6 @@
             <param name="ResourceList">An instance of the resource list. Pass null to create</param>
             <returns></returns>
         </member>
-        <member name="M:Westwind.Globalization.DbResourceControl.GetNonLocalizableControlProperties(System.Web.UI.Control,System.Collections.Generic.List{Westwind.Globalization.LocalizableProperty})">
-            <summary>
-            This method is used to override special controls that don't
-            have LocalizableProperties but in fact should have them by
-            explicitly marking certain properties as overridable.
-            </summary>
-            <param name="control">The control </param>
-            <param name="ResourceList"></param>        
-        </member>
         <member name="M:Westwind.Globalization.DbResourceControl.AddLocalizationIcons(System.Web.UI.Control,System.Boolean)">
             <summary>
             This method is responsible for showing localization icons next to every control
@@ -496,39 +469,10 @@
             <param name="control"></param>
             <param name="TopLevel"></param>
         </member>
-        <member name="M:Westwind.Globalization.DbResourceControl.AddIconScriptFunctions">
-            <summary>
-            Internal method to add the page level script routines
-            that are used to inject the icons next to controls. These routines
-            inject HTML into the DOM rather than adding controls in order
-            to avoid problems with Controls.Add() and ASP.NET script expressions.
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.DbResourceControl.ShowIconsInitially">
-            <summary>
-             Determines the initial state of the ShowLocalization Icons Text box.
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.DbResourceControl.ClientOnLocalizationIconHandler">
-            <summary>
-            Optional override for Client OnLocalization Handler that when set is fired
-            in response to a click on one of the localization icons. Gets passed
-            an event object plus the resource name and resource set name.
-            
-            If set OnLocalization is called first which in turn fires the handler
-            of your choice.
-            </summary>
-        </member>
         <member name="T:Westwind.Globalization.LocalizableProperty">
             <summary>
             simple object that holds the value structure of each
             saved resource item on a form
-            </summary>
-        </member>
-        <member name="T:Westwind.Globalization.DbResourceControlDesigner">
-            <summary>
-            Control designer used so we get a grey button display instead of the 
-            default label display for the control.
             </summary>
         </member>
         <member name="T:Westwind.Globalization.JavaScriptResourceHandler">

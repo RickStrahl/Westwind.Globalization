@@ -35,8 +35,10 @@
                   ng-click="view.onStringUpdate(resource)"
                   data-resource-id="SaveResource"><i class="fa fa-check"></i></span>
             <span class="input-group-addon"
-                  tabindex="-1" role="button" aria-label="Translate resource"
-                  title="Translate Resource"
+                  tabindex="-1"
+                  aria-label="{{::view.dbRes('TranslateResource')}}"
+                  title="{{::view.dbRes('TranslateResource')}}"
+                  role="button"
                   ng-click="view.onTranslateClick($event,resource)"
                   data-resource-id="TranslateResource"><i class="fa fa-flag-o"></i></span>
         </div>

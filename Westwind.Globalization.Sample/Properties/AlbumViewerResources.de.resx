@@ -61,8 +61,20 @@
    <data name="YearReleased" xml:space="preserve">
       <value>Erscheinungsjahr</value>
    </data>
+   <data name="AddSong" xml:space="preserve">
+      <value>Song hinzufügen</value>
+   </data>
    <data name="By" xml:space="preserve">
       <value>von</value>
+   </data>
+   <data name="AlbumViewer" xml:space="preserve">
+      <value>AlbenViewer</value>
+   </data>
+   <data name="AlbumDescription.Placeholder" xml:space="preserve">
+      <value>Detaillierte Beschreibung für dieses album</value>
+   </data>
+   <data name="Remove" xml:space="preserve">
+      <value>Entfernen</value>
    </data>
    <data name="AlbumDescription" xml:space="preserve">
       <value>Beschreibung</value>

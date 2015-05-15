@@ -15,8 +15,9 @@
 
             var vm = this;
 
-            vm.resources = resources;
+            vm.resources = resources; // global generated resources
             vm.dbRes = resources.dbRes;
+
             vm.listVisible = true;
             vm.searchText = "";
             vm.resourceSet = null;
@@ -47,6 +48,7 @@
                     "ResourceSet": "",
                     "TextFile": null,
                     "BinFile": null,
+                    "ValueType": 0,
                     "FileName": ""
                 };
             };
@@ -161,6 +163,19 @@
 
             }
         };
+        vm.onResourceFullscreenEdit = function (ev, resource) {
+            
+
+            $("#resource-editor").fullScreenEditor('show', {
+                value: resource.Value,
+                onSave: function (value) {
+                    var $el = $("textarea[data-localeid='" + resource.LocaleId + "'");
+                    var id = $el.prop("id");
+                    vm.activeResource.Value = value;
+                    ww.angular.applyBindingValue("#" + id, value);
+                }
+        });
+        }
        vm.onTranslateClick = function(ev, resource) {           
            vm.editedResource = resource.Value;
            var id = $(ev.target).parent().find("textarea").prop("id");
@@ -215,13 +230,31 @@
                vm.activeResource.Value = vm.activeResource.ResourceId;
 
        }
-       vm.onAddResourceClick = function() {
+       vm.onAddResourceClick = function(resourceId,resourceSet,content) {
+           
+           if (!resourceId) {
+               if (vm.activeResource)
+                   resourceId = vm.activeResource.ResourceId;
+               else
+                   resourceId = "";
+           }
+           if (!resourceSet) {
+               if (vm.activeResource)
+                   resourceSet = vm.activeResource.ResourceSet;
+               else
+                   resourceSet = "";
+           }
+           var localeId = "";
+           if (vm.activeResource)
+               localeId = vm.activeResource.LocaleId;
            
            var res = vm.newResource();           
-           res.ResourceSet = vm.activeResource.ResourceSet;
-           res.LocaleId = vm.activeResource.LocaleId;
-           res.ResourceId = vm.activeResource.ResourceId;
+           res.ResourceSet = resourceSet;
+           res.LocaleId = localeId;
+           res.ResourceId = resourceId;
+           res.Value = content;
            vm.activeResource = res;
+           console.log(vm.activeResource);
 
            $("#AddResourceDialog").modal();
        };
@@ -241,21 +274,21 @@
                    });
                    if (i < 0) {
                        vm.resourceSets.unshift(vm.activeResource.ResourceSet);
-                       vm.resourceSet = vm.activeResource.ResourceSet;
+                       vm.resourceSet = vm.resourceSets[0];
                        vm.onResourceSetChange();
                    }
 
                    // check if resourceId exists
                    var i = _.findIndex(vm.resourceList,function(res) {
                        return res.ResourceId === id;
-                   });                   
-                   if (i < 0)
+                   });
+                   if (i < 0) {
                        vm.resourceList.unshift(vm.activeResource);
+                       vm.activeResource = vm.resourceList[0];
+                   }
 
                    vm.resourceId = id;
                    vm.onResourceIdChange();
-
-                   
 
                    $("#AddResourceDialog").modal('hide');
                })
@@ -263,6 +296,41 @@
                    var err = ww.angular.parseHttpError(arguments);
                    alert(err.message);
                });
+       };
+       vm.onResourceUpload = function (files) {
+           if (files && files.length) {
+               for (var i = 0; i < files.length; i++) {
+                   var file = files[i];
+                   $upload.upload({
+                       url: 'LocalizationService.ashx?method=UploadResource',
+                       fields: { 'resourceset': vm.activeResource.ResourceSet, 'resourceid': vm.activeResource.ResourceId, "localeid": vm.activeResource.LocaleId },
+                       file: file
+                   }).progress(function (evt) {
+                       var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                       vm.uploadProgress = progressPercentage + '% ' + evt.config.file.name;
+                   }).success(function (data, status, headers, config) {
+                       $("#AddResourceDialog").modal('hide');
+                       var id = vm.activeResource.ResourceId;
+                       
+                       // check if resourceId exists
+                       var i = _.findIndex(vm.resourceList, function (res) {
+                           return res.ResourceId === id;
+                       });
+                       if (i < 0)
+                           vm.resourceList.unshift(vm.activeResource);
+
+                       vm.resourceId = id;
+                       vm.onResourceIdChange();
+
+                       showMessage(vm.dbRes('ResourceSaved'));
+                       vm.uploadProgress = null;
+                   })
+                       .error(function () {
+                           parseError(arguments);
+                           vm.uploadProgress = null;
+                       });
+               }
+           }
        };
        vm.onDeleteResourceClick = function() {
            var id = vm.activeResource.ResourceId;
@@ -356,30 +424,6 @@
                })
                .error(parseError);
        }
-       vm.onResourceUpload = function (files) {
-           if (files && files.length) {
-               for (var i = 0; i < files.length; i++) {
-                   var file = files[i];
-                   $upload.upload({
-                       url: 'LocalizationService.ashx?method=UploadResource',
-                       fields: { 'resourceset': vm.resourceSet, 'resourceid': vm.resourceId, "localeid": vm.activeResource.LocaleId },
-                       file: file
-                   }).progress(function (evt) {
-                       var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                       vm.uploadProgress = progressPercentage + '% ' + evt.config.file.name;
-                   }).success(function (data, status, headers, config) {
-                       $("#AddResourceDialog").modal('hide');
-                       vm.getResourceItems();
-                       showMessage(vm.dbRes('ResourceSaved'));
-                       vm.uploadProgress = null;
-                   })
-                       .error(function () {
-                           parseError(arguments);
-                           vm.uploadProgress = null;
-                       });
-               }
-           }
-       };
        vm.onReloadResourcesClick = function() {
            localizationService.reloadResources()
                .success(function() {
@@ -405,7 +449,10 @@
         vm.showResourceIcons = function () {
             vm.resourceEditMode = !vm.resourceEditMode;
             if (vm.resourceEditMode)
-                ww.resourceEditor.showResourceIcons({ adminUrl: "./" });
+                ww.resourceEditor.showResourceIcons({
+                    adminUrl: "./",
+                    editorWindowOpenOptions: "height=600, width=900, left=30, top=30"
+                });
             else
                 ww.resourceEditor.removeResourceIcons();
         };
@@ -442,12 +489,13 @@
         }
 
         function parseQueryString() {
-            var query = window.location.search;
+            var query = window.location.search;            
             var res = {
                 isEmpty: !query,
                 query: query,
                 resourceId: getUrlEncodedKey("ResourceId", query),
-                resourceSet: getUrlEncodedKey("ResourceSet", query)
+                resourceSet: getUrlEncodedKey("ResourceSet", query),
+                content: getUrlEncodedKey("Content", query)
             }
 
             return res;
@@ -456,26 +504,33 @@
        function selectResourceSet(query) {           
            if(!query.resourceSet)
                 return;
-
+           
            for (var i = 0; i < vm.resourceSets.length; i++) {
                if (vm.resourceSets[i] == query.resourceSet) {                       
                    vm.resourceSet = vm.resourceSets[i];
-                   $timeout(function() { selectResourceId(query) });
+                   $timeout(function() { selectResourceIdWithQuery(query) },50);
                    break;
                }                   
            }
         
-           function selectResourceId(query) {
-               vm.getResourceList()                         
-               .success(function() {
-                   for (var i = 0; i < vm.resourceList.length; i++) {
-                       if (vm.resourceList[i].ResourceId === query.resourceId) {
-                           vm.resourceId = vm.resourceList[i].ResourceId;
-                           vm.onResourceIdChange();
-                           break;
+           function selectResourceIdWithQuery(query) {               
+               vm.getResourceList()
+                   .success(function() {
+                       var found = false;                       
+                       for (var i = 0; i < vm.resourceList.length; i++) {
+                           if (vm.resourceList[i].ResourceId === query.resourceId) {
+                               vm.resourceId = vm.resourceList[i].ResourceId;                               
+                               vm.onResourceIdChange();
+                               found = true;
+                               break;
+                           }
                        }
-                   }
-               });
+
+                       if (!found)
+                           $timeout(function() {
+                               vm.onAddResourceClick(query.resourceId, query.resourceSet, query.content);
+                           }, 100);
+                   });
            }
 
        }
@@ -505,7 +560,7 @@
                var query = parseQueryString();
                if (query.isEmpty)
                    return;
-           console.log(query);
+               console.log(query);
                selectResourceSet(query);
            });
    }

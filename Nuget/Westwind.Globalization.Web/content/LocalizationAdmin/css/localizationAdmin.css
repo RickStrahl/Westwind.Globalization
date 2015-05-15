@@ -185,7 +185,7 @@ input.ng-invalid,textarea.ng-invalid,select.ng-invalid {
     width: 13px;     
     text-decoration: none;
     zIndex: 999999;
-    opacity: 0.65;
+    opacity: 0.35;
     margin: -14px 0 0 -2px;
     cursor: pointer;
 }
@@ -196,7 +196,7 @@ input.ng-invalid,textarea.ng-invalid,select.ng-invalid {
     font-family: fontawesome;
         content: "\f024"; /* flag */
         font-size: 9pt;
-        color: red;
+        color: red;        
 }
 
 [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {

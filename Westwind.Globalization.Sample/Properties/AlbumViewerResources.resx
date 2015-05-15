@@ -85,6 +85,15 @@
    <data name="AlbumDescription" xml:space="preserve">
       <value>Description</value>
    </data>
+   <data name="Remove" xml:space="preserve">
+      <value>Remove</value>
+   </data>
+   <data name="AddSong" xml:space="preserve">
+      <value>Add Song</value>
+   </data>
+   <data name="AlbumViewer" xml:space="preserve">
+      <value>AlbumViewer</value>
+   </data>
    <data name="Show" xml:space="preserve">
       <value>Show</value>
    </data>
@@ -93,5 +102,8 @@
    </data>
    <data name="YearReleased" xml:space="preserve">
       <value>Year released</value>
+   </data>
+   <data name="AlbumDescription.Placeholder" xml:space="preserve">
+      <value>Detailed description for this album</value>
    </data>
 </root>
