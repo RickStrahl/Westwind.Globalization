@@ -18,8 +18,7 @@ namespace Westwind.Globalization.Sample
     {
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
-            GlobalConfiguration.Configure(WebApiConfig.Register);
+                       
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
@@ -56,7 +55,7 @@ namespace Westwind.Globalization.Sample
 
         protected void Application_BeginRequest()
         {
-            WebUtils.SetUserLocale(currencySymbol: "$"); //,allowedLocales: "en,de,fr");
+            WebUtils.SetUserLocale(currencySymbol: "$",allowedLocales: "en,de,fr");
             Trace.WriteLine("App_BeginRequest - Culture: " + Thread.CurrentThread.CurrentCulture.IetfLanguageTag);
         }
   
