@@ -1,16 +1,27 @@
 # West Wind Globalization
 ### Database Resource Localization for .NET
-Easily create .NET resources stored in a Sql database for editing and updating 
-at runtime using an interactive editor or programmatically using code.
-The library uses the standard .NET and ASP.NET infrastructure of ResourceSets, 
-ResourceManagers and ResourceProviders with a generic data backend to feed resource sets and provide edit and update capabilities to  localization resources stored in a database. You can also extend and create your own providers using either SQL data sources or any other data store.
 
-Additional components provide the ability to import and export Resx resources and
-the ability to serve server side resources as JSON resources to JavaScript clients.
+This library and tooling provides easy to use database resource managers and providers that allow you to use a database for storing localization resources. Unlike static Resx resources, database resources are dynamic and can be changed at runtime and are editable by multiple users at the same time. The custom resource managers and providers use the standard .NET resource infrastructure, so other than startup configuration there are no code changes when switching from using traditional Resx resources - and you can always switch back just as easily.
+
+A rich, Web based resource editor is also provided that makes it easy to create resource content and translate it interactively in a running application where you can see resource changes immediately applied without recompilation. You can import and export Resx resources, generate strongly typed classes and serve resources to JavaScript applications using the database resources. 
+
+To install, use NuGet:
+
+```
+PM> Install-Package Westwind.Globalization.Web
+```
+If you're not using a Web Project you can also use:
+```
+PM> Install-Package Westwind.Globalization
+```
+
+Please read or watch the video of the Installation Section which describes how to install the packages, import existing resources (if any) and then start creating new ones quickly.
+
+> If you want to see how to apply resources in your applications, it's also a good idea to clone this project as it has a number of examples that demonstrate resource usage. Check out the AlbumViewer MVC application, the Localization Admin AngularJs SPA application, and the ResourceTest ASPX and Web Page examples.
 
 Requirements:
-* .NET 4.5
-* Sql Server 2008+, Sql Express or SQL Compact 4, MySql, SqLite
+* .NET 4.5 or later
+* SQL Server 2008-2014, SQL Server Express, SQL Compact 4, MySql, SqLite
 
 ### Resources:
 * [Westwind.Globalization Home Page](http://west-wind.com/westwind.globalization/)
@@ -25,25 +36,24 @@ Requirements:
 
 
 ### Features
-* .NET Resources in Sql Server, Sql Server Compact, MySql and SqLite   
-* Two Database ASP.NET ResourceProviders (ASP.NET/WebForms) 
-* Database .NET  ResourceManager (ASP.NET MVC,non-Web apps)
-* Uses standard, efficient .NET Resource management and caching
-* Use standard .NET/ASP.NET syntax to access resources
+* .NET Resources in Sql Server, SqlCe, MySql and SqLite   
+* ASP.NET Database ResourceProviders (ASP.NET/WebForms) 
+* .NET  ResourceManager (ASP.NET MVC,non-Web apps)
+* Uses standard .NET Resource infrastructure and caching
 * Or: Use our dynamic DbRes string based helper (works anywhere)
-* Interactive, live Web Resource Editor to edit Resources
-* Live Reloading of edited Resources in Web apps
-* DbResourceManagers let you manage resources with code
-* Extensible DbResourceManager interface to create custom Providers
-* Import and Export Resx resources 
-* Generate strongly typed resource classes from the Db resources
+* Interactive Web Resource Editor to edit Resources
+* Keyboard optimized resources editing
+* Translate text resources with Google or Bing
+* Use Markdown in your text resources
+* Import and export Resx resources 
+* Generate strongly typed classes from the Db resources
+* Release and reload resources in running Web apps
 * Serve .NET Resources to JavaScript as JSON
+* Create your own custom DbResourceManagers
+* Directly access and manage DbResources with code 
 
-To use the DbResourceProvider or DbResourceManager requires no code changes 
-from ResX resources, other than a few lines of provider configuration. 
-You can import existing ASP.NET and standard .RESX resources and edit 
-them interactively, then export them back to RESX resources if desired, 
-or run them out of the database directly.
+
+Because this library uses the standard .NET resource infrastructure using the DbResourceProvider or DbResourceManager requires no code changes from ResX resources, other than provider configuration in your .config file and potentially a few lines of startup code.  You can import existing Resx resources and edit them interactively. Serve your resources either with the DbResourceProvider or DbResourceManager, or if you chose export them back out to Resx files for your final application code. Importing and exporting is a easily done from the Web admin interface or can be fired using code including as part of your build process.
 
 > **Note**: The database is accessed only once per ResourceSet and per Locale, using the
 > standard .NET Resource caching architecture used in Resource Providers and
@@ -71,6 +81,9 @@ but it's not the only way you can do this of course. Since you have access
 to the data API underneath it as well as the database itself, it's 
 easy to create your own customized UI or data driven API that suits your
 application needs exactly.
+
+> **Markdown Support** The resource edit form allows you to optionally use Markdown for resource editing which in addition to localization makes it possible to use this libary as a basic CMS to manage user manageable content in your applications.
+
 
 ### How the database Providers work
 This library implements a custom .NET ResourceManager and 
@@ -140,11 +153,11 @@ To run the sample application you have to set up a database to provide the resou
 The easiest way to use this library in your own applications is to install the NuGet package into an ASP.NET application.
 
 ```
-pm> Install-Package Westwind.Globalization.Web -pre
+pm> Install-Package Westwind.Globalization.Web
 ```
 If you're not using a Web Project you can also use:
 ```
-pm> Install-Package Westwind.Globalization -pre
+pm> Install-Package Westwind.Globalization
 ```
 which doesn't install the web related components and HTML resources. Version 2.0 is currently in beta so you need to use the `-pre` for the latest versions.
 
@@ -652,8 +665,6 @@ Dan and his company provided a block of my billable hours dedicated to this proj
 Want to sponsor this project, need customization or make a donation? You can contact me directly at rstrahl@west-wind.com or you can also make a donation online via PayPal.
 
 * [Make a donation for Westwind.Globalization using PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ERVCP2CMPS4QL)
-* [Make a donation for Westwind.Globalization using our Web Store](http://store.west-wind.com/product/donation)
-
 
 ## License
 The Westwind.Globalization library is licensed under the

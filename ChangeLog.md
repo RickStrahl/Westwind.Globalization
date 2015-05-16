@@ -1,7 +1,23 @@
 # West Wind Globalization Changelog
 
-### Version 2.0 Beta6
+### Version 2.1 Release
+<small>not released yet</small><br/>
 
+* **[Markdown support for Text Resources](https://github.com/RickStrahl/Westwind.Globalization/wiki/Markdown-For-Resource-Values)**<br/>
+You can indicate that you would like text resources to be automatically parsed as markdown. Simply enter your text as Markdown and set the 'Type' option to Markdown causes the text resources to automatically parsed to HTML when added to the ResourceSet dictionary. Markdown conversion is also applied for Resx exports (converted to HTML) and the JavaScript Resource Handler.
+
+* **Full screen Resource Editor**<br/>
+You can now double click the resource editing field to display a full screen editor that provides more room for editing larger content. Works especially well when editing Markdown content.
+
+* **[Improved Resource Caching for JavaScript Resources](https://github.com/RickStrahl/Westwind.Globalization/wiki/JavaScript-Resource-Handler---Serve-JavaScript-Resources-from-the-Server)**<br/>
+Refactored code in the  resource HttpHandler that serves JavaScript resources. The query string based interface now supports ASP.NET ResourceProvider, .NET ResourceManager and Resx resources for serving server resources to JavaScript.
+
+* **AlbumViewer MVC Localization Sample**<br/>
+Added a small ASP.NET MVC application that demonstrates resource usage in the user interface.  
+
+
+### Version 2.0 Beta6
+<small>May 10th, 2014</small><br/>
 * **Rework WebForms Resource Editing Links**<br/>
 Updated the DbResourceControl to automatically generate resource editing icons for WebForms pages using the new client side resource icon logic. The control now generates icons from most Web Controls automatically. Removed logic for auto-embedding of scripts - Webforms now manaully have to add the styles and scripts just like any other HTML platform, but using the control provides the automatic linking without additional markup. 
 

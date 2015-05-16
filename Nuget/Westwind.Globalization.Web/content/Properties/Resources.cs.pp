@@ -110,5 +110,6 @@ namespace $rootnamespace$.Properties
 				return GeneratedResourceHelper.GetResourceString("Resources","AddressIsRequired",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
+
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using Westwind.Utilities.Data;
+using Westwind.Globalization;
 
 
 namespace Westwind.Globalization.Test
@@ -11,7 +12,7 @@ namespace Westwind.Globalization.Test
     public class DbResourceMySqlDataManagerTests
     {
 
-        private DbResourceMySqlDataManager GetManager()
+        private Westwind.Globalization.DbResourceMySqlDataManager GetManager()
         {
             var manager = new DbResourceMySqlDataManager();
             manager.Configuration.ConnectionString = "MySqlLocalizations";

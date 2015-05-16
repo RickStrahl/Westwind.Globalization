@@ -78,6 +78,10 @@
    </data>
    <data name="MarkdownText" xml:space="preserve">
       <value>&lt;p&gt;Dies ist &lt;strong&gt;Markdown Text&lt;/strong&gt; der &lt;em&gt;als HTML formatiert ist&lt;/em&gt;, wenn es gerendert wird.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Punkt1&lt;/li&gt;
+&lt;li&gt;Punkt2&lt;/li&gt;
+&lt;/ul&gt;
 
 </value>
    </data>

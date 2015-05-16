@@ -173,6 +173,13 @@
             </div>
 		</div>
 
+        <div class="container">
+            <h3>Expanded Markdown Text</h3>
+            
+            <label>Auto Expanded Markdown text:</label>
+            <%= DbRes.T("MarkdownText","Resources") %>
+        </div>
+
         <hr />
 
         <div class="container">
