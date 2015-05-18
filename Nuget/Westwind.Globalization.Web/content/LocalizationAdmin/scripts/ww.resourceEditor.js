@@ -67,7 +67,8 @@
             var $el = $($(this).data("resource-element"));
             var resId = $el.data("resource-id");
             var resSet = $el.data("resource-set");
-            var content = $el.text() || $el.val();
+            var content = $el.text() || $el.val() || "";
+            content = $.trim(content);
 
             if (content && content.length > 600)
                 content = "";
@@ -77,7 +78,6 @@
                 if ($resSets.length > 0)
                     resSet = $resSets.eq(0).data("resource-set");
             }
-
             
             window.open(self.options.adminUrl + "?ResourceSet=" + encodeURIComponent(resSet) +
                     "&ResourceId=" + encodeURIComponent(resId) +

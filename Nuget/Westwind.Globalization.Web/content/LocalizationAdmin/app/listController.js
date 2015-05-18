@@ -253,12 +253,12 @@
            res.LocaleId = localeId;
            res.ResourceId = resourceId;
            res.Value = content;
-           vm.activeResource = res;
-           console.log(vm.activeResource);
+           vm.activeResource = res;           
 
            $("#AddResourceDialog").modal();
        };
        vm.onEditResourceClick = function () {
+           debugger;
            $("#AddResourceDialog").modal();
        };
 

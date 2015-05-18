@@ -4,7 +4,6 @@
 
 <%--Import the strongly typed resource namespace - if this fails strongly typed resources don't exist--%>
 <%@ Import Namespace="$rootnamespace$.Properties" %>
-
 <script runat="server">
     private string LocaleId;    
     
@@ -57,9 +56,10 @@
             margin: 10px 0 -10px;
         }
     </style>
-    <script src="LocalizationAdmin/bower_components/jquery/dist/jquery.min.js"></script>
 </head>
-<body>
+
+<body data-resource-set="Resources">
+
     <div class="banner">
         <div id="TitleBar">
             <a href="./">
@@ -79,13 +79,23 @@
             <li>
                 <a href="localizationAdmin/">
                     <i class="fa fa-gears"></i> Resource Editor
+                </a>                
+            </li>        
+            <li>
+                <a href="resourcetest.cshtml">
+                    <i class="fa fa-check-circle"></i> Razor Test Page
+                </a>
+            </li>       
+            <li>
+                <a href="javascript:{}" id="EditResources">
+                    <i class="fa fa-flag"></i> Edit Resources
                 </a>
             </li>      
             <li>
                 <a href="./">
                     <i class="fa fa-home"></i>
                 </a>
-            </li>    
+            </li> 
         </ul>
         <div class="clearfix"></div>
     </nav>
@@ -130,12 +140,19 @@
 
         <div class="container">
             <h3>DbRes</h3>
-
-            <label>Using DbRes Direct Access Provider (default locale):</label>
-            <%= DbRes.T("HelloWorld","Resources") %>
+          
+            <label >Using DbRes Direct Access Provider (default locale):</label>                                  
+            <span data-resource-id="HelloWorld">
+                <%= DbRes.T("HelloWorld","Resources") %>
+            </span>
 
             <label>Using DbRes Force to German:</label>
             <%= DbRes.T("HelloWorld","Resources","de") %>
+            
+            <label>Missing Resource:</label>
+            <span data-resource-id="MissingResource">
+                <%= @DbRes.T("MissingResource", "Resources") %>
+            </span>    
         </div>
 
         <hr />
@@ -147,7 +164,9 @@
             <%= GetGlobalResourceObject("Resources","HelloWorld") %>
 
 			<label>GetLocalResourceObject:</label>
-            <%= GetLocalResourceObject("lblHelloWorldLabel.Text") %>
+            <span data-resource-id="lblHelloWorldLabel.Text" data-resource-set="ResourceTest.aspx">
+                <%= GetLocalResourceObject("lblHelloWorldLabel.Text") %>
+            </span>
 			
             <label>Meta Tag (meta:resourcekey= lblHelloWorldLabel.Text):</label>
             <asp:Label ID="lblHelloLabel" runat="server" meta:resourcekey="lblHelloWorldLabel"></asp:Label>
@@ -159,14 +178,14 @@
         <hr />
 
         <div class="container">
-
             <h3>Strongly Typed Resource (generated)</h3>
 
             <label>Strongly typed Resource Generated from Db (uses ASP.NET ResourceProvider)</label>
-            <%= Resources.HelloWorld %>
+            <%= Resources.HelloWorld %>      
+                                         
 			
             <label>Strongly typed image resource:</label>
-            <div>
+            <div data-resource-id="FlagPng">
                 <% try { %>
                 <%= GeneratedResourceHelper.BitmapToEmbeddedHtmlImage(Resources.FlagPng, System.Drawing.Imaging.ImageFormat.Png) %>
                 <% } catch {} %>
@@ -177,27 +196,53 @@
             <h3>Expanded Markdown Text</h3>
             
             <label>Auto Expanded Markdown text:</label>
-            <%= DbRes.T("MarkdownText","Resources") %>
+            <span data-resource-id="MarkdownText">
+                <%= DbRes.T("MarkdownText","Resources") %>
+            </span>
         </div>
 
         <hr />
 
-        <div class="container">
-
+        <div class="container">            
             <h3>JavaScript Resource Handler</h3>
-
             <label>Localized JavaScript Variable (assigned in JavaScript code from resources.HelloWorld):</label>
+            
             <div id="JavaScriptHelloWorld"></div>
-
-        </div>
-
+        </div>                
     </div>
-
-    <!-- Generates a resources variable that contains all server side resources translated for this resource set-->
-    <script src="<%= JavaScriptResourceHandler.GetJavaScriptResourcesUrl("resources","Resources") %>"></script>
+        
     <script>
-        document.querySelector("#JavaScriptHelloWorld").innerText = resources.HelloWorld;
+        global = {};
     </script>
+    <!-- Generates a resources variable that contains all server side resources translated for this resource set-->
+    <script src="<%= JavaScriptResourceHandler.GetJavaScriptResourcesUrl("global.resources","Resources") %>"></script>
+     
+    <%-- *** You can also use raw script tags to embed which is more verbose ***
+    <script src="/JavaScriptResourceHandler.axd?ResourceSet=Resources&LocaleId=en&VarName=resources&ResourceType=resdb&ResourceMode=1"></script>
+    --%>
 
+    <script>
+        document.querySelector("#JavaScriptHelloWorld").innerText = global.resources.HelloWorld;
+    </script>
+    
+    
+    <!-- Enable Resource Editing --> 
+
+
+    <script src="LocalizationAdmin/bower_components/jquery/dist/jquery.min.js"></script>   
+    <script src="LocalizationAdmin/scripts/ww.resourceEditor.js"></script>
+    <script>
+        var toggleEditMode = false;
+        $("#EditResources").click(function () {
+            toggleEditMode = !toggleEditMode;
+            if (toggleEditMode)
+                ww.resourceEditor.showResourceIcons({
+                    adminUrl: "./localizationAdmin/",
+                    editorWindowOpenOptions: "height=600,width=900,top=20,left=20"
+                });
+            else
+                ww.resourceEditor.removeResourceIcons();
+        });
+    </script>
 </body>
 </html>

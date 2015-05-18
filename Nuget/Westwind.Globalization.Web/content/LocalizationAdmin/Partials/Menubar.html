@@ -16,7 +16,7 @@
             <a ng-show="view.resourceSets && view.resourceSets.length > 0"
                xng-click="view.onExportResxResourcesClick()"
                data-toggle="modal" data-target="#ImportExportResxDialog"
-               title="{{view.dbRes('ExportResx_Title')}}"
+               title="{{::view.dbRes('ExportResx_Title')}}"
                data-resource-id="ImportExportResx"
                >
                 <i class="fa fa-download"></i> {{::view.dbRes('ImportExportResx')}}

@@ -25,14 +25,9 @@
     <pages>
       <namespaces>
         <add namespace="Westwind.Utilities"/>
-        <add namespace="Westwind.Web" />
-		<add namespace="Westwind.Web.Controls" />
+        <add namespace="Westwind.Web" />		
 		<add namespace="Westwind.Globalization" />
-      </namespaces>
-      <controls>        
-        <add tagPrefix="ww" namespace="Westwind.Web.Controls" assembly="Westwind.Web.WebForms" />        
-        <add tagPrefix="ww" namespace="Westwind.Globalization" assembly="Westwind.Globalization.Web" />        
-      </controls>	  
+      </namespaces> 
     </pages>
     <httpHandlers>
       <add verb="GET" path="JavaScriptResourceHandler.axd" type="Westwind.Globalization.JavaScriptResourceHandler,Westwind.Globalization.Web"/>

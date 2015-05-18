@@ -1,7 +1,17 @@
-﻿@using System.Drawing.Imaging
+﻿@*
+    This test page has to be renamed to be used in order to avoid project startup
+    issues if ASP.NET Web Pages/MVC are not present. 
+    
+    Use requires:
+        * Have ASP.NET WebPages or MVC 4/5 installed 
+        * Or: install-package Microsoft.AspNet.WebPages and compile
+        * <appSettings><add key="webPages:Version" value="3.0"/></appSettings>       
+        * Rename this file to ResourceTest.cshtml
+*@
+@using System.Drawing.Imaging
 @using System.Threading
 @using Westwind.Globalization
-@using Westwind.Globalization.Sample.Properties
+@using $rootnamespace$.Properties
 @{    
     var localeId = Request.Params["LocaleId"];
     if (!string.IsNullOrEmpty(localeId))

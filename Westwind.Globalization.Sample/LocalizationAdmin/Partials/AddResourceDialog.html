@@ -36,11 +36,12 @@
 
                 <div class="form-group">
                     <div class="pull-right">
-                        <label>Type</label>&nbsp;&nbsp;
-                        <select style="border-radius: 3px; padding: 2px; border-color: silver"  ng-model="view.activeResource.ValueType">
-                            <option value="0">Text</option>
-                            <option value="2">Markdown</option>
-                            <option value="1">Binary</option>
+                        <label>Type</label>&nbsp;&nbsp;                        
+                        <select  style="margin-bottom: 3px;border-radius: 3px; padding: 4px; border-color: silver"                                
+                                xng-model="view.activeResource.ValueType">
+                            <option ng-selected="view.activeResource.ValueType == 0" value="0">Text</option>
+                            <option ng-selected="view.activeResource.ValueType == 2" value="2" >Markdown</option>
+                            <option ng-selected="view.activeResource.ValueType == 1" value="1">Binary</option>
                         </select>
                     </div>
 
@@ -56,8 +57,6 @@
                     {{::view.dbRes("FileResourceUpload")}}
                 </div>
                 <div id="Upload-Progress" class="small pull-right">{{::view.uploadProgress}}</div>
-
-
             </div>
 
 
