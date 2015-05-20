@@ -2,7 +2,7 @@
 <package> 
   <metadata> 
     <id>Westwind.Globalization.Web</id> 
-    <version>2.0.52</version>
+    <version>2.0.53</version>
     <authors>Rick Strahl, West Wind Technologies</authors>
     <title>West Wind Globalization Web for ASP.NET (Westwind.Globalization.Web)</title> 
     <summary>Database Resource Localization for ASP.NET Web applications.</summary>
@@ -16,10 +16,9 @@
     <projectUrl>https://github.com/RickStrahl/Westwind.Globalization</projectUrl>
     <iconUrl>http://west-wind.com/westwind.globalization/images/Westwind.Localization_128.png</iconUrl>
    	<dependencies>
-	  <!-- smaller than V3.0 -->
 	  <dependency id="Westwind.Globalization" version="2.0.50" />
-	  <dependency id="Westwind.Web" version="2.62" />	  
-	  <dependency id="Westwind.Web.WebForms" version="2.59" />
+	  <dependency id="Westwind.Web" version="2.64" />	  
+	  <dependency id="Westwind.Web.WebForms" version="2.64" />
 	</dependencies>
   </metadata> 
 </package>

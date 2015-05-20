@@ -1,7 +1,7 @@
 ﻿/// <reference path="jquery.js" />
 /*
 ww.jQuery.js  
-Version 1.16 - 2/25/2015
+Version 1.17 - 5/15/2015
 West Wind jQuery plug-ins and utilities
 
 (c) 2008-2015 Rick Strahl, West Wind Technologies 
@@ -269,8 +269,13 @@ http://en.wikipedia.org/wiki/MIT_License
     onPageError = function (err) {
         showStatus(err.message || err.Message, 6000, true);
     };
-    CallbackException = function (message, detail) {
+    CallbackException = function (message, detail, status) {
         this.isCallbackError = true;
+        if (status)
+            this.status = status;
+        else
+            this.status = 500;
+
         if (typeof (message) == "object") {
             if (message.message)
                 this.message = message.message;

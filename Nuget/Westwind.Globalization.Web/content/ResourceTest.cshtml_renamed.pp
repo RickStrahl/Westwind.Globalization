@@ -5,7 +5,10 @@
     Use requires:
         * Have ASP.NET WebPages or MVC 4/5 installed 
         * Or: install-package Microsoft.AspNet.WebPages and compile
-        * <appSettings><add key="webPages:Version" value="3.0"/></appSettings>       
+        * <appSettings>
+              <add key="webPages:Version" value="3.0.0.0"/>
+              <add key="webpages:Enabled" value="true"/>
+          </appSettings>       
         * Rename this file to ResourceTest.cshtml
 *@
 @using System.Drawing.Imaging
