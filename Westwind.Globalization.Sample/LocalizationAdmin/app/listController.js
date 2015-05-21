@@ -258,7 +258,6 @@
            $("#AddResourceDialog").modal();
        };
        vm.onEditResourceClick = function () {
-           debugger;
            $("#AddResourceDialog").modal();
        };
 

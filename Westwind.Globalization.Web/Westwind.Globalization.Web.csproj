@@ -83,7 +83,9 @@
     <None Include="DbResourceProvider\DbResourceProviderHierarchy.cd" />
     <None Include="DbSimpleResourceProvider\BasicResourceProvider.cd" />
     <None Include="DbSimpleResourceProvider\DbSimpleResourceProviderHierarchy.cd" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\editresources.png" />
