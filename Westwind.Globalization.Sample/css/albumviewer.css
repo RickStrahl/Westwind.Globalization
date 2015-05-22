@@ -1,3 +1,6 @@
+html, body {
+    font-size: 11pt;
+}
 body {
     overflow-x: hidden;
 }
@@ -240,6 +243,30 @@ h3 {
     font-size: 9pt;              
     color: red;                      
 }
+.resource-editor-button {   
+        z-index: 999999; 
+        color: white;        
+        background-color: DarkGreen;
+        opacity: 0.35;     
+        position: fixed;
+        bottom: 10px;
+        right: 20px;
+        padding: 7px 9px 5px 10px;        
+        border-radius: 50%;
+}
+.resource-editor-button.off {
+    background-color: #b64545;
+}
+.resource-editor-button:before{
+ font-family: fontawesome;
+        content: "\f024"; /* flag */
+        font-size: 14pt;
+}
+.resource-editor-button:hover {
+    font-family: fontawesome;
+    opacity: 0.65;
+}
+
 
 
 input.ng-invalid,textarea.ng-invalid,select.ng-invalid {

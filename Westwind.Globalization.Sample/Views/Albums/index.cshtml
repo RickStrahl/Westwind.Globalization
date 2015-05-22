@@ -39,10 +39,8 @@
 
     <title>West Wind Album Viewer</title>
 
-    <link href="~/localizationAdmin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    @*link href="~/LocalizationAdmin/css/bootstrap-theme.css" rel="stylesheet" />*@
+    <link href="~/localizationAdmin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>    
     <link href="~/LocalizationAdmin/bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
-
     <link href="~/css/albumviewer.css" rel="stylesheet"/>
     <link href="~/Views/Albums/index.css" rel="stylesheet"/>
 </head>
@@ -140,7 +138,7 @@
         globals = {
             baseUrl: "./",
             editResources: @(allowResourceEditing ? "true" : "false" )
-            };
+        };
 
         var $albumList = $("#albumslist");
         $albumList.on("click", ".album-container", function() {
@@ -184,6 +182,14 @@
                     ww.resourceEditor.removeResourceIcons();
             });
         </script>
+    <script>
+        ww.resourceEditor.showEditButton(
+            {
+                adminUrl: "./localizationAdmin/",
+                editorWindowOpenOptions: "height=600, width=900, left=30, top=30"
+            }
+        );
+    </script>
     }
 
 </body>

@@ -241,8 +241,6 @@
     <Content Include="LocalizationAdmin\bower_components\lodash\LICENSE.txt" />
     <Content Include="LocalizationAdmin\bower_components\lodash\lodash.js" />
     <Content Include="LocalizationAdmin\bower_components\lodash\lodash.min.js" />
-    <Content Include="LocalizationAdmin\css\bootstrap-theme.css" />
-    <Content Include="LocalizationAdmin\css\bootstrap-theme.min.css" />
     <Content Include="LocalizationAdmin\css\localizationAdmin.css" />
     <Content Include="LocalizationAdmin\favicon.ico" />
     <Content Include="LocalizationAdmin\images\Westwind.Localization_128.png" />
@@ -327,7 +325,6 @@
     <Content Include="LocalizationAdmin\bower_components\jquery\dist\jquery.min.map" />
     <Content Include="LocalizationAdmin\bower_components\lodash\.bower.json" />
     <Content Include="LocalizationAdmin\bower_components\lodash\bower.json" />
-    <Content Include="LocalizationAdmin\css\bootstrap-theme.css.map" />
     <Content Include="LocalizationAdmin\LocalizationService.ashx" />
     <None Include="ResourceTest.cshtml" />
     <Content Include="ResourceTest.aspx" />

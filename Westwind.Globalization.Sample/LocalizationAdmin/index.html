@@ -22,8 +22,7 @@
 
     <title>Localization Administration</title>
 
-    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <!--<link href="LocalizationAdministration/css/bootstrap-theme.css" rel="stylesheet"/>-->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>       
     <link href="bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
 
     <link href="css/localizationAdmin.css" rel="stylesheet"/>
@@ -61,17 +60,17 @@
                    ng-model="view.searchText"
                    style="border-radius: 0; margin: 0"
                    type="search" data-resource-id="SearchResources"
-                   accesskey="E"/>            
+                   accesskey="E"/>
         </div>
-        
-        
+
+
         <div class="form-group">
             <select id="ResourceIdList" ng-model="view.resourceId"
                     ng-change="view.onResourceIdChange(resource)"
                     size="2" class="form-control">
                 <option ng-repeat="resource in view.resourceList | filter:view.searchText"
                         value="{{resource.ResourceId}}"
-                        style="{{resource.Style}}">
+                        style=" {{resource.Style}}">
                     {{resource.ResourceId}}
                 </option>
             </select>
@@ -84,6 +83,8 @@
         <div ng-include src="'partials/ResourceSetList.html'"></div>
     </div>
 </div>
+
+<!--<div class="resource-editor-button" title="Enable/disable resource editing."></div>-->
 
 
 <div id="ErrorMessage" class="alert alert-{{view.error.cssClass}} alert-dismissable"
@@ -129,6 +130,15 @@
 <script src="app/createClassController.js"></script>
 
 <script src="scripts/ww.resourceEditor.js"></script>
+
+<script>    
+    ww.resourceEditor.showEditButton(
+        {
+            adminUrl: "./",
+            editorWindowOpenOptions: "height=600, width=900, left=30, top=30"
+        }
+    );
+</script>
 
 </body>
 </html>

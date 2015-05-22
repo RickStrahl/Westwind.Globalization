@@ -139,7 +139,12 @@ input.ng-invalid,textarea.ng-invalid,select.ng-invalid {
     }
 }
 
-
+.form-control-small {
+    margin-bottom: 3px;
+    border-radius: 4px;
+    padding: 4px;
+    border-color: silver;
+}
 .navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav > li > a {
    border-bottom: solid 2px transparent;
 }
@@ -184,7 +189,7 @@ input.ng-invalid,textarea.ng-invalid,select.ng-invalid {
     height: 13px;
     width: 13px;     
     text-decoration: none;
-    zIndex: 999999;
+    z-index: 999999;
     opacity: 0.35;
     margin: -14px 0 0 -2px;
     cursor: pointer;
@@ -198,7 +203,29 @@ input.ng-invalid,textarea.ng-invalid,select.ng-invalid {
         font-size: 9pt;
         color: red;        
 }
-
+.resource-editor-button {   
+        z-index: 999999;
+        color: white;        
+        background-color: DarkGreen;
+        opacity: 0.35;     
+        position: fixed;
+        bottom: 10px;
+        right: 20px;
+        padding: 7px 9px 5px 10px;        
+        border-radius: 50%;
+}
+.resource-editor-button.off {
+    background-color: #b64545;
+}
+.resource-editor-button:before{
+ font-family: fontawesome;
+        content: "\f024"; /* flag */
+        font-size: 14pt;
+}
+.resource-editor-button:hover {
+    font-family: fontawesome;
+    opacity: 0.65;
+}
 [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
