@@ -3,18 +3,18 @@
 (function () {
     if (typeof (ww) == 'undefined')
         ww = {};
-    var self = null;
+    var self = null;    
 
-    ww.resourceEditor = {
-        options: null,
-        showResourceIcons: function (options) {
+    ww.resourceEditor = self = {
+        options: {
+            adminUrl: "LocalizationAdmin/",
+            editorWindowOpenOptions: "height=600, width=900, left=30, top=30", // ""
+            editorWindowName: "_localization-resource-editor"            
+        },
+        showResourceIcons: function(options) {
             self.removeResourceIcons();
 
-            var opt = {
-                adminUrl: "LocalizationAdmin/",
-                editorWindowOpenOptions: "", // "height=600, width=900, left=30, top=30",
-                editorWindowName: "_localization-resource-editor"
-            };
+            var opt = self.options;
             $.extend(opt, options);
             self.options = opt;
 
@@ -22,9 +22,9 @@
             if (set.length < 1) {
                 console.log("resourceEditor: No 'data-resource-set' attribute defined");
                 return;
-            }            
+            }
 
-            var $els = $("[data-resource-id");
+            var $els = $("[data-resource-id]");
             if ($els.length < 1) {
                 console.log("resourceEditor: No 'data-resource-id' attributes found");
                 return;
@@ -32,36 +32,37 @@
 
             $els.each(function() {
                 var $el = $(this);
-                var resId = $el.data("resource-id");      
+                var resId = $el.data("resource-id");
                 var pos = $el.position();
-                
+
                 var $new = $("<res-edit>")
                     .addClass("resource-editor-icon")
                     .css(pos)
-                    .data("resource-element",this) // store actual base element
-                    .attr("target", "resourceEditor")
+                    .data("resource-element", this) // store actual base element                    
                     .attr("title", "Edit resource: " + resId)
                     .click(self.showEditorForm);
-    
+
                 $new.insertBefore($el);
 
             });
 
-            $(window).resize(function() {
-                ww.resourceEditor.removeResourceIcons();
-                ww.resourceEditor.showResourceIcons(options);
-            });
+            $(window).bind("resize.resize_ww_resourceeditor",
+                function() {
+                    ww.resourceEditor.removeResourceIcons();
+                    ww.resourceEditor.showResourceIcons(options);
+                });
         },
-        removeResourceIcons: function() {
+        removeResourceIcons: function () {
+            $(window).unbind("resize.resize_ww_resourceeditor");
             $(".resource-editor-icon").remove();
         },
         isResourceEditingEnabled: function() {
             if ($(".resource-editor-icon").length > 0)
                 return true;
+
             return false;
         },
-        showEditorForm: function (e) {
-
+        showEditorForm: function(e) {
             e.preventDefault();
 
             var $el = $($(this).data("resource-element"));
@@ -78,27 +79,39 @@
                 if ($resSets.length > 0)
                     resSet = $resSets.eq(0).data("resource-set");
             }
-            
+
             window.open(self.options.adminUrl + "?ResourceSet=" + encodeURIComponent(resSet) +
-                    "&ResourceId=" + encodeURIComponent(resId) +
-                    "&Content=" + encodeURIComponent(content),
-                    self.options.editorWindowName, self.options.editorWindowOpenOptions);
+                "&ResourceId=" + encodeURIComponent(resId) +
+                "&Content=" + encodeURIComponent(content),
+                self.options.editorWindowName, self.options.editorWindowOpenOptions);
+        },
+        editButtonState: false,
+        showEditButton: function (options) {
+            var opt = self.options;
+            $.extend(opt, options);
+            
+            var $el = $("<resource-editor-button></resource-editor-button>")
+                .addClass("resource-editor-button")
+                .addClass("off")
+                .attr("title","Enable or disable Resource Editing")
+                .click(function () {
+                    console.log("click fired.");
+                    self.editButtonState = !self.editButtonState;
+                    if (self.editButtonState) {
+                        self.showResourceIcons(opt);
+                        $el.removeClass("off");
+                    } else {
+                        self.removeResourceIcons();
+                        $el.addClass("off");
+                    }
+
+                })
+                .appendTo("body");                        
         }
-
-
     };
 
     self = ww.resourceEditor;
 })();
 
-(function() {
-    if (typeof (ww) == 'undefined')
-        ww = {};
-    var self = null;
-    ww.resourceEditorControl = {
-        
-    };
 
-    self = ww.resourceEditorControl;
-})();
     

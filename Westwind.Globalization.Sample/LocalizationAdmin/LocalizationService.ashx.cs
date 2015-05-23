@@ -567,6 +567,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             TextFile = item.TextFile;
             BinFile = item.BinFile;
             Comment = item.Comment;
+            ValueType = item.ValueType;            
         }
 
         public bool IsRtl

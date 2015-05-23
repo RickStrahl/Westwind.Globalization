@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebFormDbResourceControlSample.aspx.cs" Inherits="Westwind.Globalization.Sample.WebFormDbResourceControlSample" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebFormDbResourceControlSample.aspx.cs"
+    Inherits="Westwind.Globalization.Sample.WebFormDbResourceControlSample" %>
 
 <%@ Register Assembly="Westwind.Globalization.Web" Namespace="Westwind.Globalization"
     TagPrefix="loc" %>
@@ -43,85 +44,80 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        
-        
-            <div class="banner">
-        <div id="TitleBar">
-            <a href="./">
-                <img src="localizationAdmin/images/Westwind.Localization_128.png"
-                    style="height: 35px; float: left" />
-                <div style="float: left; margin-left: 5px; line-height: 1.2">
-                    <i style="color: steelblue; font-size: 0.8em; font-weight: bold;">West Wind Globalization</i><br />
-                    <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;">WebForms DbResourceManager
-                        Test</i>
-                </div>
-            </a>
-        </div>
-    </div>
 
-    <nav class="menubar " style="background: #727272;">
-        <ul id="MenuButtons" class="nav navbar-nav pull-right navbar">
-            <li>
-                <a href="localizationAdmin/">
-                    <i class="fa fa-gears"></i> Resource Editor
-                </a>                
-            </li>        
-            <li>
-                <a href="resourcetest.aspx">
-                    <i class="fa fa-check-circle"></i> WebForms Test Page
-                </a>
-            </li>       
-            <li>
+
+        <div class="banner">
+            <div id="TitleBar">
                 <a href="./">
-                    <i class="fa fa-home"></i>
+                    <img src="localizationAdmin/images/Westwind.Localization_128.png"
+                        style="height: 35px; float: left" />
+                    <div style="float: left; margin-left: 5px; line-height: 1.2">
+                        <i style="color: steelblue; font-size: 0.8em; font-weight: bold;">West Wind Globalization</i><br />
+                        <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;">WebForms DbResourceManager
+                            Test</i>
+                    </div>
                 </a>
-            </li> 
-        </ul>
-        <div class="clearfix"></div>
-    </nav>  
-        
-    <div class="alert alert-info">
-        <i class="fa fa-info-circle fa-3x" style="float: left; margin: 0 10px 10px 0"></i>
-        <asp:Localize runat="server" ID="lblNotice"  meta:resourcekey="lblNotice">
-        </asp:Localize>
-    </div>
-        
-        
+            </div>
+        </div>
+
+        <nav class="menubar " style="background: #727272;">
+            <ul id="MenuButtons" class="nav navbar-nav pull-right navbar">
+                <li>
+                    <a href="localizationAdmin/">
+                        <i class="fa fa-gears"></i>Resource Editor
+                    </a>
+                </li>
+                <li>
+                    <a href="resourcetest.aspx">
+                        <i class="fa fa-check-circle"></i>WebForms Test Page
+                    </a>
+                </li>
+                <li>
+                    <a href="./">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </nav>
+
+        <div class="alert alert-info">
+            <i class="fa fa-info-circle fa-3x" style="float: left; margin: 0 10px 10px 0"></i>
+            <asp:Localize runat="server" ID="lblNotice" meta:resourcekey="lblNotice">                
+                This page uses the DbResourceControl to automatically add resource editing links to any ASP.NET controls. Click the Resource Edit button to see the resource edit icons pop up. Any control added to the page, automatically gets resource editing links.
+            </asp:Localize>
+        </div>
 
 
         <div class="container" style="margin-top: 30px;">
             <div class="form-group">
                 <label class="control-label" for="form-group-input">
-                    <asp:Label runat="server" ID="lblName" Text="Name"  meta:resourcekey="lblName" /></label>
+                    <asp:Label runat="server" ID="lblName" Text="Name" meta:resourcekey="lblName" /></label>
                 <asp:TextBox runat="server" ID="txtName" Text="" class="form-control" />
             </div>
 
             <div class="form-group">
                 <label class="control-label" for="form-group-input">
-                    <asp:Label runat="server" ID="lblCompany" Text="Company" meta:resourcekey="lblCompany"/></label>
+                    <asp:Label runat="server" ID="lblCompany" Text="Company" meta:resourcekey="lblCompany" /></label>
                 <asp:TextBox runat="server" ID="txtCompany" Text="" class="form-control" />
             </div>
-            
-            
+
             <div class="well-sm well">
                 <asp:Button runat="server" ID="btnSumbit" Text="Save" CssClass="btn btn-primary" />
             </div>
-
         </div>
-    
-    <script src="LocalizationAdmin/bower_components/jquery/dist/jquery.min.js"></script>
+
+        <loc:DbResourceControl ID="DbResourceControl1" runat="server" EnableResourceLinking="true" />
+
+        <script src="LocalizationAdmin/bower_components/jquery/dist/jquery.min.js"></script>
         <script src="LocalizationAdmin/scripts/ww.resourceEditor.js"></script>
-<script>    
-    ww.resourceEditor.showEditButton(
-        {
-            adminUrl: "./localizationAdmin"            
-        }
-    );
-</script>
-
-
-            <loc:DbResourceControl ID="DbResourceControl1" runat="server"  EnableResourceLinking="true"/>
-
+        <script>
+            ww.resourceEditor.showEditButton(
+                {
+                    adminUrl: "./localizationAdmin"
+                }
+            );
+        </script>
 
     </form>
 </body>

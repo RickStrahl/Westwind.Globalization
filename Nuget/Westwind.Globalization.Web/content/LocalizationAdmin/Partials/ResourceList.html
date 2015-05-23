@@ -22,6 +22,7 @@
                           ng-focus="view.onLocaleIdChanged(resource)"
                           data-localeid="{{resource.LocaleId}}"
                           ng-model="resource.Value"
+                          dir="{{resource.IsRtl ? 'rtl' : '' }}"
                           ng-dblclick="view.onResourceFullscreenEdit($event, resource, resourceForm)"
                           ng-keydown="view.onResourceKeyDown($event,resource,resourceForm)">                    
                 </textarea>
