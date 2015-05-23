@@ -77,7 +77,7 @@
       <value>Description</value>
    </data>
    <data name="ArtistName" xml:space="preserve">
-      <value>Band Name</value>
+      <value>Band Name!!!</value>
    </data>
    <data name="MoreFrom" xml:space="preserve">
       <value>More From</value>
@@ -93,6 +93,9 @@
    </data>
    <data name="AlbumViewer" xml:space="preserve">
       <value>AlbumViewer</value>
+   </data>
+   <data name="Buy" xml:space="preserve">
+      <value>Buy</value>
    </data>
    <data name="Show" xml:space="preserve">
       <value>Show</value>

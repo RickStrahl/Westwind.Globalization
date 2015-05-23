@@ -425,6 +425,25 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             return true;
         }
 
+
+        [CallbackMethod]
+        public bool IsRtl(string localeId)
+        {
+            try
+            {
+                var li = localeId;
+                if (string.IsNullOrEmpty(localeId))
+                    li = CultureInfo.InstalledUICulture.IetfLanguageTag;
+
+                var ci = CultureInfo.GetCultureInfoByIetfLanguageTag(localeId);
+                return ci.TextInfo.IsRightToLeft;
+            }
+            catch {}
+
+            return false;
+        }
+
+
         [CallbackMethod]
         public bool CreateClass(string filename = null, string nameSpace = null)
         {

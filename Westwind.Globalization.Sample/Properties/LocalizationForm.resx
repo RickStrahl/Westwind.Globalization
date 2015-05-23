@@ -280,19 +280,22 @@
    <data name="Translation" xml:space="preserve">
       <value>Translation</value>
    </data>
-   <data name="Use" xml:space="preserve">
-      <value>Use</value>
-   </data>
    <data name="To" xml:space="preserve">
       <value>To</value>
    </data>
    <data name="From" xml:space="preserve">
       <value>From</value>
    </data>
+   <data name="Use" xml:space="preserve">
+      <value>Use</value>
+   </data>
    <data name="Translate" xml:space="preserve">
       <value>Translate</value>
    </data>
    <data name="TextToTranslate" xml:space="preserve">
       <value>Text to translate</value>
+   </data>
+   <data name="FeatureNotSupported" xml:space="preserve">
+      <value>This feature is not supported in this live online demo application.</value>
    </data>
 </root>

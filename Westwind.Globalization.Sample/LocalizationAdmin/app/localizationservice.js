@@ -29,6 +29,7 @@
             deleteResourceSet: deleteResourceSet,
             renameResourceSet: renameResourceSet,
             reloadResources: reloadResources,
+            isRtl: isRtl,
             backup: backup,
             createTable: createTable,
             createClass: createClass,
@@ -175,7 +176,10 @@
             return $http.get("localizationService.ashx?method=GetLocalizationInfo")
                     .error(parseHttpError);
         }
-
+        function isRtl(localeId) {
+            return $http.get("localizationService.ashx?method=IsRtl&localeId=" + localeId)
+                .error(parseHttpError);
+        }
         function parseHttpError() {
             service.error = ww.angular.parseHttpError(arguments);
         }

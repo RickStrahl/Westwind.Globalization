@@ -58,14 +58,17 @@
    <resheader name="writer">
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
-   <data name="YearReleased" xml:space="preserve">
-      <value>Erscheinungsjahr</value>
-   </data>
    <data name="AddSong" xml:space="preserve">
       <value>Song hinzufügen</value>
    </data>
+   <data name="YearReleased" xml:space="preserve">
+      <value>Erscheinungsjahr</value>
+   </data>
    <data name="By" xml:space="preserve">
       <value>von</value>
+   </data>
+   <data name="Buy" xml:space="preserve">
+      <value>Kaufen</value>
    </data>
    <data name="AlbumViewer" xml:space="preserve">
       <value>AlbenViewer</value>

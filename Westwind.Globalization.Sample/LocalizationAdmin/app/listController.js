@@ -231,8 +231,17 @@
            if (!vm.activeResource.Value)
                vm.activeResource.Value = vm.activeResource.ResourceId;
 
-       }
-       vm.onAddResourceClick = function(resourceId,resourceSet,content) {
+       },
+            vm.onLocaleIdBlur = function(localeId) {
+                    if (!localeId)
+                        localeId = vm.activeResource.LocaleId;
+
+                    localizationService.isRtl(localeId)
+                        .success(function(isRtl) {
+                            vm.activeResource.IsRtl = isRtl;
+                        });
+                },
+            vm.onAddResourceClick = function(resourceId,resourceSet,content) {
            
            if (!resourceId) {
                if (vm.activeResource)
