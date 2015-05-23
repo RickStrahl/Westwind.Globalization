@@ -68,16 +68,17 @@
 <script>
     jQuery.fn.fullScreenEditor = function fullScreenEditor(action, options) {
         if (typeof action === "object") {
-            options = action;
+            options = action;           
             action = '';
         }
 
-        var opt = $.extend({
+        var opt = $.extend({            
             onSave: null,
             onClose: null,
             onCancel: null,
             onPreview: null,
-            value: null
+            value: null,
+            rtl: false
         }, options);
 
         var $editor = $("#resource-editor");
@@ -98,6 +99,11 @@
         }
         if (action === "show") {
             $textbox.val(opt.value);
+
+            if (opt.rtl)
+                $textbox.attr("dir", "rtl");
+            else
+                $textbox.attr("dir", "ltr");
 
             $editor.removeClass("editor-hidden");
             setTimeout(resizeEditWindow, 100);

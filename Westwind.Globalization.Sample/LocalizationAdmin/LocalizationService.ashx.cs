@@ -118,17 +118,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
                 var item = new ResourceItemEx(items[i]);
                 item.BinFile = null;
                 item.TextFile = null;
-
-                var li = item.LocaleId;
-                if (string.IsNullOrEmpty(item.LocaleId))
-                    li = CultureInfo.InstalledUICulture.IetfLanguageTag;                
-                try
-                {
-                    var ci = CultureInfo.GetCultureInfoByIetfLanguageTag(item.LocaleId);
-                    item.IsRtl = ci.TextInfo.IsRightToLeft;                    
-                }
-                catch
-                { }                
+             
 
                 itemList.Add(item);
             }
@@ -148,7 +138,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
                 throw new ArgumentException(Manager.ErrorMessage);
 
             var itemEx = new ResourceItemEx(item);
-            itemEx.ResourceList = GetResourceStrings(resourceId, resourceSet).ToList();
+            itemEx.ResourceList = GetResourceStrings(resourceId, resourceSet).ToList();                                    
 
             return itemEx;
         }
@@ -579,7 +569,36 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             Comment = item.Comment;
         }
 
-        public bool IsRtl { get; set; }
+        public bool IsRtl
+        {
+            get
+            {
+                if (_isRtl != null)
+                    return _isRtl.Value;
+
+                _isRtl = false;
+                try
+                {
+                    var li = LocaleId;
+                    if (string.IsNullOrEmpty(LocaleId))
+                        li = CultureInfo.InstalledUICulture.IetfLanguageTag;
+                    
+                    var ci = CultureInfo.GetCultureInfoByIetfLanguageTag(LocaleId);
+                       _isRtl = ci.TextInfo.IsRightToLeft;
+                    
+                    return _isRtl.Value;
+                }
+                catch { }
+
+                return _isRtl.Value;
+            }
+            set
+            {
+                _isRtl = value;
+            }
+        }
+        private bool? _isRtl;
+
         public List<ResourceString> ResourceList { get; set; }
         
     }

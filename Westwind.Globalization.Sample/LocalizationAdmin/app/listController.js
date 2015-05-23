@@ -45,6 +45,7 @@
                     "Comment": null,
                     "Type": "",
                     "LocaleId": "",
+                    "IsRtl": false,
                     "ResourceSet": "",
                     "TextFile": null,
                     "BinFile": null,
@@ -168,6 +169,7 @@
 
             $("#resource-editor").fullScreenEditor('show', {
                 value: resource.Value,
+                rtl: resource.IsRtl,
                 onSave: function (value) {
                     var $el = $("textarea[data-localeid='" + resource.LocaleId + "'");
                     var id = $el.prop("id");
