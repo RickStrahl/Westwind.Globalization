@@ -65,13 +65,7 @@
                 </a>
                 <a href="~/artists">
                     <img src="~/images/AlbumViewer/artists32.png" title="Artists" /> <span> <span data-resource-id="Artists"> @AlbumViewerResources.Artists</span></span>
-                </a>
-                @if (allowResourceEditing)
-                {
-                    <a id="btnEditResources" href="#">
-                        <i class="fa fa-flag" data-resource-id="EditResources" title="@AlbumViewerResources.EditResources"> </i> @AlbumViewerResources.EditResources
-                    </a>
-                }
+                </a>               
             </nav>
         </div>
 
@@ -165,32 +159,23 @@
         });
     </script>
 
-    <!-- Enable resource editing -->
-    @if (allowResourceEditing)
-    {
-        <script src="~/localizationAdmin/scripts/ww.resourceEditor.js"></script>
-        <script>
-            var toggleEditMode = false;
-            $("#btnEditResources").click(function() {
-                toggleEditMode = !toggleEditMode;
-                if (toggleEditMode)
-                    ww.resourceEditor.showResourceIcons({
-                        adminUrl: "./localizationAdmin/",
-                        editorWindowOpenOptions: "height=600, width=900, left=30, top=30"
-                    });
-                else
-                    ww.resourceEditor.removeResourceIcons();
-            });
-        </script>
+
+<!-- Enable resource editing -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" type="text/javascript"></script>
+@if (allowResourceEditing)
+{
+    <script src="~/localizationAdmin/scripts/ww.resourceEditor.js"></script>
     <script>
-        ww.resourceEditor.showEditButton(
-            {
-                adminUrl: "./localizationAdmin/",
+        var basePath = "@Url.Content("~/localizationAdmin")";
+
+        // enable resource editing - button on bottom right
+        ww.resourceEditor.showEditButton({
+                adminUrl: basePath,
                 editorWindowOpenOptions: "height=600, width=900, left=30, top=30"
             }
         );
     </script>
-    }
+}
 
 </body>
 </html>

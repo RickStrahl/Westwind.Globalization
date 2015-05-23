@@ -70,7 +70,7 @@
                     size="2" class="form-control">
                 <option ng-repeat="resource in view.resourceList | filter:view.searchText"
                         value="{{resource.ResourceId}}"
-                        style=" {{resource.Style}}">
+                        style="{{resource.Style}}">
                     {{resource.ResourceId}}
                 </option>
             </select>
@@ -139,6 +139,7 @@
         }
     );
 </script>
+
 
 </body>
 </html>

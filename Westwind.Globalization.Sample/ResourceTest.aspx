@@ -170,7 +170,7 @@
             </span>
 			
             <label>Meta Tag (meta:resourcekey= lblHelloWorldLabel.Text):</label>
-            <asp:Label ID="lblHelloLabel" runat="server" meta:resourcekey="lblHelloWorldLabel"></asp:Label>
+            <asp:Label ID="lblHelloLabel" runat="server" meta:resourcekey="lblHelloWorldLabel"></asp:Label>            
 
             <label>Resource Expressions (Global Resources):</label>
             <asp:Label ID="Label1" runat="server" Text="<%$ Resources:Resources,HelloWorld %>"></asp:Label>
@@ -181,8 +181,10 @@
         <div class="container">
             <h3>Strongly Typed Resource (generated)</h3>
 
-            <label>Strongly typed Resource Generated from Db (uses ASP.NET ResourceProvider)</label>
-            <%= Resources.HelloWorld %>      
+            <label data-resource-id="StronglyTypedDbResource">Strongly typed Resource Generated from Db (uses ASP.NET ResourceProvider)</label>
+            <span data-resource-id="HelloWorld">
+                <%= Resources.HelloWorld %>      
+            </span>
                                          
 			
             <label>Strongly typed image resource:</label>

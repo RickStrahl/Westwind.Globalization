@@ -153,6 +153,13 @@
     </Compile>
     <Compile Include="Models\ViewModelWithLocalizedAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebFormDbResourceControlSample.aspx.cs">
+      <DependentUpon>WebFormDbResourceControlSample.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebFormDbResourceControlSample.aspx.designer.cs">
+      <DependentUpon>WebFormDbResourceControlSample.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -290,6 +297,7 @@
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\ww.jquery.js" />
     <Content Include="Scripts\ww.jquery.min.js" />
+    <Content Include="WebFormDbResourceControlSample.aspx" />
     <Content Include="_readme.Westwind.Globalization.html" />
     <Content Include="LocalizationAdmin\scripts\ww.jquery.min.js.map">
       <DependentUpon>ww.jquery.min.js</DependentUpon>
@@ -341,8 +349,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\ModelAttributesFromResources.cshtml" />
     <Content Include="Views\Albums\index.css">

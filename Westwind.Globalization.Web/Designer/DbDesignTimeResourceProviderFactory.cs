@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel.Design;
 using System.Globalization;
@@ -133,8 +134,15 @@ namespace Westwind.Globalization
                 string resourceSet = GetFullPagePath();
                 
                 // Load IDictionary data using the DataManager (same code as provider)
-                var manager = DbResourceDataManager.CreateDbResourceDataManager();                
-                _reader = manager.GetResourceSet("", resourceSet);
+                var manager = DbResourceDataManager.CreateDbResourceDataManager();
+                try
+                {
+                    _reader = manager.GetResourceSet("", resourceSet);
+                }
+                catch
+                {
+                    _reader = new Dictionary<string, object>();
+                }
             }
 
             private void Flush()

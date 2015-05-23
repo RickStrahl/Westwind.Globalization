@@ -226,6 +226,7 @@ input.ng-invalid,textarea.ng-invalid,select.ng-invalid {
     font-family: fontawesome;
     opacity: 0.65;
 }
+
 [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }

@@ -3,8 +3,7 @@
 (function () {
     if (typeof (ww) == 'undefined')
         ww = {};
-    var self = null;
-    var re
+    var self = null;    
 
     ww.resourceEditor = self = {
         options: {
@@ -39,8 +38,7 @@
                 var $new = $("<res-edit>")
                     .addClass("resource-editor-icon")
                     .css(pos)
-                    .data("resource-element", this) // store actual base element
-                    .attr("target", "resourceEditor")
+                    .data("resource-element", this) // store actual base element                    
                     .attr("title", "Edit resource: " + resId)
                     .click(self.showEditorForm);
 
@@ -115,14 +113,5 @@
     self = ww.resourceEditor;
 })();
 
-(function() {
-    if (typeof (ww) == 'undefined')
-        ww = {};
-    var self = null;
-    ww.resourceEditorControl = {
-        
-    };
 
-    self = ww.resourceEditorControl;
-})();
     
