@@ -97,7 +97,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         }
 
         [CallbackMethod()]
-        public IEnumerable<ResourceItem> GetResourceItems(dynamic parm)
+        public IEnumerable<ResourceItemEx> GetResourceItems(dynamic parm)
         {
             string resourceId = parm.ResourceId;
             string resourceSet = parm.ResourceSet;
@@ -110,15 +110,30 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
                 return null;
             }
 
+            var itemList = new List<ResourceItemEx>();
+
             // strip file data for size
             for (int i = 0; i < items.Count; i++)
             {
-                var item = items[i];
+                var item = new ResourceItemEx(items[i]);
                 item.BinFile = null;
                 item.TextFile = null;
+
+                var li = item.LocaleId;
+                if (string.IsNullOrEmpty(item.LocaleId))
+                    li = CultureInfo.InstalledUICulture.IetfLanguageTag;                
+                try
+                {
+                    var ci = CultureInfo.GetCultureInfoByIetfLanguageTag(item.LocaleId);
+                    item.IsRtl = ci.TextInfo.IsRightToLeft;                    
+                }
+                catch
+                { }                
+
+                itemList.Add(item);
             }
 
-            return items;
+            return itemList;
         }
 
         [CallbackMethod()]
@@ -564,7 +579,9 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             Comment = item.Comment;
         }
 
+        public bool IsRtl { get; set; }
         public List<ResourceString> ResourceList { get; set; }
+        
     }
 }
 

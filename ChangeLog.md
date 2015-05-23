@@ -9,12 +9,20 @@ You can indicate that you would like text resources to be automatically parsed a
 * **Full screen Resource Editor**<br/>
 You can now double click the resource editing field to display a full screen editor that provides more room for editing larger content. Works especially well when editing Markdown content.
 
+* **[Simplified Resource Linking Activation via pre-configured Icon](https://github.com/RickStrahl/Westwind.Globalization/wiki/Interactive-Resource-Editing#resource-editing-toggle-button)**<br/>
+You can now more easily add resource linking to any page that uses the `data-resource-id` resource linking features. Using `ww.resourceEditor.showEditButton()` is now a one liner that displays a clickable icon that toggles the edit mode. 
+
+* **Support for Right To Left Languages in Resource Editor**<br/>
+Individual resources displayed in the resource edit textarea now reflect the RTL setting of the language specified. So if you have a resource in Hebrew or Arabic for example, the edit box will let you type using RTL now.
+
 * **[Improved Resource Caching for JavaScript Resources](https://github.com/RickStrahl/Westwind.Globalization/wiki/JavaScript-Resource-Handler---Serve-JavaScript-Resources-from-the-Server)**<br/>
 Refactored code in the  resource HttpHandler that serves JavaScript resources. The query string based interface now supports ASP.NET ResourceProvider, .NET ResourceManager and Resx resources for serving server resources to JavaScript.
 
 * **AlbumViewer MVC Localization Sample**<br/>
 Added a small ASP.NET MVC application that demonstrates resource usage in the user interface.  
 
+* **Fix WebForms Designer Issue with Meta-Resource Attributes**
+Fix bug that caused controls to not render on the design time surface due to an error with designtime loading of database resources.
 
 ### Version 2.0 Beta6
 <small>May 10th, 2014</small><br/>
