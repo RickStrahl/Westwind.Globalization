@@ -642,5 +642,51 @@
             Other custom resource providers are not supported.
             </summary>
         </member>
+        <member name="T:Westwind.Globalization.Web.Administration.LocalizationService">
+            <summary>
+            Localization form Admin service that provides JSON data for 
+            the admin interface.
+            </summary>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.GetResourceStrings(System.String,System.String)">
+            <summary>
+            Gets all resources for a given ResourceId for all cultures from
+            a resource set.
+            </summary>
+            <param name="resourceId"></param>
+            <param name="resourceSet"></param>
+            <returns>Returns an array of Key/Value objects to the client</returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.UpdateResource(Westwind.Globalization.ResourceItem)">
+            <summary>
+            Updates or Adds a resource if it doesn't exist
+            </summary>
+            <param name="resource"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.RenameResource(System.Object)">
+            <summary>
+            Renames a resource key to a new name.
+            
+            Requires a JSON object with the following properties:
+            {
+            }
+            
+            
+            </summary>
+            <param name="parms"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.RenameResourceProperty(System.String,System.String,System.String)">
+            <summary>
+            Renames all resource keys that match a property (ie. lblName.Text, lblName.ToolTip)
+            at once. This is useful if you decide to rename a meta:resourcekey in the ASP.NET
+            markup.
+            </summary>
+            <param name="Property">Original property prefix</param>
+            <param name="NewProperty">New Property prefix</param>
+            <param name="ResourceSet">The resourceset it applies to</param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

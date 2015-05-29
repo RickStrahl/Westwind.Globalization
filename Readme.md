@@ -230,18 +230,6 @@ The base folder that's used for all Resx Import and Export operations. The defau
 **StronglyTypeGlobalResource and ResourceBaseNamespace**<br/>
 If you do a strongly typed class export from the admin manager all resources will be created in a single file in the this file using the ResourceBaseNameSpace as the namespace in the generated class.
 
-#### Configuration File Overrides
-The default configuration format using .NET .config flies is shown above. If your application/web account has rights to write to the .config file, the configuration information is created automatically the first time you start up the application (except the `<globalization>` section. These config section has standard .NET behavior with auto-restarting on change in web.config.
-
-Configuration information can also be stored in plain Json or Xml files by explicitly setting the configuration provider during startup (in Application_Load or during app startup code):
-
-```C#
-DbResourceConfiguration.ConfigurationMode = ConfigurationModes.JsonFile;
-//DbResourceConfiguration.ConfigurationMode = ConfigurationModes.XmlFile;
-```
-
-These files are external and do not automatically cause an app restart. 
-
 
 #### Run the Web Resource Editor
 In order to use database resources you'll actually have to create some resources in a database. Make sure you've first added a valid connection string in the config file in the last step! Then open the `/LocalizationAdmin/` in your browser and click on the *Create Table* button in the toolbar.
@@ -252,15 +240,9 @@ data programmatically.
 
 By default a `Resources` ResourceSet has been provided for you the resources of which are used in the test page. You can remove those resources or the resource set as needed once you know the provider works. ResourceSets are logical groups of resources that belong together - I like to use one ResourceSet per form or per application feature depending on how much content is involved. But you can also use a single ResourceSet for your entire application if you want. Whatever works for you to make it easy to find resources.
 
+#### Import Existing Resources
 I also recommend that you first perform an *Import Resx* step to pull any existing Resx resources in your project into the application. This will also import the Localization form's resources into your database so that the localization form properly localizes.  
- 
-Note that you can use the Search feature on the Admin form to quickly locate resources in the selected ResourceSet by name. Just type in a few letters of the resource name and you should get a list matching the entered values which makes it easy to locate resources.
 
-Note if you're using WebForms, ASP.NET uses the concept of global and remote resources. The resource editor will treat any ResourceSets that have a 'file extension' like .aspx as a local resource. To match local resources mapped to an ASPX page use (Path)/Page.aspx. Path can be blank in which case you don't specify a leading slash. For example the localization admin page local resources live in a ResourceSet named: 
-
-LocalizationForm
-
-Once you have the form up and running add some resources to your pages.
 
 ## Setting ASP.NET Locale based on Browser Locale
 In order to do automatic localization based on a browser's language used you can

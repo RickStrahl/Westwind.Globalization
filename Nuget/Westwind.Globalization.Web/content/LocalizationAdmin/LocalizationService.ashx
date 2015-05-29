@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="LocalizationService.ashx.cs" Class="Westwind.Globalization.Sample.LocalizationAdministration.LocalizationService" %>
+﻿<%@ WebHandler Language="C#"   Class="Westwind.Globalization.Web.Administration.LocalizationService" %>

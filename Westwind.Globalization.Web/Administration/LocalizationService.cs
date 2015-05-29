@@ -10,7 +10,7 @@ using Westwind.Utilities;
 using Westwind.Web;
 using Westwind.Web.JsonSerializers;
 
-namespace Westwind.Globalization.Sample.LocalizationAdministration
+namespace Westwind.Globalization.Web.Administration
 {
     /// <summary>
     /// Localization form Admin service that provides JSON data for 
@@ -53,7 +53,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
 
         [CallbackMethod]
         public IEnumerable<string> GetResourceSets()
-        {            
+        {
             return Manager.GetAllResourceSets(ResourceListingTypes.AllResources);
         }
 
@@ -74,7 +74,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
                 string language = "Invariant";
                 if (!string.IsNullOrEmpty(localeId))
                     language = ci.DisplayName + " (" + ci.Name + ")";
-                list.Add(new {LocaleId = localeId, Name = language});
+                list.Add(new { LocaleId = localeId, Name = language });
             }
 
             return list;
@@ -135,7 +135,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
                 throw new ArgumentException(Manager.ErrorMessage);
 
             var itemEx = new ResourceItemEx(item);
-            itemEx.ResourceList = GetResourceStrings(resourceId, resourceSet).ToList();                                    
+            itemEx.ResourceList = GetResourceStrings(resourceId, resourceSet).ToList();
 
             return itemEx;
         }
@@ -170,10 +170,11 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             string resourceId = parm.resourceId;
             string resourceSet = parm.resourceSet;
             string localeId = parm.localeId;
-            
-            var item = Manager.GetResourceItem(resourceId,resourceSet,localeId);
+
+            var item = Manager.GetResourceItem(resourceId, resourceSet, localeId);
             if (item == null)
-            {    item = new ResourceItem()
+            {
+                item = new ResourceItem()
                 {
                     ResourceId = resourceId,
                     LocaleId = localeId,
@@ -234,18 +235,18 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
 
             if (string.IsNullOrEmpty(resourceId) || string.IsNullOrEmpty(resourceSet))
                 throw new ApplicationException("Resourceset or ResourceId are not provided for upload.");
-            
-             var item = Manager.GetResourceItem(resourceId, resourceSet, localeId);
-                if (item == null)
+
+            var item = Manager.GetResourceItem(resourceId, resourceSet, localeId);
+            if (item == null)
+            {
+                item = new ResourceItem()
                 {
-                    item = new ResourceItem()
-                    {
-                        ResourceId = resourceId,
-                        ResourceSet = resourceSet,
-                        LocaleId = localeId,
-                        ValueType = (int)ValueTypes.Binary
-                    };
-                }
+                    ResourceId = resourceId,
+                    ResourceSet = resourceSet,
+                    LocaleId = localeId,
+                    ValueType = (int)ValueTypes.Binary
+                };
+            }
 
             using (var ms = new MemoryStream())
             {
@@ -262,7 +263,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             return true;
         }
 
-    
+
 
         [CallbackMethod]
         public bool DeleteResource(dynamic parm)
@@ -332,7 +333,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         public bool RenameResourceProperty(string Property, string NewProperty, string ResourceSet)
         {
             if (!Manager.RenameResourceProperty(Property, NewProperty, ResourceSet))
-                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET,"InvalidResourceId"));
+                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "InvalidResourceId"));
 
             return true;
         }
@@ -435,7 +436,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
                 var ci = CultureInfo.GetCultureInfoByIetfLanguageTag(localeId);
                 return ci.TextInfo.IsRightToLeft;
             }
-            catch {}
+            catch { }
 
             return false;
         }
@@ -444,9 +445,9 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         [CallbackMethod]
         public bool CreateClass(string filename = null, string nameSpace = null)
         {
-        #if OnlineDemo
+#if OnlineDemo
             throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
-        #endif
+#endif
             var config = DbResourceConfiguration.Current;
 
             StronglyTypedResources strongTypes =
@@ -459,7 +460,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
                 nameSpace = config.ResourceBaseNamespace;
 
             strongTypes.CreateClassFromAllDatabaseResources(nameSpace, filename);
-            
+
             if (!string.IsNullOrEmpty(strongTypes.ErrorMessage))
                 throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "StronglyTypedGlobalResourcesFailed"));
 
@@ -474,7 +475,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
 #endif
             if (string.IsNullOrEmpty(outputBasePath))
                 outputBasePath = DbResourceConfiguration.Current.ResxBaseFolder;
-            else if(outputBasePath.StartsWith("~"))
+            else if (outputBasePath.StartsWith("~"))
                 outputBasePath = Context.Server.MapPath(outputBasePath);
 
             outputBasePath = outputBasePath.Replace("/", "\\").Replace("\\\\", "\\");
@@ -536,11 +537,11 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
 
             // Get the section related object.
             GlobalizationSection configSection =
-                (GlobalizationSection) webConfig.GetSection("system.web/globalization");
+                (GlobalizationSection)webConfig.GetSection("system.web/globalization");
 
             string providerFactory = configSection.ResourceProviderFactoryType;
             if (string.IsNullOrEmpty(providerFactory))
-                providerFactory = WebUtils.GRes(STR_RESOURCESET,"NoProviderConfigured");
+                providerFactory = WebUtils.GRes(STR_RESOURCESET, "NoProviderConfigured");
 
             var config = DbResourceConfiguration.Current;
 
@@ -557,7 +558,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             };
         }
 
-        
+
     }
 
     public class ResourceString
@@ -583,7 +584,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             TextFile = item.TextFile;
             BinFile = item.BinFile;
             Comment = item.Comment;
-            ValueType = item.ValueType;            
+            ValueType = item.ValueType;
         }
 
         public bool IsRtl
@@ -599,10 +600,10 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
                     var li = LocaleId;
                     if (string.IsNullOrEmpty(LocaleId))
                         li = CultureInfo.InstalledUICulture.IetfLanguageTag;
-                    
+
                     var ci = CultureInfo.GetCultureInfoByIetfLanguageTag(LocaleId);
-                       _isRtl = ci.TextInfo.IsRightToLeft;
-                    
+                    _isRtl = ci.TextInfo.IsRightToLeft;
+
                     return _isRtl.Value;
                 }
                 catch { }
@@ -617,7 +618,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
         private bool? _isRtl;
 
         public List<ResourceString> ResourceList { get; set; }
-        
+
     }
 }
 

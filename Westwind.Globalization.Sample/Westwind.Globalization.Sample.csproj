@@ -142,9 +142,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AlbumViewer\AlbumsBusiness.cs" />
     <Compile Include="Controllers\AlbumsController.cs" />
-    <Compile Include="LocalizationAdmin\LocalizationService.ashx.cs">
-      <DependentUpon>LocalizationService.ashx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Resources.cs" />
     <Compile Include="Controllers\AlbumViewer\AlbumViewerEntities.cs" />
     <Compile Include="Controllers\HomeController.cs" />
