@@ -8,8 +8,7 @@
     resourceProviderInfoController.$inject = ['$scope','$http', '$timeout', 'localizationService']; 
 
 
-    function resourceProviderInfoController($scope, $http, $timeout,localizationService) {
-        /* jshint validthis:true */          
+    function resourceProviderInfoController($scope, $http, $timeout, localizationService) {        
         var vm = this;
         vm.title = 'translateController';
         vm.resources = resources;
@@ -21,7 +20,8 @@
             icon: "info-circle",
             cssClass: "info"
         };
-
+        
+        console.log("resourceProviderInfoController");
         localizationService.getLocalizationInfo()
             .success(function(info) {
             vm.info = info;

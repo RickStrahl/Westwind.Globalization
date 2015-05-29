@@ -1,3 +1,5 @@
+// this resource file exists only for sample purposes - so that the demo pages work
+// you can safely remove these files
 using System;
 using System.Web;
 using System.Resources;

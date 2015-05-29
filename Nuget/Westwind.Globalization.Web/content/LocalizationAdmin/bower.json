@@ -1,6 +1,6 @@
 {
   "name": "LocalizationAdmin",
-  "version": "2.0.20-Beta4",
+  "version": "2.0.60",
   "homepage": "https://github.com/RickStrahl/Westwind.Globalization",
   "authors": [
     "Rick Strahl <rstrahl@west-wind.com>"
@@ -17,11 +17,13 @@
   ],
   "dependencies": {
     "angular-sanitize": "1.4",
-    "bootstrap": "~3.3.2",
-    "es5-shim": ">=3.4.0",
+    "bootstrap": "~3.3.2",    
     "fontawesome": "~4.3.0",
     "lodash": "~3.0.0",
     "ng-file-upload": "~3.2.4",
+    "angular": "1.4"
+  },
+  "resolutions": {
     "angular": "1.4"
   }
 }

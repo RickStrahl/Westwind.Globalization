@@ -63,8 +63,7 @@ namespace Westwind.Globalization
             get { return _connectionString; }
             set { _connectionString = value; }
         }
-
-        private string _connectionString = "*** ENTER YOUR CONNECTION STRING OR CONNECTION ENTRY HERE ***";
+        private string _connectionString = "*** ENTER A CONNECTION STRING OR connectionStrings ENTRY HERE ***";
 
         /// <summary>
         /// Database table name used in the database
@@ -157,32 +156,6 @@ namespace Westwind.Globalization
         }
         private string _LocalizationFormWebPath = "~/LocalizationAdmin/";
 
-
-#if IncludeWebFormsControls
-        /// <summary>
-        /// WebForms only. The virtual path for the Web application. This value is used at design time for WebForms implicit resource import from Visual Studio.
-        /// </summary>
-        public string DesignTimeVirtualPath
-        {
-            get { return _DesignTimeVirtualPath; }
-            set { _DesignTimeVirtualPath = value; }
-        }
-        private string _DesignTimeVirtualPath = string.Empty;
-
-        /// <summary>
-        /// WebForms only. Determines whether the DbResourceControl shows its localization options on the
-        /// page. 
-        /// </summary>
-        public bool ShowLocalizationControlOptions { get; set; }
-
-        /// <summary>
-        /// WebForms only. Determines whether page controls show icons when a 
-        /// DbResourceControl is active. Note requires that ShowLocalizationControlOptions
-        /// is true as well.
-        /// </summary>
-        public bool ShowControlIcons { get; set; }
-        
-#endif
         
         /// <summary>
         /// API key for Bing Translate API in the 

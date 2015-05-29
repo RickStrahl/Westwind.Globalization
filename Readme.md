@@ -8,9 +8,14 @@ A rich, Web based resource editor is also provided that makes it easy to create 
 To install, use NuGet:
 
 ```
+PM> Install-Package Westwind.Globalization.Web.Starter
+```
+or if you don't want sample resources and a test page, simply use:
+```
 PM> Install-Package Westwind.Globalization.Web
 ```
-If you're not using a Web Project you can also use:
+
+If you're not using a Web Project or you're using MVC/Web API and don't need the Web Resource Editor you can just use the core package:
 ```
 PM> Install-Package Westwind.Globalization
 ```
@@ -153,18 +158,20 @@ To run the sample application you have to set up a database to provide the resou
 The easiest way to use this library in your own applications is to install the NuGet package into an ASP.NET application.
 
 ```
+pm> Install-Package Westwind.Globalization.Web.Starter
+```
+If you don't need sample resources and a test page you can use the base Web package instead.
+```
 pm> Install-Package Westwind.Globalization.Web
 ```
-If you're not using a Web Project you can also use:
+
+If you're not using a Web Project, or an MVC/Web API project that doesn't use the Web Resource Editor you can use the core package:
 ```
 pm> Install-Package Westwind.Globalization
 ```
-which doesn't install the web related components and HTML resources. Version 2.0 is currently in beta so you need to use the `-pre` for the latest versions.
+which doesn't install the web related components and HTML resources. 
 
-The .Web version installs the required assemblies, adds a few configuration entries in
-web.config and enables the resource provider by default. It also installs
-the localization administration form shown above, so you can create the
-resource table and manage resources in it.
+The .Web version installs the required assemblies, adds a few configuration entries in web.config and enables the resource provider by default. The Starter package adds sample resources and a couple of test pages. I recommend you use the .Starter package so you can ensure the provider is working and serving resources - once up and running you can remove the starter package, leaving the dependent assemblies in place.
 
 #### Configuration Settings
 The key configuration items set are the DbResourceConfiguration section in

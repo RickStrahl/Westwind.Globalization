@@ -102,7 +102,6 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             string resourceId = parm.ResourceId;
             string resourceSet = parm.ResourceSet;
 
-
             var items = Manager.GetResourceItems(resourceId, resourceSet, true).ToList();
             if (items == null)
             {
@@ -118,8 +117,6 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
                 var item = new ResourceItemEx(items[i]);
                 item.BinFile = null;
                 item.TextFile = null;
-             
-
                 itemList.Add(item);
             }
 

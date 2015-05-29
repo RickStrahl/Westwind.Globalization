@@ -58,20 +58,23 @@
    <resheader name="writer">
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
+   <data name="FeatureNotSupported" xml:space="preserve">
+      <value>Diese Funktion ist nicht  unterstützt in dieser Online-Demo -Anwendung.</value>
+   </data>
    <data name="TextToTranslate" xml:space="preserve">
       <value>Text zu übersetzen</value>
    </data>
    <data name="Translate" xml:space="preserve">
       <value>Übersetzen</value>
    </data>
+   <data name="Use" xml:space="preserve">
+      <value>Anwenden</value>
+   </data>
    <data name="From" xml:space="preserve">
       <value>Von</value>
    </data>
    <data name="To" xml:space="preserve">
       <value>Zu</value>
-   </data>
-   <data name="Use" xml:space="preserve">
-      <value>Anwenden</value>
    </data>
    <data name="Translation" xml:space="preserve">
       <value>Übersetzung</value>

@@ -102,7 +102,6 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             string resourceId = parm.ResourceId;
             string resourceSet = parm.ResourceSet;
 
-
             var items = Manager.GetResourceItems(resourceId, resourceSet, true).ToList();
             if (items == null)
             {
@@ -118,8 +117,6 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
                 var item = new ResourceItemEx(items[i]);
                 item.BinFile = null;
                 item.TextFile = null;
-             
-
                 itemList.Add(item);
             }
 
@@ -425,6 +422,25 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             return true;
         }
 
+
+        [CallbackMethod]
+        public bool IsRtl(string localeId)
+        {
+            try
+            {
+                var li = localeId;
+                if (string.IsNullOrEmpty(localeId))
+                    li = CultureInfo.InstalledUICulture.IetfLanguageTag;
+
+                var ci = CultureInfo.GetCultureInfoByIetfLanguageTag(localeId);
+                return ci.TextInfo.IsRightToLeft;
+            }
+            catch {}
+
+            return false;
+        }
+
+
         [CallbackMethod]
         public bool CreateClass(string filename = null, string nameSpace = null)
         {
@@ -567,6 +583,7 @@ namespace Westwind.Globalization.Sample.LocalizationAdministration
             TextFile = item.TextFile;
             BinFile = item.BinFile;
             Comment = item.Comment;
+            ValueType = item.ValueType;            
         }
 
         public bool IsRtl

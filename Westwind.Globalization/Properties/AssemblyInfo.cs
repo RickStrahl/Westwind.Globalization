@@ -10,7 +10,7 @@ using System.Web.UI;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Westwind.Globalization")]
-[assembly: AssemblyDescription("Westwind Globalization .NET Data based resource access")]
+[assembly: AssemblyDescription("Westwind Globalization .NET Database Localization Resources")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("West Wind Technologies")]
 [assembly: AssemblyProduct("Westwind.Globalization")]
@@ -37,5 +37,5 @@ using System.Web.UI;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("2.0.55.0")]
-[assembly: AssemblyFileVersion("2.0.55.0")]
+[assembly: AssemblyVersion("2.0.60.0")]
+[assembly: AssemblyFileVersion("2.0.60.0")]

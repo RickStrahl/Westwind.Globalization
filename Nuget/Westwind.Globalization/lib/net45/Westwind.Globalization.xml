@@ -1967,24 +1967,6 @@
             DbResourceControl
             </summary>        
         </member>
-        <member name="P:Westwind.Globalization.DbResourceConfiguration.DesignTimeVirtualPath">
-            <summary>
-            WebForms only. The virtual path for the Web application. This value is used at design time for WebForms implicit resource import from Visual Studio.
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.DbResourceConfiguration.ShowLocalizationControlOptions">
-            <summary>
-            WebForms only. Determines whether the DbResourceControl shows its localization options on the
-            page. 
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.DbResourceConfiguration.ShowControlIcons">
-            <summary>
-            WebForms only. Determines whether page controls show icons when a 
-            DbResourceControl is active. Note requires that ShowLocalizationControlOptions
-            is true as well.
-            </summary>
-        </member>
         <member name="P:Westwind.Globalization.DbResourceConfiguration.BingClientId">
             <summary>
             API key for Bing Translate API in the 

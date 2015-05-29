@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?> 
 <package> 
   <metadata> 
-    <id>Westwind.Globalization.Web</id> 
+    <id>Westwind.Globalization.Web.Starter</id> 
     <version>2.0.60</version>
     <authors>Rick Strahl, West Wind Technologies</authors>
-    <title>West Wind Globalization Web for ASP.NET</title> 
-    <summary>Database Resource Localization for ASP.NET Web applications.</summary>
-    <description>
+    <title>West Wind Globalization Web for ASP.NET - Starter Package</title> 
+    <summary>Database Resource Localization for ASP.NET Web applications Starter Web that includes sample resources and test pages.</summary>
+    <description> 
+    This project is the Web Starter project for Westwind.Globalization.Web. It includes a few sample resources you can use to verify that the dbResource provider is working and allows you to play with a sample page. It's recommended you start with this .Starter NuGet package - you can remove it after you are up and running.
+
 	This library provides the ASP.NET specific components to the Westwind.Globalization library. It contains the ASP.NET Resource Providers (DbResourceSimpleProvider, DbResourceProvider), the JavaScript Resource Handler to serve ASP.NET resources to JavaScript client, the on-line Resource editor to allow editing of data resources in real time. This library also provides the integration with WebForms using the resource control and dynamic icons.	
 	
 	This library is required for using Westwind.Globalization in most ASP.NET Web Projects. MVC projects can safely remove the Westwind.Web.Forms assembly from the distribution.
@@ -16,9 +18,8 @@
     <projectUrl>https://github.com/RickStrahl/Westwind.Globalization</projectUrl>
     <iconUrl>http://west-wind.com/westwind.globalization/images/Westwind.Localization_128.png</iconUrl>
    	<dependencies>
-	  <dependency id="Westwind.Globalization" version="2.0.60" />
-	  <dependency id="Westwind.Web" version="2.64" />	  
-	  <dependency id="Westwind.Web.WebForms" version="2.64" />
+	  <dependency id="Westwind.Globalization.Web" version="" />	  
 	</dependencies>
   </metadata> 
 </package>
+

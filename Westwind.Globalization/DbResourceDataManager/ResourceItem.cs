@@ -60,8 +60,7 @@ namespace Westwind.Globalization
                 SendPropertyChanged("Comment");
             }
         }
-
-        private string _Comment = null;
+        private string _Comment = null;     
 
         /// <summary>
         /// Type of the data if not a string
@@ -81,7 +80,6 @@ namespace Westwind.Globalization
                 SendPropertyChanged("LocaleId");
             }
         }
-
         private string _LocaleId = string.Empty;
 
 
@@ -126,13 +124,15 @@ namespace Westwind.Globalization
                 SendPropertyChanged("ResourceSet");
             }
         }
+        private string _ResourceSet = string.Empty;
+
 
         public string TextFile { get; set; }
         public byte[] BinFile { get; set; }
         public string FileName { get; set; }
 
 
-        private string _ResourceSet = string.Empty;
+        
 
         public event PropertyChangedEventHandler PropertyChanged;
 

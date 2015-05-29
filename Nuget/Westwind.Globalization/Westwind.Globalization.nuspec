@@ -2,10 +2,10 @@
 <package> 
   <metadata> 
     <id>Westwind.Globalization</id> 
-    <version>2.0.55</version>
+    <version>2.0.60</version>
     <authors>Rick Strahl, West Wind Technologies</authors>
-    <title>West Wind Globalization Database ResourceManager (Westwind.Globalization)</title> 
-    <summary>Database Resource Localization for non-Web .NET projects. For ASP.NET Web projects please use the Westwind.Globalization.Web Package</summary>
+    <title>West Wind Globalization Database ResourceManager</title> 
+    <summary>Database Resource Localization for non-Web .NET projects. For ASP.NET Web projects use the Westwind.Globalization.Web Package</summary>
     <description>
 	West Wind Globalization provides custom data driven .NET ResourceManagers and ResourceProviders for both plain .NET and ASP.NET applications as well as serving JavaScript resources from .NET resources. There's also a a rich real time Web Resource editor that can update resources live but you'll need the Web NuGet package for that feature to light up. 
 	

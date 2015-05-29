@@ -5,9 +5,9 @@
         .module('app')
         .factory('localizationService', localizationService);
 
-    localizationService.$inject = ['$http', '$q'];
+    localizationService.$inject = ['$http', '$q', '$timeout'];
 
-    function localizationService($http, $q) {
+    function localizationService($http, $q, $timeout) {
         var service = {
             error: null,
             baseUrl: "./",
@@ -21,6 +21,7 @@
             getAllLocaleIds: getAllLocaleIds,
             localeIds: [],
             resourceStrings: [],
+            localizationInfo: null,
             getResourceStrings: getResourceStrings,
             updateResourceString: updateResourceString,
             updateResource: updateResource,
@@ -29,6 +30,7 @@
             deleteResourceSet: deleteResourceSet,
             renameResourceSet: renameResourceSet,
             reloadResources: reloadResources,
+            isRtl: isRtl,
             backup: backup,
             createTable: createTable,
             createClass: createClass,
@@ -172,10 +174,20 @@
                     .error(parseHttpError);
         }
         function getLocalizationInfo() {
+            // cache
+            if (service.localizationInfo)
+                return ww.angular.$httpPromiseFromValue($q,service.localizationInfo);
+            
             return $http.get("localizationService.ashx?method=GetLocalizationInfo")
-                    .error(parseHttpError);
+                .success(function(info) {
+                    service.localizationInfo = info;
+                })
+                .error(parseHttpError);            
         }
-
+        function isRtl(localeId) {
+            return $http.get("localizationService.ashx?method=IsRtl&localeId=" + localeId)
+                .error(parseHttpError);
+        }
         function parseHttpError() {
             service.error = ww.angular.parseHttpError(arguments);
         }

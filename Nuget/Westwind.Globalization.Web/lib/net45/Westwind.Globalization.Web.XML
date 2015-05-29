@@ -302,11 +302,6 @@
             <param name="key"></param>
             <returns></returns>
         </member>
-        <member name="T:Westwind.Globalization.GlobalizationResources">
-            <summary>
-            Class is used as to consolidate access to resources
-            </summary>
-        </member>
         <member name="T:Westwind.Globalization.Web.Resources.Resources">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.

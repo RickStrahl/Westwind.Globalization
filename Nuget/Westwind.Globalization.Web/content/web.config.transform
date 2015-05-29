@@ -2,22 +2,6 @@
   <configSections>
     <section name="DbResourceConfiguration" requirePermission="false" type="System.Configuration.NameValueSectionHandler,System,Version=1.0.3300.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   </configSections>
-  
-  <DbResourceConfiguration>
-    <add key="ConnectionString" value="*** ENTER A RAW CONNECTION STRING OR CONNECTION STRING ENTRY HERE ***" />
-    <add key="ResourceTableName" value="Localizations" />
-    <add key="StronglyTypedGlobalResource" value="~/Properties/Resources.cs" />
-    <add key="ResourceBaseNamespace" value="$rootnamespace$.Properties" />
-    <add key="ResxExportProjectType" value="Project" />
-    <add key="ResxBaseFolder" value="~/Properties/" />
-    <add key="AddMissingResources" value="False" />
-    <add key="LocalizationFormWebPath" value="~/LocalizationAdmin/" />
-    <add key="DesignTimeVirtualPath" value="" />
-    <add key="ShowLocalizationControlOptions" value="False" />
-    <add key="ShowControlIcons" value="False" />
-    <add key="BingClientId" value="" />
-    <add key="BingClientSecret" value="" />    
-  </DbResourceConfiguration>
 
   <system.web>
     <globalization resourceProviderFactoryType="Westwind.Globalization.DbSimpleResourceProviderFactory,Westwind.Globalization.Web"/>
@@ -39,5 +23,18 @@
       <add name="JavaScriptResourceHandler" verb="GET" path="JavascriptResourceHandler.axd" type="Westwind.Globalization.JavaScriptResourceHandler,Westwind.Globalization.Web"/>
     </handlers>
   </system.webServer>
-</configuration>
 
+  <DbResourceConfiguration>
+    <add key="ConnectionString" value="*** ENTER A RAW CONNECTION STRING OR connectionStrings ENTRY HERE ***" />
+    <add key="ResourceTableName" value="Localizations" />
+    <add key="ResxExportProjectType" value="Project" />
+    <add key="StronglyTypedGlobalResource" value="~/Properties/Resources.cs" />
+    <add key="ResourceBaseNamespace" value="$rootnamespace$.Properties" />
+    <add key="ResxBaseFolder" value="~/Properties/" />
+    <add key="AddMissingResources" value="False" />
+    <add key="LocalizationFormWebPath" value="~/LocalizationAdmin/" />
+    <add key="BingClientId" value="" />
+    <add key="BingClientSecret" value="" />    
+  </DbResourceConfiguration>
+
+</configuration>

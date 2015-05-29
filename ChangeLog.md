@@ -19,10 +19,13 @@ Individual resources displayed in the resource edit textarea now reflect the RTL
 Refactored code in the  resource HttpHandler that serves JavaScript resources. The query string based interface now supports ASP.NET ResourceProvider, .NET ResourceManager and Resx resources for serving server resources to JavaScript.
 
 * **AlbumViewer MVC Localization Sample**<br/>
-Added a small ASP.NET MVC application that demonstrates resource usage in the user interface.  
+Added a small ASP.NET MVC sample application that demonstrates resource editing and usage in the user interface.
 
 * **Fix WebForms Designer Issue with Meta-Resource Attributes**
 Fix bug that caused controls to not render on the design time surface due to an error with designtime loading of database resources.
+
+* **Separate Sample Resources and Test Page into Westwind.Globalization.Web.Starter NuGet Package**
+In order to reduce the artifacts added to Web projects we've broken out the sample resources and test pages into a separate .Starter package which can be removed from the project after initial loading.
 
 ### Version 2.0 Beta6
 <small>May 10th, 2014</small><br/>

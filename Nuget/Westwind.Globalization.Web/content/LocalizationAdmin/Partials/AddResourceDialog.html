@@ -14,8 +14,10 @@
                     <div class="form-group" style="margin-right: 14px;">
                         <label xclass="sr-only">Lang:</label>
                         <input type="text" class="form-control"
-                               ng-model="view.activeResource.LocaleId" placeholder="Locale Id"
-                               style="width: 70px;" />
+                                ng-model="view.activeResource.LocaleId"
+                                placeholder="Locale Id"
+                                ng-blur="view.onLocaleIdBlur()"
+                                style="width: 70px;" />
                     </div>
                     <div class="form-group">
                         <label>ResourceSet:</label>
@@ -48,11 +50,12 @@
 
                     <label class="control-label" for="ResourceValue">Text</label>
                     <textarea id="ResourceValue" onfocus=" this.select(); "
-                              class="form-control"
-                              dir="{{view.activeResource.IsRtl ? 'rtl' : ''}}"
-                              ng-model="view.activeResource.Value"
-                              placeholder="Resource text"></textarea>
-                </div>
+                            class="form-control"
+                            ww-rtl="view.activeResource.IsRtl"
+                            xdir="{{view.activeResource.IsRtl ? 'rtl' : ''}}"
+                            ng-model="view.activeResource.Value"
+                            placeholder="Resource text"></textarea>
+                 </div>
                 
                 <label>{{::view.activeResource.FileName}}&nbsp;&nbsp;</label>
                 <div class="btn btn-sm btn-default"

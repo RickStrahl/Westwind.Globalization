@@ -74,10 +74,10 @@
       <value>Edit</value>
    </data>
    <data name="AlbumName" xml:space="preserve">
-      <value>Description</value>
+      <value>Album Name</value>
    </data>
    <data name="ArtistName" xml:space="preserve">
-      <value>Band Name!!!</value>
+      <value>Band Name</value>
    </data>
    <data name="MoreFrom" xml:space="preserve">
       <value>More From</value>
