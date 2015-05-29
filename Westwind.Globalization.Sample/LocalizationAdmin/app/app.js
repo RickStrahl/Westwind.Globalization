@@ -45,16 +45,16 @@
         };
     });
 
-    app.directive('locDir', function() {
+    app.directive('wwRtl', function() {
         return {
-            require: "ngModel",
+            //require: "ngModel",
             restrict: "A",
             replace: true,
             scope: {
-                locDir: "@"
+                wwRtl: "@"
             },
             link: function($scope, $element, $attrs) {
-                var expr = $scope.locDir;
+                var expr = $scope.wwRtl;
                 $scope.$parent.$watch(expr, function(isRtl) {
                     var rtl = "";
                     if (isRtl)
@@ -67,7 +67,6 @@
 
     function resizeControls() {
         var cHeight = $(window).height() - $(".banner").outerHeight() - $(".menubar").outerHeight();
-        console.log(cHeight);
         $("#ContentContainer").height(cHeight);
     }
 

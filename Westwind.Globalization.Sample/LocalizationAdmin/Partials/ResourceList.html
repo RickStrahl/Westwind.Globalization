@@ -18,13 +18,13 @@
             </span>
             <form name="resourceForm" id="form1">
                 <textarea id="value_{{$index}}" name="value_{{$index}}"
-                          class="form-control"
-                          ng-focus="view.onLocaleIdChanged(resource)"
-                          data-localeid="{{resource.LocaleId}}"
-                          ng-model="resource.Value"
-                          dir="{{resource.IsRtl ? 'rtl' : '' }}"
-                          ng-dblclick="view.onResourceFullscreenEdit($event, resource, resourceForm)"
-                          ng-keydown="view.onResourceKeyDown($event,resource,resourceForm)">                    
+                            class="form-control"
+                            ng-focus="view.onLocaleIdChanged(resource)"
+                            data-localeid="{{resource.LocaleId}}"
+                            ng-model="resource.Value"
+                            ww-rtl="resource.IsRtl"
+                            ng-dblclick="view.onResourceFullscreenEdit($event, resource, resourceForm)"
+                            ng-keydown="view.onResourceKeyDown($event,resource,resourceForm)">                    
                 </textarea>
             </form>
             <span class="input-group-addon"
@@ -78,5 +78,5 @@
 </div>
 
 <div class="resource-editor">
-    
+
 </div>
