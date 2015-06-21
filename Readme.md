@@ -31,7 +31,7 @@ Requirements:
 ### Resources:
 * [Westwind.Globalization Home Page](http://west-wind.com/westwind.globalization/)
 * [Nuget Package](https://www.nuget.org/packages?q=westwind.globalization)
-* [Video: Getting Started with West Wind Globalization](https://youtu.be/cFXh0DrPgmo)
+* [Video: Getting Started with West Wind Globalization](https://youtu.be/ABR7ISppB1k)
 * [Original Article for Database Driven Resource Provider](http://www.west-wind.com/presentations/wwdbresourceprovider/)
 * [Wiki Documentation and FAQ](http://west-wind.com/westwind.globalization/docs/)
 * [Westwind-Globalization on StackOverFlow](http://stackoverflow.com/questions/tagged/westwind-globalization)
