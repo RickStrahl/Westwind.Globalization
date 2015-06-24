@@ -1043,39 +1043,6 @@
             SqlDataAccess             (provides a data access (DAL))
             </summary>
         </member>
-        <member name="T:Westwind.Globalization.DbResourceProviderSection">
-            <summary>
-            This is the resource provider section that mimics the settings stored in DbResourceConfiguration object.
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.DbResourceProviderSection.ResxExportProjectType">
-            <summary>
-            Determines whether WebForms (using App_Global/LocalResource) or plain .NET Resx files are 
-            used for exporting ResX resources. Options are WebForms and Project. WebForms generates resources 
-            in resource folders, Class generates ResX files in the Properties folder of the project.
-            </summary>        
-        </member>
-        <member name="P:Westwind.Globalization.DbResourceProviderSection.ResxBaseFolder">
-            <summary>
-            The base folder used for importing and exporting resources. Resources can be imported from 
-            anywhere in the project base path, but export only to \\properties (type Project) 
-            or \\App_LocalResource or \\App_GlobalResources (type WebForms)
-            </summary>        
-        </member>
-        <member name="P:Westwind.Globalization.DbResourceProviderSection.StronglyTypedGlobalResource">
-            <summary>
-            Determines whether a strongly typed resource is created when database resources are exported to a ResX file
-            Specify the project relative filename (~/Properties/Resources.cs) and a namespace ("AppResources")
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.DbResourceProviderSection.ResourceBaseNamespace">
-            <summary>
-            The base namespace used for resources imported from Resx resources
-            and for generation of strongly typed resources.
-            Resourcenames then add the project path to the base path
-            (ie. AppResources.Properties.Resources) 
-            </summary>
-        </member>
         <member name="T:Westwind.Globalization.DbRes">
             <summary>
             Helper class that handles access to the DbResourceManager

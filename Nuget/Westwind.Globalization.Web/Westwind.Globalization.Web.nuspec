@@ -2,23 +2,22 @@
 <package> 
   <metadata> 
     <id>Westwind.Globalization.Web</id> 
-    <version>2.0.61</version>
+    <version>2.1.0</version>
     <authors>Rick Strahl, West Wind Technologies</authors>
     <title>West Wind Globalization Web for ASP.NET</title> 
     <summary>Database Resource Localization for ASP.NET Web applications.</summary>
     <description>
 	This library provides the ASP.NET specific components to the Westwind.Globalization library. It contains the ASP.NET Resource Providers (DbResourceSimpleProvider, DbResourceProvider), the JavaScript Resource Handler to serve ASP.NET resources to JavaScript client, the on-line Resource editor to allow editing of data resources in real time. This library also provides the integration with WebForms using the resource control and dynamic icons.	
 	
-	This library is required for using Westwind.Globalization in most ASP.NET Web Projects. MVC projects can safely remove the Westwind.Web.Forms assembly from the distribution.
+	This library is required for using Westwind.Globalization in most ASP.NET Web Projects. MVC Projects that don't require the Web Resource Editor interface, can use the Core package.
     </description>
     <language>en-US</language>
     <licenseUrl>https://github.com/RickStrahl/Westwind.Globalization#license</licenseUrl>
     <projectUrl>https://github.com/RickStrahl/Westwind.Globalization</projectUrl>
     <iconUrl>http://west-wind.com/westwind.globalization/images/Westwind.Localization_128.png</iconUrl>
    	<dependencies>
-	  <dependency id="Westwind.Globalization" version="2.0.60" />
-	  <dependency id="Westwind.Web" version="2.64" />	  
-	  <dependency id="Westwind.Web.WebForms" version="2.64" />
+	  <dependency id="Westwind.Globalization" version="2.1.0" />
+	  <dependency id="Westwind.Web" version="2.64" />	  	  
 	</dependencies>
   </metadata> 
 </package>

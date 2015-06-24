@@ -15,12 +15,12 @@ or if you don't want sample resources and a test page, simply use:
 PM> Install-Package Westwind.Globalization.Web
 ```
 
-If you're not using a Web Project or you're using MVC/Web API and don't need the Web Resource Editor you can just use the core package:
+If you're not using a Web Project or you're using MVC/Web API **and** don't need the Web Resource Editor you can just use the core package:
 ```
 PM> Install-Package Westwind.Globalization
 ```
 
-Please read or watch the video of the Installation Section which describes how to install the packages, import existing resources (if any) and then start creating new ones quickly.
+Please read the Installation Section below or watch the [Getting Started Video](https://youtu.be/ABR7ISppB1k), which describes how to install the packages, configure the project, import existing resources (if any) and then start creating new ones quickly.
 
 > If you want to see how to apply resources in your applications, it's also a good idea to clone this project as it has a number of examples that demonstrate resource usage. Check out the AlbumViewer MVC application, the Localization Admin AngularJs SPA application, and the ResourceTest ASPX and Web Page examples.
 
@@ -31,9 +31,9 @@ Requirements:
 ### Resources:
 * [Westwind.Globalization Home Page](http://west-wind.com/westwind.globalization/)
 * [Nuget Package](https://www.nuget.org/packages?q=westwind.globalization)
-* [Video: Getting Started with West Wind Globalization](https://youtu.be/ABR7ISppB1k)
-* [Original Article for Database Driven Resource Provider](http://www.west-wind.com/presentations/wwdbresourceprovider/)
+* [Video: Getting Started with West Wind Globalization 2.0](https://youtu.be/ABR7ISppB1k)
 * [Wiki Documentation and FAQ](http://west-wind.com/westwind.globalization/docs/)
+* [Original Article for Database Driven Resource Provider](http://www.west-wind.com/presentations/wwdbresourceprovider/)
 * [Westwind-Globalization on StackOverFlow](http://stackoverflow.com/questions/tagged/westwind-globalization)
 * [Class Reference](http://west-wind.com/westwind.globalization/docs/?page=_40y0vh66q.htm)
 * [Change Log](ChangeLog.md)
