@@ -77,7 +77,6 @@
     <Compile Include="Administration\LocalizationService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="DbResourceProvider\DbResourceProviderHierarchy.cd" />
     <None Include="DbSimpleResourceProvider\BasicResourceProvider.cd" />
     <None Include="DbSimpleResourceProvider\DbSimpleResourceProviderHierarchy.cd" />
