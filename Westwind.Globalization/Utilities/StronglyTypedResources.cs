@@ -41,6 +41,7 @@ using System.IO;
 using System.Web;
 using System.Xml;
 using System.Collections;
+using System.Linq;
 
 
 namespace Westwind.Globalization
@@ -183,12 +184,19 @@ namespace Westwind.Globalization
         /// <param name="Namespace">Optional namespace for the generated file</param>
         /// <param name="FileName">Output class file. .cs or .vb determines code language</param>
         /// <returns>Generated class as a string</returns>
-        public string CreateClassFromAllDatabaseResources(string Namespace, string FileName)
+        public string CreateClassFromAllDatabaseResources(string Namespace, string FileName, IEnumerable<string> resourceSets = null)
         {
             bool IsVb = IsFileVb(FileName);
 
             var man = DbResourceDataManager.CreateDbResourceDataManager();  
             var resources = man.GetAllResourceSets(ResourceListingTypes.GlobalResourcesOnly);
+
+            if (resourceSets != null)
+            {
+                if (resourceSets != null)
+                    resources = resources.Where(rs => resourceSets.Any(rs1 => rs1 == rs))
+                                         .ToList();
+            }
 
             StringBuilder sbClasses = new StringBuilder();
             foreach (var resourceSet in resources)

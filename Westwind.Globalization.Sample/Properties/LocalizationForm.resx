@@ -262,6 +262,9 @@
    <data name="InvalidResourceId" xml:space="preserve">
       <value>Invalid Resource Id.</value>
    </data>
+   <data name="AllResourceSets" xml:space="preserve">
+      <value>All Resource Sets</value>
+   </data>
    <data name="Save" xml:space="preserve">
       <value>Save</value>
    </data>
@@ -294,6 +297,9 @@
    </data>
    <data name="TextToTranslate" xml:space="preserve">
       <value>Text to translate</value>
+   </data>
+   <data name="ResourceSetsToExport" xml:space="preserve">
+      <value>ResourceSets to export</value>
    </data>
    <data name="FeatureNotSupported" xml:space="preserve">
       <value>This feature is not supported in this live online demo application.</value>

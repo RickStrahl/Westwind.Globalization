@@ -157,15 +157,14 @@
             return $http.get("localizationService.ashx?method=CreateTable")
                  .error(parseHttpError);
         }
-        function createClass(file, namespace) {
-            return $http.get("localizationService.ashx?method=CreateClass" +
-                "&file=" + encodeURIComponent(file) +
-                "&namespace=" + encodeURIComponent(namespace))
+        function createClass(file, namespace, resourceSets) {
+            return $http.post("localizationService.ashx?method=CreateClass",
+            { fileName: file, namespace: namespace, resourceSets: resourceSets })
                     .error(parseHttpError);
         }
-        function exportResxResources(path) {
+        function exportResxResources(path, resourceSets) {
             path = path || "";
-            return $http.get("localizationService.ashx?method=ExportResxResources&outputBasePath=" + encodeURIComponent(path))
+            return $http.post("localizationService.ashx?method=ExportResxResources",{  outputBasePath: path, resourceSets: resourceSets})
                     .error(parseHttpError);
         }
         function importResxResources(path) {

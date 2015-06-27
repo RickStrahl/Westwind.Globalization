@@ -11,6 +11,8 @@
         vm.resources = resources;
         vm.dbRes = resources.dbRes;        
         vm.info = null;
+        vm.resourceSets = localizationService.resourceSets;
+        vm.selectedResourceSets = [];
         
         initialize();
 
@@ -19,6 +21,10 @@
                 .success(function (pi) {
                     vm.info = pi;
                 });
+            setTimeout(function () {
+                vm.resourceSets = localizationService.resourceSets;
+                vm.selectedResourceSets = [""];
+            }, 20);
         }
 
         vm.onCreateClassClick = function () {
@@ -26,7 +32,7 @@
             var ns = vm.info.ResourceBaseNamespace;
             var parentView = $scope.$parent.view;
             
-            localizationService.createClass(file,ns)
+            localizationService.createClass(file,ns, vm.selectedResourceSets)
                 .success(function () {
                     $("#CreateClassDialog").modal('hide');                   
                     parentView.showMessage(vm.dbRes("StronglyTypedClassCreated"));

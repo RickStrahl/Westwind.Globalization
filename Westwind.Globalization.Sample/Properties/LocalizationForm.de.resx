@@ -61,8 +61,14 @@
    <data name="FeatureNotSupported" xml:space="preserve">
       <value>Diese Funktion ist nicht  unterstützt in dieser Online-Demo -Anwendung.</value>
    </data>
+   <data name="ResourceSetsToExport" xml:space="preserve">
+      <value>ResourceSets zu exportieren</value>
+   </data>
    <data name="TextToTranslate" xml:space="preserve">
       <value>Text zu übersetzen</value>
+   </data>
+   <data name="AllResourceSets" xml:space="preserve">
+      <value>Alle RessourceSets</value>
    </data>
    <data name="Translate" xml:space="preserve">
       <value>Übersetzen</value>

@@ -309,7 +309,7 @@ namespace Westwind.Globalization
         /// If not specified the value is inferred for an ASP.NET Web app.
         /// </param>        
         /// <returns></returns>
-        public bool GenerateResXFiles()
+        public bool GenerateResXFiles(IEnumerable<string> resourceSets = null)
         {
             var data = DbResourceDataManager.CreateDbResourceDataManager();  
 
@@ -317,6 +317,10 @@ namespace Westwind.Globalization
             // The data is ordered by ResourceSet, LocaleId and resource ID as each
             // ResourceSet or Locale changes a new file is written
             var resources = data.GetAllResources(applyValueConverters: true);
+           
+            if (resourceSets != null)
+                resources = resources.Where(rs => resourceSets.Any(rs1 => rs1 == rs.ResourceSet))
+                                     .ToList();
 
             if (resources == null)
                 return false;

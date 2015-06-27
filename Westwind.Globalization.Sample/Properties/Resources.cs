@@ -435,6 +435,14 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
+		public static System.String ResourceSetsToExport
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("LocalizationForm","ResourceSetsToExport",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
 		public static System.String ResourceSaved
 		{
 			get
@@ -576,6 +584,14 @@ namespace Westwind.Globalization.Sample.Properties
 			get
 			{
 				return GeneratedResourceHelper.GetResourceString("LocalizationForm","BackupComplete",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String AllResourceSets
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("LocalizationForm","AllResourceSets",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 

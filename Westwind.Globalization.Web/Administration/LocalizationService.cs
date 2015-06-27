@@ -38,6 +38,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Configuration;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Westwind.Utilities;
 using Westwind.Web;
 using Westwind.Web.JsonSerializers;
@@ -475,12 +476,26 @@ namespace Westwind.Globalization.Web.Administration
 
 
         [CallbackMethod]
-        public bool CreateClass(string filename = null, string nameSpace = null)
+        public bool CreateClass(dynamic parms)
         {
 #if OnlineDemo
             throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
 #endif
             var config = DbResourceConfiguration.Current;
+
+            // { filename: "~/properties/resources.cs, nameSpace: "WebApp1", resourceSets: ["rs1","rs2"]]
+            string filename = parms["fileName"];
+            string nameSpace = parms["namespace"];
+            JArray rs = parms["resourceSets"] as JArray; 
+
+            string[] resourceSets = null;
+            if (rs != null)
+            {
+                resourceSets = rs.ToObject<string[]>();
+                if (resourceSets != null && resourceSets.Length == 1 && string.IsNullOrEmpty(resourceSets[0]))
+                    resourceSets = null;
+            }
+
 
             StronglyTypedResources strongTypes =
                 new StronglyTypedResources(Context.Request.PhysicalApplicationPath);
@@ -488,10 +503,15 @@ namespace Westwind.Globalization.Web.Administration
             if (string.IsNullOrEmpty(filename))
                 filename = HttpContext.Current.Server.MapPath(config.StronglyTypedGlobalResource);
 
+            else if (filename.StartsWith("~"))
+                filename = Context.Server.MapPath(filename);
+
+            filename = filename.Replace("/", "\\").Replace("\\\\", "\\");
+
             if (string.IsNullOrEmpty(nameSpace))
                 nameSpace = config.ResourceBaseNamespace;
 
-            strongTypes.CreateClassFromAllDatabaseResources(nameSpace, filename);
+            strongTypes.CreateClassFromAllDatabaseResources(nameSpace, filename, resourceSets);
 
             if (!string.IsNullOrEmpty(strongTypes.ErrorMessage))
                 throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "StronglyTypedGlobalResourcesFailed"));
@@ -500,11 +520,23 @@ namespace Westwind.Globalization.Web.Administration
         }
 
         [CallbackMethod]
-        public bool ExportResxResources(string outputBasePath = null)
+        public bool ExportResxResources(dynamic parms)
         {
 #if OnlineDemo
             throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
 #endif
+            // Post:  {outputBasePath: "~\Properties", resourceSets: ["rs1","rs2"] }
+            string outputBasePath = parms["outputBasePath"] ;
+
+            string[] resourceSets = null;
+            JArray t = parms["resourceSets"] as JArray;
+            if (t != null)
+            {
+                resourceSets = t.ToObject<string[]>();
+                if (resourceSets != null && resourceSets.Length == 1 && string.IsNullOrEmpty(resourceSets[0]))
+                    resourceSets = null;
+            }
+
             if (string.IsNullOrEmpty(outputBasePath))
                 outputBasePath = DbResourceConfiguration.Current.ResxBaseFolder;
             else if (outputBasePath.StartsWith("~"))
@@ -523,8 +555,9 @@ namespace Westwind.Globalization.Web.Administration
             }
             else
             {
-                if (!exporter.GenerateResXFiles())
-                    throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceGenerationFailed"));
+                    // if resourceSets is null all resources are generated
+                    if (!exporter.GenerateResXFiles(resourceSets))
+                        throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceGenerationFailed"));                
             }
 
             return true;

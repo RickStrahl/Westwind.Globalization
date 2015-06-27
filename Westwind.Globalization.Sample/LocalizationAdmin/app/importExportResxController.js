@@ -10,6 +10,8 @@
         var vm = this;
         vm.resources = resources;
         vm.dbRes = resources.dbRes;
+        vm.resourceSets = null;
+        vm.selectedResourceSets = [];
         
         vm.info = null;        
         vm.importExportType = "Export";        
@@ -23,7 +25,9 @@
 
         vm.exportResources = function () {
             var parentView = $scope.$parent.view;
-            localizationService.exportResxResources(vm.info.ResxBaseFolder)
+            if (vm.selectedResourceSets && vm.selectedResourceSets.length == 1 && !vm.selectedResourceSets[0])
+                vm.selectedResourceSets = null;
+            localizationService.exportResxResources(vm.info.ResxBaseFolder, vm.selectedResourceSets)
                 .success(function() {
                     $("#ImportExportResxDialog").modal('hide');
                     parentView.showMessage(vm.dbRes("ResxResourcesHaveBeenCreated"));
@@ -48,6 +52,11 @@
                 .success(function(pi) {
                     vm.info = pi;
                 });
+
+            setTimeout(function () {
+                vm.resourceSets = localizationService.resourceSets;
+                vm.selectedResourceSets = [""];
+            }, 20);
         }
     }
 })();;

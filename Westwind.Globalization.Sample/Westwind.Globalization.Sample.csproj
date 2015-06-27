@@ -42,10 +42,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -114,10 +110,6 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
     </Reference>
     <Reference Include="Westwind.Utilities, Version=2.64.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -333,23 +325,12 @@
     <Content Include="Views\Albums\EditAlbum_Partial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\AlbumViewer\SampleCode\" />
     <Folder Include="Views\AlbumViewer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Westwind.Globalization.Web\Westwind.Globalization.Web.csproj">
-      <Project>{d827f9a2-12e0-436c-b986-8589ed643481}</Project>
-      <Name>Westwind.Globalization.Web</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Westwind.Globalization\Westwind.Globalization.csproj">
-      <Project>{51dece39-764c-4c32-a57a-d93a5fd9bd6a}</Project>
-      <Name>Westwind.Globalization</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\AlbumViewerResources.de.resx" />
@@ -366,6 +347,16 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Westwind.Globalization.Web\Westwind.Globalization.Web.csproj">
+      <Project>{d827f9a2-12e0-436c-b986-8589ed643481}</Project>
+      <Name>Westwind.Globalization.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Westwind.Globalization\Westwind.Globalization.csproj">
+      <Project>{51dece39-764c-4c32-a57a-d93a5fd9bd6a}</Project>
+      <Name>Westwind.Globalization</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

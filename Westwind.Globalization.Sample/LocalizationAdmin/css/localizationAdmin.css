@@ -12,6 +12,9 @@ h2,h3,h4 {
 h3 {
     color: steelblue;
 }
+select[multiple] > option {
+    padding: 3px;
+}
 .banner {
     background: #535353;
     height: 50px;
@@ -122,8 +125,7 @@ input.ng-invalid,textarea.ng-invalid,select.ng-invalid {
 
     .navbar-nav a:hover {
         color: #535353;
-    }
-
+    }    
 @media (max-width: 767px) {
     #MenuButtons {
         display: none;
