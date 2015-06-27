@@ -134,7 +134,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AlbumViewer\AlbumsBusiness.cs" />
     <Compile Include="Controllers\AlbumsController.cs" />
-    <Compile Include="Properties\Resources.cs" />
+    <Compile Include="Properties\AlbumViewerResources.designer.cs" />
+    <Compile Include="Properties\LocalizationForm.designer.cs" />
     <Compile Include="Controllers\AlbumViewer\AlbumViewerEntities.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -142,6 +143,7 @@
     </Compile>
     <Compile Include="Models\ViewModelWithLocalizedAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.designer.cs" />
     <Compile Include="WebFormDbResourceControlSample.aspx.cs">
       <DependentUpon>WebFormDbResourceControlSample.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

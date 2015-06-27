@@ -31,7 +31,8 @@
                 .success(function() {
                     $("#ImportExportResxDialog").modal('hide');
                     parentView.showMessage(vm.dbRes("ResxResourcesHaveBeenCreated"));
-                });
+                })
+                .error(parentView.parseError);
         };
 
         vm.importResources = function() {

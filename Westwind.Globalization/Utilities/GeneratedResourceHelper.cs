@@ -100,8 +100,9 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Helper method called to retrieve ASP.NET ResourceProvider based
-        /// resources. Isolted into a separate method to avoid referencing
-        /// HttpContext.
+        /// resources. Isolated into a separate method to avoid referencing
+        /// HttpContext from the StronglyTyped resource file so non-Web
+        /// projects don't pull in System.Web.
         /// </summary>
         /// <param name="resourceSet"></param>
         /// <param name="resourceId"></param>

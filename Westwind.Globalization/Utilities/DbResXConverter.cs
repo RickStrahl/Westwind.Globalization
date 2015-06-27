@@ -309,7 +309,7 @@ namespace Westwind.Globalization
         /// If not specified the value is inferred for an ASP.NET Web app.
         /// </param>        
         /// <returns></returns>
-        public bool GenerateResXFiles(IEnumerable<string> resourceSets = null)
+        public bool GenerateResXFiles(IEnumerable<string> resourceSets = null, bool generateStronglyTypedClasses = false)
         {
             var data = DbResourceDataManager.CreateDbResourceDataManager();  
 
@@ -348,7 +348,7 @@ namespace Westwind.Globalization
 
                 // Create a new output file if the resource set or locale changes
                 if (res.ResourceSet != lastSet || res.LocaleId != lastLocale)
-                {
+                {         
                     if (xWriter != null)
                     {
                         xWriter.WriteEndElement();

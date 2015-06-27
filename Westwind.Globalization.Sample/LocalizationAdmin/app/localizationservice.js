@@ -157,9 +157,9 @@
             return $http.get("localizationService.ashx?method=CreateTable")
                  .error(parseHttpError);
         }
-        function createClass(file, namespace, resourceSets) {
+        function createClass(file, namespace, resourceSets,classType) {
             return $http.post("localizationService.ashx?method=CreateClass",
-            { fileName: file, namespace: namespace, resourceSets: resourceSets })
+            { fileName: file, namespace: namespace, resourceSets: resourceSets, classType: classType || "DbRes" })
                     .error(parseHttpError);
         }
         function exportResxResources(path, resourceSets) {

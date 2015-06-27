@@ -1,7 +1,16 @@
 # West Wind Globalization Changelog
 
+### Version 2.15
+<small>note released yet</small>
+
+* **Add support for exporting specific ResourceSets to Resx**  
+You can now choose to export either all ResourceSets (old behavior) or select one or more ResourceSets to export to Resx resources. This allows for much more flexibility in importing resources for editing from arbitrary projects on disk, then exporting them back to their original folders. Great for editing resources in Class Library projects.
+
+* **Add support for generating Strongly Typed Classes for specific ResourceSets**  
+You can now choose to export either all ResourceSets (old behavior) or select one or more ResourceSets when generating strongly typed classes. Like for ResourceSets this allows for strongly typed resources to be exported to arbitrary lcoatations and usage in all types of projects external to the Web site.
+
 ### Version 2.1 Release
-<small>not released yet</small><br/>
+<small>June 24th, 2015</small>
 
 * **[Markdown support for Text Resources](https://github.com/RickStrahl/Westwind.Globalization/wiki/Markdown-For-Resource-Values)**<br/>
 You can indicate that you would like text resources to be automatically parsed as markdown. Simply enter your text as Markdown and set the 'Type' option to Markdown causes the text resources to automatically parsed to HTML when added to the ResourceSet dictionary. Markdown conversion is also applied for Resx exports (converted to HTML) and the JavaScript Resource Handler.

@@ -102,6 +102,7 @@
     <Compile Include="DbResourceProviderTests.cs" />
     <Compile Include="DbResourceSqLiteServerDataManagerTests.cs" />
     <Compile Include="DbResourceSqlServerCeDataManagerTests.cs" />
+    <Compile Include="StronglyTypedResourceTests.cs" />
     <Compile Include="JavaScriptresourcesTests.cs" />
     <Compile Include="MySqlResourceProviderTests.cs" />
     <Compile Include="DbResXConverterTests.cs" />

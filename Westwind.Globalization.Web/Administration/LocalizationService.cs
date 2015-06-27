@@ -483,9 +483,10 @@ namespace Westwind.Globalization.Web.Administration
 #endif
             var config = DbResourceConfiguration.Current;
 
-            // { filename: "~/properties/resources.cs, nameSpace: "WebApp1", resourceSets: ["rs1","rs2"]]
+            // { filename: "~/properties/resources.cs, nameSpace: "WebApp1", resourceSets: ["rs1","rs2"],classType: "DbRes|Resx"]
             string filename = parms["fileName"];
             string nameSpace = parms["namespace"];
+            string classType = parms["classType"];
             JArray rs = parms["resourceSets"] as JArray; 
 
             string[] resourceSets = null;
@@ -511,10 +512,31 @@ namespace Westwind.Globalization.Web.Administration
             if (string.IsNullOrEmpty(nameSpace))
                 nameSpace = config.ResourceBaseNamespace;
 
-            strongTypes.CreateClassFromAllDatabaseResources(nameSpace, filename, resourceSets);
 
             if (!string.IsNullOrEmpty(strongTypes.ErrorMessage))
                 throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "StronglyTypedGlobalResourcesFailed"));
+
+            if (classType != "Resx")
+                strongTypes.CreateClassFromAllDatabaseResources(nameSpace, filename, resourceSets);
+            else
+            {
+                string outputBasePath = Path.GetDirectoryName(filename);
+                
+                if (resourceSets == null || resourceSets.Length < 1)
+                    resourceSets = GetResourceSets().ToArray();
+
+                foreach (var resource in resourceSets)
+                {
+                    string file = Path.Combine(outputBasePath, resource + ".resx");
+                    if (!File.Exists(file))
+                        continue;
+
+                    var str = new StronglyTypedResources(null);
+
+                    str.CreateResxDesignerClassFromResxFile(file, resource,
+                        DbResourceConfiguration.Current.ResourceBaseNamespace, false);
+                }
+            }
 
             return true;
         }

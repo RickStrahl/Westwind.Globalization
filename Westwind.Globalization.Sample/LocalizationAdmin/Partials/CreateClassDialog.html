@@ -27,6 +27,15 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label class="radio-inline" title="Generated class that can use ResourceManager, ResourceProvider or Resx resources depending on a static flag value.">
+                            <input type="radio" ng-model="view.classType" value="DbRes">Single File Dynamic
+                        </label>
+                        &nbsp;&nbsp;
+                        <label class="radio-inline" title="Classic Resx Designer classes - only works for Resx resources and produces same output Visual Studio does.">
+                            <input type="radio" ng-model="view.classType" value="Resx" name="optradio">Resx Designer Classes
+                        </label>
+                    </div>
 
                     <div class="form-group">
                         <label>{{::view.resources.ResourceSetsToExport}}:</label>
@@ -49,6 +58,12 @@
                         <label>Export Namespace:</label>
                         <input ng-model="view.info.ResourceBaseNamespace" class="form-control"/>
                     </div>
+
+                    <div class="form-group ">
+                        <label>Export Namespace:</label>
+                        <input ng-model="view.info.ResourceBaseNamespace" class="form-control"/>
+                    </div>
+
                 </div>
 
 
