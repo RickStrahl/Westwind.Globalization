@@ -9,6 +9,9 @@ You can now choose to export either all ResourceSets (old behavior) or select on
 * **Add support for generating Strongly Typed Classes for specific ResourceSets**  
 You can now choose to export either all ResourceSets (old behavior) or select one or more ResourceSets when generating strongly typed classes. Like for ResourceSets this allows for strongly typed resources to be exported to arbitrary lcoatations and usage in all types of projects external to the Web site.
 
+* **Add Support for generating standard Resx Designer files from ResourceSets**  
+ALthough we already supported strongly typed resources with Resx through the dynamicly generated strongly typed resource export, you can now export classic .designer.cs/vb files. By doing so you can easily work with resources that don't take a dependency on Westwind.Globalization such as when editing resources files externally.
+
 ### Version 2.1 Release
 <small>June 24th, 2015</small>
 
