@@ -78,9 +78,21 @@ select[multiple] > option {
     overflow-x: auto;
       -webkit-transition: left 1.2s;
     transition: left 1.2s;
+    overflow: auto;
 }
 #ContentPanel.expanded {
     left: 0;
+}
+#ResourceGrid {
+    position: absolute !important;
+    top: 55px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px; 
+    overflow-y: auto;   
+    display: none;
+    background: white;
+    z-index: 1000;    
 }
 .locale-id {
     float: left;

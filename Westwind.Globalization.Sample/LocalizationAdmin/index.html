@@ -87,6 +87,7 @@
 <!--<div class="resource-editor-button" title="Enable/disable resource editing."></div>-->
 
 
+
 <div id="ErrorMessage" class="alert alert-{{view.error.cssClass}} alert-dismissable"
      ng-show="view.error.message">
     <!--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>-->
@@ -100,6 +101,7 @@
 <div ng-include src="'partials/ImportExportResxDialog.html'"></div>
 <div ng-include src="'partials/CreateClassDialog.html'"></div>
 <div ng-include src="'partials/ResourceEditor.html'"></div>
+<div ng-include src="'partials/ResourceGrid.html'"></div>
 
 
 
@@ -128,7 +130,6 @@
 <script src="app/resourceProviderInfoController.js"></script>
 <script src="app/importExportResxController.js"></script>
 <script src="app/createClassController.js"></script>
-
 <script src="scripts/ww.resourceEditor.js"></script>
 
 <!--<script>    

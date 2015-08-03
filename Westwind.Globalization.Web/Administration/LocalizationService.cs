@@ -73,6 +73,129 @@ namespace Westwind.Globalization.Web.Administration
             return ids;
         }
 
+
+        /// <summary>
+        /// Returns a shaped objects that can be displayed in an editable grid the grid view for locale ids
+        /// of resources.
+        //{
+        //  "Locales": [
+        //    "",
+        //    "de",
+        //    "fr"
+        //  ],
+        //  "Resources": [
+        //    {
+        //      "ResourceId": "AddressIsRequired",
+        //      "Resources": [
+        //        {
+        //          "ResourceId": "AddressIsRequired",
+        //          "LocaleId": "",
+        //          "ResourceSet": "Resources",
+        //          "Value": "An address is required."
+        //        },
+        //        {
+        //          "ResourceId": "AddressIsRequired",
+        //          "LocaleId": "de",
+        //          "ResourceSet": "Resources",
+        //          "Value": "Eine Addresse muss angegeben werden."
+        //        },
+        //        {
+        //          "ResourceId": "AddressIsRequired",
+        //          "LocaleId": "fr",
+        //          "ResourceSet": "Resources",
+        //          "Value": "Une adresse doit Ãªtre saisi."
+        //        }
+        //      ]
+        //    },
+        //    {}
+        //]
+        //}
+        /// </summary>
+        /// <param name="resourceSet"></param>
+        /// <returns></returns>
+        [CallbackMethod]
+        public object GetAllResourcesForResourceGrid(string resourceSet)
+        {
+            var db = Manager.GetDb();
+
+
+            var sql = @"SELECT TOP 1000
+      [ResourceId]
+      ,[Value]
+      ,[LocaleId]
+      ,[ResourceSet]
+  FROM [{0}]
+ where resourceset=@resourceset
+  order by ResourceId, localeId";
+
+            sql = string.Format(sql, Manager.Configuration.ResourceTableName);
+
+            var items = db.Query<ResourceItem>(sql, db.CreateParameter("@resourceset", resourceSet));
+
+            if (items == null)
+                throw new ApplicationException(db.ErrorMessage);
+
+            var itemList = items
+                .OrderBy(it => it.ResourceId + "_" + it.LocaleId)
+                .Select(it => new BasicResourceItem()
+                {
+                    ResourceId = it.ResourceId,
+                    LocaleId = it.LocaleId,
+                    ResourceSet = it.ResourceSet,
+                    Value = it.Value as string
+                }).ToList();
+
+            var totalLocales = itemList.GroupBy(it => it.LocaleId).Select(it=> it.Key).ToList();
+
+            foreach (var item in itemList.GroupBy(it=> it.ResourceId))
+            {                
+                string resid = item.Key;
+                var resItems = itemList.Where(it => it.ResourceId == resid).ToList();
+                if (resItems.Count < totalLocales.Count)
+                {
+                    foreach (string locale in totalLocales)
+                    {
+                        if (!resItems.Any(ri => ri.LocaleId == locale))
+                        {
+                            itemList.Add(new BasicResourceItem
+                            {
+                                ResourceId = resid,
+                                LocaleId = locale,
+                                ResourceSet = resourceSet
+                            });
+                        }
+                    }
+                }
+
+
+            }
+            itemList = itemList.OrderBy(it => it.ResourceId + "_" + it.LocaleId).ToList();
+
+            var resultList = new List<object>();
+            foreach (var item in itemList.GroupBy(it=> it.ResourceId))
+            {
+                var resId = item.Key;
+                var newItem = new
+                {
+                    ResourceId = resId,
+                    Resources = itemList
+                        .Where(it => it.ResourceId == resId)
+                        .OrderBy(it => it.LocaleId)
+                };
+                resultList.Add(newItem);
+            }
+
+            var result = new
+            {
+                ResourceSet = resourceSet,
+                Locales = totalLocales,
+                Resources = resultList
+            };
+
+            return result;
+        }
+
+
         [CallbackMethod]
         public IEnumerable<ResourceIdListItem> GetResourceListHtml(string resourceSet)
         {
@@ -520,7 +643,7 @@ namespace Westwind.Globalization.Web.Administration
                 strongTypes.CreateClassFromAllDatabaseResources(nameSpace, filename, resourceSets);
             else
             {
-                string outputBasePath = Path.GetDirectoryName(filename);
+                string outputBasePath = filename;
                 
                 if (resourceSets == null || resourceSets.Length < 1)
                     resourceSets = GetResourceSets().ToArray();
@@ -641,7 +764,10 @@ namespace Westwind.Globalization.Web.Administration
                 config.ResxExportProjectType,
                 config.ResxBaseFolder,
                 config.ResourceBaseNamespace,
-                config.StronglyTypedGlobalResource
+                config.StronglyTypedGlobalResource,
+                config.BingClientId,
+                config.BingClientSecret,
+                config.AddMissingResources                
             };
         }
 

@@ -1973,6 +1973,14 @@ namespace Westwind.Globalization
         public object Value { get; set; }        
     }
 
+    public class BasicResourceItem
+    {
+        public string ResourceId { get; set; }
+        public string LocaleId { get; set; }
+        public string ResourceSet { get; set; }
+        public string Value { get; set; }
+    }
+
     public class ResourceIdListItem : ResourceIdItem
     {
         public string Text { get; set;  }

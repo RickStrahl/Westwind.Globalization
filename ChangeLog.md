@@ -1,7 +1,10 @@
 # West Wind Globalization Changelog
 
-### Version 2.15
+### Version 2.20
 <small>note released yet</small>
+
+* **Add Grid Editor for quick Editing of Resources**  
+Added a grid view that allows editing of all resources in a resource set in a grid view that displays resources for all locales simultaneously. It's great way to quickly edit resources.
 
 * **Add support for exporting specific ResourceSets to Resx**  
 You can now choose to export either all ResourceSets (old behavior) or select one or more ResourceSets to export to Resx resources. This allows for much more flexibility in importing resources for editing from arbitrary projects on disk, then exporting them back to their original folders. Great for editing resources in Class Library projects.
@@ -11,6 +14,10 @@ You can now choose to export either all ResourceSets (old behavior) or select on
 
 * **Add Support for generating standard Resx Designer files from ResourceSets**  
 ALthough we already supported strongly typed resources with Resx through the dynamicly generated strongly typed resource export, you can now export classic .designer.cs/vb files. By doing so you can easily work with resources that don't take a dependency on Westwind.Globalization such as when editing resources files externally.
+
+* **Add Support for Localization Configurations**
+*under construction*  
+You can now save and restore configuration settings to a separate file which facilitates opening multiple localization 'projects' effectively.
 
 ### Version 2.1 Release
 <small>June 24th, 2015</small>

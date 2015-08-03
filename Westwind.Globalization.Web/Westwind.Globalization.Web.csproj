@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administration\LocalizationConfigurationsManager.cs" />
     <Compile Include="DbResourceProvider\DbResourceProvider.cs" />
     <Compile Include="DbResourceProvider\DbResourceProviderFactory.cs" />
     <Compile Include="DbSimpleResourceProvider\DbSimpleResourceProvider.cs" />

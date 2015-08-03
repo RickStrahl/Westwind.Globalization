@@ -1,5 +1,12 @@
 GET http://localhost:7894/localizationAdmin/localizationService.ashx?method=GetResourceList&ResourceSet=Resources HTTP/1.1
 Accept: application/json
+Websurge-Request-Name: GetResourceList
+
+------------------------------------------------------------------
+
+GET http://localhost:7894/localizationAdmin/localizationService.ashx?method=GetAllResourcesForResourceGrid&resourceSet=Resources HTTP/1.1
+Accept: application/json
+Websurge-Request-Name: GetAllResourcesForResourceGrid
 
 ------------------------------------------------------------------
 
@@ -187,12 +194,13 @@ CultureName: "de"
 {
   "NoProgressEvents": false,
   "DelayTimeMs": 0,
+  "NoContentDecompression": false,
   "CaptureMinimalResponseData": false,
   "MaxResponseSize": 0,
   "ReplaceCookieValue": null,
   "ReplaceAuthorization": null,
   "ReplaceQueryStringValuePairs": null,
-  "ReplaceDomain": "rasxps/westwind.globalization.sample",
+  "ReplaceDomain": "localhost/westwind.globalization.sample",
   "Username": null,
   "Password": "",
   "RandomizeRequests": false,

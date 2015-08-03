@@ -15,6 +15,7 @@
             resourceList: [],
             getResourceItems: getResourceItems,
             resourceItems: [],
+            getResourceGridItems: getResourceGridItems,
             resourceId: null,
             getResourceSets: getResourceSets,
             resourceSets: [],
@@ -75,6 +76,12 @@
                 })
                 .error(parseHttpError);
         }
+
+        function getResourceGridItems(resourceSet) {
+            return $http.get("localizationService.ashx?method=GetAllResourcesForResourceGrid&resourceSet=" + resourceSet)
+                .error(parseHttpError);
+        }
+
 
         function getResourceItem(resourceId, resourceSet, lang) {
             return $http.post("localizationService.ashx?method=GetResourceItem",

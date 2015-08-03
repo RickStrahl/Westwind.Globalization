@@ -58,8 +58,17 @@
    <resheader name="writer">
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
+   <data name="DynamicClasses" xml:space="preserve">
+      <value>Dynamische Klassen (Db oder Resx )</value>
+   </data>
+   <data name="ResxDesignerClasses" xml:space="preserve">
+      <value>Resx Designer Klassen</value>
+   </data>
    <data name="FeatureNotSupported" xml:space="preserve">
       <value>Diese Funktion ist nicht  unterstützt in dieser Online-Demo -Anwendung.</value>
+   </data>
+   <data name="CreateClassInfo" xml:space="preserve">
+      <value>Sie können Ihre ResourceSets als stark typisierte Klassen exportieren. Jeder ResourceSet wird als eine Klasse mit Properties für jede Resource ID exportier. Hier können Sie den Dateinamen und einen Namespace für die generierten Klassen angeben.</value>
    </data>
    <data name="ResourceSetsToExport" xml:space="preserve">
       <value>ResourceSets zu exportieren</value>
