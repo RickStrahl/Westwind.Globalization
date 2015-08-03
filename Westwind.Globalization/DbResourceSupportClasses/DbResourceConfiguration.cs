@@ -55,6 +55,15 @@ namespace Westwind.Globalization
     /// </summary>
     public class DbResourceConfiguration : Westwind.Utilities.Configuration.AppConfiguration
     {
+        
+        /// <summary>
+        /// Name of a LocalizationConfiguration entry that is loaded from the database
+        /// if available. Defaults to null - if set reads these configuration settings
+        /// other than the database connection string from an entry in the 
+        /// LocalizationConfigurations table.
+        /// </summary>
+        public string ActiveConfiguration { get; set; }
+
         /// <summary>
         /// A global instance of the current configuration. By default this instance reads its
         /// configuration values from web.config at runtime, but it can be overridden to
@@ -200,6 +209,7 @@ namespace Westwind.Globalization
         /// Bing Secret Key for Bing Translate API Access
         /// </summary>
         public string BingClientSecret { get; set; }
+        
 
 
         public List<IResourceSetValueConverter> ResourceSetValueConverters = new List<IResourceSetValueConverter>();
