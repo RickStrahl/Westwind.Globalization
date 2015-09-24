@@ -16,14 +16,11 @@
     "tests"
   ],
   "dependencies": {
-    "angular-sanitize": "1.4",
-    "bootstrap": "~3.3.2",    
-    "fontawesome": "~4.3.0",
-    "lodash": "~3.0.0",
-    "ng-file-upload": "~3.2.4",
-    "angular": "1.4"
-  },
-  "resolutions": {
-    "angular": "1.4"
+    "angular": "1.4.6",
+    "angular-sanitize": "1.4.6",
+    "bootstrap": "~3.3.2",
+    "font-awesome": "~4.4.0",
+    "lodash": "~3.0.1",
+    "ng-file-upload": "~3.2.4"
   }
 }

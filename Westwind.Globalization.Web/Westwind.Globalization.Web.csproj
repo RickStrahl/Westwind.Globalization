@@ -50,9 +50,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Westwind.Utilities, Version=2.64.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Westwind.Utilities.2.64\lib\net45\Westwind.Utilities.dll</HintPath>
+    <Reference Include="Westwind.Utilities, Version=2.65.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Westwind.Utilities.2.65\lib\net45\Westwind.Utilities.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Westwind.Web, Version=2.64.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administration\LocalizationConfigurationsManager.cs" />
     <Compile Include="DbResourceProvider\DbResourceProvider.cs" />
     <Compile Include="DbResourceProvider\DbResourceProviderFactory.cs" />
     <Compile Include="DbSimpleResourceProvider\DbSimpleResourceProvider.cs" />

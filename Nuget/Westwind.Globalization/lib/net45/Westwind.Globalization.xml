@@ -4,325 +4,27 @@
         <name>Westwind.Globalization</name>
     </assembly>
     <members>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetDb(System.String)">
-            <summary>
-            Creates an instance of the DataAccess Data provider
-            </summary>
-            <param name="connectionString"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetResourceSet(System.String,System.String)">
-            <summary>
-            Returns a specific set of resources for a given culture and 'resource set' which
-            in this case is just the virtual directory and culture.
-            </summary>
-            <param name="cultureName">name of the culture Id (de, de-de) to retrieve</param>
-            <param name="resourceSet">Name of the resource set to retrieve</param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetResourceSetNormalizedForLocaleId(System.String,System.String)">
-            <summary>
-            Returns a fully normalized list of resources that contains the most specific
-            locale version for the culture provided.
-                            
-            This means that this routine walks the resource hierarchy and returns
-            the most specific value in this order: de-ch, de, invariant.
-            </summary>
-            <param name="cultureName"></param>
-            <param name="resourceSet"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetAllResources(System.Boolean,System.Boolean)">
-            <summary>
-            Returns a data table of all the resources for all locales. The result is in a 
-            table called TResources that contains all fields of the table. The table is
-            ordered by LocaleId.
-            
-            This version returns either local or global resources in a Web app
-            
-            Fields:
-            ResourceId,Value,LocaleId,ResourceSet,Type
-            </summary>
-            <param name="localResources">return local resources if true</param>        
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetAllResourceIds(System.String)">
-            <summary>
-            Returns all available resource ids for a given resource set in all languages.
-            
-            Returns a ResourceIdItem object with ResourecId and HasValue fields.
-            HasValue returns whether there are any entries in any culture for this
-            resourceId
-            </summary>
-            <param name="resourceSet"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetAllResourceIdListItems(System.String)">
-            <summary>
-            Returns an DataTable called TResourceIds with ResourceId and HasValues fields
-            where the ResourceId is formatted for HTML display.
-            </summary>
-            <param name="resourceSet"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetAllResourceSets(Westwind.Globalization.ResourceListingTypes)">
-            <summary>
-            Returns all available resource sets
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetAllLocaleIds(System.String)">
-            <summary>
-            Gets all the locales for a specific resource set.
-            
-            Returns a table named TLocaleIds (LocaleId field)
-            </summary>
-            <param name="ResourceSet"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetAllResourcesForCulture(System.String,System.String)">
-            <summary>
-            Gets all the Resourecs and ResourceIds for a given resource set and Locale
-            
-            returns a table "TResource" ResourceId, Value fields
-            </summary>
-            <param name="resourceSet"></param>
-            <param name="cultureName"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetResourceString(System.String,System.String,System.String)">
-            <summary>
-            Returns an individual Resource String from the database
-            </summary>
-            <param name="resourceId"></param>
-            <param name="resourceSet"></param>       
-            <param name="cultureName"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetResourceObject(System.String,System.String,System.String)">
-            <summary>
-            Returns an object from the Resources. Attempts to convert the object to its
-            original type.  Use this for any non-string  types. Useful for binary resources
-            like images, icons etc.
-            
-            While this method can be used with strings, GetResourceString()
-            is much more efficient.
-            </summary>
-            <param name="resourceId"></param>
-            <param name="resourceSet"></param>
-            <param name="cultureName">required. Null or Empty culture returns invariant</param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetResourceItem(System.String,System.String,System.String)">
-            <summary>
-            Returns a resource item that returns both the Value and Comment to the
-            fields to the client.
-            </summary>
-            <param name="resourceId">The ID of the resource to retrieve</param>
-            <param name="resourceSet">Name of the ResourceSet to return</param>
-            <param name="cultureName">required. Null or Empty returns invariant</param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetResourceItems(System.String,System.String,System.Boolean)">
-            <summary>
-            Returns all resource items for a given resource ID in all locales.
-            Returned as full ResourceItem objects
-            </summary>
-            <param name="resourceId">The resource Id to return for</param>
-            <param name="resourceSet">Resourceset to look in</param>
-            <param name="forAllResourceSetLocales">When true returns empty entries for missing resources of locales in this resource set</param>
-            <returns>List of resource items or null</returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetResourceStrings(System.String,System.String,System.Boolean)">
-            <summary>
-            Returns all the resource strings for all cultures for a specific resource Id.
-            Returned as a dictionary.
-            </summary>
-            <param name="resourceId">Resource Id to retrieve strings for</param>
-            <param name="resourceSet">Resource Set on which to retrieve strings</param>
-            <param name="forAllResourceSetLocales">If true returns empty entries for each locale that exists but has no value in this resource set</param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.UpdateOrAddResource(Westwind.Globalization.ResourceItem)">
-            <summary>
-            Updates a resource if it exists, if it doesn't one is created
-            </summary>
-            <param name="resource">Resource to update</param>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.UpdateOrAddResource(System.String,System.Object,System.String,System.String,System.String,System.Boolean,System.Int32)">
-            <summary>
-            Updates a resource if it exists, if it doesn't one is created
-            </summary>
-            <param name="resourceId"></param>
-            <param name="value"></param>
-            <param name="cultureName"></param>
-            <param name="resourceSet"></param>
-            <param name="Type"></param>        
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.AddResource(Westwind.Globalization.ResourceItem)">
-            <summary>
-            Adds a resource to the Localization Table
-            </summary>
-            <param name="resource">Resource to update</param>        
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.AddResource(System.String,System.Object,System.String,System.String,System.String,System.Boolean,System.Int32)">
-            <summary>
-            Adds a resource to the Localization Table
-            </summary>
-            <param name="resourceId">The resource key name</param>
-            <param name="value">Value to set it to. Can also be a file which is loaded as binary data when valueIsFileName is true</param>
-            <param name="cultureName">name of the culture or null for invariant/default</param>
-            <param name="resourceSet">The ResourceSet to which the resource id is added</param>
-            <param name="comment">Optional comment for the key</param>
-            <param name="valueIsFileName">if true the Value property is a filename to import</param>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.UpdateResource(System.String,System.Object,System.String,System.String,System.String,System.Boolean,System.Int32)">
-            <summary>
-            Updates an existing resource in the Localization table
-            </summary>
-            <param name="resourceId"></param>
-            <param name="value"></param>
-            <param name="cultureName"></param>
-            <param name="resourceSet"></param>
-            <param name="Type"></param>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.UpdateResource(Westwind.Globalization.ResourceItem)">
-            <summary>
-            Updates a resource if it exists, if it doesn't one is created
-            </summary>
-            <param name="resource">Resource to update</param>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.DeleteResource(System.String,System.String,System.String)">
-            <summary>
-            Deletes a specific resource ID based on ResourceId, ResourceSet and Culture.
-            If an empty culture is passed the entire group is removed (ie. all locales).
-            </summary>
-            <param name="resourceId">Resource Id to delete</param>
-            <param name="resourceSet">The resource set to remove</param>
-            <param name="cultureName">language ID - if empty all languages are deleted</param>
-            e
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.RenameResource(System.String,System.String,System.String)">
-            <summary>
-            Renames a given resource in a resource set. Note all languages will be renamed
-            </summary>
-            <param name="ResourceId"></param>
-            <param name="NewResourceId"></param>
-            <param name="ResourceSet"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.RenameResourceProperty(System.String,System.String,System.String)">
-            <summary>
-            Renames all property keys for a given property prefix. So this routine updates
-            lblName.Text, lblName.ToolTip to lblName2.Text, lblName2.ToolTip if the property
-            is changed from lblName to lblName2.
-            </summary>
-            <param name="Property"></param>
-            <param name="NewProperty"></param>
-            <param name="ResourceSet"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.DeleteResourceSet(System.String)">
-            <summary>
-            Deletes an entire resource set from the database. Careful with this function!
-            </summary>
-            <param name="ResourceSet"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.RenameResourceSet(System.String,System.String)">
-            <summary>
-            Renames a resource set. Useful if you need to move a local page resource set
-            to a new page. ResourceSet naming for local resources is application relative page path:
-            
-            test.aspx
-            subdir/test.aspx
-            
-            Global resources have a simple name
-            </summary>
-            <param name="OldResourceSet">Name of the existing resource set</param>
-            <param name="NewResourceSet">Name to set the resourceset name to</param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.ResourceExists(System.String,System.String,System.String)">
-            <summary>
-            Checks to see if a resource exists in the resource store
-            </summary>
-            <param name="ResourceId"></param>
-            <param name="Value"></param>
-            <param name="CultureName"></param>
-            <param name="ResourceSet"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.IsValidCulture(System.String)">
-            <summary>
-            Returns true or false depending on whether the two letter country code exists
-            </summary>
-            <param name="IetfTag">two or four letter IETF tag (examples: de, de-DE,fr,fr-CA)</param>
-            <returns>true or false</returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.GenerateResources(System.Collections.IDictionary,System.String,System.String,System.Boolean)">
-            <summary>
-            Persists resources to the database - first wipes out all resources, then writes them back in
-            from the ResourceSet
-            </summary>
-            <param name="resourceList"></param>
-            <param name="cultureName"></param>
-            <param name="resourceSet"></param>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetResourcesAsJavascriptObject(System.String,System.String,System.String)">
-            <summary>
-            Creates an global JavaScript object object that holds all non-control 
-            local string resources as property values.
-            
-            All resources are returned in normalized fashion from most specifc
-            to more generic (de-ch,de,invariant depending on availability)
-            </summary>
-            <param name="javaScriptVarName">Name of the JS object variable to createBackupTable</param>
-            <param name="resourceSet">ResourceSet name. Pass NULL for locale Resources</param>
-            <param name="localeId"></param>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.IsLocalizationTable(System.String)">
-            <summary>
-            Checks to see if the LocalizationTable exists
-            </summary>
-            <param name="tableName">Table name or the configuration.ResourceTableName if not passed</param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.CreateBackupTable(System.String)">
-            <summary>
-            Create a backup of the localization database.
-            
-            Note the table used is the one specified in the Configuration.ResourceTableName
-            </summary>
-            <param name="BackupTableName">Table of the backup table. Null creates a _Backup table.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.RestoreBackupTable(System.String)">
-            <summary>
-            Restores the localization table from a backup table by first wiping out 
-            </summary>
-            <param name="backupTableName"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.CreateLocalizationTable(System.String)">
-            <summary>
-            Creates the Localization table on the current connection string for
-            the provider.
-            </summary>
-            <param name="tableName"></param>
-            <returns></returns>
-        </member>
-        <member name="P:Westwind.Globalization.IDbResourceDataManager.Configuration">
+        <member name="P:Westwind.Globalization.DbResourceDataManager.Configuration">
             <summary>
             Instance of the DbResourceConfiguration that can be overridden
             Defaults to the default instance - DbResourceConfiguration.Current
             </summary>
         </member>
-        <member name="P:Westwind.Globalization.IDbResourceDataManager.ErrorMessage">
+        <member name="P:Westwind.Globalization.DbResourceDataManager.ErrorMessage">
             <summary>
             Error message that can be checked after a method complets
             and returns a failure result.
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.DbResourceDataManager.TableCreationSql">
+            <summary>
+            Code used to create a database (if required) for the
+            given data provider.
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.DbResourceDataManager.Transaction">
+            <summary>
+            Internally used Transaction object
             </summary>
         </member>
         <member name="M:Westwind.Globalization.DbResourceDataManager.CreateDbResourceDataManager(System.Type)">
@@ -683,29 +385,6 @@
             <param name="resourceType">Type name to deserialize - type must be referenced by the app</param>
             <returns>value or null on failure (no exceptions thrown)</returns>
         </member>
-        <member name="P:Westwind.Globalization.DbResourceDataManager.Configuration">
-            <summary>
-            Instance of the DbResourceConfiguration that can be overridden
-            Defaults to the default instance - DbResourceConfiguration.Current
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.DbResourceDataManager.ErrorMessage">
-            <summary>
-            Error message that can be checked after a method complets
-            and returns a failure result.
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.DbResourceDataManager.TableCreationSql">
-            <summary>
-            Code used to create a database (if required) for the
-            given data provider.
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.DbResourceDataManager.Transaction">
-            <summary>
-            Internally used Transaction object
-            </summary>
-        </member>
         <member name="T:Westwind.Globalization.DbResourceDataManagerTypes">
             <summary>
             The data managers supported by this library
@@ -783,6 +462,327 @@
             Sql CE implementation of the Db SQL data provider
             </summary>
         </member>
+        <member name="P:Westwind.Globalization.IDbResourceDataManager.Configuration">
+            <summary>
+            Instance of the DbResourceConfiguration that can be overridden
+            Defaults to the default instance - DbResourceConfiguration.Current
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.IDbResourceDataManager.ErrorMessage">
+            <summary>
+            Error message that can be checked after a method complets
+            and returns a failure result.
+            </summary>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetDb(System.String)">
+            <summary>
+            Creates an instance of the DataAccess Data provider
+            </summary>
+            <param name="connectionString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetResourceSet(System.String,System.String)">
+            <summary>
+            Returns a specific set of resources for a given culture and 'resource set' which
+            in this case is just the virtual directory and culture.
+            </summary>
+            <param name="cultureName">name of the culture Id (de, de-de) to retrieve</param>
+            <param name="resourceSet">Name of the resource set to retrieve</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetResourceSetNormalizedForLocaleId(System.String,System.String)">
+            <summary>
+            Returns a fully normalized list of resources that contains the most specific
+            locale version for the culture provided.
+                            
+            This means that this routine walks the resource hierarchy and returns
+            the most specific value in this order: de-ch, de, invariant.
+            </summary>
+            <param name="cultureName"></param>
+            <param name="resourceSet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetAllResources(System.Boolean,System.Boolean)">
+            <summary>
+            Returns a data table of all the resources for all locales. The result is in a 
+            table called TResources that contains all fields of the table. The table is
+            ordered by LocaleId.
+            
+            This version returns either local or global resources in a Web app
+            
+            Fields:
+            ResourceId,Value,LocaleId,ResourceSet,Type
+            </summary>
+            <param name="localResources">return local resources if true</param>        
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetAllResourceIds(System.String)">
+            <summary>
+            Returns all available resource ids for a given resource set in all languages.
+            
+            Returns a ResourceIdItem object with ResourecId and HasValue fields.
+            HasValue returns whether there are any entries in any culture for this
+            resourceId
+            </summary>
+            <param name="resourceSet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetAllResourceIdListItems(System.String)">
+            <summary>
+            Returns an DataTable called TResourceIds with ResourceId and HasValues fields
+            where the ResourceId is formatted for HTML display.
+            </summary>
+            <param name="resourceSet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetAllResourceSets(Westwind.Globalization.ResourceListingTypes)">
+            <summary>
+            Returns all available resource sets
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetAllLocaleIds(System.String)">
+            <summary>
+            Gets all the locales for a specific resource set.
+            
+            Returns a table named TLocaleIds (LocaleId field)
+            </summary>
+            <param name="ResourceSet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetAllResourcesForCulture(System.String,System.String)">
+            <summary>
+            Gets all the Resourecs and ResourceIds for a given resource set and Locale
+            
+            returns a table "TResource" ResourceId, Value fields
+            </summary>
+            <param name="resourceSet"></param>
+            <param name="cultureName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetResourceString(System.String,System.String,System.String)">
+            <summary>
+            Returns an individual Resource String from the database
+            </summary>
+            <param name="resourceId"></param>
+            <param name="resourceSet"></param>       
+            <param name="cultureName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetResourceObject(System.String,System.String,System.String)">
+            <summary>
+            Returns an object from the Resources. Attempts to convert the object to its
+            original type.  Use this for any non-string  types. Useful for binary resources
+            like images, icons etc.
+            
+            While this method can be used with strings, GetResourceString()
+            is much more efficient.
+            </summary>
+            <param name="resourceId"></param>
+            <param name="resourceSet"></param>
+            <param name="cultureName">required. Null or Empty culture returns invariant</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetResourceItem(System.String,System.String,System.String)">
+            <summary>
+            Returns a resource item that returns both the Value and Comment to the
+            fields to the client.
+            </summary>
+            <param name="resourceId">The ID of the resource to retrieve</param>
+            <param name="resourceSet">Name of the ResourceSet to return</param>
+            <param name="cultureName">required. Null or Empty returns invariant</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetResourceItems(System.String,System.String,System.Boolean)">
+            <summary>
+            Returns all resource items for a given resource ID in all locales.
+            Returned as full ResourceItem objects
+            </summary>
+            <param name="resourceId">The resource Id to return for</param>
+            <param name="resourceSet">Resourceset to look in</param>
+            <param name="forAllResourceSetLocales">When true returns empty entries for missing resources of locales in this resource set</param>
+            <returns>List of resource items or null</returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetResourceStrings(System.String,System.String,System.Boolean)">
+            <summary>
+            Returns all the resource strings for all cultures for a specific resource Id.
+            Returned as a dictionary.
+            </summary>
+            <param name="resourceId">Resource Id to retrieve strings for</param>
+            <param name="resourceSet">Resource Set on which to retrieve strings</param>
+            <param name="forAllResourceSetLocales">If true returns empty entries for each locale that exists but has no value in this resource set</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.UpdateOrAddResource(Westwind.Globalization.ResourceItem)">
+            <summary>
+            Updates a resource if it exists, if it doesn't one is created
+            </summary>
+            <param name="resource">Resource to update</param>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.UpdateOrAddResource(System.String,System.Object,System.String,System.String,System.String,System.Boolean,System.Int32)">
+            <summary>
+            Updates a resource if it exists, if it doesn't one is created
+            </summary>
+            <param name="resourceId"></param>
+            <param name="value"></param>
+            <param name="cultureName"></param>
+            <param name="resourceSet"></param>
+            <param name="Type"></param>        
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.AddResource(Westwind.Globalization.ResourceItem)">
+            <summary>
+            Adds a resource to the Localization Table
+            </summary>
+            <param name="resource">Resource to update</param>        
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.AddResource(System.String,System.Object,System.String,System.String,System.String,System.Boolean,System.Int32)">
+            <summary>
+            Adds a resource to the Localization Table
+            </summary>
+            <param name="resourceId">The resource key name</param>
+            <param name="value">Value to set it to. Can also be a file which is loaded as binary data when valueIsFileName is true</param>
+            <param name="cultureName">name of the culture or null for invariant/default</param>
+            <param name="resourceSet">The ResourceSet to which the resource id is added</param>
+            <param name="comment">Optional comment for the key</param>
+            <param name="valueIsFileName">if true the Value property is a filename to import</param>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.UpdateResource(System.String,System.Object,System.String,System.String,System.String,System.Boolean,System.Int32)">
+            <summary>
+            Updates an existing resource in the Localization table
+            </summary>
+            <param name="resourceId"></param>
+            <param name="value"></param>
+            <param name="cultureName"></param>
+            <param name="resourceSet"></param>
+            <param name="Type"></param>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.UpdateResource(Westwind.Globalization.ResourceItem)">
+            <summary>
+            Updates a resource if it exists, if it doesn't one is created
+            </summary>
+            <param name="resource">Resource to update</param>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.DeleteResource(System.String,System.String,System.String)">
+            <summary>
+            Deletes a specific resource ID based on ResourceId, ResourceSet and Culture.
+            If an empty culture is passed the entire group is removed (ie. all locales).
+            </summary>
+            <param name="resourceId">Resource Id to delete</param>
+            <param name="resourceSet">The resource set to remove</param>
+            <param name="cultureName">language ID - if empty all languages are deleted</param>
+            e
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.RenameResource(System.String,System.String,System.String)">
+            <summary>
+            Renames a given resource in a resource set. Note all languages will be renamed
+            </summary>
+            <param name="ResourceId"></param>
+            <param name="NewResourceId"></param>
+            <param name="ResourceSet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.RenameResourceProperty(System.String,System.String,System.String)">
+            <summary>
+            Renames all property keys for a given property prefix. So this routine updates
+            lblName.Text, lblName.ToolTip to lblName2.Text, lblName2.ToolTip if the property
+            is changed from lblName to lblName2.
+            </summary>
+            <param name="Property"></param>
+            <param name="NewProperty"></param>
+            <param name="ResourceSet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.DeleteResourceSet(System.String)">
+            <summary>
+            Deletes an entire resource set from the database. Careful with this function!
+            </summary>
+            <param name="ResourceSet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.RenameResourceSet(System.String,System.String)">
+            <summary>
+            Renames a resource set. Useful if you need to move a local page resource set
+            to a new page. ResourceSet naming for local resources is application relative page path:
+            
+            test.aspx
+            subdir/test.aspx
+            
+            Global resources have a simple name
+            </summary>
+            <param name="OldResourceSet">Name of the existing resource set</param>
+            <param name="NewResourceSet">Name to set the resourceset name to</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.ResourceExists(System.String,System.String,System.String)">
+            <summary>
+            Checks to see if a resource exists in the resource store
+            </summary>
+            <param name="ResourceId"></param>
+            <param name="Value"></param>
+            <param name="CultureName"></param>
+            <param name="ResourceSet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.IsValidCulture(System.String)">
+            <summary>
+            Returns true or false depending on whether the two letter country code exists
+            </summary>
+            <param name="IetfTag">two or four letter IETF tag (examples: de, de-DE,fr,fr-CA)</param>
+            <returns>true or false</returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.GenerateResources(System.Collections.IDictionary,System.String,System.String,System.Boolean)">
+            <summary>
+            Persists resources to the database - first wipes out all resources, then writes them back in
+            from the ResourceSet
+            </summary>
+            <param name="resourceList"></param>
+            <param name="cultureName"></param>
+            <param name="resourceSet"></param>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetResourcesAsJavascriptObject(System.String,System.String,System.String)">
+            <summary>
+            Creates an global JavaScript object object that holds all non-control 
+            local string resources as property values.
+            
+            All resources are returned in normalized fashion from most specifc
+            to more generic (de-ch,de,invariant depending on availability)
+            </summary>
+            <param name="javaScriptVarName">Name of the JS object variable to createBackupTable</param>
+            <param name="resourceSet">ResourceSet name. Pass NULL for locale Resources</param>
+            <param name="localeId"></param>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.IsLocalizationTable(System.String)">
+            <summary>
+            Checks to see if the LocalizationTable exists
+            </summary>
+            <param name="tableName">Table name or the configuration.ResourceTableName if not passed</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.CreateBackupTable(System.String)">
+            <summary>
+            Create a backup of the localization database.
+            
+            Note the table used is the one specified in the Configuration.ResourceTableName
+            </summary>
+            <param name="BackupTableName">Table of the backup table. Null creates a _Backup table.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.RestoreBackupTable(System.String)">
+            <summary>
+            Restores the localization table from a backup table by first wiping out 
+            </summary>
+            <param name="backupTableName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.CreateLocalizationTable(System.String)">
+            <summary>
+            Creates the Localization table on the current connection string for
+            the provider.
+            </summary>
+            <param name="tableName"></param>
+            <returns></returns>
+        </member>
         <member name="T:Westwind.Globalization.IDbResourceSetDataManager">
             <summary>
             This interface is all that's required to use the Db resource provider
@@ -801,16 +801,7 @@
             <param name="resourceSet"></param>
             <returns></returns>
         </member>
-        <member name="M:Westwind.Globalization.IResourceSetValueConverter.Convert(System.Object,System.String)">
-            <summary>
-            The method used to convert or transform the value
-            that will be stored in the ResourceSet fed for resources.
-            </summary>
-            <param name="resourceValue">The actual value to convert</param>
-            <param name="key">key of the value to convert</param>        
-            <returns></returns>
-        </member>
-        <member name="P:Westwind.Globalization.IResourceSetValueConverter.ValueType">
+        <member name="P:Westwind.Globalization.MarkdownResourceSetValueConverter.ValueType">
             <summary>
             The value type that you would like to act on.
             This value can be the standard value type defined
@@ -828,7 +819,7 @@
             <param name="key">key of the value to convert</param>        
             <returns></returns>
         </member>
-        <member name="P:Westwind.Globalization.MarkdownResourceSetValueConverter.ValueType">
+        <member name="P:Westwind.Globalization.IResourceSetValueConverter.ValueType">
             <summary>
             The value type that you would like to act on.
             This value can be the standard value type defined
@@ -836,6 +827,15 @@
             value that is stored in the ValueType property of
             database.
             </summary>
+        </member>
+        <member name="M:Westwind.Globalization.IResourceSetValueConverter.Convert(System.Object,System.String)">
+            <summary>
+            The method used to convert or transform the value
+            that will be stored in the ResourceSet fed for resources.
+            </summary>
+            <param name="resourceValue">The actual value to convert</param>
+            <param name="key">key of the value to convert</param>        
+            <returns></returns>
         </member>
         <member name="T:Westwind.Globalization.DbResourceReader">
             <summary>
@@ -1067,6 +1067,12 @@
             as resources are accessed.
             </summary>
         </member>
+        <member name="P:Westwind.Globalization.DbRes.AutoAddResources">
+            <summary>
+            Determines whether resources that fail in a lookup are automatically
+            added to the resource table
+            </summary>
+        </member>
         <member name="M:Westwind.Globalization.DbRes.T(System.String,System.String,System.String)">
             <summary>
             Localization helper function that Translates a resource
@@ -1189,23 +1195,10 @@
             Effectively unloads the ResourceManager and ResourceProvider.
             </summary>
         </member>
-        <member name="P:Westwind.Globalization.DbRes.AutoAddResources">
-            <summary>
-            Determines whether resources that fail in a lookup are automatically
-            added to the resource table
-            </summary>
-        </member>
         <member name="T:Westwind.Globalization.ResourceItem">
             <summary>
             Returns a resource item that contains both Value and Comment
             </summary>
-        </member>
-        <member name="M:Westwind.Globalization.ResourceItem.FromDataReader(System.Data.IDataReader)">
-            <summary>
-            initializes the resource item properties from
-            the active data reader item.
-            </summary>
-            <param name="reader"></param>
         </member>
         <member name="P:Westwind.Globalization.ResourceItem.ResourceId">
             <summary>
@@ -1243,6 +1236,13 @@
             <summary>
             The resource set (file) that this resource belongs to
             </summary>
+        </member>
+        <member name="M:Westwind.Globalization.ResourceItem.FromDataReader(System.Data.IDataReader)">
+            <summary>
+            initializes the resource item properties from
+            the active data reader item.
+            </summary>
+            <param name="reader"></param>
         </member>
         <member name="T:Westwind.Globalization.IWestWindResourceProvider">
             <summary>
@@ -1377,8 +1377,9 @@
         <member name="M:Westwind.Globalization.GeneratedResourceHelper.GetAspNetResourceProviderValue(System.String,System.String)">
             <summary>
             Helper method called to retrieve ASP.NET ResourceProvider based
-            resources. Isolted into a separate method to avoid referencing
-            HttpContext.
+            resources. Isolated into a separate method to avoid referencing
+            HttpContext from the StronglyTyped resource file so non-Web
+            projects don't pull in System.Web.
             </summary>
             <param name="resourceSet"></param>
             <param name="resourceId"></param>
@@ -1412,15 +1413,6 @@
             providers in WAP.
             </summary>
         </member>
-        <member name="M:Westwind.Globalization.JavaScriptResources.SerializeResourceDictionary(System.Collections.Generic.Dictionary{System.String,System.Object},System.String,System.String)">
-            <summary>
-            Generates the actual JavaScript object map string makes up the
-            handler's result content.
-            </summary>
-            <param name="resxDict"></param>
-            <param name="resourceSetName"></param>
-            <returns></returns>
-        </member>
         <member name="P:Westwind.Globalization.JavaScriptResources.OutputPath">
             <summary>
             The physical path for the Web application
@@ -1431,12 +1423,31 @@
             An error message set on a failure result
             </summary>
         </member>
+        <member name="M:Westwind.Globalization.JavaScriptResources.SerializeResourceDictionary(System.Collections.Generic.Dictionary{System.String,System.Object},System.String,System.String)">
+            <summary>
+            Generates the actual JavaScript object map string makes up the
+            handler's result content.
+            </summary>
+            <param name="resxDict"></param>
+            <param name="resourceSetName"></param>
+            <returns></returns>
+        </member>
         <member name="T:Westwind.Globalization.StronglyTypedResources">
             <summary>
             Class that handles generating strongly typed resources 
             for global Web resource files. This feature is not supported
             in ASP.NET stock projects and doesn't support custom resource
             providers in WAP.
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.StronglyTypedResources.WebPhysicalPath">
+            <summary>
+            The physical path for the Web application
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.StronglyTypedResources.ErrorMessage">
+            <summary>
+            An error message set on a failure result
             </summary>
         </member>
         <member name="F:Westwind.Globalization.StronglyTypedResources.IsVb">
@@ -1466,7 +1477,7 @@
             <param name="Namespace"></param>        
             <returns></returns>
         </member>
-        <member name="M:Westwind.Globalization.StronglyTypedResources.CreateClassFromAllDatabaseResources(System.String,System.String)">
+        <member name="M:Westwind.Globalization.StronglyTypedResources.CreateClassFromAllDatabaseResources(System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
             <summary>
             Creates strongly typed classes from all global resources in the current application
             from the active DbResourceManager. One class is created which contains each of the
@@ -1477,6 +1488,19 @@
             </summary>
             <param name="Namespace">Optional namespace for the generated file</param>
             <param name="FileName">Output class file. .cs or .vb determines code language</param>
+            <returns>Generated class as a string</returns>
+        </member>
+        <member name="M:Westwind.Globalization.StronglyTypedResources.CreateResxDesignerClassesFromAllDatabaseResources(System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates strongly typed classes from all global resources in the current application
+            from the active DbResourceManager. One class is created which contains each of the
+            resource classes. Classnames are not necessarily named with
+            
+            Uses the default DbResourceConfiguration.Current settings for connecting
+            to the database.
+            </summary>
+            <param name="ns">Optional namespace for the generated file</param>
+            <param name="fileName">Output class file. .cs or .vb determines code language</param>
             <returns>Generated class as a string</returns>
         </member>
         <member name="M:Westwind.Globalization.StronglyTypedResources.CreateClassFromResXResource(System.String,System.String,System.String,System.String)">
@@ -1506,7 +1530,7 @@
             <param name="FileName">Output filename for the CSharp class. If null no file is generated and only the class is returned</param>
             <returns>string of the generated class</returns>
         </member>
-        <member name="M:Westwind.Globalization.StronglyTypedResources.CreateClassFromResourceSet(System.Resources.ResourceSet,System.String,System.String,System.String)">
+        <member name="M:Westwind.Globalization.StronglyTypedResources.CreateResxDesignerClassFromResourceSet(System.String,System.String,System.String,System.String)">
             <summary>
             Creates a strongly typed resource from a ResourceSet object. The ResourceSet passed should always
             be the invariant resourceset that contains all the ResourceIds.
@@ -1519,7 +1543,23 @@
             <param name="fileName">Output filename for the CSharp class. If null no file is generated and only the class is returned</param>
             <returns></returns>
         </member>
+        <member name="M:Westwind.Globalization.StronglyTypedResources.CreateResxDesignerClassFromResxFile(System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Creates a StronglyTyped class from a REsx file. Can be used after a Resx fi
+            </summary>
+            <param name="resxFile"></param>
+            <param name="resourceSetName"></param>
+            <param name="namespaceName"></param>
+        </member>
         <member name="M:Westwind.Globalization.StronglyTypedResources.CreateClassHeader(System.String,System.String,System.Boolean,System.Text.StringBuilder)">
+            <summary>
+            Creates the class header for a page
+            </summary>
+            <param name="Classname"></param>
+            <param name="IsVb"></param>
+            <param name="sbClass"></param>
+        </member>
+        <member name="M:Westwind.Globalization.StronglyTypedResources.CreateResxDesignerClassHeader(System.String,System.String,System.Boolean,System.Text.StringBuilder)">
             <summary>
             Creates the class header for a page
             </summary>
@@ -1538,6 +1578,17 @@
             <param name="Class"></param>
             <returns></returns>
         </member>
+        <member name="M:Westwind.Globalization.StronglyTypedResources.CreateResxDesignerNameSpaceWrapper(System.String,System.Boolean,System.String)">
+            <summary>
+            Wraps the body of a class (or multiple classes) into a namespace
+            and adds teh appropriate using/imports statements. If no namespace is
+            passed the using/imports are still added, but no namespace is assigned
+            </summary>
+            <param name="Namespace"></param>
+            <param name="IsVb"></param>
+            <param name="Class"></param>
+            <returns></returns>
+        </member>
         <member name="M:Westwind.Globalization.StronglyTypedResources.IsFileVb(System.String)">
             <summary>
             Checks to see if the file extension is .vb and if so 
@@ -1546,21 +1597,21 @@
             <param name="FileName"></param>
             <returns></returns>
         </member>
-        <member name="P:Westwind.Globalization.StronglyTypedResources.WebPhysicalPath">
-            <summary>
-            The physical path for the Web application
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.StronglyTypedResources.ErrorMessage">
-            <summary>
-            An error message set on a failure result
-            </summary>
-        </member>
         <member name="T:Westwind.Globalization.TranslationServices">
             <summary>
             Provides basic translation features via several Web interfaces
             
             NOTE: These services may change their format or otherwise fail.
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.TranslationServices.ErrorMessage">
+            <summary>
+            Error message set when an error occurs in the translation service
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.TranslationServices.TimeoutSeconds">
+            <summary>
+            Timeout for how long to wait for a translation
             </summary>
         </member>
         <member name="M:Westwind.Globalization.TranslationServices.TranslateGoogle(System.String,System.String,System.String)">
@@ -1607,16 +1658,6 @@
             <param name="clientSecret">The client secret or password</param>
             <returns></returns>
         </member>
-        <member name="P:Westwind.Globalization.TranslationServices.ErrorMessage">
-            <summary>
-            Error message set when an error occurs in the translation service
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.TranslationServices.TimeoutSeconds">
-            <summary>
-            Timeout for how long to wait for a translation
-            </summary>
-        </member>
         <member name="T:Westwind.Globalization.DbResXConverter">
             <summary>
             This class can be used to export resources from the database to ASP.NET
@@ -1652,6 +1693,19 @@
             If not specified HttpContext.Current.PhysicalPath is used instead.
             </param>
         </member>
+        <member name="P:Westwind.Globalization.DbResXConverter.BasePhysicalPath">
+            <summary>
+            The physical path of the Web application. This path serves as 
+            the root path to write resources to.
+            
+            Example: c:\projects\MyWebApp
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.DbResXConverter.ErrorMessage">
+            <summary>
+            Error message if an operation fails
+            </summary>
+        </member>
         <member name="M:Westwind.Globalization.DbResXConverter.GenerateLocalWebResourceResXFiles">
             <summary>
             Genereates Local Web Resource ResX files from the DbResourceDataManager
@@ -1675,7 +1729,7 @@
             <param name="localResources"></param>
             <returns></returns>
         </member>
-        <member name="M:Westwind.Globalization.DbResXConverter.GenerateResXFiles">
+        <member name="M:Westwind.Globalization.DbResXConverter.GenerateResXFiles(System.Collections.Generic.IEnumerable{System.String},System.Boolean)">
             <summary>
             Generates Resx Files for standard non-Web Resource files        
             based on the BasePhysicalPath
@@ -1779,19 +1833,6 @@
             <param name="localeId"></param>
             <returns></returns>
         </member>
-        <member name="P:Westwind.Globalization.DbResXConverter.BasePhysicalPath">
-            <summary>
-            The physical path of the Web application. This path serves as 
-            the root path to write resources to.
-            
-            Example: c:\projects\MyWebApp
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.DbResXConverter.ErrorMessage">
-            <summary>
-            Error message if an operation fails
-            </summary>
-        </member>
         <member name="T:Westwind.Globalization.DbResourceConfiguration">
             <summary>
             The configuration class that is used to configure the Resource Provider.
@@ -1802,6 +1843,14 @@
             configuration settings object. By default it reads the configuration settings
             from web.config (at runtime). You can override this behavior by creating your
             own configuration object and assigning it to the DbResourceConfiguration.Current property.
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.DbResourceConfiguration.ActiveConfiguration">
+            <summary>
+            Name of a LocalizationConfiguration entry that is loaded from the database
+            if available. Defaults to null - if set reads these configuration settings
+            other than the database connection string from an entry in the 
+            LocalizationConfigurations table.
             </summary>
         </member>
         <member name="F:Westwind.Globalization.DbResourceConfiguration.Current">
@@ -1826,52 +1875,6 @@
             Static constructor for the Current property - guarantees this
             code fires exactly once giving us a singleton instance
             of the configuration object.
-            </summary>
-        </member>
-        <member name="F:Westwind.Globalization.DbResourceConfiguration.DbResourceDataManagerType">
-            <summary>
-            Allows you to override the data provider used to access resources.
-            Defaults to Sql Server. To override set this value during application
-            startup - typical on DbResourceConfiguration.Current.DbResourceDataManagerType
-            
-            This type instance is used to instantiate the actual provider.       
-            </summary>
-        </member>
-        <member name="M:Westwind.Globalization.DbResourceConfiguration.#ctor">
-            <summary>
-            Base constructor that doesn't do anything to the default values.
-            </summary>
-        </member>
-        <member name="M:Westwind.Globalization.DbResourceConfiguration.OnCreateDefaultProvider(System.String,System.Object)">
-            <summary>
-            Override this method to create the custom default provider. Here we allow for different 
-            configuration providers so we don't have to rely on .NET configuration classed (for vNext)
-            </summary>
-        </member>
-        <member name="M:Westwind.Globalization.DbResourceConfiguration.CreateDbResourceDataManager">
-            <summary>
-            Creates an instance of the DbResourceDataManager based on configuration settings
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="F:Westwind.Globalization.DbResourceConfiguration.LoadedProviders">
-            <summary>
-            Keep track of loaded providers so we can unload them
-            </summary>
-        </member>
-        <member name="M:Westwind.Globalization.DbResourceConfiguration.ClearResourceCache">
-            <summary>
-            This static method clears all resources from the loaded Resource Providers 
-            and forces them to be reloaded the next time they are requested.
-            
-            Use this method after you've edited resources in the database and you want 
-            to refresh the UI to show the newly changed values.
-            
-            This method works by internally tracking all the loaded ResourceProvider 
-            instances and calling the IwwResourceProvider.ClearResourceCache() method 
-            on each of the provider instances. This method is called by the Resource 
-            Administration form when you explicitly click the Reload Resources button.
-            <seealso>Class DbResourceConfiguration</seealso>
             </summary>
         </member>
         <member name="P:Westwind.Globalization.DbResourceConfiguration.ConnectionString">
@@ -1945,6 +1948,52 @@
             Bing Secret Key for Bing Translate API Access
             </summary>
         </member>
+        <member name="F:Westwind.Globalization.DbResourceConfiguration.DbResourceDataManagerType">
+            <summary>
+            Allows you to override the data provider used to access resources.
+            Defaults to Sql Server. To override set this value during application
+            startup - typical on DbResourceConfiguration.Current.DbResourceDataManagerType
+            
+            This type instance is used to instantiate the actual provider.       
+            </summary>
+        </member>
+        <member name="M:Westwind.Globalization.DbResourceConfiguration.#ctor">
+            <summary>
+            Base constructor that doesn't do anything to the default values.
+            </summary>
+        </member>
+        <member name="M:Westwind.Globalization.DbResourceConfiguration.OnCreateDefaultProvider(System.String,System.Object)">
+            <summary>
+            Override this method to create the custom default provider. Here we allow for different 
+            configuration providers so we don't have to rely on .NET configuration classed (for vNext)
+            </summary>
+        </member>
+        <member name="M:Westwind.Globalization.DbResourceConfiguration.CreateDbResourceDataManager">
+            <summary>
+            Creates an instance of the DbResourceDataManager based on configuration settings
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:Westwind.Globalization.DbResourceConfiguration.LoadedProviders">
+            <summary>
+            Keep track of loaded providers so we can unload them
+            </summary>
+        </member>
+        <member name="M:Westwind.Globalization.DbResourceConfiguration.ClearResourceCache">
+            <summary>
+            This static method clears all resources from the loaded Resource Providers 
+            and forces them to be reloaded the next time they are requested.
+            
+            Use this method after you've edited resources in the database and you want 
+            to refresh the UI to show the newly changed values.
+            
+            This method works by internally tracking all the loaded ResourceProvider 
+            instances and calling the IwwResourceProvider.ClearResourceCache() method 
+            on each of the provider instances. This method is called by the Resource 
+            Administration form when you explicitly click the Reload Resources button.
+            <seealso>Class DbResourceConfiguration</seealso>
+            </summary>
+        </member>
         <member name="T:Westwind.Globalization.GlobalizationResxExportProjectTypes">
             <summary>
             Project types for Resx Exports. Either WebForms using 
@@ -1995,6 +2044,11 @@
         <member name="F:Westwind.Globalization.DbResourceManager.SyncLock">
             <summary>
             Critical Section lock used for loading/adding resource sets
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.DbResourceManager.AutoAddMissingEntries">
+            <summary>
+            If true causes any entries that aren't found to be added
             </summary>
         </member>
         <member name="M:Westwind.Globalization.DbResourceManager.#ctor(System.String)">
@@ -2071,11 +2125,6 @@
             </summary>
             <param name="name"></param>
             <param name="value"></param>
-        </member>
-        <member name="P:Westwind.Globalization.DbResourceManager.AutoAddMissingEntries">
-            <summary>
-            If true causes any entries that aren't found to be added
-            </summary>
         </member>
     </members>
 </doc>

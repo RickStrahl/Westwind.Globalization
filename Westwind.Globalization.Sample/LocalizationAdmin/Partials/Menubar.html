@@ -12,34 +12,41 @@
     <style>
         </style>
     <ul id="MenuButtons" class="nav navbar-nav pull-right navbar">
+             <li>
+            <a ng-show="view.resourceSets && view.resourceSets.length > 0"
+                ng-click="view.onGridMenuClick()"
+                title="{{view.dbRes('GridView_Title')}}"
+                data-resource-id="GridView">
+                <i class="fa fa-list-alt"></i> {{view.dbRes('GridView')}}
+            </a>
+        </li>
         <li>
             <a ng-show="view.resourceSets && view.resourceSets.length > 0"
                xng-click="view.onExportResxResourcesClick()"
                data-toggle="modal" data-target="#ImportExportResxDialog"
                title="{{::view.dbRes('ExportResx_Title')}}"
-               data-resource-id="ImportExportResx"
-               >
+               data-resource-id="ImportExportResx">
                 <i class="fa fa-download"></i> {{::view.dbRes('ImportExportResx')}}
             </a>
         </li>
         <li>
             <a ng-show="view.resourceSets && view.resourceSets.length > 0"
-                data-toggle="modal" data-target="#CreateClassDialog"
-                title="{{view.resources.CreateClass_Title}}"
-                data-resource-id="CreateClass">
+               data-toggle="modal" data-target="#CreateClassDialog"
+               title="{{view.resources.CreateClass_Title}}"
+               data-resource-id="CreateClass">
                 <i class="fa fa-code" style="font-weight: bold;"></i> {{::view.dbRes('CreateClass')}}
             </a>
         </li>
         <li>
             <a ng-show="view.resourceSets && view.resourceSets.length > 0"
-                ng-click="view.onReloadResourcesClick()"
-                title="{{view.dbRes('ReloadResources_Title')}}"
-                data-resource-id="ReloadResources">
+               ng-click="view.onReloadResourcesClick()"
+               title="{{view.dbRes('ReloadResources_Title')}}"
+               data-resource-id="ReloadResources">
                 <i class="fa fa-refresh"></i> {{::view.dbRes('ReloadResources')}}
             </a>
         </li>
         <li>
-                        
+
             <a ng-show="!view.resourceSets || view.resourceSets.length < 1"
                ng-click="view.onCreateTableClick()"
                title=" {{::view.dbRes('CreateTable_Title')}} "
@@ -56,7 +63,7 @@
                data-resource-id="Backup">
                 <i class="fa fa-save"></i> {{::view.dbRes('Backup')}}
             </a>
-        </li>        
+        </li>
         <li role="presentation" class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
                 <i class="fa fa-gear"></i> <span class="caret"></span>
@@ -81,7 +88,7 @@
 
         <li>
             <a href="../"
-               title="{{view.dbRes('Home_Title')}}" 
+               title="{{view.dbRes('Home_Title')}}"
                data-resource-id="Home.Title">
                 <i class="fa fa-home"></i>
             </a>

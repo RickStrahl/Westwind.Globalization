@@ -23,6 +23,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>bfb9a77d</NuGetPackageImportStamp>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,6 +43,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -111,9 +116,13 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Westwind.Utilities, Version=2.64.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Westwind.Utilities.2.64\lib\net45\Westwind.Utilities.dll</HintPath>
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Westwind.Utilities, Version=2.65.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Westwind.Utilities.2.65\lib\net45\Westwind.Utilities.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Westwind.Web">
       <HintPath>..\packages\Westwind.Web.2.64\lib\net45\Westwind.Web.dll</HintPath>
@@ -198,10 +207,10 @@
     <Content Include="LocalizationAdmin\bower_components\bootstrap\dist\js\bootstrap.js" />
     <Content Include="LocalizationAdmin\bower_components\bootstrap\dist\js\bootstrap.min.js" />
     <Content Include="LocalizationAdmin\bower_components\bootstrap\dist\js\npm.js" />
-    <Content Include="LocalizationAdmin\bower_components\fontawesome\.gitignore" />
-    <Content Include="LocalizationAdmin\bower_components\fontawesome\css\font-awesome.css" />
-    <Content Include="LocalizationAdmin\bower_components\fontawesome\css\font-awesome.min.css" />
-    <Content Include="LocalizationAdmin\bower_components\fontawesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="LocalizationAdmin\bower_components\font-awesome\css\font-awesome.css" />
+    <Content Include="LocalizationAdmin\bower_components\font-awesome\css\font-awesome.min.css" />
+    <Content Include="LocalizationAdmin\bower_components\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="LocalizationAdmin\bower_components\font-awesome\HELP-US-OUT.txt" />
     <Content Include="LocalizationAdmin\bower_components\ng-file-upload\angular-file-upload-all.js" />
     <Content Include="LocalizationAdmin\bower_components\ng-file-upload\angular-file-upload-all.min.js" />
     <Content Include="LocalizationAdmin\bower_components\ng-file-upload\angular-file-upload-shim.js" />
@@ -217,6 +226,7 @@
     <Content Include="LocalizationAdmin\index.html" />
     <Content Include="LocalizationAdmin\Partials\ImportExportResxDialog.html" />
     <Content Include="LocalizationAdmin\Partials\ResourceEditor.html" />
+    <Content Include="LocalizationAdmin\Partials\ResourceGrid.html" />
     <Content Include="LocalizationAdmin\Partials\ResourceProviderInfoDialog.html" />
     <Content Include="LocalizationAdmin\Partials\RenameResourceDialog.html" />
     <Content Include="LocalizationAdmin\Partials\ResourceSetList.html" />
@@ -258,15 +268,6 @@
     <Content Include="LocalizationAdmin\bower_components\angular\bower.json" />
     <Content Include="LocalizationAdmin\bower_components\angular\package.json" />
     <Content Include="LocalizationAdmin\bower_components\angular\README.md" />
-    <Content Include="LocalizationAdmin\bower_components\fontawesome\.bower.json" />
-    <Content Include="LocalizationAdmin\bower_components\fontawesome\.npmignore" />
-    <Content Include="LocalizationAdmin\bower_components\fontawesome\bower.json" />
-    <Content Include="LocalizationAdmin\bower_components\fontawesome\css\font-awesome.css.map" />
-    <Content Include="LocalizationAdmin\bower_components\fontawesome\fonts\fontawesome-webfont.eot" />
-    <Content Include="LocalizationAdmin\bower_components\fontawesome\fonts\fontawesome-webfont.ttf" />
-    <Content Include="LocalizationAdmin\bower_components\fontawesome\fonts\fontawesome-webfont.woff" />
-    <Content Include="LocalizationAdmin\bower_components\fontawesome\fonts\fontawesome-webfont.woff2" />
-    <Content Include="LocalizationAdmin\bower_components\fontawesome\fonts\FontAwesome.otf" />
     <Content Include="LocalizationAdmin\scripts\ww.jquery.min.js">
       <DependentUpon>ww.jquery.js</DependentUpon>
     </Content>
@@ -294,6 +295,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="LocalizationAdmin\bower_components\font-awesome\.bower.json" />
+    <Content Include="LocalizationAdmin\bower_components\font-awesome\.gitignore" />
+    <Content Include="LocalizationAdmin\bower_components\font-awesome\.npmignore" />
+    <Content Include="LocalizationAdmin\bower_components\font-awesome\bower.json" />
+    <Content Include="LocalizationAdmin\bower_components\font-awesome\css\font-awesome.css.map" />
+    <Content Include="LocalizationAdmin\bower_components\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="LocalizationAdmin\bower_components\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="LocalizationAdmin\bower_components\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="LocalizationAdmin\bower_components\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="LocalizationAdmin\bower_components\font-awesome\fonts\FontAwesome.otf" />
     <None Include="LocalizationAdmin\scripts\_references.js" />
     <Content Include="LocalizationAdmin\bower_components\jquery\.bower.json" />
     <Content Include="LocalizationAdmin\bower_components\jquery\bower.json" />

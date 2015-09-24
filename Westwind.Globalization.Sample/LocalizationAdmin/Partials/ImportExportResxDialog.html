@@ -63,11 +63,10 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" ng-show="view.importExportType=='Export'">
                         <label>{{::view.resources.ResourceSetsToExport}}:</label>
                         <select id="typeResourceSet" class="form-control"
                                 multiple
-                                ng-show="view.importExportType=='Export'"
                                 ng-model="view.selectedResourceSets">
                             <option value="">*** {{::view.resources.AllResourceSets}}</option>
                             <option ng-repeat="resourceSet in view.resourceSets" value="{{resourceSet}}">{{resourceSet}}</option>

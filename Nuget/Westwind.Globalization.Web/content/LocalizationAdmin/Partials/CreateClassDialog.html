@@ -20,15 +20,34 @@
                         <div style="margin-left: 40px; margin-top: -30px;">
                             <p data-resource-id="CreateClassInfo">
                                 {{::view.resources.CreateClassInfo}}
-                            </p>
-                            <p data-resource-id="CreateClassInfo2">
-                                {{::view.resources.CreateClassInfo2}}
-                            </p>                            
+                            </p>                                                   
                         </div>
                     </div>
 
+                    <div class="form-group" style="font-weight: bold">
+                        <label class="radio-inline" title="Custom generated single file that contains all resource classes. Can use Db Resources or Resx resources interactively using ResourceManager, ResourceProvider or Resx resources depending on a static flag value.">
+                            <input type="radio" ng-model="view.classType" value="DbRes" data-resource-id="DynamicClasses">{{::view.resources.DynamicClasses}}
+                        </label>
+                        &nbsp;&nbsp;
+                        <label class="radio-inline" title="Classic Resx Designer classes - only works for Resx resources and produces same output Visual Studio does.">
+                            <input type="radio" ng-model="view.classType" value="Resx" name="optradio" data-resource-id="ResxDesignerClasses">{{::view.resources.ResxDesignerClasses}}
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label>{{::view.resources.ResourceSetsToExport}}:</label>
+                        <select id="typeResourceSet" class="form-control"
+                                multiple                                
+                                ng-model="view.selectedResourceSets">
+                            <option value="">*** {{::view.resources.AllResourceSets}}</option>
+                            <option ng-repeat="resourceSet in view.resourceSets" value="{{resourceSet}}">{{resourceSet}}</option>
+                        </select>
+                    </div>
+
+
                     <div class="form-group ">
-                        <label>Export {{::view.resources.Filename}}:</label>
+                        <label ng-show="view.classType=='DbRes'">Export {{::view.resources.Filename}}:</label>
+                        <label ng-show="view.classType=='Resx'">Export Folder:</label>
                         <input ng-model="view.info.StronglyTypedGlobalResource" class="form-control" />
                     </div>
 
@@ -36,7 +55,8 @@
                     <div class="form-group ">
                         <label>Export Namespace:</label>
                         <input ng-model="view.info.ResourceBaseNamespace" class="form-control"/>
-                    </div>
+                    </div>         
+
                 </div>
 
 

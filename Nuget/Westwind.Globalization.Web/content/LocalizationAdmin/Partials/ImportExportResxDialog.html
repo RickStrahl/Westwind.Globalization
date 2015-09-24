@@ -61,7 +61,17 @@
                             <option value="Export">Export {{::view.resources.Resources}}</option>
                             <option value="Import">Import {{::view.resources.Resources}}</option>
                         </select>
-                    </div>                 
+                    </div>
+
+                    <div class="form-group" ng-show="view.importExportType=='Export'">
+                        <label>{{::view.resources.ResourceSetsToExport}}:</label>
+                        <select id="typeResourceSet" class="form-control"
+                                multiple
+                                ng-model="view.selectedResourceSets">
+                            <option value="">*** {{::view.resources.AllResourceSets}}</option>
+                            <option ng-repeat="resourceSet in view.resourceSets" value="{{resourceSet}}">{{resourceSet}}</option>
+                        </select>
+                    </div>        
 
 
                     <div class="form-group ">

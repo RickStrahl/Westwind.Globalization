@@ -453,7 +453,7 @@ namespace Westwind.Globalization
                 string sql = "select ResourceId,Value,LocaleId,ResourceSet,Type,TextFile,BinFile,FileName,Comment,ValueType,Updated from " + Configuration.ResourceTableName +
                              " where ResourceSet " +
                              (!localResources ? "not" : string.Empty) + " like @ResourceSet " +
-                             "ORDER BY ResourceSet,LocaleId";
+                             "ORDER BY ResourceSet,LocaleId, ResourceId";
 
                 items = data.Query<ResourceItem>(sql, data.CreateParameter("@ResourceSet", "%.%"));
 
@@ -1971,6 +1971,14 @@ namespace Westwind.Globalization
         public string ResourceId { get; set; }
         public bool HasValue { get; set; }
         public object Value { get; set; }        
+    }
+
+    public class BasicResourceItem
+    {
+        public string ResourceId { get; set; }
+        public string LocaleId { get; set; }
+        public string ResourceSet { get; set; }
+        public string Value { get; set; }
     }
 
     public class ResourceIdListItem : ResourceIdItem
