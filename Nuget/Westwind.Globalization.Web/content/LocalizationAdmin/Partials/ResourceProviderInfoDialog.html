@@ -10,27 +10,54 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h3 class="modal-title" id="ResourceProviderInfoTitle">{{view.dbRes('ResourceProviderInfo')}}</h3>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body">                                       
+                    <table class="table table-condensed" style="font-size: 0.9em;">
+                        <tr class="warning">
+                            <td style="width: 25%">Connection String:</td>
+                            <td>
+                                <input ng-model="view.info.ConnectionString"  class="form-control input-sm"/>
+                            </td>
+                        </tr>
+                        <tr class="warning">
+                            <td>Tablename:</td>
+                            <td>
+                                <input ng-model="view.info.ResourceTableName" class="form-control input-sm" />
+                            </td>
+                        </tr>
+                        <tr class="info">
+                            <td>Resx Folder:</td>
+                            <td><input ng-model="view.info.ResxBaseFolder" class="form-control input-sm" /></td>
+                        </tr>
+                        <tr class="info">
+                            <td>Resx Namespace:</td>
+                            <td><input ng-model="view.info.ResourceBaseNamespace" class="form-control input-sm" /></td>
+                        </tr>
+                        <tr class="info">
+                            <td>Strongly Typed Class File:</td>
+                            <td><input ng-model="view.info.StronglyTypedGlobalResource" class="form-control input-sm"/></td>
+                        </tr>
+
+                        <tr class="success">
+                            <td>Bing Client Id:</td>
+                            <td><input ng-model="view.info.BingClientId" class="form-control input-sm" /></td>
+                        </tr>
+                        <tr class="success">
+                            <td>Bing Client Secret:</td>
+                            <td><input ng-model="view.info.BingClientSecret" class="form-control input-sm" /></td>
+                        </tr>
+                    </table>
+
+
                     <div class="form-group">
                         <label>ASP.NET Resource Provider in use:</label>
                         <div>{{view.info.ProviderFactory }}</div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label>DbResourceProvider Type in use:</label>
                         <div>{{view.info.DbResourceProviderType }}</div>
                     </div>
 
-                    <div class="form-group">
-                        <label>Database Connection &amp; Table:</label>
-                        <div>{{view.info.ConnectionString}} &nbsp;&nbsp;&nbsp; <b>Table:</b> {{view.info.ResourceTableName}}</div>
-                    </div>
-
-                    
-                    <div class="form-group">
-                        <label>Resx Export Folder &amp; Mode:</label>
-                        <div>{{view.info.ResxBaseFolder}} &nbsp;&nbsp;&nbsp; <b>Project Mode:</b> {{view.info.ResxExportProjectType}} </div>
-                    </div>                    
                 </div>
                 <div class="modal-footer">
                     <button type="submit"

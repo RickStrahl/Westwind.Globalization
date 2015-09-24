@@ -4,6 +4,145 @@
         <name>Westwind.Globalization.Web</name>
     </assembly>
     <members>
+        <member name="T:Westwind.Globalization.Web.Administration.LocalizationConfigurationsManager">
+            <summary>
+            This class manages saving configuration settings so they can be easily restored
+            in LocalizationsConfigurations.json in the Web root folder
+            </summary>
+            <remarks>
+            Assumes Web application has rights to read/write to disk in the Web root in
+            order to save settings.
+            </remarks>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationConfigurationsManager.StoreConfiguration(System.String,Westwind.Globalization.DbResourceConfiguration)">
+            <summary>
+            Saves the current configuration settings
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="T:Westwind.Globalization.Web.Administration.LocalizationService">
+            <summary>
+            Localization form Admin service that provides JSON data for 
+            the admin interface.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Westwind.Globalization.Web.Administration.LocalizationService.GetAllResourcesForResourceGrid(System.String)" -->
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.GetResourceStrings(System.String,System.String)">
+            <summary>
+            Gets all resources for a given ResourceId for all cultures from
+            a resource set.
+            </summary>
+            <param name="resourceId"></param>
+            <param name="resourceSet"></param>
+            <returns>Returns an array of Key/Value objects to the client</returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.UpdateResource(Westwind.Globalization.ResourceItem)">
+            <summary>
+            Updates or Adds a resource if it doesn't exist
+            </summary>
+            <param name="resource"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.RenameResource(System.Object)">
+            <summary>
+            Renames a resource key to a new name.
+            
+            Requires a JSON object with the following properties:
+            {
+            }
+            
+            
+            </summary>
+            <param name="parms"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.RenameResourceProperty(System.String,System.String,System.String)">
+            <summary>
+            Renames all resource keys that match a property (ie. lblName.Text, lblName.ToolTip)
+            at once. This is useful if you decide to rename a meta:resourcekey in the ASP.NET
+            markup.
+            </summary>
+            <param name="Property">Original property prefix</param>
+            <param name="NewProperty">New Property prefix</param>
+            <param name="ResourceSet">The resourceset it applies to</param>
+            <returns></returns>
+        </member>
+        <member name="T:Westwind.Globalization.Web.Resources.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.Web.Resources.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.Web.Resources.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.Web.Resources.Resources.Can_t_save_resource__Invalid_culture_id_passed">
+            <summary>
+              Looks up a localized string similar to Can&apos;t save resource: Invalid culture id passed: {0}.
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.Web.Resources.Resources.Client_Id_and_Client_Secret_must_be_provided">
+            <summary>
+              Looks up a localized string similar to Client Id and Client Secret must be provided..
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.Web.Resources.Resources.Client_Id_and_Client_Secret_must_be_provided_">
+            <summary>
+              Looks up a localized string similar to Client Id and Client Secret must be provided..
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.Web.Resources.Resources.ConnectionFailed">
+            <summary>
+              Looks up a localized string similar to Connection failed: .
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.Web.Resources.Resources.ConnectionStringForResourcesIsNotConfigure">
+            <summary>
+              Looks up a localized string similar to Connection string for resources is not configured.
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.Web.Resources.Resources.EditPageResources">
+            <summary>
+              Looks up a localized string similar to Edit Page Resources.
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.Web.Resources.Resources.InvalidSearchResult">
+            <summary>
+              Looks up a localized string similar to Invalid search result..
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.Web.Resources.Resources.LocalizationOptions">
+            <summary>
+              Looks up a localized string similar to Localization Options.
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.Web.Resources.Resources.LocalizationTable_Localization_Table_exists_already">
+            <summary>
+              Looks up a localized string similar to Localization Table exists already.
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.Web.Resources.Resources.No_matching_Recordset_found">
+            <summary>
+              Looks up a localized string similar to No matching Recordset found..
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.Web.Resources.Resources.NoResourceIdSpecifiedCantAddResource">
+            <summary>
+              Looks up a localized string similar to No ResourceId specified. Can&apos;t add resource.
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.Web.Resources.Resources.ShowLocalizationIcons">
+            <summary>
+              Looks up a localized string similar to Show Localization Icons.
+            </summary>
+        </member>
         <member name="T:Westwind.Globalization.DbResourceProvider">
             <summary>
             The DbResourceProvider class is an ASP.NET Resource Provider implementation
@@ -41,6 +180,16 @@
             <param name="virtualPath"></param>
             <param name="classname"></param>
         </member>
+        <member name="P:Westwind.Globalization.DbResourceProvider.ResourceManager">
+            <summary>
+            IResourceProvider interface - required to provide an instance to an
+            ResourceManager object.
+            
+            Note that the resource manager is not tied to a specific culture by
+            default. The Provider uses the UiCulture without explicitly passing
+            culture info.
+            </summary>
+        </member>
         <member name="M:Westwind.Globalization.DbResourceProvider.ClearResourceCache">
             <summary>
             Releases all resources and forces resources to be reloaded
@@ -55,6 +204,14 @@
             <param name="resourceKey"></param>
             <param name="culture"></param>
             <returns></returns>
+        </member>
+        <member name="P:Westwind.Globalization.DbResourceProvider.ResourceReader">
+            <summary>
+            Required instance of the ResourceReader for this provider. Part of
+            the IResourceProvider interface. The reader is responsible for feeding
+            the Resource data from a ResourceSet. The interface basically walks
+            an enumerable interface by ResourceId.
+            </summary>
         </member>
         <member name="M:Westwind.Globalization.DbResourceProvider.System#Web#Compilation#IImplicitResourceProvider#GetObject(System.Web.Compilation.ImplicitResourceKey,System.Globalization.CultureInfo)">
             <summary>
@@ -85,24 +242,6 @@
             </summary>
             <param name="keyPrefix"></param>
             <returns></returns>
-        </member>
-        <member name="P:Westwind.Globalization.DbResourceProvider.ResourceManager">
-            <summary>
-            IResourceProvider interface - required to provide an instance to an
-            ResourceManager object.
-            
-            Note that the resource manager is not tied to a specific culture by
-            default. The Provider uses the UiCulture without explicitly passing
-            culture info.
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.DbResourceProvider.ResourceReader">
-            <summary>
-            Required instance of the ResourceReader for this provider. Part of
-            the IResourceProvider interface. The reader is responsible for feeding
-            the Resource data from a ResourceSet. The interface basically walks
-            an enumerable interface by ResourceId.
-            </summary>
         </member>
         <member name="T:Westwind.Globalization.DbResourceProviderFactory">
             <summary>
@@ -301,82 +440,6 @@
             </summary>
             <param name="key"></param>
             <returns></returns>
-        </member>
-        <member name="T:Westwind.Globalization.Web.Resources.Resources">
-            <summary>
-              A strongly-typed resource class, for looking up localized strings, etc.
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.Web.Resources.Resources.ResourceManager">
-            <summary>
-              Returns the cached ResourceManager instance used by this class.
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.Web.Resources.Resources.Culture">
-            <summary>
-              Overrides the current thread's CurrentUICulture property for all
-              resource lookups using this strongly typed resource class.
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.Web.Resources.Resources.Can_t_save_resource__Invalid_culture_id_passed">
-            <summary>
-              Looks up a localized string similar to Can&apos;t save resource: Invalid culture id passed: {0}.
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.Web.Resources.Resources.Client_Id_and_Client_Secret_must_be_provided">
-            <summary>
-              Looks up a localized string similar to Client Id and Client Secret must be provided..
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.Web.Resources.Resources.Client_Id_and_Client_Secret_must_be_provided_">
-            <summary>
-              Looks up a localized string similar to Client Id and Client Secret must be provided..
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.Web.Resources.Resources.ConnectionFailed">
-            <summary>
-              Looks up a localized string similar to Connection failed: .
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.Web.Resources.Resources.ConnectionStringForResourcesIsNotConfigure">
-            <summary>
-              Looks up a localized string similar to Connection string for resources is not configured.
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.Web.Resources.Resources.EditPageResources">
-            <summary>
-              Looks up a localized string similar to Edit Page Resources.
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.Web.Resources.Resources.InvalidSearchResult">
-            <summary>
-              Looks up a localized string similar to Invalid search result..
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.Web.Resources.Resources.LocalizationOptions">
-            <summary>
-              Looks up a localized string similar to Localization Options.
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.Web.Resources.Resources.LocalizationTable_Localization_Table_exists_already">
-            <summary>
-              Looks up a localized string similar to Localization Table exists already.
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.Web.Resources.Resources.No_matching_Recordset_found">
-            <summary>
-              Looks up a localized string similar to No matching Recordset found..
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.Web.Resources.Resources.NoResourceIdSpecifiedCantAddResource">
-            <summary>
-              Looks up a localized string similar to No ResourceId specified. Can&apos;t add resource.
-            </summary>
-        </member>
-        <member name="P:Westwind.Globalization.Web.Resources.Resources.ShowLocalizationIcons">
-            <summary>
-              Looks up a localized string similar to Show Localization Icons.
-            </summary>
         </member>
         <member name="T:Westwind.Globalization.DbResourceControl">
             <summary>
@@ -641,52 +704,6 @@
             or the DbResourceProviders of this assembly.
             Other custom resource providers are not supported.
             </summary>
-        </member>
-        <member name="T:Westwind.Globalization.Web.Administration.LocalizationService">
-            <summary>
-            Localization form Admin service that provides JSON data for 
-            the admin interface.
-            </summary>
-        </member>
-        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.GetResourceStrings(System.String,System.String)">
-            <summary>
-            Gets all resources for a given ResourceId for all cultures from
-            a resource set.
-            </summary>
-            <param name="resourceId"></param>
-            <param name="resourceSet"></param>
-            <returns>Returns an array of Key/Value objects to the client</returns>
-        </member>
-        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.UpdateResource(Westwind.Globalization.ResourceItem)">
-            <summary>
-            Updates or Adds a resource if it doesn't exist
-            </summary>
-            <param name="resource"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.RenameResource(System.Object)">
-            <summary>
-            Renames a resource key to a new name.
-            
-            Requires a JSON object with the following properties:
-            {
-            }
-            
-            
-            </summary>
-            <param name="parms"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.RenameResourceProperty(System.String,System.String,System.String)">
-            <summary>
-            Renames all resource keys that match a property (ie. lblName.Text, lblName.ToolTip)
-            at once. This is useful if you decide to rename a meta:resourcekey in the ASP.NET
-            markup.
-            </summary>
-            <param name="Property">Original property prefix</param>
-            <param name="NewProperty">New Property prefix</param>
-            <param name="ResourceSet">The resourceset it applies to</param>
-            <returns></returns>
         </member>
     </members>
 </doc>

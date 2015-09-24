@@ -23,6 +23,7 @@
         vm.resourceSet = null;
         vm.resourceSets = [];
         vm.resourceList = [];
+        vm.resourceGridResources = [];
         vm.resourceId = null;
         vm.activeResource = null;
         vm.localeIds = [];
@@ -166,8 +167,6 @@
             }
         };
         vm.onResourceFullscreenEdit = function(ev, resource) {
-
-
             $("#resource-editor").fullScreenEditor('show', {
                 value: resource.Value,
                 rtl: resource.IsRtl,
@@ -434,7 +433,33 @@
                     showMessage(vm.dbRes('ResourceSetRenamed'));
                 })
                 .error(parseError);
-        }
+        };
+        vm.onGridMenuClick = function () {
+            var resourceSet = vm.resourceSet;
+            localizationService.getResourceGridItems(resourceSet)
+                .success(function (resources) {
+                    vm.resourceGridResources = resources;
+                });
+        
+            $("#ResourceGrid").show();
+        };
+        vm.saveGridResource = function(resource) {
+            localizationService.updateResource(resource)
+                .success(function() {
+                    showMessage(vm.dbRes('ResourceSaved'));
+                })
+                .error(parseError);
+        };
+        vm.onGridClose = function() {
+            // refresh resource display in case we change the value 
+            // of the active item
+            vm.onResourceIdChange();
+
+            $("#ResourceGrid").hide();
+
+            // release resources and clear bindings
+            vm.resourceGridResources = null;            
+        };
         vm.onReloadResourcesClick = function() {
             localizationService.reloadResources()
                 .success(function() {
