@@ -236,6 +236,21 @@ namespace Westwind.Globalization.Test
             Assert.IsNull(check, manager.ErrorMessage);
         }
 
+        [Test]
+        public void IsLocalizationTable()
+        {
+            var manager = GetManager();
+
+            Assert.IsTrue(manager.IsLocalizationTable(),
+                "Localization table doesn't exist: " + manager.Configuration.ResourceTableName);
+
+            Assert.IsTrue(manager.IsLocalizationTable("Localizations"),
+                "Localization table doesn't exist: Localizations");
+
+
+            Assert.IsFalse(manager.IsLocalizationTable("bogus"),
+             "Localization table shouldn't exist: bogus");
+        }
 
 
         [Test]
@@ -250,7 +265,6 @@ namespace Westwind.Globalization.Test
                 Console.WriteLine("Localization Table created.");
             else
                 Console.WriteLine(manager.ErrorMessage);
-
 
         }
 

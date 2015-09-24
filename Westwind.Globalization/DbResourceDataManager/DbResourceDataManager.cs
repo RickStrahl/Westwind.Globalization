@@ -1774,18 +1774,24 @@ namespace Westwind.Globalization
         {
             if (tableName == null)
                 tableName = Configuration.ResourceTableName;
+            if (string.IsNullOrEmpty(tableName))
+                tableName = "Localizations";
 
+
+            string sql = "SELECT * FROM INFORMATION_SCHEMA.TABLES where TABLE_NAME=@0";
+        
             using (var data = GetDb())
             {
-                var Pk = data.ExecuteScalar("select count(pk) from " + tableName);
+                var tables = data.ExecuteTable("TTables",sql, tableName);
 
-                if (Pk is int || Pk is long)
-                    return true;
-
-                SetError(data.ErrorMessage);
+                if (tables == null || tables.Rows.Count < 1)
+                {
+                    SetError(data.ErrorMessage);
+                    return false;
+                }             
             }
-            
-            return false;
+
+            return true;
         }
 
 
@@ -1856,6 +1862,7 @@ namespace Westwind.Globalization
 
             return true;
         }
+
 
         /// <summary>
         /// Creates the Localization table on the current connection string for

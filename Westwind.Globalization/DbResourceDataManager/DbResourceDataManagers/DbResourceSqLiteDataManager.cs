@@ -45,6 +45,29 @@ namespace Westwind.Globalization
             }
         }
 
+        public override bool IsLocalizationTable(string tableName = null)
+        {
+            if (tableName == null)
+                tableName = Configuration.ResourceTableName;
+            if (string.IsNullOrEmpty(tableName))
+                tableName = "Localizations";
+
+            string sql = "SELECT name FROM sqlite_master WHERE type = 'table' AND name='" + tableName + "'";            
+
+            using (var data = GetDb())
+            {
+                var tables = data.ExecuteTable("TTables", sql, tableName);
+
+                if (tables == null || tables.Rows.Count < 1)
+                {
+                    SetError(data.ErrorMessage);
+                    return false;
+                }
+            }
+
+            return true;            
+        }
+
         public override bool CreateLocalizationTable(string tableName = null)
         {
             if (tableName == null)
