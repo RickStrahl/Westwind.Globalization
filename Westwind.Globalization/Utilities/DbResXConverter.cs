@@ -194,7 +194,8 @@ namespace Westwind.Globalization
                 LocaleId = LocaleId.ToLower();
 
                 // Create a new output file if the resource set or locale changes
-                if (ResourceSet != LastSet || LocaleId != LastLocale)
+                if (string.Compare(ResourceSet, LastSet, StringComparison.OrdinalIgnoreCase) != 0 || 
+                    string.Compare(LocaleId, LastLocale, StringComparison.OrdinalIgnoreCase) != 0)                    
                 {
                     if (xWriter != null)
                     {
