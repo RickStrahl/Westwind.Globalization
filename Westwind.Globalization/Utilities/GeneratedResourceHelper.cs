@@ -70,7 +70,7 @@ namespace Westwind.Globalization
             if (resourceMode == ResourceAccessMode.Resx)
                 return manager.GetString(resourceId);
 
-            return DbRes.T(resourceSet, "LocalizationForm");
+            return DbRes.T(resourceId, resourceSet);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Westwind.Globalization
                 return GetAspNetResourceProviderValue(resourceSet, resourceId);
             if (resourceMode == ResourceAccessMode.Resx)
                 return manager.GetObject(resourceId);
-            return DbRes.TObject(resourceSet, "LocalizationForm");
+            return DbRes.TObject(resourceId, resourceSet);
         }
 
 
