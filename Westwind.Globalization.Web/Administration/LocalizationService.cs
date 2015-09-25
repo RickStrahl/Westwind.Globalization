@@ -326,6 +326,7 @@ namespace Westwind.Globalization.Web.Administration
             string resourceId = parm.resourceId;
             string resourceSet = parm.resourceSet;
             string localeId = parm.localeId;
+            string comment = parm.comment;
 
             var item = Manager.GetResourceItem(resourceId, resourceSet, localeId);
             if (item == null)
@@ -334,7 +335,8 @@ namespace Westwind.Globalization.Web.Administration
                 {
                     ResourceId = resourceId,
                     LocaleId = localeId,
-                    ResourceSet = resourceSet
+                    ResourceSet = resourceSet,                    
+                    Comment = comment
                 };
             }
 
@@ -347,6 +349,28 @@ namespace Westwind.Globalization.Web.Administration
             item.BinFile = null;
             item.TextFile = null;
 
+            if (Manager.UpdateOrAddResource(item) < 0)
+                return false;
+
+            return true;
+        }
+
+        [CallbackMethod]
+        public bool UpdateComment(dynamic parm)
+        {
+            string comment = parm.comment;
+            string resourceId = parm.resourceId;
+            string resourceSet = parm.resourceSet;
+            string localeId = parm.localeId;
+
+            var item = Manager.GetResourceItem(resourceId, resourceSet, localeId);
+            if (item == null)
+            {
+                // can't update a comment on non-existing resource
+                return false;
+            }
+            item.Comment = comment;
+            
             if (Manager.UpdateOrAddResource(item) < 0)
                 return false;
 

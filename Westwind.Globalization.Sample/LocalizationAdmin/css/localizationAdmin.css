@@ -94,6 +94,11 @@ select[multiple] > option {
     background: white;
     z-index: 1000;    
 }
+.locale-id-header {
+    font-size: 15pt;
+    color: darkred;
+    font-weight: bold;
+}
 .locale-id {
     float: left;
     width: 60px;
@@ -102,6 +107,9 @@ select[multiple] > option {
 }
 .color-check {
     color: limegreen;
+}
+.color-danger {
+    color: firebrick;
 }
 .color-disabled {
     color: silver;

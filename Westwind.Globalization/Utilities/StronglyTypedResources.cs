@@ -319,7 +319,7 @@ namespace Westwind.Globalization
                 }
                 else
                 {
-                    sbClass.Append(Indent + "Public Shared Property " + resourceId + "() as " + typeName + "\r\n");
+                    sbClass.Append(Indent + "Public Shared ReadOnly Property " + resourceId + "() as " + typeName + "\r\n");
                     sbClass.AppendFormat(Indent + "\tGet\r\n" + Indent + "\t\treturn CType( HttpContext.GetGlobalResourceObject(\"{0}\",\"{1}\"), {2})\r\n",
                                          Classname, resourceId,typeName);
                     sbClass.Append(Indent + "\tEnd Get\r\n");

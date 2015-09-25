@@ -1,0 +1,33 @@
+﻿<div id="CommentDialog" data-resourceset-id="LocalizationForm"
+     class="modal fade"
+     tabindex="-1" role="dialog"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title" id="myModal-label">Edit Comment</h3>
+                <div class="locale-id-header">{{view.activeResource.ResourceId}} ({{view.activeResource.LocaleId ? view.activeResource.LocaleId : "invariant"}})</div>
+            </div>
+            <div class="modal-body">
+                <textarea id="comment" class="form-control"
+                placeholder="Enter your comment text specific to this resource and locale for {{view.activeResource.LocaleId ? view.activeResource.LocaleId : 'invariant'}}"
+                ng-model="view.activeResource.Comment"
+                style="height: 200px;">
+                </textarea>                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" 
+                        ng-click="view.onCommentUpdateClick()">
+                    <i class="fa fa-check color-check"></i>
+                    Save Comment
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
