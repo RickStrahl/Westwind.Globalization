@@ -436,6 +436,13 @@
             <param name="BackupTableName">Table of the backup table. Null creates a _Backup table.</param>
             <returns></returns>
         </member>
+        <member name="M:Westwind.Globalization.DbResourceMySqlDataManager.IsLocalizationTable(System.String)">
+            <summary>
+            Checks to see if the LocalizationTable exists
+            </summary>
+            <param name="tableName">Table name or the configuration.ResourceTableName if not passed</param>
+            <returns></returns>
+        </member>
         <member name="T:Westwind.Globalization.DbResourceSqLiteDataManager">
             <summary>
             Sql CE implementation of the Db SQL data provider

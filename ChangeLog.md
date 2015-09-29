@@ -1,5 +1,11 @@
 # West Wind Globalization Changelog
 
+### Version 2.2.1
+<small>September 30th, 2015</small>
+
+* **Add Comment Editing**
+Added support for editing and previewing comments on individual resources. Comment button brings up a modal dialog that allows editing of comments which are updated immediately. Comments can be previewed by hovering the button and the comment button uses different icons for filled and empty comments.
+
 ### Version 2.2
 <small>September 24th, 2015</small>
 
