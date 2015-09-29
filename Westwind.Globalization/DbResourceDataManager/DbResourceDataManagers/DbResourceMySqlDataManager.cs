@@ -84,6 +84,34 @@ namespace Westwind.Globalization
             return true;
         }
 
+        /// <summary>
+        /// Checks to see if the LocalizationTable exists
+        /// </summary>
+        /// <param name="tableName">Table name or the configuration.ResourceTableName if not passed</param>
+        /// <returns></returns>
+        public override bool IsLocalizationTable(string tableName = null)
+        {
+            if (tableName == null)
+                tableName = Configuration.ResourceTableName;
+            if (string.IsNullOrEmpty(tableName))
+                tableName = "Localizations";
+
+            string sql = "SHOW TABLES LIKE @0";
+
+            using (var data = GetDb())
+            {
+                var tables = data.ExecuteTable("TTables", sql, tableName);
+
+                if (tables == null || tables.Rows.Count < 1)
+                {
+                    SetError(data.ErrorMessage);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         public override bool CreateLocalizationTable(string tableName = null)
         {
             if (tableName == null)
