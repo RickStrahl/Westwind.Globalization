@@ -26,6 +26,7 @@
             getResourceStrings: getResourceStrings,
             updateResourceString: updateResourceString,
             updateResource: updateResource,
+            updateComment: updateComment,
             deleteResource: deleteResource,
             renameResource: renameResource,
             deleteResourceSet: deleteResourceSet,
@@ -110,15 +111,30 @@
                 .error(parseHttpError);
         }
 
-        function updateResourceString(value, resourceId, resourceSet, localeId) {
+        
+
+        function updateResourceString(value, resourceId, resourceSet, localeId,comment) {
             var parm = {
                 value: value,
                 resourceId: resourceId,
                 resourceSet: resourceSet,
-                localeId: localeId
+                localeId: localeId,
+                comment: comment
             };
 
             return $http.post("localizationService.ashx?method=UpdateResourceString", parm)
+                .error(parseHttpError);
+        }
+
+        function updateComment(comment, resourceId, resourceSet, localeId) {
+            var parm = {                
+                resourceId: resourceId,
+                resourceSet: resourceSet,
+                localeId: localeId,
+                comment: comment
+            };
+
+            return $http.post("localizationService.ashx?method=UpdateComment", parm)
                 .error(parseHttpError);
         }
 

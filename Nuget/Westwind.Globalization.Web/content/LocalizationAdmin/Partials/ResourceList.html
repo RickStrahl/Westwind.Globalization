@@ -66,14 +66,17 @@
             <i class="fa fa-remove"></i> {{::view.dbRes('Delete')}}
         </button>
         <button class="btn btn-sm btn-default" title="{{::view.dbRes('Rename_Title')}}"
-                ng-click="view.onRenameResourceClick()"
+                ng-click="view.onRenameResourceClick()" 
                 data-resource-id="Rename">
             <i class="fa fa-exchange"></i> {{::view.dbRes('Rename')}}
         </button>
-        <button class="btn btn-sm btn-default" title="Comment" disabled="disabled"
-                data-resource-id="Comment">
-            <i class="fa fa-comment-o"></i> {{::view.dbRes('Comment')}}
-        </button>
+        <button class="btn btn-sm btn-default"
+                ng-click="view.onCommentClick()"
+                data-resource-id="Comment"
+                title="{{view.activeResource.Comment}}">
+            <i ng-class="{ 'fa': true, 'fa-comment': view.activeResource.Comment, 'fa-comment-o': !view.activeResource.Comment}"></i>
+            {{::view.dbRes('Comment')}}
+        </button>        
     </div>
 </div>
 

@@ -73,7 +73,7 @@
         };
 
 
-        vm.updateResource = function(resource) {
+        vm.updateResource = function (resource) {            
             return localizationService.updateResource(resource)
                 .success(function() {
                     vm.getResourceItems();
@@ -83,13 +83,14 @@
         };
 
         vm.updateResourceString = function(value, localeId) {
-            return localizationService.updateResourceString(value, vm.resourceId, vm.resourceSet, localeId)
+            return localizationService.updateResourceString(value, vm.resourceId, vm.resourceSet, localeId, vm.activeResource.Comment)
                 .success(function() {
                     vm.getResourceItems();
                     showMessage(vm.dbRes('ResourceSaved'));
                 })
                 .error(parseError);
         };
+
 
         var firstListLoad = true;
         vm.getResourceList = function getResourceList() {
@@ -272,6 +273,9 @@
             $("#AddResourceDialog").modal();
         };
 
+        vm.onCommentClick = function() {
+            $("#CommentDialog").modal();
+        }
         vm.onSaveResourceClick = function() {
             vm.updateResource(vm.activeResource)
                 .success(function() {
@@ -307,6 +311,16 @@
                     alert(err.message);
                 });
         };
+        vm.onCommentUpdateClick = function () {
+            localizationService.updateComment(vm.activeResource.Comment,
+                    vm.activeResource.ResourceId,
+                    vm.activeResource.ResourceSet,
+                    vm.activeResource.LocaleId)
+                .success(function() {
+                    $('#CommentDialog').modal('hide');
+                })
+                .error(parseError);
+        }
         vm.onResourceUpload = function(files) {
             if (files && files.length) {
                 for (var i = 0; i < files.length; i++) {
