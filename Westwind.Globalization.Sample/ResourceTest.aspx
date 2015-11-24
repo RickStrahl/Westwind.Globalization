@@ -185,6 +185,11 @@
             <span data-resource-id="HelloWorld">
                 <%= Resources.HelloWorld %>      
             </span>
+            
+            <label data-resource-id="StronglyTypedDbResource">Strongly typed Resource using ResourceManager.GetString</label>
+            <span data-resource-id="HelloWorld">
+                <%= Resources.ResourceManager.GetString("HelloWorld") %>      
+            </span>
                                          
 			
             <label>Strongly typed image resource:</label>
