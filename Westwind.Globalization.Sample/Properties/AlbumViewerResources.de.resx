@@ -58,55 +58,55 @@
    <resheader name="writer">
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
+   <data name="AddAlbum" xml:space="preserve">
+      <value>Neues Album</value>
+   </data>
    <data name="AddSong" xml:space="preserve">
       <value>Song hinzufügen</value>
-   </data>
-   <data name="YearReleased" xml:space="preserve">
-      <value>Erscheinungsjahr</value>
-   </data>
-   <data name="By" xml:space="preserve">
-      <value>von</value>
-   </data>
-   <data name="Buy" xml:space="preserve">
-      <value>Kaufen</value>
-   </data>
-   <data name="AlbumViewer" xml:space="preserve">
-      <value>AlbenViewer</value>
-   </data>
-   <data name="AlbumDescription.Placeholder" xml:space="preserve">
-      <value>Detaillierte Beschreibung für dieses album</value>
-   </data>
-   <data name="Remove" xml:space="preserve">
-      <value>Entfernen</value>
    </data>
    <data name="AlbumDescription" xml:space="preserve">
       <value>Beschreibung</value>
    </data>
-   <data name="MoreFrom" xml:space="preserve">
-      <value>Mehr von</value>
-   </data>
-   <data name="ArtistName" xml:space="preserve">
-      <value>Name der Band</value>
+   <data name="AlbumDescription.Placeholder" xml:space="preserve">
+      <value>Detaillierte Beschreibung für dieses album</value>
    </data>
    <data name="AlbumName" xml:space="preserve">
       <value>Name des Albums</value>
    </data>
-   <data name="Edit" xml:space="preserve">
-      <value>Bearbeiten</value>
+   <data name="Albums" xml:space="preserve">
+      <value>Alben</value>
    </data>
-   <data name="Show" xml:space="preserve">
-      <value>Anzeigen</value>
+   <data name="AlbumViewer" xml:space="preserve">
+      <value>AlbenViewer</value>
    </data>
-   <data name="EditResources" xml:space="preserve">
-      <value>Resourcen Bearbeiten</value>
-   </data>
-   <data name="AddAlbum" xml:space="preserve">
-      <value>Neues Album</value>
+   <data name="ArtistName" xml:space="preserve">
+      <value>Name der Band</value>
    </data>
    <data name="Artists" xml:space="preserve">
       <value>Künstler</value>
    </data>
-   <data name="Albums" xml:space="preserve">
-      <value>Alben</value>
+   <data name="Buy" xml:space="preserve">
+      <value>Kaufen</value>
+   </data>
+   <data name="By" xml:space="preserve">
+      <value>von</value>
+   </data>
+   <data name="Edit" xml:space="preserve">
+      <value>Bearbeiten</value>
+   </data>
+   <data name="EditResources" xml:space="preserve">
+      <value>Resourcen Bearbeiten</value>
+   </data>
+   <data name="MoreFrom" xml:space="preserve">
+      <value>Mehr von</value>
+   </data>
+   <data name="Remove" xml:space="preserve">
+      <value>Entfernen</value>
+   </data>
+   <data name="Show" xml:space="preserve">
+      <value>Anzeigen</value>
+   </data>
+   <data name="YearReleased" xml:space="preserve">
+      <value>Erscheinungsjahr</value>
    </data>
 </root>
