@@ -1,11 +1,9 @@
-﻿<div id="ResourceList" class="well"
-     style="margin-bottom: 2px; padding: 10px; background: #f2f2f2;">
+﻿<div id="ResourceList" class="well well-sm" >
 
-    <label style="font-size: 15pt; color: darkred; font-weight: bold;">
+    <label style="font-size: 1.5em; color: darkred; font-weight: bold;margin-bottom: 7px;">
         {{view.resourceItems[0].ResourceId}}
     </label>
-
-    <div class="separator"></div>
+    
     <div id="resourcegroup_{{$index + 1}}" class="resource-group"
          ng-repeat="resource in view.resourceItems">
 
@@ -81,5 +79,4 @@
 </div>
 
 <div class="resource-editor">
-
 </div>

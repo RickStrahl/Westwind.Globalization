@@ -1,4 +1,13 @@
-body {        
+html, body {
+    height: 100%;
+    overflow-y: hidden;
+}
+body {
+    display: flex;
+    flex-direction: column;    
+}
+div {
+    -webkit-overflow-scrolling: touch;
 }
 .page-header-text{
     font-size: 1.8em;
@@ -16,14 +25,24 @@ select[multiple] > option {
     padding: 3px;
 }
 .banner {
+    flex: 0 0 auto;
+
     background: #535353;
-    height: 50px;
+    padding: 4px;  
 }
-#TitleBar {
-    position: absolute;
-    top: 10px;
-    left: 8px;
+.menubar {
+    flex: 0 0 auto;
+    background: #727272;
+}
+.splitter {
+    flex: 0 0 auto;
+    width: 14px;
+    background: url(../images/vsizegrip.png) center center no-repeat #727272;
+    cursor: col-resize;  
+}
+#TitleBar {     
     z-index: 100;
+    margin: 5px;
 }
 #ErrorMessage {
     border-radius: 4px;
@@ -38,16 +57,25 @@ select[multiple] > option {
     box-shadow: 2px 2px 4px #535353;
 }
 #ContentContainer {
-    position: relative;    
+    flex: 1 1 auto;        
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: row;    
 }
-#ListPanel,#ContentPanel {
-    position: absolute;
-    top: 0;
-    left: 0;    
-    bottom: 0;
-    width: 310px;
-    padding: 0 ;
-    overflow-x: hidden;    
+#ListPanel {
+    flex: 0 0 auto;
+    width: 310px;        
+    overflow: hidden;
+    
+
+    display: flex;
+    flex-direction: column;
+
+    padding-right: 1px;
+    border-right: 1px solid silver;
+}
+#ListPanel,#ContentPanel {              
     -webkit-transition: width 1.2s;
     transition: width 1.2s;
 }
@@ -55,40 +83,45 @@ select[multiple] > option {
     width: 0;
 }
 #ListPanel select {
-    position: absolute;
-    width: 309px;    
-    top: 35px;
-    bottom: 1px;        
-    left: 0;
-    right: 0;
+    flex: 1 1 auto;        
+    width: auto;    
+    height: 100%;     
+    overflow: auto;
+
     border-radius: 0;
     border: none;
     padding: 0;
 }
     #ListPanel select option {
-        padding: 5px 0 5px 5px !important;        
-        min-height: 1.5em;    
+        padding: 5px 0 5px 5px !important;                
     }
+#ResourceIdList {
+    
+}
 #ContentPanel {
-    top: 17px;
-    left: 310px;
-    right: 0;    
-    width: auto;
-    padding: 0px 20px 10px;
-    overflow-x: auto;
-      -webkit-transition: left 1.2s;
+    flex: 1 1 auto;  
+    width: auto;          
+    overflow: auto;    
+
+    padding: 5px 10px 5px;
+    -webkit-transition: left 1.2s;
     transition: left 1.2s;
-    overflow: auto;
 }
 #ContentPanel.expanded {
-    left: 0;
+   
 }
+
+#ResourceList {
+    
+}
+
 #ResourceGrid {
     position: absolute !important;
     top: 55px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px; 
+    left: 0;
+    /* ReSharper disable once RedundantUnits */
+    right: 0;
+    bottom: 0; 
     overflow-y: auto;   
     display: none;
     background: white;

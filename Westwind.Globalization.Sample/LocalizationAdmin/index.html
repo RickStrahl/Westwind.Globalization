@@ -48,9 +48,8 @@
      ng-cloak>
 
     <div id="ListPanel"
-         ng-class="{ collapsed: !view.listVisible}"
-         class="col-sm-3"
-         style="padding-right: 1px; border-right: 1px solid silver;">
+         ng-class="{ collapsed: !view.listVisible}">
+         
         <div class="input-group">
             <span class="input-group-addon" style="border-radius: 0"><i class="fa fa-search"></i></span>
             <input id="SearchResources"
@@ -62,24 +61,28 @@
                    accesskey="E"/>
         </div>
 
-
-        <div class="form-group">
-            <select id="ResourceIdList" ng-model="view.resourceId"
-                    ng-change="view.onResourceIdChange(resource)"
-                    size="2" class="form-control">
-                <option ng-repeat="resource in view.resourceList | filter:view.searchText"
-                        value="{{resource.ResourceId}}"
-                        style="{{resource.Style}}">
-                    {{resource.ResourceId}}
-                </option>
-            </select>
-        </div>
+        <select id="ResourceIdList" ng-model="view.resourceId"
+                ng-change="view.onResourceIdChange(resource)"
+                size="2"
+                class="form-control">
+            <option ng-repeat="resource in view.resourceList | filter:view.searchText"
+                    value="{{resource.ResourceId}}"
+                    style="{{resource.Style}}" >
+                {{resource.ResourceId}}
+            </option>
+        </select>        
     </div>
 
-    <div id="ContentPanel" class="col-sm-8" ng-class="{expanded: !view.listVisible }">
+    <div class="splitter">
+    </div>
+
+    <div id="ContentPanel" class="ContentPanel"
+         ng-class="{expanded: !view.listVisible }">
+
         <div ng-include src="'partials/ResourceList.html'"></div>
 
         <div ng-include src="'partials/ResourceSetList.html'"></div>
+
     </div>
 </div>
 

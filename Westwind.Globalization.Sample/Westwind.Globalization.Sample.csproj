@@ -222,6 +222,7 @@
     <Content Include="LocalizationAdmin\bower_components\ng-file-upload\FileAPI.min.js" />
     <Content Include="LocalizationAdmin\bower_components\ng-file-upload\ng-file-upload-all.js" />
     <Content Include="LocalizationAdmin\bower_components\ng-file-upload\ng-file-upload-all.min.js" />
+    <Content Include="LocalizationAdmin\images\vsizegrip.png" />
     <Content Include="LocalizationAdmin\Partials\CommentDialog.html" />
     <Content Include="LocalizationAdmin\Partials\CreateClassDialog.html" />
     <Content Include="LocalizationAdmin\Partials\Menubar.html" />
