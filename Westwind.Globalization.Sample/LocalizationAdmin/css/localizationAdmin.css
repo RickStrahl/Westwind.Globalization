@@ -67,17 +67,15 @@ select[multiple] > option {
     flex: 0 0 auto;
     width: 310px;        
     overflow: hidden;
-    
 
     display: flex;
     flex-direction: column;
-
-    padding-right: 1px;
+    
     border-right: 1px solid silver;
 }
 #ListPanel,#ContentPanel {              
-    -webkit-transition: width 1.2s;
-    transition: width 1.2s;
+    -webkit-transition: width 1s;
+    transition: width 1s;
 }
 #ListPanel.collapsed {
     width: 0;
