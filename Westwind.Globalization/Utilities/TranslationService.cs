@@ -71,6 +71,83 @@ namespace Westwind.Globalization
         }
         private int _TimeoutSeconds = 10;
 
+        /// <summary>
+        /// Translates a string into another language using Google's translate API JSON calls.
+        /// <seealso>Class TranslationServices</seealso>
+        /// </summary>
+        /// <param name="Text">Text to translate. Should be a single word or sentence.</param>
+        /// <param name="FromCulture">
+        /// Two letter culture (en of en-us, fr of fr-ca, de of de-ch)
+        /// </param>
+        /// <param name="ToCulture">
+        /// Two letter culture (as for FromCulture)
+        /// </param>
+        /// <param name="googleApiKey">Google Api key - if not specified it's read from the configuration</param>
+        public string TranslateGoogle(string text, string fromCulture, string toCulture, string googleApiKey = null)
+        {
+            fromCulture = fromCulture.ToLower();
+            toCulture = toCulture.ToLower();
+
+            if (!string.IsNullOrEmpty(googleApiKey))
+            {
+                googleApiKey = DbResourceConfiguration.Current.GoogleApiKey;
+                if (!string.IsNullOrEmpty(googleApiKey))
+
+                    return TranslateGoogleApi(text, fromCulture, toCulture, googleApiKey);
+            }
+
+            // normalize the culture in case something like en-us was passed 
+            // retrieve only en since Google doesn't support sub-locales
+            string[] tokens = fromCulture.Split('-');
+            if (tokens.Length > 1)
+                fromCulture = tokens[0];
+
+            // normalize ToCulture
+            tokens = toCulture.Split('-');
+            if (tokens.Length > 1)
+                toCulture = tokens[0];
+
+            string format = "https://translate.googleapis.com/translate_a/single?client=gtx&sl={1}&tl={2}&dt=t&q={0}";
+
+            string url = string.Format(format,
+                text, fromCulture, toCulture);
+
+            // Retrieve Translation with HTTP GET call
+            string jsonString;
+            try
+            {
+                WebClient web = new WebClient();
+                web.Headers.Add(HttpRequestHeader.AcceptCharset, "UTF-8");
+
+                // Make sure we have response encoding to UTF-8
+                web.Encoding = Encoding.UTF8;
+                jsonString = web.DownloadString(url);
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = Resources.ConnectionFailed + ": " +
+                               ex.GetBaseException().Message;
+                return null;
+            }
+
+
+            // format:
+            //[[["Hallo grausame Welt","Hello Cruel world",,,0]],,"en"]
+            //[ [ ["Hallo grausame Welt","Hello Cruel world",,,0]],,"en"]
+            dynamic json = JArray.Parse(jsonString);
+            string result = json[0][0][0];
+
+            if (string.IsNullOrEmpty(result))
+            {
+                ErrorMessage = Resources.InvalidSearchResult;
+                return null;
+            }
+
+            result = WebUtility.HtmlDecode(result);
+            return result;
+        }
+
+
 
         /// <summary>
         /// Translates a string into another language using Google's translate API JSON calls.
@@ -84,80 +161,72 @@ namespace Westwind.Globalization
         /// Two letter culture (as for FromCulture)
         /// </param>
         /// <param name="googleApiKey">Google Api key - if not specified it's read from the configuration</param>
-        public string TranslateGoogle(string text, string fromCulture, string toCulture,string googleApiKey = null)
-        {
+        public string TranslateGoogleApi(string text, string fromCulture, string toCulture, string googleApiKey = null)
+{
 
-            if (string.IsNullOrEmpty(googleApiKey))
-                googleApiKey = DbResourceConfiguration.Current.GoogleApiKey;
+    if (string.IsNullOrEmpty(googleApiKey))
+        googleApiKey = DbResourceConfiguration.Current.GoogleApiKey;
 
-                fromCulture = fromCulture.ToLower();
-            toCulture = toCulture.ToLower();
+    fromCulture = fromCulture.ToLower();
+    toCulture = toCulture.ToLower();
 
-            // normalize the culture in case something like en-us was passed 
-            // retrieve only en since Google doesn't support sub-locales
-            string[] tokens = fromCulture.Split('-');
-            if (tokens.Length > 1)
-                fromCulture = tokens[0];
+    // normalize the culture in case something like en-us was passed 
+    // retrieve only en since Google doesn't support sub-locales
+    string[] tokens = fromCulture.Split('-');
+    if (tokens.Length > 1)
+        fromCulture = tokens[0];
+
+    // normalize ToCulture
+    tokens = toCulture.Split('-');
+    if (tokens.Length > 1)
+        toCulture = tokens[0];
+
+    string format = "https://www.googleapis.com/language/translate/v2?key={3}&source={1}&target={2}&q={0}";
             
-            // normalize ToCulture
-            tokens = toCulture.Split('-');
-            if (tokens.Length > 1)
-                toCulture = tokens[0];
+    string url = string.Format(format,
+        text, fromCulture, toCulture, googleApiKey);
 
-            string format = "https://www.googleapis.com/language/translate/v2?key={3}&source={1}&target={2}&q={0}";
+    // Retrieve Translation with HTTP GET call
+    string jsonString;
+    try
+    {
+        WebClient web = new WebClient();
+        web.Headers.Add(HttpRequestHeader.AcceptCharset, "UTF-8");
 
-            //string encodedText = StringUtils.UrlEncode(text);
-            
-
-            string url = string.Format(format,                                     
-                                       text,fromCulture,toCulture,googleApiKey);
-
-            // Retrieve Translation with HTTP GET call
-            string jsonString;
-            try
-            {
-                WebClient web = new WebClient();
-
-                // MUST add a known browser user agent or else response encoding doen't return UTF-8 (WTF Google?)
-                //web.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36");
-                web.Headers.Add(HttpRequestHeader.AcceptCharset, "UTF-8");
-                //web.Headers.Add(HttpRequestHeader.AcceptEncoding, "gzip, deflate");
-
-                // Make sure we have response encoding to UTF-8
-                web.Encoding = Encoding.UTF8;
-                jsonString = web.DownloadString(url);
-             
-            }
-            catch (Exception ex)
-            {
-                ErrorMessage = Resources.ConnectionFailed + ": " +
-                                    ex.GetBaseException().Message;
-                return null;
-            }
+        // Make sure we have response encoding to UTF-8
+        web.Encoding = Encoding.UTF8;
+        jsonString = web.DownloadString(url);
+    }
+    catch (Exception ex)
+    {
+        ErrorMessage = Resources.ConnectionFailed + ": " +
+                        ex.GetBaseException().Message;
+        return null;
+    }
 
 
-            // format:
-            //{
-            //   "data": {
-            //       "translations": [
-            //       {
-            //          "translatedText": "Wo bist du"
-            //   }
-            //  ]
-            // }
-            //}
-            dynamic json = JValue.Parse(jsonString);
-            string result = json.data.translations[0].translatedText;
-            
-            if (string.IsNullOrEmpty(result))
-            {
-                ErrorMessage = Resources.InvalidSearchResult;
-                return null;
-            }
+    // format:
+    //{
+    //   "data": {
+    //       "translations": [
+    //       {
+    //          "translatedText": "Wo bist du"
+    //   }
+    //  ]
+    // }
+    //}
+    dynamic json = JValue.Parse(jsonString);
+    string result = json.data.translations[0].translatedText;
 
-            result = WebUtility.HtmlDecode(result);
-            return result;
-        }
+    if (string.IsNullOrEmpty(result))
+    {
+        ErrorMessage = Resources.InvalidSearchResult;
+        return null;
+    }
+
+    result = WebUtility.HtmlDecode(result);
+    return result;
+}
 
 
         /// <summary>

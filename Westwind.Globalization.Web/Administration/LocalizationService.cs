@@ -518,11 +518,8 @@ namespace Westwind.Globalization.Web.Administration
             translate.TimeoutSeconds = 10;
 
             string result = null;
-            if (service == "google")
-                if (!string.IsNullOrEmpty(DbResourceConfiguration.Current.GoogleApiKey))
+            if (service == "google")                
                     result = translate.TranslateGoogle(text, @from, to);
-                else
-                    result = "";
             else if (service == "bing")
             {
                 if (string.IsNullOrEmpty(DbResourceConfiguration.Current.BingClientId))
