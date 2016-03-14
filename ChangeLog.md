@@ -11,6 +11,9 @@ you need a Google Translate API key which can be provided in the .config file.
 * **Fix Grid Record Limit**  
 Fix internal filtering of the grid resource view in the localization editor.
 
+* **Switch to FlexBox Layout for Localization Admin Form**  
+The LocalizationAdmin form now uses FlexBox for a much cleaner, responsive and resizable panel and more reliable responsive layout of the main form.
+
 ### Version 2.2.1
 <small>September 30th, 2015</small>
 
