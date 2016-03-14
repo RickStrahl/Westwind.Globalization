@@ -433,7 +433,7 @@ namespace Westwind.Globalization
         }
 
         /// <summary>
-        /// Returns a data table of all the resources for all locales. The result is in a 
+        /// Returns a list of all the resources for all locales. The result is in a 
         /// table called TResources that contains all fields of the table. The table is
         /// ordered by LocaleId.
         /// 
@@ -444,18 +444,30 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="localResources">return local resources if true</param>        
         /// <returns></returns>
-        public virtual List<ResourceItem> GetAllResources(bool localResources = false, bool applyValueConverters = false)
+        public virtual List<ResourceItem> GetAllResources(bool localResources = false, bool applyValueConverters = false, string resourceSet = null)
         {
             IEnumerable<ResourceItem> items;
             using (var data = GetDb())
             {
-                
+
+                string resourceSetFilter = "";
+                if (!string.IsNullOrEmpty(resourceSet))
+                    resourceSetFilter = " AND resourceset = @ResourceSet2 ";
+
                 string sql = "select ResourceId,Value,LocaleId,ResourceSet,Type,TextFile,BinFile,FileName,Comment,ValueType,Updated from " + Configuration.ResourceTableName +
                              " where ResourceSet " +
-                             (!localResources ? "not" : string.Empty) + " like @ResourceSet " +
+                             (!localResources ? "not" : string.Empty) + " like @ResourceSet " + 
+                             resourceSetFilter +
                              "ORDER BY ResourceSet,LocaleId, ResourceId";
 
-                items = data.Query<ResourceItem>(sql, data.CreateParameter("@ResourceSet", "%.%"));
+
+                var parms = new List<IDbDataParameter>();
+                parms.Add( data.CreateParameter("@ResourceSet", "%.%"));
+
+                if (!string.IsNullOrEmpty(resourceSetFilter))
+                    parms.Add(data.CreateParameter("@ResourceSet2", resourceSet));
+
+                items = data.Query<ResourceItem>(sql, parms.ToArray());
 
                 if (items == null)
                 {

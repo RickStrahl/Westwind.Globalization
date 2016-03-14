@@ -116,25 +116,12 @@ namespace Westwind.Globalization.Web.Administration
         [CallbackMethod]
         public object GetAllResourcesForResourceGrid(string resourceSet)
         {
-            var db = Manager.GetDb();
-
-
-            var sql = @"SELECT TOP 1000
-      [ResourceId]
-      ,[Value]
-      ,[LocaleId]
-      ,[ResourceSet]
-  FROM [{0}]
- where resourceset=@resourceset
-  order by ResourceId, localeId";
-
-            sql = string.Format(sql, Manager.Configuration.ResourceTableName);
-
-            var items = db.Query<ResourceItem>(sql, db.CreateParameter("@resourceset", resourceSet));
+            var items = Manager.GetAllResources(resourceSet: resourceSet);
 
             if (items == null)
-                throw new ApplicationException(db.ErrorMessage);
+                throw new ApplicationException(Manager.ErrorMessage);
 
+            // reorder and reshape the data
             var itemList = items
                 .OrderBy(it => it.ResourceId + "_" + it.LocaleId)
                 .Select(it => new BasicResourceItem()
@@ -166,8 +153,6 @@ namespace Westwind.Globalization.Web.Administration
                         }
                     }
                 }
-
-
             }
             itemList = itemList.OrderBy(it => it.ResourceId + "_" + it.LocaleId).ToList();
 
@@ -185,6 +170,7 @@ namespace Westwind.Globalization.Web.Administration
                 resultList.Add(newItem);
             }
 
+            // final projection
             var result = new
             {
                 ResourceSet = resourceSet,
