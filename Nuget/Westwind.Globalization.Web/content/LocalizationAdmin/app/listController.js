@@ -56,9 +56,14 @@
         };
 
 
-        vm.collapseList = function() {
-            vm.listVisible = !vm.listVisible;
-            console.log(vm.listVisible);
+        vm.collapseList = function () {
+            if ($("#ListPanel").width() < 80) {
+                vm.listVisible = true;
+                $("#ListPanel").width(310);
+            } else {
+                vm.listVisible = false;
+                $("#ListPanel").width(0);
+            }
         };
 
         vm.getResourceSets = function getResourceSets() {

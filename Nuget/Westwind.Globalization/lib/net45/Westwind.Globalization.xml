@@ -77,9 +77,9 @@
             <param name="reader"></param>
             <returns></returns>
         </member>
-        <member name="M:Westwind.Globalization.DbResourceDataManager.GetAllResources(System.Boolean,System.Boolean)">
+        <member name="M:Westwind.Globalization.DbResourceDataManager.GetAllResources(System.Boolean,System.Boolean,System.String)">
             <summary>
-            Returns a data table of all the resources for all locales. The result is in a 
+            Returns a list of all the resources for all locales. The result is in a 
             table called TResources that contains all fields of the table. The table is
             ordered by LocaleId.
             
@@ -509,7 +509,7 @@
             <param name="resourceSet"></param>
             <returns></returns>
         </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetAllResources(System.Boolean,System.Boolean)">
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.GetAllResources(System.Boolean,System.Boolean,System.String)">
             <summary>
             Returns a data table of all the resources for all locales. The result is in a 
             table called TResources that contains all fields of the table. The table is
@@ -1621,7 +1621,7 @@
             Timeout for how long to wait for a translation
             </summary>
         </member>
-        <member name="M:Westwind.Globalization.TranslationServices.TranslateGoogle(System.String,System.String,System.String)">
+        <member name="M:Westwind.Globalization.TranslationServices.TranslateGoogle(System.String,System.String,System.String,System.String)">
             <summary>
             Translates a string into another language using Google's translate API JSON calls.
             <seealso>Class TranslationServices</seealso>
@@ -1633,6 +1633,21 @@
             <param name="ToCulture">
             Two letter culture (as for FromCulture)
             </param>
+            <param name="googleApiKey">Google Api key - if not specified it's read from the configuration</param>
+        </member>
+        <member name="M:Westwind.Globalization.TranslationServices.TranslateGoogleApi(System.String,System.String,System.String,System.String)">
+            <summary>
+            Translates a string into another language using Google's translate API JSON calls.
+            <seealso>Class TranslationServices</seealso>
+            </summary>
+            <param name="Text">Text to translate. Should be a single word or sentence.</param>
+            <param name="FromCulture">
+            Two letter culture (en of en-us, fr of fr-ca, de of de-ch)
+            </param>
+            <param name="ToCulture">
+            Two letter culture (as for FromCulture)
+            </param>
+            <param name="googleApiKey">Google Api key - if not specified it's read from the configuration</param>
         </member>
         <member name="M:Westwind.Globalization.TranslationServices.TranslateBing(System.String,System.String,System.String,System.String)">
             <summary>
@@ -1953,6 +1968,12 @@
         <member name="P:Westwind.Globalization.DbResourceConfiguration.BingClientSecret">
             <summary>
             Bing Secret Key for Bing Translate API Access
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.DbResourceConfiguration.GoogleApiKey">
+            <summary>
+            Google Translate API Key used to access Translate API.
+            Note this is a for pay API!
             </summary>
         </member>
         <member name="F:Westwind.Globalization.DbResourceConfiguration.DbResourceDataManagerType">

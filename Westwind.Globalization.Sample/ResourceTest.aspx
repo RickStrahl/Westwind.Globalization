@@ -60,7 +60,7 @@
 </head>
 
 <body data-resource-set="Resources">
-
+    <form runat="server" id="form2">
     <div class="banner">
         <div id="TitleBar">
             <a href="./">
@@ -174,6 +174,13 @@
 
             <label>Resource Expressions (Global Resources):</label>
             <asp:Label ID="Label1" runat="server" Text="<%$ Resources:Resources,HelloWorld %>"></asp:Label>
+            
+            <label>Resource Expressions in Lists (Global Resources):</label>
+            <asp:DropDownList runat="server" id="lstNames" CssClass="form-control" style="width: 200px;" >
+                <asp:ListItem Value="1" Text="<%$ Resources:Resources,Today %>"></asp:ListItem>
+                <asp:ListItem Value="2" Text="<%$ Resources:Resources,Yesterday %>"></asp:ListItem>
+            </asp:DropDownList>
+            
         </div>
 
         <hr />
@@ -218,7 +225,9 @@
             <div id="JavaScriptHelloWorld"></div>
         </div>                
     </div>
-        
+
+    </form>        
+
     <script>
         global = {};
     </script>

@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var app = angular
+    angular
         .module('app')
         .controller('headerController', headerController);
 
@@ -9,8 +9,6 @@
 
     function headerController(localizationService) {
         var vm = this;
-
-
     }
 })();
 

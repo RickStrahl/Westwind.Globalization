@@ -1,12 +1,11 @@
 # West Wind Globalization Changelog
 
 
-### Version 2.3
-<small>unreleased</small>
+### Version 2.10
+<small>March 15th, 2015</small>
 
 * **Fix Google Translation**
-Added support for official Google Translate API v2 as the hack we used using the Google JSON API for free previously no longer works as Google has now locked it down. In order to use the new (for pay) Google Translate API
-you need a Google Translate API key which can be provided in the .config file.
+Added support for official Google Translate API v2 which requires an API key and is a for pay API. Updated the 'free' Google API hack that works through the online translator API links which are not 'officially' supported by Google and may limit access at any time. If no API key is provided the free API is used, otherwise the full Translate API is used, using the API key provided in the .config file.
 
 * **Fix Grid Record Limit**  
 Fix internal filtering of the grid resource view in the localization editor.
@@ -17,7 +16,7 @@ The LocalizationAdmin form now uses FlexBox for a much cleaner, responsive and r
 ### Version 2.2.1
 <small>September 30th, 2015</small>
 
-* **Add Comment Editing**
+* **Add Comment Editing**  
 Added support for editing and previewing comments on individual resources. Comment button brings up a modal dialog that allows editing of comments which are updated immediately. Comments can be previewed by hovering the button and the comment button uses different icons for filled and empty comments.
 
 ### Version 2.2

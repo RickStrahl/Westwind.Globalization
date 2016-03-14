@@ -121,12 +121,12 @@
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Westwind.Utilities, Version=2.65.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Westwind.Utilities.2.65\lib\net45\Westwind.Utilities.dll</HintPath>
+    <Reference Include="Westwind.Utilities, Version=2.66.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Westwind.Utilities.2.66\lib\net45\Westwind.Utilities.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Westwind.Web">
-      <HintPath>..\packages\Westwind.Web.2.64\lib\net45\Westwind.Web.dll</HintPath>
+    <Reference Include="Westwind.Web, Version=2.66.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Westwind.Web.2.66\lib\net45\Westwind.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Westwind.Web.WebForms, Version=2.64.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -280,6 +280,8 @@
     <Content Include="Properties\GermanFlag.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\ww.jquery.js" />
+    <Content Include="Scripts\ww.jquery.min.js" />
     <Content Include="WebFormDbResourceControlSample.aspx" />
     <Content Include="_readme.Westwind.Globalization.html" />
     <Content Include="LocalizationAdmin\scripts\ww.jquery.min.js.map">

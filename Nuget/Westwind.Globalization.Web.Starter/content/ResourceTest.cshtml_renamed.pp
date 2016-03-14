@@ -157,6 +157,9 @@
         <h3>ASP.NET ResourceProvider</h3>
         <label>Get GlobalResource Object (default locale):</label>
         @HttpContext.GetGlobalResourceObject("Resources","HelloWorld")
+
+        <h3>.NET ResourceManager</h3>
+        @Resources.ResourceManager.GetString("HelloWorld")
     </div>
 
     <div class="container">

@@ -19,8 +19,10 @@
 
     app.config([
             function() {
-                $(window).resize(resizeControls);
-                setTimeout(resizeControls, 90);
+                $("#ListPanel").resizable({
+                    handleSelector: ".splitter",
+                    resizeHeight: false
+                });
             }
         ])
         .filter('linebreakFilter', function() {
@@ -64,10 +66,4 @@
             }
         }
     });
-
-    function resizeControls() {
-        var cHeight = $(window).height() - $(".banner").outerHeight() - $(".menubar").outerHeight();
-        $("#ContentContainer").height(cHeight);
-    }
-
 })();

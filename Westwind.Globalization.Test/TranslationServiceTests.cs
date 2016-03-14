@@ -23,8 +23,8 @@ namespace Westwind.Globalization.Test
             Console.WriteLine(result);
             Console.WriteLine();
 
-            Assert.IsFalse(string.IsNullOrEmpty(result),service.ErrorMessage);
-            
+            Assert.IsFalse(string.IsNullOrEmpty(result), service.ErrorMessage);
+
 
             string result2 = service.TranslateGoogle(result, "de", "en");
             Console.WriteLine(result);
@@ -41,7 +41,8 @@ namespace Westwind.Globalization.Test
             Assert.IsFalse(string.IsNullOrEmpty(result3), service.ErrorMessage);
 
 
-            q = "Here's some text \"in quotes\" that needs to encode properly Really, where do I go, what do I do, how do I do it and when can it be done, who said it, where is it and whatever happened to Jim, what happened to Helmut when he came home I thought he might have been dead";
+            q =
+                "Here's some text \"in quotes\" that needs to encode properly Really, where do I go, what do I do, how do I do it and when can it be done, who said it, where is it and whatever happened to Jim, what happened to Helmut when he came home I thought he might have been dead";
 
             string result4 = service.TranslateGoogle(q, "en", "de");
             Console.WriteLine(q);
@@ -61,18 +62,21 @@ namespace Westwind.Globalization.Test
             string token = service.GetBingAuthToken();
             Assert.IsNotNull(token);
 
-            string result = service.TranslateBing("Life is great and one is spoiled when it goes on and on and on", "en", "de",token);
+            string result = service.TranslateBing("Life is great and one is spoiled when it goes on and on and on", "en",
+                "de", token);
             Console.WriteLine(result);
 
-            string result2 = service.TranslateBing(result, "de", "en",token);
+            string result2 = service.TranslateBing(result, "de", "en", token);
             Console.WriteLine(result2);
 
-            string result3 = service.TranslateBing("Here's some text \"in quotes\" that needs to encode properly", "en", "de",token);
+            string result3 = service.TranslateBing("Here's some text \"in quotes\" that needs to encode properly", "en",
+                "de", token);
             Console.WriteLine(result3);
 
-            string ttext = "Here's some text \"in quotes\" that needs to encode properly Really, where do I go, what do I do, how do I do it and when can it be done, who said it, where is it and whatever happened to Jim, what happened to Helmut when he came home I thought he might have been dead";
+            string ttext =
+                "Here's some text \"in quotes\" that needs to encode properly Really, where do I go, what do I do, how do I do it and when can it be done, who said it, where is it and whatever happened to Jim, what happened to Helmut when he came home I thought he might have been dead";
             Console.WriteLine(ttext);
-            string result4 = service.TranslateBing(ttext, "en", "de",token);
+            string result4 = service.TranslateBing(ttext, "en", "de", token);
 
             Console.WriteLine(result4);
         }

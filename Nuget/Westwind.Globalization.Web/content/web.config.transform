@@ -5,7 +5,7 @@
 
   <system.web>
     <globalization resourceProviderFactoryType="Westwind.Globalization.DbSimpleResourceProviderFactory,Westwind.Globalization.Web"/>
-    <trust originUrl="(http://www.google.com/translate_t)|(http://api.microsofttranslator.com/V2/Http.svc/Translate)|(https://datamarket.accesscontrol.windows.net/v2/OAuth2-13)"/>
+    <trust originUrl="(https://translate.googleapis.com/translate_a/single)|(https://www.googleapis.com/language/translate/v2)|(http://api.microsofttranslator.com/V2/Http.svc/Translate)|(https://datamarket.accesscontrol.windows.net/v2/OAuth2-13)"/>
     <pages>
       <namespaces>
         <add namespace="Westwind.Utilities"/>

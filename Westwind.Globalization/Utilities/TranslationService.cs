@@ -59,6 +59,7 @@ namespace Westwind.Globalization
             get { return _ErrorMessage; }
             set { _ErrorMessage = value; }
         }
+
         private string _ErrorMessage = "";
 
         /// <summary>
@@ -69,6 +70,7 @@ namespace Westwind.Globalization
             get { return _TimeoutSeconds; }
             set { _TimeoutSeconds = value; }
         }
+
         private int _TimeoutSeconds = 10;
 
         /// <summary>
@@ -162,71 +164,71 @@ namespace Westwind.Globalization
         /// </param>
         /// <param name="googleApiKey">Google Api key - if not specified it's read from the configuration</param>
         public string TranslateGoogleApi(string text, string fromCulture, string toCulture, string googleApiKey = null)
-{
+        {
 
-    if (string.IsNullOrEmpty(googleApiKey))
-        googleApiKey = DbResourceConfiguration.Current.GoogleApiKey;
+            if (string.IsNullOrEmpty(googleApiKey))
+                googleApiKey = DbResourceConfiguration.Current.GoogleApiKey;
 
-    fromCulture = fromCulture.ToLower();
-    toCulture = toCulture.ToLower();
+            fromCulture = fromCulture.ToLower();
+            toCulture = toCulture.ToLower();
 
-    // normalize the culture in case something like en-us was passed 
-    // retrieve only en since Google doesn't support sub-locales
-    string[] tokens = fromCulture.Split('-');
-    if (tokens.Length > 1)
-        fromCulture = tokens[0];
+            // normalize the culture in case something like en-us was passed 
+            // retrieve only en since Google doesn't support sub-locales
+            string[] tokens = fromCulture.Split('-');
+            if (tokens.Length > 1)
+                fromCulture = tokens[0];
 
-    // normalize ToCulture
-    tokens = toCulture.Split('-');
-    if (tokens.Length > 1)
-        toCulture = tokens[0];
+            // normalize ToCulture
+            tokens = toCulture.Split('-');
+            if (tokens.Length > 1)
+                toCulture = tokens[0];
 
-    string format = "https://www.googleapis.com/language/translate/v2?key={3}&source={1}&target={2}&q={0}";
-            
-    string url = string.Format(format,
-        text, fromCulture, toCulture, googleApiKey);
+            string format = "https://www.googleapis.com/language/translate/v2?key={3}&source={1}&target={2}&q={0}";
 
-    // Retrieve Translation with HTTP GET call
-    string jsonString;
-    try
-    {
-        WebClient web = new WebClient();
-        web.Headers.Add(HttpRequestHeader.AcceptCharset, "UTF-8");
+            string url = string.Format(format,
+                text, fromCulture, toCulture, googleApiKey);
 
-        // Make sure we have response encoding to UTF-8
-        web.Encoding = Encoding.UTF8;
-        jsonString = web.DownloadString(url);
-    }
-    catch (Exception ex)
-    {
-        ErrorMessage = Resources.ConnectionFailed + ": " +
-                        ex.GetBaseException().Message;
-        return null;
-    }
+            // Retrieve Translation with HTTP GET call
+            string jsonString;
+            try
+            {
+                WebClient web = new WebClient();
+                web.Headers.Add(HttpRequestHeader.AcceptCharset, "UTF-8");
+
+                // Make sure we have response encoding to UTF-8
+                web.Encoding = Encoding.UTF8;
+                jsonString = web.DownloadString(url);
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = Resources.ConnectionFailed + ": " +
+                               ex.GetBaseException().Message;
+                return null;
+            }
 
 
-    // format:
-    //{
-    //   "data": {
-    //       "translations": [
-    //       {
-    //          "translatedText": "Wo bist du"
-    //   }
-    //  ]
-    // }
-    //}
-    dynamic json = JValue.Parse(jsonString);
-    string result = json.data.translations[0].translatedText;
+            // format:
+            //{
+            //   "data": {
+            //       "translations": [
+            //       {
+            //          "translatedText": "Wo bist du"
+            //   }
+            //  ]
+            // }
+            //}
+            dynamic json = JValue.Parse(jsonString);
+            string result = json.data.translations[0].translatedText;
 
-    if (string.IsNullOrEmpty(result))
-    {
-        ErrorMessage = Resources.InvalidSearchResult;
-        return null;
-    }
+            if (string.IsNullOrEmpty(result))
+            {
+                ErrorMessage = Resources.InvalidSearchResult;
+                return null;
+            }
 
-    result = WebUtility.HtmlDecode(result);
-    return result;
-}
+            result = WebUtility.HtmlDecode(result);
+            return result;
+        }
 
 
         /// <summary>
@@ -246,7 +248,7 @@ namespace Westwind.Globalization
         /// If not passed the default keys from .config file are used if any</param>
         /// <returns></returns>
         public string TranslateBing(string text, string fromCulture, string toCulture,
-                                    string accessToken = null)
+            string accessToken = null)
         {
             string serviceUrl = "http://api.microsofttranslator.com/V2/Http.svc/Translate";
 
@@ -256,18 +258,18 @@ namespace Westwind.Globalization
                 if (accessToken == null)
                     return null;
             }
-            
+
             string res;
 
             try
             {
-                var web = new WebClient();                
-                web.Headers.Add("Authorization", "Bearer " + accessToken);                        
+                var web = new WebClient();
+                web.Headers.Add("Authorization", "Bearer " + accessToken);
                 string ct = "text/plain";
                 string postData = string.Format("?text={0}&from={1}&to={2}&contentType={3}",
-                                         StringUtils.UrlEncode(text),
-                                         fromCulture, toCulture,
-                                         StringUtils.UrlEncode(ct));
+                    StringUtils.UrlEncode(text),
+                    fromCulture, toCulture,
+                    StringUtils.UrlEncode(ct));
 
                 web.Encoding = Encoding.UTF8;
                 res = web.DownloadString(serviceUrl + postData);
@@ -280,8 +282,8 @@ namespace Westwind.Globalization
 
             // result is a single XML Element fragment
             var doc = new XmlDocument();
-            doc.LoadXml(res);            
-            return doc.DocumentElement.InnerText;          
+            doc.LoadXml(res);
+            return doc.DocumentElement.InnerText;
         }
 
         /// <summary>
@@ -309,12 +311,12 @@ namespace Westwind.Globalization
                 ErrorMessage = Resources.Client_Id_and_Client_Secret_must_be_provided;
                 return null;
             }
-            
+
             var postData = string.Format("grant_type=client_credentials&client_id={0}" +
                                          "&client_secret={1}" +
                                          "&scope=http://api.microsofttranslator.com",
-                                         StringUtils.UrlEncode(clientId),
-                                         StringUtils.UrlEncode(clientSecret));
+                StringUtils.UrlEncode(clientId),
+                StringUtils.UrlEncode(clientSecret));
 
             // POST Auth data to the oauth API
             string res, token;
@@ -335,7 +337,7 @@ namespace Westwind.Globalization
             var auth = JsonConvert.DeserializeObject(res, typeof (BingAuth)) as BingAuth;
             if (auth == null)
                 return null;
-            
+
             token = auth.access_token;
 
             return token;
