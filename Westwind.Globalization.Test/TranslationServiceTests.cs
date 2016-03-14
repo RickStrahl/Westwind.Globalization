@@ -15,22 +15,40 @@ namespace Westwind.Globalization.Test
         {
             TranslationServices service = new TranslationServices();
 
-            string result = service.TranslateGoogle("Life is great and one is spoiled when it goes on and on and on", "en", "de");
+            string q = null;
+
+            q = "Where are you?";
+            string result = service.TranslateGoogle(q, "en", "de");
+            Console.WriteLine(q);
             Console.WriteLine(result);
-            Console.WriteLine(service.ErrorMessage);
+            Console.WriteLine();
+
+            Assert.IsFalse(string.IsNullOrEmpty(result),service.ErrorMessage);
             
 
             string result2 = service.TranslateGoogle(result, "de", "en");
+            Console.WriteLine(result);
             Console.WriteLine(result2);
 
-            string result3 = service.TranslateGoogle("Here's some text \"in quotes\" that needs to encode properly", "en", "de");
+            Assert.IsFalse(string.IsNullOrEmpty(result2), service.ErrorMessage);
+
+
+            q = "Here's some text \"in quotes\" that needs to encode properly";
+            string result3 = service.TranslateGoogle(q, "en", "de");
+            Console.WriteLine(q);
             Console.WriteLine(result3);
 
-            string ttext = "Here's some text \"in quotes\" that needs to encode properly Really, where do I go, what do I do, how do I do it and when can it be done, who said it, where is it and whatever happened to Jim, what happened to Helmut when he came home I thought he might have been dead";
-            Console.WriteLine(ttext);
+            Assert.IsFalse(string.IsNullOrEmpty(result3), service.ErrorMessage);
 
-            string result4 = service.TranslateGoogle(ttext, "en", "de");
+
+            q = "Here's some text \"in quotes\" that needs to encode properly Really, where do I go, what do I do, how do I do it and when can it be done, who said it, where is it and whatever happened to Jim, what happened to Helmut when he came home I thought he might have been dead";
+
+            string result4 = service.TranslateGoogle(q, "en", "de");
+            Console.WriteLine(q);
             Console.WriteLine(result4);
+
+            Assert.IsFalse(string.IsNullOrEmpty(result4), service.ErrorMessage);
+
         }
 
 

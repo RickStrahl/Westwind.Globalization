@@ -88,7 +88,7 @@ select[multiple] > option {
 
     border-radius: 0;
     border: none;
-    padding: 0;
+    padding: 4px 0 0;
 }
     #ListPanel select option {
         padding: 5px 0 5px 5px !important;                

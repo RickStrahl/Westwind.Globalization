@@ -519,7 +519,10 @@ namespace Westwind.Globalization.Web.Administration
 
             string result = null;
             if (service == "google")
-                result = translate.TranslateGoogle(text, @from, to);
+                if (!string.IsNullOrEmpty(DbResourceConfiguration.Current.GoogleApiKey))
+                    result = translate.TranslateGoogle(text, @from, to);
+                else
+                    result = "";
             else if (service == "bing")
             {
                 if (string.IsNullOrEmpty(DbResourceConfiguration.Current.BingClientId))
@@ -775,6 +778,7 @@ namespace Westwind.Globalization.Web.Administration
                 config.ResxBaseFolder,
                 config.ResourceBaseNamespace,
                 config.StronglyTypedGlobalResource,
+                config.GoogleApiKey,
                 config.BingClientId,
                 config.BingClientSecret,
                 config.AddMissingResources                

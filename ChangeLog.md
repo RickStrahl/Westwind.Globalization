@@ -1,5 +1,16 @@
 # West Wind Globalization Changelog
 
+
+### Version 2.3
+<small>unreleased</small>
+
+* **Fix Google Translation**
+Added support for official Google Translate API v2 as the hack we used using the Google JSON API for free previously no longer works as Google has now locked it down. In order to use the new (for pay) Google Translate API
+you need a Google Translate API key which can be provided in the .config file.
+
+* **Fix Grid Record Limit**  
+Fix internal filtering of the grid resource view in the localization editor.
+
 ### Version 2.2.1
 <small>September 30th, 2015</small>
 

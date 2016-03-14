@@ -209,6 +209,12 @@ namespace Westwind.Globalization
         /// Bing Secret Key for Bing Translate API Access
         /// </summary>
         public string BingClientSecret { get; set; }
+
+        /// <summary>
+        /// Google Translate API Key used to access Translate API.
+        /// Note this is a for pay API!
+        /// </summary>
+        public string GoogleApiKey { get; set; }
         
 
 

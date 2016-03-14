@@ -39,6 +39,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Xml;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Westwind.Globalization.Properties;
 
 namespace Westwind.Globalization
@@ -82,9 +83,14 @@ namespace Westwind.Globalization
         /// <param name="ToCulture">
         /// Two letter culture (as for FromCulture)
         /// </param>
-        public string TranslateGoogle(string text, string fromCulture, string toCulture)
+        /// <param name="googleApiKey">Google Api key - if not specified it's read from the configuration</param>
+        public string TranslateGoogle(string text, string fromCulture, string toCulture,string googleApiKey = null)
         {
-            fromCulture = fromCulture.ToLower();
+
+            if (string.IsNullOrEmpty(googleApiKey))
+                googleApiKey = DbResourceConfiguration.Current.GoogleApiKey;
+
+                fromCulture = fromCulture.ToLower();
             toCulture = toCulture.ToLower();
 
             // normalize the culture in case something like en-us was passed 
@@ -98,26 +104,29 @@ namespace Westwind.Globalization
             if (tokens.Length > 1)
                 toCulture = tokens[0];
 
-            string format =
-                "https://translate.google.com/translate_a/single?client=t&sl={1}&tl={2}&hl=en&dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&dt=at&ie=UTF-8&oe=UTF-8&ssel=0&tsel=4&tk=519371|510563&q={0}";
-            //@"https://translate.google.com/translate_a/t?client=j&text={0}&hl=en&sl={1}&tl={2}
+            string format = "https://www.googleapis.com/language/translate/v2?key={3}&source={1}&target={2}&q={0}";
+
+            //string encodedText = StringUtils.UrlEncode(text);
+            
 
             string url = string.Format(format,                                     
-                                       StringUtils.UrlEncode(text),fromCulture,toCulture);
+                                       text,fromCulture,toCulture,googleApiKey);
 
             // Retrieve Translation with HTTP GET call
-            string json;
+            string jsonString;
             try
             {
                 WebClient web = new WebClient();
 
                 // MUST add a known browser user agent or else response encoding doen't return UTF-8 (WTF Google?)
-                web.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla /5.0");
+                //web.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36");
                 web.Headers.Add(HttpRequestHeader.AcceptCharset, "UTF-8");
+                //web.Headers.Add(HttpRequestHeader.AcceptEncoding, "gzip, deflate");
 
                 // Make sure we have response encoding to UTF-8
                 web.Encoding = Encoding.UTF8;
-                json = web.DownloadString(url);
+                jsonString = web.DownloadString(url);
+             
             }
             catch (Exception ex)
             {
@@ -126,8 +135,19 @@ namespace Westwind.Globalization
                 return null;
             }
 
-            // Extract out nested arrays - nasty stuff string parsing is easier
-            string result = StringUtils.ExtractString(json, "[[[\"", "\",");
+
+            // format:
+            //{
+            //   "data": {
+            //       "translations": [
+            //       {
+            //          "translatedText": "Wo bist du"
+            //   }
+            //  ]
+            // }
+            //}
+            dynamic json = JValue.Parse(jsonString);
+            string result = json.data.translations[0].translatedText;
             
             if (string.IsNullOrEmpty(result))
             {
@@ -135,11 +155,8 @@ namespace Westwind.Globalization
                 return null;
             }
 
-            // turn back into a JSON string to decode JSON encoding
-            result = "\"" + result + "\"";
-
-            // result string must be JSON decoded
-            return JsonConvert.DeserializeObject(result,typeof(string)) as string;            
+            result = WebUtility.HtmlDecode(result);
+            return result;
         }
 
 
