@@ -60,7 +60,7 @@
 </head>
 
 <body data-resource-set="Resources">
-    <form runat="server" id="form2">
+    <form runat="server" id="form1" name="form1" action="ResourceTest.aspx" method="GET" >
     <div class="banner">
         <div id="TitleBar">
             <a href="./">
@@ -113,7 +113,6 @@
                 Current UI Culture: <b><%= Thread.CurrentThread.CurrentUICulture.IetfLanguageTag %></b>
             </div>
             <div>
-                <form id="form1" name="form1" action="ResourceTest.aspx" method="GET">
                     <select id="localeId" name="localeId"
                         value="<%= LocaleId %>"
                         value
@@ -135,7 +134,6 @@
                                 opt.selected = false;
                         }
                     </script>
-                </form>
             </div>
         </section>
 
