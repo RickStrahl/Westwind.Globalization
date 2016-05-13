@@ -1,23 +1,31 @@
 ﻿<%@ Page Language="C#" %>
 
+<%@ Import Namespace="System.Diagnostics" %>
+<%@ Import Namespace="System.Globalization" %>
+<%@ Import Namespace="System.Resources" %>
 <%@ Import Namespace="System.Threading" %>
 
 <%--Import the strongly typed resource namespace - if this fails strongly typed resources don't exist--%>
 <%@ Import Namespace="Westwind.Globalization.Sample.Properties" %>
 
 <script runat="server">
-    private string LocaleId;    
-    
+    private string LocaleId;
+
     protected override void InitializeCulture()
     {
         base.InitializeCulture();
 
         LocaleId = Request.Params["LocaleId"];
-        
+
         // explicitly reset the UserLocale
         if (!string.IsNullOrEmpty(LocaleId))
             Westwind.Utilities.WebUtils.SetUserLocale(LocaleId, LocaleId, "$", true, "en,de,fr");
+
+
+
+
     }
+    
 </script>
 
 <!DOCTYPE html>
@@ -60,7 +68,7 @@
 </head>
 
 <body data-resource-set="Resources">
-    <form runat="server" id="form2">
+    <form runat="server" id="form1">
     <div class="banner">
         <div id="TitleBar">
             <a href="./">
@@ -113,7 +121,7 @@
                 Current UI Culture: <b><%= Thread.CurrentThread.CurrentUICulture.IetfLanguageTag %></b>
             </div>
             <div>
-                <form id="form1" name="form1" action="ResourceTest.aspx" method="GET">
+                <form id="form1" name="form2" action="ResourceTest.aspx" method="GET">
                     <select id="localeId" name="localeId"
                         value="<%= LocaleId %>"
                         value
@@ -136,6 +144,7 @@
                         }
                     </script>
                 </form>
+                
             </div>
         </section>
 
@@ -183,6 +192,7 @@
             
         </div>
 
+    
         <hr />
 
         <div class="container">

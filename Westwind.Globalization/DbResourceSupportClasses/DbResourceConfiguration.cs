@@ -100,22 +100,12 @@ namespace Westwind.Globalization
         /// <seealso>Class DbResource
         /// Compiling Your Applications with the Provider</seealso>
         /// </summary>
-        public string ConnectionString
-        {
-            get { return _connectionString; }
-            set { _connectionString = value; }
-        }
-        private string _connectionString = "*** ENTER A CONNECTION STRING OR connectionStrings ENTRY HERE ***";
+        public string ConnectionString { get; set; } = "*** ENTER A CONNECTION STRING OR connectionStrings ENTRY HERE ***";
 
         /// <summary>
         /// Database table name used in the database
         /// </summary>
-        public string ResourceTableName
-        {
-            get { return _ResourceTableName; }
-            set { _ResourceTableName = value; }
-        }
-        private string _ResourceTableName = "Localizations";
+        public string ResourceTableName { get; set; } = "Localizations";
 
 
         /// <summary>
@@ -128,35 +118,19 @@ namespace Westwind.Globalization
         /// Otherwise format is: 
         /// ~/App_Code/Resources.cs
         /// </summary>
-        public string StronglyTypedGlobalResource
-        {
-            get { return _StronglyTypedGlobalResource; }
-            set { _StronglyTypedGlobalResource = value; }
-        }
-        private string _StronglyTypedGlobalResource = "~/App_Code/Resources.cs";
+        public string StronglyTypedGlobalResource { get; set; } = "~/App_Code/Resources.cs";
 
 
         /// <summary>
         /// The namespace used for exporting and importing resources 
         /// </summary>
-        public string ResourceBaseNamespace
-        {
-            get { return _resourceBaseNamespace; }
-            set { _resourceBaseNamespace = value; }
-           
-        }
-        private string _resourceBaseNamespace = "AppResources";
+        public string ResourceBaseNamespace { get; set; } = "AppResources";
 
 
         /// <summary>
         /// Determines how what type of project we are working with
         /// </summary>
-        public GlobalizationResxExportProjectTypes ResxExportProjectType
-        {
-            get { return _resxExportProjectType; }
-            set { _resxExportProjectType = value; }
-        }
-        private GlobalizationResxExportProjectTypes _resxExportProjectType = GlobalizationResxExportProjectTypes.Project;
+        public GlobalizationResxExportProjectTypes ResxExportProjectType { get; set; } = GlobalizationResxExportProjectTypes.Project;
 
 
         /// <summary>
@@ -165,12 +139,7 @@ namespace Westwind.Globalization
         /// path. Used only by the Web Admin form. All explicit API imports and exports are
         /// can pass in the base path explicitly.
         /// </summary>
-        public string ResxBaseFolder
-        {
-            get { return _resxBaseFolder; }
-            set { _resxBaseFolder = value; }
-        }
-        private string _resxBaseFolder = "~/Properties/";
+        public string ResxBaseFolder { get; set; } = "~/Properties/";
 
         /// <summary>
         /// Determines whether any resources that are not found are automatically
@@ -178,27 +147,27 @@ namespace Westwind.Globalization
         /// 
         /// Note only applies to the Invariant culture.
         /// </summary>
-        public bool AddMissingResources
-        {
-            get { return _AddMissingResources; }
-            set { _AddMissingResources = value; }
-        }
-        private bool _AddMissingResources = true;
+        public bool AddMissingResources { get; set; } = true;
 
+
+        /// <summary>
+        /// Default mechanism used to access resources in DbRes.T().           
+        /// This setting is global and used by all resources running through
+        /// the DbResourceManage/Provider.
+        /// 
+        /// This doesn't not affect Generated REsources which have their own 
+        /// ResourceAccesssMode override that can be explicitly overridden.    
+        /// </summary>
+        public ResourceAccessMode ResourceAccessMode { get; set; } = ResourceAccessMode.DbResourceManager;
 
         /// <summary>
         /// Determines the location of the Localization form in a Web relative path.
         /// This form is popped up when clicking on Edit Resources in the 
         /// DbResourceControl
         /// </summary>        
-        public string LocalizationFormWebPath
-        {
-            get { return _LocalizationFormWebPath; }
-            set { _LocalizationFormWebPath = value; }
-        }
-        private string _LocalizationFormWebPath = "~/LocalizationAdmin/";
+        public string LocalizationFormWebPath { get; set; } = "~/LocalizationAdmin/";
 
-        
+
         /// <summary>
         /// API key for Bing Translate API in the 
         /// Administration API.
@@ -385,8 +354,6 @@ namespace Westwind.Globalization
             return ReflectionUtils.CreateInstanceFromType(Current.DbResourceDataManagerType) as
                 DbResourceDataManager;
         }
-
-
 
         /// <summary>
         /// Keep track of loaded providers so we can unload them

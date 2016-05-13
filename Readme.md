@@ -202,6 +202,9 @@ resources:
     <add key="ShowLocalizationControlOptions" value="False" />
     <add key="ShowControlIcons" value="False" />
 
+    <!-- Google Translate API -->
+    <add key="GoogleApiKey" value="" />
+
     <!-- Bing Translation -->
     <add key="BingClientId" value="" />
     <add key="BingClientSecret" value="" />    

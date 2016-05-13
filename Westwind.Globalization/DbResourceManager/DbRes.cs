@@ -92,11 +92,29 @@ namespace Westwind.Globalization
         /// </returns>
         public static string T(string resId, string resourceSet = null, string lang = null)
         {
+
+            string translated = null;
             if (string.IsNullOrEmpty(resId))
                 return resId;
 
             if (resourceSet == null)
                 resourceSet = string.Empty;
+
+            
+            if (DbResourceConfiguration.Current.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider && HttpContext.Current != null)
+            {
+                translated = HttpContext.GetGlobalResourceObject(resourceSet, resId) as string;
+                if (string.IsNullOrEmpty(translated))
+                    return resId;
+
+                return translated;
+            }
+            else if (DbResourceConfiguration.Current.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider &&
+                     HttpContext.Current != null)
+            {
+                
+            }
+
 
             var manager = GetResourceManager(resourceSet);                            
             if (manager == null)
@@ -194,7 +212,7 @@ namespace Westwind.Globalization
                 resourceSet = string.Empty;
 
             // check if the res manager exists
-            DbResourceManager manager = GetResourceManager(resourceSet);
+            ResourceManager manager = GetResourceManager(resourceSet);
             
             // no manager no resources
             if (manager == null)
@@ -206,7 +224,9 @@ namespace Westwind.Globalization
             else
                 ci = new CultureInfo(lang);
 
-            manager.AutoAddMissingEntries = AutoAddResources;
+            if(manager is DbResourceManager)
+                ((DbResourceManager) manager).AutoAddMissingEntries = AutoAddResources;
+
             object result = manager.GetObject(resId, ci);
 
             if (result == null)
@@ -258,7 +278,7 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="resourceSet"></param>
         /// <returns></returns>
-        public static DbResourceManager GetResourceManager(string resourceSet)
+        public static ResourceManager GetResourceManager(string resourceSet)
         {            
             // check if the res manager exists
             DbResourceManager manager = null;
@@ -267,11 +287,12 @@ namespace Westwind.Globalization
             // if not we have to create it and add it to static collection
             if (manager == null)
             {
+                
                 lock (ResourceManagers)
                 {
                     ResourceManagers.TryGetValue(resourceSet, out manager);
                     if (manager == null)
-                    {
+                    {                        
                         manager = new DbResourceManager(resourceSet);
                         ResourceManagers.Add(resourceSet, manager);
                     }

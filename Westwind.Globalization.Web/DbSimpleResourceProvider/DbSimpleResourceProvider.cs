@@ -65,7 +65,6 @@ using System.Collections.Specialized;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Diagnostics;
-using Westwind.Utilities;
 
 namespace Westwind.Globalization
 {

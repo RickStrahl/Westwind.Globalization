@@ -77,6 +77,7 @@ namespace Westwind.Globalization.Web.Administration
         /// <summary>
         /// Returns a shaped objects that can be displayed in an editable grid the grid view for locale ids
         /// of resources.
+        /// 
         //{
         //  "Locales": [
         //    "",
@@ -193,12 +194,22 @@ namespace Westwind.Globalization.Web.Administration
             return ids;
         }
 
+        /// <summary>
+        /// Returns a list of all ResourceSets
+        /// </summary>
+        /// <returns></returns>
         [CallbackMethod]
         public IEnumerable<string> GetResourceSets()
         {
             return Manager.GetAllResourceSets(ResourceListingTypes.AllResources);
         }
 
+
+        /// <summary>
+        /// Returns a list of the all the LocaleIds used in a given resource set
+        /// </summary>
+        /// <param name="resourceSet"></param>
+        /// <returns></returns>
         [CallbackMethod]
         public IEnumerable<object> GetAllLocaleIds(string resourceSet)
         {
@@ -222,6 +233,12 @@ namespace Westwind.Globalization.Web.Administration
             return list;
         }
 
+
+        /// <summary>
+        /// Returns a resource string based on  resourceId, resourceSet,cultureName
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
         [CallbackMethod]
         public string GetResourceString(dynamic parm)
         {
@@ -238,6 +255,12 @@ namespace Westwind.Globalization.Web.Administration
             return value;
         }
 
+        /// <summary>
+        /// Returns all resources for a given Resource ID. Pass resourceId, and resourceSet
+        /// in an object map.
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
         [CallbackMethod()]
         public IEnumerable<ResourceItemEx> GetResourceItems(dynamic parm)
         {
@@ -265,6 +288,12 @@ namespace Westwind.Globalization.Web.Administration
             return itemList;
         }
 
+        /// <summary>
+        /// Returns an individual ResourceIdtem for a resource ID and specific culture.
+        /// pass resourceId, resourceSet, cultureName in an object map.
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
         [CallbackMethod()]
         public ResourceItemEx GetResourceItem(dynamic parm)
         {
@@ -305,6 +334,13 @@ namespace Westwind.Globalization.Web.Administration
             });
         }
 
+
+        /// <summary>
+        /// Adds or updates a resource. Pass value, resourceId,resourceSet,localeId,comment
+        /// as a map.
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
         [CallbackMethod]
         public bool UpdateResourceString(dynamic parm)
         {
@@ -341,6 +377,12 @@ namespace Westwind.Globalization.Web.Administration
             return true;
         }
 
+        /// <summary>
+        /// Updates just a comment for an individual resourceId. Pass resourceId, resourceSet and localeId
+        /// in a map.
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
         [CallbackMethod]
         public bool UpdateComment(dynamic parm)
         {
@@ -388,6 +430,11 @@ namespace Westwind.Globalization.Web.Administration
         }
 
 
+        /// <summary>
+        /// Updates or adds a binary file resource based on form variables.
+        /// ResourceId,ResourceSet,LocaleId and a single file upload.
+        /// </summary>
+        /// <returns></returns>
         [CallbackMethod]
         public bool UploadResource()
         {
@@ -430,7 +477,12 @@ namespace Westwind.Globalization.Web.Administration
         }
 
 
-
+        /// <summary>
+        /// Delete an individual resource. Pass resourceId, resourceSet and localeId 
+        /// as a map. If localeId is null all the resources are deleted.
+        /// </summary>
+        /// <param name="parm"></param>
+        /// <returns></returns>
         [CallbackMethod]
         public bool DeleteResource(dynamic parm)
         {
@@ -534,6 +586,12 @@ namespace Westwind.Globalization.Web.Administration
             return result;
         }
 
+
+        /// <summary>
+        /// Deletes an entire resource set.
+        /// </summary>
+        /// <param name="resourceSet"></param>
+        /// <returns></returns>
         [CallbackMethod]
         public bool DeleteResourceSet(string resourceSet)
         {
@@ -547,6 +605,13 @@ namespace Westwind.Globalization.Web.Administration
             return true;
         }
 
+
+        /// <summary>
+        /// Renames a resource set to a new name.
+        /// </summary>
+        /// <param name="oldResourceSet"></param>
+        /// <param name="newResourceSet"></param>
+        /// <returns></returns>
         [CallbackMethod]
         public bool RenameResourceSet(string oldResourceSet, string newResourceSet)
         {
@@ -559,6 +624,11 @@ namespace Westwind.Globalization.Web.Administration
             return true;
         }
 
+
+        /// <summary>
+        /// Clears the resource cache. Works only if using one of the Westwind
+        /// ASP.NET resource providers or managers.
+        /// </summary>
         [CallbackMethod]
         public void ReloadResources()
         {
@@ -567,6 +637,11 @@ namespace Westwind.Globalization.Web.Administration
             DbRes.ClearResources(); // resource manager
         }
 
+
+        /// <summary>
+        /// Backs up the resource table into a new table with the same name + _backup
+        /// </summary>
+        /// <returns></returns>
         [CallbackMethod]
         public bool Backup()
         {
@@ -576,6 +651,12 @@ namespace Westwind.Globalization.Web.Administration
             return Manager.CreateBackupTable(null);
         }
 
+
+        /// <summary>
+        /// Creates a new localization table as defined int he configuration if it doesn't
+        /// exist. If the table exists an error is returned.
+        /// </summary>
+        /// <returns></returns>
         [CallbackMethod]
         public bool CreateTable()
         {
@@ -590,6 +671,11 @@ namespace Westwind.Globalization.Web.Administration
         }
 
 
+        /// <summary>
+        /// Determines whether a locale is an RTL language
+        /// </summary>
+        /// <param name="localeId"></param>
+        /// <returns></returns>
         [CallbackMethod]
         public bool IsRtl(string localeId)
         {
@@ -608,6 +694,16 @@ namespace Westwind.Globalization.Web.Administration
         }
 
 
+        /// <summary>
+        /// Creates .NET strongly typed class from the resources. Pass:
+        /// fileName, namespace, classType, resourceSets as a map.
+        /// </summary>
+        /// <remarks>
+        /// Requires that the application has rights to write output into
+        /// the location specified by the filename.
+        /// </remarks>
+        /// <param name="parms"></param>
+        /// <returns></returns>
         [CallbackMethod]
         public bool CreateClass(dynamic parms)
         {
@@ -674,6 +770,12 @@ namespace Westwind.Globalization.Web.Administration
             return true;
         }
 
+
+        /// <summary>
+        /// Export resources from database to Resx files.
+        /// </summary>
+        /// <param name="parms"></param>
+        /// <returns></returns>
         [CallbackMethod]
         public bool ExportResxResources(dynamic parms)
         {
@@ -718,6 +820,12 @@ namespace Westwind.Globalization.Web.Administration
             return true;
         }
 
+
+        /// <summary>
+        /// Import resources from Resx files into database
+        /// </summary>
+        /// <param name="inputBasePath"></param>
+        /// <returns></returns>
         [CallbackMethod]
         public bool ImportResxResources(string inputBasePath = null)
         {
@@ -749,6 +857,11 @@ namespace Westwind.Globalization.Web.Administration
         }
 
 
+        /// <summary>
+        /// Returns configuration information so the UI can display this info on the configuration
+        /// page.
+        /// </summary>
+        /// <returns></returns>
         [CallbackMethod]
         public object GetLocalizationInfo()
         {
@@ -785,12 +898,21 @@ namespace Westwind.Globalization.Web.Administration
 
     }
 
+
+    /// <summary>
+    /// Class that holds a resource value including the locale id
+    /// </summary>
     public class ResourceString
     {
         public string LocaleId { get; set; }
         public string Value { get; set; }
     }
 
+
+    /// <summary>
+    /// Class that holds a resource item with all of its detail
+    /// information.
+    /// </summary>
     public class ResourceItemEx : ResourceItem
     {
         public ResourceItemEx()
