@@ -587,7 +587,7 @@ namespace Westwind.Globalization
                 else if (string.Compare(dir,"app_globalresources",StringComparison.OrdinalIgnoreCase) == 0)
                     ImportDirectoryResources(webPath + dir + "\\","");
 
-                else if (!("bin|app_code|app_themes|app_data|.git|.svn|_svn|app_data|migrations|node_modules|bower_components|".Contains(dir.ToLower() + "|")))
+                else if (!("bin|obj|app_code|app_themes|app_data|.git|.svn|_svn|app_data|migrations|node_modules|bower_components|".Contains(dir.ToLower() + "|")))
                     // Recurse through child directories
                     ImportWebResources(webPath + dir + "\\"); 
             }
