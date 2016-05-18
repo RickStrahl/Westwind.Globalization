@@ -239,6 +239,9 @@
                     .val(value)
                     .controller('ngModel')
                     .$setViewValue(value);
+
+                vm.activeResource = res;
+                vm.onSaveResourceClick();
             }, 100);
 
         });
@@ -288,10 +291,7 @@
                         function() { $("#ResourceId").focus(); });
             };
         vm.onEditResourceClick = function() {
-            $("#AddResourceDialog").modal();
-
-                      
-            
+            $("#AddResourceDialog").modal();            
         };
 
         vm.onCommentClick = function() {
@@ -322,8 +322,10 @@
                         vm.activeResource = vm.resourceList[0];
                     }
 
-                    vm.resourceId = id;
-                    vm.onResourceIdChange();
+                    setTimeout(function() {
+                        vm.resourceId = id;
+                        vm.onResourceIdChange();
+                    },10);
 
                     $("#AddResourceDialog").modal('hide');
                 })

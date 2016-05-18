@@ -38,7 +38,8 @@
             createClass: createClass,
             exportResxResources: exportResxResources,
             importResxResources: importResxResources,
-            getLocalizationInfo: getLocalizationInfo
+            getLocalizationInfo: getLocalizationInfo,
+            isLocalizationTable: isLocalizationTable
         };
         return service;
 
@@ -58,7 +59,7 @@
                 .error(parseHttpError);
         }
 
-        function isLocalizationTablew() {
+        function isLocalizationTable() {
             return $http.get("localizationService.ashx?method=IsLocalizationTable");
         }
 
