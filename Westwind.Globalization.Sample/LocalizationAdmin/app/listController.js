@@ -271,15 +271,21 @@
                 res.ResourceId = resourceId;
                 res.Value = content;
                 vm.activeResource = res;
-
-                $("#AddResourceDialog").modal();
+                
+                $("#AddResourceDialog")
+                    .modal()
+                    .on("shown.bs.modal",
+                        function() { $("#ResourceId").focus(); });
             };
         vm.onEditResourceClick = function() {
             $("#AddResourceDialog").modal();
+
+                      
+            
         };
 
         vm.onCommentClick = function() {
-            $("#CommentDialog").modal();
+            $("#CommentDialog").modal();            
         }
         vm.onSaveResourceClick = function() {
             vm.updateResource(vm.activeResource)
