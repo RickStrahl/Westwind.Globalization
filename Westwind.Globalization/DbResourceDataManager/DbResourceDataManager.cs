@@ -1569,16 +1569,23 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="ResourceSet"></param>
         /// <returns></returns>
-        public virtual bool DeleteResourceSet(string ResourceSet)
+        public virtual bool DeleteResourceSet(string ResourceSet, string cultureName = null)
         {
             if (string.IsNullOrEmpty(ResourceSet))
                 return false;
 
             using (var data = GetDb())
             {
-                var result = data.ExecuteNonQuery("delete from " + Configuration.ResourceTableName + 
-                                                  " where ResourceSet=@ResourceSet",
-                    data.CreateParameter("@ResourceSet", ResourceSet));
+                int result;
+                if (cultureName == null)
+                    result = data.ExecuteNonQuery("delete from " + Configuration.ResourceTableName + 
+                                                " where ResourceSet=@ResourceSet",
+                                                data.CreateParameter("@ResourceSet", ResourceSet));
+                else
+                    result = data.ExecuteNonQuery("delete from " + Configuration.ResourceTableName +
+                                                    " where ResourceSet=@ResourceSet and LocaleId=@LocaleId",
+                                                    data.CreateParameter("@ResourceSet", ResourceSet),
+                                                    data.CreateParameter("@LocaleId",cultureName));
                 if (result < 0)
                 {
                     SetError(data.ErrorMessage);
@@ -1788,8 +1795,7 @@ namespace Westwind.Globalization
                 tableName = Configuration.ResourceTableName;
             if (string.IsNullOrEmpty(tableName))
                 tableName = "Localizations";
-
-
+            
             string sql = "SELECT * FROM INFORMATION_SCHEMA.TABLES where TABLE_NAME=@0";
         
             using (var data = GetDb())

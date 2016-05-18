@@ -708,9 +708,12 @@ namespace Westwind.Globalization
     /// <returns></returns>
     public bool ImportResourceFile(string FileName,string ResourceSetName,string LocaleId)
     {
-        string FilePath = Path.GetDirectoryName(FileName) + "\\";
+        string filePath = Path.GetDirectoryName(FileName) + "\\";
 
-        var Data = DbResourceDataManager.CreateDbResourceDataManager();  
+        var data = DbResourceDataManager.CreateDbResourceDataManager();
+
+        // clear out resources first
+        data.DeleteResourceSet(ResourceSetName, LocaleId);
         
         XmlDocument dom = new XmlDocument();
 
@@ -749,9 +752,9 @@ namespace Westwind.Globalization
 
             if (string.IsNullOrEmpty(Type))
             {
-                if (Data.UpdateOrAddResource(Name, Value, LocaleId, ResourceSetName, Comment) == -1)
+                if (data.UpdateOrAddResource(Name, Value, LocaleId, ResourceSetName, Comment) == -1)
                 {
-                    ErrorMessage = Data.ErrorMessage;
+                    ErrorMessage = data.ErrorMessage;
                     return false;
                 }
             }
@@ -761,13 +764,13 @@ namespace Westwind.Globalization
                 string[] tokens = Value.Split(';');
                 if (tokens.Length > 0)
                 {
-                    string ResFileName = FilePath + tokens[0];
+                    string ResFileName = filePath + tokens[0];
                     if (File.Exists(ResFileName))
                         // DataManager knows about file resources and can figure type info
-                        if (Data.UpdateOrAddResource(Name, ResFileName, LocaleId, ResourceSetName, Comment, true) ==
+                        if (data.UpdateOrAddResource(Name, ResFileName, LocaleId, ResourceSetName, Comment, true) ==
                             -1)
                         {
-                            ErrorMessage = Data.ErrorMessage;
+                            ErrorMessage = data.ErrorMessage;
                             return false;
                         }
                 }

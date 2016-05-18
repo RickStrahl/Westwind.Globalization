@@ -282,7 +282,7 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="ResourceSet"></param>
         /// <returns></returns>
-        bool DeleteResourceSet(string ResourceSet);
+        bool DeleteResourceSet(string ResourceSet, string cultureName = null);
 
         /// <summary>
         /// Renames a resource set. Useful if you need to move a local page resource set
