@@ -58,6 +58,10 @@
                 .error(parseHttpError);
         }
 
+        function isLocalizationTablew() {
+            return $http.get("localizationService.ashx?method=IsLocalizationTable");
+        }
+
         function getAllLocaleIds(resourceSet) {
             return $http.get("localizationService.ashx?method=GetAllLocaleIds&ResourceSet=" + resourceSet)
                 .success(function(localeIds) {

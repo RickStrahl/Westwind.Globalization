@@ -23,6 +23,7 @@
         vm.resourceSet = null;
         vm.resourceSets = [];
         vm.resourceList = [];
+        vm.isLocalizationTable = true;
         vm.resourceGridResources = [];
         vm.resourceId = null;
         vm.activeResource = null;
@@ -70,8 +71,17 @@
             return localizationService.getResourceSets()
                 .success(function(resourceSets) {
                     vm.resourceSets = resourceSets;
-                    if (!vm.resourceSet && resourceSets && resourceSets.length > 0)
+                    if (!vm.resourceSet && resourceSets && resourceSets.length > 0) {
                         vm.resourceSet = vm.resourceSets[0];
+                        vm.isLocalizationTable = true;
+                    } else {
+                        localizationService.isLocalizationTable()
+                            .success(function(exists) {
+                                vm.isLocalizationTable = exists;
+                            })
+                            .error(parseError);
+                    }
+
                     vm.onResourceSetChange();
                 })
                 .error(parseError);

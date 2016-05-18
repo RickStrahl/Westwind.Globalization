@@ -204,6 +204,16 @@ namespace Westwind.Globalization.Web.Administration
             return Manager.GetAllResourceSets(ResourceListingTypes.AllResources);
         }
 
+        /// <summary>
+        /// checks to see if the localiztion table exists
+        /// </summary>
+        /// <returns></returns>
+        [CallbackMethod]
+        public bool IsLocalizationTable()
+        {
+            return Manager.IsLocalizationTable();
+        }
+
 
         /// <summary>
         /// Returns a list of the all the LocaleIds used in a given resource set
