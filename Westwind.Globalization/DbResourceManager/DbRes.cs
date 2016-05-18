@@ -109,13 +109,7 @@ namespace Westwind.Globalization
 
                 return translated;
             }
-            else if (DbResourceConfiguration.Current.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider &&
-                     HttpContext.Current != null)
-            {
-                
-            }
-
-
+  
             var manager = GetResourceManager(resourceSet);                            
             if (manager == null)
                 return resId;
