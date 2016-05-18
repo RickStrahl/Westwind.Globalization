@@ -1,8 +1,15 @@
 # West Wind Globalization Changelog
 
+### Version 2.12
+<small>May 19th, 2016</small>
+* **Miscellaneous UI fixes**  
+Translations are now immediately saved instead of just updating the field to avoid accidentally losing resource updates. The check for whether the resource table exists in the database now actually checks back in the db which allows doing imports when no reosurce sets are loaded. Fix various UI refresh problems. 
+
+* **Fix Resource Import for stale Resources**  
+When importing resources, the resource set imported to is cleared out before resources are imported to avoid stale resources. 
 
 ### Version 2.10
-<small>March 15th, 2015</small>
+<small>March 15th, 2016</small>
 
 * **Fix Google Translation**
 Added support for official Google Translate API v2 which requires an API key and is a for pay API. Updated the 'free' Google API hack that works through the online translator API links which are not 'officially' supported by Google and may limit access at any time. If no API key is provided the free API is used, otherwise the full Translate API is used, using the API key provided in the .config file.
