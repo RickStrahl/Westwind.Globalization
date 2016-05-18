@@ -803,15 +803,17 @@ using Westwind.Globalization;
             {
                 if (isFirst && char.IsDigit(ch))
                     sb.Append("_"); // prefix
-                isFirst = false;
+                
 
                 // skip
                 if (char.IsWhiteSpace(ch) || char.IsPunctuation(ch) || char.IsSeparator(ch) || char.IsControl(ch) || char.IsSymbol(ch) )
                 {
+                    sb.Append("_");
                     nextUpper = true;
                     continue;
                 }
 
+                isFirst = false;
                 sb.Append(nextUpper ? char.ToUpper(ch) : ch);
 
                 nextUpper = false;
