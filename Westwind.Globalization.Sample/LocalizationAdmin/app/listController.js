@@ -146,8 +146,7 @@
         };
 
 
-/// *** Event handlers *** 
-
+        /// *** Event handlers *** 
         vm.onResourceSetChange = function onResourceSetChange() {
             vm.getResourceList();
         };
@@ -206,7 +205,7 @@
         // call back from translate controller
         $scope.$root.$on("translateComplete", function(e, lang, value) {
             var res = null;
-            var index = -1;
+            var index = -1;            
             for (var i = 0; i < vm.resourceItems.length; i++) {
                 res = vm.resourceItems[i];
                 if (res.LocaleId === lang) {
@@ -220,30 +219,30 @@
                 res = vm.newResource();
                 res.LocaleId = lang;
                 //res.Value = value;
-                res.ResourceId = vm.resourceId;
+                //res.ResourceId = vm.resourceId;
                 res.ResourceSet = vm.resourceSet;
                 vm.resourceItems.push(res);
             }
-            //else
-            //    vm.resourceItems[index].Value = value;
+            // always set the resource id
+            res.ResourceId = vm.resourceId;
 
             if (index == -1)
                 index = vm.resourceItems.length - 1;
 
             ww.angular.applyBindingValue("#value_" + index, value);
-
+            
+            
             // assign the value directly to field
             // to force to $dirty state and show green check
             $timeout(function() {
-                angular.element('#value_' + index)
-                    .val(value)
-                    .controller('ngModel')
-                    .$setViewValue(value);
+                    var $el = angular.element('#value_' + index);
+                    $el.val(value)
+                        .controller('ngModel')
+                        .$setViewValue(value);
 
-                vm.activeResource = res;
-                vm.onSaveResourceClick();
-            }, 100);
-
+                    $el.focus();
+                    vm.onSaveResourceClick();                
+            },100);
         });
 
         vm.onResourceIdBlur = function() {
@@ -329,7 +328,7 @@
 
                     $("#AddResourceDialog").modal('hide');
                 })
-                .error(function() {
+                .error(function () {                    
                     var err = ww.angular.parseHttpError(arguments);
                     alert(err.message);
                 });
