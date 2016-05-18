@@ -23,6 +23,7 @@
         vm.resourceSet = null;
         vm.resourceSets = [];
         vm.resourceList = [];
+        vm.isLocalizationTable = true;
         vm.resourceGridResources = [];
         vm.resourceId = null;
         vm.activeResource = null;
@@ -70,8 +71,17 @@
             return localizationService.getResourceSets()
                 .success(function(resourceSets) {
                     vm.resourceSets = resourceSets;
-                    if (!vm.resourceSet && resourceSets && resourceSets.length > 0)
+                    if (!vm.resourceSet && resourceSets && resourceSets.length > 0) {
                         vm.resourceSet = vm.resourceSets[0];
+                        vm.isLocalizationTable = true;
+                    } else {
+                        localizationService.isLocalizationTable()
+                            .success(function(exists) {
+                                vm.isLocalizationTable = exists;
+                            })
+                            .error(parseError);
+                    }
+
                     vm.onResourceSetChange();
                 })
                 .error(parseError);
@@ -229,6 +239,9 @@
                     .val(value)
                     .controller('ngModel')
                     .$setViewValue(value);
+
+                vm.activeResource = res;
+                vm.onSaveResourceClick();
             }, 100);
 
         });
@@ -271,15 +284,18 @@
                 res.ResourceId = resourceId;
                 res.Value = content;
                 vm.activeResource = res;
-
-                $("#AddResourceDialog").modal();
+                
+                $("#AddResourceDialog")
+                    .modal()
+                    .on("shown.bs.modal",
+                        function() { $("#ResourceId").focus(); });
             };
         vm.onEditResourceClick = function() {
-            $("#AddResourceDialog").modal();
+            $("#AddResourceDialog").modal();            
         };
 
         vm.onCommentClick = function() {
-            $("#CommentDialog").modal();
+            $("#CommentDialog").modal();            
         }
         vm.onSaveResourceClick = function() {
             vm.updateResource(vm.activeResource)
@@ -306,8 +322,10 @@
                         vm.activeResource = vm.resourceList[0];
                     }
 
-                    vm.resourceId = id;
-                    vm.onResourceIdChange();
+                    setTimeout(function() {
+                        vm.resourceId = id;
+                        vm.onResourceIdChange();
+                    },10);
 
                     $("#AddResourceDialog").modal('hide');
                 })

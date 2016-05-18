@@ -192,11 +192,14 @@
                 <%= Resources.HelloWorld %>      
             </span>
             
-            <label data-resource-id="StronglyTypedDbResource">Strongly typed Resource using ResourceManager.GetString</label>
+            <label data-resource-id="StronglyTypedDbResource">Strongly typed Resource using ResourceManager.GetString (Resx Mode only)</label>
             <span data-resource-id="HelloWorld">
-                <!-- 
-                <%= Resources.ResourceManager.GetString("HelloWorld") %> 
-                -->
+                <% try
+                   { %>
+                    <%= Resources.ResourceManager.GetString("HelloWorld") %>
+                <% }  catch { %>
+                    </i>n/a</i>
+                <%}%>
             </span>
                                          
 			

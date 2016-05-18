@@ -277,7 +277,7 @@
             <param name="ResourceSet"></param>
             <returns></returns>
         </member>
-        <member name="M:Westwind.Globalization.DbResourceDataManager.DeleteResourceSet(System.String)">
+        <member name="M:Westwind.Globalization.DbResourceDataManager.DeleteResourceSet(System.String,System.String)">
             <summary>
             Deletes an entire resource set from the database. Careful with this function!
             </summary>
@@ -700,7 +700,7 @@
             <param name="ResourceSet"></param>
             <returns></returns>
         </member>
-        <member name="M:Westwind.Globalization.IDbResourceDataManager.DeleteResourceSet(System.String)">
+        <member name="M:Westwind.Globalization.IDbResourceDataManager.DeleteResourceSet(System.String,System.String)">
             <summary>
             Deletes an entire resource set from the database. Careful with this function!
             </summary>
@@ -1950,6 +1950,16 @@
             added to the resource file.
             
             Note only applies to the Invariant culture.
+            </summary>
+        </member>
+        <member name="P:Westwind.Globalization.DbResourceConfiguration.ResourceAccessMode">
+            <summary>
+            Default mechanism used to access resources in DbRes.T().           
+            This setting is global and used by all resources running through
+            the DbResourceManage/Provider.
+            
+            This doesn't not affect Generated REsources which have their own 
+            ResourceAccesssMode override that can be explicitly overridden.    
             </summary>
         </member>
         <member name="P:Westwind.Globalization.DbResourceConfiguration.LocalizationFormWebPath">

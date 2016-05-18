@@ -13,7 +13,7 @@
         </style>
     <ul id="MenuButtons" class="nav navbar-nav pull-right navbar">
              <li>
-            <a ng-show="view.resourceSets && view.resourceSets.length > 0"
+            <a ng-show="view.isLocalizationTable"
                 ng-click="view.onGridMenuClick()"
                 title="{{view.dbRes('GridView_Title')}}"
                 data-resource-id="GridView">
@@ -21,7 +21,7 @@
             </a>
         </li>
         <li>
-            <a ng-show="view.resourceSets && view.resourceSets.length > 0"
+            <a ng-show="view.isLocalizationTable"
                xng-click="view.onExportResxResourcesClick()"
                data-toggle="modal" data-target="#ImportExportResxDialog"
                title="{{::view.dbRes('ExportResx_Title')}}"
@@ -30,7 +30,7 @@
             </a>
         </li>
         <li>
-            <a ng-show="view.resourceSets && view.resourceSets.length > 0"
+            <a ng-show="view.isLocalizationTable"
                data-toggle="modal" data-target="#CreateClassDialog"
                title="{{view.resources.CreateClass_Title}}"
                data-resource-id="CreateClass">
@@ -38,7 +38,7 @@
             </a>
         </li>
         <li>
-            <a ng-show="view.resourceSets && view.resourceSets.length > 0"
+            <a ng-show="view.isLocalizationTable"
                ng-click="view.onReloadResourcesClick()"
                title="{{view.dbRes('ReloadResources_Title')}}"
                data-resource-id="ReloadResources">
@@ -47,7 +47,7 @@
         </li>
         <li>
 
-            <a ng-show="!view.resourceSets || view.resourceSets.length < 1"
+            <a ng-show="!view.isLocalizationTable"
                ng-click="view.onCreateTableClick()"
                title=" {{::view.dbRes('CreateTable_Title')}} "
                data-resource-id="CreateTable">
@@ -57,7 +57,7 @@
 
         </li>
         <li>
-            <a ng-show="view.resourceSets && view.resourceSets.length > 0"
+            <a ng-show="view.isLocalizationTable"
                ng-click="view.onBackupClick()"
                title="{{::view.dbRes('Backup_Title')}}"
                data-resource-id="Backup">

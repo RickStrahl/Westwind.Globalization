@@ -27,6 +27,48 @@
             </summary>
         </member>
         <!-- Badly formed XML comment ignored for member "M:Westwind.Globalization.Web.Administration.LocalizationService.GetAllResourcesForResourceGrid(System.String)" -->
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.GetResourceSets">
+            <summary>
+            Returns a list of all ResourceSets
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.IsLocalizationTable">
+            <summary>
+            checks to see if the localiztion table exists
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.GetAllLocaleIds(System.String)">
+            <summary>
+            Returns a list of the all the LocaleIds used in a given resource set
+            </summary>
+            <param name="resourceSet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.GetResourceString(System.Object)">
+            <summary>
+            Returns a resource string based on  resourceId, resourceSet,cultureName
+            </summary>
+            <param name="parm"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.GetResourceItems(System.Object)">
+            <summary>
+            Returns all resources for a given Resource ID. Pass resourceId, and resourceSet
+            in an object map.
+            </summary>
+            <param name="parm"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.GetResourceItem(System.Object)">
+            <summary>
+            Returns an individual ResourceIdtem for a resource ID and specific culture.
+            pass resourceId, resourceSet, cultureName in an object map.
+            </summary>
+            <param name="parm"></param>
+            <returns></returns>
+        </member>
         <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.GetResourceStrings(System.String,System.String)">
             <summary>
             Gets all resources for a given ResourceId for all cultures from
@@ -36,11 +78,42 @@
             <param name="resourceSet"></param>
             <returns>Returns an array of Key/Value objects to the client</returns>
         </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.UpdateResourceString(System.Object)">
+            <summary>
+            Adds or updates a resource. Pass value, resourceId,resourceSet,localeId,comment
+            as a map.
+            </summary>
+            <param name="parm"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.UpdateComment(System.Object)">
+            <summary>
+            Updates just a comment for an individual resourceId. Pass resourceId, resourceSet and localeId
+            in a map.
+            </summary>
+            <param name="parm"></param>
+            <returns></returns>
+        </member>
         <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.UpdateResource(Westwind.Globalization.ResourceItem)">
             <summary>
             Updates or Adds a resource if it doesn't exist
             </summary>
             <param name="resource"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.UploadResource">
+            <summary>
+            Updates or adds a binary file resource based on form variables.
+            ResourceId,ResourceSet,LocaleId and a single file upload.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.DeleteResource(System.Object)">
+            <summary>
+            Delete an individual resource. Pass resourceId, resourceSet and localeId 
+            as a map. If localeId is null all the resources are deleted.
+            </summary>
+            <param name="parm"></param>
             <returns></returns>
         </member>
         <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.RenameResource(System.Object)">
@@ -66,6 +139,91 @@
             <param name="NewProperty">New Property prefix</param>
             <param name="ResourceSet">The resourceset it applies to</param>
             <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.DeleteResourceSet(System.String)">
+            <summary>
+            Deletes an entire resource set.
+            </summary>
+            <param name="resourceSet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.RenameResourceSet(System.String,System.String)">
+            <summary>
+            Renames a resource set to a new name.
+            </summary>
+            <param name="oldResourceSet"></param>
+            <param name="newResourceSet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.ReloadResources">
+            <summary>
+            Clears the resource cache. Works only if using one of the Westwind
+            ASP.NET resource providers or managers.
+            </summary>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.Backup">
+            <summary>
+            Backs up the resource table into a new table with the same name + _backup
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.CreateTable">
+            <summary>
+            Creates a new localization table as defined int he configuration if it doesn't
+            exist. If the table exists an error is returned.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.IsRtl(System.String)">
+            <summary>
+            Determines whether a locale is an RTL language
+            </summary>
+            <param name="localeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.CreateClass(System.Object)">
+            <summary>
+            Creates .NET strongly typed class from the resources. Pass:
+            fileName, namespace, classType, resourceSets as a map.
+            </summary>
+            <remarks>
+            Requires that the application has rights to write output into
+            the location specified by the filename.
+            </remarks>
+            <param name="parms"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.ExportResxResources(System.Object)">
+            <summary>
+            Export resources from database to Resx files.
+            </summary>
+            <param name="parms"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.ImportResxResources(System.String)">
+            <summary>
+            Import resources from Resx files into database
+            </summary>
+            <param name="inputBasePath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.Globalization.Web.Administration.LocalizationService.GetLocalizationInfo">
+            <summary>
+            Returns configuration information so the UI can display this info on the configuration
+            page.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Westwind.Globalization.Web.Administration.ResourceString">
+            <summary>
+            Class that holds a resource value including the locale id
+            </summary>
+        </member>
+        <member name="T:Westwind.Globalization.Web.Administration.ResourceItemEx">
+            <summary>
+            Class that holds a resource item with all of its detail
+            information.
+            </summary>
         </member>
         <member name="T:Westwind.Globalization.Web.Resources.Resources">
             <summary>
