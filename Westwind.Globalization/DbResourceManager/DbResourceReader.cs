@@ -56,7 +56,7 @@ namespace Westwind.Globalization
         /// <summary>
         /// The culture that applies to to this reader
         /// </summary>
-        private CultureInfo cultureInfo;
+        private string cultureName;
 
         /// <summary>
         /// Cached instance of items. The ResourceManager will often be called repeatedly
@@ -78,8 +78,14 @@ namespace Westwind.Globalization
         /// <param name="cultureInfo">The CultureInfo identifying the culture of the resources to be read</param>
         public DbResourceReader(string baseNameField, CultureInfo cultureInfo)
         {
+          this.baseNameField = baseNameField;
+	        cultureName = cultureInfo.Name;
+        }
+
+        public DbResourceReader(string baseNameField, string cultureName)
+        {
             this.baseNameField = baseNameField;
-            this.cultureInfo = cultureInfo;
+            this.cultureName = cultureName;
         }
 
         /// <summary>
@@ -111,7 +117,7 @@ namespace Westwind.Globalization
                 // Here's the only place we really access the database and return
                 // a specific ResourceSet for a given ResourceSet Id and Culture
                 DbResourceDataManager manager = DbResourceDataManager.CreateDbResourceDataManager();
-                Items = manager.GetResourceSet(cultureInfo.Name, baseNameField);
+                Items = manager.GetResourceSet(cultureName, baseNameField);
                 return Items.GetEnumerator();
             }
         }

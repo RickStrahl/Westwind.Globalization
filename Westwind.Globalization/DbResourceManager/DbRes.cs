@@ -114,13 +114,7 @@ namespace Westwind.Globalization
             if (manager == null)
                 return resId;
 
-            CultureInfo ci;
-            if (string.IsNullOrEmpty(lang))
-                ci = CultureInfo.CurrentUICulture;
-            else
-                ci = new CultureInfo(lang);
-
-            string result = manager.GetObject(resId, ci) as string;
+            string result = manager.GetObject(resId, lang) as string;
 
             if (string.IsNullOrEmpty(result))
                 return resId;
@@ -272,7 +266,7 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="resourceSet"></param>
         /// <returns></returns>
-        public static ResourceManager GetResourceManager(string resourceSet)
+        public static DbResourceManager GetResourceManager(string resourceSet)
         {            
             // check if the res manager exists
             DbResourceManager manager = null;
@@ -314,7 +308,7 @@ namespace Westwind.Globalization
             else if (lang == string.Empty)
                 ci = CultureInfo.InvariantCulture;
             else
-                ci = new CultureInfo(lang);
+                return manager.GetResourceSet(lang, false, false);
 
             return manager.GetResourceSet(ci, false, true);
         }

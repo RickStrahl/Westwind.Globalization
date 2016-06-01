@@ -160,10 +160,35 @@ namespace Westwind.Globalization
                 
                 // Add the resource set to the cached set
                 resourceSets.Add(culture.Name, rs);
-                
+
                 // And return an instance
                 return rs;
-            }            
+            }
+        }
+
+        public ResourceSet GetResourceSet(string cultureName, bool createIfNotExists, bool tryParents)
+        {
+            var resourceSets = InternalResourceSets;
+
+            // retrieve cached instance - outside of lock for perf
+            if (resourceSets.ContainsKey(cultureName))
+                return resourceSets[cultureName];
+
+            lock (SyncLock)
+            {
+                // have to check again to ensure still not existing
+                if (resourceSets.ContainsKey(cultureName))
+                    return resourceSets[cultureName];
+
+                // Otherwise create a new instance, load it and return it
+                var rs = new DbResourceSet(BaseNameField, cultureName);
+
+                // Add the resource set to the cached set
+                resourceSets.Add(cultureName, rs);
+
+                // And return an instance
+                return rs;
+            }
         }
 
         /// <summary>
@@ -220,7 +245,51 @@ namespace Westwind.Globalization
         }
 
         /// <summary>
-        /// Add a new resource to the base resource set
+        ///     Worker method specific to DBResource system that allows accessing a resource by a culture Id that
+        ///     does not correspond to a registered CultureInfo. The parent must be a registered Culture for
+        ///     fallback to work.
+        /// </summary>
+        public object GetObject(string name, string cultureName)
+        {
+            object value = null;
+            var fallbackCultureName = cultureName;
+            if (!string.IsNullOrWhiteSpace(cultureName))
+            {
+                var set = GetResourceSet(cultureName, false, true);
+
+                value = set.GetObject(name);
+                if (value != null)
+                {
+                    return value;
+                }
+
+                var lastDashIndex = cultureName.LastIndexOf('-');
+                if (lastDashIndex != -1)
+                {
+                    fallbackCultureName = cultureName.Substring(0, cultureName.Length - lastDashIndex + 1);
+                }
+            }
+
+            CultureInfo culture;
+            if (string.IsNullOrWhiteSpace(fallbackCultureName))
+            {
+                culture = CultureInfo.CurrentUICulture;
+            }
+            else
+            {
+                culture = new CultureInfo(fallbackCultureName);
+            }
+
+            value = base.GetObject(name, culture);
+
+            if (value == null && AutoAddMissingEntries)
+                AddMissingResource(name, name);
+
+            return value;
+        }
+
+        /// <summary>
+        ///     Add a new resource to the base resource set
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
