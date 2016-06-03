@@ -266,7 +266,7 @@ namespace Westwind.Globalization
                 var lastDashIndex = cultureName.LastIndexOf('-');
                 if (lastDashIndex != -1)
                 {
-                    fallbackCultureName = cultureName.Substring(0, cultureName.Length - lastDashIndex + 1);
+                    fallbackCultureName = cultureName.Substring(0, lastDashIndex);
                 }
             }
 
