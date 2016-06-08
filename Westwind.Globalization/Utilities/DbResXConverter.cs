@@ -902,7 +902,7 @@ namespace Westwind.Globalization
         if (type == null)
             return null;
 
-        var resMan = new ResourceManager(resourceSetName, type.Assembly);
+        var resMan = new DbResourceManager(resourceSetName, type.Assembly);
         if (resMan == null)
             return null;
 
@@ -910,17 +910,17 @@ namespace Westwind.Globalization
     }
 
 
-    public Dictionary<string, object> GetResourcesNormalizedForLocale(ResourceManager resourceManager, string localeId)
+    public Dictionary<string, object> GetResourcesNormalizedForLocale(DbResourceManager resourceManager, string localeId)
     {        
         var resDict = new Dictionary<string, object>();
 
-        var culture = Thread.CurrentThread.CurrentUICulture;
-        if (localeId == null)
-            culture = CultureInfo.CurrentUICulture;
-        else if(localeId == string.Empty)
-            culture = CultureInfo.InvariantCulture;
-        else if (culture.IetfLanguageTag != localeId)
-            culture = CultureInfo.GetCultureInfoByIetfLanguageTag(localeId);
+        //var culture = Thread.CurrentThread.CurrentUICulture;
+        //if (localeId == null)
+        //    culture = CultureInfo.CurrentUICulture;
+        //else if(localeId == string.Empty)
+        //    culture = CultureInfo.InvariantCulture;
+        //else if (culture.IetfLanguageTag != localeId)
+        //    culture = CultureInfo.GetCultureInfoByIetfLanguageTag(localeId);
         
         try
         {
@@ -935,7 +935,7 @@ namespace Westwind.Globalization
             var keys = resDict.Keys.ToList();
             foreach (var key in keys)
             {
-                resDict[key] = resourceManager.GetObject(key,culture);
+                resDict[key] = resourceManager.GetObject(key, localeId);
             }            
         }
         catch (Exception ex)
