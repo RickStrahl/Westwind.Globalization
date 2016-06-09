@@ -143,7 +143,7 @@ namespace Westwind.Globalization
         /// This value *always* returns a string unless you pass in null in defaultText.
         /// </returns>
         /// 
-        public static string T(string resId, string defaultText, string resourceSet, string lang = null)
+        public static string TDefault(string resId, string defaultText, string resourceSet, string lang = null)
         {
             string translated = null;
             if (string.IsNullOrEmpty(resId))
