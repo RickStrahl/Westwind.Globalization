@@ -130,6 +130,58 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Localization helper function that Translates a resource
+        /// Id to a resource value string. If id is not found default text is returned. Easy access that allows full
+        /// control over the resource to retrieve or default UiCulture
+        /// locale retrieval.
+        /// </summary>
+        /// <param name="resId">The Resource Id to retrieve</param>
+        /// <param name="defaultText">Default text that is returned when resource with given resId is not found</param>
+        /// <param name="resourceSet">Name of the ResourceSet that houses this resource. If null or empty resources are used.</param>
+        /// <param name="lang">5 letter or 2 letter language ieetf code: en-US, de-DE or en, de etc.</param>
+        /// <returns>
+        /// Localized resource or the resource Id if no match is found. 
+        /// This value *always* returns a string unless you pass in null in defaultText.
+        /// </returns>
+        /// 
+        public static string T(string resId, string defaultText, string resourceSet, string lang = null)
+        {
+            string translated = null;
+            if (string.IsNullOrEmpty(resId))
+                return defaultText;
+
+            if (resourceSet == null)
+                resourceSet = string.Empty;
+
+
+            if (DbResourceConfiguration.Current.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider && HttpContext.Current != null)
+            {
+                translated = HttpContext.GetGlobalResourceObject(resourceSet, resId) as string;
+                if (string.IsNullOrEmpty(translated))
+                    return defaultText;
+
+                return translated;
+            }
+
+            var manager = GetResourceManager(resourceSet);
+            if (manager == null)
+                return defaultText;
+
+            CultureInfo ci;
+            if (string.IsNullOrEmpty(lang))
+                ci = CultureInfo.CurrentUICulture;
+            else
+                ci = new CultureInfo(lang);
+
+            string result = manager.GetObject(resId, ci) as string;
+
+            if (string.IsNullOrEmpty(result))
+                return defaultText;
+
+            return result;
+        }
+
+        /// <summary>
+        /// Localization helper function that Translates a resource
         /// Id to a resource value to an HtmlStringg. Easy access that allows full
         /// control over the resource to retrieve or default UiCulture
         /// locale retrieval.
