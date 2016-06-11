@@ -92,8 +92,6 @@ namespace Westwind.Globalization
         /// </returns>
         public static string T(string resId, string resourceSet = null, string lang = null)
         {
-
-            string translated = null;
             if (string.IsNullOrEmpty(resId))
                 return resId;
 
@@ -103,7 +101,7 @@ namespace Westwind.Globalization
             
             if (DbResourceConfiguration.Current.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider && HttpContext.Current != null)
             {
-                translated = HttpContext.GetGlobalResourceObject(resourceSet, resId) as string;
+                var translated = HttpContext.GetGlobalResourceObject(resourceSet, resId) as string;
                 if (string.IsNullOrEmpty(translated))
                     return resId;
 
@@ -145,7 +143,6 @@ namespace Westwind.Globalization
         /// 
         public static string TDefault(string resId, string defaultText, string resourceSet, string lang = null)
         {
-            string translated = null;
             if (string.IsNullOrEmpty(resId))
                 return defaultText;
 
@@ -155,7 +152,7 @@ namespace Westwind.Globalization
 
             if (DbResourceConfiguration.Current.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider && HttpContext.Current != null)
             {
-                translated = HttpContext.GetGlobalResourceObject(resourceSet, resId) as string;
+                var translated = HttpContext.GetGlobalResourceObject(resourceSet, resId) as string;
                 if (string.IsNullOrEmpty(translated))
                     return defaultText;
 

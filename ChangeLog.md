@@ -1,7 +1,15 @@
 # West Wind Globalization Changelog
 
+### Version 2.15
+<small>not released yet</small>
+
+* **dbRes.TDefault() to get resource with Default fallback**  
+New method that allows passing of a default string if a resources ID can't be found. 
+
+
 ### Version 2.12
 <small>May 19th, 2016</small>
+
 * **Miscellaneous UI fixes**  
 Translations are now immediately saved instead of just updating the field to avoid accidentally losing resource updates. The check for whether the resource table exists in the database now actually checks back in the db which allows doing imports when no reosurce sets are loaded. Fix various UI refresh problems. 
 
