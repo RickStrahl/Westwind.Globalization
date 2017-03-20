@@ -336,7 +336,7 @@ To use this provider you have to enable it in web.config. To do so:
 ```XML
 <configuration>  
   <system.web>
-       <globalization resourceProviderFactoryType="Westwind.Globalization.DbSimpleResourceProviderFactory,Westwind.Globalization" />    
+       <globalization resourceProviderFactoryType="Westwind.Globalization.DbSimpleResourceProviderFactory,Westwind.Globalization.Web" />    
        <!--<globalization resourceProviderFactoryType="Westwind.Globalization.DbResourceProviderFactory,Westwind.Globalization" />-->    
   </system.web>
 </configuration>
@@ -552,7 +552,7 @@ To configure the Resource Handler it has to be registered in web.config as follo
     <add name="JavaScriptResourceHandler"
         verb="GET"
         path="JavascriptResourceHandler.axd"
-        type="Westwind.Globalization.JavaScriptResourceHandler,Westwind.Globalization" />
+        type="Westwind.Globalization.JavaScriptResourceHandler,Westwind.Globalization.Web" />
 </handlers>
 </system.webServer>
 </configuration>
