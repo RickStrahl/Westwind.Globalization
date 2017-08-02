@@ -22,19 +22,19 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="resourceSet"></param>
         /// <returns></returns>
-        public override List<ResourceIdItem> GetAllResourceIds(string resourceSet)
+        public override List<ResourceIdItem> GetAllResourceIds(string resourceSet, string projectName = null)
         {
             using (var data = GetDb())
             {
                 string sql = string.Format(
                     @"select ResourceId, if(MAX(length(Value)) > 0,true,false) as HasValue
 	  	            from {0}
-                    where ResourceSet=@ResourceSet 
+                    where ResourceSet=@ResourceSet AND IFNULL(ProjectName,'')=IFNULL(@ProjectName,'')
 		            group by 1", Configuration.ResourceTableName);
 
                 // have to use a reader as bool values are coming back as longs that 
                 // aren't automatically parsed into bool
-                var reader = data.ExecuteReader(sql, data.CreateParameter("@ResourceSet", resourceSet));               
+                var reader = data.ExecuteReader(sql, data.CreateParameter("@ResourceSet", resourceSet), data.CreateParameter("@ProjectName", projectName));
                 if (reader == null)
                 {
                     SetError(data.ErrorMessage);
@@ -44,7 +44,7 @@ namespace Westwind.Globalization
                 var list = new List<ResourceIdItem>();
                 while (reader.Read())
                 {
-                    bool val = ((long) reader["HasValue"]) == 1 ? true : false;
+                    bool val = ((long)reader["HasValue"]) == 1 ? true : false;
 
                     list.Add(new ResourceIdItem()
                     {
@@ -52,7 +52,7 @@ namespace Westwind.Globalization
                         HasValue = val
                     });
                 }
-                
+
                 return list;
             }
         }
@@ -134,9 +134,9 @@ namespace Westwind.Globalization
             {
 
                 if (!data.RunSqlScript(sql, false, false))
-                {       
+                {
                     SetError(data.ErrorMessage);
-                    return false;                    
+                    return false;
                 }
             }
 
@@ -144,8 +144,8 @@ namespace Westwind.Globalization
         }
 
 
-    
-        
+
+
         protected override string TableCreationSql
         {
             get
@@ -157,6 +157,7 @@ namespace Westwind.Globalization
   Value varchar(2048) DEFAULT NULL,
   LocaleId varchar(10) DEFAULT NULL,
   ResourceSet varchar(512) DEFAULT NULL,
+  ProjectName nvarchar(500) DEFAULT NULL,
   Type varchar(512) DEFAULT NULL,
   BinFile blob,
   TextFile text,

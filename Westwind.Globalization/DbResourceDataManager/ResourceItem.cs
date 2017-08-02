@@ -92,7 +92,7 @@ namespace Westwind.Globalization
                 SendPropertyChanged("Comment");
             }
         }
-        private string _Comment = null;     
+        private string _Comment = null;
 
         /// <summary>
         /// Type of the data if not a string
@@ -121,15 +121,15 @@ namespace Westwind.Globalization
         /// </summary> 
         public int ValueType
         {
-	        get { return _ValueType ; }
+            get { return _ValueType; }
             set
             {
                 SendPropertyChanged("ValueType");
                 _ValueType = value;
             }
         }
-        private int _ValueType = (int) ValueTypes.Text;
-        
+        private int _ValueType = (int)ValueTypes.Text;
+
 
         public DateTime Updated
         {
@@ -158,13 +158,27 @@ namespace Westwind.Globalization
         }
         private string _ResourceSet = string.Empty;
 
+        /// <summary>
+        /// The project name different locality for different project
+        /// empty means global or default localization
+        /// </summary>
+        public string ProjectName
+        {
+            get { return _ProjectName; }
+            set
+            {
+                _ProjectName = value;
+                SendPropertyChanged("ProjectName");
+            }
+        }
+        private string _ProjectName = string.Empty;
 
         public string TextFile { get; set; }
         public byte[] BinFile { get; set; }
         public string FileName { get; set; }
 
 
-        
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -192,14 +206,15 @@ namespace Westwind.Globalization
             TextFile = reader["TextFile"] as string;
             BinFile = reader["BinFile"] as byte[];
             Comment = reader["Comment"] as string;
+            ProjectName = reader["ProjectName"] as string;
             ValueType = Convert.ToInt32(reader["ValueType"]);
             try
             {
-                Updated = (DateTime) reader["Updated"];
+                Updated = (DateTime)reader["Updated"];
             }
             catch { }
-            
-        }    
+
+        }
     }
 
     public enum ValueTypes

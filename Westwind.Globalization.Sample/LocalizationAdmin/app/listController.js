@@ -1,7 +1,7 @@
 /// <reference path="localizationservice.js" />
 /// <reference path="../bower_components/lodash/lodash.js" />
 /// <reference path="../scripts/ww.resourceEditor.js" />
-(function(undefined) {
+(function (undefined) {
     'use strict';
 
     var app = angular
@@ -34,13 +34,15 @@
         vm.uploadProgress = null;
         vm.resourceEditMode = false;
         vm.editedResource = null;
+        vm.projectNames = [];
+        vm.projectName = null;
         vm.error = {
             message: null,
             icon: "info-circle",
             cssClass: "info"
         }
 
-        vm.newResource = function() {
+        vm.newResource = function () {
             return {
                 "ResourceId": null,
                 "Value": null,
@@ -52,7 +54,8 @@
                 "TextFile": null,
                 "BinFile": null,
                 "ValueType": 0,
-                "FileName": ""
+                "FileName": "",
+                "ProjectName": null
             };
         };
 
@@ -67,16 +70,19 @@
             }
         };
 
-        vm.getResourceSets = function getResourceSets() {
-            return localizationService.getResourceSets()
-                .success(function(resourceSets) {
+        vm.getResourceSets = function getResourceSets(projectName) {
+
+            return localizationService.getResourceSets(projectName)
+                .success(function (resourceSets) {
+
                     vm.resourceSets = resourceSets;
+                    vm.resourceSet = vm.resourceSets[0];
                     if (!vm.resourceSet && resourceSets && resourceSets.length > 0) {
-                        vm.resourceSet = vm.resourceSets[0];
+                        //vm.resourceSet = vm.resourceSets[0];
                         vm.isLocalizationTable = true;
                     } else {
                         localizationService.isLocalizationTable()
-                            .success(function(exists) {
+                            .success(function (exists) {
                                 vm.isLocalizationTable = exists;
                             })
                             .error(parseError);
@@ -87,19 +93,31 @@
                 .error(parseError);
         };
 
+        vm.getProjectNames = function getProjectNames() {
 
-        vm.updateResource = function (resource) {            
+            return localizationService.getProjectNames()
+                .success(function (projectNames) {
+                    vm.projectNames = projectNames;
+                    if (!vm.projectName && projectNames && projectNames.length > 0) {
+                        vm.projectName = vm.projectNames[0];
+                    }
+                    vm.onProjectNameChange();
+                })
+                .error(parseError);
+        };
+
+        vm.updateResource = function (resource) {
             return localizationService.updateResource(resource)
-                .success(function() {
+                .success(function () {
                     vm.getResourceItems();
                     showMessage(vm.dbRes('ResourceSaved'));
                 })
                 .error(parseError);
         };
 
-        vm.updateResourceString = function(value, localeId) {
-            return localizationService.updateResourceString(value, vm.resourceId, vm.resourceSet, localeId, vm.activeResource.Comment)
-                .success(function() {
+        vm.updateResourceString = function (value, localeId) {
+            return localizationService.updateResourceString(value, vm.resourceId, vm.resourceSet, localeId, vm.activeResource.Comment, vm.projectName)
+                .success(function () {
                     vm.getResourceItems();
                     showMessage(vm.dbRes('ResourceSaved'));
                 })
@@ -115,20 +133,21 @@
                 firstListLoad = false;
                 return;
             }
-            return localizationService.getResourceList(vm.resourceSet)
-                .success(function(resourceList) {
+            return localizationService.getResourceList(vm.resourceSet, vm.projectName)
+                .success(function (resourceList) {
                     vm.resourceList = resourceList;
                     if (resourceList.length > 0) {
                         vm.resourceId = vm.resourceList[0].ResourceId;
-                        setTimeout(function() { vm.onResourceIdChange(); }, 10);
+                        setTimeout(function () { vm.onResourceIdChange(); }, 10);
                     }
                 })
                 .error(parseError);
+
         };
 
-        vm.getResourceItems = function getResourceItems() {            
-            localizationService.getResourceItems(vm.resourceId, vm.resourceSet)
-                .success(function(resourceItems) {
+        vm.getResourceItems = function getResourceItems() {
+            localizationService.getResourceItems(vm.resourceId, vm.resourceSet, vm.projectName)
+                .success(function (resourceItems) {
                     vm.resourceItems = resourceItems;
                     if (vm.resourceItems.length > 0) {
                         vm.activeResource = vm.resourceItems[0];
@@ -150,6 +169,13 @@
         vm.onResourceSetChange = function onResourceSetChange() {
             vm.getResourceList();
         };
+        vm.onProjectNameChange = function onProjectNameChange() {
+            vm.getResourceSets(vm.projectName).success(function () {
+
+                vm.getResourceList();
+            });
+
+        };
         vm.onResourceIdChange = function onResourceIdChange() {
             vm.getResourceItems();
         };
@@ -168,7 +194,7 @@
             // Ctrl-Enter - save and next field
             if (ev.ctrlKey && ev.keyCode === 13) {
                 vm.onStringUpdate(resource);
-                $timeout(function() {
+                $timeout(function () {
                     // set focus to next field
                     var el = $(ev.target);
                     var id = el.prop("id").replace("value_", "") * 1;
@@ -181,11 +207,11 @@
 
             }
         };
-        vm.onResourceFullscreenEdit = function(ev, resource) {
+        vm.onResourceFullscreenEdit = function (ev, resource) {
             $("#resource-editor").fullScreenEditor('show', {
                 value: resource.Value,
                 rtl: resource.IsRtl,
-                onSave: function(value) {
+                onSave: function (value) {
                     var $el = $("textarea[data-localeid='" + resource.LocaleId + "'");
                     var id = $el.prop("id");
                     vm.activeResource.Value = value;
@@ -193,7 +219,7 @@
                 }
             });
         }
-        vm.onTranslateClick = function(ev, resource) {
+        vm.onTranslateClick = function (ev, resource) {
             vm.editedResource = resource.Value;
             var id = $(ev.target).parent().find("textarea").prop("id");
 
@@ -203,9 +229,9 @@
         };
 
         // call back from translate controller
-        $scope.$root.$on("translateComplete", function(e, lang, value) {
+        $scope.$root.$on("translateComplete", function (e, lang, value) {
             var res = null;
-            var index = -1;            
+            var index = -1;
             for (var i = 0; i < vm.resourceItems.length; i++) {
                 res = vm.resourceItems[i];
                 if (res.LocaleId === lang) {
@@ -230,40 +256,41 @@
                 index = vm.resourceItems.length - 1;
 
             ww.angular.applyBindingValue("#value_" + index, value);
-            
-            
+
+
             // assign the value directly to field
             // to force to $dirty state and show green check
-            $timeout(function() {
-                    var $el = angular.element('#value_' + index);
-                    $el.val(value)
-                        .controller('ngModel')
-                        .$setViewValue(value);
+            $timeout(function () {
+                var $el = angular.element('#value_' + index);
+                $el.val(value)
+                    .controller('ngModel')
+                    .$setViewValue(value);
 
-                    $el.focus();
-                    vm.onSaveResourceClick();                
-            },100);
+                $el.focus();
+                vm.onSaveResourceClick();
+            }, 100);
         });
 
-        vm.onResourceIdBlur = function() {
-                if (!vm.activeResource.Value)
-                    vm.activeResource.Value = vm.activeResource.ResourceId;
+        vm.onResourceIdBlur = function () {
+            if (!vm.activeResource.Value)
+                vm.activeResource.Value = vm.activeResource.ResourceId;
 
-            },
-            vm.onLocaleIdBlur = function(localeId) {
+        },
+            vm.onLocaleIdBlur = function (localeId) {
                 if (!localeId)
                     localeId = vm.activeResource.LocaleId;
 
                 localizationService.isRtl(localeId)
-                    .success(function(isRtl) {
+                    .success(function (isRtl) {
                         vm.activeResource.IsRtl = isRtl;
                     });
             },
-            vm.onAddResourceClick = function(resourceId, resourceSet, content) {
+            vm.onAddResourceClick = function (resourceId, resourceSet, content, projectName) {
 
                 if (!resourceId) {
-                    if (vm.activeResource)
+                    if (vm.activeResource) {
                         resourceId = vm.activeResource.ResourceId;
+                    }
                     else
                         resourceId = "";
                 }
@@ -273,6 +300,14 @@
                     else
                         resourceSet = "";
                 }
+
+                if (!projectName) {
+                    if (vm.activeResource)
+                        projectName = vm.activeResource.ProjectName;
+                    else
+                        projectName = null;
+                }
+
                 var localeId = "";
                 if (vm.activeResource)
                     localeId = vm.activeResource.LocaleId;
@@ -282,28 +317,31 @@
                 res.LocaleId = localeId;
                 res.ResourceId = resourceId;
                 res.Value = content;
+                res.ProjectName = projectName;
                 vm.activeResource = res;
-                
+
+
                 $("#AddResourceDialog")
                     .modal()
                     .on("shown.bs.modal",
-                        function() { $("#ResourceId").focus(); });
+                        function () { $("#ResourceId").focus(); });
             };
-        vm.onEditResourceClick = function() {
-            $("#AddResourceDialog").modal();            
+        vm.onEditResourceClick = function () {
+            $("#AddResourceDialog").modal();
         };
 
-        vm.onCommentClick = function() {
-            $("#CommentDialog").modal();            
+        vm.onCommentClick = function () {
+            $("#CommentDialog").modal();
         }
-        vm.onSaveResourceClick = function() {
+        vm.onSaveResourceClick = function () {
+
             vm.updateResource(vm.activeResource)
-                .success(function() {
+                .success(function () {
                     var id = vm.activeResource.ResourceId;
                     var resourceSet = vm.activeResource.ResourceSet;
 
                     // check to see if resourceset exists
-                    var i = _.findIndex(vm.resourceSets, function(set) {
+                    var i = _.findIndex(vm.resourceSets, function (set) {
                         return set === resourceSet;
                     });
                     if (i < 0) {
@@ -313,7 +351,7 @@
                     }
 
                     // check if resourceId exists
-                    var i = _.findIndex(vm.resourceList, function(res) {
+                    var i = _.findIndex(vm.resourceList, function (res) {
                         return res.ResourceId === id;
                     });
                     if (i < 0) {
@@ -321,14 +359,14 @@
                         vm.activeResource = vm.resourceList[0];
                     }
 
-                    setTimeout(function() {
+                    setTimeout(function () {
                         vm.resourceId = id;
                         vm.onResourceIdChange();
-                    },10);
+                    }, 10);
 
                     $("#AddResourceDialog").modal('hide');
                 })
-                .error(function () {                    
+                .error(function () {
                     var err = ww.angular.parseHttpError(arguments);
                     alert(err.message);
                 });
@@ -337,48 +375,49 @@
             localizationService.updateComment(vm.activeResource.Comment,
                     vm.activeResource.ResourceId,
                     vm.activeResource.ResourceSet,
-                    vm.activeResource.LocaleId)
-                .success(function() {
+                    vm.activeResource.LocaleId,
+                    vm.projectName)
+                .success(function () {
                     $('#CommentDialog').modal('hide');
                 })
                 .error(parseError);
         }
-        vm.onResourceUpload = function(files) {
+        vm.onResourceUpload = function (files) {
             if (files && files.length) {
                 for (var i = 0; i < files.length; i++) {
                     var file = files[i];
                     $upload.upload({
-                            url: 'LocalizationService.ashx?method=UploadResource',
-                            fields: { 'resourceset': vm.activeResource.ResourceSet, 'resourceid': vm.activeResource.ResourceId, "localeid": vm.activeResource.LocaleId },
-                            file: file
-                        }).progress(function(evt) {
-                            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                            vm.uploadProgress = progressPercentage + '% ' + evt.config.file.name;
-                        }).success(function(data, status, headers, config) {
-                            $("#AddResourceDialog").modal('hide');
-                            var id = vm.activeResource.ResourceId;
+                        url: 'LocalizationService.ashx?method=UploadResource',
+                        fields: { 'resourceset': vm.activeResource.ResourceSet, 'resourceid': vm.activeResource.ResourceId, "localeid": vm.activeResource.LocaleId },
+                        file: file
+                    }).progress(function (evt) {
+                        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                        vm.uploadProgress = progressPercentage + '% ' + evt.config.file.name;
+                    }).success(function (data, status, headers, config) {
+                        $("#AddResourceDialog").modal('hide');
+                        var id = vm.activeResource.ResourceId;
 
-                            // check if resourceId exists
-                            var i = _.findIndex(vm.resourceList, function(res) {
-                                return res.ResourceId === id;
-                            });
-                            if (i < 0)
-                                vm.resourceList.unshift(vm.activeResource);
+                        // check if resourceId exists
+                        var i = _.findIndex(vm.resourceList, function (res) {
+                            return res.ResourceId === id;
+                        });
+                        if (i < 0)
+                            vm.resourceList.unshift(vm.activeResource);
 
-                            vm.resourceId = id;
-                            vm.onResourceIdChange();
+                        vm.resourceId = id;
+                        vm.onResourceIdChange();
 
-                            showMessage(vm.dbRes('ResourceSaved'));
-                            vm.uploadProgress = null;
-                        })
-                        .error(function() {
+                        showMessage(vm.dbRes('ResourceSaved'));
+                        vm.uploadProgress = null;
+                    })
+                        .error(function () {
                             parseError(arguments);
                             vm.uploadProgress = null;
                         });
                 }
             }
         };
-        vm.onDeleteResourceClick = function() {
+        vm.onDeleteResourceClick = function () {
             var id = vm.activeResource.ResourceId;
 
             if (!confirm(
@@ -387,9 +426,9 @@
                 vm.dbRes('AreYouSureYouWantToDeleteThisResource')))
                 return;
 
-            localizationService.deleteResource(id, vm.activeResource.ResourceSet)
-                .success(function() {
-                    var i = _.findIndex(vm.resourceList, function(res) {
+            localizationService.deleteResource(id, vm.activeResource.ResourceSet, null, vm.projectName)
+                .success(function () {
+                    var i = _.findIndex(vm.resourceList, function (res) {
                         return res.ResourceId === id;
                     });
 
@@ -403,20 +442,20 @@
 
                     showMessage(String.format(vm.dbRes('ResourceDeleted'), id));
                 })
-                .error(function() {
+                .error(function () {
                     showMessage(String.Format(vm.dbRes('ResourceNotDeleted'), id));
                 });
         };
-        vm.onRenameResourceClick = function() {
+        vm.onRenameResourceClick = function () {
             vm.newResourceId = null;
             $("#RenameResourceDialog").modal();
-            $timeout(function() {
+            $timeout(function () {
                 $("#NewResourceId").focus();
             }, 1000);
         };
-        vm.onRenameResourceDialogClick = function() {
-            localizationService.renameResource(vm.activeResource.ResourceId, vm.newResourceId, vm.activeResource.ResourceSet)
-                .success(function() {
+        vm.onRenameResourceDialogClick = function () {
+            localizationService.renameResource(vm.activeResource.ResourceId, vm.newResourceId, vm.activeResource.ResourceSet, vm.projectName)
+                .success(function () {
                     for (var i = 0; i < vm.resourceList.length; i++) {
                         var res = vm.resourceList[i];
                         if (res.ResourceId == vm.activeResource.ResourceId) {
@@ -431,15 +470,16 @@
                 .error(parseError);
         }
 
-        vm.onDeleteResourceSetClick = function() {
+        vm.onDeleteResourceSetClick = function () {
+            debugger
             if (!confirm(vm.dbRes('YouAreAboutToDeleteThisResourceSet') + ":\n\n     " +
                 vm.resourceSet + "\n\n" +
                 vm.dbRes('AreYouSureYouWantToDoThis')))
                 return;
 
-            localizationService.deleteResourceSet(vm.resourceSet)
-                .success(function() {
-                    vm.getResourceSets();
+            localizationService.deleteResourceSet(vm.resourceSet, vm.projectName)
+                .success(function () {
+                    vm.getResourceSets(vm.projectName);
                     showMessage(vm.resoures.ResourceSetDeleted);
                     vm.resourceSet = vm.resourceSets[0];
                     vm.onResourceSetChange();
@@ -447,17 +487,38 @@
                 .error(parseError);
         }
 
-        vm.onRenameResourceSetClick = function() {
+
+        vm.onDeleteProjectClick = function () {
+
+            if (!confirm(vm.dbRes('YouAreAboutToDeleteThisProject') + ":\n\n     " +
+                vm.projectName + "\n\n" +
+                vm.dbRes('AreYouSureYouWantToDoThis')))
+                return;
+
+            localizationService.deleteProject(vm.projectName)
+                .success(function () {
+
+                    vm.getProjectNames();
+                    vm.projectName = vm.projectNames[0];
+                    vm.getResourceSets(vm.projectName);
+                    showMessage(vm.resoures.ResourceSetDeleted);
+                    vm.resourceSet = vm.resourceSets[0];
+                    vm.onResourceSetChange();
+                })
+                .error(parseError);
+        }
+
+        vm.onRenameResourceSetClick = function () {
             var newResourceSet = prompt(String.format(vm.dbRes('RenameResourceSetTo'), vm.resourceSet), "");
             if (!newResourceSet)
                 return;
 
 
-            localizationService.renameResourceSet(vm.resourceSet, newResourceSet)
-                .success(function() {
-                    vm.getResourceSets()
-                        .success(function() {
-                            vm.resourceSets.every(function(rs) {
+            localizationService.renameResourceSet(vm.resourceSet, newResourceSet, vm.projectName)
+                .success(function () {
+                    vm.getResourceSets(vm.projectName)
+                        .success(function () {
+                            vm.resourceSets.every(function (rs) {
                                 if (rs == newResourceSet) {
                                     vm.resourceSet = rs;
                                     vm.getResourceList();
@@ -470,23 +531,61 @@
                 })
                 .error(parseError);
         };
+
+
+        vm.onRenameProjectNameClick = function () {
+
+            if (vm.projectName == null) {
+                showMessage("The global project can not be rename");
+                return;
+            }
+            var newProjectName = prompt(String.format("Rename project name to ", vm.projectName), vm.projectName);
+            if (!newProjectName)
+                return;
+
+            localizationService.renameProjectName(vm.projectName, newProjectName)
+                .success(function () {
+                    vm.getProjectNames()
+                   .success(function () {
+                       vm.projectNames.every(function (prj) {
+                           if (prj == newProjectName) {
+                               vm.projectName = prj;
+                               $timeout(function () {
+                                   vm.onProjectNameChange();
+                               }, 300);
+                               return false;
+                           }
+                           return true;
+                       });
+                   });
+                    showMessage("project renamed successfully");
+                })
+                .error(parseError);
+
+
+
+        };
         vm.onGridMenuClick = function () {
+            debugger
             var resourceSet = vm.resourceSet;
-            localizationService.getResourceGridItems(resourceSet)
+            var projectName = vm.projectName;
+            localizationService.getResourceGridItems(resourceSet, projectName)
                 .success(function (resources) {
                     vm.resourceGridResources = resources;
                 });
-        
+
             $("#ResourceGrid").show();
         };
-        vm.saveGridResource = function(resource) {
+        vm.saveGridResource = function (resource) {
+            debugger
+            resource.projectName = vm.projectName;
             localizationService.updateResource(resource)
-                .success(function() {
+                .success(function () {
                     showMessage(vm.dbRes('ResourceSaved'));
                 })
                 .error(parseError);
         };
-        vm.onGridClose = function() {
+        vm.onGridClose = function () {
             // refresh resource display in case we change the value 
             // of the active item
             vm.onResourceIdChange();
@@ -494,31 +593,31 @@
             $("#ResourceGrid").hide();
 
             // release resources and clear bindings
-            vm.resourceGridResources = null;            
+            vm.resourceGridResources = null;
         };
-        vm.onReloadResourcesClick = function() {
+        vm.onReloadResourcesClick = function () {
             localizationService.reloadResources()
-                .success(function() {
+                .success(function () {
                     showMessage(vm.dbRes('ResourcesHaveBeenReloaded'));
                 })
                 .error(parseError);
         };
-        vm.onBackupClick = function() {
+        vm.onBackupClick = function () {
             localizationService.backup()
-                .success(function() {
+                .success(function () {
                     showMessage(vm.dbRes('ResourcesHaveBeenBackedUp'));
                 })
                 .error(parseError);
         };
-        vm.onCreateTableClick = function() {
+        vm.onCreateTableClick = function () {
             localizationService.createTable()
-                .success(function() {
+                .success(function () {
                     vm.getResourceSets();
                     showMessage(vm.dbRes('LocalizationTableHasBeenCreated'));
                 })
                 .error(parseError);
         };
-        vm.showResourceIcons = function() {
+        vm.showResourceIcons = function () {
             vm.resourceEditMode = !vm.resourceEditMode;
             if (vm.resourceEditMode)
                 ww.resourceEditor.showResourceIcons({
@@ -555,7 +654,7 @@
             else
                 vm.error.cssClass = "info";
 
-            $timeout(function() {
+            $timeout(function () {
                 if (msg === vm.error.message)
                     vm.error.message = null;
             }, 5000);
@@ -588,7 +687,7 @@
 
             function selectResourceIdWithQuery(query) {
                 vm.getResourceList()
-                    .success(function() {
+                    .success(function () {
                         var found = false;
                         for (var i = 0; i < vm.resourceList.length; i++) {
                             if (vm.resourceList[i].ResourceId === query.resourceId) {
@@ -600,8 +699,8 @@
                         }
 
                         if (!found)
-                            $timeout(function() {
-                                vm.onAddResourceClick(query.resourceId, query.resourceSet, query.content);
+                            $timeout(function () {
+                                vm.onAddResourceClick(query.resourceId, query.resourceSet, query.content, query.projectName);
                             }, 100);
                     });
             }
@@ -619,7 +718,7 @@
         }
 
 
-        $(document.body).keydown(function(ev) {
+        $(document.body).keydown(function (ev) {
             if (ev.keyCode == 76 && ev.altKey) {
                 $("#ResourceIdList").focus();
             }
@@ -627,16 +726,19 @@
 
 
         // initialize
-        vm.getResourceSets()
-            .success(function() {
-                var query = parseQueryString();
-                if (query.isEmpty) {
-                    // just load resource sets
-                    vm.getResourceSets();
-                    return;
-                }                
-                selectResourceSet(query);
-            });
+        vm.getProjectNames().success(function () {
+            vm.getResourceSets(null)
+                .success(function () {
+                    var query = parseQueryString();
+                    if (query.isEmpty) {
+                        // just load resource sets
+                        vm.getResourceSets(vm.projectName);
+                        return;
+                    }
+                    selectResourceSet(query);
+                });
+        });
+
     }
 })();
 

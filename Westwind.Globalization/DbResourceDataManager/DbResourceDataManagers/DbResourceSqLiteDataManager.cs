@@ -25,17 +25,17 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="resourceSet"></param>
         /// <returns></returns>
-        public override List<ResourceIdItem> GetAllResourceIds(string resourceSet)
+        public override List<ResourceIdItem> GetAllResourceIds(string resourceSet, string projectName = null)
         {
             using (var data = GetDb())
             {
                 string sql = string.Format(
                     @"select ResourceId, CAST( MAX(length(Value)) > 0 as bit )   as HasValue 
 	  	            from {0}
-                    where ResourceSet=@ResourceSet 
+                    where ResourceSet=@ResourceSet AND IFNULL(ProjectName,'')=IFNULL(@ProjectName,'')
 		            group by 1", Configuration.ResourceTableName);
 
-                var list = data.Query<ResourceIdItem>(sql, data.CreateParameter("@ResourceSet", resourceSet));
+                var list = data.Query<ResourceIdItem>(sql, data.CreateParameter("@ResourceSet", resourceSet), data.CreateParameter("@ProjectName", projectName));
                 if (list == null)
                 {
                     SetError(data.ErrorMessage);
@@ -52,7 +52,7 @@ namespace Westwind.Globalization
             if (string.IsNullOrEmpty(tableName))
                 tableName = "Localizations";
 
-            string sql = "SELECT name FROM sqlite_master WHERE type = 'table' AND name='" + tableName + "'";            
+            string sql = "SELECT name FROM sqlite_master WHERE type = 'table' AND name='" + tableName + "'";
 
             using (var data = GetDb())
             {
@@ -65,7 +65,7 @@ namespace Westwind.Globalization
                 }
             }
 
-            return true;            
+            return true;
         }
 
         public override bool CreateLocalizationTable(string tableName = null)
@@ -90,9 +90,9 @@ namespace Westwind.Globalization
             {
 
                 if (!data.RunSqlScript(sql, false, false))
-                {       
+                {
                     SetError(data.ErrorMessage);
-                    return false;                    
+                    return false;
                 }
             }
 
@@ -100,8 +100,8 @@ namespace Westwind.Globalization
         }
 
 
-    
-        
+
+
         protected override string TableCreationSql
         {
             get
@@ -113,6 +113,7 @@ namespace Westwind.Globalization
 , [Value] ntext  NULL
 , [LocaleId] nvarchar(10) COLLATE NOCASE DEFAULT '' NULL
 , [ResourceSet] nvarchar(512) COLLATE NOCASE DEFAULT ''  NULL
+, [ProjectName] nvarchar(500) COLLATE NOCASE DEFAULT ''  NULL
 , [Type] nvarchar(512) DEFAULT '' NULL
 , [BinFile] image NULL
 , [TextFile] ntext NULL

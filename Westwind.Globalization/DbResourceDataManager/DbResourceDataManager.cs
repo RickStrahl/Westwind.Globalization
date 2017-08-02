@@ -49,19 +49,19 @@ using Westwind.Utilities.Data;
 namespace Westwind.Globalization
 {
     public abstract class DbResourceDataManager : IDbResourceDataManager
-    {     
+    {
         /// <summary>
         /// Instance of the DbResourceConfiguration that can be overridden
         /// Defaults to the default instance - DbResourceConfiguration.Current
         /// </summary>
-        public DbResourceConfiguration Configuration { get; set;  }                        
+        public DbResourceConfiguration Configuration { get; set; }
 
         /// <summary>
         /// Error message that can be checked after a method complets
         /// and returns a failure result.
         /// </summary>
-        public string ErrorMessage { get; set;  }
-        
+        public string ErrorMessage { get; set; }
+
         /// <summary>
         /// Code used to create a database (if required) for the
         /// given data provider.
@@ -89,9 +89,9 @@ namespace Westwind.Globalization
             if (managerType == null)
                 managerType = DbResourceConfiguration.Current.DbResourceDataManagerType;
             if (managerType == null)
-                managerType = typeof (DbResourceSqlServerDataManager);
+                managerType = typeof(DbResourceSqlServerDataManager);
 
-            return ReflectionUtils.CreateInstanceFromType(managerType) as DbResourceDataManager;            
+            return ReflectionUtils.CreateInstanceFromType(managerType) as DbResourceDataManager;
         }
 
         /// <summary>
@@ -134,16 +134,16 @@ namespace Westwind.Globalization
         /// <param name="cultureName">name of the culture Id (de, de-de) to retrieve</param>
         /// <param name="resourceSet">Name of the resource set to retrieve</param>
         /// <returns></returns>
-        public virtual IDictionary GetResourceSet(string cultureName, string resourceSet)
+        public virtual IDictionary GetResourceSet(string cultureName, string resourceSet, string projectName = null)
         {
             if (cultureName == null)
                 cultureName = string.Empty;
             if (resourceSet == null)
                 resourceSet = string.Empty;
-            
-            string resourceFilter;
-            resourceFilter = " ResourceSet=@ResourceSet";
 
+            string resourceFilter, projectFilter;
+            resourceFilter = " ResourceSet=@ResourceSet";
+            projectFilter = "  ISNULL(ProjectName,'')=ISNULL(@ProjectName,'')";
             var resources = new Dictionary<string, object>();
 
             using (var data = GetDb())
@@ -151,12 +151,14 @@ namespace Westwind.Globalization
                 DbDataReader reader;
 
                 if (string.IsNullOrEmpty(cultureName))
-                    reader = data.ExecuteReader("select ResourceId,Value,Type,BinFile,TextFile,FileName,ValueType from " + Configuration.ResourceTableName + " where " + resourceFilter + " and (LocaleId is null OR LocaleId = '') order by ResourceId",
-                        data.CreateParameter("@ResourceSet", resourceSet));
-                else
-                    reader = data.ExecuteReader("select ResourceId,Value,Type,BinFile,TextFile,FileName,ValueType from " + Configuration.ResourceTableName + " where " + resourceFilter + " and LocaleId=@LocaleId order by ResourceId",
+                    reader = data.ExecuteReader("select ResourceId,Value,Type,BinFile,TextFile,FileName,ValueType from " + Configuration.ResourceTableName + " where " + resourceFilter + " AND " + projectFilter + " and (LocaleId is null OR LocaleId = '') order by ResourceId",
                         data.CreateParameter("@ResourceSet", resourceSet),
-                        data.CreateParameter("@LocaleId", cultureName));
+                        data.CreateParameter("@ProjectName", projectName));
+                else
+                    reader = data.ExecuteReader("select ResourceId,Value,Type,BinFile,TextFile,FileName,ValueType from " + Configuration.ResourceTableName + " where " + resourceFilter + " AND " + projectFilter + " and LocaleId=@LocaleId order by ResourceId",
+                        data.CreateParameter("@ResourceSet", resourceSet),
+                        data.CreateParameter("@LocaleId", cultureName),
+                        data.CreateParameter("@ProjectName", projectName));
 
                 if (reader == null)
                 {
@@ -171,9 +173,9 @@ namespace Westwind.Globalization
                         object resourceValue = reader["Value"] as string;
                         string resourceType = reader["Type"] as string;
                         int valueType = 0;
-                        
-                        valueType = Convert.ToInt32(reader["ValueType"]);                           
-                        
+
+                        valueType = Convert.ToInt32(reader["ValueType"]);
+
                         if (!string.IsNullOrWhiteSpace(resourceType))
                         {
                             try
@@ -185,7 +187,7 @@ namespace Westwind.Globalization
                                     resourceValue = LoadFileResource(reader);
                                 else
                                 {
-                                    resourceValue =  DeserializeValue(resourceValue as string, resourceType);
+                                    resourceValue = DeserializeValue(resourceValue as string, resourceType);
                                 }
 
                             }
@@ -217,7 +219,7 @@ namespace Westwind.Globalization
                 finally
                 {
                     // close reader and connection
-                    reader.Close(); 
+                    reader.Close();
                 }
             }
 
@@ -226,11 +228,11 @@ namespace Westwind.Globalization
 
         protected virtual void OnResourceSetValueConvert(ref object resourceValue, string key, int valueType)
         {
-            foreach(var resourceSetValueConverter in DbResourceConfiguration.Current.ResourceSetValueConverters)
+            foreach (var resourceSetValueConverter in DbResourceConfiguration.Current.ResourceSetValueConverters)
             {
                 if (valueType == resourceSetValueConverter.ValueType)
                     resourceValue = resourceSetValueConverter.Convert(resourceValue, key);
-            }            
+            }
         }
 
 
@@ -244,7 +246,7 @@ namespace Westwind.Globalization
         /// <param name="cultureName"></param>
         /// <param name="resourceSet"></param>
         /// <returns></returns>
-        public virtual Dictionary<string, object> GetResourceSetNormalizedForLocaleId(string cultureName, string resourceSet)
+        public virtual Dictionary<string, object> GetResourceSetNormalizedForLocaleId(string cultureName, string resourceSet, string projectName = null)
         {
             if (cultureName == null)
                 cultureName = string.Empty;
@@ -257,12 +259,12 @@ namespace Westwind.Globalization
                                       "\t" + data.ConnectionString);
 
 
-                  DbDataReader reader = null;
+                DbDataReader reader = null;
 
                 string sql =
                     @"select resourceId, LocaleId, Value, Type, BinFile, TextFile, FileName
     from " + Configuration.ResourceTableName + @"
-	where ResourceSet=@ResourceSet and (LocaleId = '' {0} )
+	where ISNULL(ProjectName,'')=ISNULL(@ProjectName,'') AND ResourceSet=@ResourceSet and (LocaleId = '' {0} )
     order by ResourceId, LocaleId DESC";
 
 
@@ -271,6 +273,7 @@ namespace Westwind.Globalization
 
                 List<DbParameter> parameters = new List<DbParameter>();
                 parameters.Add(data.CreateParameter("@ResourceSet", resourceSet));
+                parameters.Add(data.CreateParameter("@ProjectName", projectName));
 
                 if (!string.IsNullOrEmpty(cultureName))
                 {
@@ -342,7 +345,7 @@ namespace Westwind.Globalization
             return resDictionary;
         }
 
-        public static ResourceItem  SetFileDataOnResourceItem(ResourceItem item, byte[] data, string fileName)
+        public static ResourceItem SetFileDataOnResourceItem(ResourceItem item, byte[] data, string fileName)
         {
             if (data == null || item == null || string.IsNullOrEmpty(fileName))
                 throw new ArgumentException(Resources.ResourceItemMissingFileUploadData);
@@ -354,13 +357,13 @@ namespace Westwind.Globalization
 
             string type;
             if ("jpg,jpeg,png,gif,bmp".Contains(ext))
-                type = typeof (Bitmap).AssemblyQualifiedName;
-            else if("ico" == ext)
+                type = typeof(Bitmap).AssemblyQualifiedName;
+            else if ("ico" == ext)
                 type = typeof(Icon).AssemblyQualifiedName;
             else if ("txt,css,htm,html,xml,js".Contains(ext))
-                type = typeof (string).AssemblyQualifiedName;
+                type = typeof(string).AssemblyQualifiedName;
             else
-                type = typeof (byte[]).AssemblyQualifiedName;
+                type = typeof(byte[]).AssemblyQualifiedName;
 
             using (var ms = new MemoryStream())
             {
@@ -393,7 +396,7 @@ namespace Westwind.Globalization
                 if (TypeInfo.IndexOf("System.String") > -1)
                 {
                     value = reader["TextFile"] as string;
-                }                
+                }
                 else if (TypeInfo.Contains("System.Drawing.Bitmap"))
                 {
                     // IMPORTANT: don't release the mem stream or Jpegs won't render/save
@@ -403,7 +406,7 @@ namespace Westwind.Globalization
                         // to use the Bitmap later. Let CLR worry about garbage collection
                         // Prefer: Don't store jpegs
                         var ms = new MemoryStream(reader["BinFile"] as byte[]);
-                        value = new Bitmap(ms);                        
+                        value = new Bitmap(ms);
                     }
                     else
                     {
@@ -444,7 +447,7 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="localResources">return local resources if true</param>        
         /// <returns></returns>
-        public virtual List<ResourceItem> GetAllResources(bool localResources = false, bool applyValueConverters = false, string resourceSet = null)
+        public virtual List<ResourceItem> GetAllResources(bool localResources = false, bool applyValueConverters = false, string resourceSet = null, string projectName = null)
         {
             IEnumerable<ResourceItem> items;
             using (var data = GetDb())
@@ -455,14 +458,15 @@ namespace Westwind.Globalization
                     resourceSetFilter = " AND resourceset = @ResourceSet2 ";
 
                 string sql = "select ResourceId,Value,LocaleId,ResourceSet,Type,TextFile,BinFile,FileName,Comment,ValueType,Updated from " + Configuration.ResourceTableName +
-                             " where ResourceSet " +
-                             (!localResources ? "not" : string.Empty) + " like @ResourceSet " + 
+                             " where ISNULL(ProjectName,'')=ISNULL(@ProjectName,'') AND ResourceSet " +
+                             (!localResources ? "not" : string.Empty) + " like @ResourceSet " +
                              resourceSetFilter +
                              "ORDER BY ResourceSet,LocaleId, ResourceId";
 
 
                 var parms = new List<IDbDataParameter>();
-                parms.Add( data.CreateParameter("@ResourceSet", "%.%"));
+                parms.Add(data.CreateParameter("@ResourceSet", "%.%"));
+                parms.Add(data.CreateParameter("@ProjectName", projectName));
 
                 if (!string.IsNullOrEmpty(resourceSetFilter))
                     parms.Add(data.CreateParameter("@ResourceSet2", resourceSet));
@@ -488,13 +492,13 @@ namespace Westwind.Globalization
                         }
                     }
                 }
-                
+
                 return itemList;
             }
         }
 
 
-        
+
         /// <summary>
         /// Returns all available resource ids for a given resource set in all languages.
         /// 
@@ -504,26 +508,26 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="resourceSet"></param>
         /// <returns></returns>
-        public virtual List<ResourceIdItem> GetAllResourceIds(string resourceSet)
-        {                      
+        public virtual List<ResourceIdItem> GetAllResourceIds(string resourceSet, string projectName = null)
+        {
             using (var data = GetDb())
             {
                 string sql = string.Format(
-//                    @"select ResourceId, CAST(MAX(len(Value)) as bit)  as HasValue
-//	  	from {0}
-//        where ResourceSet=@ResourceSet
-//		group by ResourceId", Configuration.ResourceTableName);
+                //                    @"select ResourceId, CAST(MAX(len(Value)) as bit)  as HasValue
+                //	  	from {0}
+                //        where ResourceSet=@ResourceSet
+                //		group by ResourceId", Configuration.ResourceTableName);
                 @"select ResourceId,CAST( MAX( 
 	  case  
 		WHEN len( CAST(Value as nvarchar(10))) > 0 THEN 1
 		ELSE 0
 	  end ) as Bit) as HasValue
 	  	from {0}
-        where ResourceSet=@ResourceSet 
-	    group by ResourceId",Configuration.ResourceTableName);
+        where ResourceSet=@ResourceSet AND ISNULL(ProjectName,'')= ISNULL(@ProjectName,'') 
+	    group by ResourceId", Configuration.ResourceTableName);
 
                 var items = data.Query<ResourceIdItem>(sql,
-                    data.CreateParameter("@ResourceSet", resourceSet));
+                    data.CreateParameter("@ResourceSet", resourceSet), data.CreateParameter("@ProjectName", projectName));
                 if (items == null)
                 {
                     SetError(data.ErrorMessage);
@@ -540,24 +544,24 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="resourceSet"></param>
         /// <returns></returns>
-        public virtual List<ResourceIdListItem> GetAllResourceIdListItems(string resourceSet)
+        public virtual List<ResourceIdListItem> GetAllResourceIdListItems(string resourceSet, string projectName = null)
         {
-            var resourceIds = GetAllResourceIds(resourceSet);
+            var resourceIds = GetAllResourceIds(resourceSet, projectName);
             if (resourceIds == null)
                 return null;
 
             var listItems = resourceIds.Select(id => new ResourceIdListItem
             {
-                 ResourceId = id.ResourceId,
-                 HasValue = id.HasValue,
-                 Value = id.Value as string
+                ResourceId = id.ResourceId,
+                HasValue = id.HasValue,
+                Value = id.Value as string
             }).ToList();
-            
+
             string lastId = "xx";
             foreach (var resId in listItems)
             {
                 string resourceId = resId.ResourceId;
-               
+
                 string[] tokens = resourceId.Split('.');
                 if (tokens.Length == 1)
                 {
@@ -567,11 +571,11 @@ namespace Westwind.Globalization
                 {
                     if (lastId == tokens[0])
                     {
-                        resId.Style = "color: maroon; margin-left: 20px;";                        
+                        resId.Style = "color: maroon; margin-left: 20px;";
                     }
                     lastId = tokens[0];
                 }
-                
+
             }
 
             return listItems;
@@ -581,7 +585,7 @@ namespace Westwind.Globalization
         /// Returns all available resource sets
         /// </summary>
         /// <returns></returns>
-        public virtual List<string> GetAllResourceSets(ResourceListingTypes type)
+        public virtual List<string> GetAllResourceSets(ResourceListingTypes type, string projectName = null)
         {
             using (var data = GetDb())
             {
@@ -589,17 +593,20 @@ namespace Westwind.Globalization
 
                 if (type == ResourceListingTypes.AllResources)
                     dt = data.ExecuteReader("select ResourceSet as ResourceSet from " +
-                                            Configuration.ResourceTableName + " group by ResourceSet");
+                                            Configuration.ResourceTableName + " WHERE ISNULL(ProjectName,'')=ISNULL(@ProjectName,'') group by ResourceSet",
+                                              data.CreateParameter("@ProjectName", projectName));
                 else if (type == ResourceListingTypes.LocalResourcesOnly)
                     dt = data.ExecuteReader(
                         "select ResourceSet as ResourceSet from " +
                         Configuration.ResourceTableName +
-                        " where resourceset like '%.aspx' or resourceset like '%.ascx' or resourceset like '%.master' or resourceset like '%.sitemap' group by ResourceSet",
-                        data.CreateParameter("@ResourceSet", "%.%"));
+                        " where ISNULL(ProjectName,0)=ISNULL(@ProjectName,0) AND resourceset like '%.aspx' or resourceset like '%.ascx' or resourceset like '%.master' or resourceset like '%.sitemap' group by ResourceSet",
+                        data.CreateParameter("@ResourceSet", "%.%"),
+                        data.CreateParameter("@ProjectName", projectName));
                 else if (type == ResourceListingTypes.GlobalResourcesOnly)
                     dt = data.ExecuteReader("select ResourceSet as ResourceSet from " +
                                             Configuration.ResourceTableName +
-                                            " where resourceset not like '%.aspx' and resourceset not like '%.ascx' and resourceset not like '%.master' and resourceset not like '%.sitemap' group by ResourceSet");
+                                            " where ISNULL(ProjectName,0)=ISNULL(@ProjectName,0) AND resourceset not like '%.aspx' and resourceset not like '%.ascx' and resourceset not like '%.master' and resourceset not like '%.sitemap' group by ResourceSet",
+                                             data.CreateParameter("@ProjectName", projectName));
 
                 if (dt == null)
                 {
@@ -607,11 +614,43 @@ namespace Westwind.Globalization
                     return null;
                 }
 
-                var items = new List<string>();                
+                var items = new List<string>();
 
                 while (dt.Read())
                 {
                     string id = dt["ResourceSet"] as string;
+                    if (!string.IsNullOrEmpty(id))
+                        items.Add(id);
+                }
+
+                return items;
+            }
+        }
+
+        /// <summary>
+        /// Returns all available resource sets
+        /// </summary>
+        /// <returns></returns>
+        public virtual List<string> GetAllProjectNames()
+        {
+            using (var data = GetDb())
+            {
+                DbDataReader dt = null;
+
+                dt = data.ExecuteReader("select ProjectName as ProjectName from " +
+                                        Configuration.ResourceTableName + " group by ProjectName");
+
+                if (dt == null)
+                {
+                    ErrorMessage = data.ErrorMessage;
+                    return null;
+                }
+
+                var items = new List<string>();
+
+                while (dt.Read())
+                {
+                    string id = dt["ProjectName"] as string;
                     if (!string.IsNullOrEmpty(id))
                         items.Add(id);
                 }
@@ -627,7 +666,7 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="ResourceSet"></param>
         /// <returns></returns>
-        public virtual List<string> GetAllLocaleIds(string resourceSet)
+        public virtual List<string> GetAllLocaleIds(string resourceSet, string projectName = null)
         {
             if (resourceSet == null)
                 resourceSet = string.Empty;
@@ -635,14 +674,15 @@ namespace Westwind.Globalization
             using (var data = GetDb())
             {
                 var reader = data.ExecuteReader("select LocaleId,'' as Language from " + Configuration.ResourceTableName +
-                                                " where ResourceSet=@ResourceSet group by LocaleId",
-                    data.CreateParameter("@ResourceSet", resourceSet));
+                                                " where ISNULL(ProjectName,'')=ISNULL(@ProjectName,'') AND ResourceSet=@ResourceSet group by LocaleId",
+                    data.CreateParameter("@ResourceSet", resourceSet),
+                    data.CreateParameter("@ProjectName", projectName));
 
                 if (reader == null)
                     return null;
 
                 var ids = new List<string>();
-                
+
 
                 while (reader.Read())
                 {
@@ -663,24 +703,25 @@ namespace Westwind.Globalization
         /// <param name="resourceSet"></param>
         /// <param name="cultureName"></param>
         /// <returns></returns>
-        public virtual List<ResourceIdItem> GetAllResourcesForCulture(string resourceSet, string cultureName)
+        public virtual List<ResourceIdItem> GetAllResourcesForCulture(string resourceSet, string cultureName, string projectName = null)
         {
             if (cultureName == null)
                 cultureName = string.Empty;
 
             using (var data = new SqlDataAccess(Configuration.ConnectionString))
             {
-                var reader = 
+                var reader =
                     data.ExecuteReader(
-                        "select ResourceId, Value from " + Configuration.ResourceTableName + " where ResourceSet=@ResourceSet and LocaleId=@LocaleId",
+                        "select ResourceId, Value from " + Configuration.ResourceTableName + " where ISNULL(ProjectName,'')=ISNULL(@ProjectName,'') AND ResourceSet=@ResourceSet and LocaleId=@LocaleId",
                         data.CreateParameter("@ResourceSet", resourceSet),
-                        data.CreateParameter("@LocaleId", cultureName));
+                        data.CreateParameter("@LocaleId", cultureName),
+                        data.CreateParameter("@ProjectName", projectName));
 
                 if (reader == null)
                     return null;
 
                 var ids = new List<ResourceIdItem>();
-                
+
                 while (reader.Read())
                 {
                     string id = reader["ResourceId"] as string;
@@ -704,7 +745,7 @@ namespace Westwind.Globalization
         /// <param name="resourceSet"></param>       
         /// <param name="cultureName"></param>
         /// <returns></returns>
-        public virtual string GetResourceString(string resourceId, string resourceSet, string cultureName)
+        public virtual string GetResourceString(string resourceId, string resourceSet, string cultureName, string projectName = null)
         {
             SetError();
 
@@ -715,10 +756,11 @@ namespace Westwind.Globalization
             using (var data = GetDb())
             {
                 result = data.ExecuteScalar("select Value from " + Configuration.ResourceTableName +
-                                            " where ResourceId=@ResourceId and ResourceSet=@ResourceSet and LocaleId=@LocaleId",
+                                            " where ISNULL(ProjectName,'')=ISNULL(@ProjectName,'') AND ResourceId=@ResourceId and ResourceSet=@ResourceSet and LocaleId=@LocaleId",
                     data.CreateParameter("@ResourceId", resourceId),
                     data.CreateParameter("@ResourceSet", resourceSet),
-                    data.CreateParameter("@LocaleId", cultureName));
+                    data.CreateParameter("@LocaleId", cultureName),
+                    data.CreateParameter("@ProjectName", projectName));
             }
 
             return result as string;
@@ -737,7 +779,7 @@ namespace Westwind.Globalization
         /// <param name="resourceSet"></param>
         /// <param name="cultureName">required. Null or Empty culture returns invariant</param>
         /// <returns></returns>
-        public virtual object GetResourceObject(string resourceId, string resourceSet, string cultureName)
+        public virtual object GetResourceObject(string resourceId, string resourceSet, string cultureName, string projectName = null)
         {
             object result = null;
             SetError();
@@ -751,10 +793,11 @@ namespace Westwind.Globalization
                 reader =
                     data.ExecuteReader(
                         "select Value,Type from " + Configuration.ResourceTableName +
-                        " where ResourceId=@ResourceId and ResourceSet=@ResourceSet and LocaleId=@LocaleId",
+                        " where ISNULL(ProjectName,'')=ISNULL(@ProjectName,'') AND ResourceId=@ResourceId and ResourceSet=@ResourceSet and LocaleId=@LocaleId",
                         data.CreateParameter("@ResourceId", resourceId),
                         data.CreateParameter("@ResourceSet", resourceSet),
-                        data.CreateParameter("@LocaleId", cultureName));
+                        data.CreateParameter("@LocaleId", cultureName),
+                        data.CreateParameter("@ProjectName", projectName));
 
                 if (reader == null)
                     return null;
@@ -784,7 +827,7 @@ namespace Westwind.Globalization
         /// <param name="resourceSet">Name of the ResourceSet to return</param>
         /// <param name="cultureName">required. Null or Empty returns invariant</param>
         /// <returns></returns>
-        public virtual ResourceItem GetResourceItem(string resourceId, string resourceSet, string cultureName)
+        public virtual ResourceItem GetResourceItem(string resourceId, string resourceSet, string cultureName, string projectName = null)
         {
             ErrorMessage = string.Empty;
 
@@ -797,10 +840,11 @@ namespace Westwind.Globalization
                 using (IDataReader reader =
                     data.ExecuteReader(
                         "select * from " + Configuration.ResourceTableName +
-                        " where ResourceId=@ResourceId and ResourceSet=@ResourceSet and LocaleId=@LocaleId",
+                        " where ISNULL(ProjectName,'')=ISNULL(@ProjectName,'') AND ResourceId=@ResourceId and ResourceSet=@ResourceSet and LocaleId=@LocaleId",
                         data.CreateParameter("@ResourceId", resourceId),
                         data.CreateParameter("@ResourceSet", resourceSet),
-                        data.CreateParameter("@LocaleId", cultureName)))
+                        data.CreateParameter("@LocaleId", cultureName),
+                        data.CreateParameter("@ProjectName", projectName)))
                 {
                     if (reader == null || !reader.Read())
                         return null;
@@ -811,7 +855,7 @@ namespace Westwind.Globalization
                     reader.Close();
                 }
             }
-            
+
             return item;
         }
 
@@ -823,13 +867,13 @@ namespace Westwind.Globalization
         /// <param name="resourceSet">Resourceset to look in</param>
         /// <param name="forAllResourceSetLocales">When true returns empty entries for missing resources of locales in this resource set</param>
         /// <returns>List of resource items or null</returns>
-        public virtual IEnumerable<ResourceItem> GetResourceItems(string resourceId, string resourceSet, bool forAllResourceSetLocales = false)
+        public virtual IEnumerable<ResourceItem> GetResourceItems(string resourceId, string resourceSet, bool forAllResourceSetLocales = false, string projectName = null)
         {
             ErrorMessage = string.Empty;
 
             if (resourceSet == null)
                 resourceSet = string.Empty;
-            
+
             List<ResourceItem> items = null;
 
             using (var data = GetDb())
@@ -837,17 +881,19 @@ namespace Westwind.Globalization
                 using (IDataReader reader =
                     data.ExecuteReader(
                         "select * from " + Configuration.ResourceTableName +
-                        " where ResourceId=@ResourceId and ResourceSet=@ResourceSet " +
+                        " where ResourceId=@ResourceId and ResourceSet=@ResourceSet and ISNULL(ProjectName,'')=ISNULL(@ProjectName,'') " +
                         " order by LocaleId",
                         data.CreateParameter("@ResourceId", resourceId),
-                        data.CreateParameter("@ResourceSet", resourceSet)))
+                        data.CreateParameter("@ResourceSet", resourceSet),
+                        data.CreateParameter("@ProjectName", projectName)
+                        ))
                 {
                     if (reader == null)
                     {
                         SetError(data.ErrorMessage);
                         return null;
                     }
-                        
+
 
                     items = new List<ResourceItem>();
                     while (reader.Read())
@@ -862,17 +908,19 @@ namespace Westwind.Globalization
 
                 if (forAllResourceSetLocales)
                 {
-                    var locales = GetAllLocalesForResourceSet(resourceSet);
+                    var locales = GetAllLocalesForResourceSet(resourceSet, projectName);
                     if (locales != null)
                     {
                         var usedLocales = items.Select(i => i.LocaleId);
                         var emptyLocales = locales.Where(s => !usedLocales.Contains(s));
                         foreach (var locale in emptyLocales)
                         {
-                            items.Add(new ResourceItem(){ 
-                                 LocaleId = locale,
-                                 Value = "",
-                                 ResourceSet = resourceSet
+                            items.Add(new ResourceItem()
+                            {
+                                LocaleId = locale,
+                                Value = "",
+                                ResourceSet = resourceSet,
+                                ProjectName = projectName
                             });
                         }
                     }
@@ -891,15 +939,16 @@ namespace Westwind.Globalization
         /// <param name="resourceSet">Resource Set on which to retrieve strings</param>
         /// <param name="forAllResourceSetLocales">If true returns empty entries for each locale that exists but has no value in this resource set</param>
         /// <returns></returns>
-        public virtual Dictionary<string, string> GetResourceStrings(string resourceId, string resourceSet, bool forAllResourceSetLocales = false)
+        public virtual Dictionary<string, string> GetResourceStrings(string resourceId, string resourceSet, bool forAllResourceSetLocales = false, string projectName = null)
         {
             var Resources = new Dictionary<string, string>();
             using (var data = GetDb())
             {
                 using (DbDataReader reader = data.ExecuteReader("select Value,LocaleId from " + Configuration.ResourceTableName +
-                                                                " where ResourceId=@ResourceId and ResourceSet=@ResourceSet order by LocaleId",
+                                                                " where ISNULL(ProjectName,'')=ISNULL(@ProjectName,'') AND ResourceId=@ResourceId and ResourceSet=@ResourceSet order by LocaleId",
                     data.CreateParameter("@ResourceId", resourceId),
-                    data.CreateParameter("@ResourceSet", resourceSet)))
+                    data.CreateParameter("@ResourceSet", resourceSet),
+                    data.CreateParameter("@ProjectName", projectName)))
                 {
                     if (reader == null)
                         return null;
@@ -927,12 +976,12 @@ namespace Westwind.Globalization
 
             }
 
-            
+
 
             return Resources;
         }
 
-        public virtual List<string> GetAllLocalesForResourceSet(string resourceSet)
+        public virtual List<string> GetAllLocalesForResourceSet(string resourceSet, string projectName = null)
         {
             var locales = new List<string>();
 
@@ -940,19 +989,20 @@ namespace Westwind.Globalization
             {
                 var localeTable = data.ExecuteTable("TLocales",
                     "select localeId from " + Configuration.ResourceTableName +
-                    " where ResourceSet=@0 group by localeId", resourceSet);
+                    " where ISNULL(ProjectName,'')=ISNULL(@ProjectName,'') AND ResourceSet=@0 group by localeId", resourceSet,
+                    data.CreateParameter("@ProjectName", projectName));
                 if (localeTable != null)
                 {
                     foreach (DataRow row in localeTable.Rows)
                     {
-                        var val = row["localeId"] as string ;
+                        var val = row["localeId"] as string;
                         if (val != null)
                             locales.Add(val);
                     }
                     return locales;
                 }
             }
-            
+
             return null;
         }
 
@@ -993,7 +1043,7 @@ namespace Westwind.Globalization
         /// <param name="resourceSet"></param>
         /// <param name="Type"></param>        
         public virtual int UpdateOrAddResource(string resourceId, object value, string cultureName, string resourceSet,
-            string comment = null, bool valueIsFileName = false, int valueType = 0)
+            string comment = null, bool valueIsFileName = false, int valueType = 0, string projectName = null)
         {
             if (!IsValidCulture(cultureName))
             {
@@ -1002,14 +1052,14 @@ namespace Westwind.Globalization
             }
 
             int result = 0;
-            result = UpdateResource(resourceId, value, cultureName, resourceSet, comment, valueIsFileName);
+            result = UpdateResource(resourceId, value, cultureName, resourceSet, comment, valueIsFileName, valueType, projectName);
 
             // We either failed or we updated
             if (result != 0)
                 return result;
 
             // We have no records matched in the Update - Add instead
-            result = AddResource(resourceId, value, cultureName, resourceSet, comment, valueIsFileName);
+            result = AddResource(resourceId, value, cultureName, resourceSet, comment, valueIsFileName, valueType, projectName);
 
             if (result == -1)
                 return -1;
@@ -1064,7 +1114,7 @@ namespace Westwind.Globalization
                 DbParameter TextFileParm = data.CreateParameter("@TextFile", resource.TextFile);
 
                 string Sql = "insert into " + Configuration.ResourceTableName +
-                             " (ResourceId,Value,LocaleId,Type,Resourceset,BinFile,TextFile,Filename,Comment,ValueType,Updated) Values (@ResourceID,@Value,@LocaleId,@Type,@ResourceSet,@BinFile,@TextFile,@FileName,@Comment,@ValueType,@Updated)";
+                             " (ResourceId,Value,LocaleId,Type,Resourceset,BinFile,TextFile,Filename,Comment,ValueType,Updated,ProjectName) Values (@ResourceID,@Value,@LocaleId,@Type,@ResourceSet,@BinFile,@TextFile,@FileName,@Comment,@ValueType,@Updated,@ProjectName)";
                 if (data.ExecuteNonQuery(Sql,
                     data.CreateParameter("@ResourceId", resource.ResourceId),
                     data.CreateParameter("@Value", resource.Value),
@@ -1075,7 +1125,8 @@ namespace Westwind.Globalization
                     data.CreateParameter("@FileName", resource.FileName),
                     data.CreateParameter("@Comment", resource.Comment),
                     data.CreateParameter("@ValueType", resource.ValueType),
-                    data.CreateParameter("@Updated", DateTime.UtcNow)) == -1)
+                    data.CreateParameter("@Updated", DateTime.UtcNow),
+                    data.CreateParameter("@ProjectName", resource.ProjectName)) == -1)
                 {
                     ErrorMessage = data.ErrorMessage;
                     return -1;
@@ -1097,8 +1148,8 @@ namespace Westwind.Globalization
         /// <param name="valueIsFileName">if true the Value property is a filename to import</param>
         public virtual int AddResource(string resourceId, object value,
                                        string cultureName, string resourceSet,
-                                       string comment = null, bool valueIsFileName = false, 
-                                       int valueType = 0)
+                                       string comment = null, bool valueIsFileName = false,
+                                       int valueType = 0, string projectName = null)
         {
             string Type = string.Empty;
 
@@ -1116,7 +1167,7 @@ namespace Westwind.Globalization
                 Type = value.GetType().AssemblyQualifiedName;
                 try
                 {
-                    SerializeValue(value);                                        
+                    SerializeValue(value);
                 }
                 catch (Exception ex)
                 {
@@ -1166,7 +1217,7 @@ namespace Westwind.Globalization
                 DbParameter TextFileParm = data.CreateParameter("@TextFile", TextFile);
 
                 string Sql = "insert into " + Configuration.ResourceTableName +
-                             " (ResourceId,Value,LocaleId,Type,Resourceset,BinFile,TextFile,Filename,Comment,ValueType,Updated) Values (@ResourceID,@Value,@LocaleId,@Type,@ResourceSet,@BinFile,@TextFile,@FileName,@Comment,@ValueType,@Updated)";
+                             " (ResourceId,Value,LocaleId,Type,Resourceset,BinFile,TextFile,Filename,Comment,ValueType,Updated,ProjectName) Values (@ResourceID,@Value,@LocaleId,@Type,@ResourceSet,@BinFile,@TextFile,@FileName,@Comment,@ValueType,@Updated,@ProjectName)";
                 if (data.ExecuteNonQuery(Sql,
                     data.CreateParameter("@ResourceId", resourceId),
                     data.CreateParameter("@Value", value),
@@ -1176,8 +1227,10 @@ namespace Westwind.Globalization
                     BinFileParm, TextFileParm,
                     data.CreateParameter("@FileName", FileName),
                     data.CreateParameter("@Comment", comment),
-                    data.CreateParameter("@ValueType",valueType),
-                    data.CreateParameter("@Updated", DateTime.UtcNow)) == -1)
+                    data.CreateParameter("@ValueType", valueType),
+                    data.CreateParameter("@Updated", DateTime.UtcNow),
+                    data.CreateParameter("@ProjectName", projectName)) == -1)
+
                 {
                     ErrorMessage = data.ErrorMessage;
                     return -1;
@@ -1210,10 +1263,10 @@ namespace Westwind.Globalization
         /// <param name="cultureName"></param>
         /// <param name="resourceSet"></param>
         /// <param name="Type"></param>
-        public virtual int UpdateResource(string resourceId, object value, 
+        public virtual int UpdateResource(string resourceId, object value,
                                           string cultureName, string resourceSet,
                                           string comment = null, bool valueIsFileName = false,
-                                          int valueType = 0)
+                                          int valueType = 0, string projectName = null)
         {
             string type;
             if (cultureName == null)
@@ -1284,7 +1337,7 @@ namespace Westwind.Globalization
                 var textFileParm = data.CreateParameter("@TextFile", TextFile);
 
                 string sql = "update " + Configuration.ResourceTableName +
-                             " set Value=@Value, Type=@Type, BinFile=@BinFile,TextFile=@TextFile,FileName=@FileName, Comment=@Comment, ValueType=@ValueType, updated=@Updated " +
+                             " set Value=@Value, Type=@Type, BinFile=@BinFile,TextFile=@TextFile,FileName=@FileName, Comment=@Comment, ValueType=@ValueType, updated=@Updated,ProjectName=@ProjectName " +
                              "where LocaleId=@LocaleId AND ResourceSet=@ResourceSet and ResourceId=@ResourceId";
                 result = data.ExecuteNonQuery(sql,
                     data.CreateParameter("@ResourceId", resourceId),
@@ -1296,7 +1349,8 @@ namespace Westwind.Globalization
                     data.CreateParameter("@FileName", FileName),
                     data.CreateParameter("@Comment", comment),
                     data.CreateParameter("@ValueType", valueType),
-                    data.CreateParameter("@Updated",DateTime.UtcNow)
+                    data.CreateParameter("@Updated", DateTime.UtcNow),
+                    data.CreateParameter("@ProjectName", projectName)
                     );
                 if (result == -1)
                 {
@@ -1350,10 +1404,9 @@ namespace Westwind.Globalization
             }
 
 
-          
+
             if (resource.Value == null)
                 resource.Value = string.Empty;
-
 
             int result;
             using (var data = GetDb())
@@ -1367,8 +1420,8 @@ namespace Westwind.Globalization
                 var textFileParm = data.CreateParameter("@TextFile", resource.TextFile);
 
                 string sql = "update " + Configuration.ResourceTableName +
-                             " set Value=@Value, Type=@Type, BinFile=@BinFile,TextFile=@TextFile,FileName=@FileName, Comment=@Comment, ValueType=@ValueType, updated=@Updated " +
-                             "where LocaleId=@LocaleId AND ResourceSet=@ResourceSet and ResourceId=@ResourceId";
+                             " set Value=@Value, Type=@Type, BinFile=@BinFile,TextFile=@TextFile,FileName=@FileName, Comment=@Comment, ValueType=@ValueType, updated=@Updated, ProjectName=@ProjectName " +
+                             "where LocaleId=@LocaleId AND ResourceSet=@ResourceSet and ResourceId=@ResourceId AND ISNULL(ProjectName,'')=ISNULL(@ProjectName,'') ";
                 result = data.ExecuteNonQuery(sql,
                     data.CreateParameter("@ResourceId", resource.ResourceId),
                     data.CreateParameter("@Value", resource.Value),
@@ -1379,7 +1432,8 @@ namespace Westwind.Globalization
                     data.CreateParameter("@FileName", resource.FileName),
                     data.CreateParameter("@Comment", resource.Comment),
                     data.CreateParameter("@ValueType", resource.ValueType),
-                    data.CreateParameter("@Updated", DateTime.UtcNow)
+                    data.CreateParameter("@Updated", DateTime.UtcNow),
+                    data.CreateParameter("@ProjectName", resource.ProjectName)
                     );
                 if (result == -1)
                 {
@@ -1391,7 +1445,7 @@ namespace Westwind.Globalization
             return result;
 
         }
-        
+
 
         /// <summary>
         /// Internal routine that looks at a file and based on its
@@ -1429,7 +1483,7 @@ namespace Westwind.Globalization
             {
                 fileInfo.FileFormatType = FileFormatTypes.Image;
                 fileInfo.Type = "FileResource";
-                if(!noPhysicalFile)
+                if (!noPhysicalFile)
                     fileInfo.BinContent = File.ReadAllBytes(fileName);
                 fileInfo.ValueString = fileInfo.FileName + ";" + typeof(Bitmap).AssemblyQualifiedName;
             }
@@ -1444,16 +1498,16 @@ namespace Westwind.Globalization
             else
             {
                 fileInfo.FileFormatType = FileFormatTypes.Binary;
-                fileInfo.Type = "FileResource"; 
+                fileInfo.Type = "FileResource";
                 if (!noPhysicalFile)
-                    fileInfo.BinContent = File.ReadAllBytes(fileName);                
+                    fileInfo.BinContent = File.ReadAllBytes(fileName);
                 fileInfo.ValueString = fileInfo.FileName + ";" + typeof(Byte[]).AssemblyQualifiedName;
             }
 
             return fileInfo;
         }
 
-    
+
 
 
         /// <summary>
@@ -1465,7 +1519,7 @@ namespace Westwind.Globalization
         /// <param name="cultureName">language ID - if empty all languages are deleted</param>
         /// e
         /// <returns></returns>
-        public virtual bool DeleteResource(string resourceId, string resourceSet = null, string cultureName = null)
+        public virtual bool DeleteResource(string resourceId, string resourceSet = null, string cultureName = null, string projectName = null)
         {
             int Result = 0;
 
@@ -1479,16 +1533,18 @@ namespace Westwind.Globalization
                 if (!string.IsNullOrEmpty(cultureName))
                     // Delete the specific entry only
                     Result = data.ExecuteNonQuery("delete from " + Configuration.ResourceTableName +
-                                                  " where ResourceId=@ResourceId and LocaleId=@LocaleId and ResourceSet=@ResourceSet",
+                                                  " where ISNULL(ProjectName,'')=ISNULL(@ProjectName,'') AND ResourceId=@ResourceId and LocaleId=@LocaleId and ResourceSet=@ResourceSet",
                         data.CreateParameter("@ResourceId", resourceId),
                         data.CreateParameter("@LocaleId", cultureName),
-                        data.CreateParameter("@ResourceSet", resourceSet));
+                        data.CreateParameter("@ResourceSet", resourceSet),
+                        data.CreateParameter("@ProjectName", projectName));
                 else
-                // If we're deleting the invariant entry - delete ALL of the languages for this key
+                    // If we're deleting the invariant entry - delete ALL of the languages for this key
                     Result = data.ExecuteNonQuery("delete from " + Configuration.ResourceTableName +
-                                                  " where ResourceId=@ResourceId and ResourceSet=@ResourceSet",
+                                                  " where ISNULL(ProjectName,'')=ISNULL(@ProjectName,'') AND ResourceId=@ResourceId and ResourceSet=@ResourceSet",
                         data.CreateParameter("@ResourceId", resourceId),
-                        data.CreateParameter("@ResourceSet", resourceSet));
+                        data.CreateParameter("@ResourceSet", resourceSet),
+                        data.CreateParameter("@ProjectName", projectName));
 
                 if (Result == -1)
                 {
@@ -1507,15 +1563,16 @@ namespace Westwind.Globalization
         /// <param name="NewResourceId"></param>
         /// <param name="ResourceSet"></param>
         /// <returns></returns>
-        public virtual bool RenameResource(string ResourceId, string NewResourceId, string ResourceSet)
+        public virtual bool RenameResource(string ResourceId, string NewResourceId, string ResourceSet, string projectName = null)
         {
             using (var data = GetDb())
             {
-                var result = data.ExecuteNonQuery("update " + Configuration.ResourceTableName + 
-                                                  " set ResourceId=@NewResourceId where ResourceId=@ResourceId AND ResourceSet=@ResourceSet", 
-                    data.CreateParameter("@ResourceId", ResourceId), 
+                var result = data.ExecuteNonQuery("update " + Configuration.ResourceTableName +
+                                                  " set ResourceId=@NewResourceId where ResourceId=@ResourceId AND ResourceSet=@ResourceSet AND ISNULL(ProjectName,'')=ISNULL(@ProjectName,'')",
+                    data.CreateParameter("@ResourceId", ResourceId),
                     data.CreateParameter("@NewResourceId", NewResourceId),
-                    data.CreateParameter("@ResourceSet", ResourceSet));
+                    data.CreateParameter("@ResourceSet", ResourceSet),
+                    data.CreateParameter("@ProjectName", projectName));
                 if (result == -1)
                 {
                     ErrorMessage = data.ErrorMessage;
@@ -1528,7 +1585,7 @@ namespace Westwind.Globalization
                 }
             }
 
-            
+
 
             return true;
         }
@@ -1542,18 +1599,19 @@ namespace Westwind.Globalization
         /// <param name="NewProperty"></param>
         /// <param name="ResourceSet"></param>
         /// <returns></returns>
-        public virtual bool RenameResourceProperty(string Property, string NewProperty, string ResourceSet)
+        public virtual bool RenameResourceProperty(string Property, string NewProperty, string ResourceSet, string projectName = null)
         {
             using (var data = GetDb())
             {
                 Property += ".";
                 NewProperty += ".";
                 string PropertyQuery = Property + "%";
-                int Result = data.ExecuteNonQuery("update " + Configuration.ResourceTableName + " set ResourceId=replace(resourceid,@Property,@NewProperty) where ResourceSet=@ResourceSet and ResourceId like @PropertyQuery",
+                int Result = data.ExecuteNonQuery("update " + Configuration.ResourceTableName + " set ResourceId=replace(resourceid,@Property,@NewProperty) where ISNULL(ProjectName,'')=ISNULL(@ProjectName,'') AND ResourceSet=@ResourceSet and ResourceId like @PropertyQuery",
                     data.CreateParameter("@Property", Property),
                     data.CreateParameter("@NewProperty", NewProperty),
                     data.CreateParameter("@ResourceSet", ResourceSet),
-                    data.CreateParameter("@PropertyQuery", PropertyQuery));
+                    data.CreateParameter("@PropertyQuery", PropertyQuery),
+                    data.CreateParameter("@ProjectName", projectName));
                 if (Result == -1)
                 {
                     SetError(data.ErrorMessage);
@@ -1569,7 +1627,7 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="ResourceSet"></param>
         /// <returns></returns>
-        public virtual bool DeleteResourceSet(string ResourceSet, string cultureName = null)
+        public virtual bool DeleteResourceSet(string ResourceSet, string cultureName = null, string projectName = null)
         {
             if (string.IsNullOrEmpty(ResourceSet))
                 return false;
@@ -1578,14 +1636,43 @@ namespace Westwind.Globalization
             {
                 int result;
                 if (cultureName == null)
-                    result = data.ExecuteNonQuery("delete from " + Configuration.ResourceTableName + 
-                                                " where ResourceSet=@ResourceSet",
-                                                data.CreateParameter("@ResourceSet", ResourceSet));
+                    result = data.ExecuteNonQuery("delete from " + Configuration.ResourceTableName +
+                                                " where ISNULL(ProjectName,'')=ISNULL(@ProjectName,'') AND ResourceSet=@ResourceSet",
+                                                data.CreateParameter("@ResourceSet", ResourceSet),
+                                                data.CreateParameter("@ProjectName", projectName));
                 else
                     result = data.ExecuteNonQuery("delete from " + Configuration.ResourceTableName +
-                                                    " where ResourceSet=@ResourceSet and LocaleId=@LocaleId",
+                                                    " where ISNULL(ProjectName,'')=ISNULL(@ProjectName,'') AND ResourceSet=@ResourceSet and LocaleId=@LocaleId",
                                                     data.CreateParameter("@ResourceSet", ResourceSet),
-                                                    data.CreateParameter("@LocaleId",cultureName));
+                                                    data.CreateParameter("@LocaleId", cultureName),
+                                                    data.CreateParameter("@ProjectName", projectName));
+                if (result < 0)
+                {
+                    SetError(data.ErrorMessage);
+                    return false;
+                }
+                if (result == 0)
+                {
+                    SetError(Resources.No_matching_Recordset_found);
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Deletes an entire resource set from the database. Careful with this function!
+        /// </summary>
+        /// <param name="ResourceSet"></param>
+        /// <returns></returns>
+        public virtual bool DeleteProject(string projectName = null)
+        {
+            using (var data = GetDb())
+            {
+                int result = data.ExecuteNonQuery("delete from " + Configuration.ResourceTableName +
+                                                " where ISNULL(ProjectName,'')=ISNULL(@ProjectName,'')",
+                                                data.CreateParameter("@ProjectName", projectName));
                 if (result < 0)
                 {
                     SetError(data.ErrorMessage);
@@ -1613,16 +1700,47 @@ namespace Westwind.Globalization
         /// <param name="OldResourceSet">Name of the existing resource set</param>
         /// <param name="NewResourceSet">Name to set the resourceset name to</param>
         /// <returns></returns>
-        public virtual bool RenameResourceSet(string OldResourceSet, string NewResourceSet)
+        public virtual bool RenameResourceSet(string OldResourceSet, string NewResourceSet, string projectName = null)
         {
-            using (var  data = GetDb())
+            using (var data = GetDb())
             {
-                int result = data.ExecuteNonQuery("update " + Configuration.ResourceTableName + " set ResourceSet=@NewResourceSet where ResourceSet=@OldResourceSet",
+                int result = data.ExecuteNonQuery("update " + Configuration.ResourceTableName + " set ResourceSet=@NewResourceSet where ISNULL(ProjectName,'')=ISNULL(@ProjectName,'') AND ResourceSet=@OldResourceSet",
                     data.CreateParameter("@NewResourceSet", NewResourceSet),
-                    data.CreateParameter("@OldResourceSet", OldResourceSet));
+                    data.CreateParameter("@OldResourceSet", OldResourceSet),
+                    data.CreateParameter("@ProjectName", projectName));
                 if (result == -1)
                 {
-                    SetError( data.ErrorMessage);
+                    SetError(data.ErrorMessage);
+                    return false;
+                }
+                if (result == 0)
+                {
+                    SetError(Resources.No_matching_Recordset_found);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+
+        /// <summary>
+        /// Renames a project name. Useful if you need to change client's project name
+        /// client's project name. 
+        /// </summary>
+        /// <param name="OldProjectName">Name of the existing project name</param>
+        /// <param name="NewProjectName">Name to set the project name to</param>
+        /// <returns></returns>
+        public virtual bool RenameProjectName(string OldProjectName, string NewProjectName)
+        {
+            using (var data = GetDb())
+            {
+                int result = data.ExecuteNonQuery("update " + Configuration.ResourceTableName + " set ProjectName=@NewProjectName where ProjectName=@OldProjectName",
+                    data.CreateParameter("@NewProjectName", NewProjectName),
+                    data.CreateParameter("@OldProjectName", OldProjectName));
+                if (result == -1)
+                {
+                    SetError(data.ErrorMessage);
                     return false;
                 }
                 if (result == 0)
@@ -1643,18 +1761,19 @@ namespace Westwind.Globalization
         /// <param name="CultureName"></param>
         /// <param name="ResourceSet"></param>
         /// <returns></returns>
-        public virtual bool ResourceExists(string ResourceId, string CultureName, string ResourceSet)
+        public virtual bool ResourceExists(string ResourceId, string CultureName, string ResourceSet, string projectName = null)
         {
             if (CultureName == null)
                 CultureName = string.Empty;
 
             using (var Data = GetDb())
             {
-                var result = Data.ExecuteScalar("select ResourceId from " + Configuration.ResourceTableName + 
-                                                " where ResourceId=@ResourceId and LocaleID=@LocaleId and ResourceSet=@ResourceSet group by ResourceId",
+                var result = Data.ExecuteScalar("select ResourceId from " + Configuration.ResourceTableName +
+                                                " where ISNULL(ProjectName,'')=ISNULL(@ProjectName,'') AND ResourceId=@ResourceId and LocaleID=@LocaleId and ResourceSet=@ResourceSet group by ResourceId",
                     Data.CreateParameter("@ResourceId", ResourceId),
                     Data.CreateParameter("@LocaleId", CultureName),
-                    Data.CreateParameter("@ResourceSet", ResourceSet));
+                    Data.CreateParameter("@ResourceSet", ResourceSet),
+                    Data.CreateParameter("@ProjectName", projectName));
 
                 if (result == null)
                     return false;
@@ -1688,7 +1807,7 @@ namespace Westwind.Globalization
         /// <param name="resourceList"></param>
         /// <param name="cultureName"></param>
         /// <param name="resourceSet"></param>
-        public virtual bool GenerateResources(IDictionary resourceList, string cultureName, string resourceSet, bool deleteAllResourceFirst)
+        public virtual bool GenerateResources(IDictionary resourceList, string cultureName, string resourceSet, bool deleteAllResourceFirst, string projectName = null)
         {
             if (resourceList == null)
                 throw new InvalidOperationException("No Resources");
@@ -1696,7 +1815,7 @@ namespace Westwind.Globalization
             if (cultureName == null)
                 cultureName = string.Empty;
 
-            using (var data =GetDb())
+            using (var data = GetDb())
             {
                 if (!data.BeginTransaction())
                     return false;
@@ -1708,9 +1827,10 @@ namespace Westwind.Globalization
                     // First delete all resources for this resource set
                     if (deleteAllResourceFirst)
                     {
-                        int result = data.ExecuteNonQuery("delete " + Configuration.ResourceTableName + " where LocaleId=@LocaleId and ResourceSet=@ResourceSet",
+                        int result = data.ExecuteNonQuery("delete " + Configuration.ResourceTableName + " where  LocaleId=@LocaleId and ISNULL(ProjectName,'')=ISNULL(@ProjectName,'') AND ResourceSet=@ResourceSet",
                             data.CreateParameter("@LocaleId", cultureName),
-                            data.CreateParameter("@ResourceSet", resourceSet));
+                            data.CreateParameter("@ResourceSet", resourceSet),
+                            data.CreateParameter("@ProjectName", projectName));
                         if (result == -1)
                         {
                             data.RollbackTransaction();
@@ -1724,9 +1844,9 @@ namespace Westwind.Globalization
                         {
                             int Result = 0;
                             if (deleteAllResourceFirst)
-                                Result = AddResource(Entry.Key.ToString(), Entry.Value, cultureName, resourceSet, null);
+                                Result = AddResource(Entry.Key.ToString(), Entry.Value, cultureName, resourceSet, null, false, 0, projectName);
                             else
-                                Result = UpdateOrAddResource(Entry.Key.ToString(), Entry.Value, cultureName, resourceSet, null);
+                                Result = UpdateOrAddResource(Entry.Key.ToString(), Entry.Value, cultureName, resourceSet, null, false, 0, projectName);
                             if (Result == -1)
                             {
                                 data.RollbackTransaction();
@@ -1760,8 +1880,9 @@ namespace Westwind.Globalization
         /// <param name="javaScriptVarName">Name of the JS object variable to createBackupTable</param>
         /// <param name="resourceSet">ResourceSet name. Pass NULL for locale Resources</param>
         /// <param name="localeId"></param>
-        public virtual string GetResourcesAsJavascriptObject(string javaScriptVarName, string resourceSet, string localeId)
+        public virtual string GetResourcesAsJavascriptObject(string javaScriptVarName, string resourceSet, string localeId, string projectName = null)
         {
+            // TODO Santosh
             if (localeId == null)
                 localeId = CultureInfo.CurrentUICulture.IetfLanguageTag;
             if (resourceSet == null)
@@ -1779,7 +1900,7 @@ namespace Westwind.Globalization
                     localRes.Add(key, resources[key] as string);
             }
 
-            var json = JsonConvert.SerializeObject(localRes, Formatting.Indented);            
+            var json = JsonConvert.SerializeObject(localRes, Formatting.Indented);
             return "var " + javaScriptVarName + " = " + json + ";\r\n";
         }
 
@@ -1795,18 +1916,18 @@ namespace Westwind.Globalization
                 tableName = Configuration.ResourceTableName;
             if (string.IsNullOrEmpty(tableName))
                 tableName = "Localizations";
-            
+
             string sql = "SELECT * FROM INFORMATION_SCHEMA.TABLES where TABLE_NAME=@0";
-        
+
             using (var data = GetDb())
             {
-                var tables = data.ExecuteTable("TTables",sql, tableName);
+                var tables = data.ExecuteTable("TTables", sql, tableName);
 
                 if (tables == null || tables.Rows.Count < 1)
                 {
                     SetError(data.ErrorMessage);
                     return false;
-                }             
+                }
             }
 
             return true;
@@ -1863,8 +1984,8 @@ namespace Westwind.Globalization
 
                 string sql =
                     @"insert into {0}
-  (ResourceId,Value,LocaleId,ResourceSet,Type,BinFile,TextFile,FileName,Comment) 
-   select ResourceId,Value,LocaleId,ResourceSet,Type,BinFile,TextFile,FileName,Comment from {1}";
+  (ResourceId,Value,LocaleId,ResourceSet,Type,BinFile,TextFile,FileName,Comment,ProjectName) 
+   select ResourceId,Value,LocaleId,ResourceSet,Type,BinFile,TextFile,FileName,Comment,ProjectName from {1}";
 
                 sql = string.Format(sql, Configuration.ResourceTableName, backupTableName);
 
@@ -1897,7 +2018,7 @@ namespace Westwind.Globalization
 
             string Sql = string.Format(TableCreationSql, tableName);
 
-            
+
             // Check for table existing already
             if (IsLocalizationTable(tableName))
             {
@@ -1926,7 +2047,8 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="value"></param>
         /// <returns>JSON string or null (no exceptions thrown on error)</returns>
-        protected virtual string SerializeValue(object value){
+        protected virtual string SerializeValue(object value)
+        {
             return JsonConvert.SerializeObject(value);
         }
 
@@ -1943,9 +2065,9 @@ namespace Westwind.Globalization
             if (type == null)
                 return null;
 
-            return JsonConvert.DeserializeObject(serializedValue,type);
+            return JsonConvert.DeserializeObject(serializedValue, type);
         }
-       
+
         public void SetError()
         {
             SetError("CLEAR");
@@ -1995,7 +2117,7 @@ namespace Westwind.Globalization
     {
         public string ResourceId { get; set; }
         public bool HasValue { get; set; }
-        public object Value { get; set; }        
+        public object Value { get; set; }
     }
 
     public class BasicResourceItem
@@ -2008,7 +2130,7 @@ namespace Westwind.Globalization
 
     public class ResourceIdListItem : ResourceIdItem
     {
-        public string Text { get; set;  }
+        public string Text { get; set; }
         public bool Selected { get; set; }
         public string Style { get; set; }
     }

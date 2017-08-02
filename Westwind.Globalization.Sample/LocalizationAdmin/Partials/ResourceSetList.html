@@ -23,7 +23,7 @@
             <i class="fa fa-exchange"></i> {{::view.dbRes('Rename')}}
         </button>
         <button class="btn btn-sm btn-default" title="Reload ResourceSets from database"
-                ng-click="view.getResourceSets()"
+                ng-click="view.getResourceSets(view.projectName)"
                 data-resource-id="Refresh">
             <i class="fa fa-refresh"></i> {{::view.dbRes('Refresh')}}
         </button>

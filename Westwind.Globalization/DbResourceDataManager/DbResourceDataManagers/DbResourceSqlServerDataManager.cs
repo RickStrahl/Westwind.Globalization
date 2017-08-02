@@ -29,6 +29,7 @@ CREATE TABLE [{0}] (
 		Value           nvarchar(max) NULL,
 		LocaleId        nvarchar(10) NULL,
 		ResourceSet     nvarchar(512) NULL,
+        ProjectName     nvarchar(500) NULL,
 		Type            nvarchar(512) NULL,
 		BinFile         varbinary(max) NULL,
 		TextFile        nvarchar(max) NULL,

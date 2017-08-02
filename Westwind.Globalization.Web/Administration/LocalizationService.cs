@@ -63,9 +63,9 @@ namespace Westwind.Globalization.Web.Administration
         }
 
         [CallbackMethod]
-        public IEnumerable<ResourceIdItem> GetResourceList(string resourceSet)
+        public IEnumerable<ResourceIdItem> GetResourceList(string resourceSet, string projectName = null)
         {
-            var ids = Manager.GetAllResourceIds(resourceSet);
+            var ids = Manager.GetAllResourceIds(resourceSet, projectName);
             if (ids == null)
                 throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceSetLoadingFailed") + ":" +
                                                Manager.ErrorMessage);
@@ -115,9 +115,10 @@ namespace Westwind.Globalization.Web.Administration
         /// <param name="resourceSet"></param>
         /// <returns></returns>
         [CallbackMethod]
-        public object GetAllResourcesForResourceGrid(string resourceSet)
+        public object GetAllResourcesForResourceGrid(string resourceSet,string projectName=null)
         {
-            var items = Manager.GetAllResources(resourceSet: resourceSet);
+            // TODO santosh
+            var items = Manager.GetAllResources(resourceSet: resourceSet,projectName:projectName);
 
             if (items == null)
                 throw new ApplicationException(Manager.ErrorMessage);
@@ -133,10 +134,10 @@ namespace Westwind.Globalization.Web.Administration
                     Value = it.Value as string
                 }).ToList();
 
-            var totalLocales = itemList.GroupBy(it => it.LocaleId).Select(it=> it.Key).ToList();
+            var totalLocales = itemList.GroupBy(it => it.LocaleId).Select(it => it.Key).ToList();
 
-            foreach (var item in itemList.GroupBy(it=> it.ResourceId))
-            {                
+            foreach (var item in itemList.GroupBy(it => it.ResourceId))
+            {
                 string resid = item.Key;
                 var resItems = itemList.Where(it => it.ResourceId == resid).ToList();
                 if (resItems.Count < totalLocales.Count)
@@ -158,7 +159,7 @@ namespace Westwind.Globalization.Web.Administration
             itemList = itemList.OrderBy(it => it.ResourceId + "_" + it.LocaleId).ToList();
 
             var resultList = new List<object>();
-            foreach (var item in itemList.GroupBy(it=> it.ResourceId))
+            foreach (var item in itemList.GroupBy(it => it.ResourceId))
             {
                 var resId = item.Key;
                 var newItem = new
@@ -184,9 +185,9 @@ namespace Westwind.Globalization.Web.Administration
 
 
         [CallbackMethod]
-        public IEnumerable<ResourceIdListItem> GetResourceListHtml(string resourceSet)
+        public IEnumerable<ResourceIdListItem> GetResourceListHtml(string resourceSet, string projectName = null)
         {
-            var ids = Manager.GetAllResourceIdListItems(resourceSet);
+            var ids = Manager.GetAllResourceIdListItems(resourceSet, projectName);
             if (ids == null)
                 throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceSetLoadingFailed") + ":" +
                                                Manager.ErrorMessage);
@@ -199,15 +200,33 @@ namespace Westwind.Globalization.Web.Administration
         /// </summary>
         /// <returns></returns>
         [CallbackMethod]
-        public IEnumerable<string> GetResourceSets()
+        public IEnumerable<string> GetResourceSets(string projectName = null)
         {
-            return Manager.GetAllResourceSets(ResourceListingTypes.AllResources);
+            return Manager.GetAllResourceSets(ResourceListingTypes.AllResources, projectName);
         }
 
         /// <summary>
         /// checks to see if the localiztion table exists
         /// </summary>
         /// <returns></returns>
+        /// 
+
+        /// <summary>
+        /// Returns a list of all ProjectNames
+        /// </summary>
+        /// <returns></returns>
+        [CallbackMethod]
+        public IEnumerable<string> GetProjectNames()
+        {
+            return Manager.GetAllProjectNames();
+        }
+
+        /// <summary>
+        /// checks to see if the localiztion table exists
+        /// </summary>
+        /// <returns></returns>
+
+
         [CallbackMethod]
         public bool IsLocalizationTable()
         {
@@ -223,6 +242,7 @@ namespace Westwind.Globalization.Web.Administration
         [CallbackMethod]
         public IEnumerable<object> GetAllLocaleIds(string resourceSet)
         {
+            // TODO Santosh
             var ids = Manager.GetAllLocaleIds(resourceSet);
             if (ids == null)
                 throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "LocaleIdsFailedToLoad") + ":" +
@@ -252,6 +272,7 @@ namespace Westwind.Globalization.Web.Administration
         [CallbackMethod]
         public string GetResourceString(dynamic parm)
         {
+            // TODO Santosh
             string resourceId = parm.ResourceId;
             string resourceSet = parm.ResourceSet;
             string cultureName = parm.CultureName;
@@ -276,8 +297,8 @@ namespace Westwind.Globalization.Web.Administration
         {
             string resourceId = parm.ResourceId;
             string resourceSet = parm.ResourceSet;
-
-            var items = Manager.GetResourceItems(resourceId, resourceSet, true).ToList();
+            string projectName = parm.projectName;
+            var items = Manager.GetResourceItems(resourceId, resourceSet, true, projectName).ToList();
             if (items == null)
             {
                 throw new InvalidOperationException(Manager.ErrorMessage);
@@ -307,6 +328,7 @@ namespace Westwind.Globalization.Web.Administration
         [CallbackMethod()]
         public ResourceItemEx GetResourceItem(dynamic parm)
         {
+            // TODO Santosh
             string resourceId = parm.ResourceId;
             string resourceSet = parm.ResourceSet;
             string cultureName = parm.CultureName;
@@ -331,6 +353,7 @@ namespace Westwind.Globalization.Web.Administration
         [CallbackMethod]
         public IEnumerable<ResourceString> GetResourceStrings(string resourceId, string resourceSet)
         {
+            // TODO Santosh
             Dictionary<string, string> resources = Manager.GetResourceStrings(resourceId, resourceSet, true);
 
             if (resources == null)
@@ -359,16 +382,17 @@ namespace Westwind.Globalization.Web.Administration
             string resourceSet = parm.resourceSet;
             string localeId = parm.localeId;
             string comment = parm.comment;
-
-            var item = Manager.GetResourceItem(resourceId, resourceSet, localeId);
+            string projectName = parm.projectName;
+            var item = Manager.GetResourceItem(resourceId, resourceSet, localeId, projectName);
             if (item == null)
             {
                 item = new ResourceItem()
                 {
                     ResourceId = resourceId,
                     LocaleId = localeId,
-                    ResourceSet = resourceSet,                    
-                    Comment = comment
+                    ResourceSet = resourceSet,
+                    Comment = comment,
+                    ProjectName = projectName
                 };
             }
 
@@ -400,15 +424,16 @@ namespace Westwind.Globalization.Web.Administration
             string resourceId = parm.resourceId;
             string resourceSet = parm.resourceSet;
             string localeId = parm.localeId;
+            string projectName = parm.projectName;
 
-            var item = Manager.GetResourceItem(resourceId, resourceSet, localeId);
+            var item = Manager.GetResourceItem(resourceId, resourceSet, localeId, projectName);
             if (item == null)
             {
                 // can't update a comment on non-existing resource
                 return false;
             }
             item.Comment = comment;
-            
+
             if (Manager.UpdateOrAddResource(item) < 0)
                 return false;
 
@@ -429,7 +454,7 @@ namespace Westwind.Globalization.Web.Administration
             if (resource.Value == null)
             {
                 return Manager.DeleteResource(resource.ResourceId, resourceSet: resource.ResourceSet,
-                    cultureName: resource.LocaleId);
+                    cultureName: resource.LocaleId, projectName: resource.ProjectName);
             }
 
             int result = Manager.UpdateOrAddResource(resource);
@@ -448,6 +473,7 @@ namespace Westwind.Globalization.Web.Administration
         [CallbackMethod]
         public bool UploadResource()
         {
+            // TODO Santosh
             if (Request.Files.Count < 1)
                 return false;
 
@@ -496,13 +522,13 @@ namespace Westwind.Globalization.Web.Administration
         [CallbackMethod]
         public bool DeleteResource(dynamic parm)
         {
-
 #if OnlineDemo        
         throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
 #endif
             string resourceId = parm.resourceId;
             string resourceSet = parm.resourceSet;
             string localeId = null;
+            string projectName = parm.projectName;
             try
             {
                 // localeId is optional
@@ -512,7 +538,7 @@ namespace Westwind.Globalization.Web.Administration
             {
             }
 
-            if (!Manager.DeleteResource(resourceId, resourceSet, localeId))
+            if (!Manager.DeleteResource(resourceId, resourceSet, localeId, projectName))
                 throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceUpdateFailed") + ": " +
                                                Manager.ErrorMessage);
 
@@ -539,9 +565,9 @@ namespace Westwind.Globalization.Web.Administration
             string resourceId = parms["resourceId"];
             string newResourceId = parms["newResourceId"];
             string resourceSet = parms["resourceSet"];
+            string projectName = parms["projectName"];
 
-
-            if (!Manager.RenameResource(resourceId, newResourceId, resourceSet))
+            if (!Manager.RenameResource(resourceId, newResourceId, resourceSet, projectName))
                 throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET,
                     "InvalidResourceId"));
 
@@ -560,6 +586,7 @@ namespace Westwind.Globalization.Web.Administration
         [CallbackMethod]
         public bool RenameResourceProperty(string Property, string NewProperty, string ResourceSet)
         {
+            // TODO Santosh
             if (!Manager.RenameResourceProperty(Property, NewProperty, ResourceSet))
                 throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "InvalidResourceId"));
 
@@ -580,8 +607,8 @@ namespace Westwind.Globalization.Web.Administration
             translate.TimeoutSeconds = 10;
 
             string result = null;
-            if (service == "google")                
-                    result = translate.TranslateGoogle(text, @from, to);
+            if (service == "google")
+                result = translate.TranslateGoogle(text, @from, to);
             else if (service == "bing")
             {
                 if (string.IsNullOrEmpty(DbResourceConfiguration.Current.BingClientId))
@@ -603,19 +630,30 @@ namespace Westwind.Globalization.Web.Administration
         /// <param name="resourceSet"></param>
         /// <returns></returns>
         [CallbackMethod]
-        public bool DeleteResourceSet(string resourceSet)
+        public bool DeleteResourceSet(string resourceSet, string projectName)
         {
 #if OnlineDemo
         throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
 #endif
 
-            if (!Manager.DeleteResourceSet(resourceSet))
+            if (!Manager.DeleteResourceSet(resourceSet, null, projectName))
                 throw new ApplicationException(Manager.ErrorMessage);
 
             return true;
         }
 
+        [CallbackMethod]
+        public bool DeleteProject(string projectName = null)
+        {
+#if OnlineDemo
+        throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
+#endif
 
+            if (!Manager.DeleteProject(projectName))
+                throw new ApplicationException(Manager.ErrorMessage);
+
+            return true;
+        }
         /// <summary>
         /// Renames a resource set to a new name.
         /// </summary>
@@ -623,12 +661,31 @@ namespace Westwind.Globalization.Web.Administration
         /// <param name="newResourceSet"></param>
         /// <returns></returns>
         [CallbackMethod]
-        public bool RenameResourceSet(string oldResourceSet, string newResourceSet)
+        public bool RenameResourceSet(string oldResourceSet, string newResourceSet, string projectName)
         {
 #if OnlineDemo
         throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
 #endif
-            if (!Manager.RenameResourceSet(oldResourceSet, newResourceSet))
+            if (!Manager.RenameResourceSet(oldResourceSet, newResourceSet, projectName))
+                throw new ApplicationException(Manager.ErrorMessage);
+
+            return true;
+        }
+
+
+        /// <summary>
+        /// Renames a project set to a new name.
+        /// </summary>
+        /// <param name="oldResourceSet"></param>
+        /// <param name="newResourceSet"></param>
+        /// <returns></returns>
+        [CallbackMethod]
+        public bool RenameProjectName(string oldProjectName, string newProjectName)
+        {
+#if OnlineDemo
+        throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
+#endif
+            if (!Manager.RenameProjectName(oldProjectName, newProjectName))
                 throw new ApplicationException(Manager.ErrorMessage);
 
             return true;
@@ -726,7 +783,8 @@ namespace Westwind.Globalization.Web.Administration
             string filename = parms["fileName"];
             string nameSpace = parms["namespace"];
             string classType = parms["classType"];
-            JArray rs = parms["resourceSets"] as JArray; 
+            string projectName = parms["projectName"];
+            JArray rs = parms["resourceSets"] as JArray;
 
             string[] resourceSets = null;
             if (rs != null)
@@ -756,13 +814,13 @@ namespace Westwind.Globalization.Web.Administration
                 throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "StronglyTypedGlobalResourcesFailed"));
 
             if (classType != "Resx")
-                strongTypes.CreateClassFromAllDatabaseResources(nameSpace, filename, resourceSets);
+                strongTypes.CreateClassFromAllDatabaseResources(nameSpace, filename, resourceSets, projectName);
             else
             {
                 string outputBasePath = filename;
-                
+
                 if (resourceSets == null || resourceSets.Length < 1)
-                    resourceSets = GetResourceSets().ToArray();
+                    resourceSets = GetResourceSets(projectName).ToArray();
 
                 foreach (var resource in resourceSets)
                 {
@@ -793,8 +851,8 @@ namespace Westwind.Globalization.Web.Administration
             throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
 #endif
             // Post:  {outputBasePath: "~\Properties", resourceSets: ["rs1","rs2"] }
-            string outputBasePath = parms["outputBasePath"] ;
-
+            string outputBasePath = parms["outputBasePath"];
+            string projectName = parms["projectName"];
             string[] resourceSets = null;
             JArray t = parms["resourceSets"] as JArray;
             if (t != null)
@@ -815,16 +873,16 @@ namespace Westwind.Globalization.Web.Administration
 
             if (DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.WebForms)
             {
-                if (!exporter.GenerateLocalWebResourceResXFiles())
+                if (!exporter.GenerateLocalWebResourceResXFiles(projectName))
                     throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceGenerationFailed"));
-                if (!exporter.GenerateGlobalWebResourceResXFiles())
+                if (!exporter.GenerateGlobalWebResourceResXFiles(projectName))
                     throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceGenerationFailed"));
             }
             else
             {
-                    // if resourceSets is null all resources are generated
-                    if (!exporter.GenerateResXFiles(resourceSets))
-                        throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceGenerationFailed"));                
+                // if resourceSets is null all resources are generated
+                if (!exporter.GenerateResXFiles(resourceSets, projectName: projectName))
+                    throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceGenerationFailed"));
             }
 
             return true;
@@ -837,7 +895,7 @@ namespace Westwind.Globalization.Web.Administration
         /// <param name="inputBasePath"></param>
         /// <returns></returns>
         [CallbackMethod]
-        public bool ImportResxResources(string inputBasePath = null)
+        public bool ImportResxResources(string inputBasePath = null, string projectName = null)
         {
 #if OnlineDemo
             throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
@@ -856,9 +914,9 @@ namespace Westwind.Globalization.Web.Administration
             bool res = false;
 
             if (DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.WebForms)
-                res = converter.ImportWebResources(inputBasePath);
+                res = converter.ImportWebResources(inputBasePath, projectName);
             else
-                res = converter.ImportWinResources(inputBasePath);
+                res = converter.ImportWinResources(inputBasePath, projectName);
 
             if (!res)
                 new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceImportFailed"));
@@ -901,7 +959,7 @@ namespace Westwind.Globalization.Web.Administration
                 config.GoogleApiKey,
                 config.BingClientId,
                 config.BingClientSecret,
-                config.AddMissingResources                
+                config.AddMissingResources
             };
         }
 
@@ -941,6 +999,7 @@ namespace Westwind.Globalization.Web.Administration
             BinFile = item.BinFile;
             Comment = item.Comment;
             ValueType = item.ValueType;
+            ProjectName = item.ProjectName;
         }
 
         public bool IsRtl

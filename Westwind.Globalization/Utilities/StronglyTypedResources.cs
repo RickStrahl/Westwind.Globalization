@@ -58,7 +58,7 @@ namespace Westwind.Globalization
     /// </summary>
     public class StronglyTypedResources
     {
-                
+
         public StronglyTypedResources(string WebPhysicalPath)
         {
             this.WebPhysicalPath = WebPhysicalPath;
@@ -92,7 +92,7 @@ namespace Westwind.Globalization
         private bool IsVb = false;
 
 
-        
+
 
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Westwind.Globalization
         {
             if (!WebPhysicalPath.EndsWith("\\"))
                 WebPhysicalPath += "\\";
-            
+
             bool IsVb = IsFileVb(FileName);
 
             string ResPath = WebPhysicalPath + "app_globalresources\\";
@@ -119,7 +119,7 @@ namespace Westwind.Globalization
             StringBuilder sbClasses = new StringBuilder();
 
             foreach (string CurFile in Files)
-            {                
+            {
                 string[] tokens = Path.GetFileName(CurFile).Split('.');
 
                 // If there's more than two parts is a culture specific file
@@ -129,14 +129,14 @@ namespace Westwind.Globalization
 
                 // ResName: admin/default.aspx or default.aspx or resources (global or assembly resources)
                 string ResName = Path.GetFileNameWithoutExtension(tokens[0]);
-                ResName = ResName.Replace(".", "_");                
+                ResName = ResName.Replace(".", "_");
 
                 string Class = CreateClassFromResXResource(CurFile, Namespace, ResName, null);
                 sbClasses.Append(Class);
             }
 
             string Output = CreateNameSpaceWrapper(Namespace, IsVb, sbClasses.ToString());
-            File.WriteAllText(FileName,Output);
+            File.WriteAllText(FileName, Output);
 
             return Output;
         }
@@ -149,10 +149,10 @@ namespace Westwind.Globalization
         /// <param name="Namespace"></param>        
         /// <returns></returns>
         public void CreateGlobalResxResourceDesignerFiles(string Namespace, CodeGenerationLanguage lang)
-        {            
+        {
             if (!WebPhysicalPath.EndsWith("\\"))
                 WebPhysicalPath += "\\";
-            
+
             string ResPath = WebPhysicalPath + "app_globalresources\\";
 
             string[] Files = Directory.GetFiles(ResPath, "*.resx");
@@ -172,8 +172,8 @@ namespace Westwind.Globalization
                 ResName = ResName.Replace(".", "_");
 
                 CreateClassFromResXResource(file, Namespace, ResName,
-                    ResPath + ResName + ".Designer." + 
-                    (lang == CodeGenerationLanguage.Vb ? "vb" :"cs") );                
+                    ResPath + ResName + ".Designer." +
+                    (lang == CodeGenerationLanguage.Vb ? "vb" : "cs"));
             }
         }
 
@@ -188,10 +188,10 @@ namespace Westwind.Globalization
         /// <param name="Namespace">Optional namespace for the generated file</param>
         /// <param name="FileName">Output class file. .cs or .vb determines code language</param>
         /// <returns>Generated class as a string</returns>
-        public string CreateClassFromAllDatabaseResources(string Namespace, string FileName, IEnumerable<string> resourceSets = null)
+        public string CreateClassFromAllDatabaseResources(string Namespace, string FileName, IEnumerable<string> resourceSets = null, string projectName = null)
         {
-            var man = DbResourceDataManager.CreateDbResourceDataManager();  
-            var resources = man.GetAllResourceSets(ResourceListingTypes.GlobalResourcesOnly);
+            var man = DbResourceDataManager.CreateDbResourceDataManager();
+            var resources = man.GetAllResourceSets(ResourceListingTypes.GlobalResourcesOnly, projectName);
 
             if (resourceSets != null)
             {
@@ -202,13 +202,13 @@ namespace Westwind.Globalization
 
             StringBuilder sbClasses = new StringBuilder();
             foreach (var resourceSet in resources)
-            {                
+            {
                 string Class = CreateClassFromDatabaseResource(resourceSet, Namespace, resourceSet, null);
                 sbClasses.Append(Class);
             }
 
             string Output = CreateNameSpaceWrapper(Namespace, IsVb, sbClasses.ToString());
-            File.WriteAllText(FileName, Output );
+            File.WriteAllText(FileName, Output);
 
             return Output;
         }
@@ -225,7 +225,7 @@ namespace Westwind.Globalization
         /// <param name="fileName">Output class file. .cs or .vb determines code language</param>
         /// <returns>Generated class as a string</returns>
         public string CreateResxDesignerClassesFromAllDatabaseResources(string ns, string outputPath, IEnumerable<string> resourceSets = null)
-        {               
+        {
             var man = DbResourceDataManager.CreateDbResourceDataManager();
             var resources = man.GetAllResourceSets(ResourceListingTypes.GlobalResourcesOnly);
 
@@ -251,7 +251,7 @@ namespace Westwind.Globalization
 
             return classCode;
         }
-        
+
         /// <summary>
         /// Creates an ASP.NET compatible strongly typed resource from a ResX file in ASP.NET.
         /// The class generated works only for Global Resources by calling GetGlobalResourceObject.
@@ -269,7 +269,7 @@ namespace Westwind.Globalization
             XmlDocument Dom = new XmlDocument();
 
             bool IsVb = IsFileVb(FileName);
-            
+
             try
             {
                 Dom.Load(ResXFile);
@@ -282,7 +282,7 @@ namespace Westwind.Globalization
 
             string Indent = "\t\t";
             StringBuilder sbClass = new StringBuilder();
-            
+
 
             CreateClassHeader(Classname, Namespace, IsVb, sbClass);
             XmlNodeList nodes = Dom.DocumentElement.SelectNodes("data");
@@ -292,7 +292,7 @@ namespace Westwind.Globalization
                 string value = Node.ChildNodes[0].InnerText;
                 string resourceId = Node.Attributes["name"].Value;
                 string varName = SafeVarName(resourceId);
-                
+
 
                 string typeName = null;
                 if (Node.Attributes["type"] != null)
@@ -314,14 +314,14 @@ namespace Westwind.Globalization
                 {
                     sbClass.Append(Indent + "public static " + typeName + " " + varName + "\r\n" + Indent + "{\r\n");
                     sbClass.AppendFormat(Indent + "\tget {{ return ({2}) HttpContext.GetGlobalResourceObject(\"{0}\",\"{1}\"); }}\r\n",
-                                         Classname, resourceId,typeName);
-                    sbClass.Append(Indent + "}\r\n\r\n");                    
+                                         Classname, resourceId, typeName);
+                    sbClass.Append(Indent + "}\r\n\r\n");
                 }
                 else
                 {
                     sbClass.Append(Indent + "Public Shared ReadOnly Property " + resourceId + "() as " + typeName + "\r\n");
                     sbClass.AppendFormat(Indent + "\tGet\r\n" + Indent + "\t\treturn CType( HttpContext.GetGlobalResourceObject(\"{0}\",\"{1}\"), {2})\r\n",
-                                         Classname, resourceId,typeName);
+                                         Classname, resourceId, typeName);
                     sbClass.Append(Indent + "\tEnd Get\r\n");
                     sbClass.Append(Indent + "End Property\r\n\r\n");
                 }
@@ -331,7 +331,7 @@ namespace Westwind.Globalization
                 sbClass.Append("\t}\r\n\r\n");
             else
                 sbClass.Append("End Class\r\n\r\n");
-            
+
 
             if (!string.IsNullOrEmpty(FileName))
             {
@@ -358,7 +358,7 @@ namespace Westwind.Globalization
         public string CreateClassFromDatabaseResource(string ResourceSetName, string Namespace, string Classname, string FileName)
         {
             // Use the custom ResourceManage to retrieve a ResourceSet
-            DbResourceManager Man = new DbResourceManager(ResourceSetName);           
+            DbResourceManager Man = new DbResourceManager(ResourceSetName);
             ResourceSet ResourceSet = Man.GetResourceSet(CultureInfo.InvariantCulture, false, false);
             return CreateClassFromResourceSet(ResourceSet, Namespace, Classname, FileName);
         }
@@ -380,7 +380,7 @@ namespace Westwind.Globalization
             // Use the custom ResourceManage to retrieve a ResourceSet
             var man = new DbResourceManager(resourceSetName);
             var resourceSet = man.GetResourceSet(CultureInfo.InvariantCulture, false, false);
-            
+
             IsVb = IsFileVb(fileName);
 
             StringBuilder sbClass = new StringBuilder();
@@ -403,31 +403,31 @@ namespace Westwind.Globalization
                     item.Value = string.Empty;
 
                 string typeName = item.Value.GetType().FullName;
-                string key = item.Key as string;                
+                string key = item.Key as string;
                 if (string.IsNullOrEmpty(key))
                     continue;
 
                 string varName = SafeVarName(key);
-                
+
                 // It's a string
                 if (!IsVb)
                 {
                     sbClass.AppendLine(indent + "public static " + typeName + " " + varName + "\r\n" + indent + "{");
                     sbClass.AppendFormat(indent + "\tget\r\n" +
-                                         indent + "\t{{\r\n" + 
+                                         indent + "\t{{\r\n" +
                                          indent + "\t\t" +
-                                         (string.IsNullOrEmpty(typeName) || typeName == "System.String" 
+                                         (string.IsNullOrEmpty(typeName) || typeName == "System.String"
                                           ? "return ResourceManager.GetString(\"{0}\", resourceCulture);\r\n"
-                                          : "return ({1})ResourceManager.GetObject(\"{0}\", resourceCulture);\r\n")  +                                     
+                                          : "return ({1})ResourceManager.GetObject(\"{0}\", resourceCulture);\r\n") +
                                          indent + "\t}}\r\n",
-                                         key,typeName);
-                    sbClass.AppendLine(indent + "}\r\n");                    
+                                         key, typeName);
+                    sbClass.AppendLine(indent + "}\r\n");
                 }
                 else
                 {
                     sbClass.Append(indent + "Public Shared Property " + varName + "() as " + typeName + "\r\n");
                     sbClass.AppendFormat(indent + "\tGet\r\n" + indent + "\t\treturn CType( ResourceManager.GetObject(\"{1}\",resourceCulture)\r\n",
-                                         classname, key,typeName);
+                                         classname, key, typeName);
                     sbClass.Append(indent + "\tEnd Get\r\n");
                     sbClass.Append(indent + "End Property\r\n\r\n");
                 }
@@ -438,14 +438,14 @@ namespace Westwind.Globalization
             else
                 sbClass.Append("End Class\r\n\r\n");
 
-            string Output = CreateNameSpaceWrapper(nameSpace,IsVb,sbClass.ToString() );
+            string Output = CreateNameSpaceWrapper(nameSpace, IsVb, sbClass.ToString());
 
             if (!string.IsNullOrEmpty(fileName))
             {
                 File.WriteAllText(fileName, Output);
                 return Output;
             }
-                
+
             return sbClass.ToString();
         }
 
@@ -493,7 +493,7 @@ namespace Westwind.Globalization
                     throw new ApplicationException(ErrorMessage);
                 }
 
-                provider.GenerateCodeFromCompileUnit(code, sw, new CodeGeneratorOptions());                                                         
+                provider.GenerateCodeFromCompileUnit(code, sw, new CodeGeneratorOptions());
             }
         }
 
@@ -567,7 +567,7 @@ namespace Westwind.Globalization
 
             return sbClass.ToString();
         }
-        
+
         /// <summary>
         /// Creates the class header for a page
         /// </summary>
@@ -579,11 +579,11 @@ namespace Westwind.Globalization
             if (Classname.Contains("/") || Classname.Contains("\\"))
             {
                 Classname = Classname.Replace("\\", "/");
-                Classname = Classname.Substring(Classname.LastIndexOf("/")+1);
+                Classname = Classname.Substring(Classname.LastIndexOf("/") + 1);
             }
 
             if (!IsVb)
-            {                
+            {
                 sbClass.AppendFormat(
 @"  [System.CodeDom.Compiler.GeneratedCodeAttribute(""Westwind.Globalization.StronglyTypedResources"", ""2.0"")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -604,7 +604,7 @@ namespace Westwind.Globalization
         }}
         private static ResourceManager resourceMan = null;
 
-", nameSpace,Classname);
+", nameSpace, Classname);
 
             }
             else
@@ -688,7 +688,7 @@ namespace Westwind.Globalization
             StringBuilder sbOutput = new StringBuilder();
 
             if (!IsVb)
-               sbOutput.Append(@"using System;
+                sbOutput.Append(@"using System;
 using System.Web;
 using System.Resources;
 using Westwind.Globalization;
@@ -769,7 +769,7 @@ using Westwind.Globalization;
             return sbOutput.ToString();
         }
 
-          
+
         /// <summary>
         /// Checks to see if the file extension is .vb and if so 
         /// returns true
@@ -803,10 +803,10 @@ using Westwind.Globalization;
             {
                 if (isFirst && char.IsDigit(ch))
                     sb.Append("_"); // prefix
-                
+
 
                 // skip
-                if (char.IsWhiteSpace(ch) || char.IsPunctuation(ch) || char.IsSeparator(ch) || char.IsControl(ch) || char.IsSymbol(ch) )
+                if (char.IsWhiteSpace(ch) || char.IsPunctuation(ch) || char.IsSeparator(ch) || char.IsControl(ch) || char.IsSymbol(ch))
                 {
                     sb.Append("_");
                     nextUpper = true;

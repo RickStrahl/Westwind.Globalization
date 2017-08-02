@@ -14,7 +14,6 @@
                     </h3>
                 </div>
                 <div class="modal-body">
-
                     <div class="alert alert-info"
                          ng-show="view.importExportType=='Export'">
                         <i class="fa fa-info-circle fa-2x pull-left;"></i>
@@ -29,7 +28,6 @@
                             </p>
                         </div>
                     </div>
-
                     <div class="alert alert-info"
                          ng-show="view.importExportType=='Import'">
                         <i class="fa fa-info-circle fa-2x pull-left;"></i>
@@ -54,12 +52,20 @@
                         </div>
                     </div>
 
-
                     <div class="form-group">
                         <select id="typeImportExport" class="form-control"
                                 ng-model="view.importExportType" style="font-weight: bold;">
                             <option value="Export">Export {{::view.resources.Resources}}</option>
                             <option value="Import">Import {{::view.resources.Resources}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" ng-show="view.importExportType=='Export'">
+                        <label>Project Name:</label>
+                        <select class="form-control" ng-model="view.info.selectedProject"
+                                ng-change="view.onProjectNameChange()"
+                                ng-options="set for set in view.projectNames">
+                            <option value="">Global</option>
                         </select>
                     </div>
 
@@ -71,15 +77,16 @@
                             <option value="">*** {{::view.resources.AllResourceSets}}</option>
                             <option ng-repeat="resourceSet in view.resourceSets" value="{{resourceSet}}">{{resourceSet}}</option>
                         </select>
-                    </div>        
-
-
+                    </div>
+                    <div class="form-group " ng-show="view.importExportType=='Import'">
+                        <label>Project Name:</label>
+                        <input ng-model="view.info.ProjectName" class="form-control" placeholder="For global projects leave this field balnk." />
+                    </div>
                     <div class="form-group ">
                         <label>Resx {{view.importExportType}} {{::view.resources.Folder}}:</label>
-                        <input ng-model="view.info.ResxBaseFolder" class="form-control"/>
+                        <input ng-model="view.info.ResxBaseFolder" class="form-control" />
                     </div>
                 </div>
-
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -90,10 +97,8 @@
                             class="btn btn-primary">
                         <i class="fa fa-check"></i> {{view.importExportType }} {{::view.resources.Resources}}
                     </button>
-
                 </div>
             </form>
         </div>
     </div>
 </div>
-

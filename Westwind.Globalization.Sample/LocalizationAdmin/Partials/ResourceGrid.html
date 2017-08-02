@@ -18,7 +18,7 @@
             <td>{{resource.ResourceId}}</td>
             <td ng-repeat="res in resource.Resources">
                 <textarea ng-model="res.Value"
-                          ng-blur="view.saveGridResource(res)"
+                          ng-blur="view.saveGridResource(res,view.projectName)"
                           style="min-width: 300px"></textarea>
             </td>
 

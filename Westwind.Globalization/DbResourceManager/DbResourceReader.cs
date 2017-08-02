@@ -111,7 +111,17 @@ namespace Westwind.Globalization
                 // Here's the only place we really access the database and return
                 // a specific ResourceSet for a given ResourceSet Id and Culture
                 DbResourceDataManager manager = DbResourceDataManager.CreateDbResourceDataManager();
-                Items = manager.GetResourceSet(cultureInfo.Name, baseNameField);
+                // check if default project is set then access the data from project's/client's  specific resources
+                if (!string.IsNullOrEmpty(DbResourceConfiguration.Current.DefaultProjectName))
+                {
+                    Items = manager.GetResourceSet(cultureInfo.Name, baseNameField, DbResourceConfiguration.Current.DefaultProjectName);
+                }
+
+                if (Items.Count == 0)
+                {
+                    // populate the resources from global or default data means project/client's value is null or blank in the database
+                    Items = manager.GetResourceSet(cultureInfo.Name, baseNameField);
+                }
                 return Items.GetEnumerator();
             }
         }

@@ -3,22 +3,24 @@
 }
 @section header{
     <style>
-        html,body { font-family: 'Trebuchet', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif }
-         .header {
-             font-size: 220%;
-             line-height: 1.3em;
-         }
-         .btn {
-             min-width: 130px;
-         }
+        html, body {
+            font-family: 'Trebuchet', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        .header {
+            font-size: 220%;
+            line-height: 1.3em;
+        }
+
+        .btn {
+            min-width: 130px;
+        }
     </style>
 }
-<div class="jumbotron">    
-    
+<div class="jumbotron">
+
     <h2 class="headerss">Westwind.Globalization Samples</h2>
-
-    <img src="~/Images/Westwind.Localization_128.png" style="margin-right: 10px;" class="pull-left"/>
-
+    <img src="~/Images/Westwind.Localization_128.png" style="margin-right: 10px;" class="pull-left" />
     <p class="lead">
         The Westwind.Globalization ASP.NET components provide the abillity to easily create
         database hosted resources, that are easily and dynamically modifiable while still using
@@ -29,8 +31,10 @@
         as well as ASP.NET MVC using either strongly typed pre-compiled resources or a simplified
         custom resource manager that efficiently caches resources and provides simplified syntax.
     </p>
+    <p>
+        @Westwind.Globalization.DbRes.T("HeHadCreatedThisNote", "CorrespondenceNote")
+    </p>
 </div>
-
 <div class="row">
     <div class="col-md-4">
         <h3>Documentation</h3>
@@ -52,10 +56,10 @@
             and properly displays text the provider is running and translating values properly.
         </p>
         <p><a class="btn btn-default" href="~/ResourceTest.aspx">Try it (aspx) &raquo;</a></p>
-        <p><a class="btn btn-default" href="~/ResourceTest.cshtml">Try it (cshtml) &raquo;</a>
+        <p>
+            <a class="btn btn-default" href="~/ResourceTest.cshtml">Try it (cshtml) &raquo;</a>
         </p>
         <p><a class="btn btn-default" href="~/albums">Sample App &raquo;</a></p>
-
     </div>
     <div class="col-md-4">
         <h3>Resource Administration</h3>
