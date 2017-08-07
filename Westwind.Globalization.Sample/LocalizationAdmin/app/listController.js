@@ -21,6 +21,7 @@
         vm.listVisible = true;
         vm.searchText = "";
         vm.resourceSet = null;
+        vm.filteredResourceSets = [];
         vm.resourceSets = [];
         vm.resourceList = [];
         vm.isLocalizationTable = true;
@@ -738,6 +739,23 @@
                     selectResourceSet(query);
                 });
         });
+
+        vm.onSearchResourceSets = function () {
+
+            setTimeout(function () {
+                vm.resourceSet = vm.filteredResourceSets[0];
+                vm.onResourceSetChange();
+            }, 20);
+        }
+
+
+        vm.onSeachProjects = function () {
+
+            setTimeout(function () {
+                vm.projectName = vm.filteredProjects[0];
+                vm.onProjectNameChange();
+            }, 20);
+        }
 
     }
 })();

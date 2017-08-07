@@ -1,8 +1,20 @@
 ﻿<div class="well well-sm" style="margin-top: 25px;">
     <label>Project List</label>
+    <div class="col-md-5 pull-right">
+        <div class="input-group">
+
+            <input type="text" class="form-control" placeholder="Search Projects"
+                   ng-model="view.searchProjects"
+                   ng-model-onblur ng-change="view.onSeachProjects()">
+            <span class="input-group-addon">
+                <i class="fa fa-search"></i>
+            </span>           
+        </div>
+        <br />
+    </div>
     <select class="form-control" ng-model="view.projectName"
             ng-change="view.onProjectNameChange()"
-            ng-options="set for set in view.projectNames">
+            ng-options="set for set in view.filteredProjects=(view.projectNames | filter:view.searchProjects)">
         <option value="">Global</option>
     </select>
     <div class="btn-group" style="margin-top: 12px;">
