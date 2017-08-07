@@ -726,7 +726,7 @@ namespace Westwind.Globalization.Web.Administration
             string filename = parms["fileName"];
             string nameSpace = parms["namespace"];
             string classType = parms["classType"];
-            JArray rs = parms["resourceSets"] as JArray; 
+            JArray rs = parms["resourceSets"] as JArray;
 
             string[] resourceSets = null;
             if (rs != null)
@@ -772,8 +772,7 @@ namespace Westwind.Globalization.Web.Administration
 
                     var str = new StronglyTypedResources(null);
 
-                    str.CreateResxDesignerClassFromResxFile(file, resource,
-                        DbResourceConfiguration.Current.ResourceBaseNamespace, false);
+                    str.CreateResxDesignerClassFromResxFile(file, resource, nameSpace, false);
                 }
             }
 
