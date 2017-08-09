@@ -1,10 +1,10 @@
 #region License
 /*
  **************************************************************
- *  Author: Rick Strahl 
+ *  Author: Rick Strahl
  *          © West Wind Technologies, 2009-2015
  *          http://www.west-wind.com/
- * 
+ *
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -14,10 +14,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -26,7 +26,7 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- **************************************************************  
+ **************************************************************
 */
 #endregion
 
@@ -42,19 +42,20 @@ using System.Text;
 using System.Threading;
 using System.Web;
 using System.Xml;
+using Westwind.Globalization.Utilities;
 using Westwind.Utilities;
 
 namespace Westwind.Globalization
 {
     /// <summary>
     /// This class can be used to export resources from the database to ASP.NET
-    /// compatible resources (Resx). This class takes all the resources in 
+    /// compatible resources (Resx). This class takes all the resources in
     /// the database and creates RESX files that match these resources.
-    /// 
+    ///
     /// Please note that it will overrwrite any existing resource files
     /// if they already exist, so please use this class with care if
     /// you have existing ResX resources.
-    /// 
+    ///
     /// Note this class is primarily ASP.NET specific in that it looks at
     /// ASP.NET specific directory structures for ResX imports and strongly
     /// typed resource creation.
@@ -69,15 +70,15 @@ namespace Westwind.Globalization
         public DbResXConverter() : this(null) { }
 
         /// <summary>
-        /// Pass in the base phyiscal path for the project. 
-        /// 
+        /// Pass in the base phyiscal path for the project.
+        ///
         /// For Web Projects this will be the Web root dir for
-        /// non-Web projects this will be the project base path 
+        /// non-Web projects this will be the project base path
         /// as a string.
         /// </summary>
         /// <param name="basePhsyicalPath">
         /// Optional - allows specifying the virtual path where the resources are loaded and saved to.
-        /// 
+        ///
         /// If not specified HttpContext.Current.PhysicalPath is used instead.
         /// </param>
         public DbResXConverter(string basePhsyicalPath)
@@ -89,9 +90,9 @@ namespace Westwind.Globalization
         }
 
         /// <summary>
-        /// The physical path of the Web application. This path serves as 
+        /// The physical path of the Web application. This path serves as
         /// the root path to write resources to.
-        /// 
+        ///
         /// Example: c:\projects\MyWebApp
         /// </summary>
         public string BasePhysicalPath
@@ -302,13 +303,13 @@ namespace Westwind.Globalization
         }
 
         /// <summary>
-        /// Generates Resx Files for standard non-Web Resource files        
+        /// Generates Resx Files for standard non-Web Resource files
         /// based on the BasePhysicalPath
         /// </summary>
         /// <param name="outputPath">
         /// Optional output path where resources are generated.
         /// If not specified the value is inferred for an ASP.NET Web app.
-        /// </param>        
+        /// </param>
         /// <returns></returns>
         public bool GenerateResXFiles(IEnumerable<string> resourceSets = null, bool generateStronglyTypedClasses = false, string projectName = null)
         {
@@ -459,7 +460,7 @@ namespace Westwind.Globalization
 
 
         /// <summary>
-        /// Translates the resource set path ASP.NET WebForms Global 
+        /// Translates the resource set path ASP.NET WebForms Global
         /// or local resource path base (ie. without the .resx and localeId extension).
         /// </summary>
         /// <param name="ResourceSet"></param>
@@ -545,10 +546,10 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Imports ResX Web Resources of a Web application by parsing through
-        /// the App_GlobalResources and App_LocalResources directories of 
+        /// the App_GlobalResources and App_LocalResources directories of
         /// a Web site.
-        /// 
-        /// Note: Requires that WebPhysicalPath is set to point at the 
+        ///
+        /// Note: Requires that WebPhysicalPath is set to point at the
         /// Web root directory.
         /// </summary>
         /// <returns></returns>
@@ -645,11 +646,11 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Imports all resources from a given directory. This method works for any resources.
-        /// 
+        ///
         /// When using LocalResources, make sure to provide an app relative path as the second
         /// parameter if the resources live in non root folder. So if you have resources in off
         /// an Admin folder use "admin/" as the parameter. Otherwise for web root resources or
-        /// global or assembly level assemblies pass string.Empty or null.   
+        /// global or assembly level assemblies pass string.Empty or null.
         /// </summary>
         /// <param name="path">Physical Path for the Resources</param>
         /// <param name="relativePath">Optional - relative path prefix for Web App_LocalResources (ie. admin/)</param>
@@ -665,7 +666,7 @@ namespace Westwind.Globalization
             {
                 string file = CurFile;//.ToLower();
 
-                //string[] tokens = file.Replace(".resx","").Split('.');                
+                //string[] tokens = file.Replace(".resx","").Split('.');
                 string[] tokens = Path.GetFileName(file).Replace(".resx", "").Split('.');
 
 
@@ -830,7 +831,7 @@ namespace Westwind.Globalization
         }
 
         /// <summary>
-        /// Returns all resources for a given locale normalized down the hierarchy for 
+        /// Returns all resources for a given locale normalized down the hierarchy for
         /// a given resource file. The resource file should be specified without the
         /// .resx and locale identifier extensions.
         /// </summary>
@@ -886,7 +887,7 @@ namespace Westwind.Globalization
         }
 
         /// <summary>
-        /// Returns resources for a given resource set in a specific locale        
+        /// Returns resources for a given resource set in a specific locale
         /// </summary>
         /// <param name="resourceSet"></param>
         /// <param name="baseNamespace"></param>
@@ -914,9 +915,9 @@ namespace Westwind.Globalization
         {
             var resDict = new Dictionary<string, object>();
 
-            var culture = Thread.CurrentThread.CurrentUICulture;
+            var culture = GetCultureHelper.GetCurrentThreadUICulture();
             if (localeId == null)
-                culture = CultureInfo.CurrentUICulture;
+                culture = GetCultureHelper.GetCurrentCultureInfoUICulture();
             else if (localeId == string.Empty)
                 culture = CultureInfo.InvariantCulture;
             else if (culture.IetfLanguageTag != localeId)
