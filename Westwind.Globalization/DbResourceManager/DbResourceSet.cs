@@ -50,7 +50,7 @@ namespace Westwind.Globalization
     public class DbResourceSet : ResourceSet
     {
         string _BaseName = null;
-        CultureInfo _Culture = null;
+        string _CultureName = String.Empty;
 
         /// <summary>
         /// Core constructore. Gets passed a baseName (which is the ResourceSet Id - 
@@ -66,7 +66,14 @@ namespace Westwind.Globalization
             : base(new DbResourceReader(baseName, culture))
         {
             _BaseName = baseName;
-            _Culture = culture;
+            _CultureName = culture.Name;
+        }
+
+        public DbResourceSet(string baseName, string cultureName)
+            : base(new DbResourceReader(baseName, cultureName))
+        {
+            _BaseName = baseName;
+            _CultureName = cultureName;
         }
 
         /// <summary>

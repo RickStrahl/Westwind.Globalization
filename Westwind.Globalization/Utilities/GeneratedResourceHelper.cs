@@ -48,6 +48,11 @@ namespace Westwind.Globalization
     /// </summary>
     public static class GeneratedResourceHelper
     {
+        /// <summary>
+        /// Allows setting the Culture to be used for strongly typed resource lookups 
+        /// by name rather than usign the CurrentUiCulture 
+        /// </summary>
+        [ThreadStatic] public static string CurrentCulture;
 
         /// <summary>
         /// Helper function called from strongly typed resources to retrieve 
@@ -70,7 +75,7 @@ namespace Westwind.Globalization
             if (resourceMode == ResourceAccessMode.Resx)
                 return manager.GetString(resourceId);
 
-            return DbRes.T(resourceId, resourceSet);
+            return DbRes.T(resourceId, resourceSet, CurrentCulture);
         }
 
         /// <summary>
@@ -93,7 +98,7 @@ namespace Westwind.Globalization
                 return GetAspNetResourceProviderValue(resourceSet, resourceId);
             if (resourceMode == ResourceAccessMode.Resx)
                 return manager.GetObject(resourceId);
-            return DbRes.TObject(resourceId, resourceSet);
+            return DbRes.TObject(resourceId, resourceSet, CurrentCulture);
         }
 
 
