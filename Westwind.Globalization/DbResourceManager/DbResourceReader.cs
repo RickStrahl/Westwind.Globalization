@@ -33,6 +33,7 @@
 using System.Resources;
 using System.Globalization;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Westwind.Globalization
 {
@@ -111,7 +112,29 @@ namespace Westwind.Globalization
                 // Here's the only place we really access the database and return
                 // a specific ResourceSet for a given ResourceSet Id and Culture
                 DbResourceDataManager manager = DbResourceDataManager.CreateDbResourceDataManager();
-                Items = manager.GetResourceSet(cultureInfo.Name, baseNameField);
+                // check if default project is set then access the data from project's/client's  specific resources
+                if (!string.IsNullOrEmpty(DbResourceConfiguration.Current.DefaultProjectName))
+                {
+                    Items = manager.GetResourceSet(cultureInfo.Name, baseNameField, DbResourceConfiguration.Current.DefaultProjectName);
+                    IDictionary globalItems = manager.GetResourceSet(cultureInfo.Name, baseNameField);
+                    if ((!object.Equals(globalItems, null)) && (globalItems.Count > 0))
+                    {
+                        Dictionary<string, object> tempp = (Dictionary<string, object>)Items;
+                        foreach (DictionaryEntry glblItem in globalItems)
+                        {
+                            if (!tempp.ContainsKey(glblItem.Key.ToString()))
+                            {
+                                Items.Add(glblItem.Key, glblItem.Value);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+
+                    Items = manager.GetResourceSet(cultureInfo.Name, baseNameField);
+                }
+
                 return Items.GetEnumerator();
             }
         }

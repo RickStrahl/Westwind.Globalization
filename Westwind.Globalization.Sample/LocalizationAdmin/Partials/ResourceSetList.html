@@ -1,9 +1,23 @@
 ﻿<div class="well well-sm" style="margin-top: 25px;">
 
     <label>ResourceSet</label>
-    <select class="form-control" ng-model="view.resourceSet"
+    <div class="col-md-5 pull-right">
+        <!--<input type="search" ng-model="view.searchResourceSet" class="form-control" />-->
+        <div class="input-group">
+
+            <input type="text" class="form-control" placeholder="Search Reaource Sets" 
+                   ng-model="view.searchResourceSet"
+                   ng-model-onblur ng-change="view.onSearchResourceSets()">
+            <span class="input-group-addon">
+                <i class="fa fa-search"></i>
+            </span>
+        </div>
+        <br />
+    </div>
+
+    <select allow-clear="true" class="form-control" ng-model="view.resourceSet"
             ng-change="view.onResourceSetChange()"
-            ng-options="set for set in view.resourceSets"></select>
+            ng-options="set for set in view.filteredResourceSets=(view.resourceSets | filter:view.searchResourceSet)"></select>
     <div class="btn-group" style="margin-top: 12px;">
         <button class="btn btn-sm btn-default" title="Add new ResourceSet"
                 ng-click="view.onAddResourceClick()" data-resource-id="Add">
@@ -23,10 +37,10 @@
             <i class="fa fa-exchange"></i> {{::view.dbRes('Rename')}}
         </button>
         <button class="btn btn-sm btn-default" title="Reload ResourceSets from database"
-                ng-click="view.getResourceSets()"
+                ng-click="view.getResourceSets(view.projectName)"
                 data-resource-id="Refresh">
             <i class="fa fa-refresh"></i> {{::view.dbRes('Refresh')}}
         </button>
-    </div>
 
+    </div>
 </div>

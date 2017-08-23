@@ -55,7 +55,7 @@ namespace Westwind.Globalization
     /// </summary>
     public class DbResourceConfiguration : Westwind.Utilities.Configuration.AppConfiguration
     {
-        
+
         /// <summary>
         /// Name of a LocalizationConfiguration entry that is loaded from the database
         /// if available. Defaults to null - if set reads these configuration settings
@@ -79,7 +79,7 @@ namespace Westwind.Globalization
         /// Determines how configuration information is stored: Config, Json or XML
         /// Default uses .NET configuration files.
         /// </summary>
-        public static ConfigurationModes ConfigurationMode  = ConfigurationModes.ConfigFile;
+        public static ConfigurationModes ConfigurationMode = ConfigurationModes.ConfigFile;
 
         /// <summary>
         /// Static constructor for the Current property - guarantees this
@@ -184,8 +184,10 @@ namespace Westwind.Globalization
         /// Note this is a for pay API!
         /// </summary>
         public string GoogleApiKey { get; set; }
-        
-
+        /// <summary>
+        /// Default project name for 
+        /// </summary>
+        public string DefaultProjectName { get; set; } = null;
 
         public List<IResourceSetValueConverter> ResourceSetValueConverters = new List<IResourceSetValueConverter>();
 
@@ -197,11 +199,11 @@ namespace Westwind.Globalization
         /// 
         /// This type instance is used to instantiate the actual provider.       
         /// </summary>
-        [XmlIgnore]                
+        [XmlIgnore]
         [NonSerialized]
         public Type DbResourceDataManagerType = typeof(DbResourceSqlServerDataManager);
 
-        
+
 
 
         /// <summary>
@@ -215,7 +217,7 @@ namespace Westwind.Globalization
         public void AddResourceSetValueConverter(IResourceSetValueConverter converter)
         {
             ResourceSetValueConverters.Add(converter);
-        }        
+        }
 
         /// <summary>
         /// Override this method to create the custom default provider. Here we allow for different 
@@ -319,7 +321,7 @@ namespace Westwind.Globalization
         //        }
         //        catch { }                
         //    }
-                
+
         //    return true;
         //}
 
@@ -398,8 +400,8 @@ namespace Westwind.Globalization
     /// Project types for Resx Exports. Either WebForms using 
     /// local and global resources files, or project
     /// </summary>
-    public enum GlobalizationResxExportProjectTypes 
-    {        
+    public enum GlobalizationResxExportProjectTypes
+    {
         /// <summary>
         /// WebForms project that use App_LocalResource/App_GlobalResources
         /// to store local and global resources

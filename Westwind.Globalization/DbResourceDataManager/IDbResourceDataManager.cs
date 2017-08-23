@@ -65,7 +65,7 @@ namespace Westwind.Globalization
         /// <param name="cultureName">name of the culture Id (de, de-de) to retrieve</param>
         /// <param name="resourceSet">Name of the resource set to retrieve</param>
         /// <returns></returns>
-        IDictionary GetResourceSet(string cultureName, string resourceSet);
+        IDictionary GetResourceSet(string cultureName, string resourceSet, string projectName = null);
 
         /// <summary>
         /// Returns a fully normalized list of resources that contains the most specific
@@ -77,7 +77,7 @@ namespace Westwind.Globalization
         /// <param name="cultureName"></param>
         /// <param name="resourceSet"></param>
         /// <returns></returns>
-        Dictionary<string, object> GetResourceSetNormalizedForLocaleId(string cultureName, string resourceSet);
+        Dictionary<string, object> GetResourceSetNormalizedForLocaleId(string cultureName, string resourceSet, string projectName = null);
 
         /// <summary>
         /// Returns a data table of all the resources for all locales. The result is in a 
@@ -91,7 +91,7 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="localResources">return local resources if true</param>        
         /// <returns></returns>
-        List<ResourceItem> GetAllResources(bool localResources = false, bool applyValueConverters = false, string resourceSet = null);
+        List<ResourceItem> GetAllResources(bool localResources = false, bool applyValueConverters = false, string resourceSet = null, string projectName = null);
 
         /// <summary>
         /// Returns all available resource ids for a given resource set in all languages.
@@ -102,7 +102,7 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="resourceSet"></param>
         /// <returns></returns>
-        List<ResourceIdItem> GetAllResourceIds(string resourceSet);
+        List<ResourceIdItem> GetAllResourceIds(string resourceSet, string projectName = null);
 
         /// <summary>
         /// Returns an DataTable called TResourceIds with ResourceId and HasValues fields
@@ -110,13 +110,20 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="resourceSet"></param>
         /// <returns></returns>
-        List<ResourceIdListItem> GetAllResourceIdListItems(string resourceSet);
+        List<ResourceIdListItem> GetAllResourceIdListItems(string resourceSet, string projectName = null);
 
         /// <summary>
         /// Returns all available resource sets
         /// </summary>
         /// <returns></returns>
-        List<string> GetAllResourceSets(ResourceListingTypes type);
+        List<string> GetAllResourceSets(ResourceListingTypes type, string projectName = null);
+
+
+        /// <summary>
+        /// Returns all available project names
+        /// </summary>
+        /// <returns></returns>
+        List<string> GetAllProjectNames();
 
         /// <summary>
         /// Gets all the locales for a specific resource set.
@@ -125,7 +132,7 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="ResourceSet"></param>
         /// <returns></returns>
-        List<string> GetAllLocaleIds(string resourceSet);
+        List<string> GetAllLocaleIds(string resourceSet, string projectName = null);
 
         /// <summary>
         /// Gets all the Resourecs and ResourceIds for a given resource set and Locale
@@ -135,7 +142,7 @@ namespace Westwind.Globalization
         /// <param name="resourceSet"></param>
         /// <param name="cultureName"></param>
         /// <returns></returns>
-        List<ResourceIdItem> GetAllResourcesForCulture(string resourceSet, string cultureName);
+        List<ResourceIdItem> GetAllResourcesForCulture(string resourceSet, string cultureName, string projectName = null);
 
         /// <summary>
         /// Returns an individual Resource String from the database
@@ -144,7 +151,7 @@ namespace Westwind.Globalization
         /// <param name="resourceSet"></param>       
         /// <param name="cultureName"></param>
         /// <returns></returns>
-        string GetResourceString(string resourceId, string resourceSet, string cultureName);
+        string GetResourceString(string resourceId, string resourceSet, string cultureName, string projectName = null);
 
         /// <summary>
         /// Returns an object from the Resources. Attempts to convert the object to its
@@ -158,7 +165,7 @@ namespace Westwind.Globalization
         /// <param name="resourceSet"></param>
         /// <param name="cultureName">required. Null or Empty culture returns invariant</param>
         /// <returns></returns>
-        object GetResourceObject(string resourceId, string resourceSet, string cultureName);
+        object GetResourceObject(string resourceId, string resourceSet, string cultureName, string projectName = null);
 
         /// <summary>
         /// Returns a resource item that returns both the Value and Comment to the
@@ -168,7 +175,7 @@ namespace Westwind.Globalization
         /// <param name="resourceSet">Name of the ResourceSet to return</param>
         /// <param name="cultureName">required. Null or Empty returns invariant</param>
         /// <returns></returns>
-        ResourceItem GetResourceItem(string resourceId, string resourceSet, string cultureName);
+        ResourceItem GetResourceItem(string resourceId, string resourceSet, string cultureName, string projectName = null);
 
         /// <summary>
         /// Returns all resource items for a given resource ID in all locales.
@@ -178,7 +185,7 @@ namespace Westwind.Globalization
         /// <param name="resourceSet">Resourceset to look in</param>
         /// <param name="forAllResourceSetLocales">When true returns empty entries for missing resources of locales in this resource set</param>
         /// <returns>List of resource items or null</returns>
-        IEnumerable<ResourceItem> GetResourceItems(string resourceId, string resourceSet, bool forAllResourceSetLocales = false);
+        IEnumerable<ResourceItem> GetResourceItems(string resourceId, string resourceSet, bool forAllResourceSetLocales = false, string projectName = null);
 
         /// <summary>
         /// Returns all the resource strings for all cultures for a specific resource Id.
@@ -188,9 +195,9 @@ namespace Westwind.Globalization
         /// <param name="resourceSet">Resource Set on which to retrieve strings</param>
         /// <param name="forAllResourceSetLocales">If true returns empty entries for each locale that exists but has no value in this resource set</param>
         /// <returns></returns>
-        Dictionary<string, string> GetResourceStrings(string resourceId, string resourceSet, bool forAllResourceSetLocales = false);
+        Dictionary<string, string> GetResourceStrings(string resourceId, string resourceSet, bool forAllResourceSetLocales = false, string projectName = null);
 
-        List<string> GetAllLocalesForResourceSet(string resourceSet);
+        List<string> GetAllLocalesForResourceSet(string resourceSet, string projectName = null);
 
         /// <summary>
         /// Updates a resource if it exists, if it doesn't one is created
@@ -207,7 +214,7 @@ namespace Westwind.Globalization
         /// <param name="resourceSet"></param>
         /// <param name="Type"></param>        
         int UpdateOrAddResource(string resourceId, object value, string cultureName, string resourceSet,
-            string comment = null, bool valueIsFileName = false, int valueType = 0);
+            string comment = null, bool valueIsFileName = false, int valueType = 0, string projectName = null);
 
         /// <summary>
         /// Adds a resource to the Localization Table
@@ -226,7 +233,7 @@ namespace Westwind.Globalization
         /// <param name="valueIsFileName">if true the Value property is a filename to import</param>
         int AddResource(string resourceId, object value,
             string cultureName, string resourceSet,
-            string comment = null, bool valueIsFileName = false, int valueType = 0);
+            string comment = null, bool valueIsFileName = false, int valueType = 0, string projectName = null);
 
         /// <summary>
         /// Updates an existing resource in the Localization table
@@ -236,9 +243,9 @@ namespace Westwind.Globalization
         /// <param name="cultureName"></param>
         /// <param name="resourceSet"></param>
         /// <param name="Type"></param>
-        int UpdateResource(string resourceId, object value, 
+        int UpdateResource(string resourceId, object value,
             string cultureName, string resourceSet,
-            string comment = null, bool valueIsFileName = false, int valueType=0);
+            string comment = null, bool valueIsFileName = false, int valueType = 0, string projectName = null);
 
         /// <summary>
         /// Updates a resource if it exists, if it doesn't one is created
@@ -255,7 +262,7 @@ namespace Westwind.Globalization
         /// <param name="cultureName">language ID - if empty all languages are deleted</param>
         /// e
         /// <returns></returns>
-        bool DeleteResource(string resourceId, string resourceSet = null, string cultureName = null);
+        bool DeleteResource(string resourceId, string resourceSet = null, string cultureName = null, string projectName = null);
 
         /// <summary>
         /// Renames a given resource in a resource set. Note all languages will be renamed
@@ -264,7 +271,7 @@ namespace Westwind.Globalization
         /// <param name="NewResourceId"></param>
         /// <param name="ResourceSet"></param>
         /// <returns></returns>
-        bool RenameResource(string ResourceId, string NewResourceId, string ResourceSet);
+        bool RenameResource(string ResourceId, string NewResourceId, string ResourceSet, string projectName = null);
 
         /// <summary>
         /// Renames all property keys for a given property prefix. So this routine updates
@@ -275,14 +282,21 @@ namespace Westwind.Globalization
         /// <param name="NewProperty"></param>
         /// <param name="ResourceSet"></param>
         /// <returns></returns>
-        bool RenameResourceProperty(string Property, string NewProperty, string ResourceSet);
+        bool RenameResourceProperty(string Property, string NewProperty, string ResourceSet, string projectName = null);
 
         /// <summary>
         /// Deletes an entire resource set from the database. Careful with this function!
         /// </summary>
         /// <param name="ResourceSet"></param>
         /// <returns></returns>
-        bool DeleteResourceSet(string ResourceSet, string cultureName = null);
+        bool DeleteResourceSet(string ResourceSet, string cultureName = null, string projectName = null);
+
+        /// <summary>
+        /// Deletes an entire projects from the database. Careful with this function!
+        /// </summary>
+        /// <param name="projectName"></param>
+        /// <returns></returns>
+        bool DeleteProject(string projectName = null);
 
         /// <summary>
         /// Renames a resource set. Useful if you need to move a local page resource set
@@ -296,7 +310,16 @@ namespace Westwind.Globalization
         /// <param name="OldResourceSet">Name of the existing resource set</param>
         /// <param name="NewResourceSet">Name to set the resourceset name to</param>
         /// <returns></returns>
-        bool RenameResourceSet(string OldResourceSet, string NewResourceSet);
+        bool RenameResourceSet(string OldResourceSet, string NewResourceSet, string projectName = null);
+
+        /// <summary>
+        /// Renames a project name. Useful if you need to change client's project name
+        /// client's project name. 
+        /// </summary>
+        /// <param name="OldProjectName">Name of the existing project name</param>
+        /// <param name="NewProjectName">Name to set the project name to</param>
+        /// <returns></returns>
+        bool RenameProjectName(string OldProjectName, string NewProjectName);
 
         /// <summary>
         /// Checks to see if a resource exists in the resource store
@@ -306,7 +329,7 @@ namespace Westwind.Globalization
         /// <param name="CultureName"></param>
         /// <param name="ResourceSet"></param>
         /// <returns></returns>
-        bool ResourceExists(string ResourceId, string CultureName, string ResourceSet);
+        bool ResourceExists(string ResourceId, string CultureName, string ResourceSet, string projectName = null);
 
         /// <summary>
         /// Returns true or false depending on whether the two letter country code exists
@@ -322,7 +345,7 @@ namespace Westwind.Globalization
         /// <param name="resourceList"></param>
         /// <param name="cultureName"></param>
         /// <param name="resourceSet"></param>
-        bool GenerateResources(IDictionary resourceList, string cultureName, string resourceSet, bool deleteAllResourceFirst);
+        bool GenerateResources(IDictionary resourceList, string cultureName, string resourceSet, bool deleteAllResourceFirst, string projectName = null);
 
         /// <summary>
         /// Creates an global JavaScript object object that holds all non-control 
@@ -334,7 +357,7 @@ namespace Westwind.Globalization
         /// <param name="javaScriptVarName">Name of the JS object variable to createBackupTable</param>
         /// <param name="resourceSet">ResourceSet name. Pass NULL for locale Resources</param>
         /// <param name="localeId"></param>
-        string GetResourcesAsJavascriptObject(string javaScriptVarName, string resourceSet, string localeId);
+        string GetResourcesAsJavascriptObject(string javaScriptVarName, string resourceSet, string localeId, string projectName = null);
 
         /// <summary>
         /// Checks to see if the LocalizationTable exists

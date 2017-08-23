@@ -77,6 +77,7 @@ CREATE TABLE [{0}] (
 , [Value] ntext DEFAULT ('') NULL
 , [LocaleId] nvarchar(10) DEFAULT ('') NULL
 , [ResourceSet] nvarchar(512) DEFAULT ('') NULL
+, [ProjectName] nvarchar(500) DEFAULT ('') NULL
 , [Type] nvarchar(512) DEFAULT ('') NULL
 , [BinFile] image NULL
 , [TextFile] ntext NULL
