@@ -1,10 +1,10 @@
 #region License
 /*
  **************************************************************
- *  Author: Rick Strahl 
+ *  Author: Rick Strahl
  *          © West Wind Technologies, 2009-2015
  *          http://www.west-wind.com/
- * 
+ *
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -14,10 +14,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -26,7 +26,7 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- **************************************************************  
+ **************************************************************
 */
 #endregion
 
@@ -45,6 +45,7 @@ using Newtonsoft.Json;
 using Westwind.Globalization.Properties;
 using Westwind.Utilities;
 using Westwind.Utilities.Data;
+using Westwind.Globalization.Utilities;
 
 namespace Westwind.Globalization
 {
@@ -239,7 +240,7 @@ namespace Westwind.Globalization
         /// <summary>
         /// Returns a fully normalized list of resources that contains the most specific
         /// locale version for the culture provided.
-        ///                 
+        ///
         /// This means that this routine walks the resource hierarchy and returns
         /// the most specific value in this order: de-ch, de, invariant.
         /// </summary>
@@ -310,7 +311,7 @@ namespace Westwind.Globalization
                             continue;
                         lastResourceId = resourceId;
 
-                        // Read the value into this                        
+                        // Read the value into this
                         object resourceValue = reader["Value"] as string;
                         string resourceType = reader["Type"] as string;
 
@@ -379,7 +380,7 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Internal method used to parse the data in the database into a 'real' value.
-        /// 
+        ///
         /// Value field hold filename and type string
         /// TextFile,BinFile hold the actual file content
         /// </summary>
@@ -418,7 +419,7 @@ namespace Westwind.Globalization
                 }
                 else if (TypeInfo.Contains("System.Drawing.Icon"))
                 {
-                    // IMPORTANT: don't release the mem stream 
+                    // IMPORTANT: don't release the mem stream
                     var ms = new MemoryStream(reader["BinFile"] as byte[]);
                     value = new Icon(ms);
                 }
@@ -436,16 +437,16 @@ namespace Westwind.Globalization
         }
 
         /// <summary>
-        /// Returns a list of all the resources for all locales. The result is in a 
+        /// Returns a list of all the resources for all locales. The result is in a
         /// table called TResources that contains all fields of the table. The table is
         /// ordered by LocaleId.
-        /// 
+        ///
         /// This version returns either local or global resources in a Web app
-        /// 
+        ///
         /// Fields:
         /// ResourceId,Value,LocaleId,ResourceSet,Type
         /// </summary>
-        /// <param name="localResources">return local resources if true</param>        
+        /// <param name="localResources">return local resources if true</param>
         /// <returns></returns>
         public virtual List<ResourceItem> GetAllResources(bool localResources = false, bool applyValueConverters = false, string resourceSet = null, string projectName = null)
         {
@@ -537,7 +538,7 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Returns all available resource ids for a given resource set in all languages.
-        /// 
+        ///
         /// Returns a ResourceIdItem object with ResourecId and HasValue fields.
         /// HasValue returns whether there are any entries in any culture for this
         /// resourceId
@@ -553,13 +554,13 @@ namespace Westwind.Globalization
                 //	  	from {0}
                 //        where ResourceSet=@ResourceSet
                 //		group by ResourceId", Configuration.ResourceTableName);
-                @"select ResourceId,CAST( MAX( 
-	  case  
+                @"select ResourceId,CAST( MAX(
+	  case
 		WHEN len( CAST(Value as nvarchar(10))) > 0 THEN 1
 		ELSE 0
 	  end ) as Bit) as HasValue
 	  	from {0}
-        where ResourceSet=@ResourceSet AND ISNULL(ProjectName,'')= ISNULL(@ProjectName,'') 
+        where ResourceSet=@ResourceSet AND ISNULL(ProjectName,'')= ISNULL(@ProjectName,'')
 	    group by ResourceId", Configuration.ResourceTableName);
 
                 var items = data.Query<ResourceIdItem>(sql,
@@ -697,7 +698,7 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Gets all the locales for a specific resource set.
-        /// 
+        ///
         /// Returns a table named TLocaleIds (LocaleId field)
         /// </summary>
         /// <param name="ResourceSet"></param>
@@ -733,7 +734,7 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Gets all the Resourecs and ResourceIds for a given resource set and Locale
-        /// 
+        ///
         /// returns a table "TResource" ResourceId, Value fields
         /// </summary>
         /// <param name="resourceSet"></param>
@@ -778,7 +779,7 @@ namespace Westwind.Globalization
         /// Returns an individual Resource String from the database
         /// </summary>
         /// <param name="resourceId"></param>
-        /// <param name="resourceSet"></param>       
+        /// <param name="resourceSet"></param>
         /// <param name="cultureName"></param>
         /// <returns></returns>
         public virtual string GetResourceString(string resourceId, string resourceSet, string cultureName, string projectName = null)
@@ -807,7 +808,7 @@ namespace Westwind.Globalization
         /// Returns an object from the Resources. Attempts to convert the object to its
         /// original type.  Use this for any non-string  types. Useful for binary resources
         /// like images, icons etc.
-        /// 
+        ///
         /// While this method can be used with strings, GetResourceString()
         /// is much more efficient.
         /// </summary>
@@ -1077,7 +1078,7 @@ namespace Westwind.Globalization
         /// <param name="value"></param>
         /// <param name="cultureName"></param>
         /// <param name="resourceSet"></param>
-        /// <param name="Type"></param>        
+        /// <param name="Type"></param>
         public virtual int UpdateOrAddResource(string resourceId, object value, string cultureName, string resourceSet,
             string comment = null, bool valueIsFileName = false, int valueType = 0, string projectName = null)
         {
@@ -1107,7 +1108,7 @@ namespace Westwind.Globalization
         /// <summary>
         /// Adds a resource to the Localization Table
         /// </summary>
-        /// <param name="resource">Resource to update</param>        
+        /// <param name="resource">Resource to update</param>
         public virtual int AddResource(ResourceItem resource)
         {
             string Type = string.Empty;
@@ -1727,10 +1728,10 @@ namespace Westwind.Globalization
         /// <summary>
         /// Renames a resource set. Useful if you need to move a local page resource set
         /// to a new page. ResourceSet naming for local resources is application relative page path:
-        /// 
+        ///
         /// test.aspx
         /// subdir/test.aspx
-        /// 
+        ///
         /// Global resources have a simple name
         /// </summary>
         /// <param name="OldResourceSet">Name of the existing resource set</param>
@@ -1762,7 +1763,7 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Renames a project name. Useful if you need to change client's project name
-        /// client's project name. 
+        /// client's project name.
         /// </summary>
         /// <param name="OldProjectName">Name of the existing project name</param>
         /// <param name="NewProjectName">Name to set the project name to</param>
@@ -1907,9 +1908,9 @@ namespace Westwind.Globalization
 
 
         /// <summary>
-        /// Creates an global JavaScript object object that holds all non-control 
+        /// Creates an global JavaScript object object that holds all non-control
         /// local string resources as property values.
-        /// 
+        ///
         /// All resources are returned in normalized fashion from most specifc
         /// to more generic (de-ch,de,invariant depending on availability)
         /// </summary>
@@ -1920,18 +1921,18 @@ namespace Westwind.Globalization
         {
             // TODO Santosh
             if (localeId == null)
-                localeId = CultureInfo.CurrentUICulture.IetfLanguageTag;
+                localeId = GetCultureHelper.GetCurrentCultureInfoUICulture().IetfLanguageTag;
             if (resourceSet == null)
                 resourceSet = string.Empty;
 
             IDictionary resources = GetResourceSetNormalizedForLocaleId(
                 localeId, resourceSet);
 
-            // Filter the list to non-control resources 
+            // Filter the list to non-control resources
             Dictionary<string, string> localRes = new Dictionary<string, string>();
             foreach (string key in resources.Keys)
             {
-                // We're only interested in non control local resources 
+                // We're only interested in non control local resources
                 if (!key.Contains(".") && resources[key] is string)
                     localRes.Add(key, resources[key] as string);
             }
@@ -1972,7 +1973,7 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Create a backup of the localization database.
-        /// 
+        ///
         /// Note the table used is the one specified in the Configuration.ResourceTableName
         /// </summary>
         /// <param name="BackupTableName">Table of the backup table. Null creates a _Backup table.</param>
@@ -1997,7 +1998,7 @@ namespace Westwind.Globalization
 
 
         /// <summary>
-        /// Restores the localization table from a backup table by first wiping out 
+        /// Restores the localization table from a backup table by first wiping out
         /// </summary>
         /// <param name="backupTableName"></param>
         /// <returns></returns>
@@ -2020,7 +2021,7 @@ namespace Westwind.Globalization
 
                 string sql =
                     @"insert into {0}
-  (ResourceId,Value,LocaleId,ResourceSet,Type,BinFile,TextFile,FileName,Comment,ProjectName) 
+  (ResourceId,Value,LocaleId,ResourceSet,Type,BinFile,TextFile,FileName,Comment,ProjectName)
    select ResourceId,Value,LocaleId,ResourceSet,Type,BinFile,TextFile,FileName,Comment,ProjectName from {1}";
 
                 sql = string.Format(sql, Configuration.ResourceTableName, backupTableName);
@@ -2090,7 +2091,7 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Deserializes serialized data in JSON format based on a
-        /// type name provided in the resource type parameter.        
+        /// type name provided in the resource type parameter.
         /// </summary>
         /// <param name="serializedValue">JSON encoded string</param>
         /// <param name="resourceType">Type name to deserialize - type must be referenced by the app</param>
@@ -2197,7 +2198,7 @@ namespace Westwind.Globalization
 
     /// <summary>
     /// Internal structure that contains format information about a file
-    /// resource. Used internally to figure out how to write 
+    /// resource. Used internally to figure out how to write
     /// a resource into the database
     /// </summary>
     public class FileInfoFormat

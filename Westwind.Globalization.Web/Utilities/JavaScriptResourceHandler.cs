@@ -1,10 +1,10 @@
 ﻿#region License
 /*
  **************************************************************
- *  Author: Rick Strahl 
+ *  Author: Rick Strahl
  *          © West Wind Technologies, 2008 - 2009
  *          http://www.west-wind.com/
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -13,10 +13,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -25,7 +25,7 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- **************************************************************  
+ **************************************************************
 */
 #endregion
 
@@ -42,34 +42,35 @@ using System.Resources;
 using System.Threading;
 using Westwind.Web;
 using Westwind.Utilities;
+using Westwind.Globalization.Utilities;
 
 namespace Westwind.Globalization
 {
     /// <summary>
     /// Http Handler that returns ASP.NET Local and Global Resources as JavaScript
-    /// objects. Supports both plain Resx Resources as well as DbResourceProvider 
+    /// objects. Supports both plain Resx Resources as well as DbResourceProvider
     /// driven resources.
-    /// 
+    ///
     /// Objects are generated in the form of:
-    /// 
+    ///
     /// &lt;&lt;code lang="JavaScript"&gt;&gt;var localRes  = {
     ///    BackupFailed: "Backup was not completed",
     ///    Loading: "Loading"
     /// );&lt;&lt;/code&gt;&gt;
-    /// 
+    ///
     /// where the resource key becomes the property name with a string value.
-    /// 
-    /// The handler is driven through query string variables determines which 
+    ///
+    /// The handler is driven through query string variables determines which
     /// resources are returned:
-    /// 
+    ///
     /// ResourceSet      -  Examples: "resources" (global), "admin/somepage.aspx" "default.aspx" (local)
     /// LocaleId         -  Examples: "de-de","de",""  (empty=invariant)
     /// ResourceType     -  Resx,ResDb
     /// IncludeControls  -  if non-blank includes control values (. in name)
-    /// VarName          -  name of hte variable generated - if omitted localRes or globalRes is created.    
+    /// VarName          -  name of hte variable generated - if omitted localRes or globalRes is created.
     /// ResourceMode -  Flag required to find Resx resources on disk 0 - Local 1 - global 2 - plain resx
-    /// 
-    /// Resources retrieved are aggregated for the locale Id (ie. de-de returns 
+    ///
+    /// Resources retrieved are aggregated for the locale Id (ie. de-de returns
     /// de-de,de and invariant) whichever matches first.
     /// </summary>
     public class JavaScriptResourceHandler : IHttpHandler
@@ -102,7 +103,7 @@ namespace Westwind.Globalization
 
             // pick current UI Culture
             if (localeId == "auto")
-                localeId = Thread.CurrentThread.CurrentUICulture.IetfLanguageTag;
+                localeId = GetCultureHelper.GetCurrentThreadUICulture().IetfLanguageTag;
 
             Dictionary<string, object> resDict = null;
 
@@ -116,7 +117,7 @@ namespace Westwind.Globalization
 
 
             if (resourceType.ToLower() == "resdb")
-            {                
+            {
                 // use existing/cached resource manager if previously used
                 // so database is accessed only on first hit
                 var resManager = DbRes.GetResourceManager(resourceSet);
@@ -137,8 +138,8 @@ namespace Westwind.Globalization
                 string basePath = context.Server.MapPath(DbResourceConfiguration.Current.ResxBaseFolder);
                 DbResXConverter converter = new DbResXConverter(basePath);
 
-                resDict = converter.GetCompiledResourcesNormalizedForLocale(resourceSet, 
-                    DbResourceConfiguration.Current.ResourceBaseNamespace, 
+                resDict = converter.GetCompiledResourcesNormalizedForLocale(resourceSet,
+                    DbResourceConfiguration.Current.ResourceBaseNamespace,
                     localeId);
 
                 if (resDict == null)
@@ -154,7 +155,7 @@ namespace Westwind.Globalization
 
             if (resourceMode == "0" && !includeControls)
             {
-                // filter the list to strip out controls (anything that contains a . in the ResourceId 
+                // filter the list to strip out controls (anything that contains a . in the ResourceId
                 // is considered a control value
                 resDict = resDict.Where(res => !res.Key.Contains('.') && res.Value is string)
                                  .ToDictionary(dict => dict.Key, dict => dict.Value);
@@ -172,7 +173,7 @@ namespace Westwind.Globalization
             // client cache
             if (!HttpContext.Current.IsDebuggingEnabled)
             {
-                Response.ExpiresAbsolute = DateTime.UtcNow.AddDays(1);                
+                Response.ExpiresAbsolute = DateTime.UtcNow.AddDays(1);
                 Response.AppendHeader("Accept-Ranges", "bytes");
                 Response.AppendHeader("Vary", "Accept-Encoding");
                 Response.Cache.SetETag("\"" + javaScript.GetHashCode().ToString("x") + "\"");
@@ -212,7 +213,7 @@ namespace Westwind.Globalization
             try
             {
                 IDictionaryEnumerator enumerator;
-                using (var resSet = resMan.GetResourceSet(Thread.CurrentThread.CurrentUICulture, true, true))
+                using (var resSet = resMan.GetResourceSet(GetCultureHelper.GetCurrentThreadUICulture(), true, true))
                 {
                     enumerator = resSet.GetEnumerator();
 
@@ -224,7 +225,7 @@ namespace Westwind.Globalization
                 }
             }
             catch (Exception ex)
-            {                
+            {
                 return null;
             }
 
@@ -266,11 +267,11 @@ namespace Westwind.Globalization
 
             // add dbRes function
             sb.AppendFormat(
-"\t" + @"""dbRes"": function dbRes(resId) {{ return {0}[resId] || resId; }}      
+"\t" + @"""dbRes"": function dbRes(resId) {{ return {0}[resId] || resId; }}
 }}
-",varname);                
+",varname);
 
- 
+
             return sb.ToString();
         }
 
@@ -307,9 +308,9 @@ namespace Westwind.Globalization
 
             // Trigger Gzip encoding and headers if supported
             if (text.Length > 2000)
-                WebUtils.GZipEncodePage();       
+                WebUtils.GZipEncodePage();
 
-            Response.Write(text);            
+            Response.Write(text);
         }
 
         /// <summary>
@@ -333,17 +334,17 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Embed global JavaScript resources into the page.
-        /// 
+        ///
         /// This version returns resources of the active Resx or DB Resource Provider
         /// and includes no controls and creates a variable named "globalRes"
         /// and uses the page's current UI culture
         /// </summary>
         /// <param name="control"></param>
-        /// <param name="resourceSet"></param>       
+        /// <param name="resourceSet"></param>
         public static void RegisterJavaScriptGlobalResources(Control control, string varName, string resourceSet)
         {
             RegisterJavaScriptGlobalResources(control, varName, resourceSet,
-                                              CultureInfo.CurrentUICulture.IetfLanguageTag,
+                                              GetCultureHelper.GetCurrentCultureInfoUICulture().IetfLanguageTag,
                                               ResourceProviderTypes.AutoDetect);
         }
 
@@ -367,12 +368,12 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Embed global JavaScript resources into the page.
-        /// 
+        ///
         /// This version returns resources of the active Resx or DB Resource Provider,
         /// includes no controls and uses the CurrentUICulture's locale id
         /// </summary>
         /// <param name="control">A control or page instance required to </param>
-        /// <param name="varName">Name of the JavaScript object variable created</param>        
+        /// <param name="varName">Name of the JavaScript object variable created</param>
         public static void RegisterJavaScriptLocalResources(Control control, string varName)
         {
             ResourceProviderTypes type = ResourceProviderTypes.AutoDetect;
@@ -381,7 +382,7 @@ namespace Westwind.Globalization
             string resourceSet = WebUtils.GetAppRelativePath();
 
             RegisterJavaScriptLocalResources(control, varName,
-                                             CultureInfo.CurrentUICulture.IetfLanguageTag, resourceSet, type, false);
+                                             GetCultureHelper.GetCurrentCultureInfoUICulture().IetfLanguageTag, resourceSet, type, false);
         }
 
 
@@ -389,7 +390,7 @@ namespace Westwind.Globalization
         /// Returns a URL to the JavaScriptResourceHandler.axd handler that retrieves
         /// normalized resources for a given resource set and localeId and creates
         /// a JavaScript object with the name specified.
-        /// 
+        ///
         /// This function returns only the URL - you're responsible for embedding
         /// the URL into the page as a script tag to actually load the resources.
         /// </summary>
@@ -406,7 +407,7 @@ namespace Westwind.Globalization
                 if (DbSimpleResourceProvider.ProviderLoaded || DbResourceProvider.ProviderLoaded)
                     resourceType = ResourceProviderTypes.DbResourceProvider;
             }
-            
+
 
             StringBuilder sb = new StringBuilder(512);
             sb.Append(WebUtils.ResolveUrl("~/") + "JavaScriptResourceHandler.axd?");
@@ -423,7 +424,7 @@ namespace Westwind.Globalization
         /// Returns a URL to the JavaScriptResourceHandler.axd handler that retrieves
         /// normalized resources for a given resource set and localeId and creates
         /// a JavaScript object with the name specified.
-        /// 
+        ///
         /// This version assumes the current UI Culture and auto-detects the
         /// provider type (Resx or DbRes) currently active.
         /// </summary>
@@ -432,7 +433,7 @@ namespace Westwind.Globalization
         /// <returns></returns>
         public static string GetJavaScriptGlobalResourcesUrl(string varName, string resourceSet)
         {
-            string localeId = CultureInfo.CurrentUICulture.IetfLanguageTag;
+            string localeId = GetCultureHelper.GetCurrentCultureInfoUICulture().IetfLanguageTag;
             return GetJavaScriptGlobalResourcesUrl(varName, resourceSet, localeId, ResourceProviderTypes.AutoDetect);
         }
 
@@ -458,29 +459,29 @@ namespace Westwind.Globalization
 
             sb.Append(WebUtils.ResolveUrl("~/") + "JavaScriptResourceHandler.axd?");
             sb.AppendFormat("ResourceSet={0}&LocaleId={1}&VarName={2}&ResourceType={3}&ResourceMode=0",
-                resourceSet, localeId, varName, 
+                resourceSet, localeId, varName,
                 (resourceType == ResourceProviderTypes.DbResourceProvider ? "resdb" : "resx") );
             if (includeControls)
-                sb.Append("&IncludeControls=1");            
+                sb.Append("&IncludeControls=1");
 
             return sb.ToString();
         }
 
         /// <summary>
-        /// Returns a URL to embed local resources into the page via JavaScriptResourceHandler.axd. 
+        /// Returns a URL to embed local resources into the page via JavaScriptResourceHandler.axd.
         /// This method returns only a URL - you're responsible for embedding the script tag into the page
         /// to actually load the resources.
-        /// 
+        ///
         /// This version assumes the local resource set for the current request/page and autodetected
         /// resources (resdb or resx). It also uses the CurrentUICulture as the locale.
         /// </summary>
-        /// <param name="varName">The name of the JavaScript variable to create</param>        
+        /// <param name="varName">The name of the JavaScript variable to create</param>
         /// <param name="includeControls"></param>
         /// <returns></returns>
         public static string GetJavaScriptLocalResourcesUrl(string varName, bool includeControls)
         {
             string resourceSet = WebUtils.GetAppRelativePath();
-            string localeId = CultureInfo.CurrentUICulture.IetfLanguageTag;
+            string localeId = GetCultureHelper.GetCurrentCultureInfoUICulture().IetfLanguageTag;
             return GetJavaScriptLocalResourcesUrl(varName, localeId, resourceSet,
                                                   ResourceProviderTypes.AutoDetect, includeControls);
         }
@@ -490,7 +491,7 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="varName">The name of the JavaScript variable to create</param>
         /// <param name="resourceSet">The name of the resource set
-        /// 
+        ///
         /// Example:
         /// CodePasteMvc.Resources.Resources  (~/Resources/Resources.resx in CodePasteMvc project)
         /// </param>
@@ -502,8 +503,8 @@ namespace Westwind.Globalization
                                                       ResourceProviderTypes resourceType = ResourceProviderTypes.AutoDetect)
         {
             if (localeId == null)
-                localeId = CultureInfo.CurrentUICulture.IetfLanguageTag;
-            
+                localeId = GetCultureHelper.GetCurrentCultureInfoUICulture().IetfLanguageTag;
+
             if (resourceType == ResourceProviderTypes.AutoDetect)
             {
                 if (DbSimpleResourceProvider.ProviderLoaded || DbResourceProvider.ProviderLoaded)
@@ -526,7 +527,7 @@ namespace Westwind.Globalization
     /// <summary>
     /// Determines the resource provider type used
     /// to retrieve resources.
-    /// 
+    ///
     /// Note only applies to the stock ResX provider
     /// or the DbResourceProviders of this assembly.
     /// Other custom resource providers are not supported.
