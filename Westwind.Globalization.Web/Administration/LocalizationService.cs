@@ -115,10 +115,10 @@ namespace Westwind.Globalization.Web.Administration
         /// <param name="resourceSet"></param>
         /// <returns></returns>
         [CallbackMethod]
-        public object GetAllResourcesForResourceGrid(string resourceSet,string projectName=null)
+        public object GetAllResourcesForResourceGrid(string resourceSet, string projectName = null)
         {
             // TODO santosh
-            var items = Manager.GetAllResources(resourceSet: resourceSet,projectName:projectName);
+            var items = Manager.GetAllResources(resourceSet: resourceSet, projectName: projectName);
 
             if (items == null)
                 throw new ApplicationException(Manager.ErrorMessage);
@@ -183,6 +183,20 @@ namespace Westwind.Globalization.Web.Administration
             return result;
         }
 
+
+
+        [CallbackMethod]
+        public object SearchAllResource(string searchkey)
+        {
+            List<ResourceItem> items = new List<ResourceItem>();
+            // TODO santosh
+            if (!string.IsNullOrEmpty(searchkey))
+            {
+                items = Manager.SearchAllResources(searchKey: searchkey);
+            }         
+
+            return items;
+        }
 
         [CallbackMethod]
         public IEnumerable<ResourceIdListItem> GetResourceListHtml(string resourceSet, string projectName = null)

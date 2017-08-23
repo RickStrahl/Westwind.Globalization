@@ -1,0 +1,42 @@
+﻿<div class="well well-sm" style="margin-top: 25px;">
+    <label>Global Search</label>
+    <div class="input-group">
+
+        <input type="text" class="form-control" placeholder="Search ResourceId or ResourceSet" ng-model="view.searchKey" ng-model-onblur ng-change="view.onSearchAllResources()">
+        <span class="input-group-addon">
+            <i class="fa fa-search"></i>
+        </span>
+    </div>
+
+    <br />
+    <div class="panel-body" style="background:white;border-radius:5px">
+        <table class="table table-bordered bordered table-striped table-condensed datatable"  datatable="ng" dt-options="showCase.dtOptions" dt-column-defs="showCase.dtColumnDefs" >
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Resource Id</th>
+                    <th>Resource Set</th>
+                    <th>Locale Id</th>
+                    <th>Value</th>
+                    <th>Project Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="n in view.searchResourceList">
+                    <td>{{$index+1}}</td>
+                    <td>{{n.ResourceId}}</td>
+                    <td>{{n.ResourceSet}}</td>
+                    <td>{{n.LocaleId}}</td>
+                    <td>{{n.Value}}</td>
+                    <td>{{n.ProjectName}}</td>
+                    <td>
+                        <a href="javascript:void(0);" ng-click="view.EditSearchResource(n)">Edit</a> | <a href="javascript:void(0);" ng-click="view.DeleteSearchResource(n)">Delete</a>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

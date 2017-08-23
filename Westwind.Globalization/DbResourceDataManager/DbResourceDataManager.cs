@@ -497,6 +497,42 @@ namespace Westwind.Globalization
             }
         }
 
+        /// <summary>
+        /// Returns a list of all the resources for the matched records in resourceId,resourceSet,value,projectname columns. The result is in a 
+        /// table called TResources that contains all fields of the table. The table is
+        /// ordered by LocaleId.
+        /// 
+        /// This version returns either local or global resources in a Web app
+        /// 
+        /// Fields:
+        /// ResourceId,Value,LocaleId,ResourceSet,Type
+        /// </summary>
+        /// <param name="searchKey">return all the matched records in resourceId,resourceSet,value,projectname columns</param>        
+        /// <returns></returns>
+        public virtual List<ResourceItem> SearchAllResources(string searchKey)
+        {
+            IEnumerable<ResourceItem> items;
+            using (var data = GetDb())
+            {
+
+                string sql = "select ResourceId,Value,LocaleId,ResourceSet,ProjectName,Type,TextFile,BinFile,FileName,Comment,ValueType,Updated from " + Configuration.ResourceTableName +
+                             " where ISNULL(ProjectName,'')+ISNULL(ResourceSet,'')+ISNULL(ResourceId,'')+ISNULL(Value,'') like @searchKey " +
+                             "ORDER BY ProjectName,ResourceSet,LocaleId, ResourceId";
+
+
+                var parms = new List<IDbDataParameter>();
+                parms.Add(data.CreateParameter("@searchKey", string.Format("%{0}%",searchKey)));
+                items = data.Query<ResourceItem>(sql, parms.ToArray());
+                if (items == null)
+                {
+                    ErrorMessage = data.ErrorMessage;
+                    return null;
+                }
+                var itemList = items.ToList();
+                return itemList;
+            }
+        }
+
 
 
         /// <summary>

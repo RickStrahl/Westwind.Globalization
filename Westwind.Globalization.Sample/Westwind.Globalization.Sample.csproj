@@ -209,6 +209,10 @@
     <Content Include="LocalizationAdmin\bower_components\bootstrap\dist\js\bootstrap.js" />
     <Content Include="LocalizationAdmin\bower_components\bootstrap\dist\js\bootstrap.min.js" />
     <Content Include="LocalizationAdmin\bower_components\bootstrap\dist\js\npm.js" />
+    <Content Include="LocalizationAdmin\bower_components\datatable\css\dataTables.bootstrap.min.css" />
+    <Content Include="LocalizationAdmin\bower_components\datatable\js\angular-datatables.min.js" />
+    <Content Include="LocalizationAdmin\bower_components\datatable\js\dataTables.bootstrap.min.js" />
+    <Content Include="LocalizationAdmin\bower_components\datatable\js\jquery.dataTables.min.js" />
     <Content Include="LocalizationAdmin\bower_components\font-awesome\css\font-awesome.css" />
     <Content Include="LocalizationAdmin\bower_components\font-awesome\css\font-awesome.min.css" />
     <Content Include="LocalizationAdmin\bower_components\font-awesome\fonts\fontawesome-webfont.svg" />
@@ -229,6 +233,7 @@
     <Content Include="LocalizationAdmin\Partials\Menubar.html" />
     <Content Include="LocalizationAdmin\index.html" />
     <Content Include="LocalizationAdmin\Partials\ImportExportResxDialog.html" />
+    <Content Include="LocalizationAdmin\Partials\SearchPanel.html" />
     <Content Include="LocalizationAdmin\Partials\ResourceEditor.html" />
     <Content Include="LocalizationAdmin\Partials\ResourceGrid.html" />
     <Content Include="LocalizationAdmin\Partials\ResourceProviderInfoDialog.html" />

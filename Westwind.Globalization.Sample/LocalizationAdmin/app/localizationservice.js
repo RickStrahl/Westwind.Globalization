@@ -44,7 +44,8 @@
             getLocalizationInfo: getLocalizationInfo,
             isLocalizationTable: isLocalizationTable,
             projectNames: [],
-            projectName: null
+            projectName: null,
+            searchAllResources: searchAllResources,
         };
         return service;
 
@@ -98,7 +99,7 @@
         }
 
         function getResourceGridItems(resourceSet, projectName) {
-            debugger
+            
             return $http.get("localizationService.ashx?method=GetAllResourcesForResourceGrid&resourceSet=" + resourceSet + (projectName != null ? "&projectName=" + projectName : ""))
                 .error(parseHttpError);
         }
@@ -185,7 +186,7 @@
         }
 
         function deleteResourceSet(resourceSet, projectName) {
-            debugger
+            
             return $http.get("localizationService.ashx?method=DeleteResourceSet&ResourceSet=" + resourceSet + (projectName != null ? "&projectName=" + projectName : ""))
                  .error(parseHttpError);
         }
@@ -221,7 +222,7 @@
                     .error(parseHttpError);
         }
         function exportResxResources(path, resourceSets, projectName) {
-            debugger
+            
             path = path || "";
             return $http.post("localizationService.ashx?method=ExportResxResources", { outputBasePath: path, resourceSets: resourceSets, projectName: projectName })
                     .error(parseHttpError);
@@ -249,6 +250,11 @@
         }
         function parseHttpError() {
             service.error = ww.angular.parseHttpError(arguments);
+        }
+
+        function searchAllResources(searchkey) {
+            return $http.get("localizationService.ashx?method=SearchAllResource&searchkey=" + searchkey)
+                .error(parseHttpError);
         }
     }
 })();

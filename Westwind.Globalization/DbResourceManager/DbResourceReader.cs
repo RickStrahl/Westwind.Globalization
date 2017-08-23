@@ -33,6 +33,7 @@
 using System.Resources;
 using System.Globalization;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Westwind.Globalization
 {
@@ -115,13 +116,25 @@ namespace Westwind.Globalization
                 if (!string.IsNullOrEmpty(DbResourceConfiguration.Current.DefaultProjectName))
                 {
                     Items = manager.GetResourceSet(cultureInfo.Name, baseNameField, DbResourceConfiguration.Current.DefaultProjectName);
+                    IDictionary globalItems = manager.GetResourceSet(cultureInfo.Name, baseNameField);
+                    if ((!object.Equals(globalItems, null)) && (globalItems.Count > 0))
+                    {
+                        Dictionary<string, object> tempp = (Dictionary<string, object>)Items;
+                        foreach (DictionaryEntry glblItem in globalItems)
+                        {
+                            if (!tempp.ContainsKey(glblItem.Key.ToString()))
+                            {
+                                Items.Add(glblItem.Key, glblItem.Value);
+                            }
+                        }
+                    }
                 }
-
-                if (Items.Count == 0)
+                else
                 {
-                    // populate the resources from global or default data means project/client's value is null or blank in the database
+
                     Items = manager.GetResourceSet(cultureInfo.Name, baseNameField);
                 }
+
                 return Items.GetEnumerator();
             }
         }

@@ -8,11 +8,10 @@
         .module('app')
         .controller('listController', listController);
 
-    listController.$inject = ['$scope', '$timeout', '$upload', 'localizationService'];
+    listController.$inject = ['$scope', '$timeout', '$upload', 'localizationService', '$compile', 'DTOptionsBuilder', 'DTColumnBuilder'];
 
-    function listController($scope, $timeout, $upload, localizationService) {
+    function listController($scope, $timeout, $upload, localizationService, $compile, DTOptionsBuilder, DTColumnBuilder) {
         console.log('list controller');
-
         var vm = this;
 
         vm.resources = resources; // global generated resources
@@ -24,6 +23,8 @@
         vm.filteredResourceSets = [];
         vm.resourceSets = [];
         vm.resourceList = [];
+        vm.searchResourceList = [];
+        vm.searchKey = "";
         vm.isLocalizationTable = true;
         vm.resourceGridResources = [];
         vm.resourceId = null;
@@ -363,6 +364,7 @@
                     setTimeout(function () {
                         vm.resourceId = id;
                         vm.onResourceIdChange();
+                        vm.onSearchAllResources();
                     }, 10);
 
                     $("#AddResourceDialog").modal('hide');
@@ -434,13 +436,13 @@
                     });
 
                     vm.resourceList.splice(i, 1);
-
-                    if (i > 0)
-                        vm.resourceId = vm.resourceList[i - 1].ResourceId;
-                    else
-                        vm.resourceId = vm.resourceList[0].ResourceId;
+                    if (vm.resourceList > 0)
+                        if (i > 0)
+                            vm.resourceId = vm.resourceList[i - 1].ResourceId;
+                        else
+                            vm.resourceId = vm.resourceList[0].ResourceId;
                     vm.onResourceIdChange();
-
+                    vm.onSearchAllResources();
                     showMessage(String.format(vm.dbRes('ResourceDeleted'), id));
                 })
                 .error(function () {
@@ -472,7 +474,7 @@
         }
 
         vm.onDeleteResourceSetClick = function () {
-            debugger
+            
             if (!confirm(vm.dbRes('YouAreAboutToDeleteThisResourceSet') + ":\n\n     " +
                 vm.resourceSet + "\n\n" +
                 vm.dbRes('AreYouSureYouWantToDoThis')))
@@ -567,7 +569,7 @@
 
         };
         vm.onGridMenuClick = function () {
-            debugger
+            
             var resourceSet = vm.resourceSet;
             var projectName = vm.projectName;
             localizationService.getResourceGridItems(resourceSet, projectName)
@@ -578,7 +580,7 @@
             $("#ResourceGrid").show();
         };
         vm.saveGridResource = function (resource) {
-            debugger
+            
             resource.projectName = vm.projectName;
             localizationService.updateResource(resource)
                 .success(function () {
@@ -748,13 +750,51 @@
             }, 20);
         }
 
-
         vm.onSeachProjects = function () {
 
             setTimeout(function () {
                 vm.projectName = vm.filteredProjects[0];
                 vm.onProjectNameChange();
             }, 20);
+        }
+
+        vm.onSearchAllResources = function () {
+            setTimeout(function () {
+                if (vm.searchKey.trim() == '') {
+                    vm.searchResourceList = [];
+                    return;
+                }
+                else {
+
+                    return localizationService.searchAllResources(vm.searchKey)
+                        .success(function (resourceList) {
+                            vm.searchResourceList = resourceList;
+                            
+                        })
+                        .error(parseError);
+
+                }
+            }, 500);
+        }
+        // datatable data
+        //vm.dtOptions = vm.searchResourceList
+        vm.EditSearchResource = function (data) {
+            
+            if (data != null) {
+                vm.activeResource.LocaleId = data.LocaleId;
+                vm.activeResource.ProjectName = data.ProjectName;
+                vm.activeResource.ResourceSet = data.ResourceSet;
+                vm.activeResource.ResourceId = data.ResourceId;
+                vm.activeResource.Value = data.Value;
+                $("#AddResourceDialog").modal();
+            }
+        }
+        vm.DeleteSearchResource = function (data) {
+            
+            vm.activeResource.ResourceId = data.ResourceId;
+            vm.activeResource.ResourceSet = data.ResourceSet;
+            vm.projectName = data.ProjectName;
+            vm.onDeleteResourceClick();
         }
 
     }
