@@ -1098,6 +1098,23 @@
             This value *always* returns a string unless you pass in null.
             </returns>
         </member>
+        <member name="M:Westwind.Globalization.DbRes.TDefault(System.String,System.String,System.String,System.String)">
+            <summary>
+            Localization helper function that Translates a resource
+            Id to a resource value string. If id is not found default text is returned. Easy access that allows full
+            control over the resource to retrieve or default UiCulture
+            locale retrieval.
+            </summary>
+            <param name="resId">The Resource Id to retrieve</param>
+            <param name="defaultText">Default text that is returned when resource with given resId is not found</param>
+            <param name="resourceSet">Name of the ResourceSet that houses this resource. If null or empty resources are used.</param>
+            <param name="lang">5 letter or 2 letter language ieetf code: en-US, de-DE or en, de etc.</param>
+            <returns>
+            Localized resource or the resource Id if no match is found. 
+            This value *always* returns a string unless you pass in null in defaultText.
+            </returns>
+            
+        </member>
         <member name="M:Westwind.Globalization.DbRes.THtml(System.String,System.String,System.String)">
             <summary>
             Localization helper function that Translates a resource
