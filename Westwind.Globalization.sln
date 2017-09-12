@@ -1,15 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7C5BE79E-79AC-47DF-97CA-12AFCDF79635}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Westwind.Globalization.Test", "Westwind.Globalization.Test\Westwind.Globalization.Test.csproj", "{E0DB861F-F563-4016-830A-7710F41E2091}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{7FC6C7F0-A67A-41EC-A2B1-43CF095726D4}"
@@ -91,5 +84,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E0DB861F-F563-4016-830A-7710F41E2091} = {0BA85EAE-8A25-4B4A-8ACF-553D14C3BAE1}
 		{1E36A3C9-2F87-407A-B568-EBF336061A06} = {0BA85EAE-8A25-4B4A-8ACF-553D14C3BAE1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C151A76C-1C52-4B8D-940B-229C2ABB203E}
 	EndGlobalSection
 EndGlobal
