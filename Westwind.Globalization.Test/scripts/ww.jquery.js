@@ -1,7 +1,7 @@
-﻿/// <reference path="jquery.js" />
+﻿/// <reference path="../bower_components/jquery/dist/jquery.js" />
 /*
 ww.jQuery.js  
-Version 1.26 - 12/25/2015
+Version 1.26 - 2/2/2016
 West Wind jQuery plug-ins and utilities
 
 (c) 2008-2015 Rick Strahl, West Wind Technologies 
@@ -49,7 +49,7 @@ http://en.wikipedia.org/wiki/MIT_License
                     if (self.accepts)
                         xhr.setRequestHeader("Accept", self.accepts);
                 },
-                success: function success(result, status) {
+                success: function success(result, status) {                    
                     var errorException = null;
                     if (self.evalResult) {
                         try {
@@ -219,11 +219,22 @@ http://en.wikipedia.org/wiki/MIT_License
                 self.completed(result, self);
         };
     };
-
+ 
     ajaxJson = function(url, parm, cb, ecb, options) {
         var ser = parm;
+
+        if (typeof cb === 'object') {
+            options = cb;
+            cb = null;
+            ecb = null;
+        }
+
+        var verb = "POST";
+        if (!parm)
+            verb = "GET";
+
         var opt = {
-            method: "POST",
+            method: verb,
             contentType: "application/json",
             accepts: "application/json",
             noPostEncoding: false
@@ -231,8 +242,8 @@ http://en.wikipedia.org/wiki/MIT_License
         $.extend(opt, options);
 
         var http = new HttpClient(opt);
-        http.evalResult = true;
-        if (!opt.noPostEncoding && opt.method == "POST")
+        http.evalResult = true;        
+        if (parm !== null && !opt.noPostEncoding && (opt.method === "POST" || opt.method === "PUT" || opt.method == "PATCH"))
             ser = JSON.stringify(parm);
 
         return http.send(url, ser, cb, ecb);
@@ -249,7 +260,7 @@ http://en.wikipedia.org/wiki/MIT_License
         if (typeof data === "object")
             data = $.param(data);
 
-        http.send(url, data, cb, ecb);
+        return http.send(url, data, cb, ecb);
     };
     $.fn.serializeObject = function() {
         var o = {};
@@ -876,7 +887,7 @@ http://en.wikipedia.org/wiki/MIT_License
                 if (newVal == undefined)
                     continue;
 
-                if (w.vals[i] != newVal) {
+                if (w.vals[i] !== newVal) {
                     w.vals[i] = newVal;
                     changed = true;
                     break;
@@ -1536,7 +1547,7 @@ http://en.wikipedia.org/wiki/MIT_License
                         if (opt.onDragStart(e, $el, opt) === false)
                             return;
                     }
-                    opt.dragFunc = doDrag;
+                    opt.dragFunc = debounce(doDrag,20);
 
                     $(document).bind('mousemove.rsz', opt.dragFunc);
                     $(document).bind('mouseup.rsz', stopDragging);
@@ -1562,8 +1573,7 @@ http://en.wikipedia.org/wiki/MIT_License
 
                     if (opt.onDrag)
                         opt.onDrag(e, $el, opt);
-
-                    //console.log('dragging', e, pos, newWidth, newHeight);
+                    
                 }
 
                 function stopDragging(e) {
@@ -1832,6 +1842,7 @@ http://en.wikipedia.org/wiki/MIT_License
         /// </param> 
         /// <returns type="string" />
         var err = "";
+
         try {
             var func = _tmplCache[str];
             if (!func) {
@@ -1848,7 +1859,8 @@ http://en.wikipedia.org/wiki/MIT_License
                 func = new Function("obj", strFunc);
                 _tmplCache[str] = func;
             }
-            return func(data);
+
+            return func.call(data, data);
         } catch (e) {
             err = e.message;
         }
@@ -1929,13 +1941,17 @@ http://en.wikipedia.org/wiki/MIT_License
         var length = width - this.length;
         if (length < 1) this.substr(0, width);
 
-        return (this + this.repeat(pad, length)).substr(0, width);
-    };
-    String.prototype.startsWith = function (sub) {
-        if (this.length == 0) return false;
-        return sub == this.substr(0, sub.length);
-    };
-    String.prototype.extract = function (startDelim, endDelim, allowMissingEndDelim, returnDelims) {
+        return (this + pad.repeat(length)).substr(0, width);
+    }
+    String.prototype.startsWith = function (sub,nocase) {
+        if (!this || this.length === 0) return false;
+
+        if (sub && nocase)
+            return sub.toLowerCase() === this.toLowerCase().substr(0, sub.length);
+
+        return sub === this.substr(0, sub.length);
+    }
+    String.prototype.extract = function(startDelim, endDelim, allowMissingEndDelim, returnDelims) {
         var str = this;
         if (str.length === 0)
             return "";

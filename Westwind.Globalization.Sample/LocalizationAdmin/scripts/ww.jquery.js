@@ -1,7 +1,7 @@
-﻿/// <reference path="jquery.js" />
+﻿/// <reference path="../bower_components/jquery/dist/jquery.js" />
 /*
 ww.jQuery.js  
-Version 1.26 - 12/25/2015
+Version 1.26 - 2/2/2016
 West Wind jQuery plug-ins and utilities
 
 (c) 2008-2015 Rick Strahl, West Wind Technologies 
@@ -46,10 +46,10 @@ http://en.wikipedia.org/wiki/MIT_License
                 async: self.async,
                 beforeSend: function beforeSend(xhr) {
                     for (var header in self.headers) xhr.setRequestHeader(header, self.headers[header]);
-                    if (self.accepts) 
-		    	xhr.setRequestHeader("Accept", self.accepts);
+                    if (self.accepts)
+                        xhr.setRequestHeader("Accept", self.accepts);
                 },
-                success: function success(result, status) {
+                success: function success(result, status) {                    
                     var errorException = null;
                     if (self.evalResult) {
                         try {
@@ -61,26 +61,26 @@ http://en.wikipedia.org/wiki/MIT_License
                         }
                     }
                     if (errorException || result && (result.isCallbackError || result.iscallbackerror)) {
-                        if (result) 
-				errorException = result;
-                        if (errorHandler) 
-				errorHandler(errorException, self);
+                        if (result)
+                            errorException = result;
+                        if (errorHandler)
+                            errorHandler(errorException, self);
                         return;
                     }
-                    if (completed) 
-		    	completed(result, self);
+                    if (completed)
+                        completed(result, self);
                 },
                 error: function(xhr, status) {
                     var err = null;
                     if (xhr.readyState == 4) {
                         var res = xhr.responseText;
-                        if (res && res.charAt(0) == '{') 
-				err = JSON.parseWithDate(res);
+                        if (res && res.charAt(0) == '{')
+                            err = JSON.parseWithDate(res);
                         if (!err) {
                             if (xhr.status && xhr.status != 200)
-			    	err = new CallbackException(xhr.status + " " + xhr.statusText);
-                            else 
-			    	err = new CallbackException("Callback Error: " + status);
+                                err = new CallbackException(xhr.status + " " + xhr.statusText);
+                            else
+                                err = new CallbackException("Callback Error: " + status);
                             err.detail = res;
                         }
                     }
@@ -95,7 +95,7 @@ http://en.wikipedia.org/wiki/MIT_License
         this.returnError = function(message) {
             var error = new CallbackException(message);
             if (self.errorHandler)
-	    	self.errorHandler(error, self);
+                self.errorHandler(error, self);
         };
     };
 
@@ -199,9 +199,9 @@ http://en.wikipedia.org/wiki/MIT_License
             else if (this.postbackMode == "Get") {
                 Url = this.serverUrl;
                 if (Url.indexOf('?') > -1)
-			Url += data;
-                else 
-			Url += "?" + data;
+                    Url += data;
+                else
+                    Url += "?" + data;
 
                 return http.send(Url, null, self.onHttpCallback, self.onHttpCallback);
             }
@@ -212,18 +212,29 @@ http://en.wikipedia.org/wiki/MIT_License
         this.onHttpCallback = function(result) {
             if (result && (result.isCallbackError || result.iscallbackerror)) {
                 if (self.errorHandler)
-			self.errorHandler(result, self);
+                    self.errorHandler(result, self);
                 return;
             }
             if (self.completed != null)
                 self.completed(result, self);
         };
     };
-
+ 
     ajaxJson = function(url, parm, cb, ecb, options) {
         var ser = parm;
+
+        if (typeof cb === 'object') {
+            options = cb;
+            cb = null;
+            ecb = null;
+        }
+
+        var verb = "POST";
+        if (!parm)
+            verb = "GET";
+
         var opt = {
-            method: "POST",
+            method: verb,
             contentType: "application/json",
             accepts: "application/json",
             noPostEncoding: false
@@ -231,8 +242,8 @@ http://en.wikipedia.org/wiki/MIT_License
         $.extend(opt, options);
 
         var http = new HttpClient(opt);
-        http.evalResult = true;
-        if (!opt.noPostEncoding && opt.method == "POST")
+        http.evalResult = true;        
+        if (parm !== null && !opt.noPostEncoding && (opt.method === "POST" || opt.method === "PUT" || opt.method == "PATCH"))
             ser = JSON.stringify(parm);
 
         return http.send(url, ser, cb, ecb);
@@ -249,7 +260,7 @@ http://en.wikipedia.org/wiki/MIT_License
         if (typeof data === "object")
             data = $.param(data);
 
-        http.send(url, data, cb, ecb);
+        return http.send(url, data, cb, ecb);
     };
     $.fn.serializeObject = function() {
         var o = {};
@@ -316,11 +327,11 @@ http://en.wikipedia.org/wiki/MIT_License
 
         // create statusbar object manually
         if (!_sb) {
-            _sb = $("<div id='_statusbar' class='" + self.cssClass + "'>" + 
-	    	  "<div class='" + self.closeButtonClass + "'>" + 
-  		  (self.closable ? "</div></div>" : ""))
-		.appendTo(document.body)
-		.hide();
+            _sb = $("<div id='_statusbar' class='" + self.cssClass + "'>" +
+                    "<div class='" + self.closeButtonClass + "'>" +
+                    (self.closable ? "</div></div>" : ""))
+                .appendTo(document.body)
+                .hide();
         }
 
         if (self.closeable)
@@ -370,13 +381,13 @@ http://en.wikipedia.org/wiki/MIT_License
                     if (self.afterTimeoutText)
                         self.show(self.afterTimeoutText);
                     else if
-                        (self.autoClose)
-				self.hide();
+                    (self.autoClose)
+                        self.hide();
                 }, timeout);
             }
             return self;
         };
-	
+
         this.hide = function() {
             if (self.noEffects)
                 _sb.hide();
@@ -386,14 +397,14 @@ http://en.wikipedia.org/wiki/MIT_License
             _sb.removeClass(self.highlightClass);
             return self;
         };
-	
+
         this.release = function() {
             if (_sb) {
                 $(_sb).remove();
             }
         };
     };
-    
+
     // use this as a global instance to customize constructor
     // or do nothing and get a default status bar
     __statusbar = null;
@@ -480,11 +491,11 @@ http://en.wikipedia.org/wiki/MIT_License
 
             var zi = el.css("zIndex");
             if (!zi || zi == "auto")
-	    	el.css("zIndex", 1);
+                el.css("zIndex", 1);
 
             // if specified make callback and pass element
             if (opt.completed)
-               opt.completed(this);
+                opt.completed(this);
         });
     };
 
@@ -618,7 +629,7 @@ http://en.wikipedia.org/wiki/MIT_License
             bottomOffset: 0,
             autoResize: false
         };
-	
+
         if (options && options.length)
             opt.container = options;
         else
@@ -642,7 +653,7 @@ http://en.wikipedia.org/wiki/MIT_License
             var height = 0;
             if ($cont[0] != window) {
                 var ds = sumDimensions($cont, "borderTopWidth", "borderBottomWidth", "paddingBottom", "paddingTop") +
-			 sumDimensions($el, "borderTopWidth", "borderBottomWidth", "marginBottom", "marginTop", "paddingBottom", "paddingTop");
+                    sumDimensions($el, "borderTopWidth", "borderBottomWidth", "marginBottom", "marginTop", "paddingBottom", "paddingTop");
                 ds = ds ? ds : 1;
                 bott = $cont.offset().top + $cont.outerHeight();
                 height = bott - top - Math.ceil(ds) - opt.bottomOffset;
@@ -700,8 +711,8 @@ http://en.wikipedia.org/wiki/MIT_License
             var tt = $("#" + el.id + "_tt");
 
             this.show = function(msg, timeout, isHtml) {
-                if (tt.length > 0) 
-			tt.remove();
+                if (tt.length > 0)
+                    tt.remove();
 
                 tt = $("<div>").attr("id", el.id + "_tt");
 
@@ -772,11 +783,11 @@ http://en.wikipedia.org/wiki/MIT_License
         /// Uses the MutationObserver API of the DOM and
         /// falls back to setInterval to poll for changes
         /// for non-compliant browsers (pre IE 11)
-        /// </summary>         
+        /// </summary>            
         /// <param name="options" type="Object">
         /// Option to set - see comments in code below.
-        /// </param>     
-        /// <returns type="jQuery" />
+        /// </param>        
+        /// <returns type="jQuery" /> 
 
         var opt = $.extend({
             // CSS styles or Attributes to monitor as comma delimited list
@@ -784,16 +795,16 @@ http://en.wikipedia.org/wiki/MIT_License
             // Example: "top,left,opacity,attr_class"
             properties: null,
 
-            // interval for 'manual polling' (IE 10 and older)         
+            // interval for 'manual polling' (IE 10 and older)            
             interval: 100,
 
             // a unique id for this watcher instance
             id: "_watcher_" + new Date().getTime(),
 
-            // flag to determine whether child elements are watched         
+            // flag to determine whether child elements are watched            
             watchChildren: false,
 
-            // Callback function if not passed in callback parameter
+            // Callback function if not passed in callback parameter   
             callback: null
         }, options);
 
@@ -817,12 +828,12 @@ http://en.wikipedia.org/wiki/MIT_License
             // store initial props and values
             $.each(data.props, function(i) {
                 var propName = data.props[i];
-                if (data.props[i].startsWith('attr_')) 
-			data.vals[i] = el$.attr(propName.replace('attr_', ''));
-                else if (propName.startsWith('prop_')) 
-			data.vals[i] = el$.prop(propName.replace('props_', ''));
-                else 
-			data.vals[i] = el$.css(propName);
+                if (data.props[i].startsWith('attr_'))
+                    data.vals[i] = el$.attr(propName.replace('attr_', ''));
+                else if (propName.startsWith('prop_'))
+                    data.vals[i] = el$.prop(propName.replace('props_', ''));
+                else
+                    data.vals[i] = el$.css(propName);
             });
 
             el$.data(opt.id, data);
@@ -835,10 +846,10 @@ http://en.wikipedia.org/wiki/MIT_License
                 var el$ = $(this);
 
                 if (window.MutationObserver) {
-                    var observer = el$.data('__watcherObserver');
+                    var observer = el$.data('__watcherObserver' + opt.id);
                     if (observer == null) {
                         observer = new MutationObserver(data.fnc);
-                        el$.data('__watcherObserver', observer);
+                        el$.data('__watcherObserver' + opt.id, observer);
                     }
                     observer.observe(this, {
                         attributes: true,
@@ -857,8 +868,8 @@ http://en.wikipedia.org/wiki/MIT_License
             if (!w) return;
             var el = this;
 
-            if (!w.func) 
-	    	return;
+            if (!w.func)
+                return;
 
             var changed = false;
             var i = 0;
@@ -894,20 +905,20 @@ http://en.wikipedia.org/wiki/MIT_License
             }
         }
     };
-    
+
     $.fn.unwatch = function(id) {
         this.each(function() {
             var el = $(this);
             var data = el.data(id);
             try {
                 if (window.MutationObserver) {
-                    var observer = el.data("__watcherObserver");
+                    var observer = el.data("__watcherObserver" + id);
                     if (observer) {
                         observer.disconnect();
-                        el.removeData("__watcherObserver");
+                        el.removeData("__watcherObserver" + id);
                     }
-                } else 
-			clearInterval(data.intervalId);
+                } else
+                    clearInterval(data.intervalId);
             }
             // ignore if element was already unbound
             catch (e) {
@@ -916,7 +927,8 @@ http://en.wikipedia.org/wiki/MIT_License
         return this;
     };
 
-    $.fn.listSetData = function(items, options) {
+
+    $.fn.listSetData = function (items, options) {
         var opt = {
             noClear: false, // don't clear the list first if true
             dataValueField: null, // optional value field for object lists
@@ -924,7 +936,7 @@ http://en.wikipedia.org/wiki/MIT_License
         };
         $.extend(opt, options);
 
-        return this.each(function() {
+        return this.each(function () {
             var el = $(this);
 
             if (items == null) {
@@ -952,19 +964,19 @@ http://en.wikipedia.org/wiki/MIT_License
             }
         });
     };
-    $.fn.listAddItem = function(text, value) {
-        return this.each(function() {
+    $.fn.listAddItem = function (text, value) {
+        return this.each(function () {
             $(this).append($("<option></option>")
                    .attr("value", value)
                    .text(text));
         });
     };
-    $.fn.listSelectItem = function(value) {
+    $.fn.listSelectItem = function (value) {
         if (this.length < 1)
-           return;
+            return;
         var list = this.get(0);
         if (!list.options)
-		    return;
+            return;
 
         for (var x = list.options.length - 1; x > -1; x--) {
             if (list.options[x].value === value) {
@@ -973,12 +985,12 @@ http://en.wikipedia.org/wiki/MIT_License
             }
         }
         return this;
-    };    
-    $.fn.listGetSelections = function(singleValue) {
+    };
+    $.fn.listGetSelections = function (singleValue) {
         var opts = this.find("option:selected");
         if (singleValue)
-            if (opts.length > 0) 
-	    	    return sels.eq(0).val();
+            if (opts.length > 0)
+                return sels.eq(0).val();
             else
                 return null;
         var sels = [];
@@ -988,7 +1000,7 @@ http://en.wikipedia.org/wiki/MIT_License
         return sels;
     };
 
-    HoverPanel = function(sel, opt) {
+    HoverPanel = function (sel, opt) {
         var _I = this;
         var jEl = $(sel);
         var el = jEl.get(0);
@@ -1015,7 +1027,7 @@ http://en.wikipedia.org/wiki/MIT_License
         this.http = null;
         $.extend(_I, opt);
 
-        this.startCallback = function(e, queryString, postData, errorHandler) {
+        this.startCallback = function (e, queryString, postData, errorHandler) {
             try {
                 var key = new Date().getTime();
                 _I.busy = key;
@@ -1065,14 +1077,14 @@ http://en.wikipedia.org/wiki/MIT_License
                 }
 
                 if (_I.eventHandlerMode == 'ShowIFrameAtMousePosition' || _I.eventHandlerMode == 'ShowIFrameInPanel') {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         if (_I.busy) _I.showIFrame.call(_I, url);
                     }, _I.navigateDelay);
                     return;
                 }
 
                 // Send the request with navigate delay
-                setTimeout(function() {
+                setTimeout(function () {
                     if (_I.busy === key)
                         _I.http.send.call(_I, url, postData, _I.onHttpCallback, _I.onHttpCallback);
                 }, _I.navigateDelay);
@@ -1081,24 +1093,24 @@ http://en.wikipedia.org/wiki/MIT_License
                 _I.onHttpCallback(new CallbackException(e.message));
             }
         };
-        this.onHttpCallback = function(result) {
+        this.onHttpCallback = function (result) {
             _I.busy = -1;
 
             if (_I.http && _I.http.status && _I.http.status != 200)
-	    	result = new CallbackException(http.statusText);
+                result = new CallbackException(http.statusText);
             if (result == null)
-	    	result = new CallbackException("No output was returned.");
+                result = new CallbackException("No output was returned.");
 
             if (result.isCallbackError) {
                 if (_I.errorHandler)
-			_I.errorHandler(result);
+                    _I.errorHandler(result);
                 return;
             }
             _I.displayResult(result);
-        };	
-        this.displayResult = function(result) {
-            if (_I.completed && _I.completed(result, _I) == false) 
-	    	return;
+        };
+        this.displayResult = function (result) {
+            if (_I.completed && _I.completed(result, _I) == false)
+                return;
             if (_I.eventHandlerMode == "ShowHtmlAtMousePosition") {
                 _I.assignContent(result);
                 _I.movePanelToPosition(_I.lastMouseLeft + _I.hoverOffsetRight, _I.lastMouseTop + _I.hoverOffsetBottom);
@@ -1108,10 +1120,10 @@ http://en.wikipedia.org/wiki/MIT_License
                 _I.show();
             }
         };
-        this.assignContent = function(result) {
+        this.assignContent = function (result) {
             $("#" + _I.htmlTargetId).html(result);
         };
-        this.movePanelToPosition = function(x, y) {
+        this.movePanelToPosition = function (x, y) {
             try {
                 jEl.css("position", "absolute");
 
@@ -1135,17 +1147,17 @@ http://en.wikipedia.org/wiki/MIT_License
                     var panWidth = jEl.outerWidth();
 
                     if (mainHeight < panHeight)
-		    	y = 0;
+                        y = 0;
                     else {
                         if (mainHeight < _I.lastMouseTop + panHeight)
-				y = mainHeight - panHeight - 10;
+                            y = mainHeight - panHeight - 10;
                     }
 
                     if (mainWidth < panWidth)
-		    	x = 0;
+                        x = 0;
                     else {
                         if (mainWidth < _I.lastMouseLeft + panWidth)
-				x = mainWidth - panWidth - 25;
+                            x = mainWidth - panWidth - 25;
                     }
                     jEl.css({ left: x + jWin.scrollLeft(), top: y + jWin.scrollTop() });
                 }
@@ -1153,33 +1165,33 @@ http://en.wikipedia.org/wiki/MIT_License
                 window.status = 'Moving of window failed: ' + e.message;
             }
         };
-        this.showIFrame = function(Url) {
+        this.showIFrame = function (Url) {
             _I.busy = false;
             Url = Url ? Url : _I.serverUrl;
             $("#" + _I.controlId + '_IFrame').attr("src", Url).load(_I.completed);
             _I.show();
             if (_I.eventHandlerMode == "ShowIFrameAtMousePosition")
-	    	_I.movePanelToPosition(_I.lastMouseLeft + _I.hoverOffsetRight, _I.lastMouseTop + _I.hoverOffsetBottom);
+                _I.movePanelToPosition(_I.lastMouseLeft + _I.hoverOffsetRight, _I.lastMouseTop + _I.hoverOffsetBottom);
         };
-        this.hide = function() {
+        this.hide = function () {
             this.abort();
             jEl.hide();
         };
-        this.abort = function() {
+        this.abort = function () {
             _I.busy = -1;
         };
-        this.show = function() {
+        this.show = function () {
             jEl.show().css("opacity", _I.panelOpacity);
         };
     };
 
-    _ModalDialog = function(sel, opt) {
+    _ModalDialog = function (sel, opt) {
         var _I = this;
         var jEl = $(sel);
-        if (jEl.length < 1) 
-		jEl = $("#" + sel);
-        if (jEl.length < 1) 
-		return;
+        if (jEl.length < 1)
+            jEl = $("#" + sel);
+        if (jEl.length < 1)
+            return;
 
         this.overlayId = "_ModalOverlay";
 
@@ -1194,11 +1206,11 @@ http://en.wikipedia.org/wiki/MIT_License
         $.extend(_I, opt);
         var hideLists = null;
 
-        this.show = function(msg, head, asHtml) {
+        this.show = function (msg, head, asHtml) {
             if (_I.contentId && typeof msg == "string")
-	    	    !asHtml ? $("#" + _I.contentId).text(msg) : $("#" + _I.contentId).html(msg);
+                !asHtml ? $("#" + _I.contentId).text(msg) : $("#" + _I.contentId).html(msg);
             if (_I.headerId && typeof head == "string")
-	    	    !asHtml ? $("#" + _I.headerId).text(head) : $("#" + _I.headerId).html(head);
+                !asHtml ? $("#" + _I.headerId).text(head) : $("#" + _I.headerId).html(head);
 
             _I.zIndex = _I.zIndex > 0 ? _I.zIndex : $.maxZIndex();
             jEl.css({ zIndex: _I.zIndex + 2 }).show().centerInClient();
@@ -1206,22 +1218,22 @@ http://en.wikipedia.org/wiki/MIT_License
             var bg = opaqueOverlay({ zIndex: _I.zIndex + 1, sel: "#" + _I.overlayId, opacity: _I.backgroundOpacity });
             _I.zIndex++;
             if (_I.fadeInBackground)
-	    	bg.hide().fadeIn("slow");
+                bg.hide().fadeIn("slow");
 
             // track any clicks inside modal dialog
             jEl.click(_I.callback);
 
             if (_I.keepCentered)
-                $(window).bind("resize.modal", function() {
+                $(window).bind("resize.modal", function () {
                     jEl.centerInClient();
-                }).bind("scroll.modal", function() {
+                }).bind("scroll.modal", function () {
                     jEl.centerInClient();
                 });
         };
-        this.hide = function() {
+        this.hide = function () {
             jEl.hide();
             if (_I.keepCentered)
-	    	$(window).unbind("resize.modal").unbind("scroll.modal");
+                $(window).unbind("resize.modal").unbind("scroll.modal");
             opaqueOverlay("hide", { sel: "#" + _I.overlayId });
             jEl.unbind("click");
 
@@ -1231,26 +1243,26 @@ http://en.wikipedia.org/wiki/MIT_License
                 hideLists = null;
             }
         };
-        this.callback = function(e) {
+        this.callback = function (e) {
             // handle clicks only for buttons/links
             if ($(e.target).is(":button,a,.closebox")) {
                 if (_I.dialogHandler) {
-                    if (_I.dialogHandler.call(e.target, e, _I) == false) 
-		    	return;
-                    setTimeout(function() {
+                    if (_I.dialogHandler.call(e.target, e, _I) == false)
+                        return;
+                    setTimeout(function () {
                         _I.hide();
                     }, 10);
                     return;
                 }
-                setTimeout(function() {
+                setTimeout(function () {
                     _I.hide();
                 }, 10);
             }
         };
     };
-    $.fn.modalDialog = function(opt, msg, head, asHtml, handler) {
-        if (this.length < 1) 
-		return this;
+    $.fn.modalDialog = function (opt, msg, head, asHtml, handler) {
+        if (this.length < 1)
+            return this;
 
         // only works with a single instance
         var el = this.get(0);
@@ -1258,13 +1270,13 @@ http://en.wikipedia.org/wiki/MIT_License
         var dId = "modal" + el.id;
 
         var md = jEl.data(dId);
-        if (!md) 
-		md = new _ModalDialog(jEl, opt);
+        if (!md)
+            md = new _ModalDialog(jEl, opt);
         if (typeof opt == "string") {
             if (opt == "hide" || opt == "close")
-	    	md.hide();
+                md.hide();
             if (opt == "instance" || opt == "get")
-	    	return md;
+                return md;
             return;
         }
         md.show(msg, head, asHtml);
@@ -1272,7 +1284,7 @@ http://en.wikipedia.org/wiki/MIT_License
 
         return this;
     };
-    $.modalDialog = function(msg, header, aButtons, handler, isHtml) {
+    $.modalDialog = function (msg, header, aButtons, handler, isHtml) {
         var dl = $("#_MBOX");
         if (dl.length < 1) {
             dl = $("<div>").addClass("dialog dragwindow").attr("id", "_MBOX").css({ width: 400 });
@@ -1282,32 +1294,32 @@ http://en.wikipedia.org/wiki/MIT_License
             dl.append(head).append(ctn);
             var btns = $("<div>").css("margin", "0px 15px 15px");
             if (!aButtons)
-	    	aButtons = [" Close "];
+                aButtons = [" Close "];
             for (var i = 0; i < aButtons.length; i++) {
                 var btn = $("<input type='button' />").attr("id", "_BTN_" + i).css("margin-right", "5px").val(aButtons[i]);
                 btns.append(btn);
             }
             dl.append(btns).appendTo(document.body);
         }
-        if (!handler) 
-            handler = function() {
+        if (!handler)
+            handler = function () {
                 if (this.id.substr(0, 5) == "_BTN_" || $(this).hasClass("closebox")) return true;
                 return false;
             };
-        dl.modalDialog({ dialogHandler: handler, headerId: "_MBOXHEADER", contentId: "_MBOXCONTENT" }, 
+        dl.modalDialog({ dialogHandler: handler, headerId: "_MBOXHEADER", contentId: "_MBOXCONTENT" },
 	                 msg, header, isHtml)
 	 .draggable({ handle: $("#_MBOX .dialog-header") })
 	 .closable({
-            closeHandler: function closeHandler() {
-                var close = true;
-                if (handler) 
-			close = handler.call(this);
-                if (close)
-			$("#_MBOX").modalDialog("hide");
-            }
-        });
+	     closeHandler: function closeHandler() {
+	         var close = true;
+	         if (handler)
+	             close = handler.call(this);
+	         if (close)
+	             $("#_MBOX").modalDialog("hide");
+	     }
+	 });
     };
-    opaqueOverlay = function(opt, p2) {
+    opaqueOverlay = function (opt, p2) {
         var _I = this;
         var jWin = $(window);
 
@@ -1319,7 +1331,7 @@ http://en.wikipedia.org/wiki/MIT_License
         var sh = $(sel);
         if (opt == "hide") {
             if (sh.length < 1)
-	    	return;
+                return;
             sh.hide();
             sh.get(0).opaqueOverlay = false;
             jWin.unbind("resize.opaque").unbind("scroll.opaque");
@@ -1327,17 +1339,17 @@ http://en.wikipedia.org/wiki/MIT_License
         }
 
         if (sh.length < 1)
-		sh = $("<div>").attr("id", this.sel.substr(1))
-		               .css("background", "black")
-			       .appendTo(document.body);
+            sh = $("<div>").attr("id", this.sel.substr(1))
+                           .css("background", "black")
+                       .appendTo(document.body);
 
         var el = sh.get(0);
         sh.show();
 
         if (!el.opaqueOverlay)
-            jWin.bind("resize.opaque", function() {
+            jWin.bind("resize.opaque", function () {
                 opaqueOverlay(opt);
-            }).bind("scroll.opaque", function() {
+            }).bind("scroll.opaque", function () {
                 opaqueOverlay(opt);
             });
 
@@ -1346,13 +1358,13 @@ http://en.wikipedia.org/wiki/MIT_License
         sh.css({ top: 0 + jWin.scrollTop(), left: 0 + jWin.scrollLeft(), position: "absolute", opacity: _I.opacity, zIndex: _I.zIndex })
 	  .width(jWin.width())
 	  .height(jWin.height());
-	  
+
         return sh;
     };
 
     if (!$.fn.draggable) {
-        $.fn.draggable = function(opt) {
-            return this.each(function() {
+        $.fn.draggable = function (opt) {
+            return this.each(function () {
                 var el = $(this);
                 var drag = el.data("draggable");
 
@@ -1371,7 +1383,7 @@ http://en.wikipedia.org/wiki/MIT_License
         };
         var __dragIndex = 1;
 
-        DragBehavior = function(sel, opt) {
+        DragBehavior = function (sel, opt) {
             var _I = this;
             var el = $(sel);
 
@@ -1386,7 +1398,7 @@ http://en.wikipedia.org/wiki/MIT_License
 
             _I.handle = _I.handle ? $(_I.handle, el) : el;
             if (_I.handle.length < 1)
-	    	_I.handle = el;
+                _I.handle = el;
 
             var isMouseDown = false;
             var isDrag = false;
@@ -1397,10 +1409,10 @@ http://en.wikipedia.org/wiki/MIT_License
             var savedOpacity = 1;
             var savedzIndex = 0;
 
-            this.mouseDown = function(e) {
+            this.mouseDown = function (e) {
                 var dEl = _I.handle.get(0);
                 var s = false;
-                $(e.target).parents().each(function() {
+                $(e.target).parents().each(function () {
                     if (this == dEl) s = true;
                 });
                 if (isMouseDown || e.target != dEl && !s || $(e.target).is(".closebox,input,textara,a")) return;
@@ -1412,7 +1424,7 @@ http://en.wikipedia.org/wiki/MIT_License
                 deltaX = e.pageX - pos.left;
                 deltaY = e.pageY - pos.top;
 
-                setTimeout(function() {
+                setTimeout(function () {
                     if (!isMouseDown) return;
                     el.show().makeAbsolute(_I.forceAbsolute);
                     _I.dragActivate(e);
@@ -1422,7 +1434,7 @@ http://en.wikipedia.org/wiki/MIT_License
                 e.stopPropagation();
                 e.preventDefault();
             };
-            this.dragActivate = function(e) {
+            this.dragActivate = function (e) {
                 if (!isMouseDown) return;
                 isDrag = true;
                 _I.moveToMouse(e);
@@ -1439,9 +1451,9 @@ http://en.wikipedia.org/wiki/MIT_License
                 $(document.body).bind("selectstart.dbh", nf);
                 _I.handle.bind("selectstart.dbh", nf);
                 if (_I.start)
-			_I.start(e, _I);
+                    _I.start(e, _I);
             };
-            this.dragDeactivate = function(e, noMove) {
+            this.dragDeactivate = function (e, noMove) {
                 if (!isMouseDown) return;
                 isMouseDown = false;
 
@@ -1449,7 +1461,7 @@ http://en.wikipedia.org/wiki/MIT_License
                 isDrag = false;
 
                 if (!noMove)
-			_I.moveToMouse(e);
+                    _I.moveToMouse(e);
                 $(document).unbind("mousemove.dbh");
 
                 $(document).unbind("selectstart.dbh");
@@ -1463,19 +1475,19 @@ http://en.wikipedia.org/wiki/MIT_License
                     el.css({ zIndex: 10000 + __dragIndex, cursor: "auto" });
                     el.css("opacity", savedOpacity);
                     if (_I.stop)
-		    	_I.stop(e, _I);
+                        _I.stop(e, _I);
                 }
             };
-            this.mouseUp = function(e) {
+            this.mouseUp = function (e) {
                 _I.dragDeactivate(e);
             };
-            this.mouseMove = function(e) {
+            this.mouseMove = function (e) {
                 if (isMouseDown) _I.moveToMouse(e);
             };
-            this.moveToMouse = function(e) {
+            this.moveToMouse = function (e) {
                 el.css({ left: e.pageX - deltaX, top: e.pageY - deltaY });
             };
-            this.stopDragging = function() {
+            this.stopDragging = function () {
                 if (!isDrag) return;
                 _I.dragDeactivate(null, true);
                 $(document).unbind("mousedown", _I.mouseDown);
@@ -1535,7 +1547,7 @@ http://en.wikipedia.org/wiki/MIT_License
                         if (opt.onDragStart(e, $el, opt) === false)
                             return;
                     }
-                    opt.dragFunc = doDrag;
+                    opt.dragFunc = debounce(doDrag,20);
 
                     $(document).bind('mousemove.rsz', opt.dragFunc);
                     $(document).bind('mouseup.rsz', stopDragging);
@@ -1561,8 +1573,7 @@ http://en.wikipedia.org/wiki/MIT_License
 
                     if (opt.onDrag)
                         opt.onDrag(e, $el, opt);
-
-                    //console.log('dragging', e, pos, newWidth, newHeight);
+                    
                 }
 
                 function stopDragging(e) {
@@ -1604,7 +1615,7 @@ http://en.wikipedia.org/wiki/MIT_License
         };
     }
 
-    $.fn.closable = function(options) {
+    $.fn.closable = function (options) {
         var opt = {
             handle: null,
             closeHandler: null,
@@ -1614,12 +1625,12 @@ http://en.wikipedia.org/wiki/MIT_License
         };
         opt = $.extend(opt, options);
 
-        return this.each(function(i) {
+        return this.each(function (i) {
             var el = $(this);
             var pos = el.css("position");
             if (!pos || pos == "static")
-	    	el.css("position", "relative");
-		
+                el.css("position", "relative");
+
             var h = opt.handle ? $(opt.handle, el).css({ position: "relative" }) : el;
 
             var div = el.find("." + opt.cssClass);
@@ -1629,24 +1640,24 @@ http://en.wikipedia.org/wiki/MIT_License
                 div.addClass(opt.cssClass);
                 exists = false;
             }
-            div.click(function(e) {
-                if (opt.closeHandler && !opt.closeHandler.call(this, e)) 
-			return;
-                if (opt.fadeOut) 
-			$(el).fadeOut(opt.fadeOut);
-                else 
-			$(el).hide();
+            div.click(function (e) {
+                if (opt.closeHandler && !opt.closeHandler.call(this, e))
+                    return;
+                if (opt.fadeOut)
+                    $(el).fadeOut(opt.fadeOut);
+                else
+                    $(el).hide();
             });
             if (opt.imageUrl) div.css("background-image", "none");
 
             if (!exists)
-	    	h.append(div);
+                h.append(div);
         });
     };
 
-    $.fn.contentEditable = function(opt) {
+    $.fn.contentEditable = function (opt) {
         if (this.length < 1)
-		return;
+            return;
         var oldPadding = "0px";
         var def = {
             editClass: null,
@@ -1655,30 +1666,30 @@ http://en.wikipedia.org/wiki/MIT_License
         };
         $.extend(def, opt);
 
-        this.each(function() {
+        this.each(function () {
             var jContent = $(this);
 
-            if (this.contentEditable == "true") 
-	    	    return this; // already editing
+            if (this.contentEditable == "true")
+                return this; // already editing
 
             var jButton = $("<input type='button' value='" + def.saveText + "' class='editablebutton' style='display: block;'/>");
 
             var cleanupEditor = function cleanupEditor() {
                 if (def.editClass)
-			        jContent.removeClass(def.editClass);
-                else 
-			        jContent.css({ background: "transparent", padding: oldPadding });
-                    jContent.get(0).contentEditable = false;
-                    jButton.remove();
+                    jContent.removeClass(def.editClass);
+                else
+                    jContent.css({ background: "transparent", padding: oldPadding });
+                jContent.get(0).contentEditable = false;
+                jButton.remove();
             };
 
-            jButton.click(function(e) {
+            jButton.click(function (e) {
                 if (def.saveHandler.call(jContent.get(0), e))
-			cleanupEditor();
+                    cleanupEditor();
             });
-            jContent.keypress(function(e) {
+            jContent.keypress(function (e) {
                 if (e.keyCode == 27)
-			cleanupEditor();
+                    cleanupEditor();
             });
 
             jContent
@@ -1688,7 +1699,7 @@ http://en.wikipedia.org/wiki/MIT_License
             this.contentEditable = true;
 
             if (def.editClass)
-	    	jContent.addClass(def.editClass);
+                jContent.addClass(def.editClass);
             else {
                 oldPadding = jContent.css("padding");
                 jContent.css({ background: "lavender", padding: 10 });
@@ -1697,7 +1708,7 @@ http://en.wikipedia.org/wiki/MIT_License
         });
         return this;
     };
-    $.fn.editable = function(opt) {
+    $.fn.editable = function (opt) {
         if (this.length < 1) return this;
 
         var oldPadding = "0px";
@@ -1710,7 +1721,7 @@ http://en.wikipedia.org/wiki/MIT_License
         };
         $.extend(def, opt);
 
-        this.each(function() {
+        this.each(function () {
             var jContent = $(this);
 
             if (opt == "cleanup") {
@@ -1740,14 +1751,14 @@ http://en.wikipedia.org/wiki/MIT_License
                 .fadeIn("slow")
                 .data("editing", jContent.get(0))
                 .insertBefore(jContent)
-                .keypress(function(e) {
+                .keypress(function (e) {
                     if (e.keyCode == 27)
                         cleanupEditor();
                 });
 
             jContent.data("editing", true).hide();
 
-            jContent.data("cleanupEditor", function() {
+            jContent.data("cleanupEditor", function () {
                 jEdit.remove();
                 jButton.remove();
                 jContent.data("editing", false)
@@ -1755,7 +1766,7 @@ http://en.wikipedia.org/wiki/MIT_License
                     .fadeIn("slow");
             });
 
-            jButton.click(function(e) {
+            jButton.click(function (e) {
                 var pass = {
                     text: jEdit.val(),
                     cleanup: jContent.data("cleanupEditor"),
@@ -1775,7 +1786,7 @@ http://en.wikipedia.org/wiki/MIT_License
         return this;
     };
 
-    $.maxZIndex = $.fn.maxZIndex = function(opt) {
+    $.maxZIndex = $.fn.maxZIndex = function (opt) {
         /// <summary>
         /// Returns the max zOrder in the document (no parameter)
         /// Sets max zOrder by passing a non-zero number
@@ -1789,14 +1800,14 @@ http://en.wikipedia.org/wiki/MIT_License
         var def = { inc: 10, group: "*" };
         $.extend(def, opt);
         var zmax = 0;
-        $(def.group).each(function() {
+        $(def.group).each(function () {
             var cur = parseInt($(this).css('z-index'));
             zmax = cur > zmax ? cur : zmax;
         });
         if (!this.jquery)
             return zmax;
 
-        return this.each(function() {
+        return this.each(function () {
             zmax += def.inc;
             $(this).css("z-index", zmax);
         });
@@ -1819,7 +1830,7 @@ http://en.wikipedia.org/wiki/MIT_License
     ///
     /// based on John Resig's Micro Templating engine
     var _tmplCache = {};
-    parseTemplate = function(str, data) {
+    parseTemplate = function (str, data) {
         /// <summary>
         /// Client side template parser that uses &lt;#= #&gt; and &lt;# code #&gt; expressions.
         /// and # # code blocks for template expansion.
@@ -1831,6 +1842,7 @@ http://en.wikipedia.org/wiki/MIT_License
         /// </param> 
         /// <returns type="string" />
         var err = "";
+
         try {
             var func = _tmplCache[str];
             if (!func) {
@@ -1841,14 +1853,14 @@ http://en.wikipedia.org/wiki/MIT_License
                .split("'").join("\\'")
                .split("\t").join("'")
                .replace(/<#=(.+?)#>/g, "',$1,'")
-               .replace(/<#=(.+?)#>/g, "',$1,'")
                .split("<#").join("');")
                .split("#>").join("p.push('")
                + "');}return p.join('');";
                 func = new Function("obj", strFunc);
                 _tmplCache[str] = func;
             }
-            return func(data);
+
+            return func.call(data, data);
         } catch (e) {
             err = e.message;
         }
@@ -1869,7 +1881,6 @@ http://en.wikipedia.org/wiki/MIT_License
     getBodyFromHtmlDocument = function (html) {
         return html.replace(/^[\s\S]*<body.*?>|<\/body>[\s\S]*$/ig, '').trimStart().trimEnd();
     }
-
 
     $$ = function (id, context) {
         /// <summary>
@@ -1896,17 +1907,17 @@ http://en.wikipedia.org/wiki/MIT_License
             div.innerText = this.toString();
         return div.innerHTML;
     };
-    String.prototype.trimEnd = function(c) {
+    String.prototype.trimEnd = function (c) {
         if (c)
-		return this.replace(new RegExp(c.escapeRegExp() + "*$"), '');
+            return this.replace(new RegExp(c.escapeRegExp() + "*$"), '');
         return this.replace(/\s+$/, '');
     };
-    String.prototype.trimStart = function(c) {
+    String.prototype.trimStart = function (c) {
         if (c)
-		return this.replace(new RegExp("^" + c.escapeRegExp() + "*"), '');
+            return this.replace(new RegExp("^" + c.escapeRegExp() + "*"), '');
         return this.replace(/^\s+/, '');
     };
-    String.prototype.repeat = function(chr, count) {
+    String.prototype.repeat = function (chr, count) {
         var str = "";
         for (var x = 0; x < count; x++) {
             str += chr;
@@ -1923,22 +1934,27 @@ http://en.wikipedia.org/wiki/MIT_License
 
         return (this.repeat(pad, length) + this).substr(0, width);
     };
-    String.prototype.padR = function(width, pad) {
+    String.prototype.padR = function (width, pad) {
         if (!width || width < 1) return this;
 
         if (!pad) pad = " ";
         var length = width - this.length;
         if (length < 1) this.substr(0, width);
 
-        return (this + this.repeat(pad, length)).substr(0, width);
-    };
-    String.prototype.startsWith = function(sub) {
-        if (this.length == 0) return false;
-        return sub == this.substr(0, sub.length);
-    };
+        return (this + pad.repeat(length)).substr(0, width);
+    }
+    String.prototype.startsWith = function (sub,nocase) {
+        if (!this || this.length === 0) return false;
+
+        if (sub && nocase)
+            return sub.toLowerCase() === this.toLowerCase().substr(0, sub.length);
+
+        return sub === this.substr(0, sub.length);
+    }
     String.prototype.extract = function(startDelim, endDelim, allowMissingEndDelim, returnDelims) {
         var str = this;
         if (str.length === 0)
+            return "";
 
         var src = str.toLowerCase();
         startDelim = startDelim.toLocaleLowerCase();
@@ -1947,7 +1963,7 @@ http://en.wikipedia.org/wiki/MIT_License
         var i1 = src.indexOf(startDelim);
         if (i1 == -1)
             return "";
-        
+
         var i2 = src.indexOf(endDelim, i1 + startDelim.length);
 
         if (!allowMissingEndDelim && i2 == -1)
@@ -1962,32 +1978,32 @@ http://en.wikipedia.org/wiki/MIT_License
 
         if (returnDelims)
             return str.substr(i1, i2 - i1 + startDelim.length);
-        
+
         return str.substr(i1 + startDelim.length, i2 - i1 - startDelim.length);
     };
-    String.prototype.escapeRegExp = function() {
+    String.prototype.escapeRegExp = function () {
         return this.replace(/[.*+?^${}()|[\]\/\\]/g, "\\$0");
     };
-    String.format = function(frmt, args) {
+    String.format = function (frmt, args) {
         for (var x = 0; x < arguments.length; x++) {
             frmt = frmt.replace(new RegExp("\\{" + x.toString() + "\\}", "g"), arguments[x + 1]);
         }
         return frmt;
     };
-    String.prototype.format = function() {
+    String.prototype.format = function () {
         var a = [this];
         $.merge(a, arguments);
         return String.format.apply(this, a);
     };
-    String.prototype.isNumber = function() {
+    String.prototype.isNumber = function () {
 
         if (this.length == 0) return false;
-        if ("0123456789".indexOf(this.charAt(0)) > -1) 
-		return true;
+        if ("0123456789".indexOf(this.charAt(0)) > -1)
+            return true;
         return false;
     };
     var _monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    Date.prototype.formatDate = function(format) {
+    Date.prototype.formatDate = function (format) {
         var date = this;
         if (!format)
             format = "MM/dd/yyyy";
@@ -2030,7 +2046,7 @@ http://en.wikipedia.org/wiki/MIT_License
 
         return format;
     };
-    Number.prototype.formatNumber = function(format, option) {
+    Number.prototype.formatNumber = function (format, option) {
         var num = this;
         var fmt = Number.getNumberFormat();
         if (format == "c") {
@@ -2068,8 +2084,8 @@ http://en.wikipedia.org/wiki/MIT_License
         }
         return num.toString();
     };
-    Number.getNumberFormat = function(cur) {
-        var t = 1000.1 .toLocaleString();
+    Number.getNumberFormat = function (cur) {
+        var t = 1000.1.toLocaleString();
         var r = {};
         r.d = t.charAt(5);
         if (r.d.isNumber())
@@ -2080,7 +2096,7 @@ http://en.wikipedia.org/wiki/MIT_License
         r.s = cur || "$";
         return r;
     };
-    registerNamespace = function(ns) {
+    registerNamespace = function (ns) {
         var pts = ns.split('.');
         var stk = window;
         var nsp = "";
@@ -2092,7 +2108,7 @@ http://en.wikipedia.org/wiki/MIT_License
                 stk = stk[pt] = {};
         }
     };
-    getUrlEncodedKey = function(key, query) {
+    getUrlEncodedKey = function (key, query) {
         if (!query) query = window.location.search;
         var re = new RegExp("[?|&]" + key + "=(.*?)&");
         var matches = re.exec(query + "&");
@@ -2100,7 +2116,7 @@ http://en.wikipedia.org/wiki/MIT_License
             return "";
         return decodeURIComponent(matches[1].replace("+", " "));
     };
-    setUrlEncodedKey = function(key, value, query) {
+    setUrlEncodedKey = function (key, value, query) {
 
         query = query || window.location.search;
         var q = query + "&";
@@ -2125,13 +2141,13 @@ http://en.wikipedia.org/wiki/MIT_License
         }
     }
 
-    $.expr[":"].containsNoCase = function(el, i, m) {
+    $.expr[":"].containsNoCase = function (el, i, m) {
         var search = m[3];
         if (!search) return false;
         return new RegExp(search, "i").test($(el).text());
     };
 
-    $.fn.searchFilter = function(options) {
+    $.fn.searchFilter = function (options) {
         var opt = $.extend({
             // target selector
             targetSelector: "",
@@ -2140,7 +2156,7 @@ http://en.wikipedia.org/wiki/MIT_License
             onSelected: null
         }, options);
 
-        return this.each(function() {
+        return this.each(function () {
             var $el = $(this);
 
             function keyup() {
@@ -2149,11 +2165,11 @@ http://en.wikipedia.org/wiki/MIT_License
                 var $target = $(opt.targetSelector);
                 $target.show();
 
-                if (opt.onSelected) 
-			opt.onSelected($target);
+                if (opt.onSelected)
+                    opt.onSelected($target);
 
                 if (search && search.length >= opt.charCount)
-			$target.not(":containsNoCase(" + search + ")").hide();
+                    $target.not(":containsNoCase(" + search + ")").hide();
             }
 
             $el.keyup(keyup);
