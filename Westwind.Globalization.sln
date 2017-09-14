@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WestWind.Globalization.Samp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Westwind.Globalization.AspnetCore", "Westwind.Globalization.AspnetCore\Westwind.Globalization.AspnetCore.csproj", "{8AA6A3DE-B7DE-449B-8E2B-59997032F829}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Westwind.AspNetCore", "..\..\Westwind.AspNetCore\Westwind.AspNetCore\Westwind.AspNetCore.csproj", "{614D911D-2718-4FE4-ACCA-BD7C3BC01472}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,18 @@ Global
 		{8AA6A3DE-B7DE-449B-8E2B-59997032F829}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8AA6A3DE-B7DE-449B-8E2B-59997032F829}.SandBox|Any CPU.ActiveCfg = Debug|Any CPU
 		{8AA6A3DE-B7DE-449B-8E2B-59997032F829}.SandBox|Any CPU.Build.0 = Debug|Any CPU
+		{614D911D-2718-4FE4-ACCA-BD7C3BC01472}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{614D911D-2718-4FE4-ACCA-BD7C3BC01472}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{614D911D-2718-4FE4-ACCA-BD7C3BC01472}.DemoMode|Any CPU.ActiveCfg = Debug|Any CPU
+		{614D911D-2718-4FE4-ACCA-BD7C3BC01472}.DemoMode|Any CPU.Build.0 = Debug|Any CPU
+		{614D911D-2718-4FE4-ACCA-BD7C3BC01472}.Deploy|Any CPU.ActiveCfg = Debug|Any CPU
+		{614D911D-2718-4FE4-ACCA-BD7C3BC01472}.Deploy|Any CPU.Build.0 = Debug|Any CPU
+		{614D911D-2718-4FE4-ACCA-BD7C3BC01472}.net40|Any CPU.ActiveCfg = Debug|Any CPU
+		{614D911D-2718-4FE4-ACCA-BD7C3BC01472}.net40|Any CPU.Build.0 = Debug|Any CPU
+		{614D911D-2718-4FE4-ACCA-BD7C3BC01472}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{614D911D-2718-4FE4-ACCA-BD7C3BC01472}.Release|Any CPU.Build.0 = Release|Any CPU
+		{614D911D-2718-4FE4-ACCA-BD7C3BC01472}.SandBox|Any CPU.ActiveCfg = Debug|Any CPU
+		{614D911D-2718-4FE4-ACCA-BD7C3BC01472}.SandBox|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
