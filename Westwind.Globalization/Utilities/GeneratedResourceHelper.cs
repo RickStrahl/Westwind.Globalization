@@ -32,14 +32,18 @@
 
 
 using System;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Resources;
 using System.Text;
 using System.Web;
 using Westwind.Utilities;
+
+
+#if NETFULL
+using System.Drawing;
+using System.Drawing.Imaging;
 using Encoder = System.Drawing.Imaging.Encoder;
+#endif
 
 namespace Westwind.Globalization
 {
@@ -65,8 +69,10 @@ namespace Westwind.Globalization
                              ResourceManager manager,
                              ResourceAccessMode resourceMode)
         {
+#if NETFULL
             if (resourceMode == ResourceAccessMode.AspNetResourceProvider)
                 return GetAspNetResourceProviderValue(resourceSet, resourceId) as string;
+#endif
             if (resourceMode == ResourceAccessMode.Resx)
                 return manager.GetString(resourceId);
 
@@ -89,15 +95,18 @@ namespace Westwind.Globalization
             ResourceManager manager,
             ResourceAccessMode resourceMode)
         {
+#if NETFULL
             if (resourceMode == ResourceAccessMode.AspNetResourceProvider)
                 return GetAspNetResourceProviderValue(resourceSet, resourceId);
+#endif
+
             if (resourceMode == ResourceAccessMode.Resx)
                 return manager.GetObject(resourceId);
             return DbRes.TObject(resourceId, resourceSet);
         }
 
 
-
+#if NETFULL
         /// <summary>
         /// Helper method called to retrieve ASP.NET ResourceProvider based
         /// resources. Isolated into a separate method to avoid referencing
@@ -111,7 +120,9 @@ namespace Westwind.Globalization
         {
             return HttpContext.GetGlobalResourceObject(resourceSet, resourceId);
         }
+#endif
 
+#if NETFULL
         /// <summary>
         /// Renders an HTML IMG tag that contains the bitmaps embedded image content
         /// inline of the HTML document. Userful for resources.
@@ -153,6 +164,7 @@ namespace Westwind.Globalization
         public static string BitmapToEmbeddedHtmlImage(byte[] data, ImageFormat format, string extraAttributes = null)
         {
             string contentType = "image/jpeg";
+
             if (format == ImageFormat.Png)
                 contentType = "image/png";
             else if (format == ImageFormat.Gif)
@@ -172,5 +184,7 @@ namespace Westwind.Globalization
             sb.Append(" />");
             return sb.ToString();
         }
+#endif
+
     }
 }

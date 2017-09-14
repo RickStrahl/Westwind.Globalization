@@ -1,0 +1,85 @@
+﻿<div id="AddResourceDialog"
+     class="modal fade"
+     tabindex="-1" role="dialog"
+     aria-labelledby="myModal-label" aria-hidden="true">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title" id="TranslateTitle">{{::view.dbRes("ResourceEditor")}}</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-inline" style="margin-bottom: 15px;">
+                    <div class="form-group" style="margin-right: 14px;">
+                        <label xclass="sr-only">Lang:</label>
+                        <input type="text" class="form-control"
+                                ng-model="view.activeResource.LocaleId"
+                                placeholder="Locale Id"
+                                ng-blur="view.onLocaleIdBlur()"
+                                style="width: 70px;" />
+                    </div>
+                    <div class="form-group">
+                        <label>ResourceSet:</label>
+                        <input type="text" class="form-control"
+                               ng-model="view.activeResource.ResourceSet"
+                               placeholder="ResourceSet"
+                               style="width: 330px;" />
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label xclass="sr-only" for="ResourceId">Resource Id</label>
+                    <textarea id="ResourceId" type="text" class="form-control"
+                              ng-blur="view.onResourceIdBlur()"                              
+                              ng-model="view.activeResource.ResourceId" 
+                              placeholder="Resource Id"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <div class="pull-right">
+                        <label>Type</label>&nbsp;&nbsp;                        
+                        <select  class="form-control-small"
+                                 ng-model="view.activeResource.ValueType" 
+                                 convert-to-number>
+                            <option value="0">Text</option>
+                            <option value="2" >Markdown</option>
+                            <option value="1">Binary</option>
+                        </select>
+                    </div>
+
+                    <label class="control-label" for="ResourceValue">Text</label>
+                    <textarea id="ResourceValue" onfocus=" this.select(); "
+                            class="form-control"
+                            ww-rtl="view.activeResource.IsRtl"
+                            xdir="{{view.activeResource.IsRtl ? 'rtl' : ''}}"
+                            ng-model="view.activeResource.Value"
+                            placeholder="Resource text"></textarea>
+                 </div>
+                
+                <label>{{::view.activeResource.FileName}}&nbsp;&nbsp;</label>
+                <div class="btn btn-sm btn-default"
+                     ng-file-select 
+                     ng-file-change="view.onResourceUpload($files)">
+                    {{::view.dbRes("FileResourceUpload")}}
+                </div>
+                <div id="Upload-Progress" class="small pull-right">{{::view.uploadProgress}}</div>
+            </div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-remove"></i> {{view.dbRes("Cancel")}}</button>
+                <button type="button" ng-click="view.onSaveResourceClick()"
+                        class="btn btn-primary" data-resource-id="Save"
+                        accesskey="S">
+                    <i class="fa fa-check"></i> {{::view.dbRes("Save")}}
+                </button>
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+</div>

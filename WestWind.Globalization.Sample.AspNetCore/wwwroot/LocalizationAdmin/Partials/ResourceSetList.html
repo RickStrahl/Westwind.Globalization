@@ -1,0 +1,32 @@
+﻿<div class="well well-sm" style="margin-top: 25px;">
+
+    <label>ResourceSet</label>
+    <select class="form-control" ng-model="view.resourceSet"
+            ng-change="view.onResourceSetChange()"
+            ng-options="set for set in view.resourceSets"></select>
+    <div class="btn-group" style="margin-top: 12px;">
+        <button class="btn btn-sm btn-default" title="Add new ResourceSet"
+                ng-click="view.onAddResourceClick()" data-resource-id="Add">
+            <i class="fa fa-plus">
+            </i> {{::view.dbRes('Add')}}
+        </button>
+        <button class="btn btn-sm btn-default"
+                ng-click="view.onDeleteResourceSetClick()"
+                title="{{::view.dbRes('Delete_ResourceSet_Title')}}"
+                data-resource-id="Delete">
+            <i class="fa fa-remove">
+            </i> {{::view.dbRes('Delete')}}
+        </button>
+        <button class="btn btn-sm btn-default" title="Rename ResourceSet"
+                ng-click="view.onRenameResourceSetClick()"
+                data-resource-id="Rename">
+            <i class="fa fa-exchange"></i> {{::view.dbRes('Rename')}}
+        </button>
+        <button class="btn btn-sm btn-default" title="Reload ResourceSets from database"
+                ng-click="view.getResourceSets()"
+                data-resource-id="Refresh">
+            <i class="fa fa-refresh"></i> {{::view.dbRes('Refresh')}}
+        </button>
+    </div>
+
+</div>

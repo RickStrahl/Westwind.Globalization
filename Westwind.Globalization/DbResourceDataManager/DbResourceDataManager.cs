@@ -269,8 +269,8 @@ namespace Westwind.Globalization
                 // use like parameter or '' if culture is empty/invariant
                 string localeFilter = string.Empty;
 
-                List<DbParameter> parameters = new List<DbParameter>();
-                parameters.Add(data.CreateParameter("@ResourceSet", resourceSet));
+                List<DbParameter> parameters =
+                    new List<DbParameter> {data.CreateParameter("@ResourceSet", resourceSet)};
 
                 if (!string.IsNullOrEmpty(cultureName))
                 {
@@ -353,12 +353,14 @@ namespace Westwind.Globalization
                 throw new ArgumentException(Resources.InvalidFileExtensionForFileResource);
 
             string type;
-            if ("jpg,jpeg,png,gif,bmp".Contains(ext))
+            if ("txt,css,htm,html,xml,js".Contains(ext))
+                type = typeof(string).AssemblyQualifiedName;
+#if NETFULL
+            else if ("jpg,jpeg,png,gif,bmp".Contains(ext))
                 type = typeof (Bitmap).AssemblyQualifiedName;
             else if("ico" == ext)
                 type = typeof(Icon).AssemblyQualifiedName;
-            else if ("txt,css,htm,html,xml,js".Contains(ext))
-                type = typeof (string).AssemblyQualifiedName;
+#endif            
             else
                 type = typeof (byte[]).AssemblyQualifiedName;
 
@@ -393,7 +395,8 @@ namespace Westwind.Globalization
                 if (TypeInfo.IndexOf("System.String") > -1)
                 {
                     value = reader["TextFile"] as string;
-                }                
+                }
+#if NETFULL
                 else if (TypeInfo.Contains("System.Drawing.Bitmap"))
                 {
                     // IMPORTANT: don't release the mem stream or Jpegs won't render/save
@@ -419,6 +422,7 @@ namespace Westwind.Globalization
                     var ms = new MemoryStream(reader["BinFile"] as byte[]);
                     value = new Icon(ms);
                 }
+#endif
                 else
                 {
                     value = reader["BinFile"] as byte[];
@@ -461,8 +465,7 @@ namespace Westwind.Globalization
                              "ORDER BY ResourceSet,LocaleId, ResourceId";
 
 
-                var parms = new List<IDbDataParameter>();
-                parms.Add( data.CreateParameter("@ResourceSet", "%.%"));
+                var parms = new List<IDbDataParameter> {data.CreateParameter("@ResourceSet", "%.%")};
 
                 if (!string.IsNullOrEmpty(resourceSetFilter))
                     parms.Add(data.CreateParameter("@ResourceSet2", resourceSet));
@@ -1425,6 +1428,7 @@ namespace Westwind.Globalization
                 }
                 fileInfo.ValueString = fileInfo.FileName + ";" + typeof(string).AssemblyQualifiedName + ";" + Encoding.Default.HeaderName;
             }
+#if NETFULL
             else if (Extension == "gif" || Extension == "jpg" || Extension == "jpeg" || Extension == "bmp" || Extension == "png")
             {
                 fileInfo.FileFormatType = FileFormatTypes.Image;
@@ -1441,6 +1445,7 @@ namespace Westwind.Globalization
                     fileInfo.BinContent = File.ReadAllBytes(fileName);
                 fileInfo.ValueString = fileInfo.FileName + ";" + typeof(Icon).AssemblyQualifiedName;
             }
+#endif
             else
             {
                 fileInfo.FileFormatType = FileFormatTypes.Binary;

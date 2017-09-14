@@ -98,7 +98,7 @@ namespace Westwind.Globalization
             if (resourceSet == null)
                 resourceSet = string.Empty;
 
-            
+#if NETFULL
             if (DbResourceConfiguration.Current.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider && HttpContext.Current != null)
             {
                 var translated = HttpContext.GetGlobalResourceObject(resourceSet, resId) as string;
@@ -107,7 +107,8 @@ namespace Westwind.Globalization
 
                 return translated;
             }
-  
+#endif
+
             var manager = GetResourceManager(resourceSet);                            
             if (manager == null)
                 return resId;
@@ -149,7 +150,7 @@ namespace Westwind.Globalization
             if (resourceSet == null)
                 resourceSet = string.Empty;
 
-
+#if NETFULL
             if (DbResourceConfiguration.Current.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider && HttpContext.Current != null)
             {
                 var translated = HttpContext.GetGlobalResourceObject(resourceSet, resId) as string;
@@ -158,6 +159,7 @@ namespace Westwind.Globalization
 
                 return translated;
             }
+#endif
 
             var manager = GetResourceManager(resourceSet);
             if (manager == null)
@@ -177,6 +179,7 @@ namespace Westwind.Globalization
             return result;
         }
 
+#if NETFULL
         /// <summary>
         /// Localization helper function that Translates a resource
         /// Id to a resource value to an HtmlStringg. Easy access that allows full
@@ -200,6 +203,7 @@ namespace Westwind.Globalization
         {
             return new HtmlString(T(resId, resourceSet, lang));
         }
+#endif
 
         /// <summary>
         /// Creates a localized format string that is transformed using the 

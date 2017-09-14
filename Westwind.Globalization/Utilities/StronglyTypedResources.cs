@@ -1,3 +1,6 @@
+
+
+
 #region License
 /*
  **************************************************************
@@ -39,14 +42,18 @@ using System.Globalization;
 using System.Resources;
 using System.Data;
 using System.IO;
-using System.Web;
+
 using System.Xml;
 using System.Collections;
 using System.Linq;
+
+#if NETFULL
 using System.Resources.Tools;
+using System.Web;
+//using System.Resources.Tools;
 using Microsoft.CSharp;
 using Microsoft.VisualBasic;
-
+#endif
 
 namespace Westwind.Globalization
 {
@@ -449,6 +456,7 @@ namespace Westwind.Globalization
             return sbClass.ToString();
         }
 
+#if NETFULL
 
         /// <summary>
         /// Creates a StronglyTyped class from a REsx file. Can be used after a Resx fi
@@ -496,6 +504,7 @@ namespace Westwind.Globalization
                 provider.GenerateCodeFromCompileUnit(code, sw, new CodeGeneratorOptions());                                                         
             }
         }
+#endif
 
         public string CreateClassFromResourceSet(ResourceSet resourceSet, string nameSpace, string classname, string fileName)
         {
@@ -821,12 +830,5 @@ using Westwind.Globalization;
 
             return sb.ToString();
         }
-    }
-
-    public enum ResourceAccessMode
-    {
-        DbResourceManager,
-        AspNetResourceProvider,
-        Resx
     }
 }

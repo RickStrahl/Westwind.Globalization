@@ -1,0 +1,82 @@
+﻿<div id="ResourceList" class="well well-sm" >
+
+    <label style="font-size: 1.5em; color: darkred; font-weight: bold;margin-bottom: 7px;">
+        {{view.resourceItems[0].ResourceId}}
+    </label>
+    
+    <div id="resourcegroup_{{$index + 1}}" class="resource-group"
+         ng-repeat="resource in view.resourceItems">
+
+        <div class="input-group" style="margin-top: 2px;">
+            <span class="input-group-addon active" style="cursor: pointer"
+                  ng-click="view.onLocaleIdChanged(resource)">
+                <div class="locale-id">
+                    {{resource.LocaleId ? resource.LocaleId : 'Invariant'}}
+                </div>
+            </span>
+            <form name="resourceForm" id="form1">
+                <textarea id="value_{{$index}}" name="value_{{$index}}"
+                            class="form-control"
+                            ng-focus="view.onLocaleIdChanged(resource)"
+                            data-localeid="{{resource.LocaleId}}"
+                            ng-model="resource.Value"
+                            ww-rtl="resource.IsRtl"
+                            ng-dblclick="view.onResourceFullscreenEdit($event, resource, resourceForm)"
+                            ng-keydown="view.onResourceKeyDown($event,resource,resourceForm)">                    
+                </textarea>
+            </form>
+            <span class="input-group-addon"
+                  title="{{::view.dbRes('SaveResource')}}"
+                  aria-label="{{::view.dbRes('SaveResource')}}"
+                  tabindex="0" role="button"
+                  ng-class="{'color-check': resourceForm.$dirty, 'color-disabled': !resourceForm.$dirty }"
+                  ng-enabled="resourceForm.$dirty"
+                  ng-click="view.onStringUpdate(resource)"
+                  data-resource-id="SaveResource"><i class="fa fa-check"></i></span>
+            <span class="input-group-addon"
+                  tabindex="-1"
+                  aria-label="{{::view.dbRes('TranslateResource')}}"
+                  title="{{::view.dbRes('TranslateResource')}}"
+                  role="button"
+                  ng-click="view.onTranslateClick($event,resource)"
+                  data-resource-id="TranslateResource"><i class="fa fa-flag-o"></i></span>
+        </div>
+
+    </div>
+
+    <!--<div class="separator" style="margin-top: 10px;margin-bottom:10px"></div>-->
+    <div class="btn-group" style="margin-top: 12px;">
+        <button ng-click="view.onAddResourceClick()" class="btn btn-sm btn-default"
+                title="{{::view.resources.Add_Title}}"
+                accesskey="A"
+                data-resource-id="Add">
+            <i class="fa fa-plus"></i> {{::view.dbRes('Add')}}
+        </button>
+        <button ng-click="view.onEditResourceClick()" class="btn btn-sm btn-default"
+                title="{{::view.resources.Edit_Title}}"
+                data-resource-id="Edit">
+            <i class="fa fa-edit"></i> {{::view.dbRes('Edit') }} {{view.activeResource.LocaleId ? '(' + view.activeResource.LocaleId + ')' : ''}}
+        </button>
+        <button class="btn btn-sm btn-default"
+                title="{{::view.dbRes('Delete_Title')}}"
+                ng-click="view.onDeleteResourceClick()"
+                data-resource-id="Delete">
+            <i class="fa fa-remove"></i> {{::view.dbRes('Delete')}}
+        </button>
+        <button class="btn btn-sm btn-default" title="{{::view.dbRes('Rename_Title')}}"
+                ng-click="view.onRenameResourceClick()" 
+                data-resource-id="Rename">
+            <i class="fa fa-exchange"></i> {{::view.dbRes('Rename')}}
+        </button>
+        <button class="btn btn-sm btn-default"
+                ng-click="view.onCommentClick()"
+                data-resource-id="Comment"
+                title="{{view.activeResource.Comment}}">
+            <i ng-class="{ 'fa': true, 'fa-comment': view.activeResource.Comment, 'fa-comment-o': !view.activeResource.Comment}"></i>
+            {{::view.dbRes('Comment')}}
+        </button>        
+    </div>
+</div>
+
+<div class="resource-editor">
+</div>

@@ -1,0 +1,99 @@
+﻿<div id="ImportExportResxDialog" data-resourceset-id="LocalizationForm"
+     class="modal fade"
+     tabindex="-1" role="dialog"
+     aria-labelledby="myModal-label"
+     aria-hidden="true"
+     ng-controller="importExportResxController as view">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form name="renameResourceForm" id="renameResourceForm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 class="modal-title" id="TranslateTitle" data-resource-id="ImportOrExportResxResources">
+                        {{::view.resources.ImportOrExportResxResources}}
+                    </h3>
+                </div>
+                <div class="modal-body">
+
+                    <div class="alert alert-info"
+                         ng-show="view.importExportType=='Export'">
+                        <i class="fa fa-info-circle fa-2x pull-left;"></i>
+                        <div style="margin-left: 40px; margin-top: -30px;">
+                            <p ng-bind="view.resources.ResxExportInfo" data-resource-id="ResxExportInfo">
+                            </p>
+                            <p ng-show="view.info.ResxExportProjectType=='Project'"
+                               ng-bind-html="view.resources.ResxExportInfo_Project">
+                            </p>
+                            <p ng-show="view.info.ResxExportProjectType=='WebForms'"
+                               ng-bind-html="view.resources.ResxExportInfo_WebForms">
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info"
+                         ng-show="view.importExportType=='Import'">
+                        <i class="fa fa-info-circle fa-2x pull-left;"></i>
+                        <div style="margin-left: 40px; margin-top: -30px;">
+                            <p ng-bind="view.resources.ResxImportInfo">
+                            </p>
+                            <p ng-bind-html="view.resources.ResxImportInfo_Project"
+                               ng-show="view.info.ResxExportProjectType=='Project'">
+                                Your Resx Export Mode is <b>Project</b>, so resource files
+                                are imported hierarically with paths prefixed using
+                                web based path syntax that is reflected in the resource
+                                set name.
+                            </p>
+                            <p ng-bind-html="view.resources.ResxImportInfo_Project"
+                               ng-show="view.info.ResxExportProjectType=='WebForms'">
+                                Your Resx Export Mode is <b>WebForms</b>, so .Resx resources are
+                                imported from the appropriate App_GlobalResources and App_LocalResources
+                                folders. Loose .Resx files are also imported. Global resources are mapped
+                                without a path, local resources contain the relative path and local resource
+                                control page/control they map.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <select id="typeImportExport" class="form-control"
+                                ng-model="view.importExportType" style="font-weight: bold;">
+                            <option value="Export">Export {{::view.resources.Resources}}</option>
+                            <option value="Import">Import {{::view.resources.Resources}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" ng-show="view.importExportType=='Export'">
+                        <label>{{::view.resources.ResourceSetsToExport}}:</label>
+                        <select id="typeResourceSet" class="form-control"
+                                multiple
+                                ng-model="view.selectedResourceSets">
+                            <option value="">*** {{::view.resources.AllResourceSets}}</option>
+                            <option ng-repeat="resourceSet in view.resourceSets" value="{{resourceSet}}">{{resourceSet}}</option>
+                        </select>
+                    </div>        
+
+
+                    <div class="form-group ">
+                        <label>Resx {{view.importExportType}} {{::view.resources.Folder}}:</label>
+                        <input ng-model="view.info.ResxBaseFolder" class="form-control"/>
+                    </div>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <i class="fa fa-remove"></i> {{::view.resources.Cancel}}
+                    </button>
+                    <button type="submit"
+                            ng-click="view.onSubmitClick()"
+                            class="btn btn-primary">
+                        <i class="fa fa-check"></i> {{view.importExportType }} {{::view.resources.Resources}}
+                    </button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

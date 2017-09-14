@@ -278,12 +278,7 @@ namespace Westwind.Globalization.Web.Administration
             string resourceSet = parm.ResourceSet;
 
             var items = Manager.GetResourceItems(resourceId, resourceSet, true).ToList();
-            if (items == null)
-            {
-                throw new InvalidOperationException(Manager.ErrorMessage);
-                return null;
-            }
-
+        
             var itemList = new List<ResourceItemEx>();
 
             // strip file data for size

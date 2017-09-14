@@ -38,6 +38,7 @@ using System.Configuration;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 using Westwind.Utilities;
 using Westwind.Utilities.Configuration;
 
@@ -79,7 +80,11 @@ namespace Westwind.Globalization
         /// Determines how configuration information is stored: Config, Json or XML
         /// Default uses .NET configuration files.
         /// </summary>
+#if NETFULL
         public static ConfigurationModes ConfigurationMode  = ConfigurationModes.ConfigFile;
+#else
+        public static ConfigurationModes ConfigurationMode = ConfigurationModes.JsonFile;
+#endif
 
         /// <summary>
         /// Static constructor for the Current property - guarantees this
@@ -90,6 +95,7 @@ namespace Westwind.Globalization
         {
             Current = new DbResourceConfiguration();
             Current.Initialize(sectionName: "DbResourceConfiguration");
+            Current.Read();
         }
 
         /// <summary>
@@ -184,9 +190,9 @@ namespace Westwind.Globalization
         /// Note this is a for pay API!
         /// </summary>
         public string GoogleApiKey { get; set; }
+
         
-
-
+        [JsonIgnore]
         public List<IResourceSetValueConverter> ResourceSetValueConverters = new List<IResourceSetValueConverter>();
 
 
@@ -197,7 +203,8 @@ namespace Westwind.Globalization
         /// 
         /// This type instance is used to instantiate the actual provider.       
         /// </summary>
-        [XmlIgnore]                
+        [XmlIgnore]
+        [JsonIgnore]
         [NonSerialized]
         public Type DbResourceDataManagerType = typeof(DbResourceSqlServerDataManager);
 
@@ -226,7 +233,7 @@ namespace Westwind.Globalization
             if (string.IsNullOrEmpty(sectionName))
                 sectionName = "DbResourceConfiguration";
 
-            IConfigurationProvider provider;
+            IConfigurationProvider provider = null;
 
             if (ConfigurationMode == ConfigurationModes.JsonFile)
             {
@@ -244,6 +251,7 @@ namespace Westwind.Globalization
                         Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DbResourceConfiguration.xml")
                 };
             }
+#if NETFULL
             else
             {
                 provider = new ConfigurationFileConfigurationProvider<DbResourceConfiguration>()
@@ -251,6 +259,16 @@ namespace Westwind.Globalization
                     ConfigurationSection = sectionName
                 };
             }
+#else
+            else 
+            {
+             provider = new JsonFileConfigurationProvider<DbResourceConfiguration>()
+                {
+                    JsonConfigurationFile =
+                        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DbResourceConfiguration.json")
+                };
+            }
+#endif
 
             return provider;
         }

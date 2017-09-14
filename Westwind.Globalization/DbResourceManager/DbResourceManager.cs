@@ -55,6 +55,10 @@ namespace Westwind.Globalization
     {
         Dictionary<string, ResourceSet> InternalResourceSets;
 
+#if NETSTANDARD
+        public string BaseNameField { get; set; }
+#endif
+
         // Duplicate the Resource Manager Constructors below
         // Key feature of these overrides is to set up the BaseName
         // which is the name of the resource set (either a local
@@ -122,7 +126,8 @@ namespace Westwind.Globalization
         /// <param name="ConnectionString"></param>
         /// <param name="assembly"></param>
         protected void Initialize(string baseName, Assembly assembly)
-        {                     
+        {
+
             BaseNameField = baseName;
 
             AutoAddMissingEntries = DbResourceConfiguration.Current.AddMissingResources;
