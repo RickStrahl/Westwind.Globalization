@@ -82,7 +82,8 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="baseName">The qualified base name which the resources represent</param>
         public DbResourceManager(string baseName)
-		{
+        {
+            
 			Initialize(baseName, null);
 		}
 
@@ -103,11 +104,11 @@ namespace Westwind.Globalization
 			Initialize(resourceType.Name, resourceType.Assembly);
 		}
 
-        public DbResourceManager(string baseName, Assembly assembly)
+        public DbResourceManager(string baseName, Assembly assembly) : base(baseName, assembly)
         {
             Initialize( baseName,null);
         }
-        public DbResourceManager(string baseName, Assembly assembly, Type usingResourceSet)
+        public DbResourceManager(string baseName, Assembly assembly, Type usingResourceSet) 
         {
             Initialize(baseName, null);
         }

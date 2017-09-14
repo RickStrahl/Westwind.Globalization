@@ -27,8 +27,8 @@ namespace WestWind.Globalization.Sample.AspNetCore.Controllers
     {
 
         // http://localhost:5000/JavaScriptResourceHandler.axd?ResourceSet=LocalizationForm&LocaleId=auto&VarName=resources&ResourceType=resdb&ResourceMode=1
-        // http://localhost:5000/api/LocalizationAdmin/JavaScriptResources?ResourceSet=Resources&LocaleId=de&VarName=resources&ResourceType=resdb&ResourceMode=1
-        [Route("/api/LocalizationAdmin/JavaScriptResources")]
+        // http://localhost:5000/api/JavaScriptLocalizationResources?ResourceSet=Resources&LocaleId=de&VarName=resources&ResourceType=resdb&ResourceMode=1
+        [Route("/api/JavaScriptLocalizationResources")]
         [Route("JavaScriptResourceHandler.axd")]
         public async Task<ActionResult> Process()
         {
