@@ -61,6 +61,7 @@
                 return true;
 
             return false;
+            return false;
         },
         showEditorForm: function(e) {
             e.preventDefault();

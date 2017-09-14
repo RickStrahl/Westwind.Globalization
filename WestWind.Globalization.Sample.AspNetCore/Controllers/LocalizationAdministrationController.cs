@@ -11,10 +11,11 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 
 namespace Westwind.Globalization.Controllers
 {
-    [Route("api/LocalizationAdmin")]
+    [Route("api/LocalizationAdministration")]
     public class LocalizationAdministrationController : Controller
     {
         public const string STR_RESOURCESET = "LocalizationForm";
@@ -23,20 +24,29 @@ namespace Westwind.Globalization.Controllers
         protected Formatting EnsureJsonNet = Formatting.Indented;
 
 
+        private static JsonSerializerSettings jsonSettings = new JsonSerializerSettings()
+        {
+            ContractResolver = new DefaultContractResolver()
+        };
+    
+
 
         [HttpGet]
         [Route("GetResourceList")]
-        public IEnumerable<ResourceIdItem> GetResourceList(string resourceSet)
+        //public IEnumerable<ResourceIdItem> GetResourceList(string resourceSet)
+        public ActionResult GetResourceList(string resourceSet)
         {
             var ids = Manager.GetAllResourceIds(resourceSet);
-            if (ids == null)                
+            if (ids == null)
                 throw new ApplicationException(DbRes.T("ResourceSetLoadingFailed", STR_RESOURCESET) + ":" +
                                                Manager.ErrorMessage);
 
-            return ids;
+            //return ids;
+            return Json(ids, jsonSettings);
         }
 
 
+   
         /// <summary>
         /// Returns a shaped objects that can be displayed in an editable grid the grid view for locale ids
         /// of resources.
@@ -79,7 +89,8 @@ namespace Westwind.Globalization.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetAllResourcesForResourceGrid")]
-        public object GetAllResourcesForResourceGrid(string resourceSet)
+        public JsonResult GetAllResourcesForResourceGrid(string resourceSet)
+        //public object GetAllResourcesForResourceGrid(string resourceSet)
         {
             var items = Manager.GetAllResources(resourceSet: resourceSet);
 
@@ -143,20 +154,22 @@ namespace Westwind.Globalization.Controllers
                 Resources = resultList
             };
 
-            return result;
+            return Json(result, jsonSettings);            
         }
 
 
         [HttpGet]
         [Route("GetResourceListHtml")]
-        public IEnumerable<ResourceIdListItem> GetResourceListHtml(string resourceSet)
+        public JsonResult GetResourceListHtml(string resourceSet)
+        //public IEnumerable<ResourceIdListItem> GetResourceListHtml(string resourceSet)
         {
             var ids = Manager.GetAllResourceIdListItems(resourceSet);
             if (ids == null)
                 throw new ApplicationException(DbRes.T("ResourceSetLoadingFailed", STR_RESOURCESET) + ":" +
                                                Manager.ErrorMessage);
 
-            return ids;
+            //return ids;
+            return Json(ids, jsonSettings);
         }
 
         /// <summary>
@@ -165,9 +178,10 @@ namespace Westwind.Globalization.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetResourceSets")]
-        public IEnumerable<string> GetResourceSets()
+        public JsonResult GetResourceSets()
+        //public IEnumerable<string> GetResourceSets()
         {
-            return Manager.GetAllResourceSets(ResourceListingTypes.AllResources);
+            return Json(Manager.GetAllResourceSets(ResourceListingTypes.AllResources), jsonSettings);
         }
 
         /// <summary>
@@ -186,10 +200,10 @@ namespace Westwind.Globalization.Controllers
         /// Returns a list of the all the LocaleIds used in a given resource set
         /// </summary>
         /// <param name="resourceSet"></param>
-        /// <returns></returns>
-        [HttpPost]
+        /// <returns></returns>        
         [Route("GetLocaleIds")]
-        public IEnumerable<object> GetAllLocaleIds(string resourceSet)
+        public JsonResult GetAllLocaleIds(string resourceSet)
+        // public IEnumerable<object> GetAllLocaleIds(string resourceSet)
         {
             var ids = Manager.GetAllLocaleIds(resourceSet);
             if (ids == null)
@@ -208,7 +222,7 @@ namespace Westwind.Globalization.Controllers
                 list.Add(new { LocaleId = localeId, Name = language });
             }
 
-            return list;
+            return Json(list,jsonSettings);
         }
 
 
@@ -233,7 +247,6 @@ namespace Westwind.Globalization.Controllers
 
             return value;
         }
-#if false
 
         /// <summary>
         /// Returns all resources for a given Resource ID. Pass resourceId, and resourceSet
@@ -241,12 +254,14 @@ namespace Westwind.Globalization.Controllers
         /// </summary>
         /// <param name="parm"></param>
         /// <returns></returns>
-        [CallbackMethod()]
-        public IEnumerable<ResourceItemEx> GetResourceItems(dynamic parm)
+        [HttpPost]
+        [Route("GetResourceItems")]
+        public JsonResult GetResourceItems([FromBody] dynamic parm)
+        //public IEnumerable<ResourceItemEx> GetResourceItems([FromBody] dynamic  parm)
         {
-            string resourceId = parm.ResourceId;
             string resourceSet = parm.ResourceSet;
-
+            string resourceId = parm.ResourceId;            
+            
             var items = Manager.GetResourceItems(resourceId, resourceSet, true).ToList();
             if (items == null)
             {
@@ -265,7 +280,7 @@ namespace Westwind.Globalization.Controllers
                 itemList.Add(item);
             }
 
-            return itemList;
+            return Json(itemList,jsonSettings);
         }
 
         /// <summary>
@@ -274,8 +289,10 @@ namespace Westwind.Globalization.Controllers
         /// </summary>
         /// <param name="parm"></param>
         /// <returns></returns>
-        [CallbackMethod()]
-        public ResourceItemEx GetResourceItem(dynamic parm)
+        [HttpPost]
+        [Route("GetResourceItem")]
+        public JsonResult GetResourceItem([FromBody] dynamic parm)
+        //public ResourceItemEx GetResourceItem([FromBody] dynamic parm)
         {
             string resourceId = parm.ResourceId;
             string resourceSet = parm.ResourceSet;
@@ -288,7 +305,7 @@ namespace Westwind.Globalization.Controllers
             var itemEx = new ResourceItemEx(item);
             itemEx.ResourceList = GetResourceStrings(resourceId, resourceSet).ToList();
 
-            return itemEx;
+            return Json(itemEx, jsonSettings);
         }
 
         /// <summary>
@@ -298,7 +315,7 @@ namespace Westwind.Globalization.Controllers
         /// <param name="resourceId"></param>
         /// <param name="resourceSet"></param>
         /// <returns>Returns an array of Key/Value objects to the client</returns>
-        [CallbackMethod]
+        [Route("GetResourceStrings")]
         public IEnumerable<ResourceString> GetResourceStrings(string resourceId, string resourceSet)
         {
             Dictionary<string, string> resources = Manager.GetResourceStrings(resourceId, resourceSet, true);
@@ -321,8 +338,9 @@ namespace Westwind.Globalization.Controllers
         /// </summary>
         /// <param name="parm"></param>
         /// <returns></returns>
-        [CallbackMethod]
-        public bool UpdateResourceString(dynamic parm)
+        [HttpPost]
+        [Route("UpdateResourceString")]
+        public bool UpdateResourceString([FromBody] dynamic parm)
         {
             string value = parm.value;
             string resourceId = parm.resourceId;
@@ -363,7 +381,8 @@ namespace Westwind.Globalization.Controllers
         /// </summary>
         /// <param name="parm"></param>
         /// <returns></returns>
-        [CallbackMethod]
+        [HttpPost]
+        [Route("UpdateComment")]
         public bool UpdateComment(dynamic parm)
         {
             string comment = parm.comment;
@@ -390,7 +409,8 @@ namespace Westwind.Globalization.Controllers
         /// </summary>
         /// <param name="resource"></param>
         /// <returns></returns>
-        [CallbackMethod]
+        [HttpPost]
+        [Route("UpdateResource")]
         public bool UpdateResource(ResourceItem resource)
         {
             if (resource == null)
@@ -409,13 +429,13 @@ namespace Westwind.Globalization.Controllers
             return true;
         }
 
-
+#if NETFULL
         /// <summary>
         /// Updates or adds a binary file resource based on form variables.
         /// ResourceId,ResourceSet,LocaleId and a single file upload.
         /// </summary>
         /// <returns></returns>
-        [CallbackMethod]
+        [Route("UploadResource")]
         public bool UploadResource()
         {
             if (Request.Files.Count < 1)
@@ -455,6 +475,48 @@ namespace Westwind.Globalization.Controllers
 
             return true;
         }
+#endif
+
+
+
+        /// <summary>
+        /// Returns configuration information so the UI can display this info on the configuration
+        /// page.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetLocalizationInfo")]
+        public object GetLocalizationInfo()
+        {
+            //// Get the Web application configuration object.
+            //var webConfig = WebConfigurationManager.OpenWebConfiguration("~/web.config");
+
+            //// Get the section related object.
+            //GlobalizationSection configSection =
+            //    (GlobalizationSection)webConfig.GetSection("system.web/globalization");
+
+            //string providerFactory = configSection.ResourceProviderFactoryType;
+            //if (string.IsNullOrEmpty(providerFactory))
+            //    providerFactory = WebUtils.GRes(STR_RESOURCESET, "NoProviderConfigured");
+
+            var config = DbResourceConfiguration.Current;
+
+            return new
+            {
+                //ProviderFactory = providerFactory,
+                config.ConnectionString,
+                config.ResourceTableName,
+                DbResourceProviderType = config.DbResourceDataManagerType.Name,
+                config.ResxExportProjectType,
+                config.ResxBaseFolder,
+                config.ResourceBaseNamespace,
+                config.StronglyTypedGlobalResource,
+                config.GoogleApiKey,
+                config.BingClientId,
+                config.BingClientSecret,
+                config.AddMissingResources
+            };
+        }
 
 
         /// <summary>
@@ -463,8 +525,9 @@ namespace Westwind.Globalization.Controllers
         /// </summary>
         /// <param name="parm"></param>
         /// <returns></returns>
-        [CallbackMethod]
-        public bool DeleteResource(dynamic parm)
+        [HttpPost]
+        [Route("DeleteResource")]
+        public bool DeleteResource([FromBody] dynamic parm)
         {
 
 #if OnlineDemo
@@ -483,7 +546,7 @@ namespace Westwind.Globalization.Controllers
             }
 
             if (!Manager.DeleteResource(resourceId, resourceSet, localeId))
-                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceUpdateFailed") + ": " +
+                throw new ApplicationException(DbRes.T("ResourceUpdateFailed", STR_RESOURCESET) + ": " +
                                                Manager.ErrorMessage);
 
             return true;
@@ -500,7 +563,8 @@ namespace Westwind.Globalization.Controllers
         /// </summary>
         /// <param name="parms"></param>
         /// <returns></returns>
-        [CallbackMethod]
+        [HttpPost]
+        [Route("RenameResource")]
         public bool RenameResource(dynamic parms)
         {
 #if OnlineDemo
@@ -512,8 +576,7 @@ namespace Westwind.Globalization.Controllers
 
 
             if (!Manager.RenameResource(resourceId, newResourceId, resourceSet))
-                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET,
-                    "InvalidResourceId"));
+                throw new ApplicationException(DbRes.T("InvalidResourceId", STR_RESOURCESET));
 
             return true;
         }
@@ -527,17 +590,18 @@ namespace Westwind.Globalization.Controllers
         /// <param name="NewProperty">New Property prefix</param>
         /// <param name="ResourceSet">The resourceset it applies to</param>
         /// <returns></returns>
-        [CallbackMethod]
+        [Route("RenameResource")]
         public bool RenameResourceProperty(string Property, string NewProperty, string ResourceSet)
         {
             if (!Manager.RenameResourceProperty(Property, NewProperty, ResourceSet))
-                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "InvalidResourceId"));
+                throw new ApplicationException(DbRes.T("InvalidResourceId", STR_RESOURCESET));
 
             return true;
         }
 
-        [CallbackMethod]
-        public string Translate(dynamic parm)
+        [HttpPost]
+        [Route("Translate")]        
+        public string Translate([FromBody] dynamic parm)
         {
             string text = parm.text;
             string from = parm.from;
@@ -572,7 +636,9 @@ namespace Westwind.Globalization.Controllers
         /// </summary>
         /// <param name="resourceSet"></param>
         /// <returns></returns>
-        [CallbackMethod]
+        [HttpGet]
+        [HttpDelete]
+        [Route("DeleteResourceSet")]
         public bool DeleteResourceSet(string resourceSet)
         {
 #if OnlineDemo
@@ -592,7 +658,7 @@ namespace Westwind.Globalization.Controllers
         /// <param name="oldResourceSet"></param>
         /// <param name="newResourceSet"></param>
         /// <returns></returns>
-        [CallbackMethod]
+        [Route("RenameResourceSet")]
         public bool RenameResourceSet(string oldResourceSet, string newResourceSet)
         {
 #if OnlineDemo
@@ -609,7 +675,7 @@ namespace Westwind.Globalization.Controllers
         /// Clears the resource cache. Works only if using one of the Westwind
         /// ASP.NET resource providers or managers.
         /// </summary>
-        [CallbackMethod]
+        [Route("ReloadResources")]
         public void ReloadResources()
         {
             //Westwind.Globalization.Tools.wwWebUtils.RestartWebApplication();
@@ -622,7 +688,7 @@ namespace Westwind.Globalization.Controllers
         /// Backs up the resource table into a new table with the same name + _backup
         /// </summary>
         /// <returns></returns>
-        [CallbackMethod]
+        [Route("Backup")]
         public bool Backup()
         {
 #if OnlineDemo
@@ -637,7 +703,7 @@ namespace Westwind.Globalization.Controllers
         /// exist. If the table exists an error is returned.
         /// </summary>
         /// <returns></returns>
-        [CallbackMethod]
+        [Route("CreateTable")]
         public bool CreateTable()
         {
 #if OnlineDemo
@@ -645,7 +711,7 @@ namespace Westwind.Globalization.Controllers
 #endif
 
             if (!Manager.CreateLocalizationTable(null))
-                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "LocalizationTableNotCreated") + "\r\n" +
+                throw new ApplicationException(DbRes.T("LocalizationTableNotCreated", STR_RESOURCESET) + "\r\n" +
                                                Manager.ErrorMessage);
             return true;
         }
@@ -656,7 +722,7 @@ namespace Westwind.Globalization.Controllers
         /// </summary>
         /// <param name="localeId"></param>
         /// <returns></returns>
-        [CallbackMethod]
+        [Route("IsRtl")]
         public bool IsRtl(string localeId)
         {
             try
@@ -673,7 +739,7 @@ namespace Westwind.Globalization.Controllers
             return false;
         }
 
-
+#if false
         /// <summary>
         /// Creates .NET strongly typed class from the resources. Pass:
         /// fileName, namespace, classType, resourceSets as a map.
@@ -835,44 +901,6 @@ namespace Westwind.Globalization.Controllers
             return true;
         }
 
-
-        /// <summary>
-        /// Returns configuration information so the UI can display this info on the configuration
-        /// page.
-        /// </summary>
-        /// <returns></returns>
-        [CallbackMethod]
-        public object GetLocalizationInfo()
-        {
-            // Get the Web application configuration object.
-            var webConfig = WebConfigurationManager.OpenWebConfiguration("~/web.config");
-
-            // Get the section related object.
-            GlobalizationSection configSection =
-                (GlobalizationSection)webConfig.GetSection("system.web/globalization");
-
-            string providerFactory = configSection.ResourceProviderFactoryType;
-            if (string.IsNullOrEmpty(providerFactory))
-                providerFactory = WebUtils.GRes(STR_RESOURCESET, "NoProviderConfigured");
-
-            var config = DbResourceConfiguration.Current;
-
-            return new
-            {
-                ProviderFactory = providerFactory,
-                config.ConnectionString,
-                config.ResourceTableName,
-                DbResourceProviderType = config.DbResourceDataManagerType.Name,
-                config.ResxExportProjectType,
-                config.ResxBaseFolder,
-                config.ResourceBaseNamespace,
-                config.StronglyTypedGlobalResource,
-                config.GoogleApiKey,
-                config.BingClientId,
-                config.BingClientSecret,
-                config.AddMissingResources
-            };
-        }
 
 #endif
     }

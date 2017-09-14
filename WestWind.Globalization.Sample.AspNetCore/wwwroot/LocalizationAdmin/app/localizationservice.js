@@ -43,7 +43,7 @@
         };
         return service;
 
-        function getResourceList(resourceSet) {
+        function getResourceList(resourceSet) {            
             return $http.get(service.baseUrl + "GetResourceListHtml?ResourceSet=" + resourceSet)
                 .success(function(resourceList) {
                     service.resourceList = resourceList;
@@ -64,15 +64,15 @@
         }
 
         function getAllLocaleIds(resourceSet) {
-            return $http.get("localizationService.ashx?method=GetAllLocaleIds&ResourceSet=" + resourceSet)
+            return $http.get(service.baseUrl + "GetAllLocaleIds?ResourceSet=" + resourceSet)
                 .success(function(localeIds) {
                     service.localeIds = localeIds;
                 })
                 .error(parseHttpError);
         }
 
-        function getResourceItems(resourceId, resourceSet) {
-            return $http.post("localizationService.ashx?method=GetResourceItems",
+        function getResourceItems(resourceId, resourceSet) {            
+            return $http.post(service.baseUrl + "GetResourceItems",
                 {
                     ResourceId: resourceId,
                     ResourceSet: resourceSet                    
@@ -84,13 +84,13 @@
         }
 
         function getResourceGridItems(resourceSet) {
-            return $http.get("localizationService.ashx?method=GetAllResourcesForResourceGrid&resourceSet=" + resourceSet)
+            return $http.get(service.baseUrl + "GetAllResourcesForResourceGrid?resourceSet=" + resourceSet)
                 .error(parseHttpError);
         }
 
 
         function getResourceItem(resourceId, resourceSet, lang) {
-            return $http.post("localizationService.ashx?method=GetResourceItem",
+            return $http.post(service.baseUrl + "GetResourceItem",
                 {
                     ResourceId: resourceId,
                     ResourceSet: resourceSet,
@@ -103,7 +103,7 @@
         }
 
         function getResourceStrings(resourceId, resourceSet) {
-            return $http.get("localizationService.ashx?method=GetResourceStrings&ResourceId=" + resourceId + "&ResourceSet=" + resourceSet)
+            return $http.get(service.baseUrl + "?ResourceId=" + resourceId + "&ResourceSet=" + resourceSet)
                 .success(function (resourceStrings) {
                     service.resourceStrings = resourceStrings;
                 })
@@ -112,7 +112,7 @@
 
         // adds or updates a resource
         function updateResource(resource) {
-            return $http.post("localizationService.ashx?method=UpdateResource", resource)
+            return $http.post(service.baseUrl + "UpdateResource", resource)
                 .error(parseHttpError);
         }
 
@@ -127,7 +127,7 @@
                 comment: comment
             };
 
-            return $http.post("localizationService.ashx?method=UpdateResourceString", parm)
+            return $http.post(service.baseUrl + "UpdateResourceString", parm)
                 .error(parseHttpError);
         }
 
@@ -139,7 +139,7 @@
                 comment: comment
             };
 
-            return $http.post("localizationService.ashx?method=UpdateComment", parm)
+            return $http.post(service.baseUrl + "UpdateComment", parm)
                 .error(parseHttpError);
         }
 
@@ -150,7 +150,7 @@
                 localeId: localeId
             };
 
-            return $http.post("localizationService.ashx?method=DeleteResource", parm)
+            return $http.post(service.baseUrl + "DeleteResource", parm)
                 .error(parseHttpError);
         }
 
@@ -161,43 +161,43 @@
                 resourceSet: resourceSet                
             };
 
-            return $http.post("localizationService.ashx?method=RenameResource", parm)
+            return $http.post(service.baseUrl + "RenameResource", parm)
                 .error(parseHttpError);
         }
 
         function deleteResourceSet(resourceSet) {
-           return $http.get("localizationService.ashx?method=DeleteResourceSet&ResourceSet=" + resourceSet)
+           return $http.get(service.baseUrl + "DeleteResourceSet?ResourceSet=" + resourceSet)
                 .error(parseHttpError);
         }
         function renameResourceSet(oldResourceSet, newResourceSet) {
-            return $http.get("localizationService.ashx?method=RenameResourceSet&oldResourceSet=" + oldResourceSet + "&newResourceSet=" + newResourceSet)
+            return $http.get(service.baseUrl + "RenameResourceSet?oldResourceSet=" + oldResourceSet + "&newResourceSet=" + newResourceSet)
                  .error(parseHttpError);
         }
         function reloadResources() {
-            return $http.get("localizationService.ashx?method=ReloadResources")
+            return $http.get(service.baseUrl + "ReloadResources")
                  .error(parseHttpError);
         }
         function backup() {
-            return $http.get("localizationService.ashx?method=Backup")
+            return $http.get(service.baseUrl + "Backup")
                  .error(parseHttpError);
         }
         function createTable() {
-            return $http.get("localizationService.ashx?method=CreateTable")
+            return $http.get(service.baseUrl + "CreateTable")
                  .error(parseHttpError);
         }
         function createClass(file, namespace, resourceSets,classType) {
-            return $http.post("localizationService.ashx?method=CreateClass",
+            return $http.post(service.baseUrl + "CreateClass",
             { fileName: file, namespace: namespace, resourceSets: resourceSets, classType: classType || "DbRes" })
                     .error(parseHttpError);
         }
         function exportResxResources(path, resourceSets) {
             path = path || "";
-            return $http.post("localizationService.ashx?method=ExportResxResources",{  outputBasePath: path, resourceSets: resourceSets})
+            return $http.post(service.baseUrl + "ExportResxResources",{  outputBasePath: path, resourceSets: resourceSets})
                     .error(parseHttpError);
         }
         function importResxResources(path) {
             path = path || "";
-            return $http.get("localizationService.ashx?method=ImportResxResources&inputBasePath=" + encodeURIComponent(path))
+            return $http.get(service.baseUrl + "ImportResxResources?inputBasePath=" + encodeURIComponent(path))
                     .error(parseHttpError);
         }
         function getLocalizationInfo() {
@@ -205,14 +205,14 @@
             if (service.localizationInfo)
                 return ww.angular.$httpPromiseFromValue($q,service.localizationInfo);
             
-            return $http.get("localizationService.ashx?method=GetLocalizationInfo")
+            return $http.get(service.baseUrl + "GetLocalizationInfo")
                 .success(function(info) {
                     service.localizationInfo = info;
                 })
                 .error(parseHttpError);            
         }
         function isRtl(localeId) {
-            return $http.get("localizationService.ashx?method=IsRtl&localeId=" + localeId)
+            return $http.get(service.baseUrl + "IsRtl?localeId=" + localeId)
                 .error(parseHttpError);
         }
         function parseHttpError() {
