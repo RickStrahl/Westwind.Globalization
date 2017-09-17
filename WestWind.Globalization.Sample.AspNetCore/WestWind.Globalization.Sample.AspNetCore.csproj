@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Westwind.AspNetCore\Westwind.AspNetCore\Westwind.AspNetCore.csproj" />
     <ProjectReference Include="..\Westwind.Globalization.AspnetCore\Westwind.Globalization.AspnetCore.csproj" />
     <ProjectReference Include="..\Westwind.Globalization\Westwind.Globalization.csproj" />
   </ItemGroup>

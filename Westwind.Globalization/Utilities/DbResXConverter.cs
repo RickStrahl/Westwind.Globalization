@@ -42,6 +42,7 @@ using System.Text;
 using System.Threading;
 using System.Web;
 using System.Xml;
+using Westwind.Globalization.Utilities;
 using Westwind.Utilities;
 
 namespace Westwind.Globalization
@@ -518,13 +519,13 @@ namespace Westwind.Globalization
             {
                 path = DbResourceConfiguration.Current.ResxBaseFolder;
                 if (path.StartsWith("~"))
-                    path = path.Replace("~", BasePhysicalPath).Replace(@"\/", "\\").Replace("/", "\\");
+                    path = DbResourceUtils.NormalizePath(path.Replace("~", BasePhysicalPath));
             }
             else
                 path = BasePhysicalPath;
 
-            resourceSet = resourceSet.Replace("/", "\\"); 
-            resourceSet = Path.Combine(path, resourceSet);
+            
+            resourceSet = Path.Combine(path, DbResourceUtils.NormalizePath(resourceSet));
                 
             
             if (IsLocalResourceSet(resourceSet) && !resourceSet.Contains("App_LocalResources"))
