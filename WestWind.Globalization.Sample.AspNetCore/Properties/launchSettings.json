@@ -2,8 +2,9 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "launchUrl": "http://localhost:5001/localizationadmin/index.html",
     "iisExpress": {
-      "applicationUrl": "http://localhost:5001/",
+      "applicationUrl": "http://0.0.0.0:5001/",
       "sslPort": 0
     }
   },
@@ -18,10 +19,11 @@
     "WestWind.Globalization.Sample.AspNetCore": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "http://localhost:5000/localizationadmin/index.html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:5000/"
+      "applicationUrl": "http://0.0.0.0:5000/"
     }
   }
 }
