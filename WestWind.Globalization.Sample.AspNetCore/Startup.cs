@@ -26,16 +26,25 @@ namespace WestWind.Globalization.Sample.AspNetCore
 
             services.AddWestwindGlobalization(opt =>
             {
+                // the default settings comme from DbResourceConfiguration.json if exists
+
+                // you can override the settings here - possibly with standard config settings
+
+                // Resource Mode - Resx or DbResourceManager                
+                opt.ResourceAccessMode = ResourceAccessMode.DbResourceManager;  // ResourceAccessMode.Resx
+
                 opt.ConnectionString = "server=.;database=localizations;integrated security=true";
                 opt.ResourceTableName = "localizations";
                 opt.AddMissingResources = false;
                 opt.ResxBaseFolder = "~/Properties/";
+             
+                
             });
 
             services.AddMvc();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfiguration configuration)
         {
             
             var supportedCultures = new[]
@@ -62,6 +71,10 @@ namespace WestWind.Globalization.Sample.AspNetCore
 
             app.UseStaticFiles();
             app.UseMvc();
+
+            // print some environment information
+            Console.WriteLine("\r\nPlatform: " + System.Runtime.InteropServices.RuntimeInformation.OSDescription);
+            Console.WriteLine("DbResourceMode: " + DbResourceConfiguration.Current.ResourceAccessMode);
         }
     }
 }

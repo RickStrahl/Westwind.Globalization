@@ -816,31 +816,33 @@ namespace Westwind.Globalization.Controllers
             if (!string.IsNullOrEmpty(strongTypes.ErrorMessage))
                 throw new ApplicationException(DbIRes.T("StronglyTypedGlobalResourcesFailed", STR_RESOURCESET));
 
-            //if (classType != "Resx")
-            strongTypes.CreateClassFromAllDatabaseResources(nameSpace, filename, resourceSets);
+            if (classType != "Resx")
+                strongTypes.CreateClassFromAllDatabaseResources(nameSpace, filename, resourceSets);
+            else             
+            {
+                string outputBasePath = filename;
+
+                if (resourceSets == null || resourceSets.Length < 1)
+                    resourceSets = Manager.GetAllResourceSets(ResourceListingTypes.AllResources).ToArray();
+
+                foreach (var resource in resourceSets)
+                {
+                    string file = Path.Combine(outputBasePath, resource + ".resx");
+                    if (!System.IO.File.Exists(file))
+                        continue;
 
 
+                    var str = new StronglyTypedResources(null);
+#if NETFULL
+                    // Use automated generation
+                    str.CreateResxDesignerClassFromResxFile(file, resource, nameSpace, false);
+#else                    
+                    // Manual code generation
+                    str.CreateResxDesignerClassFromResourceSet(resource, nameSpace,resource, file);
+#endif
 
-            //else
-            // Missing Resx StronglyTypedResourceBuilder
-            //{
-            //    string outputBasePath = filename;
-
-            //    if (resourceSets == null || resourceSets.Length < 1)
-            //        resourceSets = Manager.GetAllResourceSets(ResourceListingTypes.AllResources).ToArray();
-
-            //    foreach (var resource in resourceSets)
-            //    {
-            //        string file = Path.Combine(outputBasePath, resource + ".resx");
-            //        if (!System.IO.File.Exists(file))
-            //            continue;
-
-
-            //        var str = new StronglyTypedResources(null);                    
-            //        str.CreateResxDesignerClassFromResxFile(file, resource, nameSpace, false);
-
-            //    }
-            //}
+                }
+            }
 
             return true;
         }
@@ -878,6 +880,7 @@ namespace Westwind.Globalization.Controllers
 
             string slash = Path.DirectorySeparatorChar.ToString();
             outputBasePath = outputBasePath.Replace("/", slash)
+                                           .Replace("\\",slash)
                                            .Replace(slash + slash,slash);
 
             DbResXConverter exporter = new DbResXConverter(outputBasePath);
@@ -909,7 +912,7 @@ namespace Westwind.Globalization.Controllers
                 inputBasePath = DbResourceConfiguration.Current.ResxBaseFolder;
 
             if (inputBasePath.Contains("~"))
-                inputBasePath = Request.MapPath(inputBasePath);
+                inputBasePath = Request.MapPath(inputBasePath,basePath: Host.ContentRootPath);
 
             inputBasePath = inputBasePath.Replace("/", "\\").Replace("\\\\", "\\");
 

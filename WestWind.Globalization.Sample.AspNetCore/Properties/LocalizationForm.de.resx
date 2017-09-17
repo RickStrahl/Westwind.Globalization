@@ -1,0 +1,304 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+<root>
+   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+      <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+      <xsd:element name="root" msdata:IsDataSet="true">
+         <xsd:complexType>
+            <xsd:choice maxOccurs="unbounded">
+               <xsd:element name="metadata">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                     </xsd:sequence>
+                     <xsd:attribute name="name" use="required" type="xsd:string" />
+                     <xsd:attribute name="type" type="xsd:string" />
+                     <xsd:attribute name="mimetype" type="xsd:string" />
+                     <xsd:attribute ref="xml:space" />
+                  </xsd:complexType>
+               </xsd:element>
+               <xsd:element name="assembly">
+                  <xsd:complexType>
+                     <xsd:attribute name="alias" type="xsd:string" />
+                     <xsd:attribute name="name" type="xsd:string" />
+                  </xsd:complexType>
+               </xsd:element>
+               <xsd:element name="data">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                        <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                     </xsd:sequence>
+                     <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+                     <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+                     <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+                     <xsd:attribute ref="xml:space" />
+                  </xsd:complexType>
+               </xsd:element>
+               <xsd:element name="resheader">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                     </xsd:sequence>
+                     <xsd:attribute name="name" type="xsd:string" use="required" />
+                  </xsd:complexType>
+               </xsd:element>
+            </xsd:choice>
+         </xsd:complexType>
+      </xsd:element>
+   </xsd:schema>
+   <resheader name="resmimetype">
+      <value>text/microsoft-resx</value>
+   </resheader>
+   <resheader name="version">
+      <value>2.0</value>
+   </resheader>
+   <resheader name="reader">
+      <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+   </resheader>
+   <resheader name="writer">
+      <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+   </resheader>
+   <data name="Add" xml:space="preserve">
+      <value>Hinzufügen</value>
+   </data>
+   <data name="AllResourceSets" xml:space="preserve">
+      <value>Alle RessourceSets</value>
+   </data>
+   <data name="AreYouSureYouWantToDeleteThisResource" xml:space="preserve">
+      <value>Sind Sie sicher, dass Sie diese Ressource löschen wollen?</value>
+   </data>
+   <data name="AreYouSureYouWantToDoThis" xml:space="preserve">
+      <value>Sind Sie sicher, dass Sie dies tun wollen?</value>
+   </data>
+   <data name="Backup" xml:space="preserve">
+      <value>Sicherungskopie</value>
+   </data>
+   <data name="Backup.Title" xml:space="preserve">
+      <value>Backup Ressourcen zu einer SicherungsTabelle in der Datenbank.</value>
+   </data>
+   <data name="BackupComplete" xml:space="preserve">
+      <value>Backup wurde durchgeführt.</value>
+   </data>
+   <data name="BackupFailed" xml:space="preserve">
+      <value>Backup wurde nicht durchgeführt</value>
+   </data>
+   <data name="Cancel" xml:space="preserve">
+      <value>Abbrechen</value>
+   </data>
+   <data name="Comment" xml:space="preserve">
+      <value>Kommentar</value>
+   </data>
+   <data name="CreateClass" xml:space="preserve">
+      <value>Klassen erstellen</value>
+   </data>
+   <data name="CreateClass.Title" xml:space="preserve">
+      <value>Erstellt stark typisierte Klassen von  Datenbank Ressourcen.</value>
+   </data>
+   <data name="CreateClassInfo" xml:space="preserve">
+      <value>Sie können Ihre ResourceSets als stark typisierte Klassen exportieren. Jeder ResourceSet wird als eine Klasse mit Properties für jede Resource ID exportier. Hier können Sie den Dateinamen und einen Namespace für die generierten Klassen angeben.</value>
+   </data>
+   <data name="CreateStronglyTypedClasses" xml:space="preserve">
+      <value>Erstellung von Stark typisierten Klassen</value>
+   </data>
+   <data name="CreateTable" xml:space="preserve">
+      <value>Tabelle erstellen</value>
+   </data>
+   <data name="CreateTable.Title" xml:space="preserve">
+      <value>Neue Tabelle erstellen, wie definiert in der Konfigurationsdatei.</value>
+   </data>
+   <data name="Delete" xml:space="preserve">
+      <value>Löschen</value>
+   </data>
+   <data name="Delete.ResourceSet.Title" xml:space="preserve">
+      <value>Alle Ressourcen in diesem ResourceSet löschen.</value>
+   </data>
+   <data name="Delete.Title" xml:space="preserve">
+      <value>Alle Ressourcen löschen für diese Ressource Id.</value>
+   </data>
+   <data name="DynamicClasses" xml:space="preserve">
+      <value>Dynamische Klassen (Db oder Resx )</value>
+   </data>
+   <data name="Edit" xml:space="preserve">
+      <value>Bearbeiten</value>
+   </data>
+   <data name="EnableResourceEditing" xml:space="preserve">
+      <value>Ressourcen Bearbeitung aktivieren</value>
+   </data>
+   <data name="FeatureNotSupported" xml:space="preserve">
+      <value>Diese Funktion ist nicht  unterstützt in dieser Online-Demo -Anwendung.</value>
+   </data>
+   <data name="Filename" xml:space="preserve">
+      <value>Datei</value>
+   </data>
+   <data name="FileResourceUpload" xml:space="preserve">
+      <value>Dateien Ressource hochladen</value>
+   </data>
+   <data name="Folder" xml:space="preserve">
+      <value>Ordner</value>
+   </data>
+   <data name="From" xml:space="preserve">
+      <value>Von</value>
+   </data>
+   <data name="GridView" xml:space="preserve">
+      <value>Tabelle</value>
+   </data>
+   <data name="GridView_Title" xml:space="preserve">
+      <value>Bearbeiten von Ressourcen für den aktivierten ResourceSet in einem Grid, in dem alle Ressourcen für alle Lokale sichtbar sind und sehr schnell bearbeitet werden können.</value>
+   </data>
+   <data name="HelloWorld" xml:space="preserve">
+      <value>Hallo Welt!</value>
+   </data>
+   <data name="Home.Title" xml:space="preserve">
+      <value>Zurück zur Startseite der Website.</value>
+   </data>
+   <data name="ImportExportResx" xml:space="preserve">
+      <value>Resx Import Export</value>
+   </data>
+   <data name="ImportExportResx.Title" xml:space="preserve">
+      <value>Ressourcen aus Resx dateien importieren or exportieren.</value>
+   </data>
+   <data name="ImportOrExportResxResources" xml:space="preserve">
+      <value>Resx Ressourcen Importieren oder Exportieren</value>
+   </data>
+   <data name="ImportResx" xml:space="preserve">
+      <value>Resx Importieren</value>
+   </data>
+   <data name="ImportResx.Title" xml:space="preserve">
+      <value>Ressourcen aus Resx-Dateien importieren.</value>
+   </data>
+   <data name="InvalidResourceId" xml:space="preserve">
+      <value>Ungültige Ressourcen-ID.</value>
+   </data>
+   <data name="Lang" xml:space="preserve">
+      <value>Sprache</value>
+   </data>
+   <data name="LocaleIdsFailedToLoad" xml:space="preserve">
+      <value>Locale-IDs konnten nicht geladen werden.</value>
+   </data>
+   <data name="LocalizationAdministration" xml:space="preserve">
+      <value>Lokalisierungs Verwaltung</value>
+   </data>
+   <data name="LocalizationTableHasBeenCreated" xml:space="preserve">
+      <value>Lokalisierungs Tabelle wurde angelegt.</value>
+   </data>
+   <data name="LocalizationTableNotCreated" xml:space="preserve">
+      <value>Lokalisierungs Tabelle konnte nicht erstellt werden.</value>
+   </data>
+   <data name="NoProviderConfigured" xml:space="preserve">
+      <value>Kein Provider konfiguriert (Resx)</value>
+   </data>
+   <data name="NoResourcePassedToAddOrUpdate" xml:space="preserve">
+      <value>Keine Ressourcen zugeführt, um hinzuzufügen oder zu aktualisieren.</value>
+   </data>
+   <data name="Refresh" xml:space="preserve">
+      <value>Aktualisieren</value>
+   </data>
+   <data name="ReloadResources" xml:space="preserve">
+      <value>Ressourcen neu laden</value>
+   </data>
+   <data name="ReloadResources.Title" xml:space="preserve">
+      <value>Datenbank Ressourcen werden neu geladen, so dass der nächste Server-Hit alle Ressourcen mit Änderungen aktualisiert. Sie muessen die Seite ernneuern um die Änderungen zu sehen.</value>
+   </data>
+   <data name="Rename" xml:space="preserve">
+      <value>Umbenennen</value>
+   </data>
+   <data name="Rename.Title" xml:space="preserve">
+      <value>Alle Ressourcen für diese Ressource-ID umbennen.</value>
+   </data>
+   <data name="ResourceEditor" xml:space="preserve">
+      <value>Ressourcen Bearbeitung</value>
+   </data>
+   <data name="ResourceGenerationFailed" xml:space="preserve">
+      <value>Ressourcengenerierung fehlgeschlagen.</value>
+   </data>
+   <data name="ResourceImportFailed" xml:space="preserve">
+      <value>Ressourcen import hat fehlgeschlagen.</value>
+   </data>
+   <data name="ResourceProviderInfo" xml:space="preserve">
+      <value>Ressourcen-Provider Info</value>
+   </data>
+   <data name="Resources" xml:space="preserve">
+      <value>Ressourcen</value>
+   </data>
+   <data name="ResourceSaved" xml:space="preserve">
+      <value>Ressource wurde gespeichert.</value>
+   </data>
+   <data name="ResourceSetLoadingFailed" xml:space="preserve">
+      <value>ResourceSet konnte nicht geladen werden.</value>
+   </data>
+   <data name="ResourceSetRenamed" xml:space="preserve">
+      <value>ResourceSet umbenannt.</value>
+   </data>
+   <data name="ResourceSetsToExport" xml:space="preserve">
+      <value>ResourceSets zu exportieren</value>
+   </data>
+   <data name="ResourcesHaveBeenBackedUp" xml:space="preserve">
+      <value>Ressourcen wurden gesichert.</value>
+   </data>
+   <data name="ResourcesHaveBeenReloaded" xml:space="preserve">
+      <value>Ressourcen wurden neu geladen.</value>
+   </data>
+   <data name="ResourceUpdateFailed" xml:space="preserve">
+      <value>Ressourcen konnte nicht aktualisiert werden.</value>
+   </data>
+   <data name="ResxDesignerClasses" xml:space="preserve">
+      <value>Resx Designer Klassen</value>
+   </data>
+   <data name="ResxExportInfo" xml:space="preserve">
+      <value>Der Ressourcen-Export exportiert alle Ressourcen auf den angegebenen Ressource Ordner.</value>
+   </data>
+   <data name="ResxExportInfo.Project" xml:space="preserve">
+      <value>Ihr Resx Exportmodus ist &lt;b&gt;Projekt&lt;/ b&gt;, und so werden Ressourcendateien diesem Ordner als separate RESX-Dateien erstellt, eine für jeden ResourceSet.</value>
+   </data>
+   <data name="ResxImportInfo" xml:space="preserve">
+      <value>Der Ressourcen-Import wird alle Resx Ressourcen aus dem angegebenen Ressourcen Ordner rekursiv importieren.</value>
+   </data>
+   <data name="ResxImportInfo.Project" xml:space="preserve">
+      <value>Ihr Resx Exportmodus ist &lt;b&gt;Projekt&lt;/ b&gt;, also werden ihre Ressourcendateien recursiv mit Pfaden und Web-basierter Pfadsyntax importiert, die sich in dem RessourceSet Namen widerspiegelt.</value>
+   </data>
+   <data name="ResxImportInfo.WebForms" xml:space="preserve">
+      <value>Ihr Resx Exportmodus ist &lt;b&gt; WebForms &lt;/ b&gt;, also werden RESX-Ressourcen aus den entsprechenden App_GlobalResources und App_LocalResources Ordner importiert.</value>
+   </data>
+   <data name="ResxResourcesHaveBeenCreated" xml:space="preserve">
+      <value>Resx Ressourcen sind in Ihrem Web-Projekt erstellt worden.</value>
+   </data>
+   <data name="ResxResourcesHaveBeenImported" xml:space="preserve">
+      <value>Resx Ressourcen wurden importiert.</value>
+   </data>
+   <data name="Save" xml:space="preserve">
+      <value>Speichern</value>
+   </data>
+   <data name="SaveResource" xml:space="preserve">
+      <value>Resource speichern (Ctrl-Enter)</value>
+   </data>
+   <data name="SearchResources" xml:space="preserve">
+      <value>Ressourcen durchsuchen</value>
+   </data>
+   <data name="StronglyTypedClassCreated" xml:space="preserve">
+      <value>Stark typisierte Klassen wurden erstellt. Sie müssen in Ihrer Anwendung  zusätzliche Ressourcen neu kompilieren.</value>
+   </data>
+   <data name="StronglyTypedGlobalResourcesFailed" xml:space="preserve">
+      <value>Fehler bei der stark typisierte Ressourcen Erstellung.</value>
+   </data>
+   <data name="TextToTranslate" xml:space="preserve">
+      <value>Text zu übersetzen</value>
+   </data>
+   <data name="To" xml:space="preserve">
+      <value>Zu</value>
+   </data>
+   <data name="Translate" xml:space="preserve">
+      <value>Übersetzen</value>
+   </data>
+   <data name="TranslateResource" xml:space="preserve">
+      <value>Resource Übersetzung</value>
+   </data>
+   <data name="Translation" xml:space="preserve">
+      <value>Übersetzung</value>
+   </data>
+   <data name="Use" xml:space="preserve">
+      <value>Anwenden</value>
+   </data>
+   <data name="YouAreAboutToDeleteThisResourceSet" xml:space="preserve">
+      <value>Sie sind dabei diesen RessourceSet zu löschen.</value>
+   </data>
+</root>

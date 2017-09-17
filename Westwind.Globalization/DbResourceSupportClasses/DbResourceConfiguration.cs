@@ -126,7 +126,7 @@ namespace Westwind.Globalization
         /// Otherwise format is: 
         /// ~/App_Code/Resources.cs
         /// </summary>
-        public string StronglyTypedGlobalResource { get; set; } = "~/App_Code/Resources.cs";
+        public string StronglyTypedGlobalResource { get; set; } = "~/Properties/Resources.cs";
 
 
         /// <summary>

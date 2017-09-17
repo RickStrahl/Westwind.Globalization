@@ -1,9 +1,9 @@
 ﻿using System.Globalization;
 using System.Threading;
+//using AppResources;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using WestWind.Globalization.Sample.AspNetCore.Properties;
 
 namespace WestWind.Globalization.Sample.AspNetCore.Controllers
 {
@@ -24,12 +24,12 @@ namespace WestWind.Globalization.Sample.AspNetCore.Controllers
             return _localizer["HelloWorld"];
         }
 
-        [HttpGet]
-        [Route("StronglyTypedResource")]
-        public string StronglyTypedResource(string languageId)
-        {
-            return Resources.HelloWorld;
-        }
+        //[HttpGet]
+        //[Route("StronglyTypedResource")]
+        //public string StronglyTypedResource(string languageId)
+        //{
+        //    return Resources.HelloWorld;
+        //}
 
         [HttpGet]
         [Route("GetAllLocalizerStrings")]
@@ -47,7 +47,28 @@ namespace WestWind.Globalization.Sample.AspNetCore.Controllers
             return Westwind.Globalization.DbRes.T("HelloWorld", "Resources", "");
         }
 
+        /// <summary>
+        /// This gets Resx Resources
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("StrongDbResResources")]
+        public string StrongDbResResources()
+        {
+            return Westwind.Globalization.Sample.AspNetCore.Properties.Resources.HelloWorld;
+        }
 
+        /// <summary>
+        /// This gets generated strongly typed resources using DbRes or Resx depending
+        /// on configuration
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("StrongDesignerResources")]
+        public string StrongDesignerResources()
+        {
+            return AppResources.Resources.HelloWorld;
+        }
 
         /// <summary>
         /// Sets the culture and UI culture to a specific culture. Allows overriding of currency
