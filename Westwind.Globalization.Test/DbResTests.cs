@@ -39,7 +39,7 @@ namespace Westwind.Globalization.Test
         public void DbResHeavyLoad()
         {
             var dt = DateTime.Now;
-            for (int i = 0; i < 1500; i++)
+            for (int i = 0; i < 200; i++)
             {
                 var t = new Thread(threadedDbRes);
                 t.Start(dt);                

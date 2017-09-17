@@ -766,7 +766,6 @@ namespace Westwind.Globalization.Web.Administration
                         continue;
 
                     var str = new StronglyTypedResources(null);
-
                     str.CreateResxDesignerClassFromResxFile(file, resource, nameSpace, false);
                 }
             }

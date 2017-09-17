@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Resources;
 using System.Threading;
 using System.Web.Compilation;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Westwind.Globalization.Test
@@ -15,6 +16,8 @@ namespace Westwind.Globalization.Test
         public void DbResourceManagerBasic()        
         {
             var res = new DbResourceManager("Resources");
+
+            Console.WriteLine(JsonConvert.SerializeObject(res.Configuration, Formatting.Indented));
 
             string german = res.GetObject("Today", new CultureInfo("de-de")) as string;                       
             Assert.IsNotNull(german);
@@ -72,7 +75,7 @@ namespace Westwind.Globalization.Test
             resManager = new DbResourceManager("Resources");
 
             var dt = DateTime.Now;
-            for (int i = 0; i < 500; i++)
+            for (int i = 0; i < 100; i++)
             {
                 var t = new Thread(threadedDbSimpleResourceProvider);
                 t.Start(dt);
@@ -83,7 +86,7 @@ namespace Westwind.Globalization.Test
             Console.WriteLine("Started:  " + DateTime.Now.Ticks);
 
             // allow threads to run
-            Thread.Sleep(4000);
+            Thread.Sleep(3000);
         }
 
 
