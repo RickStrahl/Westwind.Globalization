@@ -21,13 +21,15 @@ namespace WestWind.Globalization.Sample.AspNetCore
         {
             services.AddLocalization(options =>
             {
-                options.ResourcesPath = "Resources";
+                options.ResourcesPath = "Properties";
             });
 
             services.AddWestwindGlobalization(opt =>
             {
                 opt.ConnectionString = "server=.;database=localizations;integrated security=true";
                 opt.ResourceTableName = "localizations";
+                opt.AddMissingResources = false;
+                opt.ResxBaseFolder = "~/Properties/";
             });
 
             services.AddMvc();
@@ -40,14 +42,15 @@ namespace WestWind.Globalization.Sample.AspNetCore
             {
                 new CultureInfo("en-US"),
                 new CultureInfo("en"),
+                new CultureInfo("de-DE"),
                 new CultureInfo("de"),
-                new CultureInfo("fr"),
+                new CultureInfo("fr")
             };
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
                 DefaultRequestCulture = new RequestCulture("en-US"),
                 SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures
+                SupportedUICultures = supportedCultures                 
             });
 
 

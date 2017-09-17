@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebApplication1.Resources {
+namespace WestWind.Globalization.Sample.AspNetCore.Properties {
     using System;
     
     
@@ -39,7 +39,8 @@ namespace WebApplication1.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WebApplication1.Resources.Controllers.LocalizationController", typeof(Controllers_LocalizationController).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WestWind.Globalization.Sample.AspNetCore.Properties.Controllers.LocalizationContr" +
+                            "oller", typeof(Controllers_LocalizationController).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

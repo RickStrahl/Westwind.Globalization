@@ -48,7 +48,7 @@ namespace Westwind.Globalization
     /// calls into the database to retrieve the resources for the ResourceSet.
     /// </summary>
     public class DbResourceSet : ResourceSet
-    {
+    {        
         string _BaseName = null;
         CultureInfo _Culture = null;
 
@@ -62,9 +62,10 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="baseName"></param>
         /// <param name="culture"></param>
-        public DbResourceSet(string baseName, CultureInfo culture)
-            : base(new DbResourceReader(baseName, culture))
-        {
+        /// <param name="configuration"></param>
+        public DbResourceSet(string baseName, CultureInfo culture, DbResourceConfiguration configuration) 
+            : base(new DbResourceReader(baseName, culture, configuration))
+        {            
             _BaseName = baseName;
             _Culture = culture;
         }

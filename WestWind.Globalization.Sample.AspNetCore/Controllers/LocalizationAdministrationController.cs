@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Resources;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -12,6 +15,7 @@ using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
+using Westwind.AspNetCore.Extensions;
 
 namespace Westwind.Globalization.Controllers
 {
@@ -24,12 +28,23 @@ namespace Westwind.Globalization.Controllers
         protected Formatting EnsureJsonNet = Formatting.Indented;
 
 
+        private IHostingEnvironment Host;
+
         private static JsonSerializerSettings jsonSettings = new JsonSerializerSettings()
         {
             ContractResolver = new DefaultContractResolver()
         };
-    
 
+        DbResInstance DbIRes { get;  }
+
+
+        public LocalizationAdministrationController(IHostingEnvironment host)
+        {
+            Host = host;
+
+            DbIRes = new DbResInstance( DbResourceConfiguration.Current);
+        }
+        
 
         [HttpGet]
         [Route("GetResourceList")]
@@ -38,9 +53,10 @@ namespace Westwind.Globalization.Controllers
         {
             var ids = Manager.GetAllResourceIds(resourceSet);
             if (ids == null)
-                throw new ApplicationException(DbRes.T("ResourceSetLoadingFailed", STR_RESOURCESET) + ":" +
+                throw new ApplicationException(DbIRes.T("ResourceSetLoadingFailed", STR_RESOURCESET) + ":" +
                                                Manager.ErrorMessage);
 
+            
             //return ids;
             return Json(ids, jsonSettings);
         }
@@ -165,7 +181,7 @@ namespace Westwind.Globalization.Controllers
         {
             var ids = Manager.GetAllResourceIdListItems(resourceSet);
             if (ids == null)
-                throw new ApplicationException(DbRes.T("ResourceSetLoadingFailed", STR_RESOURCESET) + ":" +
+                throw new ApplicationException(DbIRes.T("ResourceSetLoadingFailed", STR_RESOURCESET) + ":" +
                                                Manager.ErrorMessage);
 
             //return ids;
@@ -207,7 +223,7 @@ namespace Westwind.Globalization.Controllers
         {
             var ids = Manager.GetAllLocaleIds(resourceSet);
             if (ids == null)
-                throw new ApplicationException(DbRes.T("LocaleIdsFailedToLoad", STR_RESOURCESET) + ":" +
+                throw new ApplicationException(DbIRes.T("LocaleIdsFailedToLoad", STR_RESOURCESET) + ":" +
                                                Manager.ErrorMessage);
 
             var list = new List<object>();
@@ -303,7 +319,7 @@ namespace Westwind.Globalization.Controllers
                 throw new ArgumentException(Manager.ErrorMessage);
 
             var itemEx = new ResourceItemEx(item);
-            itemEx.ResourceList = GetResourceStrings(resourceId, resourceSet).ToList();
+            itemEx.ResourceList = GetResourceStringsInternal(resourceId, resourceSet).ToList();
 
             return Json(itemEx, jsonSettings);
         }
@@ -316,7 +332,15 @@ namespace Westwind.Globalization.Controllers
         /// <param name="resourceSet"></param>
         /// <returns>Returns an array of Key/Value objects to the client</returns>
         [Route("GetResourceStrings")]
-        public IEnumerable<ResourceString> GetResourceStrings(string resourceId, string resourceSet)
+        public ActionResult GetResourceStrings(string resourceId, string resourceSet)
+        {
+            var res = GetResourceStringsInternal(resourceId, resourceSet);
+
+            return Json(res, jsonSettings);
+        }
+
+
+        protected IEnumerable<ResourceString> GetResourceStringsInternal(string resourceId, string resourceSet)        
         {
             Dictionary<string, string> resources = Manager.GetResourceStrings(resourceId, resourceSet, true);
 
@@ -383,7 +407,7 @@ namespace Westwind.Globalization.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("UpdateComment")]
-        public bool UpdateComment(dynamic parm)
+        public bool UpdateComment([FromBody] dynamic parm)
         {
             string comment = parm.comment;
             string resourceId = parm.resourceId;
@@ -411,7 +435,7 @@ namespace Westwind.Globalization.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("UpdateResource")]
-        public bool UpdateResource(ResourceItem resource)
+        public bool UpdateResource([FromBody] ResourceItem resource)
         {
             if (resource == null)
                 throw new ArgumentException("NoResourcePassedToAddOrUpdate");
@@ -486,7 +510,8 @@ namespace Westwind.Globalization.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetLocalizationInfo")]
-        public object GetLocalizationInfo()
+        //public object GetLocalizationInfo()
+        public ActionResult GetLocalizationInfo()
         {
             //// Get the Web application configuration object.
             //var webConfig = WebConfigurationManager.OpenWebConfiguration("~/web.config");
@@ -501,7 +526,7 @@ namespace Westwind.Globalization.Controllers
 
             var config = DbResourceConfiguration.Current;
 
-            return new
+            return Json(new
             {
                 //ProviderFactory = providerFactory,
                 config.ConnectionString,
@@ -515,7 +540,7 @@ namespace Westwind.Globalization.Controllers
                 config.BingClientId,
                 config.BingClientSecret,
                 config.AddMissingResources
-            };
+            },jsonSettings);
         }
 
 
@@ -546,7 +571,7 @@ namespace Westwind.Globalization.Controllers
             }
 
             if (!Manager.DeleteResource(resourceId, resourceSet, localeId))
-                throw new ApplicationException(DbRes.T("ResourceUpdateFailed", STR_RESOURCESET) + ": " +
+                throw new ApplicationException(DbIRes.T("ResourceUpdateFailed", STR_RESOURCESET) + ": " +
                                                Manager.ErrorMessage);
 
             return true;
@@ -565,7 +590,7 @@ namespace Westwind.Globalization.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("RenameResource")]
-        public bool RenameResource(dynamic parms)
+        public bool RenameResource([FromBody] dynamic parms)
         {
 #if OnlineDemo
         throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
@@ -576,7 +601,7 @@ namespace Westwind.Globalization.Controllers
 
 
             if (!Manager.RenameResource(resourceId, newResourceId, resourceSet))
-                throw new ApplicationException(DbRes.T("InvalidResourceId", STR_RESOURCESET));
+                throw new ApplicationException(DbIRes.T("InvalidResourceId", STR_RESOURCESET));
 
             return true;
         }
@@ -594,7 +619,7 @@ namespace Westwind.Globalization.Controllers
         public bool RenameResourceProperty(string Property, string NewProperty, string ResourceSet)
         {
             if (!Manager.RenameResourceProperty(Property, NewProperty, ResourceSet))
-                throw new ApplicationException(DbRes.T("InvalidResourceId", STR_RESOURCESET));
+                throw new ApplicationException(DbIRes.T("InvalidResourceId", STR_RESOURCESET));
 
             return true;
         }
@@ -680,7 +705,7 @@ namespace Westwind.Globalization.Controllers
         {
             //Westwind.Globalization.Tools.wwWebUtils.RestartWebApplication();
             DbResourceConfiguration.ClearResourceCache(); // resource provider
-            DbRes.ClearResources(); // resource manager
+            DbIRes.ClearResources(); // resource manager
         }
 
 
@@ -711,7 +736,7 @@ namespace Westwind.Globalization.Controllers
 #endif
 
             if (!Manager.CreateLocalizationTable(null))
-                throw new ApplicationException(DbRes.T("LocalizationTableNotCreated", STR_RESOURCESET) + "\r\n" +
+                throw new ApplicationException(DbIRes.T("LocalizationTableNotCreated", STR_RESOURCESET) + "\r\n" +
                                                Manager.ErrorMessage);
             return true;
         }
@@ -739,7 +764,7 @@ namespace Westwind.Globalization.Controllers
             return false;
         }
 
-#if false
+
         /// <summary>
         /// Creates .NET strongly typed class from the resources. Pass:
         /// fileName, namespace, classType, resourceSets as a map.
@@ -750,8 +775,9 @@ namespace Westwind.Globalization.Controllers
         /// </remarks>
         /// <param name="parms"></param>
         /// <returns></returns>
-        [CallbackMethod]
-        public bool CreateClass(dynamic parms)
+        [HttpPost]
+        [Route("CreateClass")]
+        public bool CreateClass([FromBody] dynamic parms)
         {
 #if OnlineDemo
             throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
@@ -774,43 +800,47 @@ namespace Westwind.Globalization.Controllers
 
 
             StronglyTypedResources strongTypes =
-                new StronglyTypedResources(Context.Request.PhysicalApplicationPath);
+                new StronglyTypedResources(Request.MapPath("~/", basePath: Host.ContentRootPath));
 
             if (string.IsNullOrEmpty(filename))
-                filename = HttpContext.Current.Server.MapPath(config.StronglyTypedGlobalResource);
+                filename = Request.MapPath(config.StronglyTypedGlobalResource, basePath: Host.ContentRootPath);
 
             else if (filename.StartsWith("~"))
-                filename = Context.Server.MapPath(filename);
+                filename = Request.MapPath(filename, basePath: Host.ContentRootPath);
 
             filename = filename.Replace("/", "\\").Replace("\\\\", "\\");
 
             if (string.IsNullOrEmpty(nameSpace))
                 nameSpace = config.ResourceBaseNamespace;
-
-
+            
             if (!string.IsNullOrEmpty(strongTypes.ErrorMessage))
-                throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "StronglyTypedGlobalResourcesFailed"));
+                throw new ApplicationException(DbIRes.T("StronglyTypedGlobalResourcesFailed", STR_RESOURCESET));
 
-            if (classType != "Resx")
-                strongTypes.CreateClassFromAllDatabaseResources(nameSpace, filename, resourceSets);
-            else
-            {
-                string outputBasePath = filename;
+            //if (classType != "Resx")
+            strongTypes.CreateClassFromAllDatabaseResources(nameSpace, filename, resourceSets);
 
-                if (resourceSets == null || resourceSets.Length < 1)
-                    resourceSets = GetResourceSets().ToArray();
 
-                foreach (var resource in resourceSets)
-                {
-                    string file = Path.Combine(outputBasePath, resource + ".resx");
-                    if (!File.Exists(file))
-                        continue;
 
-                    var str = new StronglyTypedResources(null);
+            //else
+            // Missing Resx StronglyTypedResourceBuilder
+            //{
+            //    string outputBasePath = filename;
 
-                    str.CreateResxDesignerClassFromResxFile(file, resource, nameSpace, false);
-                }
-            }
+            //    if (resourceSets == null || resourceSets.Length < 1)
+            //        resourceSets = Manager.GetAllResourceSets(ResourceListingTypes.AllResources).ToArray();
+
+            //    foreach (var resource in resourceSets)
+            //    {
+            //        string file = Path.Combine(outputBasePath, resource + ".resx");
+            //        if (!System.IO.File.Exists(file))
+            //            continue;
+
+
+            //        var str = new StronglyTypedResources(null);                    
+            //        str.CreateResxDesignerClassFromResxFile(file, resource, nameSpace, false);
+
+            //    }
+            //}
 
             return true;
         }
@@ -821,8 +851,9 @@ namespace Westwind.Globalization.Controllers
         /// </summary>
         /// <param name="parms"></param>
         /// <returns></returns>
-        [CallbackMethod]
-        public bool ExportResxResources(dynamic parms)
+        [HttpPost]
+        [Route("ExportResxResources")]
+        public bool ExportResxResources([FromBody] dynamic parms)
         {
 #if OnlineDemo
             throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
@@ -841,29 +872,25 @@ namespace Westwind.Globalization.Controllers
 
             if (string.IsNullOrEmpty(outputBasePath))
                 outputBasePath = DbResourceConfiguration.Current.ResxBaseFolder;
-            else if (outputBasePath.StartsWith("~"))
-                outputBasePath = Context.Server.MapPath(outputBasePath);
 
-            outputBasePath = outputBasePath.Replace("/", "\\").Replace("\\\\", "\\");
+            if (outputBasePath.StartsWith("~"))
+                outputBasePath = Request.MapPath(outputBasePath, basePath: Host.ContentRootPath );
+
+            string slash = Path.DirectorySeparatorChar.ToString();
+            outputBasePath = outputBasePath.Replace("/", slash)
+                                           .Replace(slash + slash,slash);
 
             DbResXConverter exporter = new DbResXConverter(outputBasePath);
+                      
 
-            if (DbResourceConfiguration.Current.ResxExportProjectType == GlobalizationResxExportProjectTypes.WebForms)
-            {
-                if (!exporter.GenerateLocalWebResourceResXFiles())
-                    throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceGenerationFailed"));
-                if (!exporter.GenerateGlobalWebResourceResXFiles())
-                    throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceGenerationFailed"));
-            }
-            else
-            {
-                // if resourceSets is null all resources are generated
-                if (!exporter.GenerateResXFiles(resourceSets))
-                    throw new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceGenerationFailed"));
-            }
 
+            // if resourceSets is null all resources are generated
+            if (!exporter.GenerateResXFiles(resourceSets))
+                throw new ApplicationException(DbIRes.T("ResourceGenerationFailed", STR_RESOURCESET));
+          
             return true;
         }
+
 
 
         /// <summary>
@@ -871,7 +898,7 @@ namespace Westwind.Globalization.Controllers
         /// </summary>
         /// <param name="inputBasePath"></param>
         /// <returns></returns>
-        [CallbackMethod]
+        [Route("ImportResxResources")]
         public bool ImportResxResources(string inputBasePath = null)
         {
 #if OnlineDemo
@@ -882,7 +909,7 @@ namespace Westwind.Globalization.Controllers
                 inputBasePath = DbResourceConfiguration.Current.ResxBaseFolder;
 
             if (inputBasePath.Contains("~"))
-                inputBasePath = Context.Server.MapPath(inputBasePath);
+                inputBasePath = Request.MapPath(inputBasePath);
 
             inputBasePath = inputBasePath.Replace("/", "\\").Replace("\\\\", "\\");
 
@@ -896,14 +923,14 @@ namespace Westwind.Globalization.Controllers
                 res = converter.ImportWinResources(inputBasePath);
 
             if (!res)
-                new ApplicationException(WebUtils.GRes(STR_RESOURCESET, "ResourceImportFailed"));
+                new ApplicationException(DbIRes.T("ResourceImportFailed", STR_RESOURCESET));
 
             return true;
         }
 
 
-#endif
     }
+
 
 
     /// <summary>

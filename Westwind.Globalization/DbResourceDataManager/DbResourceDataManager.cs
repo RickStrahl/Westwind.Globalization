@@ -2,7 +2,7 @@
 /*
  **************************************************************
  *  Author: Rick Strahl 
- *          © West Wind Technologies, 2009-2015
+ *          ï¿½ West Wind Technologies, 2009-2015
  *          http://www.west-wind.com/
  * 
  *
@@ -84,21 +84,29 @@ namespace Westwind.Globalization
         /// Creates an instance of the DbResourceDataManager based on configuration settings
         /// </summary>
         /// <returns></returns>
-        public static DbResourceDataManager CreateDbResourceDataManager(Type managerType = null)
+        public static DbResourceDataManager CreateDbResourceDataManager(Type managerType = null, 
+                                                                        DbResourceConfiguration configuration = null)
         {
             if (managerType == null)
                 managerType = DbResourceConfiguration.Current.DbResourceDataManagerType;
             if (managerType == null)
                 managerType = typeof (DbResourceSqlServerDataManager);
 
-            return ReflectionUtils.CreateInstanceFromType(managerType) as DbResourceDataManager;            
+            DbResourceDataManager manager = ReflectionUtils.CreateInstanceFromType(managerType) as DbResourceDataManager;
+            if (configuration != null)
+                manager.Configuration = configuration;
+            else
+                manager.Configuration = DbResourceConfiguration.Current;
+
+            return manager;
         }
 
         /// <summary>
         /// Create an instance of the provider based on the resource type
         /// </summary>
         /// <returns></returns>
-        public static DbResourceDataManager CreateDbResourceDataManager(DbResourceProviderTypes type)
+        public static DbResourceDataManager CreateDbResourceDataManager(DbResourceProviderTypes type, 
+                                                                        DbResourceConfiguration configuration = null)
         {
             DbResourceDataManager manager;
 
@@ -110,6 +118,9 @@ namespace Westwind.Globalization
                 manager = new DbResourceSqLiteDataManager();
             else
                 return null;
+
+            if(configuration != null)
+                manager.Configuration = configuration;
 
             return manager;
         }

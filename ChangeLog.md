@@ -3,6 +3,12 @@
 ### Version 2.15
 <small>not released yet</small>
 
+* **Added .NET Core 2.0 ASP.NET Core 2.0 Support to WestWind.Globaliztion**   
+Updated `Westwind.Globalization` project to work as a .NET Standard 2.0 project usable in .NET Core and ASP.NET Core. Existing code should run as is, except that configuration for .NET Core applications has to use a JSON configuration file (for static configuration) or configure using the new ASP.NET Core `.AddWestwindGlobalization()` configuration in `ConfigureServices()`.
+
+* **DbResInstance Class**   
+Previous versions only had a static `DbRes` class to access content directly off the resource manager/provider. There's now an instance class that has an associated configuration that is more easily testable and supports multiple configurations. It's also a better fit for ASP.NET Core and the dynamic configuration through DI.
+
 * **dbRes.TDefault() to get resource with Default fallback**  
 New method that allows passing of a default string if a resources ID can't be found. 
 

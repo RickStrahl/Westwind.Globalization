@@ -57,13 +57,7 @@ namespace Westwind.Globalization
     public class DbResourceConfiguration : Westwind.Utilities.Configuration.AppConfiguration
     {
         
-        /// <summary>
-        /// Name of a LocalizationConfiguration entry that is loaded from the database
-        /// if available. Defaults to null - if set reads these configuration settings
-        /// other than the database connection string from an entry in the 
-        /// LocalizationConfigurations table.
-        /// </summary>
-        public string ActiveConfiguration { get; set; }
+        
 
         /// <summary>
         /// A global instance of the current configuration. By default this instance reads its
@@ -113,6 +107,14 @@ namespace Westwind.Globalization
         /// </summary>
         public string ResourceTableName { get; set; } = "Localizations";
 
+
+        /// <summary>
+        /// Name of a LocalizationConfiguration entry that is loaded from the database
+        /// if available. Defaults to null - if set reads these configuration settings
+        /// other than the database connection string from an entry in the 
+        /// LocalizationConfigurations table.
+        /// </summary>
+        public string ActiveConfiguration { get; set; }
 
         /// <summary>
         /// Path of an optionally generated strongly typed resource
@@ -165,6 +167,8 @@ namespace Westwind.Globalization
         /// ResourceAccesssMode override that can be explicitly overridden.    
         /// </summary>
         public ResourceAccessMode ResourceAccessMode { get; set; } = ResourceAccessMode.DbResourceManager;
+
+    
 
         /// <summary>
         /// Determines the location of the Localization form in a Web relative path.

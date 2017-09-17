@@ -3,16 +3,16 @@ using System.Threading;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using WestWind.Globalization.Sample.AspNetCore.Resources;
+using WestWind.Globalization.Sample.AspNetCore.Properties;
 
-namespace Westwind.Globalization.Controllers
+namespace WestWind.Globalization.Sample.AspNetCore.Controllers
 {
     [Route("api/Localization")]
     public class LocalizationController : Controller
     {
-        private readonly IStringLocalizer<LocalizationAdministrationController> _localizer;
+        private readonly IStringLocalizer<LocalizationController> _localizer;
 
-        public LocalizationController(IStringLocalizer<LocalizationAdministrationController> localizer)
+        public LocalizationController(IStringLocalizer<LocalizationController> localizer)
         {
             _localizer = localizer;
         }

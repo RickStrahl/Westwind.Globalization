@@ -176,7 +176,30 @@ The .Web version installs the required assemblies, adds a few configuration entr
 #### Configuration Settings
 The key configuration items set are the DbResourceConfiguration section in
 the config file which tells the provider where to find the database
-resources:
+resources.
+
+ASP.NET Core uses a JSON file:
+```json
+{
+  "ActiveConfiguration": null,
+  "ConnectionString": "server=.;database=localizationsbad;integrated security=true;app=LocalizationSample",
+  "ResourceTableName": "Localizations",
+  "StronglyTypedGlobalResource": "~/App_Code/Resources.cs",
+  "ResourceBaseNamespace": "AppResources",
+  "ResxExportProjectType": "Project",
+  "ResxBaseFolder": "~/Properties/",
+  "AddMissingResources": true,
+  "ResourceAccessMode": "DbResourceManager",
+  "LocalizationFormWebPath": "~/LocalizationAdmin/",
+  "BingClientId": "12345-4b99-47ed-be7e-caf733526020",
+  "BingClientSecret": "Screaming.Til.Your.Hoarse.SKTY",
+  "GoogleApiKey": "XXXfaSyDcvmGhGN7FlynP9QUZOLF8_4K8iF9ChWo"
+}
+```
+
+
+
+ASP.NET Classic uses the web.config Configuration file:
 
 ```xml
 <configuration>

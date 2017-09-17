@@ -47,7 +47,9 @@ namespace Westwind.Globalization
     /// in the same structures as resources read from ResX files.
     /// </summary>
     public class DbResourceReader : IResourceReader
-    {
+    {        
+        internal DbResourceConfiguration Configuration;
+
         /// <summary>
         /// Name of the ResourceSet
         /// </summary>
@@ -76,8 +78,14 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="baseNameField">The base name of the resource reader</param>
         /// <param name="cultureInfo">The CultureInfo identifying the culture of the resources to be read</param>
-        public DbResourceReader(string baseNameField, CultureInfo cultureInfo)
+        /// <param name="configuration">Configuration instance that's passed to the resource reader</param>
+        public DbResourceReader(string baseNameField, CultureInfo cultureInfo, DbResourceConfiguration configuration)
         {
+            if (configuration != null)
+                Configuration = configuration;
+            else
+                Configuration = DbResourceConfiguration.Current;
+
             this.baseNameField = baseNameField;
             this.cultureInfo = cultureInfo;
         }
@@ -110,7 +118,7 @@ namespace Westwind.Globalization
                 // DEPENDENCY HERE
                 // Here's the only place we really access the database and return
                 // a specific ResourceSet for a given ResourceSet Id and Culture
-                DbResourceDataManager manager = DbResourceDataManager.CreateDbResourceDataManager();
+                DbResourceDataManager manager = DbResourceDataManager.CreateDbResourceDataManager(configuration:Configuration);
                 Items = manager.GetResourceSet(cultureInfo.Name, baseNameField);
                 return Items.GetEnumerator();
             }

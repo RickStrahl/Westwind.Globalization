@@ -25,6 +25,7 @@
         vm.toLang = "de";
         vm.callingId = null;
         vm.resource = null;
+        vm.baseUrl = "../api/LocalizationAdministration/";
 
         vm.error = {
             message: null,
@@ -75,7 +76,8 @@
                 text: vm.inputText,
                 service: type
             };
-            $http.post("localizationService.ashx?method=Translate", data)
+            
+            $http.post(vm.baseUrl + "Translate", data)
                 .success(function (result) {
                     if (type == "google")
                         vm.googleTranslation = result;

@@ -40,6 +40,8 @@ namespace Westwind.Globalization
     /// </summary>
     public class DbResourceProvider : IResourceProvider, IImplicitResourceProvider , IWestWindResourceProvider
     {
+        internal DbResourceConfiguration Configuration;
+
         /// <summary>
         /// 
         /// </summary>
@@ -60,6 +62,8 @@ namespace Westwind.Globalization
         /// <param name="classname"></param>
         public DbResourceProvider(string virtualPath, string classname)
         {
+            Configuration = DbResourceConfiguration.Current;
+
             lock (_SyncLock)
             {
                 if (!ProviderLoaded)
@@ -156,7 +160,7 @@ namespace Westwind.Globalization
             get
             {
                 if (_ResourceReader == null)
-                    _ResourceReader = new DbResourceReader(_className, CultureInfo.InvariantCulture);
+                    _ResourceReader = new DbResourceReader(_className, CultureInfo.InvariantCulture,Configuration);
 
                 return _ResourceReader;
             }

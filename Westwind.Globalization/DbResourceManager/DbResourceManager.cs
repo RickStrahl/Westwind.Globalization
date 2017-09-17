@@ -53,6 +53,13 @@ namespace Westwind.Globalization
     /// </summary>
     public class DbResourceManager : ResourceManager
     {
+        /// <summary>
+        /// Configuration used to access the Db Resources.
+        /// If not set uses the static global configuration, otherwise you can
+        /// pass in a customized configuration that is used by this provider
+        /// </summary>
+        public DbResourceConfiguration Configuration;
+
         Dictionary<string, ResourceSet> InternalResourceSets;
 
 #if NETSTANDARD
@@ -75,18 +82,8 @@ namespace Westwind.Globalization
         /// <summary>
         /// If true causes any entries that aren't found to be added
         /// </summary>
-        public bool AutoAddMissingEntries { get; set; }
-
-        /// <summary> 
-        /// Constructs a DbResourceManager object
-        /// </summary>
-        /// <param name="baseName">The qualified base name which the resources represent</param>
-        public DbResourceManager(string baseName)
-        {
-            
-			Initialize(baseName, null);
-		}
-
+        public bool AutoAddMissingEntries { get; set; }        
+        
         public override Type  ResourceSetType
         {
         	get 
@@ -94,6 +91,16 @@ namespace Westwind.Globalization
         		 return typeof(DbResourceSet);
         	}
         }
+
+        /// <summary> 
+        /// Constructs a DbResourceManager object
+        /// </summary>
+        /// <param name="baseName">The qualified base name which the resources represent</param>
+        public DbResourceManager(string baseName) 
+        {            
+			Initialize(baseName, null);            
+		}
+
 
         /// <summary>
         /// Constructs a DbResourceManager object. Match base constructors.
@@ -104,11 +111,24 @@ namespace Westwind.Globalization
 			Initialize(resourceType.Name, resourceType.Assembly);
 		}
 
+        /// <summary>
+        /// Constructs a DbResourceManager object. Match base constructors.
+        /// </summary>
+        /// <param name="baseName">The qualified base name which the resources represent</param>
+        /// <param name="assembly">Assembly that hosts the resources. Not used.</param>
+		
         public DbResourceManager(string baseName, Assembly assembly) : base(baseName, assembly)
         {
             Initialize( baseName,null);
         }
-        public DbResourceManager(string baseName, Assembly assembly, Type usingResourceSet) 
+
+        /// <summary>
+        /// Constructs a DbResourceManager object. Match base constructors.
+        /// </summary>
+        /// <param name="baseName">The qualified base name which the resources represent</param>
+        /// <param name="assembly">Assembly that hosts the resources. Not used.</param>
+		/// <param name="resourceType">Associated resource type. Not used.</param>
+        public DbResourceManager(string baseName, Assembly assembly, Type resourceType)  
         {
             Initialize(baseName, null);
         }
@@ -128,6 +148,8 @@ namespace Westwind.Globalization
         /// <param name="assembly"></param>
         protected void Initialize(string baseName, Assembly assembly)
         {
+            // default configuration is static but you can override the configuration explicitly
+            Configuration = DbResourceConfiguration.Current;
 
             BaseNameField = baseName;
 
@@ -162,7 +184,7 @@ namespace Westwind.Globalization
                     return resourceSets[culture.Name];
             
                 // Otherwise create a new instance, load it and return it
-                DbResourceSet rs = new DbResourceSet(BaseNameField, culture);                
+                DbResourceSet rs = new DbResourceSet(BaseNameField, culture, Configuration);                
                 
                 // Add the resource set to the cached set
                 resourceSets.Add(culture.Name, rs);
@@ -232,7 +254,7 @@ namespace Westwind.Globalization
         /// <param name="value"></param>
         public void AddMissingResource(string name, string value, CultureInfo culture = null)
         {
-            var manager = DbResourceDataManager.CreateDbResourceDataManager();  
+            var manager = DbResourceDataManager.CreateDbResourceDataManager();
 
             string cultureName = string.Empty;
             if (culture != null)

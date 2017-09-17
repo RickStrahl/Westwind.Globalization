@@ -2,7 +2,7 @@
 /*
  **************************************************************
  *  Author: Rick Strahl 
- *          © West Wind Technologies, 2009-2015
+ *          © West Wind Technologies, 2009-2017
  *          http://www.west-wind.com/
  * 
  *
@@ -39,12 +39,10 @@ namespace Westwind.Globalization
 {
 
     /// <summary>
-    /// Static Helper class that handles access to the DbResourceManager
+    /// Helper class that handles access to the DbResourceManager
     /// more easily with single method access. The T() method provides
     /// an easy way to embed resources into applications using the
     /// resource key.
-    /// 
-    /// Calls through to DbResInstance
     /// 
     /// Also allows for resource reading, writing (new and updates transparently), 
     /// deleting and clearing of resources from memory.
@@ -55,17 +53,31 @@ namespace Westwind.Globalization
     /// in memory. Data access occurs only on intial access of
     /// each resource set/locale.
     /// </summary>
-    public class DbRes
+    public class DbResInstance
     {
         /// <summary>
-        /// Call through instance that handles all actual access
+        /// Internal dictionary that holds instances of resource managers
+        /// for each resourceset defined in the application. Lazy loaded
+        /// as resources are accessed.
         /// </summary>
-        private static DbResInstance Instance;
-        
+        private static Dictionary<string, DbResourceManager> ResourceManagers =
+            new Dictionary<string, DbResourceManager>();
 
-        static DbRes()
+        /// <summary>
+        /// Determines whether resources that fail in a lookup are automatically
+        /// added to the resource table
+        /// </summary>
+        public static bool AutoAddResources { get; set; }
+
+        public DbResourceConfiguration Configuration {get; set; }
+
+        public DbResInstance(DbResourceConfiguration configuration = null)
         {
-            Instance = new DbResInstance(DbResourceConfiguration.Current);
+            AutoAddResources = DbResourceConfiguration.Current.AddMissingResources;
+            if (Configuration != null)
+                Configuration = configuration;
+            else
+                Configuration = DbResourceConfiguration.Current;
         }
 
         /// <summary>
@@ -84,9 +96,41 @@ namespace Westwind.Globalization
         /// Localized resource or the resource Id if no match is found. 
         /// This value *always* returns a string unless you pass in null.
         /// </returns>
-        public static string T(string resId, string resourceSet = null, string lang = null)
+        public string T(string resId, string resourceSet = null, string lang = null)
         {
-            return Instance.T(resId, resourceSet, lang);
+            if (string.IsNullOrEmpty(resId))
+                return resId;
+
+            if (resourceSet == null)
+                resourceSet = string.Empty;
+
+#if NETFULL
+            if (DbResourceConfiguration.Current.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider && HttpContext.Current != null)
+            {
+                var translated = HttpContext.GetGlobalResourceObject(resourceSet, resId) as string;
+                if (string.IsNullOrEmpty(translated))
+                    return resId;
+
+                return translated;
+            }
+#endif
+
+            var manager = GetResourceManager(resourceSet);                            
+            if (manager == null)
+                return resId;
+
+            CultureInfo ci;
+            if (string.IsNullOrEmpty(lang))
+                ci = CultureInfo.CurrentUICulture;
+            else
+                ci = new CultureInfo(lang);
+
+            string result = manager.GetObject(resId, ci) as string;
+
+            if (string.IsNullOrEmpty(result))
+                return resId;
+
+            return result;
         }
 
         /// <summary>
@@ -102,10 +146,43 @@ namespace Westwind.Globalization
         /// <returns>
         /// Localized resource or the resource Id if no match is found. 
         /// This value *always* returns a string unless you pass in null in defaultText.
-        /// </returns>        
-        public static string TDefault(string resId, string defaultText, string resourceSet, string lang = null)
+        /// </returns>
+        /// 
+        public string TDefault(string resId, string defaultText, string resourceSet, string lang = null)
         {
-            return Instance.TDefault(resId, defaultText, resourceSet, lang);
+            if (string.IsNullOrEmpty(resId))
+                return defaultText;
+
+            if (resourceSet == null)
+                resourceSet = string.Empty;
+
+#if NETFULL
+            if (DbResourceConfiguration.Current.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider && HttpContext.Current != null)
+            {
+                var translated = HttpContext.GetGlobalResourceObject(resourceSet, resId) as string;
+                if (string.IsNullOrEmpty(translated))
+                    return defaultText;
+
+                return translated;
+            }
+#endif
+
+            var manager = GetResourceManager(resourceSet);
+            if (manager == null)
+                return defaultText;
+
+            CultureInfo ci;
+            if (string.IsNullOrEmpty(lang))
+                ci = CultureInfo.CurrentUICulture;
+            else
+                ci = new CultureInfo(lang);
+
+            string result = manager.GetObject(resId, ci) as string;
+
+            if (string.IsNullOrEmpty(result))
+                return defaultText;
+
+            return result;
         }
 
 #if NETFULL
@@ -128,9 +205,9 @@ namespace Westwind.Globalization
         /// Localized resource or the resource Id if no match is found. 
         /// This value *always* returns a string unless you pass in null.
         /// </returns>
-        public static HtmlString THtml(string resId, string resourceSet = null, string lang = null)
+        public HtmlString THtml(string resId, string resourceSet = null, string lang = null)
         {
-            return Instance.THtml(resId, resourceSet, lang);
+            return new HtmlString(T(resId, resourceSet, lang));
         }
 #endif
 
@@ -143,9 +220,9 @@ namespace Westwind.Globalization
         /// <param name="resourceSet">Resource set to localize from</param>        
         /// <param name="args">Any arguments for the format string</param>
         /// <returns></returns>
-        public static string TFormat(string format, string resId, string resourceSet, params object[] args)
+        public string TFormat(string format, string resId, string resourceSet, params object[] args)
         {
-            return Instance.TFormat(format, resId, resourceSet, args);            
+            return TFormat(resId, resourceSet, string.Empty, args);
         }
 
         /// <summary>
@@ -158,10 +235,11 @@ namespace Westwind.Globalization
         /// <param name="lang">Language code</param>
         /// <param name="args">Any arguments for the format string</param>
         /// <returns></returns>
-        public static string TFormat(string format, string resId, string resourceSet, string lang, params object[] args)
+        public string TFormat(string format, string resId, string resourceSet, string lang, params object[] args)
         {
-            return Instance.TFormat(format, resId, resourceSet, lang, args);
+            return string.Format(T(resId, resourceSet, lang), args);
         }
+
 
         /// <summary>
         /// Localization helper function that Translates a resource
@@ -178,9 +256,36 @@ namespace Westwind.Globalization
         /// <returns>
         /// The resource as an object.    
         /// </returns>
-        public static object TObject(string resId, string resourceSet = null, string lang = null, bool autoAdd = false)
+        public object TObject(string resId, string resourceSet = null, string lang = null, bool autoAdd = false)
         {
-            return Instance.TObject(resId, resourceSet, lang, autoAdd);
+            if (string.IsNullOrEmpty(resId))
+                return resId;
+
+            if (resourceSet == null)
+                resourceSet = string.Empty;
+
+            // check if the res manager exists
+            ResourceManager manager = GetResourceManager(resourceSet);
+            
+            // no manager no resources
+            if (manager == null)
+                return resId;
+
+            CultureInfo ci = null;
+            if (string.IsNullOrEmpty(lang))
+                ci = CultureInfo.CurrentUICulture;
+            else
+                ci = new CultureInfo(lang);
+
+            if(manager is DbResourceManager)
+                ((DbResourceManager) manager).AutoAddMissingEntries = AutoAddResources;
+
+            object result = manager.GetObject(resId, ci);
+
+            if (result == null)
+                return resId;
+
+            return result;
         }
 
         /// <summary>
@@ -194,10 +299,18 @@ namespace Westwind.Globalization
         /// <param name="resourceSet">The resourceSet to store the resource on. 
         /// If no resource set name is provided a default empty resource set is used.</param>
         /// <returns>true or false</returns>
-        public static bool WriteResource(string resourceId, string value = null, string lang = null,
+        public bool WriteResource(string resourceId, string value = null, string lang = null,
             string resourceSet = null)
         {
-            return Instance.WriteResource(resourceId, value, lang, resourceSet);
+            if (lang == null)
+                lang = string.Empty;
+            if (resourceSet == null)
+                resourceSet = string.Empty;
+            if (value == null)
+                value = resourceId;
+
+            var db = DbResourceDataManager.CreateDbResourceDataManager();  
+            return db.UpdateOrAddResource(resourceId, value, lang, resourceSet, null) > -1;
         }
 
         /// <summary>
@@ -207,9 +320,10 @@ namespace Westwind.Globalization
         /// <param name="lang">The language Id - Be careful:  If empty or null deletes matching keys for all languages</param>
         /// <param name="resourceSet">The resource set to apply</param>
         /// <returns>true or false</returns>
-        public static bool DeleteResource(string resourceId, string resourceSet = null, string lang = null)
+        public bool DeleteResource(string resourceId, string resourceSet = null, string lang = null)
         {
-            return Instance.DeleteResource(resourceId, resourceSet, lang);
+            var db = DbResourceDataManager.CreateDbResourceDataManager();  
+            return db.DeleteResource(resourceId, resourceSet: resourceSet, cultureName: lang);
         }
 
         /// <summary>
@@ -217,9 +331,28 @@ namespace Westwind.Globalization
         /// </summary>
         /// <param name="resourceSet"></param>
         /// <returns></returns>
-        public static ResourceManager GetResourceManager(string resourceSet)
-        {
-            return Instance.GetResourceManager(resourceSet);
+        public ResourceManager GetResourceManager(string resourceSet)
+        {            
+            // check if the res manager exists
+            DbResourceManager manager = null;
+            ResourceManagers.TryGetValue(resourceSet, out manager);
+
+            // if not we have to create it and add it to static collection
+            if (manager == null)
+            {
+                
+                lock (ResourceManagers)
+                {
+                    ResourceManagers.TryGetValue(resourceSet, out manager);
+                    if (manager == null)
+                    {                        
+                        manager = new DbResourceManager(resourceSet);
+                        ResourceManagers.Add(resourceSet, manager);
+                    }
+                }
+            }
+
+            return manager;
         }
 
         /// <summary>
@@ -228,18 +361,33 @@ namespace Westwind.Globalization
         /// <param name="resourceSet">The name of the resource set to return.</param>
         /// <param name="lang">The language code (en-US,de-DE). Pass null to use the current ui culture</param>
         /// <returns></returns>
-        public static ResourceSet GetResourceSet(string resourceSet, string lang = null)
+        public ResourceSet GetResourceSet(string resourceSet, string lang = null)
         {
-            return Instance.GetResourceSet(resourceSet, lang);
+            var manager = GetResourceManager(resourceSet);
+            if (manager == null)
+                return null;
+
+            CultureInfo ci = null;
+            if (lang == null)
+                ci = CultureInfo.CurrentUICulture;
+            else if (lang == string.Empty)
+                ci = CultureInfo.InvariantCulture;
+            else
+                ci = new CultureInfo(lang);
+
+            return manager.GetResourceSet(ci, false, true);
         }
 
         /// <summary>
         /// Clears resources from memory and forces reloading of all ResourceSets.
         /// Effectively unloads the ResourceManager and ResourceProvider.
         /// </summary>
-        public static void ClearResources()
+        public void ClearResources()
         {
-            Instance.ClearResources();
+            lock (ResourceManagers)
+            {
+                ResourceManagers = new Dictionary<string, DbResourceManager>();
+            }
         }
 
     }

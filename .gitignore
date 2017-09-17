@@ -31,5 +31,7 @@ _ReSharper*/
 $tf*/
 node_modules/
 .idea/
+.vs/
+.vscode/
 /Westwind.ApplicationConfiguration.WebSample/Properties/PublishProfiles/*.pubxml
 .vs/config/applicationhost.config
