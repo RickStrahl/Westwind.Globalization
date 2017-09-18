@@ -1,0 +1,75 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <Version>3.0.0-preview1-0</Version>
+    <Authors>Rick Strahl</Authors>
+    <Company>West Wind Technologies</Company>
+    <Description>West Wind Globalization provides custom data driven .NET ResourceManagers and ResourceProviders for both plain .NET and ASP.NET applications as well as serving JavaScript resources from .NET resources. There's also a a rich real time Web Resource editor that can update resources live but you'll need the Web NuGet package for that feature to light up. 
+
+This core package includes only core, non-Web specific features which include the custom ResourceManager implementation with support for SQL Server, Sql Server Compact, MySql  and SqLite, DbRes dynamic resource access, DbResxConverter and strongly typed class generator. All the 'core' system features are contained in this package. 
+
+If you want to use ASP.NET ResourceProviders, JavaScript resources from .NET Resources, or the Web Resource Editor add the Westwind.Globalization.Web package.</Description>
+    <Summary>not used</Summary>
+    <Copyright>West Wind Technologies</Copyright>
+    <PackageLicenseUrl>https://github.com/RickStrahl/Westwind.Globalization#license</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/RickStrahl/Westwind.Globalization</PackageProjectUrl>
+    <PackageIconUrl>http://west-wind.com/westwind.globalization/images/Westwind.Localization_128.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/RickStrahl/Westwind.Globalization</RepositoryUrl>
+    <RepositoryType>Github</RepositoryType>
+    <PackageTags>Localization Translation Globalization Resources</PackageTags>
+    <NeutralLanguage />
+  </PropertyGroup>
+
+  <ItemGroup>    
+    <PackageReference Include="CommonMark.NET" Version="0.15.1" />    
+    <PackageReference Include="Westwind.Utilities" Version="3.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
+    <DefineConstants>NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45'">
+    <DefineConstants>NET45;NETFULL</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Design">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Design.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  
+</Project>

@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
+    <DefineConstants>NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Data.SqlClient" Version="4.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="DbResourceConfiguration.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="NUnit" Version="3.8.1" />    
+    <PackageReference Include="Westwind.Utilities" Version="3.0.1" />
+  </ItemGroup>
+
+   <ItemGroup>
+     <ProjectReference Include="..\..\Westwind.Globalization\Westwind.Globalization.csproj" />
+   </ItemGroup>
+ 
+  <!-- <ItemGroup>    
+    <PackageReference id="System.Data.SQLite.Core" version="1.0.96.0" />
+  </ItemGroup>    
+   -->
+
+</Project>
