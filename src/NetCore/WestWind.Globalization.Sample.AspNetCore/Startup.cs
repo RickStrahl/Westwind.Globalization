@@ -33,7 +33,7 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 // Resource Mode - Resx or DbResourceManager                
                 opt.ResourceAccessMode = ResourceAccessMode.DbResourceManager;  // ResourceAccessMode.Resx
 
-                opt.ConnectionString = "server=.;database=localizations;integrated security=true";
+                opt.ConnectionString = "server=dev.west-wind.com;database=localizations;uid=localizations;pwd=local";
                 opt.ResourceTableName = "localizations";
                 opt.AddMissingResources = false;
                 opt.ResxBaseFolder = "~/Properties/";

@@ -1,7 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
+  <PropertyGroup Condition=" '$(OS)' != 'Windows_NT' ">
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(OS)' == 'Windows_NT' "> 
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <!-- <TargetFrameworks>netstandard2.0;net45</TargetFrameworks> -->
     <Version>3.0.0-preview1-0</Version>
     <Authors>Rick Strahl</Authors>
     <Company>West Wind Technologies</Company>
@@ -26,7 +34,7 @@ If you want to use ASP.NET ResourceProviders, JavaScript resources from .NET Res
     <PackageReference Include="Westwind.Utilities" Version="3.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup> 
     <Folder Include="Properties\" />
   </ItemGroup>
 
