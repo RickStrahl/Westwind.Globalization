@@ -1,13 +1,13 @@
 ﻿using System;
 using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Westwind.Globalization.Test
 {
-    [TestClass]
+    [TestFixture]
     public class JavaScriptresourcesTests
     {
-        [TestMethod]
+        [Test]
         public void GenerateResources()
         {
             var js = new JavaScriptResources(".\\");

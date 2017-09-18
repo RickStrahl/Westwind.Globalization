@@ -46,7 +46,7 @@ namespace Westwind.Globalization.Test
             }
 
 
-            Thread.Sleep(5000);
+            Thread.Sleep(3000);
         }
 
 

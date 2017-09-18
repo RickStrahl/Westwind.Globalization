@@ -1,7 +1,10 @@
-﻿using System;
+﻿#if false
+
+using System;
 using System.Globalization;
 using System.Threading;
 using System.Web.Compilation;
+using Westwind.Globalization.Web;
 using NUnit.Framework;
 
 namespace Westwind.Globalization.Test
@@ -63,3 +66,4 @@ namespace Westwind.Globalization.Test
         }
     }
 }
+#endif

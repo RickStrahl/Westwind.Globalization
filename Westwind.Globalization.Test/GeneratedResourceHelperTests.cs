@@ -1,18 +1,23 @@
-﻿using System;
+﻿
+using System.IO;
+using NUnit.Framework;
+
+#if NETFULL
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
 
 namespace Westwind.Globalization.Test
 {
-    [TestClass]
+    [TestFixture]
     public class GeneratedResourceHelperTests
     {
         private string PngBitMapPath = @".\data\germanflag.png";
         private string JpgBitMapPath = @".\data\germanflag.png";
 
-        [TestMethod]
+#if NETFULL
+        [Test]
         public void BitmapToEmbeddedImageFromFioleTest()
         {
             var bitmap = new Bitmap(PngBitMapPath);
@@ -21,7 +26,7 @@ namespace Westwind.Globalization.Test
         }
 
 
-        [TestMethod]
+        [Test]
         public void JpgBitmapToEmbeddedImageFromFileTest()
         {
             var data = File.ReadAllBytes(JpgBitMapPath);
@@ -43,7 +48,7 @@ namespace Westwind.Globalization.Test
             Console.WriteLine(output);
         }
 
-        [TestMethod]
+        [Test]
         public void RawDataEmbeddedImageFromFileTest()
         {
             var data = File.ReadAllBytes(JpgBitMapPath);
@@ -51,7 +56,7 @@ namespace Westwind.Globalization.Test
             Assert.IsNotNull(output);
             Console.WriteLine(output);
         }
-   
+#endif
    
     }
 }

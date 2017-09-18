@@ -25,7 +25,7 @@ namespace Westwind.Globalization.Test
         [Test]
         public void GenerateStronglyTypedResourceClassFilteredTest()
         {
-            var str = new StronglyTypedResources("c:\temp");
+            var str = new StronglyTypedResources(@"c:\temp");
             var res = str.CreateClassFromAllDatabaseResources("ResourceExport", @"resources.cs",new string[] { "Resources" });
 
             Console.WriteLine(res);
@@ -60,10 +60,14 @@ namespace Westwind.Globalization.Test
                 File.Delete(designerFile);
 
             var str = new StronglyTypedResources(@"c:\temp\resourceTest");
+#if NETFULL
             str.CreateResxDesignerClassFromResxFile(filename,"LocalizationAdmin","Westwind.Globalization.Sample");
-
+#else
+            str.CreateResxDesignerClassFromResourceSet("LocalizationAdmin", "Westwind.Globalization.Sample", "LocalizationAdmin", filename);
+#endif
             Assert.IsTrue(File.Exists(designerFile));
 
         }
     }
 }
+

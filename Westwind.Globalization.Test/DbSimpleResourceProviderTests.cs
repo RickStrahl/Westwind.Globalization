@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if false
+using System;
 using System.Globalization;
 using System.Threading;
 using System.Web.Compilation;
@@ -65,3 +66,4 @@ namespace Westwind.Globalization.Test
         }
     }
 }
+#endif

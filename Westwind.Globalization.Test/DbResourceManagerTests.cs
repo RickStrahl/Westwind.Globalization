@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Resources;
 using System.Threading;
-using System.Web.Compilation;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -49,12 +48,16 @@ namespace Westwind.Globalization.Test
 
             string english = Resources.Today;
             Assert.IsNotNull(english);
+            Console.WriteLine("English: " + english);
             Assert.IsTrue(english.StartsWith("Today"));
+            
 
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("de-de");
             string german = Resources.Today;
+            Console.WriteLine("German: " + german);
             Assert.IsNotNull(german);
-            Assert.AreEqual(german, "Heute");            
+            Assert.AreEqual("Heute",german);
+            
 
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("es-mx");
             string unknown = Resources.Today;
