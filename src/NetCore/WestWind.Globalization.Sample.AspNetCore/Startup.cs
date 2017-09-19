@@ -46,7 +46,17 @@ namespace WestWind.Globalization.Sample.AspNetCore
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfiguration configuration)
         {
-            
+
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseBrowserLink();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+            }
+
             var supportedCultures = new[]
             {
                 new CultureInfo("en-US"),
@@ -70,7 +80,12 @@ namespace WestWind.Globalization.Sample.AspNetCore
             }
 
             app.UseStaticFiles();
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller}/{action=Index}/{id?}");
+            });
 
             // print some environment information
             Console.WriteLine("\r\nPlatform: " + System.Runtime.InteropServices.RuntimeInformation.OSDescription);

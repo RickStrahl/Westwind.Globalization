@@ -4,6 +4,7 @@ namespace Westwind.Globalization
     {
         DbResourceManager,
         AspNetResourceProvider,
-        Resx
+        Resx,
+        AutoConfiguration
     }
 }
