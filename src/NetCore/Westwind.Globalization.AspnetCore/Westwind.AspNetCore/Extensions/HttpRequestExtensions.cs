@@ -1,15 +1,18 @@
-﻿using System.IO;
+﻿using System.Globalization;
+using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 
-namespace Westwind.AspNetCore.Extensions
+namespace Westwind.Globalization.AspNetCore.Extensions
 {
     public static class HttpRequestExtensions
     {
         static string WebRootPath { get; set; }
 
+        #region Content Retrieval
         /// <summary>
         /// Retrieve the raw body as a string from the Request.Body stream
         /// </summary>
@@ -47,6 +50,10 @@ namespace Westwind.AspNetCore.Extensions
             }
         }
 
+        #endregion
+
+
+        #region Path Functions
 
         /// <summary>
         /// Maps a virtual or relative path to a physical path in a Web site
@@ -93,6 +100,11 @@ namespace Westwind.AspNetCore.Extensions
                 .Replace(slash + slash, slash);
         }
 
+        #endregion
+
+
+        #region Intrinsic Object helpers
+
         /// <summary>
         /// Returns a single value as a string from:
         /// Form, Query, Session        
@@ -103,16 +115,64 @@ namespace Westwind.AspNetCore.Extensions
         {
             string result = null;
             var method = request.Method.ToLower();
-            if (request.Method == "post" || request.Method == "put")            
+            if (request.Method == "post" || request.Method == "put")
                 result = request.Form[id];
 
             if (result == null)
                 result = request.Query[id];
 
-            if (result == null)            
-                result = request.HttpContext.Session.GetString("id");
+
+            //if (result == null)            
+            //    result = request.HttpContext.Session.GetString("id");
 
             return result;
         }
+
+        #endregion
+
+
+        #region Globalization
+
+        /// <summary>
+        /// Returns an array of user languages passed in the browser
+        /// Works off the 'accept-language' header
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns>Array of languages or null if not available</returns>
+        public static string[] GetUserLanguages(HttpContext context)
+        {
+            HttpRequest Request = context.Request;
+
+            var langs = Request.Headers.GetCommaSeparatedValues("accept-language");
+
+            // if no user lang leave existing but make writable
+            if (langs == null || langs.Length == 0)
+                return null;
+
+            return langs;
+        }
+
+
+        /// <summary>
+        /// Returns the first user language or null if not available.
+        /// Works of 'accept-language' header
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public static string GetUserLanguage(HttpContext context)
+        {
+            HttpRequest Request = context.Request;
+
+            var langs = Request.Headers.GetCommaSeparatedValues("accept-language");
+
+            // if no user lang leave existing but make writable
+            if (langs == null || langs.Length == 0)
+                return null;
+
+            return langs[0];
+        }
+
+        #endregion
+
     }
 }

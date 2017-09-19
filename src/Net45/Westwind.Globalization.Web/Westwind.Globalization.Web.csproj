@@ -93,14 +93,14 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Westwind.Globalization\Westwind.Globalization.csproj">
-      <Project>{51dece39-764c-4c32-a57a-d93a5fd9bd6a}</Project>
-      <Name>Westwind.Globalization</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="scripts\ww.jquery.js" />
     <Content Include="scripts\ww.jquery.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Westwind.Globalization\Westwind.Globalization.csproj">
+      <Project>{4e6a2542-fb20-4f62-af1e-9d468459d265}</Project>
+      <Name>Westwind.Globalization</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

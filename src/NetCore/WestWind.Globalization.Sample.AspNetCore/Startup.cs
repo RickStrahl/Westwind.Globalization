@@ -79,7 +79,9 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseDefaultFiles();
             app.UseStaticFiles();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

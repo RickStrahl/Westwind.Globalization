@@ -357,13 +357,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Westwind.Globalization\Westwind.Globalization.csproj">
+      <Project>{4e6a2542-fb20-4f62-af1e-9d468459d265}</Project>
+      <Name>Westwind.Globalization</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Westwind.Globalization.Web\Westwind.Globalization.Web.csproj">
       <Project>{d827f9a2-12e0-436c-b986-8589ed643481}</Project>
       <Name>Westwind.Globalization.Web</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Westwind.Globalization\Westwind.Globalization.csproj">
-      <Project>{51dece39-764c-4c32-a57a-d93a5fd9bd6a}</Project>
-      <Name>Westwind.Globalization</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

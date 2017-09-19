@@ -22,7 +22,7 @@ namespace Westwind.Globalization.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resources {
+    internal class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Westwind.Globalization.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Westwind.Globalization.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace Westwind.Globalization.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Westwind.Globalization.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Can&apos;t save resource: Invalid culture id passed: {0}.
         /// </summary>
-        public static string Can_t_save_resource__Invalid_culture_id_passed {
+        internal static string Can_t_save_resource__Invalid_culture_id_passed {
             get {
                 return ResourceManager.GetString("Can_t_save_resource__Invalid_culture_id_passed", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Westwind.Globalization.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Client Id and Client Secret must be provided..
         /// </summary>
-        public static string Client_Id_and_Client_Secret_must_be_provided {
+        internal static string Client_Id_and_Client_Secret_must_be_provided {
             get {
                 return ResourceManager.GetString("Client_Id_and_Client_Secret_must_be_provided", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Westwind.Globalization.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Client Id and Client Secret must be provided..
         /// </summary>
-        public static string Client_Id_and_Client_Secret_must_be_provided_ {
+        internal static string Client_Id_and_Client_Secret_must_be_provided_ {
             get {
                 return ResourceManager.GetString("Client_Id_and_Client_Secret_must_be_provided_", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Westwind.Globalization.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Connection failed: .
         /// </summary>
-        public static string ConnectionFailed {
+        internal static string ConnectionFailed {
             get {
                 return ResourceManager.GetString("ConnectionFailed", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Westwind.Globalization.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Connection string for resources is not configured.
         /// </summary>
-        public static string ConnectionStringForResourcesIsNotConfigure {
+        internal static string ConnectionStringForResourcesIsNotConfigure {
             get {
                 return ResourceManager.GetString("ConnectionStringForResourcesIsNotConfigure", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Westwind.Globalization.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Edit Page Resources.
         /// </summary>
-        public static string EditPageResources {
+        internal static string EditPageResources {
             get {
                 return ResourceManager.GetString("EditPageResources", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Westwind.Globalization.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Invalid file extension for file resource..
         /// </summary>
-        public static string InvalidFileExtensionForFileResource {
+        internal static string InvalidFileExtensionForFileResource {
             get {
                 return ResourceManager.GetString("InvalidFileExtensionForFileResource", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Westwind.Globalization.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Invalid search result..
         /// </summary>
-        public static string InvalidSearchResult {
+        internal static string InvalidSearchResult {
             get {
                 return ResourceManager.GetString("InvalidSearchResult", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Westwind.Globalization.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Localization Options.
         /// </summary>
-        public static string LocalizationOptions {
+        internal static string LocalizationOptions {
             get {
                 return ResourceManager.GetString("LocalizationOptions", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Westwind.Globalization.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Localization Table exists already.
         /// </summary>
-        public static string LocalizationTable_Localization_Table_exists_already {
+        internal static string LocalizationTable_Localization_Table_exists_already {
             get {
                 return ResourceManager.GetString("LocalizationTable_Localization_Table_exists_already", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace Westwind.Globalization.Properties {
         /// <summary>
         ///   Looks up a localized string similar to No matching Recordset found..
         /// </summary>
-        public static string No_matching_Recordset_found {
+        internal static string No_matching_Recordset_found {
             get {
                 return ResourceManager.GetString("No_matching_Recordset_found", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace Westwind.Globalization.Properties {
         /// <summary>
         ///   Looks up a localized string similar to No ResourceId specified. Can&apos;t add resource.
         /// </summary>
-        public static string NoResourceIdSpecifiedCantAddResource {
+        internal static string NoResourceIdSpecifiedCantAddResource {
             get {
                 return ResourceManager.GetString("NoResourceIdSpecifiedCantAddResource", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace Westwind.Globalization.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Missing file upload data.
         /// </summary>
-        public static string ResourceItemMissingFileUploadData {
+        internal static string ResourceItemMissingFileUploadData {
             get {
                 return ResourceManager.GetString("ResourceItemMissingFileUploadData", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace Westwind.Globalization.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Show Localization Icons.
         /// </summary>
-        public static string ShowLocalizationIcons {
+        internal static string ShowLocalizationIcons {
             get {
                 return ResourceManager.GetString("ShowLocalizationIcons", resourceCulture);
             }

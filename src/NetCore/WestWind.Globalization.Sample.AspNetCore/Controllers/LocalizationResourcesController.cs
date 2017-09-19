@@ -16,7 +16,7 @@ using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using Westwind.Globalization;
 using Westwind.Globalization.AspnetCore;
-using Westwind.AspNetCore.Extensions;
+using Westwind.Globalization.AspNetCore.Extensions;
 using Westwind.Utilities;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

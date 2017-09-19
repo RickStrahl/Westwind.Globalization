@@ -4,11 +4,10 @@
 @using Controllers
 @using Westwind.Globalization
 @using Westwind.Globalization.Sample.AspNetCore.Properties
-@using Westwind.AspNetCore.Extensions
-@model ResourceTestModel
-
+@using Westwind.Globalization.AspNetCore.Extensions
 
 @{
+    Layout = null;
     string localeId = Request.Params("localeId");
     if (string.IsNullOrEmpty(localeId))
     {
@@ -38,10 +37,8 @@
 
     <title>DbResourceManager Test Page</title>
 
-    <link href="localizationAdmin/bower_components/bootstrap/dist/css/bootstrap.min.css"
-          rel="stylesheet" />
-    <link href="localizationAdmin/bower_components/fontawesome/css/font-awesome.min.css"
-          rel="stylesheet" />
+    <link href="localizationAdmin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="localizationAdmin/bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet" />
 
     <link href="localizationAdmin/css/localizationAdmin.css" rel="stylesheet" />
     <style>
