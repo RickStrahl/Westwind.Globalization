@@ -43,10 +43,9 @@ namespace WestWind.Globalization.Sample.AspNetCore.Controllers
 
             string resourceSet = Request.Query["ResourceSet"].ToString();
             string localeId = Request.Query["LocaleId"].ToString() ?? "auto";
-            string resourceType = Request.Query["ResourceType"].ToString() ?? "Resx"; // Resx/ResDb
-            bool includeControls = (Request.Query["IncludeControls"].ToString() ?? "") != "";
+            string resourceMode = Request.Query["ResourceMode"].ToString() ?? "Resx"; // Resx/ResDb            
             string varname = Request.Query["VarName"].ToString() ?? "resources";
-            string resourceMode = (Request.Query["ResourceMode"].ToString() ?? "0");
+            //string resourceMode = (Request.Query["ResourceMode"].ToString() ?? "0");
 
             // varname is embedded into script so validate to avoid script injection
             // it's gotta be a valid C# and valid JavaScript name
@@ -63,17 +62,16 @@ namespace WestWind.Globalization.Sample.AspNetCore.Controllers
 
             Dictionary<string, object> resDict = null;
 
-            if (string.IsNullOrEmpty(resourceType) || resourceType == "auto")
-            {
+            resourceMode = string.IsNullOrEmpty(resourceMode) ? "auto" : resourceMode.ToLower();
 
-                //if (DbRes.ResourceManagers != null && DbRes.ResourResourceProvider.ProviderLoaded || DbSimpleResourceProvider.ProviderLoaded)
-                resourceType = "resdb";
-                //else
-                //    resourceType = "resx";
-            }
+            ResourceAccessMode mode = ResourceAccessMode.Resx;
+            if (resourceMode == "resdb")
+                mode = ResourceAccessMode.DbResourceManager;
+            else if (resourceMode == "auto")
+                mode = DbResourceConfiguration.Current.ResourceAccessMode;
+            
 
-
-            if (resourceType.ToLower() == "resdb")
+            if (mode == ResourceAccessMode.DbResourceManager)
             {
                 // use existing/cached resource manager if previously used
                 // so database is accessed only on first hit
@@ -109,23 +107,14 @@ namespace WestWind.Globalization.Sample.AspNetCore.Controllers
                 else
                     resDict = resDict.OrderBy(kv => kv.Key).ToDictionary(k => k.Key, v => v.Value);
             }
-
-
-            if (resourceMode == "0" && !includeControls)
-            {
-                // filter the list to strip out controls (anything that contains a . in the ResourceId 
-                // is considered a control value
-                resDict = resDict.Where(res => !res.Key.Contains('.') && res.Value is string)
+            
+            // return all resource strings
+            resDict = resDict.Where(res => res.Value is string)
                     .ToDictionary(dict => dict.Key, dict => dict.Value);
-            }
-            else
-            {
-                // return all resource strings
-                resDict = resDict.Where(res => res.Value is string)
-                    .ToDictionary(dict => dict.Key, dict => dict.Value);
-            }
-
+            
             string javaScript = SerializeResourceDictionary(resDict, varname);
+
+            
 
 #if NETFULL // client cache
             if (!HttpContext.Current.IsDebuggingEnabled)
@@ -269,144 +258,37 @@ namespace WestWind.Globalization.Sample.AspNetCore.Controllers
         }
 
 
-#if false /// <summary>
-/// Returns a URL to the JavaScriptResourceHandler.axd handler that retrieves
-/// normalized resources for a given resource set and localeId and creates
-/// a JavaScript object with the name specified.
-/// 
-/// This function returns only the URL - you're responsible for embedding
-/// the URL into the page as a script tag to actually load the resources.
-/// </summary>
-/// <param name="varName"></param>
-/// <param name="resourceSet"></param>
-/// <param name="localeId"></param>
-/// <param name="resourceType"></param>
-/// <returns></returns>
-        public static string GetJavaScriptGlobalResourcesUrl(string varName, string resourceSet,
-            string localeId = null,
-            ResourceProviderTypes resourceType = ResourceProviderTypes.AutoDetect)
-        {
-            if (resourceType == ResourceProviderTypes.AutoDetect)
-            {
-                if (DbSimpleResourceProvider.ProviderLoaded || DbResourceProvider.ProviderLoaded)
-                    resourceType = ResourceProviderTypes.DbResourceProvider;
-            }
-
-
-            StringBuilder sb = new StringBuilder(512);
-            sb.Append(WebUtils.ResolveUrl("~/") + "JavaScriptResourceHandler.axd?");
-            sb.AppendFormat("ResourceSet={0}&LocaleId={1}&VarName={2}&ResourceType={3}",
-                resourceSet, localeId, varName,
-                resourceType == ResourceProviderTypes.DbResourceProvider ? "resdb" : "resx");
-            sb.Append("&ResourceMode=1");
-
-            return sb.ToString();
-        }
-
-
         /// <summary>
         /// Returns a URL to the JavaScriptResourceHandler.axd handler that retrieves
         /// normalized resources for a given resource set and localeId and creates
         /// a JavaScript object with the name specified.
         /// 
-        /// This version assumes the current UI Culture and auto-detects the
-        /// provider type (Resx or DbRes) currently active.
+        /// This function returns only the URL - you're responsible for embedding
+        /// the URL into the page as a script tag to actually load the resources.
         /// </summary>
         /// <param name="varName"></param>
         /// <param name="resourceSet"></param>
-        /// <returns></returns>
-        public static string GetJavaScriptGlobalResourcesUrl(string varName, string resourceSet)
-        {
-            string localeId = CultureInfo.CurrentUICulture.IetfLanguageTag;
-            return GetJavaScriptGlobalResourcesUrl(varName, resourceSet, localeId,
-                ResourceProviderTypes.AutoDetect);
-        }
-
-        /// <summary>
-        /// Inserts local resources into the current page.
-        /// </summary>
-        /// <param name="control">A control (typically) page needed to embed into the page</param>
-        /// <param name="resourceSet">Name of the resourceSet to load</param>
-        /// <param name="localeId">The Locale for which to load resources. Normalized from most specific to Invariant</param>
-        /// <param name="varName">Name of the variable generated</param>
-        /// <param name="resourceType">Resx or DbResourceProvider (database)</param>
-        /// <param name="includeControls">Determines whether control ids are included</param>
-        public static string GetJavaScriptLocalResourcesUrl(string varName, string localeId, string resourceSet,
-            ResourceProviderTypes resourceType, bool includeControls)
-        {
-            if (resourceType == ResourceProviderTypes.AutoDetect)
-            {
-                if (DbSimpleResourceProvider.ProviderLoaded || DbResourceProvider.ProviderLoaded)
-                    resourceType = ResourceProviderTypes.DbResourceProvider;
-            }
-
-            StringBuilder sb = new StringBuilder(512);
-
-            sb.Append(WebUtils.ResolveUrl("~/") + "JavaScriptResourceHandler.axd?");
-            sb.AppendFormat("ResourceSet={0}&LocaleId={1}&VarName={2}&ResourceType={3}&ResourceMode=0",
-                resourceSet, localeId, varName,
-                (resourceType == ResourceProviderTypes.DbResourceProvider ? "resdb" : "resx"));
-            if (includeControls)
-                sb.Append("&IncludeControls=1");
-
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns a URL to embed local resources into the page via JavaScriptResourceHandler.axd. 
-        /// This method returns only a URL - you're responsible for embedding the script tag into the page
-        /// to actually load the resources.
-        /// 
-        /// This version assumes the local resource set for the current request/page and autodetected
-        /// resources (resdb or resx). It also uses the CurrentUICulture as the locale.
-        /// </summary>
-        /// <param name="varName">The name of the JavaScript variable to create</param>        
-        /// <param name="includeControls"></param>
-        /// <returns></returns>
-        public static string GetJavaScriptLocalResourcesUrl(string varName, bool includeControls)
-        {
-            string resourceSet = WebUtils.GetAppRelativePath();
-            string localeId = CultureInfo.CurrentUICulture.IetfLanguageTag;
-            return GetJavaScriptLocalResourcesUrl(varName, localeId, resourceSet,
-                ResourceProviderTypes.AutoDetect, includeControls);
-        }
-
-        /// <summary>
-        /// Returns a standard Resx resource based on it's . delimited resourceset name
-        /// </summary>
-        /// <param name="varName">The name of the JavaScript variable to create</param>
-        /// <param name="resourceSet">The name of the resource set
-        /// 
-        /// Example:
-        /// CodePasteMvc.Resources.Resources  (~/Resources/Resources.resx in CodePasteMvc project)
-        /// </param>
-        /// <param name="localeId">IETF locale id (2 or 4 en or en-US or empty)</param>
-        /// <param name="resourceType">ResDb or ResX</param>
+        /// <param name="localeId"></param>
+        /// <param name="resourceMode></param>
         /// <returns></returns>
         public static string GetJavaScriptResourcesUrl(string varName, string resourceSet,
             string localeId = null,
-            ResourceProviderTypes resourceType = ResourceProviderTypes.AutoDetect)
+            ResourceAccessMode resourceMode = ResourceAccessMode.AutoConfiguration)
         {
-            if (localeId == null)
-                localeId = CultureInfo.CurrentUICulture.IetfLanguageTag;
-
-            if (resourceType == ResourceProviderTypes.AutoDetect)
-            {
-                if (DbSimpleResourceProvider.ProviderLoaded || DbResourceProvider.ProviderLoaded)
-                    resourceType = ResourceProviderTypes.DbResourceProvider;
-            }
-
+            if (resourceMode == ResourceAccessMode.AutoConfiguration)
+                resourceMode = DbResourceConfiguration.Current.ResourceAccessMode;
+            
+            
             StringBuilder sb = new StringBuilder(512);
-            sb.Append(WebUtils.ResolveUrl("~/") + "JavaScriptResourceHandler.axd?");
-            sb.AppendFormat("ResourceSet={0}&LocaleId={1}&VarName={2}&ResourceType={3}",
-                resourceSet, localeId, varName,
-                resourceType == ResourceProviderTypes.DbResourceProvider ? "resdb" : "resx");
-            sb.Append("&ResourceMode=1");
+            string resType = resourceMode == ResourceAccessMode.DbResourceManager ? "resdb" : "resx";
+
+            sb.Append("/api/JavaScriptLocalizationResources");
+            sb.Append($"?ResourceSet={resourceSet}&LocaleId={localeId}&VarName={varName}&ResourceMode={resType}");
+            
 
             return sb.ToString();
         }
 
-#endif
     }
 
 
