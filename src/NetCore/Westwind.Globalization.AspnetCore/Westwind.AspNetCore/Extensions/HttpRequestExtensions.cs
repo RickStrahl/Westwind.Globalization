@@ -92,5 +92,27 @@ namespace Westwind.AspNetCore.Extensions
                 .Replace("\\", slash)
                 .Replace(slash + slash, slash);
         }
+
+        /// <summary>
+        /// Returns a single value as a string from:
+        /// Form, Query, Session        
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static string Params(this HttpRequest request, string id)
+        {
+            string result = null;
+            var method = request.Method.ToLower();
+            if (request.Method == "post" || request.Method == "put")            
+                result = request.Form[id];
+
+            if (result == null)
+                result = request.Query[id];
+
+            if (result == null)            
+                result = request.HttpContext.Session.GetString("id");
+
+            return result;
+        }
     }
 }
