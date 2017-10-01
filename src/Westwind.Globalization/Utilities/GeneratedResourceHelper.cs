@@ -172,6 +172,22 @@ namespace Westwind.Globalization
             else if (format == ImageFormat.Bmp)
                 contentType = "image/bmp";
 
+            return BitmapToEmbeddedHtmlImage(data, contentType, extraAttributes);
+        }
+#endif
+        
+        /// <summary>
+        /// Renders an HTML IMG tag that contains a raw byte stream's image content
+        /// inline of the HTML document. Userful for resources.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="format"></param>
+        /// <param name="extraAttributes"></param>
+        /// <returns></returns>
+        public static string BitmapToEmbeddedHtmlImage(byte[] data, string contentType = null, string extraAttributes = null)
+        {
+            if(string.IsNullOrEmpty(contentType) || !contentType.StartsWith("image/"))
+                contentType =  "image/jpeg";
 
             StringBuilder sb = new StringBuilder();
             sb.Append("<img src=\"data:" + contentType + ";base64,");
@@ -184,7 +200,6 @@ namespace Westwind.Globalization
             sb.Append(" />");
             return sb.ToString();
         }
-#endif
-
+        
     }
 }
