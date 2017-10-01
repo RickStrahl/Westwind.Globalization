@@ -7,11 +7,7 @@ using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
@@ -22,14 +18,14 @@ using Westwind.Utilities;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace WestWind.Globalization.Sample.AspNetCore.Controllers
+namespace WestWind.Globalization.AspNetCore.Controllers
 {
-    public class LocalizationResourcesController : Controller
+    public class JavaScriptLocalizationResourcesController : Controller
     {
 
-        // http://localhost:5000/JavaScriptResourceHandler.axd?ResourceSet=LocalizationForm&LocaleId=auto&VarName=resources&ResourceType=resdb&ResourceMode=1
-        // http://localhost:5000/api/JavaScriptLocalizationResources?ResourceSet=Resources&LocaleId=de&VarName=resources&ResourceType=resdb&ResourceMode=1
-        [Route("/api/JavaScriptLocalizationResources")]
+        // http://localhost:5000/JavaScriptResourceHandler.axd?ResourceSet=LocalizationForm&LocaleId=auto&VarName=resources&ResourceMode=resdb
+        // http://localhost:5000/api/JavaScriptLocalizationResources?ResourceSet=LocalizationForm&LocaleId=auto&VarName=resources&ResourceMode=resdb
+        [Route("api/JavaScriptLocalizationResources")]
         [Route("JavaScriptResourceHandler.axd")]
         public ActionResult JavaScriptLocalizationResources()
         {

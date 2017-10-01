@@ -11,8 +11,12 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using Westwind.Globalization.AspNetCore.Extensions;
 
-namespace Westwind.Globalization.Controllers
+namespace Westwind.Globalization.Administration
 {
+
+    /// <summary>
+    /// Handles the Administration requires from the 
+    /// </summary>
     [Route("api/LocalizationAdministration")]
     public class LocalizationAdministrationController : Controller
     {
@@ -20,9 +24,7 @@ namespace Westwind.Globalization.Controllers
 
         protected DbResourceDataManager Manager = DbResourceDataManager.CreateDbResourceDataManager();
         protected Formatting EnsureJsonNet = Formatting.Indented;
-
-
-        private IHostingEnvironment Host;
+        protected IHostingEnvironment Host;
 
         private static JsonSerializerSettings jsonSettings = new JsonSerializerSettings()
         {
@@ -498,7 +500,6 @@ namespace Westwind.Globalization.Controllers
 #if OnlineDemo
         throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
 #endif
-
             if (!Manager.DeleteResourceSet(resourceSet))
                 throw new ApplicationException(Manager.ErrorMessage);
 

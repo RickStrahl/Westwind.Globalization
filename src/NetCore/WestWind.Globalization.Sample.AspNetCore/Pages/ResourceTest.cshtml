@@ -3,6 +3,7 @@
 @using System.Globalization
 @using AppResources
 @using Controllers
+@using Globalization.AspNetCore.Controllers
 @using Westwind.Globalization
 @using Westwind.Globalization.AspNetCore.Extensions
 
@@ -184,7 +185,7 @@
 
 
     <!-- Generates a resources = { "HelloWorld": "Hello World", "Today": "Today" } style variable that contains all server side resources translated for this resource set-->
-    <script src="@LocalizationResourcesController.GetJavaScriptResourcesUrl("resources","Resources",localeId)"></script>
+    <script src="@JavaScriptLocalizationResourcesController.GetJavaScriptResourcesUrl("resources","Resources",localeId)"></script>
     <script>
         document.querySelector("#JavaScriptHelloWorld").innerText = resources.HelloWorld;
     </script>
