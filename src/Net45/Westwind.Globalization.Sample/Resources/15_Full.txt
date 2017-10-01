@@ -1,0 +1,410 @@
+GET https://www.fiddler2.com/UpdateCheck.aspx?isBeta=False HTTP/1.1
+User-Agent: Fiddler/4.6.20172.31233 (.NET 4.6.2; WinNT 10.0.15063.0; en-US; 8xAMD64; Auto Update; Full Instance; Extensions: APITesting, AutoSaveExt, EventLog, Geoedge, HostsFile, RulesTab2, SAZClipboardFactory, SimpleFilter, Timeline)
+Pragma: no-cache
+Host: www.fiddler2.com
+Accept-Language: en-US
+Referer: http://fiddler2.com/client/TELE/4.6.20172.31233
+Accept-Encoding: gzip, deflate
+Connection: close
+
+
+HTTP/1.1 200 OK
+Cache-Control: private
+Content-Type: text/plain; charset=utf-8
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Server: Microsoft-IIS/8.5
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Date: Fri, 15 Sep 2017 21:01:58 GMT
+Connection: close
+Content-Length: 512
+
+
+
+------------------------------------------------------------------
+
+GET https://clientservices.googleapis.com/chrome-variations/seed?osname=win HTTP/1.1
+Host: clientservices.googleapis.com
+Connection: keep-alive
+If-None-Match: 7e9871b392f95e028f364dddf49f9042c5f8d628
+A-IM: x-bm,gzip
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36
+Accept-Encoding: gzip, deflate, br
+
+
+HTTP/1.1 304 Not Modified
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+Date: Fri, 15 Sep 2017 21:03:12 GMT
+Alt-Svc: quic=":443"; ma=2592000; v="39,38,37,35"
+
+
+
+------------------------------------------------------------------
+
+GET https://translate.googleapis.com/translate_a/l?client=chrome&hl=en&key=AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw HTTP/1.1
+Host: translate.googleapis.com
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36
+Accept-Encoding: gzip, deflate, br
+
+
+HTTP/1.1 200 OK
+Date: Fri, 15 Sep 2017 21:03:12 GMT
+Expires: Fri, 15 Sep 2017 21:03:12 GMT
+Cache-Control: private, max-age=86400
+Content-Type: application/json; charset=UTF-8
+Content-Language: en
+X-Content-Type-Options: nosniff
+Content-Disposition: attachment; filename="f.txt"
+Content-Encoding: gzip
+Server: HTTP server (unknown)
+X-XSS-Protection: 1; mode=block
+Alt-Svc: quic=":443"; ma=2592000; v="39,38,37,35"
+Transfer-Encoding: chunked
+
+
+
+------------------------------------------------------------------
+
+POST https://www.googleapis.com/oauth2/v4/token HTTP/1.1
+Host: www.googleapis.com
+Connection: keep-alive
+Content-Length: 227
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,de;q=0.8,en;q=0.6
+
+
+HTTP/1.1 200 OK
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: Mon, 01 Jan 1990 00:00:00 GMT
+Date: Fri, 15 Sep 2017 21:03:12 GMT
+Vary: Origin
+Vary: X-Origin
+Content-Type: application/json; charset=UTF-8
+Content-Encoding: gzip
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+Server: GSE
+Alt-Svc: quic=":443"; ma=2592000; v="39,38,37,35"
+Transfer-Encoding: chunked
+
+
+
+------------------------------------------------------------------
+
+POST https://accounts.google.com/ListAccounts?gpsia=1&source=ChromiumAccountReconcilor,counter:0,load_time_ms:179&json=standard HTTP/1.1
+Host: accounts.google.com
+Connection: keep-alive
+Content-Length: 1
+Origin: https://www.google.com
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,de;q=0.8,en;q=0.6
+Cookie: CONSENT=YES+AT.de+V8; LSOLH=AH+1Ng2/NYBXdirg/+I9UhMbnUwgFCQMPfpQTN2hjdT5rUNvL5BSlAuIbWKxXz85YPnxuisOVVAq:4yqYzjP-bGQUkLxq5aQhscfvDt7CvRU:24900809:eafb; SID=AQUNL5PWHmPiQpyQR1X7PhNxKPhR4mwUX8KyTR-G4f9SX-37YXPnvqA9eIxxyoitYMb1Ww.; HSID=A33PveA8m2nw6JTk2; SSID=AahWuC5p9PXXdi1nq; APISID=rF9Z088ROkOLSJPL/A5DiHI4zJURgrnjSh; SAPISID=2-pe5usHV0WrCdDF/Ah8iye1i_lD85kbCR; ACCOUNT_CHOOSER=AFx_qI5ZKeeCwprLwHvr-SuqWUGL7xWw7qYI32ZCE1lq3P2hr-vjqECHIogj9Wh-8Jbg_FuwaL4dWaiPkutqfQ32n0LCrpEfHrM33kKRvIU5N3KLvWo0j9-ygEhqeusDsj-hbv9KUmUO; LSID=cl|doritos|grandcentral|mail|o.calendar.google.com|o.mail.google.com|o.myaccount.google.com|o.notifications.google.com|s.blogger|s.youtube|ss|urlshortener|youtube:AQUNLzi4LVDWKO_ThdR6XmG2zaeIATQ8FV3kL-W7qobCe1rC71sB8BC_Vd5rzfyiOEjzJg.; NID=112=1mD98z6v47Vv9eU8Z4Tw6c8eI4HJwzMenYooGoJkU0kva-7-INHe3Gg_IfI2pJJdJjYXL_KANa7OPtzLap11zzdp1F0ZJ8jrdagoznA5_ULjWMnBF6F42syWqzKDoAn8_XUHQMuL02Cr3wYvFFo4DBv41l32KEzQFTtTmBIT9AuC4VnAo7Uyu7lXMksLQDmXxKdWwF-PzQWRjd1f5aMAHEe654BmrzbwLrQ7r543aFp2_mLDrJNl9q8O4dpTffawRm4mupKmXJlvKFRmF3zbvScSkG2tecXMymyGTUXOYF6qikmMVuMqIrBZOuaitrlSe5JPH_UM; 1P_JAR=2017-9-15-10; GAPS=1:4kHWH_5H5HokHK08MBN2BMqSf_oewKmedFg9O3BAKRD6yCEjLUqXIJOBtq2Sx3nyL2LS1nb5gBPlg4olrmLKbMbBKyxtGw:94dZfSyr_XcUm6Az; SIDCC=AE4kn7-58OdXgG9ld-io8IHobKQmFCWFbyONUhZGqLioZWcixfLmC_ly5Cl7IhrtBmrbvfXFU9OVN8ETALk
+
+
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Access-Control-Allow-Origin: https://www.google.com
+Access-Control-Allow-Credentials: true
+Content-Encoding: gzip
+Date: Fri, 15 Sep 2017 21:03:12 GMT
+Expires: Fri, 15 Sep 2017 21:03:12 GMT
+Cache-Control: private, max-age=0
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Server: GSE
+Set-Cookie: GAPS=1:VUBZpJrjH_ajcGN8ATLlN6YwngF6E3Uq--tRCAImJmt_jrXS53_E8VwscTj1ap3hQ7gZswwH0RwnlFAgy6xBjnyQA4gJ-g:nGDNbVuVlkBX6aNP;Path=/;Expires=Sun, 15-Sep-2019 21:03:12 GMT;Secure;HttpOnly;Priority=HIGH
+Set-Cookie: SIDCC=AE4kn7-WA4Pz6z4VN9MlduC_8LRChUZ2ZB9-ZRI-B7LXckZdvWsLCFip0DBpF94oz7ANwnuFlQ3m6x_5uTs; expires=Thu, 14-Dec-2017 21:03:12 GMT; path=/; domain=.google.com; priority=high
+Alt-Svc: quic=":443"; ma=2592000; v="39,38,37,35"
+Transfer-Encoding: chunked
+
+
+
+------------------------------------------------------------------
+
+POST https://www.googleapis.com/oauth2/v4/token HTTP/1.1
+Host: www.googleapis.com
+Connection: keep-alive
+Content-Length: 221
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,de;q=0.8,en;q=0.6
+
+
+HTTP/1.1 200 OK
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: Mon, 01 Jan 1990 00:00:00 GMT
+Date: Fri, 15 Sep 2017 21:03:12 GMT
+Vary: Origin
+Vary: X-Origin
+Content-Type: application/json; charset=UTF-8
+Content-Encoding: gzip
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+Server: GSE
+Alt-Svc: quic=":443"; ma=2592000; v="39,38,37,35"
+Transfer-Encoding: chunked
+
+
+
+------------------------------------------------------------------
+
+GET https://west-wind.com/ HTTP/1.1
+Host: west-wind.com
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,de;q=0.8,en;q=0.6
+Cookie: _ga=GA1.2.1233908540.1504923424; _gid=GA1.2.2107566536.1504923424
+If-Modified-Since: Fri, 15 Sep 2017 20:53:56 GMT
+
+
+HTTP/1.1 200 OK
+Cache-Control: public
+Content-Type: text/html; charset=utf-8
+Expires: Fri, 15 Sep 2017 21:04:37 GMT
+Last-Modified: Fri, 15 Sep 2017 21:03:07 GMT
+Server: Microsoft-IIS/8.5
+X-AspNetWebPages-Version: 3.0
+X-AspNet-Version: 4.0.30319
+Date: Fri, 15 Sep 2017 21:03:07 GMT
+Content-Length: 41112
+
+
+
+------------------------------------------------------------------
+
+POST https://www.googleapis.com/oauth2/v4/token HTTP/1.1
+Host: www.googleapis.com
+Connection: keep-alive
+Content-Length: 172
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,de;q=0.8,en;q=0.6
+
+
+HTTP/1.1 200 OK
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: Mon, 01 Jan 1990 00:00:00 GMT
+Date: Fri, 15 Sep 2017 21:03:12 GMT
+Vary: Origin
+Vary: X-Origin
+Content-Type: application/json; charset=UTF-8
+Content-Encoding: gzip
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+Server: GSE
+Alt-Svc: quic=":443"; ma=2592000; v="39,38,37,35"
+Transfer-Encoding: chunked
+
+
+
+------------------------------------------------------------------
+
+GET https://www.googleapis.com/oauth2/v1/userinfo HTTP/1.1
+Host: www.googleapis.com
+Connection: keep-alive
+Authorization: OAuth ya29.GmDHBCP0OfYjSuJyJ6a8Cbnvl734WPcEPqHK3b8yQ-vAKObGZcffdOsaKqTd5X8-CH4E0dC3baq-nB5210eMc4TWcU2CSAd-ehvRflr0OqyryhvhsDt7QjkEkkskm5WGSLQ
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,de;q=0.8,en;q=0.6
+
+
+HTTP/1.1 200 OK
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: Mon, 01 Jan 1990 00:00:00 GMT
+Date: Fri, 15 Sep 2017 21:03:12 GMT
+Vary: Origin
+Vary: X-Origin
+Content-Type: application/json; charset=UTF-8
+Content-Encoding: gzip
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+Server: GSE
+Alt-Svc: quic=":443"; ma=2592000; v="39,38,37,35"
+Transfer-Encoding: chunked
+
+
+
+------------------------------------------------------------------
+
+POST https://accounts.google.com/OAuthLogin HTTP/1.1
+Host: accounts.google.com
+Connection: keep-alive
+Content-Length: 35
+Authorization: Bearer ya29.GmHHBKMB8tp6ez3bMqEEZGG0smiAzayxePlbArO8Mbu42rFFWBdOhCrSHCnfd9pY3A3OhVeTrqOiBz9vo-Rb8gec9AP_jYUAhD40_GnDWYQAl8yRnj-58UPYpspKIh_mMJ4A
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,de;q=0.8,en;q=0.6
+Cookie: CONSENT=YES+AT.de+V8; LSOLH=AH+1Ng2/NYBXdirg/+I9UhMbnUwgFCQMPfpQTN2hjdT5rUNvL5BSlAuIbWKxXz85YPnxuisOVVAq:4yqYzjP-bGQUkLxq5aQhscfvDt7CvRU:24900809:eafb; SID=AQUNL5PWHmPiQpyQR1X7PhNxKPhR4mwUX8KyTR-G4f9SX-37YXPnvqA9eIxxyoitYMb1Ww.; HSID=A33PveA8m2nw6JTk2; SSID=AahWuC5p9PXXdi1nq; APISID=rF9Z088ROkOLSJPL/A5DiHI4zJURgrnjSh; SAPISID=2-pe5usHV0WrCdDF/Ah8iye1i_lD85kbCR; ACCOUNT_CHOOSER=AFx_qI5ZKeeCwprLwHvr-SuqWUGL7xWw7qYI32ZCE1lq3P2hr-vjqECHIogj9Wh-8Jbg_FuwaL4dWaiPkutqfQ32n0LCrpEfHrM33kKRvIU5N3KLvWo0j9-ygEhqeusDsj-hbv9KUmUO; LSID=cl|doritos|grandcentral|mail|o.calendar.google.com|o.mail.google.com|o.myaccount.google.com|o.notifications.google.com|s.blogger|s.youtube|ss|urlshortener|youtube:AQUNLzi4LVDWKO_ThdR6XmG2zaeIATQ8FV3kL-W7qobCe1rC71sB8BC_Vd5rzfyiOEjzJg.; NID=112=1mD98z6v47Vv9eU8Z4Tw6c8eI4HJwzMenYooGoJkU0kva-7-INHe3Gg_IfI2pJJdJjYXL_KANa7OPtzLap11zzdp1F0ZJ8jrdagoznA5_ULjWMnBF6F42syWqzKDoAn8_XUHQMuL02Cr3wYvFFo4DBv41l32KEzQFTtTmBIT9AuC4VnAo7Uyu7lXMksLQDmXxKdWwF-PzQWRjd1f5aMAHEe654BmrzbwLrQ7r543aFp2_mLDrJNl9q8O4dpTffawRm4mupKmXJlvKFRmF3zbvScSkG2tecXMymyGTUXOYF6qikmMVuMqIrBZOuaitrlSe5JPH_UM; 1P_JAR=2017-9-15-10; GAPS=1:VUBZpJrjH_ajcGN8ATLlN6YwngF6E3Uq--tRCAImJmt_jrXS53_E8VwscTj1ap3hQ7gZswwH0RwnlFAgy6xBjnyQA4gJ-g:nGDNbVuVlkBX6aNP; SIDCC=AE4kn7-WA4Pz6z4VN9MlduC_8LRChUZ2ZB9-ZRI-B7LXckZdvWsLCFip0DBpF94oz7ANwnuFlQ3m6x_5uTs
+
+
+HTTP/1.1 200 OK
+Content-Type: text/plain; charset=utf-8
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+X-Frame-Options: DENY
+Cache-control: no-cache, no-store
+Pragma: no-cache
+Expires: Mon, 01-Jan-1990 00:00:00 GMT
+Google-Accounts-Programmatic-Authenticated: 107672078820540133450
+Content-Encoding: gzip
+Date: Fri, 15 Sep 2017 21:03:12 GMT
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Server: GSE
+Alt-Svc: quic=":443"; ma=2592000; v="39,38,37,35"
+Transfer-Encoding: chunked
+
+
+
+------------------------------------------------------------------
+
+GET https://www.googleapis.com/oauth2/v1/userinfo HTTP/1.1
+Host: www.googleapis.com
+Connection: keep-alive
+Authorization: OAuth ya29.GmDHBCP0OfYjSuJyJ6a8Cbnvl734WPcEPqHK3b8yQ-vAKObGZcffdOsaKqTd5X8-CH4E0dC3baq-nB5210eMc4TWcU2CSAd-ehvRflr0OqyryhvhsDt7QjkEkkskm5WGSLQ
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36
+Accept-Encoding: gzip, deflate, br
+
+
+HTTP/1.1 200 OK
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: Mon, 01 Jan 1990 00:00:00 GMT
+Date: Fri, 15 Sep 2017 21:03:12 GMT
+Vary: Origin
+Vary: X-Origin
+Content-Type: application/json; charset=UTF-8
+Content-Encoding: gzip
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+Server: GSE
+Alt-Svc: quic=":443"; ma=2592000; v="39,38,37,35"
+Transfer-Encoding: chunked
+
+
+
+------------------------------------------------------------------
+
+POST https://www.googleapis.com/oauth2/v2/IssueToken HTTP/1.1
+Host: www.googleapis.com
+Connection: keep-alive
+Content-Length: 518
+Authorization: Bearer ya29.GmHHBDFMxGn85oM2TQNW8M1kAglmDQCu3yIYKMnYBjwBhfb8-J_GU_WoA9jfDflxegd6Bvl3uOgGVqvc293cMWwHtGYKu-psuT1J4inWQLRS1QTgvbwdAarc9lCc3n4s_xti
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,de;q=0.8,en;q=0.6
+
+
+HTTP/1.1 200 OK
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: Mon, 01 Jan 1990 00:00:00 GMT
+Date: Fri, 15 Sep 2017 21:03:12 GMT
+Vary: Origin
+Vary: X-Origin
+Content-Type: application/json; charset=UTF-8
+Content-Encoding: gzip
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+Server: GSE
+Alt-Svc: quic=":443"; ma=2592000; v="39,38,37,35"
+Transfer-Encoding: chunked
+
+
+
+------------------------------------------------------------------
+
+GET https://www.onenote.com/strings?ids=WebClipper.&locale=en-US HTTP/1.1
+Host: www.onenote.com
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36
+Accept: */*
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,de;q=0.8,en;q=0.6
+Cookie: OneNoteMvcUserIdentifier=022e6648-3a4e-4a7f-8e8b-f1b5895035ec; UserTrackerKey=AnonymousId=7c24562b-e863-4e34-bd35-80f1cceabe90&FirstVisit=09/09/2017 02:14:38&LastVisit=09/15/2017 20:54:01; TreatmentGroups=SiteShowPlatformsAboveInfoPanels=Disabled&SiteShowInfoPanels=Enabled&NotebookIntroPageExperiment=Treatment2&UpgradePageDownloadButtonExperiment=Treatment1&FreBeforeAfterSigninExperiment=Treatment2
+
+
+HTTP/1.1 200 OK
+Cache-Control: private
+Content-Length: 11837
+Content-Type: application/json; charset=utf-8
+X-RoutingOfficeCluster: wus-000.reverseproxy.onenote.com
+X-RoutingOfficeFE: ReverseProxyFrontEnd_IN_2
+X-RoutingOfficeVersion: 16.0.8606.1557
+X-RoutingSessionId: dfd93f39-a74d-4463-ba71-b6095dde94b3
+X-RoutingCorrelationId: db86a506-2208-4eb8-ae56-d9141532a5dd
+P3P: CP="CAO DSP COR ADMa DEV CONi TELi CUR PSA PSD TAI IVDi OUR SAMi BUS DEM NAV STA UNI COM INT PHY ONL FIN PUR"
+Set-Cookie: UserTrackerKey=AnonymousId=7c24562b-e863-4e34-bd35-80f1cceabe90&FirstVisit=09/09/2017 02:14:38&LastVisit=09/15/2017 21:03:12; expires=Sun, 15-Sep-2019 21:03:12 GMT; path=/; HttpOnly
+Set-Cookie: ONSessionKey=SessionId=7c986237-fb2e-49ee-a9e0-862137a52e69&StartTime=09/15/2017 21:03:12&LastActivityTime=09/15/2017 21:03:12; path=/; HttpOnly
+Set-Cookie: UserTrackerKey=AnonymousId=7c24562b-e863-4e34-bd35-80f1cceabe90&FirstVisit=09/09/2017 02:14:38&LastVisit=09/15/2017 21:03:12; expires=Sun, 15-Sep-2019 21:03:12 GMT; path=/; HttpOnly
+Set-Cookie: ONSessionKey=SessionId=7c986237-fb2e-49ee-a9e0-862137a52e69&StartTime=09/15/2017 21:03:12&LastActivityTime=09/15/2017 21:03:12; path=/; HttpOnly
+Set-Cookie: TreatmentGroups=SiteShowPlatformsAboveInfoPanels=Disabled&SiteShowInfoPanels=Enabled&NotebookIntroPageExperiment=Treatment2&UpgradePageDownloadButtonExperiment=Treatment1&FreBeforeAfterSigninExperiment=Treatment2; expires=Sun, 15-Sep-2019 21:03:12 GMT; path=/; HttpOnly
+X-CorrelationId: db86a506-2208-4eb8-ae56-d9141532a5dd
+X-UserSessionId: dfd93f39-a74d-4463-ba71-b6095dde94b3
+X-OfficeFE: SiteFrontEnd_IN_1
+X-OfficeVersion: 16.0.8615.1551
+X-OfficeCluster: wus-000.site.onenote.com
+X-AspNetMvc-Version: 5.2
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+X-Content-Type-Options: nosniff
+Date: Fri, 15 Sep 2017 21:03:11 GMT
+
+
+
+------------------------------------------------------------------
+
+POST https://accounts.google.com/GetUserInfo HTTP/1.1
+Host: accounts.google.com
+Connection: keep-alive
+Content-Length: 76
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,de;q=0.8,en;q=0.6
+
+
+HTTP/1.1 200 OK
+Content-Type: text/plain; charset=utf8
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+X-Frame-Options: DENY
+Cache-control: no-cache, no-store
+Pragma: no-cache
+Expires: Mon, 01-Jan-1990 00:00:00 GMT
+Content-Encoding: gzip
+Date: Fri, 15 Sep 2017 21:03:12 GMT
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Server: GSE
+Alt-Svc: quic=":443"; ma=2592000; v="39,38,37,35"
+Transfer-Encoding: chunked
+
+
+
+------------------------------------------------------------------
+

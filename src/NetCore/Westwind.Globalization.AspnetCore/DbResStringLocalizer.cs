@@ -1,4 +1,5 @@
-﻿#if false
+﻿// TODO: Create a native String Localizer implementation
+#if false
 using System;
 using System.Collections.Generic;
 using System.Text;

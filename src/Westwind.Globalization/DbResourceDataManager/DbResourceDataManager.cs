@@ -2,7 +2,7 @@
 /*
  **************************************************************
  *  Author: Rick Strahl 
- *          � West Wind Technologies, 2009-2015
+ *          (c) West Wind Technologies, 2009-2015
  *          http://www.west-wind.com/
  * 
  *
@@ -364,16 +364,25 @@ namespace Westwind.Globalization
                 throw new ArgumentException(Resources.InvalidFileExtensionForFileResource);
 
             string type;
-            if ("txt,css,htm,html,xml,js".Contains(ext))
+            if ("txt,css,htm,html,xml,js".Contains(ext))            
                 type = typeof(string).AssemblyQualifiedName;
+            
+
 #if NETFULL
             else if ("jpg,jpeg,png,gif,bmp".Contains(ext))
                 type = typeof (Bitmap).AssemblyQualifiedName;
             else if("ico" == ext)
                 type = typeof(Icon).AssemblyQualifiedName;
-#endif            
+#endif
             else
-                type = typeof (byte[]).AssemblyQualifiedName;
+            {
+#if NETFULL
+                type = typeof(byte[]).AssemblyQualifiedName;
+#else
+                // TODO: Have to do this to make Visual Studio happy when compiling resources
+                type = "System.Byte[], mscorlib, Version = 4.0.0.0, Culture = neutral, PublicKeyToken = b77a5c561934e089";
+#endif
+            }
 
             using (var ms = new MemoryStream())
             {

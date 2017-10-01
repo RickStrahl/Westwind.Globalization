@@ -1,9 +1,9 @@
 ﻿@page
 @using System.Threading
 @using System.Globalization
+@using AppResources
 @using Controllers
 @using Westwind.Globalization
-@using Westwind.Globalization.Sample.AspNetCore.Properties
 @using Westwind.Globalization.AspNetCore.Extensions
 
 @{
@@ -35,11 +35,10 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
      <![endif]-->
 
-    <title>DbResourceManager Test Page</title>
+    <title>DbResourceManager Razor Sample (.NET Core)</title>
 
     <link href="localizationAdmin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="localizationAdmin/bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet" />
-
     <link href="localizationAdmin/css/localizationAdmin.css" rel="stylesheet" />
     <style>
         label {
@@ -63,7 +62,7 @@
                 <div style="float: left; margin-left: 5px; line-height: 1.2">
                     <i style="color: steelblue; font-size: 0.8em; font-weight: bold;">West Wind Globalization</i><br />
                     <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;">
-                        Razor DbResourceManager Test
+                        DbResourceManager Razor @DbRes.T("Sample","ResourceTestPage") <small>(.NET Core)</small>
                     </i>
                 </div>
             </a>
@@ -74,17 +73,12 @@
         <ul id="MenuButtons" class="nav navbar-nav pull-right navbar">
             <li>
                 <a href="localizationAdmin/">
-                    <i class="fa fa-gears"></i> Resource Editor
+                    <i class="fa fa-gears"></i> @DbRes.T("ResourceEditor","ResourceTestPage")
                 </a>
-            </li>
-            <li>
-                <a href="resourcetest.aspx">
-                    <i class="fa fa-check-circle"></i> WebForms Test Page
-                </a>
-            </li>
+            </li>            
             <li>
                 <a href="javascript:{}" id="EditResources">
-                    <i class="fa fa-flag"></i> Edit Resources
+                    <i class="fa fa-flag"></i> @DbRes.T("EditResources","ResourceTestPage")
                 </a>
             </li>
             <li>
@@ -154,14 +148,14 @@
             <label>Strongly typed Resource Generated from Db (uses ASP.NET ResourceProvider)</label>
             @Resources.HelloWorld
 
-            @*<label>Strongly typed image resource: <small>(if available)</small></label>
+            <label>Strongly typed image resource: <small>(if available)</small></label>
             <div data-resource-id="FlagPng">
                 @try
             {
-                    @Html.Raw(GeneratedResourceHelper.BitmapToEmbeddedHtmlImage(Resources.FlagPng, ImageFormat.Png))
+                    @Html.Raw(GeneratedResourceHelper.BitmapToEmbeddedHtmlImage(Resources.FlagPng, "image/png",null))
             }
             catch { }
-            </div>*@
+            </div>
 
         </div>
 

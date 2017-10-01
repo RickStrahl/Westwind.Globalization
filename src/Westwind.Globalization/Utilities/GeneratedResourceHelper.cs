@@ -120,9 +120,7 @@ namespace Westwind.Globalization
         {
             return HttpContext.GetGlobalResourceObject(resourceSet, resourceId);
         }
-#endif
 
-#if NETFULL
         /// <summary>
         /// Renders an HTML IMG tag that contains the bitmaps embedded image content
         /// inline of the HTML document. Userful for resources.
@@ -150,19 +148,6 @@ namespace Westwind.Globalization
                 data = ms.ToArray();
             }
 
-            return BitmapToEmbeddedHtmlImage(data, format, extraAttributes);
-        }
-
-        /// <summary>
-        /// Renders an HTML IMG tag that contains a raw byte stream's image content
-        /// inline of the HTML document. Userful for resources.
-        /// </summary>
-        /// <param name="data"></param>
-        /// <param name="format"></param>
-        /// <param name="extraAttributes"></param>
-        /// <returns></returns>
-        public static string BitmapToEmbeddedHtmlImage(byte[] data, ImageFormat format, string extraAttributes = null)
-        {
             string contentType = "image/jpeg";
 
             if (format == ImageFormat.Png)
@@ -171,9 +156,11 @@ namespace Westwind.Globalization
                 contentType = "image/gif";
             else if (format == ImageFormat.Bmp)
                 contentType = "image/bmp";
+            else if (format == ImageFormat.Icon)
+                contentType = "image/vnd.microsoft.icon";
 
             return BitmapToEmbeddedHtmlImage(data, contentType, extraAttributes);
-        }
+        }        
 #endif
         
         /// <summary>
@@ -181,7 +168,7 @@ namespace Westwind.Globalization
         /// inline of the HTML document. Userful for resources.
         /// </summary>
         /// <param name="data"></param>
-        /// <param name="format"></param>
+        /// <param name="s"></param>
         /// <param name="extraAttributes"></param>
         /// <returns></returns>
         public static string BitmapToEmbeddedHtmlImage(byte[] data, string contentType = null, string extraAttributes = null)

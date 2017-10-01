@@ -159,7 +159,7 @@
         <div data-resource-id="FlagPng">
             @try
             {
-                @Html.Raw(GeneratedResourceHelper.BitmapToEmbeddedHtmlImage(Resources.FlagPng, ImageFormat.Png))
+                @Html.Raw(GeneratedResourceHelper.BitmapToEmbeddedHtmlImage(Resources.FlagPng, "image/png"))
             }
             catch { }
         </div>

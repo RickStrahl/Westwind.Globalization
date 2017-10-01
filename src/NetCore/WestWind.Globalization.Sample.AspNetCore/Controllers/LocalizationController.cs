@@ -55,8 +55,10 @@ namespace WestWind.Globalization.Sample.AspNetCore.Controllers
         [Route("StrongDbResResources")]
         public string StrongDbResResources()
         {
-            return Westwind.Globalization.Sample.AspNetCore.Properties.Resources.HelloWorld;
+            return AppResources.Resources.HelloWorld;
+            //return WestWind.Globalization.Sample.AspNetCore.Properties.Resources.HelloWorld;
         }
+
 
         /// <summary>
         /// This gets generated strongly typed resources using DbRes or Resx depending

@@ -347,8 +347,9 @@
             if (files && files.length) {
                 for (var i = 0; i < files.length; i++) {
                     var file = files[i];
+                    debugger;
                     $upload.upload({
-                            url: 'LocalizationService.ashx?method=UploadResource',
+                        url: '../api/LocalizationAdministration/UploadResource',
                             fields: { 'resourceset': vm.activeResource.ResourceSet, 'resourceid': vm.activeResource.ResourceId, "localeid": vm.activeResource.LocaleId },
                             file: file
                         }).progress(function(evt) {

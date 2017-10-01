@@ -272,6 +272,8 @@
     <Content Include="Properties\AmericanFlag.png" />
     <Content Include="Properties\FrenchFlag.png" />
     <Content Include="Properties\GermanFlag.png" />
+    <None Include="Resources\AmericanFlag.png" />
+    <None Include="Resources\15_Full.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\ww.jquery.js" />
@@ -353,6 +355,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -37,7 +38,8 @@ namespace Westwind.Globalization.Controllers
 
             DbIRes = new DbResInstance( DbResourceConfiguration.Current);
         }
-        
+
+        #region Retrieve Resources
 
         [HttpGet]
         [Route("GetResourceList")]
@@ -193,17 +195,6 @@ namespace Westwind.Globalization.Controllers
             return Json(Manager.GetAllResourceSets(ResourceListingTypes.AllResources), jsonSettings);
         }
 
-        /// <summary>
-        /// checks to see if the localiztion table exists
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("IsLocalizationTable")]
-        public bool IsLocalizationTable()
-        {
-            return Manager.IsLocalizationTable();
-        }
-
 
         /// <summary>
         /// Returns a list of the all the LocaleIds used in a given resource set
@@ -341,7 +332,9 @@ namespace Westwind.Globalization.Controllers
                 Value = kv.Value
             });
         }
+        #endregion
 
+        #region Update Resources
 
         /// <summary>
         /// Adds or updates a resource. Pass value, resourceId,resourceSet,localeId,comment
@@ -440,7 +433,7 @@ namespace Westwind.Globalization.Controllers
             return true;
         }
 
-#if NETFULL
+
         /// <summary>
         /// Updates or adds a binary file resource based on form variables.
         /// ResourceId,ResourceSet,LocaleId and a single file upload.
@@ -449,13 +442,15 @@ namespace Westwind.Globalization.Controllers
         [Route("UploadResource")]
         public bool UploadResource()
         {
-            if (Request.Files.Count < 1)
+            if (Request.Form.Files.Count < 1)
                 return false;
 
-            var file = Request.Files[0];
+            var file = Request.Form.Files[0];
             var resourceId = Request.Form["ResourceId"];
             var resourceSet = Request.Form["ResourceSet"];
             var localeId = Request.Form["LocaleId"];
+
+            
 
             if (string.IsNullOrEmpty(resourceId) || string.IsNullOrEmpty(resourceSet))
                 throw new ApplicationException("Resourceset or ResourceId are not provided for upload.");
@@ -472,64 +467,43 @@ namespace Westwind.Globalization.Controllers
                 };
             }
 
+            using (var fs = file.OpenReadStream())
             using (var ms = new MemoryStream())
             {
-                file.InputStream.CopyTo(ms);
-                file.InputStream.Close();
+                fs.CopyTo(ms);                
                 ms.Flush();
 
                 if (DbResourceDataManager.SetFileDataOnResourceItem(item, ms.ToArray(), file.FileName) == null)
                     return false;
 
                 int res = Manager.UpdateOrAddResource(item);
+                if (res < 0)                    
+                    return false;
             }
 
             return true;
         }
-#endif
-
 
 
         /// <summary>
-        /// Returns configuration information so the UI can display this info on the configuration
-        /// page.
+        /// Deletes an entire resource set.
         /// </summary>
+        /// <param name="resourceSet"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("GetLocalizationInfo")]
-        //public object GetLocalizationInfo()
-        public ActionResult GetLocalizationInfo()
+        [HttpDelete]
+        [Route("DeleteResourceSet")]
+        public bool DeleteResourceSet(string resourceSet)
         {
-            //// Get the Web application configuration object.
-            //var webConfig = WebConfigurationManager.OpenWebConfiguration("~/web.config");
+#if OnlineDemo
+        throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
+#endif
 
-            //// Get the section related object.
-            //GlobalizationSection configSection =
-            //    (GlobalizationSection)webConfig.GetSection("system.web/globalization");
+            if (!Manager.DeleteResourceSet(resourceSet))
+                throw new ApplicationException(Manager.ErrorMessage);
 
-            //string providerFactory = configSection.ResourceProviderFactoryType;
-            //if (string.IsNullOrEmpty(providerFactory))
-            //    providerFactory = WebUtils.GRes(STR_RESOURCESET, "NoProviderConfigured");
-
-            var config = DbResourceConfiguration.Current;
-
-            return Json(new
-            {
-                //ProviderFactory = providerFactory,
-                config.ConnectionString,
-                config.ResourceTableName,
-                DbResourceProviderType = config.DbResourceDataManagerType.Name,
-                config.ResxExportProjectType,
-                config.ResxBaseFolder,
-                config.ResourceBaseNamespace,
-                config.StronglyTypedGlobalResource,
-                config.GoogleApiKey,
-                config.BingClientId,
-                config.BingClientSecret,
-                config.AddMissingResources
-            },jsonSettings);
+            return true;
         }
-
 
         /// <summary>
         /// Delete an individual resource. Pass resourceId, resourceSet and localeId 
@@ -611,6 +585,75 @@ namespace Westwind.Globalization.Controllers
             return true;
         }
 
+        /// <summary>
+        /// Renames a resource set to a new name.
+        /// </summary>
+        /// <param name="oldResourceSet"></param>
+        /// <param name="newResourceSet"></param>
+        /// <returns></returns>
+        [Route("RenameResourceSet")]
+        public bool RenameResourceSet(string oldResourceSet, string newResourceSet)
+        {
+#if OnlineDemo
+        throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
+#endif
+            if (!Manager.RenameResourceSet(oldResourceSet, newResourceSet))
+                throw new ApplicationException(Manager.ErrorMessage);
+
+            return true;
+        }
+
+        #endregion
+
+        #region Table Administration
+
+        /// <summary>
+        /// Creates a new localization table as defined int he configuration if it doesn't
+        /// exist. If the table exists an error is returned.
+        /// </summary>
+        /// <returns></returns>
+        [Route("CreateTable")]
+        public bool CreateTable()
+        {
+#if OnlineDemo
+        throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
+#endif
+
+            if (!Manager.CreateLocalizationTable(null))
+                throw new ApplicationException(DbIRes.T("LocalizationTableNotCreated", STR_RESOURCESET) + "\r\n" +
+                                               Manager.ErrorMessage);
+            return true;
+        }
+
+        /// <summary>
+        /// Backs up the resource table into a new table with the same name + _backup
+        /// </summary>
+        /// <returns></returns>
+        [Route("Backup")]
+        public bool Backup()
+        {
+#if OnlineDemo
+            throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
+#endif
+            return Manager.CreateBackupTable(null);
+        }
+
+        /// <summary>
+        /// Clears the resource cache. Works only if using one of the Westwind
+        /// ASP.NET resource providers or managers.
+        /// </summary>
+        [Route("ReloadResources")]
+        public void ReloadResources()
+        {
+            //Westwind.Globalization.Tools.wwWebUtils.RestartWebApplication();
+            DbResourceConfiguration.ClearResourceCache(); // resource provider
+            DbIRes.ClearResources(); // resource manager
+        }
+
+        #endregion
+
+
+        #region Miscellaneous helpers
         [HttpPost]
         [Route("Translate")]        
         public string Translate([FromBody] dynamic parm)
@@ -642,90 +685,15 @@ namespace Westwind.Globalization.Controllers
             return result;
         }
 
-
         /// <summary>
-        /// Deletes an entire resource set.
+        /// checks to see if the localiztion table exists
         /// </summary>
-        /// <param name="resourceSet"></param>
         /// <returns></returns>
         [HttpGet]
-        [HttpDelete]
-        [Route("DeleteResourceSet")]
-        public bool DeleteResourceSet(string resourceSet)
+        [Route("IsLocalizationTable")]
+        public bool IsLocalizationTable()
         {
-#if OnlineDemo
-        throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
-#endif
-
-            if (!Manager.DeleteResourceSet(resourceSet))
-                throw new ApplicationException(Manager.ErrorMessage);
-
-            return true;
-        }
-
-
-        /// <summary>
-        /// Renames a resource set to a new name.
-        /// </summary>
-        /// <param name="oldResourceSet"></param>
-        /// <param name="newResourceSet"></param>
-        /// <returns></returns>
-        [Route("RenameResourceSet")]
-        public bool RenameResourceSet(string oldResourceSet, string newResourceSet)
-        {
-#if OnlineDemo
-        throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
-#endif
-            if (!Manager.RenameResourceSet(oldResourceSet, newResourceSet))
-                throw new ApplicationException(Manager.ErrorMessage);
-
-            return true;
-        }
-
-
-        /// <summary>
-        /// Clears the resource cache. Works only if using one of the Westwind
-        /// ASP.NET resource providers or managers.
-        /// </summary>
-        [Route("ReloadResources")]
-        public void ReloadResources()
-        {
-            //Westwind.Globalization.Tools.wwWebUtils.RestartWebApplication();
-            DbResourceConfiguration.ClearResourceCache(); // resource provider
-            DbIRes.ClearResources(); // resource manager
-        }
-
-
-        /// <summary>
-        /// Backs up the resource table into a new table with the same name + _backup
-        /// </summary>
-        /// <returns></returns>
-        [Route("Backup")]
-        public bool Backup()
-        {
-#if OnlineDemo
-            throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
-#endif
-            return Manager.CreateBackupTable(null);
-        }
-
-
-        /// <summary>
-        /// Creates a new localization table as defined int he configuration if it doesn't
-        /// exist. If the table exists an error is returned.
-        /// </summary>
-        /// <returns></returns>
-        [Route("CreateTable")]
-        public bool CreateTable()
-        {
-#if OnlineDemo
-        throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
-#endif
-
-            if (!Manager.CreateLocalizationTable(null))
-                throw new ApplicationException(DbIRes.T("LocalizationTableNotCreated", STR_RESOURCESET) + "\r\n" +
-                                               Manager.ErrorMessage);
-            return true;
+            return Manager.IsLocalizationTable();
         }
 
 
@@ -751,6 +719,50 @@ namespace Westwind.Globalization.Controllers
             return false;
         }
 
+        /// <summary>
+        /// Returns configuration information so the UI can display this info on the configuration
+        /// page.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetLocalizationInfo")]
+        //public object GetLocalizationInfo()
+        public ActionResult GetLocalizationInfo()
+        {
+            //// Get the Web application configuration object.
+            //var webConfig = WebConfigurationManager.OpenWebConfiguration("~/web.config");
+
+            //// Get the section related object.
+            //GlobalizationSection configSection =
+            //    (GlobalizationSection)webConfig.GetSection("system.web/globalization");
+
+            //string providerFactory = configSection.ResourceProviderFactoryType;
+            //if (string.IsNullOrEmpty(providerFactory))
+            //    providerFactory = WebUtils.GRes(STR_RESOURCESET, "NoProviderConfigured");
+
+            var config = DbResourceConfiguration.Current;
+
+            return Json(new
+            {
+                //ProviderFactory = providerFactory,
+                config.ConnectionString,
+                config.ResourceTableName,
+                DbResourceProviderType = config.DbResourceDataManagerType.Name,
+                config.ResxExportProjectType,
+                config.ResxBaseFolder,
+                config.ResourceBaseNamespace,
+                config.StronglyTypedGlobalResource,
+                config.GoogleApiKey,
+                config.BingClientId,
+                config.BingClientSecret,
+                config.AddMissingResources
+            },jsonSettings);
+        }
+
+        #endregion
+
+
+        #region Import/Export
 
         /// <summary>
         /// Creates .NET strongly typed class from the resources. Pass:
@@ -918,7 +930,7 @@ namespace Westwind.Globalization.Controllers
             return true;
         }
 
-
+        #endregion
     }
 
 

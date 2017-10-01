@@ -40,7 +40,6 @@ namespace Westwind.Globalization.Test
 
             Assert.IsFalse(string.IsNullOrEmpty(result3), service.ErrorMessage);
 
-
             q =
                 "Here's some text \"in quotes\" that needs to encode properly Really, where do I go, what do I do, how do I do it and when can it be done, who said it, where is it and whatever happened to Jim, what happened to Helmut when he came home I thought he might have been dead";
 
@@ -62,7 +61,7 @@ namespace Westwind.Globalization.Test
             string token = service.GetBingAuthToken();
             Assert.IsNotNull(token);
 
-            string result = service.TranslateBing("Life is great and one is spoiled when it goes on and on and on", "en",
+            string result = service.TranslateBing("Life is one big wave with a giant bottom turn!", "en",
                 "de", token);
             Console.WriteLine(result);
 

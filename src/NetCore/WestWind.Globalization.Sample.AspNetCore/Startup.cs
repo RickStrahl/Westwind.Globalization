@@ -25,7 +25,7 @@ namespace WestWind.Globalization.Sample.AspNetCore
             });
 
             services.AddWestwindGlobalization(opt =>
-            {
+            {                
                 // the default settings comme from DbResourceConfiguration.json if exists
 
                 // you can override the settings here - possibly with standard config settings

@@ -106,6 +106,9 @@
    <data name="Show" xml:space="preserve">
       <value>Anzeigen</value>
    </data>
+   <data name="Test" xml:space="preserve">
+      <value>test (de)</value>
+   </data>
    <data name="YearReleased" xml:space="preserve">
       <value>Erscheinungsjahr</value>
    </data>

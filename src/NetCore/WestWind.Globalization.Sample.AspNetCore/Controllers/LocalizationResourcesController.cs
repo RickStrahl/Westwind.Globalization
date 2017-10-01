@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Internal;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
@@ -30,7 +31,7 @@ namespace WestWind.Globalization.Sample.AspNetCore.Controllers
         // http://localhost:5000/api/JavaScriptLocalizationResources?ResourceSet=Resources&LocaleId=de&VarName=resources&ResourceType=resdb&ResourceMode=1
         [Route("/api/JavaScriptLocalizationResources")]
         [Route("JavaScriptResourceHandler.axd")]
-        public ActionResult Process()
+        public ActionResult JavaScriptLocalizationResources()
         {
             return ProcessRequest();            
         }
@@ -39,17 +40,21 @@ namespace WestWind.Globalization.Sample.AspNetCore.Controllers
         public ActionResult ProcessRequest()
         {
             var Request = HttpContext.Request;
-            var Response = HttpContext.Response;
+           
+            string resourceSet = Request.Query["ResourceSet"];
+            string localeId = Request.Query["LocaleId"];
+            if (string.IsNullOrEmpty(localeId))
+                localeId = "auto";
+            string resourceMode = Request.Query["ResourceMode"];
+            if (string.IsNullOrEmpty(resourceMode))
+                resourceMode = "Resx"; // Resx/ResDb/Auto          
+            string varname = Request.Query["VarName"];
+            if (string.IsNullOrEmpty(varname))
+                varname = "resources";
 
-            string resourceSet = Request.Query["ResourceSet"].ToString();
-            string localeId = Request.Query["LocaleId"].ToString() ?? "auto";
-            string resourceMode = Request.Query["ResourceMode"].ToString() ?? "Resx"; // Resx/ResDb            
-            string varname = Request.Query["VarName"].ToString() ?? "resources";
-            //string resourceMode = (Request.Query["ResourceMode"].ToString() ?? "0");
-
-            // varname is embedded into script so validate to avoid script injection
-            // it's gotta be a valid C# and valid JavaScript name
-            Match match = Regex.Match(varname, @"^[\w|\d|_|$|@|\.]*$");
+                // varname is embedded into script so validate to avoid script injection
+                // it's gotta be a valid C# and valid JavaScript name
+                Match match = Regex.Match(varname, @"^[\w|\d|_|$|@|\.]*$");
             if (match.Length < 1 || match.Groups[0].Value != varname)
                SendErrorResponse("Invalid variable name passed.");
 
@@ -289,23 +294,29 @@ namespace WestWind.Globalization.Sample.AspNetCore.Controllers
             return sb.ToString();
         }
 
-    }
+        /// <summary>
+        /// normalized SCRIPT tag to reference localized resources for a specific 
+        /// ResourceSet.
+        /// </summary>
+        /// <param name="varName"></param>
+        /// <param name="resourceSet"></param>
+        /// <param name="localeId"></param>
+        /// <param name="resourceMode></param>
+        /// <example>
+        /// @LocalizationResourceController.GetJavaScriptResourcesScriptTag("myResources","MyServerResources")
+        /// @LocalizationResourceController.GetJavaScriptResourcesScriptTag("myResources","MyServerResources",resourceMode: ResourceAccessMode.AutoConfiguration)
+        /// @LocalizationResourceController.GetJavaScriptResourcesScriptTag("myResources","MyServerResources","de-DE,ResourceAccessMode.AutoConfiguration)
+        /// </example>
+        /// <returns></returns>
 
+        public static HtmlString GetJavaScriptResourcesScriptTag(string varName, string resourceSet,
+            string localeId = null,
+            ResourceAccessMode resourceMode = ResourceAccessMode.AutoConfiguration)
+        {
+            var url = GetJavaScriptResourcesUrl(varName, resourceSet, localeId, resourceMode);
 
-
-    /// <summary>
-    /// Determines the resource provider type used
-    /// to retrieve resources.
-    /// 
-    /// Note only applies to the stock ResX provider
-    /// or the DbResourceProviders of this assembly.
-    /// Other custom resource providers are not supported.
-    /// </summary>
-    public enum ResourceProviderTypes
-    {
-        Resx,
-        DbResourceProvider,
-        AutoDetect
+            return new HtmlString($"<script src=\"{url}\"></script>");
+        }
     }
 
 }

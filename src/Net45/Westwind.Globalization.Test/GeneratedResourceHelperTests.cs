@@ -52,7 +52,7 @@ namespace Westwind.Globalization.Test
         public void RawDataEmbeddedImageFromFileTest()
         {
             var data = File.ReadAllBytes(JpgBitMapPath);
-            string output = GeneratedResourceHelper.BitmapToEmbeddedHtmlImage(data, ImageFormat.Jpeg);
+            string output = GeneratedResourceHelper.BitmapToEmbeddedHtmlImage(data,"image/jpeg");
             Assert.IsNotNull(output);
             Console.WriteLine(output);
         }

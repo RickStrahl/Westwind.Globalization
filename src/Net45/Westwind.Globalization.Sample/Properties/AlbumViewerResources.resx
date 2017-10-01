@@ -59,8 +59,7 @@
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
    <data name="AddAlbum" xml:space="preserve">
-      <value>Add  New Album</value>
-      <comment>asdda asdasdasd</comment>
+      <value>Add  New Albums</value>
    </data>
    <data name="AddSong" xml:space="preserve">
       <value>Add Songs</value>
@@ -101,11 +100,17 @@
    <data name="MoreFrom" xml:space="preserve">
       <value>More From</value>
    </data>
+   <data name="NewResource" xml:space="preserve">
+      <value>New Resource</value>
+   </data>
    <data name="Remove" xml:space="preserve">
       <value>Remove</value>
    </data>
    <data name="Show" xml:space="preserve">
       <value>Show</value>
+   </data>
+   <data name="Test" xml:space="preserve">
+      <value>Test</value>
    </data>
    <data name="YearReleased" xml:space="preserve">
       <value>Year released</value>

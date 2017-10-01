@@ -8,10 +8,11 @@ namespace Westwind.Globalization.Sample.Properties
     public class GeneratedResourceSettings
     {
         // You can change the ResourceAccess Mode globally in Application_Start        
-        public static ResourceAccessMode ResourceAccessMode = ResourceAccessMode.AspNetResourceProvider;
+        public static ResourceAccessMode ResourceAccessMode = DbResourceConfiguration.Current.ResourceAccessMode;
     }
 
-  [System.CodeDom.Compiler.GeneratedCodeAttribute("Westwind.Globalization.StronglyTypedResources", "2.0")]
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Westwind.Globalization.StronglyTypedResources", "3.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class AlbumViewerResources
@@ -62,7 +63,7 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String AlbumDescriptionPlaceholder
+		public static System.String AlbumDescription_Placeholder
 		{
 			get
 			{
@@ -118,6 +119,14 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
+		public static System.String Test
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","Test",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
 		public static System.String AlbumDescription
 		{
 			get
@@ -139,6 +148,14 @@ namespace Westwind.Globalization.Sample.Properties
 			get
 			{
 				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","AddAlbum",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String NewResource
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("AlbumViewerResources","NewResource",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 
@@ -168,7 +185,8 @@ namespace Westwind.Globalization.Sample.Properties
 
 	}
 
-  [System.CodeDom.Compiler.GeneratedCodeAttribute("Westwind.Globalization.StronglyTypedResources", "2.0")]
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Westwind.Globalization.StronglyTypedResources", "3.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class LocalizationForm
@@ -219,7 +237,7 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String HomeTitle
+		public static System.String Home_Title
 		{
 			get
 			{
@@ -251,6 +269,14 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
+		public static System.String GridView_Title
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("LocalizationForm","GridView_Title",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
 		public static System.String LocalizationAdministration
 		{
 			get
@@ -275,11 +301,11 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String StronglyTypedGlobalResourcesFailed
+		public static System.String GridView
 		{
 			get
 			{
-				return GeneratedResourceHelper.GetResourceString("LocalizationForm","StronglyTypedGlobalResourcesFailed",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+				return GeneratedResourceHelper.GetResourceString("LocalizationForm","GridView",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 
@@ -288,14 +314,6 @@ namespace Westwind.Globalization.Sample.Properties
 			get
 			{
 				return GeneratedResourceHelper.GetResourceString("LocalizationForm","ResourcesHaveBeenBackedUp",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
-			}
-		}
-
-		public static System.String CreateClassInfo2
-		{
-			get
-			{
-				return GeneratedResourceHelper.GetResourceString("LocalizationForm","CreateClassInfo2",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 
@@ -315,7 +333,7 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String CreateClassTitle
+		public static System.String CreateClass_Title
 		{
 			get
 			{
@@ -339,7 +357,7 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String DeleteTitle
+		public static System.String Delete_Title
 		{
 			get
 			{
@@ -347,7 +365,7 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String RenameTitle
+		public static System.String Rename_Title
 		{
 			get
 			{
@@ -363,7 +381,7 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String BackupTitle
+		public static System.String Backup_Title
 		{
 			get
 			{
@@ -387,7 +405,7 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String ResxExportInfoWebForms
+		public static System.String ResxExportInfo_WebForms
 		{
 			get
 			{
@@ -427,7 +445,15 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String CreateTableTitle
+		public static System.String StronglyTypedGlobalResourcesFailed
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("LocalizationForm","StronglyTypedGlobalResourcesFailed",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String CreateTable_Title
 		{
 			get
 			{
@@ -515,7 +541,7 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String ReloadResourcesTitle
+		public static System.String ReloadResources_Title
 		{
 			get
 			{
@@ -539,7 +565,7 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String ResxImportInfoProject
+		public static System.String ResxImportInfo_Project
 		{
 			get
 			{
@@ -555,7 +581,7 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String ResxExportInfoProject
+		public static System.String ResxExportInfo_Project
 		{
 			get
 			{
@@ -571,7 +597,7 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String ImportResxTitle
+		public static System.String ImportResx_Title
 		{
 			get
 			{
@@ -667,6 +693,14 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
+		public static System.String ResxDesignerClasses
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("LocalizationForm","ResxDesignerClasses",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
 		public static System.String StronglyTypedClassCreated
 		{
 			get
@@ -688,6 +722,14 @@ namespace Westwind.Globalization.Sample.Properties
 			get
 			{
 				return GeneratedResourceHelper.GetResourceString("LocalizationForm","Rename",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String DynamicClasses
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("LocalizationForm","DynamicClasses",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 
@@ -739,7 +781,7 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String ExportResxTitle
+		public static System.String ExportResx_Title
 		{
 			get
 			{
@@ -763,7 +805,7 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String DeleteResourceSetTitle
+		public static System.String Delete_ResourceSet_Title
 		{
 			get
 			{
@@ -803,7 +845,7 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String ResxImportInfoWebForms
+		public static System.String ResxImportInfo_WebForms
 		{
 			get
 			{
@@ -827,7 +869,7 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String ImportExportResxTitle
+		public static System.String ImportExportResx_Title
 		{
 			get
 			{
@@ -845,7 +887,8 @@ namespace Westwind.Globalization.Sample.Properties
 
 	}
 
-  [System.CodeDom.Compiler.GeneratedCodeAttribute("Westwind.Globalization.StronglyTypedResources", "2.0")]
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Westwind.Globalization.StronglyTypedResources", "3.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources
@@ -864,19 +907,19 @@ namespace Westwind.Globalization.Sample.Properties
         }
         private static ResourceManager resourceMan = null;
 
-		public static System.String Cancel
+		public static System.String NameIsRequired
 		{
 			get
 			{
-				return GeneratedResourceHelper.GetResourceString("Resources","Cancel",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+				return GeneratedResourceHelper.GetResourceString("Resources","NameIsRequired",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 
-		public static System.String MarkdownText
+		public static System.String ErrorColon
 		{
 			get
 			{
-				return GeneratedResourceHelper.GetResourceString("Resources","MarkdownText",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+				return GeneratedResourceHelper.GetResourceString("Resources","ErrorColon",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 
@@ -888,14 +931,6 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String NameIsRequired
-		{
-			get
-			{
-				return GeneratedResourceHelper.GetResourceString("Resources","NameIsRequired",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
-			}
-		}
-
 		public static System.String Yesterday
 		{
 			get
@@ -904,11 +939,11 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.String Save
+		public static System.String Testing
 		{
 			get
 			{
-				return GeneratedResourceHelper.GetResourceString("Resources","Save",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+				return GeneratedResourceHelper.GetResourceString("Resources","Testing",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 
@@ -920,11 +955,11 @@ namespace Westwind.Globalization.Sample.Properties
 			}
 		}
 
-		public static System.Drawing.Bitmap FlagPng
+		public static System.Byte[] FlagPng
 		{
 			get
 			{
-				return (System.Drawing.Bitmap) GeneratedResourceHelper.GetResourceObject("Resources","FlagPng",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+				return (System.Byte[]) GeneratedResourceHelper.GetResourceObject("Resources","FlagPng",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 

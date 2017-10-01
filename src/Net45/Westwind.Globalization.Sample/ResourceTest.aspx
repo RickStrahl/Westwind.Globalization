@@ -20,10 +20,6 @@
         // explicitly reset the UserLocale
         if (!string.IsNullOrEmpty(LocaleId))
             Westwind.Utilities.WebUtils.SetUserLocale(LocaleId, LocaleId, "$", true, "en,de,fr");
-
-
-
-
     }
     
 </script>
@@ -212,7 +208,7 @@
             <label>Strongly typed image resource:</label>
             <div data-resource-id="FlagPng">
                 <% try { %>
-                <%= GeneratedResourceHelper.BitmapToEmbeddedHtmlImage(Resources.FlagPng, System.Drawing.Imaging.ImageFormat.Png) %>
+                <%= GeneratedResourceHelper.BitmapToEmbeddedHtmlImage(Resources.FlagPng, "image/png") %>
                 <% } catch {} %>
             </div>
 		</div>
