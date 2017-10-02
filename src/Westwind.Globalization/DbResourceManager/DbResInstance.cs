@@ -62,7 +62,7 @@ namespace Westwind.Globalization
         /// for each resourceset defined in the application. Lazy loaded
         /// as resources are accessed.
         /// </summary>
-        private static Dictionary<string, DbResourceManager> ResourceManagers =
+        protected static Dictionary<string, DbResourceManager> ResourceManagers =
             new Dictionary<string, DbResourceManager>();
 
         /// <summary>

@@ -20,8 +20,25 @@ using Westwind.Utilities;
 
 namespace WestWind.Globalization.AspNetCore.Controllers
 {
+
+    /// <summary>
+    /// Controller that serves JavaScript resources to client side applications in the format of:
+    /// 
+    /// http://localhost:5000/api/JavaScriptLocalizationResources?ResourceSet=LocalizationForm&LocaleId=auto&VarName=resources&ResourceMode=resdb
+    /// 
+    /// Also supports legacy syntax:
+    /// http://localhost:5000/JavaScriptResourceHandler.axd?ResourceSet=LocalizationForm&LocaleId=auto&VarName=resources&ResourceMode=resdb
+    /// </summary>
     public class JavaScriptLocalizationResourcesController : Controller
     {
+
+        protected DbResourceConfiguration Config { get;  }
+
+
+        public JavaScriptLocalizationResourcesController(DbResourceConfiguration config)
+        {
+            Config = config;
+        }
 
         // http://localhost:5000/JavaScriptResourceHandler.axd?ResourceSet=LocalizationForm&LocaleId=auto&VarName=resources&ResourceMode=resdb
         // http://localhost:5000/api/JavaScriptLocalizationResources?ResourceSet=LocalizationForm&LocaleId=auto&VarName=resources&ResourceMode=resdb
@@ -73,24 +90,12 @@ namespace WestWind.Globalization.AspNetCore.Controllers
             
 
             if (mode == ResourceAccessMode.DbResourceManager)
-            {
-                // use existing/cached resource manager if previously used
-                // so database is accessed only on first hit
-                var resManager = DbRes.GetResourceManager(resourceSet);
-
-                DbResXConverter converter =
-                    new DbResXConverter(Request.MapPath(DbResourceConfiguration.Current.ResxBaseFolder));
-                resDict = converter.GetResourcesNormalizedForLocale(resManager, localeId);
-
-                //resDict = manager.GetResourceSetNormalizedForLocaleId(localeId, resourceSet);
-                if (resDict == null || resDict.Keys.Count < 1)
-                {
-                    // try resx instead
-                    string resxPath = converter.FormatResourceSetPath(resourceSet);
-                    resDict = converter.GetResXResourcesNormalizedForLocale(resxPath, localeId);
-                }
+            { 
+                var resManager = DbResourceDataManager.CreateDbResourceDataManager(
+                 Config.DbResourceDataManagerType);   
+                resDict = resManager. GetResourceSetNormalizedForLocaleId(localeId, resourceSet);
             }
-            else // Resx Resources
+            else // Resx Resources loaded from disk
             {
                 string basePath = Request.MapPath(DbResourceConfiguration.Current.ResxBaseFolder);
                 DbResXConverter converter = new DbResXConverter(basePath);
