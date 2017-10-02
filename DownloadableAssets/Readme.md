@@ -2,16 +2,16 @@
 .NET Core no longer allows content as part of NuGet packages, and these zip files provide the additional content files you can add to your project.
 
 > #### Requires ASP.NET Core MVC
-> Both of these addons rely on features of **ASP.NET MVC** in order to run. Make sure your ASP.NET Core app has ` app.UseMvc()` as part of its startup code. Note: It's only these addons that require MVC - **running** `Westwind.Globalization` and `Westwind.Globalization.AspNetCore` in an application doesn't require MVC - it's only the Admin UI and Sample that do.
+> Both of these addons rely on features of **ASP.NET MVC** in order to run. Make sure your ASP.NET Core app has ` app.UseMvc()` as part of its startup code. Note: It's only these addons that require MVC - **running** `Westwind.Globalization` and `Westwind.Globalization.AspNetCore` in a .NET Core or ASP.NET Core application doesn't require MVC - it's only the Admin UI and sample that do.
 
-This folder contains two sets of support files:
+This folder contains two sets of support files in zipped format:
 
 * **Localization Administration UI for .NET Core**  
-This Zip file contains the HTML, CSS, Scripts and Images to run the Localization Administration UI for .NET Core. These files are not required to **run** `Westwind.Globalization.AspNetCore`, but you do need them if you want your site to run the Localization Admin UI.  
-Download
+This Zip file contains the HTML, CSS, Scripts and Images to run the Localization Administration UI for ASP.NET Core. 
+<small>[Download](https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)</small>
 
 * **Sample Page and Resources**   
-When you first set up Westwind.Globalization in a Web site you might want to have a sample page to test operation and make sure it works. This zip file contains, `ResourceSample.cshtml` which is stored in the `Pages` folder of an MVC application along with Resx resources for that page you can import into the Localization database for testing.
+This zip file contains a sample page and resources you can play with when first setting up Westwind.Globalization in a ASP.NET Core site.  <small>[Download](https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationSample_AspNetCore.zip?raw=true)</small>
 
 
 ## Setting up the Localization Admin UI
