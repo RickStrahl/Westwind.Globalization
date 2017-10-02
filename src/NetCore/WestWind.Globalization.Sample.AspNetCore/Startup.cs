@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Westwind.Globalization;
+using Westwind.Globalization.AspNetCore;
 
 namespace WestWind.Globalization.Sample.AspNetCore
 {
@@ -37,16 +38,21 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 opt.ResourceTableName = "localizations";
                 opt.AddMissingResources = false;
                 opt.ResxBaseFolder = "~/Properties/";
-             
-                
+
+                // Set up security for Localization Administration form
+                opt.ConfigureAuthorizeLocalizationAdministration(controllerContext =>
+                {
+                    // return true or false whether this request is authorized
+                    return true; //controllerContext.HttpContext.User.Identity.IsAuthenticated;
+                });
+
             });
 
             services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfiguration configuration)
-        {
-
+        {            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

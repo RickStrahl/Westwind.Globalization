@@ -35,3 +35,4 @@ node_modules/
 .vscode/
 /Westwind.ApplicationConfiguration.WebSample/Properties/PublishProfiles/*.pubxml
 .vs/config/applicationhost.config
+LocalizationAdminHtml/content/

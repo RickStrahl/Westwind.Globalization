@@ -212,9 +212,15 @@ namespace Westwind.Globalization
         [NonSerialized]
         public Type DbResourceDataManagerType = typeof(DbResourceSqlServerDataManager);
 
+        /// <summary>
+        /// Internally used handler that is generically set to execute authorization
+        /// when accessing the Localization handler
+        /// </summary>
+        [XmlIgnore]
+        [JsonIgnore]
+        [NonSerialized]
+        public object OnAuthorizeLocalizationAdministration = null;
         
-
-
         /// <summary>
         /// Base constructor that doesn't do anything to the default values.
         /// </summary>

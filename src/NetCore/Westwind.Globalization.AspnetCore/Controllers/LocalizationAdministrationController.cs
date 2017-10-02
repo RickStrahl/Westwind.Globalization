@@ -4,20 +4,22 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using Westwind.Globalization.AspNetCore.Extensions;
+using Westwind.AspNetCore.Extensions;
 
 namespace Westwind.Globalization.Administration
 {
-
     /// <summary>
-    /// Handles the Administration requires from the 
+    /// Handles the Administration requires from the Localization Admin
+    /// Form. This service is self contained.
     /// </summary>
     [Route("api/LocalizationAdministration")]
+    [UnhandledApiExceptionFilter]        
     public class LocalizationAdministrationController : Controller
     {
         public const string STR_RESOURCESET = "LocalizationForm";
@@ -28,17 +30,32 @@ namespace Westwind.Globalization.Administration
 
         private static JsonSerializerSettings jsonSettings = new JsonSerializerSettings()
         {
-            ContractResolver = new DefaultContractResolver()
+            ContractResolver = new DefaultContractResolver()  // no proper case Results for backwards compatibilty
         };
 
         DbResInstance DbIRes { get;  }
 
 
-        public LocalizationAdministrationController(IHostingEnvironment host)
+        public LocalizationAdministrationController(IHostingEnvironment host, DbResourceConfiguration config)
         {
             Host = host;
+            DbIRes = new DbResInstance(config);
+        }
 
-            DbIRes = new DbResInstance( DbResourceConfiguration.Current);
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            base.OnActionExecuting(context);
+            
+            if (DbIRes.Configuration.OnAuthorizeLocalizationAdministration != null)
+            {
+                var func = DbIRes.Configuration.OnAuthorizeLocalizationAdministration as Func<ControllerContext, bool>;
+                if  (func != null)
+                {
+                    if (!func.Invoke(ControllerContext))                    
+                        throw new UnauthorizedAccessException();                    
+                }
+            }
+
         }
 
         #region Retrieve Resources

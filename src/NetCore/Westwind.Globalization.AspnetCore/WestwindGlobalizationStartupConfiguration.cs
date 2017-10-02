@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Westwind.Utilities;
 
-namespace Westwind.Globalization
+namespace Westwind.Globalization.AspNetCore
 {
     public static class ApplicationBuilderExtensions
     {
@@ -16,10 +16,15 @@ namespace Westwind.Globalization
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddWestwindGlobalization(this IServiceCollection services,
-            Action<DbResourceConfiguration> setOptionsAction)
+            Action<DbResourceConfiguration> setOptionsAction = null)
         {
+            // initialize the static instance - but you can override with 
+            // a new customized instance if desired
             DbResourceConfiguration.Current.Initialize();
-            setOptionsAction.Invoke(DbResourceConfiguration.Current);
+            var config = DbResourceConfiguration.Current;
+            setOptionsAction?.Invoke(config);
+
+            services.AddSingleton<DbResourceConfiguration>(config);
 
             return services;
         }

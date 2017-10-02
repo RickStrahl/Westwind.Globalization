@@ -22,11 +22,5 @@
     <ProjectReference Include="..\Westwind.Globalization.AspnetCore\Westwind.Globalization.AspnetCore.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Update="DbResourceConfiguration.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
 
 </Project>

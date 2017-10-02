@@ -19,6 +19,7 @@ This core package includes only core, non-Web specific features which include th
 
 If you want to use ASP.NET ResourceProviders, JavaScript resources from .NET Resources, or the Web Resource Editor add the Westwind.Globalization.Web package.</Description>
     <Summary>not used</Summary>
+    <Title>West Wind Globalization Database ResourceManager</Title>
     <Copyright>West Wind Technologies</Copyright>
     <PackageLicenseUrl>https://github.com/RickStrahl/Westwind.Globalization#license</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/RickStrahl/Westwind.Globalization</PackageProjectUrl>
@@ -27,6 +28,9 @@ If you want to use ASP.NET ResourceProviders, JavaScript resources from .NET Res
     <RepositoryType>Github</RepositoryType>
     <PackageTags>Localization Translation Globalization Resources</PackageTags>
     <NeutralLanguage />
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReleaseNotes>.NET Standard 2.0 and .NET Core Support</PackageReleaseNotes>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>    
