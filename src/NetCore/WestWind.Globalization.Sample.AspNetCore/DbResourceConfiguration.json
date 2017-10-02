@@ -1,0 +1,15 @@
+﻿{
+  "ResourceAccessMode": "Resx",
+  "ConnectionString": "server=dev.west-wind.com;database=localizations;uid=localizations;pwd=local;app=LocalizationSample",
+  "ResourceTableName": "Localizations",
+  "StronglyTypedGlobalResource": "~/Properties/Resources.cs",
+  "ResourceBaseNamespace": "AppResources",
+  "ResxExportProjectType": "Project",
+  "ResxBaseFolder": "~/Properties/",
+  "AddMissingResources": true,
+  "ActiveConfiguration": null,
+  "LocalizationFormWebPath": "~/LocalizationAdmin/",
+  "BingClientId": "",
+  "BingClientSecret": "Westwind.Globalization.SKTY",
+  "GoogleApiKey": "AIzaSyDcsmVhGN7FlynP9QUZOLF8_5K8iF9ChWo"
+}
