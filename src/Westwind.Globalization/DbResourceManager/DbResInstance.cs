@@ -30,6 +30,8 @@
 */
 #endregion
 
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Resources;
@@ -69,7 +71,7 @@ namespace Westwind.Globalization
         /// </summary>
         public static bool AutoAddResources { get; set; }
 
-        public DbResourceConfiguration Configuration {get; set; }
+        public DbResourceConfiguration Configuration { get; set; }
 
         public DbResInstance(DbResourceConfiguration configuration = null)
         {
@@ -115,7 +117,7 @@ namespace Westwind.Globalization
             }
 #endif
 
-            var manager = GetResourceManager(resourceSet);                            
+            var manager = GetResourceManager(resourceSet);
             if (manager == null)
                 return resId;
 
@@ -132,6 +134,7 @@ namespace Westwind.Globalization
 
             return result;
         }
+
 
         /// <summary>
         /// Localization helper function that Translates a resource
@@ -185,59 +188,55 @@ namespace Westwind.Globalization
             return result;
         }
 
-#if NETFULL
-        /// <summary>
-        /// Localization helper function that Translates a resource
-        /// Id to a resource value to an HtmlStringg. Easy access that allows full
-        /// control over the resource to retrieve or default UiCulture
-        /// locale retrieval.
-        /// 
-        /// Use this version for HTML content that needs to be embedded in Razor
-        /// views or other server tools that can use pre-encoded HTML content.
-        /// </summary>
-        /// <param name="resId">The Resource Id to retrieve
-        /// Note resource Ids can be *any* string and if no
-        /// matching resource is found the id is returned.
-        /// </param>
-        /// <param name="resourceSet">Name of the ResourceSet that houses this resource. If null or empty resources are used.</param>
-        /// <param name="lang">5 letter or 2 letter language ieetf code: en-US, de-DE or en, de etc.</param>
-        /// <returns>
-        /// Localized resource or the resource Id if no match is found. 
-        /// This value *always* returns a string unless you pass in null.
-        /// </returns>
+#if NETFULL /// <summary>
+/// Localization helper function that Translates a resource
+/// Id to a resource value to an HtmlStringg. Easy access that allows full
+/// control over the resource to retrieve or default UiCulture
+/// locale retrieval.
+/// 
+/// Use this version for HTML content that needs to be embedded in Razor
+/// views or other server tools that can use pre-encoded HTML content.
+/// </summary>
+/// <param name="resId">The Resource Id to retrieve
+/// Note resource Ids can be *any* string and if no
+/// matching resource is found the id is returned.
+/// </param>
+/// <param name="resourceSet">Name of the ResourceSet that houses this resource. If null or empty resources are used.</param>
+/// <param name="lang">5 letter or 2 letter language ieetf code: en-US, de-DE or en, de etc.</param>
+/// <returns>
+/// Localized resource or the resource Id if no match is found. 
+/// This value *always* returns a string unless you pass in null.
+/// </returns>
         public HtmlString THtml(string resId, string resourceSet = null, string lang = null)
         {
             return new HtmlString(T(resId, resourceSet, lang));
         }
 #endif
+        
 
         /// <summary>
         /// Creates a localized format string that is transformed using the 
-        /// specified resource id.
-        /// </summary>
-        /// <param name="format">Format string that is to be localized</param>
-        /// <param name="resId">Resource id to localize from</param>
-        /// <param name="resourceSet">Resource set to localize from</param>        
-        /// <param name="args">Any arguments for the format string</param>
-        /// <returns></returns>
-        public string TFormat(string format, string resId, string resourceSet, params object[] args)
-        {
-            return TFormat(resId, resourceSet, string.Empty, args);
-        }
-
-        /// <summary>
-        /// Creates a localized format string that is transformed using the 
-        /// specified resource id.
+        /// specified resource id. The translated text is the first parameter 
+        /// in the format
+        /// string
         /// </summary>
         /// <param name="format">Format string that is to be localized</param>
         /// <param name="resId">Resource id to localize from</param>
         /// <param name="resourceSet">Resource set to localize from</param>
-        /// <param name="lang">Language code</param>
+        /// <param name="localeId">Language code</param>
         /// <param name="args">Any arguments for the format string</param>
         /// <returns></returns>
-        public string TFormat(string format, string resId, string resourceSet, string lang, params object[] args)
+        public string TFormat(string format, string resId, string resourceSet, params object[] args)
         {
-            return string.Format(T(resId, resourceSet, lang), args);
+            var val = T(resId, resourceSet);
+
+            // insert value into args array
+            if (args == null || args.Length == 0)
+                args = new object[] {val};
+            else
+                args = (new object[] {val}).Concat(args).ToArray();
+
+            return string.Format(format, args);
         }
 
 
@@ -266,7 +265,7 @@ namespace Westwind.Globalization
 
             // check if the res manager exists
             ResourceManager manager = GetResourceManager(resourceSet);
-            
+
             // no manager no resources
             if (manager == null)
                 return resId;
@@ -277,8 +276,8 @@ namespace Westwind.Globalization
             else
                 ci = new CultureInfo(lang);
 
-            if(manager is DbResourceManager)
-                ((DbResourceManager) manager).AutoAddMissingEntries = AutoAddResources;
+            if (manager is DbResourceManager)
+                ((DbResourceManager)manager).AutoAddMissingEntries = AutoAddResources;
 
             object result = manager.GetObject(resId, ci);
 
@@ -309,7 +308,7 @@ namespace Westwind.Globalization
             if (value == null)
                 value = resourceId;
 
-            var db = DbResourceDataManager.CreateDbResourceDataManager();  
+            var db = DbResourceDataManager.CreateDbResourceDataManager();
             return db.UpdateOrAddResource(resourceId, value, lang, resourceSet, null) > -1;
         }
 
@@ -322,7 +321,7 @@ namespace Westwind.Globalization
         /// <returns>true or false</returns>
         public bool DeleteResource(string resourceId, string resourceSet = null, string lang = null)
         {
-            var db = DbResourceDataManager.CreateDbResourceDataManager();  
+            var db = DbResourceDataManager.CreateDbResourceDataManager();
             return db.DeleteResource(resourceId, resourceSet: resourceSet, cultureName: lang);
         }
 
@@ -332,7 +331,7 @@ namespace Westwind.Globalization
         /// <param name="resourceSet"></param>
         /// <returns></returns>
         public ResourceManager GetResourceManager(string resourceSet)
-        {            
+        {
             // check if the res manager exists
             DbResourceManager manager = null;
             ResourceManagers.TryGetValue(resourceSet, out manager);
@@ -340,12 +339,12 @@ namespace Westwind.Globalization
             // if not we have to create it and add it to static collection
             if (manager == null)
             {
-                
+
                 lock (ResourceManagers)
                 {
                     ResourceManagers.TryGetValue(resourceSet, out manager);
                     if (manager == null)
-                    {                        
+                    {
                         manager = new DbResourceManager(resourceSet);
                         ResourceManagers.Add(resourceSet, manager);
                     }
