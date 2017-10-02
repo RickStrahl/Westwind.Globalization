@@ -1,0 +1,15 @@
+﻿{
+  "ResourceAccessMode": "DbResourceManager",
+  "ConnectionString": "*** ENTER A CONNECTION STRING ***",
+  "ResourceTableName": "Localizations",
+  "StronglyTypedGlobalResource": "~/Properties/Resources.cs",
+  "ResourceBaseNamespace": "AppResources",
+  "ResxExportProjectType": "Project",
+  "ResxBaseFolder": "~/Properties/",
+  "AddMissingResources": true,
+  "ActiveConfiguration": null,
+  "LocalizationFormWebPath": "~/LocalizationAdmin/",
+  "BingClientId": "",
+  "BingClientSecret": "",
+  "GoogleApiKey": ""
+}
