@@ -35,15 +35,15 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 opt.ResourceAccessMode = ResourceAccessMode.DbResourceManager;  // ResourceAccessMode.Resx
 
                 opt.ConnectionString = "server=dev.west-wind.com;database=localizations;uid=localizations;pwd=local";
-                opt.ResourceTableName = "localizations";
+                opt.ResourceTableName = "localizations_TEST";
                 opt.AddMissingResources = false;
-                opt.ResxBaseFolder = "~/Properties/";
+                opt.ResxBaseFolder = "~/../Properties/";
 
                 // Set up security for Localization Administration form
-                opt.ConfigureAuthorizeLocalizationAdministration(controllerContext =>
+                opt.ConfigureAuthorizeLocalizationAdministration(actionContext =>
                 {
                     // return true or false whether this request is authorized
-                    return true; //controllerContext.HttpContext.User.Identity.IsAuthenticated;
+                    return true;   //actionContext.HttpContext.User.Identity.IsAuthenticated;
                 });
 
             });
