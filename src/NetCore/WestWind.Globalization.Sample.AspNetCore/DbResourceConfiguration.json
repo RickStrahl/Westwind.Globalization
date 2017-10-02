@@ -5,7 +5,7 @@
   "StronglyTypedGlobalResource": "~/Properties/Resources.cs",
   "ResourceBaseNamespace": "AppResources",
   "ResxExportProjectType": "Project",
-  "ResxBaseFolder": "~/Properties/",
+  "ResxBaseFolder": "~/../Properties/",
   "AddMissingResources": true,
   "ActiveConfiguration": null,
   "LocalizationFormWebPath": "~/LocalizationAdmin/",

@@ -24,9 +24,10 @@ namespace Westwind.Globalization.Administration
     {
         public const string STR_RESOURCESET = "LocalizationForm";
 
-        protected DbResourceDataManager Manager = DbResourceDataManager.CreateDbResourceDataManager();
+        protected DbResourceDataManager Manager;
         protected Formatting EnsureJsonNet = Formatting.Indented;
         protected IHostingEnvironment Host;
+        protected DbResourceConfiguration Config;
 
         private static JsonSerializerSettings jsonSettings = new JsonSerializerSettings()
         {
@@ -39,23 +40,28 @@ namespace Westwind.Globalization.Administration
         public LocalizationAdministrationController(IHostingEnvironment host, DbResourceConfiguration config)
         {
             Host = host;
+            Config = config;
             DbIRes = new DbResInstance(config);
+            Manager = DbResourceDataManager.CreateDbResourceDataManager(config.DbResourceDataManagerType);
         }
 
+       /// <summary>
+       /// Handle custom authorization and hook into Config.OnAuthorizeLocalizationAdministration
+       /// </summary>
+       /// <param name="context"></param>
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
             
             if (DbIRes.Configuration.OnAuthorizeLocalizationAdministration != null)
             {
-                var func = DbIRes.Configuration.OnAuthorizeLocalizationAdministration as Func<ControllerContext, bool>;
+                var func = Config.OnAuthorizeLocalizationAdministration as Func<ActionExecutingContext, bool>;
                 if  (func != null)
-                {
-                    if (!func.Invoke(ControllerContext))                    
+                {                                     
+                    if (!func.Invoke(context))                    
                         throw new UnauthorizedAccessException();                    
                 }
             }
-
         }
 
         #region Retrieve Resources

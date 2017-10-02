@@ -13,8 +13,9 @@ namespace Westwind.Globalization
     public static class DbResourceConfigurationExtensions
     {
 
-        public static void ConfigureAuthorizeLocalizationAdministration(this DbResourceConfiguration config,
-            Func<ControllerContext, bool> onAuthorizeLocalizationAdministration)
+        public static void ConfigureAuthorizeLocalizationAdministration(
+            this DbResourceConfiguration config,
+            Func<ActionContext, bool> onAuthorizeLocalizationAdministration)
         {
             config.OnAuthorizeLocalizationAdministration = onAuthorizeLocalizationAdministration;
         }
