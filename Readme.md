@@ -227,6 +227,10 @@ public void ConfigureServices(IServiceCollection services)
     });
 
 
+    // Optional but recommended:  Override IStringLocalizer to use DbRes instance
+    services.AddSingleton(typeof(IStringLocalizerFactory), typeof(DbResStringLocalizerFactory));
+     
+
     // Required: this enables West Wind Globalization
     services.AddWestwindGlobalization(opt =>
     {                
@@ -847,11 +851,9 @@ commercial, government and any other type of application.
 
 [Commercial Licenses](http://west-wind.com/Westwind.Globalization/docs/?page=_2lp0u0i9b.htm) are 
 also available as an option. If you are using these tools in a commercial application
-please consider purchasing one of our reasonably priced commercial licenses that help support 
-this project's development.
+please consider purchasing one of our reasonably priced commercial licenses that help support this project's development.
 
-All source code is copyright West Wind Technologies, regardless of changes made to them. 
-Any source code modifications must leave the original copyright code headers intact.
+All source code is copyright West Wind Technologies, regardless of changes made to them. Any source code modifications must leave the original copyright code headers intact.
 
 
 #### Warranty Disclaimer: No Warranty!
