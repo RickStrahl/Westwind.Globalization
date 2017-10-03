@@ -45,7 +45,7 @@ PM> Install-Package Westwind.Globalization
 
 If you want to use the Administration Web UI, you have to download and add the HTML components to your application. Download from:
 
-* [Localization Html Files](https://github.com/RickStrahl/Westwind.Globalization/blob/Master/LocalizationAdminHtml/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)
+* [Localization Admin  Html Assets](https://github.com/RickStrahl/Westwind.Globalization/blob/Master/LocalizationAdminHtml/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)
 * [Documentation for installing Localization Admin Files](DownloadableAssets/Readme.md)
 
 #### To Install on .NET Framework
@@ -163,7 +163,7 @@ There are three distinct resource access mechanisms supported:
 To run the sample application you have to set up a database to provide the resources. The following assumes you are using the default configuration which uses SQL Server and a database named *Localizations* - you can  change this via web.config settings (see the following section for more details). 
  
 * Create a SQL Server/Express Database called `Localizations`
-* Make sure the IIS Web User using has rights to create a Database in this DB
+* Make sure the Web User using **has rights** to create a Table in this DB
 * Open `http://localhost:xxxxx/LocalizationAdmin/index.html` in your browser
 * You'll get an error message like: <br/>
   *ResourceLoadingFailed: Invalid Object Name Localizations*
@@ -173,15 +173,12 @@ To run the sample application you have to set up a database to provide the resou
 * Use the path of `~/Properties/` for Resx Import Folder
 * Click on the Import Resources button
 * You should now have all the sample and LocalizationForm resources in the db
-* Open the `ResourceTest.cshtml` to test resource operation
 
-> Note that 
 
 ## Installation and Configuration
 The easiest way to use this library in your own applications is to install the NuGet package into an ASP.NET application.
 
-
-### for ASP.NET Core
+### ASP.NET Core Packages
 ```
 pm> Install-Package Westwind.Globalization.AspNetCore
 ```
@@ -189,27 +186,15 @@ pm> Install-Package Westwind.Globalization.AspNetCore
 You also need to download the resources for the Localization Administration interface if you want to integrate the Localization interface into your application.
 
 * [Localization Admin Html Assets](https://github.com/RickStrahl/Westwind.Globalization/blob/Master/LocalizationAdminHtml/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)
-* [Documentation for installing Localization Admin Files](DownloadableAssets/Readme.md)
+* [Documentation for installing Localization Admin Files](DownloadableAssets/Readme.md)* 
 
-#### for Full Framework
-```
-pm> Install-Package Westwind.Globalization.Web
-```
+For non-Web applications or if you use only the DbRes based localization features, you can just install the base package.
 
-If you're not using a Web Project, or an MVC/Web API project that doesn't use the Web Resource Editor you can use the core package:
 ```
 pm> Install-Package Westwind.Globalization
 ```
-which doesn't install the web related components and HTML resources. 
-
-The .Web version installs the required assemblies, adds a few configuration entries in web.config and enables the resource provider by default. The Starter package adds sample resources and a couple of test pages. I recommend you use the .Starter package so you can ensure the provider is working and serving resources - once up and running you can remove the starter package, leaving the dependent assemblies in place.
-
-#### Configuration Settings
-The key configuration items set are the DbResourceConfiguration section in
-the config file which tells the provider where to find the database
-resources.
-
-ASP.NET Core uses a JSON file:
+### ASP.NET Core Configuration
+ASP.NET Core uses a JSON file for configuration:
 ```json
 {
   "ResourceAccessMode": "DbResourceManager",
@@ -227,7 +212,91 @@ ASP.NET Core uses a JSON file:
 }
 ```
 
-ASP.NET Classic uses the web.config Configuration file:
+You also need to explicitly enable localization features in ASP.NET Core using the following code in the `Startup.cs` `ConfigureServices()` method:
+
+```cs
+public void ConfigureServices(IServiceCollection services)
+{
+    // Standard ASP.NET Localization features
+    services.AddLocalization(options =>
+    {
+        // I prefer Properties over the default `Resources` folder
+        // due to namespace issues if you have a Resources type as
+        // most people do for shared resources.
+        options.ResourcesPath = "Properties";
+    });
+
+
+    // Required: this enables West Wind Globalization
+    services.AddWestwindGlobalization(opt =>
+    {                
+        // the default settings comme from DbResourceConfiguration.json if exists
+        // you can override the settings here, the config you create is added
+        // to the DI system (DbResourceConfiguration)
+
+        // Resource Mode - from Database (or Resx for serving from Resources)
+        opt.ResourceAccessMode = ResourceAccessMode.DbResourceManager;  // ResourceAccessMode.Resx
+        
+        // Make sure the database you connect to exists
+        opt.ConnectionString = "server=dev.west-wind.com;database=localizations;uid=localizations;pwd=local";
+        
+        // The table in which resources are stored
+        opt.ResourceTableName = "localizations";
+        
+        opt.AddMissingResources = false;
+        opt.ResxBaseFolder = "~/Properties/";
+
+        // Set up security for Localization Administration form
+        opt.ConfigureAuthorizeLocalizationAdministration(actionContext =>
+        {
+            // return true or false whether this request is authorized
+            return true;   //actionContext.HttpContext.User.Identity.IsAuthenticated;
+        });
+
+    });
+
+    services.AddMvc();
+}
+```
+In addition you probably will want to add standard ASP.NET Core Localization features to the `Configure()` method in `Startup.cs`:
+
+```cs
+public void Configure(IApplicationBuilder app) 
+{
+    ..
+  
+    var supportedCultures = new[]
+    {
+        new CultureInfo("en-US"),
+        new CultureInfo("en"),
+        new CultureInfo("de-DE"),
+        new CultureInfo("de"),
+        new CultureInfo("fr")
+    };
+    app.UseRequestLocalization(new RequestLocalizationOptions
+    {
+        DefaultRequestCulture = new RequestCulture("en-US"),
+        SupportedCultures = supportedCultures,
+        SupportedUICultures = supportedCultures                 
+    });
+}
+```         
+
+### Full Framework Configuration
+```
+pm> Install-Package Westwind.Globalization.Web
+```
+
+If you're not using a Web Project, or an MVC/Web API project that doesn't use the Web Resource Editor you can use the core package:
+```
+pm> Install-Package Westwind.Globalization
+```
+which doesn't install the web related components and HTML resources. 
+
+The .Web version installs the required assemblies, adds a few configuration entries in web.config and enables the resource provider by default. The Starter package adds sample resources and a couple of test pages. I recommend you use the .Starter package so you can ensure the provider is working and serving resources - once up and running you can remove the starter package, leaving the dependent assemblies in place.
+
+### Full Framework Configuration
+ASP.NET Classic uses the web.config Configuration file for configuration
 
 ```xml
 <configuration>
@@ -268,40 +337,41 @@ ASP.NET Classic uses the web.config Configuration file:
   </system.web>
 </configuration>
 ```
+#### Overriding Configuration Settings (Full Framework)
+To override configuration settings that are set in `web.config` you can access the DbResourceConfiguration.Current instance that's used to configure the application. 
 
-**ConnectionString and ResourceTableName**   
-The two most important keys are the connectionString and resourceTableName which point at your database and a table that holds resources. On full framework you can use either a raw connection string or a Connection String Name defined in `<ConnectionStrings>` of your `web.config` file.
+```cs
+protected void Application_Start()
+{                       
+    FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+    RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-**AddMissingResources**  
-When set to true causes any resource lookup that fails to produce matching resource ID to write the invariant resource into the database. Use with caution - as this might slow down your application significantly as you now write to the database on any missing resources. Use only during development and testing to get resources into the system for easier debugging later.
+    // Specify where config information comes from (config file is default - can be separate Json/Xml)
+    //DbResourceConfiguration.ConfigurationMode = ConfigurationModes.ConfigFile;
+    
+    var config = DbResourceConfiguration.Current;
+    
+    config.ConnectionString = "SqlServerLocalizations";
+    config.DbResourceDataManagerType = typeof(DbResourceSqlServerDataManager);
 
-**ResxExportProjectType**  
-This option determines how the Resx export feature works. The two options are `Project` or `WebForms`. Project exports all resource files into \properties folder underneath the resxBasePath and excludes any resource sets that include a . in their name (assumed to be ASP.NET resources). WebForms writes out resources into folder specific App_LocalResources and App_GlobalResources folders based on the root folder
+    //DbResourceConfiguration.Current.ConnectionString = "MySqlLocalizations";
+    //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceMySqlDataManager);
 
-**ResxBaseFolder**  
-The base folder that's used for all Resx Import and Export operations. The default is ~/ which is the root web folder, but you can specify a full OS path here. Note that this allows you to read/write resources in other non-web projects - as long as your Web application has writes to the folder specified.
+    // force ResourceMode explicitly. Default is AspNetResourceProvider
+    GeneratedResourceSettings.ResourceAccessMode = ResourceAccessMode.DbResourceManager;
+    //GeneratedResourceSettings.ResourceAccessMode = ResourceAccessMode.Resx;
 
-**StronglyTypeGlobalResource and ResourceBaseNamespace**
-If you do a strongly typed class export from the admin manager all resources will be created in a single file in the this file using the ResourceBaseNameSpace as the namespace in the generated class.
+    // *** Remove or Add custom resource converters
+    // *** By default the MarkdownResourceConverter is provided
+    //DbResourceConfiguration.Current.ResourceSetValueConverters.Clear();
+    //DbResourceConfiguration.Current.ResourceSetValueConverters.Add(new MarkdownResourceSetValueConverter());
+}
+```
 
-#### Run the Web Resource Editor
-In order to use database resources you'll actually have to create some resources in a database. Make sure you've first added a valid connection string in the config file in the last step! Then open the `/LocalizationAdmin/` in your browser and click on the *Create Table* button in the toolbar.
+Settings made here occur before any requests are made to the providers, so `Application_Start` is a good way to initialize settings, including selecting a provider. Any of the Configuration values can be set here, or anywhere else by using the static `DbResourceConfiguration.Current` instance.
 
-Once the table's been created you can now start creation of resources interactively, by directly
-adding values to the database table, or by using the DbResourceDataManager API to manipulate the
-data programmatically.
-
-By default a `Resources` ResourceSet has been provided for you the resources of which are used in the test page. You can remove those resources or the resource set as needed once you know the provider works. ResourceSets are logical groups of resources that belong together - I like to use one ResourceSet per form or per application feature depending on how much content is involved. But you can also use a single ResourceSet for your entire application if you want. Whatever works for you to make it easy to find resources.
-
-#### Import Existing Resources
-I also recommend that you first perform an *Import Resx* step to pull any existing Resx resources in your project into the application. This will also import the Localization form's resources into your database so that the localization form properly localizes.  
-
-
-## Setting ASP.NET Locale based on Browser Locale
-In order to do automatic localization based on a browser's language used you can
-sniff the browser's default language and set the UiCulture in the Begin_Request 
-handler of your ASP.NET application class. A helper method to provide this 
-functionality automatically is provided.
+#### Setting ASP.NET Locale based on Browser Locale (Full Framework)
+In order to do automatic localization based on a browser's language used you can sniff the browser's default language and set the UiCulture in the Begin_Request handler of your ASP.NET application class. A helper method to provide this functionality automatically is provided.
 
 ```C#
 protected void Application_BeginRequest()
@@ -325,22 +395,51 @@ de-CH (Swiss german) and you de (without a locale specific suffix) the de German
 version will be returned. Resource Fallback tries to ensure that always something
 is returned.
 
+### Configuration Settings (.NET Core and Full Framework)
+
+**ConnectionString and ResourceTableName**   
+The two most important keys are the connectionString and resourceTableName which point at your database and a table that holds resources. On full framework you can use either a raw connection string or a Connection String Name defined in `<ConnectionStrings>` of your `web.config` file.
+
+**AddMissingResources**  
+When set to true causes any resource lookup that fails to produce matching resource ID to write the invariant resource into the database. Use with caution - as this might slow down your application significantly as you now write to the database on any missing resources. Use only during development and testing to get resources into the system for easier debugging later.
+
+**ResxExportProjectType**  
+This option determines how the Resx export feature works. The two options are `Project` or `WebForms`. Project exports all resource files into \Properties folder underneath the resxBasePath and excludes any resource sets that include a . in their name (assumed to be ASP.NET resources). WebForms writes out resources into folder specific App_LocalResources and App_GlobalResources folders based on the root folder
+
+**ResxBaseFolder**  
+The base folder that's used for all Resx Import and Export operations. The default is ~/ which is the root web folder, but you can specify a full OS path here. Note that this allows you to read/write resources in other non-web projects - as long as your Web application has writes to the folder specified.
+
+**StronglyTypeGlobalResource and ResourceBaseNamespace**
+If you do a strongly typed class export from the admin manager all resources will be created in a single file in the this file using the ResourceBaseNameSpace as the namespace in the generated class.
+
+#### Run the Web Resource Editor
+In order to use database resources you'll actually have to create some resources in a database. Make sure you've first added a valid connection string in the config file in the last step! Then open the `/LocalizationAdmin/index.html` in your browser and click on the *Create Table* button in the toolbar.
+
+Once the table's been created you can now start creating resources interactively, by directly
+adding values to the database table, or by using the DbResourceDataManager API to manipulate the
+data programmatically.
+
+By default a `Resources` ResourceSet has been provided for you the resources of which are used in the test page. You can remove those resources or the resource set as needed once you know the provider works. ResourceSets are logical groups of resources that belong together - I like to use one ResourceSet per form or per application feature depending on how much content is involved. But you can also use a single ResourceSet for your entire application if you want. Whatever works for you to make it easy to find resources.
+
+#### Import Existing Resources
+I also recommend that you first perform an *Import Resx* step to pull any existing Resx resources from the `~/Properties/` folder (or whereever) into your project. This will also import the Localization form's resources into your database so that the localization form properly localizes when running with the DbResource Provider.
+
+
 ## Using Resources in your Application
 There are a number of different ways to access resources from this provider.
 
 * Direct access with DbRes 
 * ASP.NET Resource provider
 * .NET Resource Manager
+* Strongly Typed Resources
 
 ### DbRes Helper Class
-The DbRes Helper class is a wrapper around the DbResourceManager and DbResouceDataManager
-object. The DbRes class contains a handful of common use static methods that are used to 
-retrieve and manipulate resources.
+The `DbRes` and `DbResInstance` Helper class are wrappers around the `DbResourceManager` and `DbResouceDataManager` object. The DbRes class contains a handful of common use methods that are used to retrieve and manipulate resources by name and resource set.
 
 In an ASP.NET Web MVC (or WebPages) application you can use:
 
 ```C#
-// Using current UiCulture - empty resource set
+// Using current UiCulture - empty resource set uses default (Resources)
 DbRes.T("HelloWorld")
 
 // Exact match with resource - Hallo Welt
@@ -371,7 +470,7 @@ string value = DbRes.T("HelloWorld");
 
 The `DbRes.T()` method returns the ResourceId passed in if a resource is missing in the ResourceSet which can be useful for providing 'default' text. Some people like to use full resource strings as their resource Ids so default values are always available even if a resource is missing or the provider is not available. 
 
-## Using the ASP.NET Resource Provider 
+## Using the ASP.NET Resource Provider  (Full Framework, WebForms)
 If you're using an existing WebForms application or you want to
 use the ASP.NET based Resource Provider model for accessing resources
 you can use the DbSimpleResourceProvider. This implementation is an
@@ -499,7 +598,7 @@ you remove or rename a resource you may break your code.
 
 Strongly typed resources are generated into a single file for all the resource sets exported in order to not clutter up your application with unnecessary generated files.  
 
-## ASP.NET MVC ModelValidation
+## ASP.NET MVC ModelValidation (Full Framework)
 ASP.NET and Entity Framework support model validation and you can also use the database provider to localize these validation messages. To do so **you have to generate strongly typed resources**, or export to Resx and then enable strong resource typing. ASP.NET/EntityFramework Model validation works based on class property access so in order to use it a type has to exist.
 
 To do this:
@@ -527,6 +626,11 @@ The type will be your exported class or generated Resx class and the name is the
 * Make sure the property name is typed correctly and matches a property name.
 * Try writing out the actual property using @Resources.AddressIsRequired to ensure the value is valid (on a simple test page perferrably). 
 
+
+## Model Validation ASP.NET Core Mvc
+ASP.NET MVC uses a completely different model for Model validation based on `IStringLocalizer`. In this initial .NET Core release we don't have support for this yet, but we're working on it. It's coming in an update soon.
+
+
 ## Non Sql Server Database Providers
 By default the resource providers and manager use **SQL Server** to hold the database resources. If you don't do any custom configuration in code to specify the Configuration.DbResourceDataManagerType you'll get the Sql Server provider/manager. 
 
@@ -543,7 +647,7 @@ To use a provider other than Sql Server you need to do the following:
 
 * Add the appropriate Westwind.Globalization.<DataBase> assembly/NuGet Package
 * Specify the Configuration.DbResourceDbD
- 
+
 ### Sql Server
 *no additional package needed*
 ```c#
@@ -582,18 +686,68 @@ DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqL
 ```  
 
 ###### Connection String Example:
-	<add name="SqLiteLocalizations" connectionString="Data Source=|DataDirectory|\SqLiteLocalizations.db;Version=3" providerName="System.Data.SQLite" />
+
+```xml
+<add name="SqLiteLocalizations" connectionString="Data Source=|DataDirectory|\SqLiteLocalizations.db;Version=3" providerName="System.Data.SQLite" />
+```
 
 ### Global Data Manager Configuration
 This code configures the data manager globally so every time a data access operation occurs it instantiates the data manager configured here. It's important that you add the appropriate assembly first, otherwise these provider types will not be available and your code won't compile.
 
-### JavaScript Resource Handler
-If you're building applications that include JavaScript logic it's likely that you also need to access localized resources on the client. This library provides a JavaScript Resource HttpHandler that can serve resources in the proper localized locale to your client application.
+
+## JavaScript Resource Handler
+If you're building applications that include JavaScript logic it's likely that you also need to access localized resources on the client. This library provides a JavaScript Resource Handler that can serve resources in the proper localized locale to your client application.
 
 The resource handler allows you to specify which resources to serve and which locale - or auto-detected locale - to serve the data to your JavaScript client application.
 
-#### Configuration
-To configure the Resource Handler it has to be registered in web.config as follows:
+The handler produces a JavaScript object map that is exposed as a global variable with properties for each of the resource keys:
+
+```javascript
+resources = {
+	"HelloWorld": "Hallo schn\u00F6de Welt",
+	"Ready": "Los",
+	"Today": "Heute",
+	"Yesterday": "Gestern",
+    "dbRes": function dbRes(resId) { return resources[resId] || resId; }    
+};
+```
+
+Resource values are normalized, meaning if a localized doesn't exist, resource fallback is used to fill the value. A `dbRes()` function is added to the object to allow returning the resource ID if a value can't be matched or if the resources for some reason fail to load.
+
+Resources can be accessed in client code:
+
+```html
+<script>
+    var hello = resources.HelloWorld;
+    var hello2 = resources.dbRes("HelloWorld");
+</script>
+```
+
+The latter will always return **some** value (HelloWorld) even if there's no matching property value to return.
+
+### Configuration and Usage (ASP.NET Core)
+For ASP.NET Core the JavaScript resource handling does not have to be configured - it's always available as long as ASP.NET MVC is active and running on the Web site. The handler is hooked in via custom routing that lives at a fixed URL.
+
+To add client side script to the `api/JavaScriptLocalizationResources` endpoint (all in one line):
+
+```html
+<script src="/api/JavaScriptLocalizationResources?  
+                ResourceSet=LocalizationForm&
+                VarName=resources&
+                localeId=auto&
+                ResourceMode=ResDb"></script>
+```
+
+The following parameters are passed:
+
+* **resourceSet** - The ResourceSet name to serve resources to serve.
+* **varName** - The name of the global variable to declare the map on. This can also be a property value of an existing object like `page.resources` to avoid cluttering up global scope.
+* **localeId** - Optional locale id like `de-DE` or `de`. If not passed the value is `auto` which reads the value from the users `accept-language` header.
+* **resourceMode** - Either `ResDb` or `Resx` which determines whether resources are served from the database or resx. If not passed or `auto` the DbResourceConfig setting is used.
+
+
+#### Configuration (.NET Framework)
+To configure the Resource Handler for classic ASP.NET it has to be registered in web.config as follows:
 
 ```xml
 <configuration>
@@ -618,17 +772,23 @@ static JavaScriptResourceHandler.GetJavaScriptResourcesUrl() method:
 <script src="@JavaScriptResourceHandler.GetJavaScriptResourcesUrl("resources","Resources")"></script>
 <script>
     document.querySelector("#JavaScriptHelloWorld").innerText = resources.HelloWorld;
+    document.querySelector("#JavaScriptYesterday").innerText = resources.dbRes("Yesterday");
 </script>
 ```
 
-or if you're using a plain HTML page:
+
+or if you're using a plain HTML page (all one line):
 
 ```html
-<script src="JavaScriptResourceHandler.axd?ResourceSet=Resources&LocaleId=auto&VarName=resources&ResourceType=resdb&ResourceMode=1"></script>
+<script src="JavaScriptResourceHandler.axd?ResourceSet=Resources&
+                            LocaleId=auto&
+                            VarName=resources&
+                            ResourceType=resdb"></script>
 <script>
     document.querySelector("#JavaScriptHelloWorld").innerText = resources.HelloWorld;
 </script>
 ```
+
 Either of the above generate the following script code (shown here localized in German):
 
 ```javascript
@@ -662,35 +822,6 @@ You can specify what type of resources are loaded with this Resource handler. Th
 ##### ResourceMode  0 (WebForms), 1 (Project/folder)
 Determines how Resx Resources are loaded using either *project* (1) or *WebForms* (0) style resources. If *project* (0) resources are used make sure the ResxBaseFolder points to the path where your Resx resources like. If you use *WebForms* mode, resources are located using App_GlobalResources and App_LocalResources folders.
 
-
-The localization by default uses the active locale of the current request, so if you switch
-the locale using WebUtils.SetUserLocale() as shown earlier, the resources are localized to
-that locale as well. You can also explicitly provide the LocaleId as a parameter in the first call, or in the `LocaleId` query parameter in the raw script call.
-
-Note that the variable name is generated in global scope by default, so `resources` is generated
-in global scope. However, you can pass in any variable name. For example, if you have a previously
-declared object that you want to attach the resources to you can use that name. For example:
-
-```html
-<script>
-    global = {};  //  declare your own global object on the page
-</script>
-<!-- generated resources to global.resources -->
-<script src="@JavaScriptResourceHandler.GetJavaScriptResourcesUrl("global.resources","Resources")"></script>
-<script>
-    // use global.resources object to access resource values
-    document.querySelector("#JavaScriptHelloWorld").innerText = global.resources.HelloWorld;
-</script>
-```
-
-Note also that there's a `dbRes()` function included in the class that allows safe, string based access to properties like this:
-
-```javascript
-var strReady1 = resources.Ready; // error if not found or can be blank  
-var strReady2 = resources.dbRes('Ready'); // no error, output 'Ready' if not found or empty
-```
-    
-That is if you try to access resources that don't exist or are null//empty the resourceKey is returned. This allows for resource names that act as 'default' values or at least will  act as fail-safe that returns the key which is better than no text at all. The behavior of this function is similar to to the DbRes.T() function on the server. 
 
 ## Project Sponsors
 The following people/organizations have provided sponsorship to this project by way of direct donations or for paid development as part of a development project using these tools:
