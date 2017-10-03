@@ -227,10 +227,9 @@ public void ConfigureServices(IServiceCollection services)
     });
 
 
-    // Optional but recommended:  Override IStringLocalizer to use DbRes instance
+    // Optional but recommended:  Override IStringLocalizer to use DbRes instances
     services.AddSingleton(typeof(IStringLocalizerFactory), typeof(DbResStringLocalizerFactory));
      
-
     // Required: this enables West Wind Globalization
     services.AddWestwindGlobalization(opt =>
     {                
