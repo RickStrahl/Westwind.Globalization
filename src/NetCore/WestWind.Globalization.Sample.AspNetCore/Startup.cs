@@ -8,9 +8,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Westwind.Globalization;
+using Westwind.Globalization.AspnetCore.StringLocalizer;
 using Westwind.Globalization.AspNetCore;
 
 namespace WestWind.Globalization.Sample.AspNetCore
@@ -24,6 +27,8 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 options.ResourcesPath = "Properties";
             });
 
+            services.AddSingleton(typeof(IStringLocalizerFactory), typeof(DbResStringLocalizerFactory));
+            
             services.AddWestwindGlobalization(opt =>
             {                
                 // the default settings comme from DbResourceConfiguration.json if exists
@@ -34,7 +39,7 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 opt.ResourceAccessMode = ResourceAccessMode.DbResourceManager;  // ResourceAccessMode.Resx
                 
                 opt.ConnectionString = "server=dev.west-wind.com;database=localizations;uid=localizations;pwd=local";
-                opt.ResourceTableName = "localizations_NOTHERE";
+                opt.ResourceTableName = "localizations";
                 opt.AddMissingResources = false;
                 opt.ResxBaseFolder = "~/Properties/";
 

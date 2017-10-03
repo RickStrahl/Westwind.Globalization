@@ -10,7 +10,7 @@ namespace WestWind.Globalization.Sample.AspNetCore.Controllers
     [Route("api/Localization")]
     public class LocalizationController : Controller
     {
-        private readonly IStringLocalizer<LocalizationController> _localizer;
+        private readonly IStringLocalizer _localizer;
 
         public LocalizationController(IStringLocalizer<LocalizationController> localizer)
         {
