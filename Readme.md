@@ -46,8 +46,7 @@ PM> Install-Package Westwind.Globalization
 If you want to use the Administration Web UI, you have to download and add the HTML components to your application. Download from:
 
 * [Localization Html Files](https://github.com/RickStrahl/Westwind.Globalization/blob/Master/LocalizationAdminHtml/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)
-
-Copy the files in the zip into the root of your project and recompile. For more info please see the [Downloadable Assets Documentation](DownloadableAssets/Readme.md).
+* [Documentation for installing Localization Admin Files](DownloadableAssets/Readme.md)
 
 #### To Install on .NET Framework
 Please read the Installation Section below or watch the [Getting Started Video](https://youtu.be/ABR7ISppB1k), which describes how to install the packages, configure the project, import existing re
