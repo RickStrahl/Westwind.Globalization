@@ -1,11 +1,54 @@
 # West Wind Globalization
 ### Database Resource Localization for .NET
 
-This library and tooling provides easy to use database resource managers and providers that allow you to use a database for storing localization resources. Unlike static Resx resources, database resources are dynamic and can be changed at runtime and are editable by multiple users at the same time. The custom resource managers and providers use the standard .NET resource infrastructure, so other than startup configuration there are no code changes when switching from using traditional Resx resources - and you can always switch back just as easily.
+This library and tooling provides easy to use database resource managers and providers that allow you to use a database for storing localization resources. Unlike static Resx resources, database resources are dynamic and can be changed at runtime and are editable by multiple users at the same time. The custom resource managers and providers use the standard .NET resource infrastructure, so other than startup configuration there are no code changes when switching from using traditional Resx resources - and you can always switch back just as easily. 
 
 A rich, Web based resource editor is also provided that makes it easy to create resource content and translate it interactively in a running application where you can see resource changes immediately applied without recompilation. You can import and export Resx resources, generate strongly typed classes and serve resources to JavaScript applications using the database resources. 
 
-To install, use NuGet:
+### Requirements:
+* .NET Core 2.0
+* .NET 4.5 or later
+* SQL Server 2008-2014, SQL Server Express, SQL Compact 4, MySql, SqLite
+
+### .NET Version Support
+
+Version 3.0 adds support for the 2.0 versions of .NET Standard, .NET Core and ASP.NET Core. The following versions are provided:
+
+* Westwind.Globalization <small>*(net45 and netstandard2.0)*</small>
+* Westwind.Globalization.AspNetCore <small>*(netstandard2.0)*</small>
+* Westwind.Globalization.Web <small>*(net45)*</small>
+* Westwind.Globalization.Sample <small>*(net45)*</small>
+* Westwind.Globalization.Sample.AspNetCore <small>*(netcore2.0)*</small>
+
+> Version 3.0 is Pre-Release
+> Version 3.0 is currently in pre-release and the documentation is still under construction. Bear with us.
+
+### Installation
+Installation is different depending on which version of .NET you are running under. .NET Core and Full Framework use different project types and NuGet Packages for the Web support.
+
+> #### Limited non-Windows Support for Admin Features
+> The admin features of this package have not been fully ported to non-Windows platforms. Specifically, any of the RESX and Import Export features will not work on non-windows platforms currently. However database access and resource editing should work ell.
+
+For installation use NuGet.
+
+#### To Install for .NET Core
+Please read the installation instructions below to configure once you've installed the project. You will need to configure startup settings in order for the Db Providers to run.
+
+```
+PM> Install-Package Westwind.Globalization.AspNetCore
+```
+If you're not using a Web Project you can just use the core package:
+
+```
+PM> Install-Package Westwind.Globalization
+```
+
+If you want to use the Administration Web UI, you have to download and add the HTML components to your application. Download from:
+
+* [Localization Html Files](https://github.com/RickStrahl/Westwind.Globalization/blob/Master/LocalizationAdminHtml/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)
+
+#### To Install on .NET Framework
+Please read the Installation Section below or watch the [Getting Started Video](https://youtu.be/ABR7ISppB1k), which describes how to install the packages, configure the project, import existing re
 
 ```
 PM> Install-Package Westwind.Globalization.Web.Starter
@@ -19,14 +62,6 @@ If you're not using a Web Project or you're using MVC/Web API **and** don't need
 ```
 PM> Install-Package Westwind.Globalization
 ```
-
-Please read the Installation Section below or watch the [Getting Started Video](https://youtu.be/ABR7ISppB1k), which describes how to install the packages, configure the project, import existing resources (if any) and then start creating new ones quickly.
-
-> If you want to see how to apply resources in your applications, it's also a good idea to clone this project as it has a number of examples that demonstrate resource usage. Check out the AlbumViewer MVC application, the Localization Admin AngularJs SPA application, and the ResourceTest ASPX and Web Page examples.
-
-Requirements:
-* .NET 4.5 or later
-* SQL Server 2008-2014, SQL Server Express, SQL Compact 4, MySql, SqLite
 
 ### Resources:
 * [Westwind.Globalization Home Page](http://west-wind.com/westwind.globalization/)
@@ -91,54 +126,37 @@ application needs exactly.
 
 
 ### How the database Providers work
-This library implements a custom .NET ResourceManager and 
-ASP.NET ResourceProvider that are tied to a database provider interface.
-(although you can implement non-data providers as well). This means you 
-can access resources using the same mechanisms that you
-use with standard Resx Resources in your .NET applications. It also
-means although resources are initially loaded from the database
-for the first load of each ResourceSet. .NET then caches resources 
-for each individual ResourceSet and locale the same way that Resx 
-resources are read from the assembly resources and then cached. 
-**The database is hit only for the first read of a given 
+This library implements a custom .NET `ResourceManager` and 
+ASP.NET `ResourceProvider` (for .NET 4.x) that are tied to a database provider interface (although you can implement non-data providers as well). This means you  can access resources using the same mechanisms that you use with standard Resx Resources in your .NET applications. It also means although resources are initially loaded from the database for the first load of each `ResourceSet`. .NET then caches resources for each individual `ResourceSet` and locale the same way that Resx resources are read from the assembly resources and then cached. 
+
+> The database is hit only for the first read of a given 
 ResourceSet/Locale combination - not every resource access
-hits the database!**
+hits the database!
 
-The DbResourceManager can be used in any type of .NET application using
-the `DbRes` class methods, generated strongly typed classes, or using the Resource
-Manager directly. The DbResourceProvider classes can be used in ASP.NET
-applications - especially for WebForms with support for local and global
-resources, implicit resources and control meta tags. MVC applications
-typically use the ResourceManager with strongly typed resources or the
-`DbRes` classes or by exporting resources back into RESX 
+The `DbResourceManager` can be used in any type of .NET application using the `DbRes` or `DbResInstance` class methods, generated strongly typed classes, or using the Resource
+Manager directly. The DbResourceProvider classes can be used in ASP.NET applications - especially for WebForms with support for local and global resources, implicit resources and control meta tags. MVC applications typically use the ResourceManager with strongly typed resources or the
+`DbRes` classes or by exporting resources back into RESX. 
 
-Underneath the .NET providers lies a the Westwind.Globalization data
+Underneath the .NET providers lies a the `Westwind.Globalization` data
 access layer (IDbResourceDataManager) that provides the data interface 
-to provide access to various providers. The default provider uses SQL Server
-as a data source with additional providers available for MySql, SqLite and
-SqlCompact. This API is accessed by the Resource Provider and Resource Manager
+to provide access to various providers. The default provider uses **SQL Server**
+as a data source with additional providers available for **MySql**, **SqLite** and
+**SqlCompact**. This API is accessed by the Resource Provider and Resource Manager
 implementations to read the resources from the database.
 
-Additionally the API can be directly accessed to provide resource 
-access, and the DbRes helper class provides very easy access to
-these resources using the DbRes.T() method which can be thought
-of as a high level translation method.
+Additionally the API can be directly accessed to provide resource access, and the DbRes helper class provides very easy access to these resources using the DbRes.T() method which can be thought of as a high level translation method.
 
-This interface is also directly accessible and allows your code as well as
-support code like the UI Web Resource editor to easily access and manipulate
-resources in real-time at runtime.
+This interface is also directly accessible and allows your code as well as support code like the UI Web Resource editor to easily access and manipulate resources in real-time at runtime.
 
-
-This library includes quite a proliferation of classes most of it due
-to the implementation requirements for the .NET providers which require
-implementation of a host of interface based classes for customization.
+This library includes quite a proliferation of classes most of it due to the implementation requirements for the .NET providers which require implementation of a host of interface based classes for customization. 
 
 There are three distinct resource access mechanisms supported:
 
 * ASP.NET Resource Provider (best used with WebForms)
 * .NET Resource Manager and strongly typed resources 
-  (Non-Web apps, and or MVC apps where you already use Resx)
-* Direct Db Provider access using DbRes helper (easiest overall - works everywhere)
+  (Non-Web apps, ASP.NET Core, classic MVC apps or anywhere where you already use Resx)
+* Direct Db Provider access using `DbRes` and `DbResInstance` helpers  
+(easiest overall - works everywhere)
 
 ## Running the Sample Application
 To run the sample application you have to set up a database to provide the resources. The following assumes you are using the default configuration which uses SQL Server and a database named *Localizations* - you can  change this via web.config settings (see the following section for more details). 

@@ -10,8 +10,8 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h3 class="modal-title" id="TranslateTitle" data-resource-id="ImportOrExportResxResources">
-                        {{::view.resources.ImportOrExportResxResources}}
-                    </h3>
+                        {{::view.dbRes('ImportOrExportResxResources')}}
+                    </h3>                    
                 </div>
                 <div class="modal-body">
 
@@ -19,13 +19,13 @@
                          ng-show="view.importExportType=='Export'">
                         <i class="fa fa-info-circle fa-2x pull-left;"></i>
                         <div style="margin-left: 40px; margin-top: -30px;">
-                            <p ng-bind="view.resources.ResxExportInfo" data-resource-id="ResxExportInfo">
+                            <p ng-bind="view.dbRes('ResxExportInfo')" data-resource-id="ResxExportInfo">
                             </p>
                             <p ng-show="view.info.ResxExportProjectType=='Project'"
-                               ng-bind-html="view.resources.ResxExportInfo_Project">
+                               ng-bind-html="view.dbRes('ResxExportInfo_Project')">
                             </p>
                             <p ng-show="view.info.ResxExportProjectType=='WebForms'"
-                               ng-bind-html="view.resources.ResxExportInfo_WebForms">
+                               ng-bind-html="view.dbRes('ResxExportInfo_WebForms')">
                             </p>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                          ng-show="view.importExportType=='Import'">
                         <i class="fa fa-info-circle fa-2x pull-left;"></i>
                         <div style="margin-left: 40px; margin-top: -30px;">
-                            <p ng-bind="view.resources.ResxImportInfo">
+                            <p ng-bind="view.dbRes('ResxImportInfo')">
                             </p>
                             <p ng-bind-html="view.resources.ResxImportInfo_Project"
                                ng-show="view.info.ResxExportProjectType=='Project'">
@@ -58,24 +58,24 @@
                     <div class="form-group">
                         <select id="typeImportExport" class="form-control"
                                 ng-model="view.importExportType" style="font-weight: bold;">
-                            <option value="Export">Export {{::view.resources.Resources}}</option>
-                            <option value="Import">Import {{::view.resources.Resources}}</option>
+                            <option value="Export">Export {{::view.dbRes('Resources')}}</option>
+                            <option value="Import">Import {{::view.dbRes('Resources')}}</option>
                         </select>
                     </div>
 
                     <div class="form-group" ng-show="view.importExportType=='Export'">
-                        <label>{{::view.resources.ResourceSetsToExport}}:</label>
+                        <label>{{::view.resources.dbRes('ResourceSetsToExport')}}:</label>
                         <select id="typeResourceSet" class="form-control"
                                 multiple
                                 ng-model="view.selectedResourceSets">
-                            <option value="">*** {{::view.resources.AllResourceSets}}</option>
+                            <option value="">*** {{::view.resources.dbRes('AllResourceSets')}}</option>
                             <option ng-repeat="resourceSet in view.resourceSets" value="{{resourceSet}}">{{resourceSet}}</option>
                         </select>
                     </div>        
 
 
                     <div class="form-group ">
-                        <label>Resx {{view.importExportType}} {{::view.resources.Folder}}:</label>
+                        <label>Resx {{view.importExportType}} {{::view.resources.dbRes('Folder')}}:</label>
                         <input ng-model="view.info.ResxBaseFolder" class="form-control"/>
                     </div>
                 </div>
@@ -83,12 +83,12 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">
-                        <i class="fa fa-remove"></i> {{::view.resources.Cancel}}
+                        <i class="fa fa-remove"></i> {{::view.dbRes('Cancel')}}
                     </button>
                     <button type="submit"
                             ng-click="view.onSubmitClick()"
                             class="btn btn-primary">
-                        <i class="fa fa-check"></i> {{view.importExportType }} {{::view.resources.Resources}}
+                        <i class="fa fa-check"></i> {{view.importExportType }} {{::view.dbRes('Resources')}}
                     </button>
 
                 </div>

@@ -7,6 +7,7 @@ using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
@@ -34,10 +35,12 @@ namespace WestWind.Globalization.AspNetCore.Controllers
 
         protected DbResourceConfiguration Config { get;  }
 
+        protected IHostingEnvironment Host { get; }
 
-        public JavaScriptLocalizationResourcesController(DbResourceConfiguration config)
+        public JavaScriptLocalizationResourcesController(IHostingEnvironment host, DbResourceConfiguration config)
         {
             Config = config;
+            Host = host;
         }
 
         // http://localhost:5000/JavaScriptResourceHandler.axd?ResourceSet=LocalizationForm&LocaleId=auto&VarName=resources&ResourceMode=resdb
@@ -93,11 +96,13 @@ namespace WestWind.Globalization.AspNetCore.Controllers
             { 
                 var resManager = DbResourceDataManager.CreateDbResourceDataManager(
                  Config.DbResourceDataManagerType);   
-                resDict = resManager. GetResourceSetNormalizedForLocaleId(localeId, resourceSet);
+                resDict = resManager.GetResourceSetNormalizedForLocaleId(localeId, resourceSet);
+                if (resDict == null || resDict.Count == 0)
+                    mode = ResourceAccessMode.Resx; // try Resx resources from disk instead
             }
-            else // Resx Resources loaded from disk
+            if (mode != ResourceAccessMode.DbResourceManager) // Resx Resources loaded from disk
             {
-                string basePath = Request.MapPath(DbResourceConfiguration.Current.ResxBaseFolder);
+                string basePath = Request.MapPath(DbResourceConfiguration.Current.ResxBaseFolder, basePath: Host.ContentRootPath);
                 DbResXConverter converter = new DbResXConverter(basePath);
 
                 resDict = converter.GetCompiledResourcesNormalizedForLocale(resourceSet,

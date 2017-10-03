@@ -17,7 +17,6 @@ namespace WestWind.Globalization.Sample.AspNetCore
 {
     public class Startup
     {
-    
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddLocalization(options =>
@@ -33,11 +32,11 @@ namespace WestWind.Globalization.Sample.AspNetCore
 
                 // Resource Mode - Resx or DbResourceManager                
                 opt.ResourceAccessMode = ResourceAccessMode.DbResourceManager;  // ResourceAccessMode.Resx
-
+                
                 opt.ConnectionString = "server=dev.west-wind.com;database=localizations;uid=localizations;pwd=local";
-                opt.ResourceTableName = "localizations_TEST";
+                opt.ResourceTableName = "localizations_NOTHERE";
                 opt.AddMissingResources = false;
-                opt.ResxBaseFolder = "~/../Properties/";
+                opt.ResxBaseFolder = "~/Properties/";
 
                 // Set up security for Localization Administration form
                 opt.ConfigureAuthorizeLocalizationAdministration(actionContext =>

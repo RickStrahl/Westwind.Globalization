@@ -11,6 +11,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using Westwind.Globalization.AspNetCore.Extensions;
 using Westwind.AspNetCore.Extensions;
+using Westwind.Utilities;
 
 namespace Westwind.Globalization.Administration
 {
@@ -900,12 +901,9 @@ namespace Westwind.Globalization.Administration
 
             if (outputBasePath.StartsWith("~"))
                 outputBasePath = Request.MapPath(outputBasePath, basePath: Host.ContentRootPath );
-
-            string slash = Path.DirectorySeparatorChar.ToString();
-            outputBasePath = outputBasePath.Replace("/", slash)
-                                           .Replace("\\",slash)
-                                           .Replace(slash + slash,slash);
-
+            
+            outputBasePath = FileUtils.NormalizePath(outputBasePath);
+                                           
             DbResXConverter exporter = new DbResXConverter(outputBasePath);
                       
 

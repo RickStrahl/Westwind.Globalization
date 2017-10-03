@@ -1,65 +1,11 @@
 # West Wind Globalization
 ### Database Resource Localization for .NET
 
-This library and tooling provides easy to use database resource managers and providers that allow you to use a database for storing localization resources. Unlike static Resx resources, database resources are dynamic and can be changed at runtime and are editable by multiple users at the same time. The custom resource managers and providers use the standard .NET resource infrastructure, so other than startup configuration there are no code changes when switching from using traditional Resx resources - and you can always switch back just as easily. 
+This library and tooling provides easy to use database resource managers and providers that allow you to use a database for storing localization resources. Unlike static Resx resources, database resources are dynamic and can be changed at runtime and are editable by multiple users at the same time. The custom resource managers and providers use the standard .NET resource infrastructure, so other than startup configuration there are no code changes when switching from using traditional Resx resources - and you can always switch back just as easily.
 
 A rich, Web based resource editor is also provided that makes it easy to create resource content and translate it interactively in a running application where you can see resource changes immediately applied without recompilation. You can import and export Resx resources, generate strongly typed classes and serve resources to JavaScript applications using the database resources. 
 
-### .NET Version Support
-
-Version 3.0 adds support for the 2.0 versions of .NET Standard, .NET Core and ASP.NET Core. The following versions are provided:
-
-* Westwind.Globalization <small>*(net45 and netstandard2.0)*</small>
-* Westwind.Globalization.AspNetCore <small>*(netstandard2.0)*</small>
-* Westwind.Globalization.Web <small>*(net45)*</small>
-* Westwind.Globalization.Sample <small>*(net45)*</small>
-* Westwind.Globalization.Sample.AspNetCore <small>*(netcore2.0)*</small>
-
-> Version 3.0 is Pre-Release
-> Version 3.0 is currently in pre-release and the documentation is not up to date.
-
-### Installation
-Installation is different depending on which version of .NET you are running under. .NET Core and Full Framework use different project types and NuGet Packages for the Web support.
-
-> #### Limited non-Windows Support for Admin Features
-> The admin features of this package have not been fully ported to non-Windows platforms. Specifically, any of the RESX and Import Export features will not work on non-windows platforms currently. However database access and resource editing should work ell.
-
-For installation use NuGet.
-
-#### To Install for .NET Core
-
-```
-PM> Install-Package Westwind.Globalization.AspNetCore
-```
-If you're not using a Web Project you can just use the core package:
-
-```
-PM> Install-Package Westwind.Globalization
-```
-
-If you want to use the Administration Web UI, you have to download and add the HTML components to your application. Download from:
-
-* [Localization Html Files](https://github.com/RickStrahl/Westwind.Globalization/blob/Master/LocalizationAdminHtml/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Please read the Installation Section below or watch the [Getting Started Video](https://youtu.be/ABR7ISppB1k), which describes how to install the packages, configure the project, import existing re
-
-
+To install, use NuGet:
 
 ```
 PM> Install-Package Westwind.Globalization.Web.Starter

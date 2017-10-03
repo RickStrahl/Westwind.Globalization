@@ -19,7 +19,6 @@
     <PackageReference Include="NUnit" Version="3.8.1" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.8.0" />
-    <PackageReference Include="Westwind.Utilities" Version="3.0.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Westwind.Globalization\Westwind.Globalization.csproj" />
