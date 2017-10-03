@@ -180,10 +180,18 @@ To run the sample application you have to set up a database to provide the resou
 ## Installation and Configuration
 The easiest way to use this library in your own applications is to install the NuGet package into an ASP.NET application.
 
+
+### for ASP.NET Core
 ```
-pm> Install-Package Westwind.Globalization.Web.Starter
+pm> Install-Package Westwind.Globalization.AspNetCore
 ```
-If you don't need sample resources and a test page you can use the base Web package instead.
+
+You also need to download the resources for the Localization Administration interface if you want to integrate the Localization interface into your application.
+
+* [Localization Admin Html Assets](https://github.com/RickStrahl/Westwind.Globalization/blob/Master/LocalizationAdminHtml/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)
+* [Documentation for installing Localization Admin Files](DownloadableAssets/Readme.md)
+
+#### for Full Framework
 ```
 pm> Install-Package Westwind.Globalization.Web
 ```
@@ -204,23 +212,20 @@ resources.
 ASP.NET Core uses a JSON file:
 ```json
 {
-  "ActiveConfiguration": null,
-  "ConnectionString": "server=.;database=localizationsbad;integrated security=true;app=LocalizationSample",
+  "ResourceAccessMode": "DbResourceManager",
+  "ConnectionString": "server=.;database=localizations;integrated security=true;",
   "ResourceTableName": "Localizations",
-  "StronglyTypedGlobalResource": "~/App_Code/Resources.cs",
-  "ResourceBaseNamespace": "AppResources",
   "ResxExportProjectType": "Project",
   "ResxBaseFolder": "~/Properties/",
+  "StronglyTypedGlobalResource": "~/Properties/Resources.cs",
+  "ResourceBaseNamespace": "AppResources",
   "AddMissingResources": true,
-  "ResourceAccessMode": "DbResourceManager",
   "LocalizationFormWebPath": "~/LocalizationAdmin/",
   "BingClientId": "12345-4b99-47ed-be7e-caf733526020",
   "BingClientSecret": "Screaming.Til.Your.Hoarse.SKTY",
   "GoogleApiKey": "XXXfaSyDcvmGhGN7FlynP9QUZOLF8_4K8iF9ChWo"
 }
 ```
-
-
 
 ASP.NET Classic uses the web.config Configuration file:
 
@@ -264,21 +269,20 @@ ASP.NET Classic uses the web.config Configuration file:
 </configuration>
 ```
 
-**ConnectionString and ResourceTableName**<br/>
-The two most important keys are the connectionString and resourceTableName which point at your database and a table that holds resources. You can use either a raw connection string as above or a connection string name in the `<ConnectionStrings>` section of your config file.
+**ConnectionString and ResourceTableName**   
+The two most important keys are the connectionString and resourceTableName which point at your database and a table that holds resources. On full framework you can use either a raw connection string or a Connection String Name defined in `<ConnectionStrings>` of your `web.config` file.
 
-**AddMissingResources**
+**AddMissingResources**  
 When set to true causes any resource lookup that fails to produce matching resource ID to write the invariant resource into the database. Use with caution - as this might slow down your application significantly as you now write to the database on any missing resources. Use only during development and testing to get resources into the system for easier debugging later.
 
-**ResxExportProjectType**<br/>
+**ResxExportProjectType**  
 This option determines how the Resx export feature works. The two options are `Project` or `WebForms`. Project exports all resource files into \properties folder underneath the resxBasePath and excludes any resource sets that include a . in their name (assumed to be ASP.NET resources). WebForms writes out resources into folder specific App_LocalResources and App_GlobalResources folders based on the root folder
 
-**ResxBaseFolder**<br/>
+**ResxBaseFolder**  
 The base folder that's used for all Resx Import and Export operations. The default is ~/ which is the root web folder, but you can specify a full OS path here. Note that this allows you to read/write resources in other non-web projects - as long as your Web application has writes to the folder specified.
 
-**StronglyTypeGlobalResource and ResourceBaseNamespace**<br/>
+**StronglyTypeGlobalResource and ResourceBaseNamespace**
 If you do a strongly typed class export from the admin manager all resources will be created in a single file in the this file using the ResourceBaseNameSpace as the namespace in the generated class.
-
 
 #### Run the Web Resource Editor
 In order to use database resources you'll actually have to create some resources in a database. Make sure you've first added a valid connection string in the config file in the last step! Then open the `/LocalizationAdmin/` in your browser and click on the *Create Table* button in the toolbar.
