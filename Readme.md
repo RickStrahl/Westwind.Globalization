@@ -47,6 +47,8 @@ If you want to use the Administration Web UI, you have to download and add the H
 
 * [Localization Html Files](https://github.com/RickStrahl/Westwind.Globalization/blob/Master/LocalizationAdminHtml/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)
 
+Copy the files in the zip into the root of your project and recompile. For more info please see the [Downloadable Assets Documentation](DownloadableAssets/Readme.md).
+
 #### To Install on .NET Framework
 Please read the Installation Section below or watch the [Getting Started Video](https://youtu.be/ABR7ISppB1k), which describes how to install the packages, configure the project, import existing re
 
@@ -163,14 +165,18 @@ To run the sample application you have to set up a database to provide the resou
  
 * Create a SQL Server/Express Database called `Localizations`
 * Make sure the IIS Web User using has rights to create a Database in this DB
-* Open http://localhost:xxxxx/LocalizationAdmin/ in your browser
+* Open `http://localhost:xxxxx/LocalizationAdmin/index.html` in your browser
 * You'll get an error message like: <br/>
   *ResourceLoadingFailed: Invalid Object Name Localizations*
 * Use the `Create Table` button to create the *Localizations* table
 * Use `Import or Export Resx` button to import resources from the project into the db
 * Select `Import Resources`	from the dropdown
+* Use the path of `~/Properties/` for Resx Import Folder
+* Click on the Import Resources button
 * You should now have all the sample and LocalizationForm resources in the db
 * Open the `ResourceTest.cshtml` to test resource operation
+
+> Note that 
 
 ## Installation and Configuration
 The easiest way to use this library in your own applications is to install the NuGet package into an ASP.NET application.
