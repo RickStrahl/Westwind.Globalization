@@ -54,11 +54,8 @@ namespace Westwind.Globalization
     /// from web.config (at runtime). You can override this behavior by creating your
     /// own configuration object and assigning it to the DbResourceConfiguration.Current property.
     /// </summary>
-    public class DbResourceConfiguration : Westwind.Utilities.Configuration.AppConfiguration
+    public class DbResourceConfiguration : AppConfiguration
     {
-        
-        
-
         /// <summary>
         /// A global instance of the current configuration. By default this instance reads its
         /// configuration values from web.config at runtime, but it can be overridden to

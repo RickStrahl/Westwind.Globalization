@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using Westwind.Globalization.AspNetCore.Extensions;
-using Westwind.AspNetCore.Extensions;
+using Westwind.Globalization.Errors;
 using Westwind.Utilities;
 
 namespace Westwind.Globalization.Administration
