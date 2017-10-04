@@ -331,26 +331,33 @@ public void Configure(IApplicationBuilder app)
     });
 }
 ```         
+#### Dependency Injection for DbResourceConfiguration
+You can get access to DbResourceConfiguration in a number of ways:
+
+* Via DI by asking for `DbResourceConfiguration`
+* Vi DI by asking for `IOptions<DbResourceConfig>` (if loaded through IConfiguration)
+* Static `DbResourceConfiguration.Current` 
 
 #### Dependency Injection for IDbResStringLocalizer
-One of the base features of ASP.NET Core's Localization is `IStringLocalizer` which provides the provides an interface to map type signatures to instances of Resx resources. `IDbResourcesStringLocalizer` uses the DbResourceManager (which supports switchable Db or Resx resource access).
+One of the base features of ASP.NET Core's Localization is `IStringLocalizer` which provides the provides an interface to map type signatures to instances of Resx resources. `DbResStringLocalizer` uses the `DbResourceManager` (which supports switchable Db or Resx resource access).
 
-To use the DbRes localizer override the default `IStringLocalizer` with:
+To use the DbRes localizer, override the default `IStringLocalizer` with:
 
 ```cs
 services.AddSingleton(typeof(IStringLocalizerFactory), typeof(DbResStringLocalizerFactory));
 ```  
 
 > #### Use of IStringLocalizer is optional. 
-> You can use `DbRes.T()` or strongly typed resources directly if you prefer. However, for `DataAnnotation` localization `IStringLocalizer` is required in ASP.NET Core (shrug), so generally you'll want to add the string localizer as above.
+> You can use `DbRes.T()` or strongly typed resources directly if you prefer. However, for `DataAnnotation` localization `IStringLocalizer` is required in ASP.NET Core (shrug), so generally you'll want to add `DbResStringLocalizer` in `ConfigureServices()`.
 
 ### Full Framework Configuration
-```
+```txt
 pm> Install-Package Westwind.Globalization.Web
 ```
 
 If you're not using a Web Project, or an MVC/Web API project that doesn't use the Web Resource Editor you can use the core package:
-```
+
+```txt
 pm> Install-Package Westwind.Globalization
 ```
 which doesn't install the web related components and HTML resources. 
