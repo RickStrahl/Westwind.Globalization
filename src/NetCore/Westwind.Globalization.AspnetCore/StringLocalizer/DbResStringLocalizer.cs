@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using Microsoft.Extensions.Localization;
 
-namespace Westwind.Globalization.AspnetCore.StringLocalizer
+namespace Westwind.Globalization.AspnetCore
 {
 
     /// <summary>
@@ -27,6 +27,8 @@ namespace Westwind.Globalization.AspnetCore.StringLocalizer
             DbRes = new DbResInstance(config);            
             Config = config;
         }
+
+
         public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
         {
             var resources = DbRes.GetResourceSet(ResourceSet);

@@ -42,7 +42,7 @@ namespace WestWind.Globalization.Sample.AspNetCore
             services.AddWestwindGlobalization(opt =>
             {
 
-                // the default are loaded from:
+                // the defaults are loaded from:
                 // 1. **DbResourceConfiguration.json** if exists
                 // 2. AspNetCore Configuration Manager (IConfiguration)
                 //    (appsettings.json, environment, user secrets - overrides entire object if set)
@@ -57,10 +57,7 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 opt.ResourceTableName = "localizations";
                 opt.AddMissingResources = false;
                 opt.ResxBaseFolder = "~/Properties/";
-
-                // Load GoogleApiKey/BingClientId/BingClientSecret from User Secrets
-                //
-
+                
                 // Set up security for Localization Administration form
                 opt.ConfigureAuthorizeLocalizationAdministration(actionContext =>
                 {
