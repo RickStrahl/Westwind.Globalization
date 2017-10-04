@@ -193,7 +193,20 @@ For non-Web applications or if you use only the DbRes based localization feature
 ```
 pm> Install-Package Westwind.Globalization
 ```
+ASP.NET Core integration works in combination with ASP.NET Core new Localization features. Westwind.Globalization builds on top of this, or you can just use its native features. West Wind Globalization supports:
+
+* `IStringLocalizer` DI via custom `IDbResourceStringLocalizer`
+* `appSettings.json` configuration (optional)
+
 ### ASP.NET Core Configuration
+Configuration can be accomplished in 3 ways:
+
+1. Using a `dbResourceConfiguration.json` file
+2. Using ASP.NET Core `IConfiguration` functionality
+(which includes `appsettings.json support, Environment and User Secrets store)
+3. Explicit configuration via `AddWestwindGlobalization(opt => return true)`
+
+#### DbResourceConfiguration
 ASP.NET Core uses a `DbResourceConfiguration.json` file for configuration:
 ```json
 {
@@ -213,7 +226,14 @@ ASP.NET Core uses a `DbResourceConfiguration.json` file for configuration:
 ```
 If this file exists configuration values are read from it.
 
-You can also store configuration settings in `appsettings.json` like this:
+#### ASP.NET Core IConfiguration
+Westwind.Globalization also registers the `DbResourceConfiguration` instance as an `IOptions<DbResourceConfiguration>` instance which allows strongly typed access to the configuration and allows configuration via:
+
+* appsettings.json
+* Environment variables
+* User Secrets store
+
+You can store configuration settings in `appsettings.json` like this:
 
 ```json
 {
@@ -234,7 +254,7 @@ You can also store configuration settings in `appsettings.json` like this:
   }
 }
 ```
-If provided the `appsettings.json file overrides the DbResourceConfiguration.json. We recommend you only use one of these.
+If provided the `appsettings.json file overrides `DbResourceConfiguration.json`. We recommend you only use one of these.
 
 You also need to explicitly enable localization features in ASP.NET Core using the following code in the `Startup.cs` `ConfigureServices()` method:
 
@@ -286,7 +306,7 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-Any code changes made override any of the file values. You can also replace the entire `DbResourceConfiguration` object entirely.
+Any code changes made override any of the file values. You can also replace the entire `DbResourceConfiguration` object entirely in this handler.
 
 In addition you probably will want to add standard ASP.NET Core Localization features to the `Configure()` method in `Startup.cs`:
 
@@ -311,6 +331,18 @@ public void Configure(IApplicationBuilder app)
     });
 }
 ```         
+
+#### Dependency Injection for IDbResStringLocalizer
+One of the base features of ASP.NET Core's Localization is `IStringLocalizer` which provides the provides an interface to map type signatures to instances of Resx resources. `IDbResourcesStringLocalizer` uses the DbResourceManager (which supports switchable Db or Resx resource access).
+
+To use the DbRes localizer override the default `IStringLocalizer` with:
+
+```cs
+services.AddSingleton(typeof(IStringLocalizerFactory), typeof(DbResStringLocalizerFactory));
+```  
+
+> #### Use of IStringLocalizer is optional. 
+> You can use `DbRes.T()` or strongly typed resources directly if you prefer. However, for `DataAnnotation` localization `IStringLocalizer` is required in ASP.NET Core (shrug), so generally you'll want to add the string localizer as above.
 
 ### Full Framework Configuration
 ```
