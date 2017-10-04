@@ -194,7 +194,7 @@ For non-Web applications or if you use only the DbRes based localization feature
 pm> Install-Package Westwind.Globalization
 ```
 ### ASP.NET Core Configuration
-ASP.NET Core uses a JSON file for configuration:
+ASP.NET Core uses a `DbResourceConfiguration.json` file for configuration:
 ```json
 {
   "ResourceAccessMode": "DbResourceManager",
@@ -211,13 +211,37 @@ ASP.NET Core uses a JSON file for configuration:
   "GoogleApiKey": "XXXfaSyDcvmGhGN7FlynP9QUZOLF8_4K8iF9ChWo"
 }
 ```
+If this file exists configuration values are read from it.
+
+You can also store configuration settings in `appsettings.json` like this:
+
+```json
+{
+  "Logging": {...},
+  "DbResourceConfiguration": {
+    "ResourceAccessMode": "DbResourceManager",
+    "ConnectionString": "server=.;database=localizations;integrated security=true;",
+    "ResourceTableName": "Localizations",
+    "StronglyTypedGlobalResource": "~/Properties/Resources.cs",
+    "ResourceBaseNamespace": "AppResources",
+    "ResxExportProjectType": "Project",
+    "ResxBaseFolder": "~/Properties/",
+    "AddMissingResources": true,
+    "LocalizationFormWebPath": "~/LocalizationAdmin/",
+    "BingClientId": "12345-4b99-47ed-be7e-caf733526020",
+    "BingClientSecret": "Screaming.Til.Your.Hoarse.SKTY",
+    "GoogleApiKey": "XXXfaSyDcvmGhGN7FlynP9QUZOLF8_4K8iF9ChWo"
+  }
+}
+```
+If provided the `appsettings.json file overrides the DbResourceConfiguration.json. We recommend you only use one of these.
 
 You also need to explicitly enable localization features in ASP.NET Core using the following code in the `Startup.cs` `ConfigureServices()` method:
 
 ```cs
 public void ConfigureServices(IServiceCollection services)
 {
-    // Standard ASP.NET Localization features
+    // Standard ASP.NET Localization features are recommended
     services.AddLocalization(options =>
     {
         // I prefer Properties over the default `Resources` folder
@@ -261,6 +285,9 @@ public void ConfigureServices(IServiceCollection services)
     services.AddMvc();
 }
 ```
+
+Any code changes made override any of the file values. You can also replace the entire `DbResourceConfiguration` object entirely.
+
 In addition you probably will want to add standard ASP.NET Core Localization features to the `Configure()` method in `Startup.cs`:
 
 ```cs
