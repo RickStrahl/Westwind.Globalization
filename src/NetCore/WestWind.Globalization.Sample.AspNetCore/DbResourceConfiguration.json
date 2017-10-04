@@ -1,6 +1,6 @@
 ﻿{
   "ResourceAccessMode": "Resx",
-  "ConnectionString": "server=.;database=localizations;uid=localizations;pwd=local;app=LocalizationSample",
+  "ConnectionString": "*** NOT USED - overridden by appsettings.json ***",
   "ResourceTableName": "Localizations",
   "StronglyTypedGlobalResource": "~/Properties/Resources.cs",
   "ResourceBaseNamespace": "AppResources",

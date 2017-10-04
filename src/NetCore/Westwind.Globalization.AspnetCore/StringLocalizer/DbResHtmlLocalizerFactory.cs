@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -9,21 +10,22 @@ using Westwind.Utilities;
 
 namespace Westwind.Globalization.AspnetCore.StringLocalizer
 {
-    public class DbResStringLocalizerFactory : IStringLocalizerFactory
+    public class DbResHtmlLocalizerFactory : IHtmlLocalizerFactory
     {
+
         private DbResourceConfiguration Config;
 
-        public DbResStringLocalizerFactory(DbResourceConfiguration config)            
+        public DbResHtmlLocalizerFactory(DbResourceConfiguration config)
         {
             Config = config;
         }
 
-        public IStringLocalizer Create(string baseName, string location)
+        public IHtmlLocalizer Create(string baseName, string location)
         {
-            return new DbResStringLocalizer(Config) { ResourceSet = baseName };
+            return new DbResHtmlLocalizer(Config) { ResourceSet = baseName };
         }
 
-        public IStringLocalizer Create(Type resourceSource)
+        public IHtmlLocalizer Create(Type resourceSource)
         {
             var appAssembly = Assembly.GetEntryAssembly();
             string appNameSpace = appAssembly.GetName().Name;
@@ -33,6 +35,8 @@ namespace Westwind.Globalization.AspnetCore.StringLocalizer
                 baseName = baseName.Substring(appNameSpace.Length + 1);
 
             return Create(baseName, null);
-        }        
+        }
+
+      
     }
 }

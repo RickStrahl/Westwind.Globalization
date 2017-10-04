@@ -273,6 +273,8 @@ public void ConfigureServices(IServiceCollection services)
 
     // Optional but recommended:  Override IStringLocalizer to use DbRes instances
     services.AddSingleton(typeof(IStringLocalizerFactory), typeof(DbResStringLocalizerFactory));
+    services.AddSingleton(typeof(IHtmlLocalizerFactory), typeof(DbResHtmlLocalizerFactory));
+    
      
     // Required: this enables West Wind Globalization
     services.AddWestwindGlobalization(opt =>
@@ -335,7 +337,7 @@ public void Configure(IApplicationBuilder app)
 You can get access to DbResourceConfiguration in a number of ways:
 
 * Via DI by asking for `DbResourceConfiguration`
-* Vi DI by asking for `IOptions<DbResourceConfig>` (if loaded through IConfiguration)
+* Via DI by asking for `IOptions<DbResourceConfig>` (if loaded through IConfiguration)
 * Static `DbResourceConfiguration.Current` 
 
 #### Dependency Injection for IDbResStringLocalizer

@@ -3,6 +3,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
@@ -37,11 +38,11 @@ namespace WestWind.Globalization.Sample.AspNetCore
 
             // Optionally enable IStringLocalizer to use DbRes objects instead of default ResourceManager
             services.AddSingleton(typeof(IStringLocalizerFactory), typeof(DbResStringLocalizerFactory));
-            
+            services.AddSingleton(typeof(IHtmlLocalizerFactory), typeof(DbResHtmlLocalizerFactory));
+
             // Required for Westwind.Globalization to work!
             services.AddWestwindGlobalization(opt =>
             {
-
                 // the defaults are loaded from:
                 // 1. **DbResourceConfiguration.json** if exists
                 // 2. AspNetCore Configuration Manager (IConfiguration)
@@ -52,8 +53,8 @@ namespace WestWind.Globalization.Sample.AspNetCore
 
                 // Resource Mode - Resx or DbResourceManager                
                 opt.ResourceAccessMode = ResourceAccessMode.DbResourceManager;  // ResourceAccessMode.Resx
-                
-                opt.ConnectionString = "server=dev.west-wind.com;database=localizations;uid=localizations;pwd=local";
+
+                opt.ConnectionString = "server=.;database=localizations;integrated security=true;";
                 opt.ResourceTableName = "localizations";
                 opt.AddMissingResources = false;
                 opt.ResxBaseFolder = "~/Properties/";
