@@ -60,11 +60,17 @@ namespace Westwind.Globalization
         /// </summary>
         public DbResourceConfiguration Configuration;
 
-        Dictionary<string, ResourceSet> InternalResourceSets;
+        /// <summary>
+        /// Internally dictionary to keep the resourceSets cached. 
+        /// One resourceSet per languageId.
+        /// </summary>
+        protected Dictionary<string, ResourceSet> InternalResourceSets;
 
-#if NETSTANDARD
-        public string BaseNameField { get; set; }
-#endif
+        /// <summary>
+        /// Internally keep track of the resource set name since BaseName 
+        /// is read-only and we can't assign to it. 
+        /// </summary>
+        protected string ResourceSetName;
 
         // Duplicate the Resource Manager Constructors below
         // Key feature of these overrides is to set up the BaseName
@@ -76,21 +82,15 @@ namespace Westwind.Globalization
         /// <summary>
         /// Critical Section lock used for loading/adding resource sets
         /// </summary>
-        private static object SyncLock = new object();
-        private static object AddSyncLock = new object();
+        private static readonly object SyncLock = new object();
+        private static readonly object AddSyncLock = new object();
 
         /// <summary>
         /// If true causes any entries that aren't found to be added
         /// </summary>
         public bool AutoAddMissingEntries { get; set; }        
         
-        public override Type  ResourceSetType
-        {
-        	get 
-        	{ 
-        		 return typeof(DbResourceSet);
-        	}
-        }
+        public override Type  ResourceSetType => typeof(DbResourceSet);
 
         /// <summary> 
         /// Constructs a DbResourceManager object
@@ -150,13 +150,13 @@ namespace Westwind.Globalization
         {
             // default configuration is static but you can override the configuration explicitly
             Configuration = DbResourceConfiguration.Current;
-
-            BaseNameField = baseName;
+            
+            ResourceSetName = baseName;
 
             AutoAddMissingEntries = DbResourceConfiguration.Current.AddMissingResources;
             
             // InternalResourceSets contains a set of resources for each locale
-            InternalResourceSets = new Dictionary<string, ResourceSet>();
+            InternalResourceSets = new Dictionary<string, ResourceSet>();            
         }
                 
         
@@ -171,23 +171,22 @@ namespace Westwind.Globalization
         /// <returns></returns>
         protected override ResourceSet InternalGetResourceSet(CultureInfo culture, bool createIfNotExists, bool tryParents)
         {
-            var resourceSets = InternalResourceSets;
-
+            
             // retrieve cached instance - outside of lock for perf
-            if (resourceSets.ContainsKey(culture.Name))
-                return resourceSets[culture.Name];
+            if (InternalResourceSets.ContainsKey(culture.Name))
+                return InternalResourceSets[culture.Name];
 
             lock(SyncLock)
             {
                 // have to check again to ensure still not existing
-                if (resourceSets.ContainsKey(culture.Name))
-                    return resourceSets[culture.Name];
+                if (InternalResourceSets.ContainsKey(culture.Name))
+                    return InternalResourceSets[culture.Name];
             
                 // Otherwise create a new instance, load it and return it
-                DbResourceSet rs = new DbResourceSet(BaseNameField, culture, Configuration);                
+                DbResourceSet rs = new DbResourceSet(ResourceSetName, culture, Configuration);                
                 
                 // Add the resource set to the cached set
-                resourceSets.Add(culture.Name, rs);
+                InternalResourceSets.Add(culture.Name, rs);
                 
                 // And return an instance
                 return rs;
@@ -263,11 +262,11 @@ namespace Westwind.Globalization
             lock (AddSyncLock)
             {
                 // double check if culture neutral version exists
-                string item = manager.GetResourceObject(name, BaseName, cultureName) as string;
+                string item = manager.GetResourceObject(name, ResourceSetName, cultureName) as string;
                 if (item != null)
                     return;
 
-                manager.AddResource(name, value, cultureName, BaseName,null);
+                manager.AddResource(name, value, cultureName, ResourceSetName,null);
             }
         }
 
