@@ -4,8 +4,13 @@
 @using AppResources
 @using Controllers
 @using Globalization.AspNetCore.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
 @using Westwind.Globalization
 @using Westwind.Globalization.AspNetCore.Extensions
+@using Westwind.Globalization.AspNetCore
+
+@inject IStringLocalizer<LocalizationController> localizer
 
 @{
     Layout = null;
@@ -63,7 +68,7 @@
                 <div style="float: left; margin-left: 5px; line-height: 1.2">
                     <i style="color: steelblue; font-size: 0.8em; font-weight: bold;">West Wind Globalization</i><br />
                     <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;">
-                        DbResourceManager Razor @DbRes.T("Sample","ResourceTestPage") <small>(.NET Core)</small>
+                        DbResourceManager Razor @DbRes.T("Sample","Pages.ResourceTestPage") <small>(.NET Core)</small>
                     </i>
                 </div>
             </a>
@@ -74,12 +79,12 @@
         <ul id="MenuButtons" class="nav navbar-nav pull-right navbar">
             <li>
                 <a href="localizationAdmin/">
-                    <i class="fa fa-gears"></i> @DbRes.T("ResourceEditor","ResourceTestPage")
+                    <i class="fa fa-gears"></i> @DbRes.T("ResourceEditor", "Pages.ResourceTestPage")
                 </a>
             </li>            
             <li>
                 <a href="javascript:{}" id="EditResources">
-                    <i class="fa fa-flag"></i> @DbRes.T("EditResources","ResourceTestPage")
+                    <i class="fa fa-flag"></i> @DbRes.T("EditResources", "Pages.ResourceTestPage")
                 </a>
             </li>
             <li>
@@ -131,7 +136,7 @@
         <div class="container">
 
             <h3>DbRes</h3>
-            <label>Using DbRes Direct Access Provider (default locale):</label>
+            <label>Using DbRes Direct (default locale):</label>
             <span data-resource-id="HelloWorld">@DbRes.T("HelloWorld", "Resources")</span>
 
             <label>Using DbRes Force to German:</label>
@@ -140,7 +145,19 @@
             <label>Missing Resource:</label>
             <span data-resource-id="MissingResource">@DbRes.T("MissingResource", "Resources")</span>
         </div>
+        
+        <div class="container">
+            <h3>IStringLocalizer</h3>
+            <label>Using DbRes Direct Access Provider (default locale):</label>
+            <span data-resource-id="HelloWorld">@localizer["HelloWorld"]</span>
+            <span data-resource-id="HelloWorld2">@DbRes.T("HelloWorld","Controllers.LocalizationController")</span>
 
+            <label>Using DbRes Force to German:</label>
+            @DbRes.T("HelloWorld", "Resources", "de")
+
+            <label>Missing Resource:</label>
+            <span data-resource-id="MissingResource">@DbRes.T("MissingResource", "Resources")</span>
+        </div>
        
 
         <div class="container">

@@ -27,10 +27,14 @@ namespace Westwind.Globalization.AspnetCore.StringLocalizer
         {
             var appAssembly = Assembly.GetEntryAssembly();
             string appNameSpace = appAssembly.GetName().Name;
-            string baseName = resourceSource.FullName;
+            string baseName = resourceSource.FullName;            
 
             if (baseName.StartsWith(appNameSpace))
                 baseName = baseName.Substring(appNameSpace.Length + 1);
+
+            // Implement the same behavior as ASP.NET Core/MVC that prefixes
+            // the base resource path. This is silly - but alas. 
+            //baseName = Config.StringLocalizerResourcePath + "." + baseName;
 
             return Create(baseName, null);
         }        

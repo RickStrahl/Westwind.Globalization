@@ -58,7 +58,9 @@ namespace WestWind.Globalization.AspNetCore.Controllers
             var Request = HttpContext.Request;
            
             string resourceSet = Request.Query["ResourceSet"];
-            string localeId = Request.Query["LocaleId"];
+
+
+                string localeId = Request.Query["LocaleId"];
             if (string.IsNullOrEmpty(localeId))
                 localeId = "auto";
             string resourceMode = Request.Query["ResourceMode"];

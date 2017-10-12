@@ -3,6 +3,7 @@ using System.Threading;
 //using AppResources;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Localization;
 
 namespace WestWind.Globalization.Sample.AspNetCore.Controllers
@@ -11,10 +12,13 @@ namespace WestWind.Globalization.Sample.AspNetCore.Controllers
     public class LocalizationController : Controller
     {
         private readonly IStringLocalizer _localizer;
+        private readonly IHtmlLocalizer _htmlLocalizer;
 
         public LocalizationController(IStringLocalizer<LocalizationController> localizer)
+                //IHtmlLocalizer<LocalizationController> htmlLocalizer)
         {
             _localizer = localizer;
+            //_htmlLocalizer = htmlLocalizer;
         }
 
         [HttpGet]
@@ -23,6 +27,14 @@ namespace WestWind.Globalization.Sample.AspNetCore.Controllers
         {
             return _localizer["HelloWorld"];
         }
+
+        [HttpGet]
+        [Route("HtmlLocalizer")]
+        public LocalizedHtmlString HtmlLocalizer(string languageId)
+        {
+            return _htmlLocalizer["HelloWorld"];
+        }
+
 
         [HttpGet]
         [Route("StronglyTypedResource")]
@@ -44,7 +56,7 @@ namespace WestWind.Globalization.Sample.AspNetCore.Controllers
         public string DbRes(string id)
         {
             //return Westwind.Globalization.DbRes.T("HelloWorld","Resources","de-DE");
-            return Westwind.Globalization.DbRes.T("HelloWorld", "Resources", "");
+            return Westwind.Globalization.DbRes.T("HelloWorld", "Controllers.LocalizationController");
         }
 
         /// <summary>

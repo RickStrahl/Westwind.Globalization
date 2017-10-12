@@ -1,6 +1,4 @@
-﻿// TODO: Create a native String Localizer implementation
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using Microsoft.Extensions.Localization;
@@ -20,12 +18,16 @@ namespace Westwind.Globalization.AspnetCore
 
         DbResourceConfiguration Config { get;  }
 
-        public string ResourceSet { get; set; } = "Resources";
+        /// <summary>
+        /// Default ResourceSetName if no Template type is provided
+        /// </summary>
+        public string ResourceSet { get; set; }
 
         public DbResStringLocalizer(DbResourceConfiguration config)
         {            
             DbRes = new DbResInstance(config);            
             Config = config;
+            ResourceSet = Config.StringLocalizerResourcePath + ".CommonResources";
         }
 
 

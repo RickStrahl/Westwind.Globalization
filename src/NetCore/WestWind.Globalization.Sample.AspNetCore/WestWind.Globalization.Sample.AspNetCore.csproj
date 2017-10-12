@@ -24,5 +24,20 @@
     <ProjectReference Include="..\Westwind.Globalization.AspnetCore\Westwind.Globalization.AspnetCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Properties\Pages.ResourceTestPage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Pages.ResourceTestPage.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Pages.ResourceTestPage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Pages.ResourceTestPage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 
 </Project>

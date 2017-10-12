@@ -34,17 +34,16 @@ namespace WestWind.Globalization.Sample.AspNetCore
             services.Configure<DbResourceConfiguration>(Configuration.GetSection("DbResourceConfiguration"));
 
             var provider = services.BuildServiceProvider();            
-            var configData = provider.GetRequiredService<IOptions<DbResourceConfiguration>>();
-
+            
             // Optionally enable IStringLocalizer to use DbRes objects instead of default ResourceManager
-            services.AddSingleton(typeof(IStringLocalizerFactory), typeof(DbResStringLocalizerFactory));
-            services.AddSingleton(typeof(IHtmlLocalizerFactory), typeof(DbResHtmlLocalizerFactory));
+            //services.AddSingleton(typeof(IStringLocalizerFactory), typeof(DbResStringLocalizerFactory));
+            //services.AddSingleton(typeof(IHtmlLocalizerFactory), typeof(DbResHtmlLocalizerFactory));
 
             // Required for Westwind.Globalization to work!
             services.AddWestwindGlobalization(opt =>
             {
                 // the defaults are loaded from:
-                // 1. **DbResourceConfiguration.json** if exists
+                // 1. DbResourceConfiguration.json if exists
                 // 2. AspNetCore Configuration Manager (IConfiguration)
                 //    (appsettings.json, environment, user secrets - overrides entire object if set)
                 // 3. Settings overridden in AddWestwindGlobalization

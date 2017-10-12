@@ -64,8 +64,8 @@
    <data name="ErrorColon" xml:space="preserve">
       <value />
    </data>
-   <data name="FlagPng" type="System.Resources.ResXFileRef, System.Windows.Forms">
-      <value>FrenchFlag.png;System.Byte[], mscorlib, Version = 4.0.0.0, Culture = neutral, PublicKeyToken = b77a5c561934e089</value>
+   <data name="FlagPng" xml:space="preserve">
+      <value>FrenchFlag.png;System.Byte[]</value>
    </data>
    <data name="HelloWorld" xml:space="preserve">
       <value>Bonjour tout le monde</value>
