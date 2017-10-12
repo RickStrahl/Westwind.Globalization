@@ -1,6 +1,6 @@
 /*
  **************************************************************
- * DbReourceManager Class
+ * DbResourceManager Class
  **************************************************************
  *  Author: Rick Strahl 
  *          (c) West Wind Technologies
@@ -96,12 +96,11 @@ namespace Westwind.Globalization
         /// Constructs a DbResourceManager object
         /// </summary>
         /// <param name="baseName">The qualified base name which the resources represent</param>
-        public DbResourceManager(string baseName) 
+        public DbResourceManager(string baseName)
         {            
-			Initialize(baseName, null);            
+			Initialize(baseName, null);                        
 		}
-
-
+        
         /// <summary>
         /// Constructs a DbResourceManager object. Match base constructors.
         /// </summary>
@@ -112,14 +111,15 @@ namespace Westwind.Globalization
 		}
 
         /// <summary>
-        /// Constructs a DbResourceManager object. Match base constructors.
+        /// Constructs a DbResourceManager object. 
+        /// Match base constructors, but not actually used
         /// </summary>
         /// <param name="baseName">The qualified base name which the resources represent</param>
         /// <param name="assembly">Assembly that hosts the resources. Not used.</param>
 		
-        public DbResourceManager(string baseName, Assembly assembly) : base(baseName, assembly)
+        public DbResourceManager(string baseName, Assembly assembly) //: base(baseName, assembly)
         {
-            Initialize( baseName,null);
+            Initialize( baseName,assembly);
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Westwind.Globalization
 		/// <param name="resourceType">Associated resource type. Not used.</param>
         public DbResourceManager(string baseName, Assembly assembly, Type resourceType)  
         {
-            Initialize(baseName, null);
+            Initialize(baseName, assembly);
         }
 
         /// <summary>
@@ -183,8 +183,8 @@ namespace Westwind.Globalization
                     return InternalResourceSets[culture.Name];
             
                 // Otherwise create a new instance, load it and return it
-                DbResourceSet rs = new DbResourceSet(ResourceSetName, culture, Configuration);                
-                
+                DbResourceSet rs = new DbResourceSet(ResourceSetName, culture, Configuration);
+
                 // Add the resource set to the cached set
                 InternalResourceSets.Add(culture.Name, rs);
                 

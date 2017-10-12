@@ -53,7 +53,7 @@ namespace Westwind.Globalization
         /// <summary>
         /// Name of the ResourceSet
         /// </summary>
-        private string baseNameField;
+        private string resourceSetName;
 
         /// <summary>
         /// The culture that applies to to this reader
@@ -76,17 +76,17 @@ namespace Westwind.Globalization
         /// Core constructor for DbResourceReader. This ctor is passed the name of the
         /// ResourceSet and a culture that is to be loaded.
         /// </summary>
-        /// <param name="baseNameField">The base name of the resource reader</param>
+        /// <param name="resourceSetName">The base name of the resource reader</param>
         /// <param name="cultureInfo">The CultureInfo identifying the culture of the resources to be read</param>
         /// <param name="configuration">Configuration instance that's passed to the resource reader</param>
-        public DbResourceReader(string baseNameField, CultureInfo cultureInfo, DbResourceConfiguration configuration)
+        public DbResourceReader(string resourceSetName, CultureInfo cultureInfo, DbResourceConfiguration configuration)
         {
             if (configuration != null)
                 Configuration = configuration;
             else
                 Configuration = DbResourceConfiguration.Current;
 
-            this.baseNameField = baseNameField;
+            this.resourceSetName = resourceSetName;
             this.cultureInfo = cultureInfo;
         }
 
@@ -115,11 +115,11 @@ namespace Westwind.Globalization
                 if (Items != null)
                     return Items.GetEnumerator();
 
-                // DEPENDENCY HERE
+                // PLACEHOLDER:   DEPENDENCY HERE
                 // Here's the only place we really access the database and return
                 // a specific ResourceSet for a given ResourceSet Id and Culture
                 DbResourceDataManager manager = DbResourceDataManager.CreateDbResourceDataManager(configuration:Configuration);
-                Items = manager.GetResourceSet(cultureInfo.Name, baseNameField);
+                Items = manager.GetResourceSet(cultureInfo.Name, resourceSetName);
                 return Items.GetEnumerator();
             }
         }
