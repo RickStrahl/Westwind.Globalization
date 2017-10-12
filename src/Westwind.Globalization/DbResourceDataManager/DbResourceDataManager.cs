@@ -476,17 +476,22 @@ namespace Westwind.Globalization
 
                 string resourceSetFilter = "";
                 if (!string.IsNullOrEmpty(resourceSet))
-                    resourceSetFilter = " AND resourceset = @ResourceSet2 ";
+                    resourceSetFilter = " WHERE resourceset = @ResourceSet2 ";
 
-                string sql = "select ResourceId,Value,LocaleId,ResourceSet,Type,TextFile,BinFile,FileName,Comment,ValueType,Updated from " + Configuration.ResourceTableName +
-                             " where ResourceSet " +
-                             (!localResources ? "not" : string.Empty) + " like @ResourceSet " + 
-                             resourceSetFilter +
-                             "ORDER BY ResourceSet,LocaleId, ResourceId";
+                string sql = "select ResourceId,Value,LocaleId,ResourceSet,Type,TextFile,BinFile,FileName,Comment,ValueType,Updated " +
+                             "from " + Configuration.ResourceTableName + " " +
+                             "where IsNull(ResourceSet,'') != '' " +
+                             
+//#if NETFULL  // allow for local resource filtering
+//                             " AND ResourceSet " + 
+//                            (!localResources ? "not" : string.Empty) + " like @ResourceSet " + 
+//#endif
+                              resourceSetFilter +
+                             " ORDER BY ResourceSet,LocaleId, ResourceId";
 
+                //var parms = new List<IDbDataParameter> { data.CreateParameter("@ResourceSet", "%.%") };
 
-                var parms = new List<IDbDataParameter> {data.CreateParameter("@ResourceSet", "%.%")};
-
+                var parms = new List<IDbDataParameter>();
                 if (!string.IsNullOrEmpty(resourceSetFilter))
                     parms.Add(data.CreateParameter("@ResourceSet2", resourceSet));
 

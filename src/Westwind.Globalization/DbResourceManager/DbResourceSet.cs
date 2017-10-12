@@ -43,17 +43,16 @@ namespace Westwind.Globalization
     /// set. The ResourceManager caches the InternalResourceSets and figures out how to
     /// return the resources from this ResourceSet using the IEnumerable interface.
     /// 
-    /// The ResourceSet doesn't do any work - it serves merely as a coordinator. The
+    /// The ResourceSet doesn't do any work - it serves merely as a coordinator with an
+    /// enumeration interface that passes the data to the Resource Manager. The
     /// actual reading of resources is managed by the ResourceReader which eventually
     /// calls into the database to retrieve the resources for the ResourceSet.
     /// </summary>
     public class DbResourceSet : ResourceSet
     {        
-        string _BaseName = null;
-        CultureInfo _Culture = null;
-
+        
         /// <summary>
-        /// Core constructore. Gets passed a baseName (which is the ResourceSet Id - 
+        /// Core constructor. Gets passed a baseName (which is the ResourceSet Id - 
         /// either a local or global resource group) and a culture. 
         /// 
         /// This constructor basically creates a new ResourceReader and uses that
@@ -66,8 +65,6 @@ namespace Westwind.Globalization
         public DbResourceSet(string baseName, CultureInfo culture, DbResourceConfiguration configuration) 
             : base(new DbResourceReader(baseName, culture, configuration))
         {            
-            _BaseName = baseName;
-            _Culture = culture;
         }
 
         /// <summary>

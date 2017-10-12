@@ -147,6 +147,15 @@ namespace Westwind.Globalization
         public string ResxBaseFolder { get; set; } = "~/Properties/";
 
         /// <summary>
+        /// The ResourcePath used for IStringLocalizer as configured in .AddLocalization()
+        /// defaults to Properties.
+        /// </summary>
+        public string StringLocalizerResourcePath
+        {
+            get { return StringUtils.ExtractString(ResxBaseFolder, "/", "/", allowMissingEndDelimiter: true); }
+        }
+
+        /// <summary>
         /// Determines whether any resources that are not found are automatically
         /// added to the resource file.
         /// 
@@ -192,7 +201,10 @@ namespace Westwind.Globalization
         /// </summary>
         public string GoogleApiKey { get; set; }
 
-        
+     
+
+
+
         [JsonIgnore]
         public List<IResourceSetValueConverter> ResourceSetValueConverters = new List<IResourceSetValueConverter>();
 

@@ -12,8 +12,7 @@
  * ----------------------------------
  * .NET Internationalization
  *      Addison Wesley Books
- *      by Guy Smith Ferrier
- * 
+ *      by Guy Smith Ferrier 
  **************************************************************  
 */
 
@@ -184,7 +183,7 @@ namespace Westwind.Globalization
             
                 // Otherwise create a new instance, load it and return it
                 DbResourceSet rs = new DbResourceSet(ResourceSetName, culture, Configuration);
-
+                
                 // Add the resource set to the cached set
                 InternalResourceSets.Add(culture.Name, rs);
                 

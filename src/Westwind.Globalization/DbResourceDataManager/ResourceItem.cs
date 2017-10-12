@@ -46,7 +46,7 @@ namespace Westwind.Globalization
     /// <summary>
     /// Returns a resource item that contains both Value and Comment
     /// </summary>
-    [DebuggerDisplay("Lang: {Type} - {ResourceId} - {Value}")]
+    [DebuggerDisplay("Lang: {Type} - {ResourceId} - {Value} - {ResourceSet}")]
     public class ResourceItem : INotifyPropertyChanged
     {
         /// <summary>

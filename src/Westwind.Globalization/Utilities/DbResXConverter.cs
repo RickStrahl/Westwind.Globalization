@@ -348,6 +348,9 @@ namespace Westwind.Globalization
                 res.LocaleId = res.LocaleId.ToLower();
                 string stringValue = res.Value as string;
 
+                if ( string.IsNullOrEmpty(res.ResourceSet))
+                    continue;
+                
                 // Create a new output file if the resource set or locale changes
                 if (res.ResourceSet != lastSet || res.LocaleId != lastLocale)
                 {         
@@ -524,8 +527,7 @@ namespace Westwind.Globalization
             else
                 path = BasePhysicalPath;
 
-            
-            resourceSet = Path.Combine(path, DbResourceUtils.NormalizePath(resourceSet));
+            resourceSet = Path.Combine(path, resourceSet);
                 
             
             if (IsLocalResourceSet(resourceSet) && !resourceSet.Contains("App_LocalResources"))
