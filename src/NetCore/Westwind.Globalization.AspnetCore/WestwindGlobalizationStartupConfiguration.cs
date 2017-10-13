@@ -32,8 +32,9 @@ namespace Westwind.Globalization.AspNetCore
 
             var provider = services.BuildServiceProvider();
             var serviceConfiguration = provider.GetService<IConfiguration>();
-            services.Configure<DbResourceConfiguration>(serviceConfiguration.GetSection("DbResourceConfiguration"));
-            
+
+            // read settings from DbResourceConfiguration in Appsettings.json
+            services.Configure<DbResourceConfiguration>(serviceConfiguration.GetSection("DbResourceConfiguration"));           
             var configData = provider.GetRequiredService<IOptions<DbResourceConfiguration>>();
             if (configData != null && configData.Value != null && !configData.Value.ConnectionString.StartsWith("***"))
             {
@@ -43,7 +44,7 @@ namespace Westwind.Globalization.AspNetCore
             setOptionsAction?.Invoke(config);
 
             // register with DI
-            services.AddSingleton<DbResourceConfiguration>(config);
+            services.AddSingleton(config);
 
             return services;
         }

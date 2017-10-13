@@ -14,11 +14,11 @@ namespace WestWind.Globalization.Sample.AspNetCore.Controllers
         private readonly IStringLocalizer _localizer;
         private readonly IHtmlLocalizer _htmlLocalizer;
 
-        public LocalizationController(IStringLocalizer<LocalizationController> localizer)
-                //IHtmlLocalizer<LocalizationController> htmlLocalizer)
+        public LocalizationController(IStringLocalizer<LocalizationController> localizer,
+                IHtmlLocalizer<LocalizationController> htmlLocalizer)
         {
             _localizer = localizer;
-            //_htmlLocalizer = htmlLocalizer;
+            _htmlLocalizer = htmlLocalizer;
         }
 
         [HttpGet]
@@ -33,7 +33,7 @@ namespace WestWind.Globalization.Sample.AspNetCore.Controllers
         public LocalizedHtmlString HtmlLocalizer(string languageId)
         {
             return _htmlLocalizer["HelloWorld"];
-        }
+        } 
 
 
         [HttpGet]

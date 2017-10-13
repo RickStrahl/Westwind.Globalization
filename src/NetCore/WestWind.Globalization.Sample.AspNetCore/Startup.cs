@@ -31,13 +31,10 @@ namespace WestWind.Globalization.Sample.AspNetCore
             });
 
 
-            services.Configure<DbResourceConfiguration>(Configuration.GetSection("DbResourceConfiguration"));
-
-            var provider = services.BuildServiceProvider();            
             
             // Optionally enable IStringLocalizer to use DbRes objects instead of default ResourceManager
-            //services.AddSingleton(typeof(IStringLocalizerFactory), typeof(DbResStringLocalizerFactory));
-            //services.AddSingleton(typeof(IHtmlLocalizerFactory), typeof(DbResHtmlLocalizerFactory));
+            services.AddSingleton(typeof(IStringLocalizerFactory), typeof(DbResStringLocalizerFactory));
+            services.AddSingleton(typeof(IHtmlLocalizerFactory), typeof(DbResHtmlLocalizerFactory));
 
             // Required for Westwind.Globalization to work!
             services.AddWestwindGlobalization(opt =>
@@ -67,7 +64,9 @@ namespace WestWind.Globalization.Sample.AspNetCore
 
             });
 
-            services.AddMvc();
+            services.AddMvc()
+                .AddViewLocalization()
+                .AddDataAnnotationsLocalization();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfiguration configuration)
