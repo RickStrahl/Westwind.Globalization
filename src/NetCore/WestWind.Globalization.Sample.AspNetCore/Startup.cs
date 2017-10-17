@@ -30,22 +30,23 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 options.ResourcesPath = "Properties";
             });
 
-
-            
             // Optionally enable IStringLocalizer to use DbRes objects instead of default ResourceManager
             services.AddSingleton(typeof(IStringLocalizerFactory), typeof(DbResStringLocalizerFactory));
             services.AddSingleton(typeof(IHtmlLocalizerFactory), typeof(DbResHtmlLocalizerFactory));
 
             // Required for Westwind.Globalization to work!
+            //services.AddWestwindGlobalization();
             services.AddWestwindGlobalization(opt =>
             {
-                // the defaults are loaded from:
+                // the defaults are loaded in this order:
+                // 0. Default DbResourceConfiguration values
                 // 1. DbResourceConfiguration.json if exists
-                // 2. AspNetCore Configuration Manager (IConfiguration)
+                // 2. AspNetCore Configuration Manager (IConfiguration/appsettings etc.)
                 //    (appsettings.json, environment, user secrets - overrides entire object if set)
-                // 3. Settings overridden in AddWestwindGlobalization
-
+                // 3. Settings can be overridden in AddWestwindGlobalization here
+                
                 // you can override settings here - possibly with standard config settings
+                // Note: this example overrides settings with these values - these are used
 
                 // Resource Mode - Resx or DbResourceManager                
                 opt.ResourceAccessMode = ResourceAccessMode.DbResourceManager;  // ResourceAccessMode.Resx
@@ -54,7 +55,7 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 opt.ResourceTableName = "localizations";
                 opt.AddMissingResources = false;
                 opt.ResxBaseFolder = "~/Properties/";
-                
+
                 // Set up security for Localization Administration form
                 opt.ConfigureAuthorizeLocalizationAdministration(actionContext =>
                 {
@@ -69,7 +70,7 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 .AddDataAnnotationsLocalization();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfiguration configuration)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfiguration configuration, IOptions<DbResourceConfiguration> localizationConfig)
         {            
             if (env.IsDevelopment())
             {
@@ -81,6 +82,7 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 app.UseExceptionHandler("/Error");
             }
 
+            
             var supportedCultures = new[]
             {
                 new CultureInfo("en-US"),
@@ -116,6 +118,8 @@ namespace WestWind.Globalization.Sample.AspNetCore
             // print some environment information
             Console.WriteLine("\r\nPlatform: " + System.Runtime.InteropServices.RuntimeInformation.OSDescription);
             Console.WriteLine("DbResourceMode: " + DbResourceConfiguration.Current.ResourceAccessMode);
+            Console.WriteLine("Connection: " + DbResourceConfiguration.Current.ConnectionString);
+            Console.WriteLine("Connection: " + DbResourceConfiguration.Current.ResourceTableName);
         }
     }
 }
