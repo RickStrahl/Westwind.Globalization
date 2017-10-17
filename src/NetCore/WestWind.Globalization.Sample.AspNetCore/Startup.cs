@@ -69,7 +69,9 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 .AddViewLocalization()
                 .AddDataAnnotationsLocalization();
 
-            // this has to go here after view localization have been initialized
+            // this *has to go here*  after view localization have been initialized
+            // so that Pages can localize - note required even if you're not using
+            // the DbResource manager. Fix in post ASP.NET Core 2.0
             services.AddTransient<IViewLocalizer, DbResViewLocalizer>();
         }
 

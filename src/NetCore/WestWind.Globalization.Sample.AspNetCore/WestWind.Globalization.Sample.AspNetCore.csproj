@@ -25,14 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Properties\Pages.ResourceTest.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Pages.ResourceTest.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Update="appsettings.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
@@ -43,8 +35,7 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Properties\Pages.ResourceTest.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Pages.ResourceTest.Designer.cs</LastGenOutput>
+      <Generator></Generator>
     </EmbeddedResource>
   </ItemGroup>
 
