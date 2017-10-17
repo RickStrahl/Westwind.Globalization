@@ -33,6 +33,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="DbResourceConfiguration.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="Properties\Pages.ResourceTestPage.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Pages.ResourceTestPage.Designer.cs</LastGenOutput>

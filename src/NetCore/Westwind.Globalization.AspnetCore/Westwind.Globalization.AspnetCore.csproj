@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>3.0.0-preview1-3</Version>
+    <Version>3.0.0-preview1-4</Version>
     <Authors>Rick Strahl</Authors>
     <Company>West Wind Technologies</Company>
     <Product>Westwind.Globalization</Product>
@@ -20,6 +20,7 @@ This library is required for using Westwind.Globalization in most ASP.NET Web Pr
     <RepositoryType>Github</RepositoryType>
     <PackageTags>ASP.NET Core Localization Translation Globalization Resources</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <FileVersion>3.0.4.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

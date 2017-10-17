@@ -1,7 +1,7 @@
 ﻿{
-  "ResourceAccessMode": "Resx",
-  "ConnectionString": "*** NOT USED - overridden by appsettings.json ***",
-  "ResourceTableName": "Localizations",
+  "ResourceAccessMode": "DbResourceManager",
+  "ConnectionString": "server=.;database=localizations;integrated security=true",
+  "ResourceTableName": "Localizations_DbResourceConfigurationJson",
   "StronglyTypedGlobalResource": "~/Properties/Resources.cs",
   "ResourceBaseNamespace": "AppResources",
   "ResxExportProjectType": "Project",

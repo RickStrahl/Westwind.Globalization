@@ -19,7 +19,7 @@
     "WestWind.Globalization.Sample.AspNetCore": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:5000/api/localization/dbres",
+      "launchUrl": "http://localhost:5000/LocalizationAdmin/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
