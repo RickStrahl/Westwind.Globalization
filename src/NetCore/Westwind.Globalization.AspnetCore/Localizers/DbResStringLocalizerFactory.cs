@@ -18,21 +18,16 @@ namespace Westwind.Globalization.AspnetCore
 
         public IStringLocalizer Create(string baseName, string location)
         {
-            // strip off application base (location) if it's provided
-            if (baseName.StartsWith(_host.ApplicationName))
-                baseName = baseName.Substring(_host.ApplicationName.Length + 1);
+            // strip off application base(location) if it's provided
+            if (baseName != null && baseName.StartsWith(location))
+                baseName = baseName.Substring(location.Length + 1);
 
             return new DbResStringLocalizer(_config) { ResourceSet = baseName };
         }
 
         public IStringLocalizer Create(Type resourceSource)
         {                        
-            string baseName = resourceSource.FullName;
-
-            // strip off project prefix - we just use the relative path
-            if (baseName.StartsWith(_host.ApplicationName))
-                    baseName = baseName.Substring(_host.ApplicationName.Length + 1);
-                  
+            string baseName = resourceSource.FullName;                             
             return Create(baseName, _host.ApplicationName);
         }        
     }
