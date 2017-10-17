@@ -9,8 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using Westwind.Globalization;
-using Westwind.Globalization.AspnetCore.StringLocalizer;
-using Westwind.Globalization.AspNetCore;
+using Westwind.Globalization.AspnetCore;
+    
 
 namespace WestWind.Globalization.Sample.AspNetCore
 {
@@ -31,8 +31,8 @@ namespace WestWind.Globalization.Sample.AspNetCore
             });
 
             // Optionally enable IStringLocalizer to use DbRes objects instead of default ResourceManager
-            services.AddSingleton(typeof(IStringLocalizerFactory), typeof(DbResStringLocalizerFactory));
-            services.AddSingleton(typeof(IHtmlLocalizerFactory), typeof(DbResHtmlLocalizerFactory));
+            services.AddSingleton<IStringLocalizerFactory, DbResStringLocalizerFactory>();
+            services.AddSingleton<IHtmlLocalizerFactory, DbResHtmlLocalizerFactory>();            
 
             // Required for Westwind.Globalization to work!
             //services.AddWestwindGlobalization();
@@ -68,6 +68,9 @@ namespace WestWind.Globalization.Sample.AspNetCore
             services.AddMvc()
                 .AddViewLocalization()
                 .AddDataAnnotationsLocalization();
+
+            // this has to go here after view localization have been initialized
+            services.AddTransient<IViewLocalizer, DbResViewLocalizer>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfiguration configuration, IOptions<DbResourceConfiguration> localizationConfig)

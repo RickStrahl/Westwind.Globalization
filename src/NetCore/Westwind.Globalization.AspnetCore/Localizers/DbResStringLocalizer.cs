@@ -24,9 +24,11 @@ namespace Westwind.Globalization.AspnetCore
         public string ResourceSet { get; set; }
 
         public DbResStringLocalizer(DbResourceConfiguration config)
-        {            
-            DbRes = new DbResInstance(config);            
+        {
+            DbRes = new DbResInstance(config);
             Config = config;
+            
+            // default
             ResourceSet = Config.StringLocalizerResourcePath + ".CommonResources";
         }
 

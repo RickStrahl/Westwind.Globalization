@@ -10,7 +10,11 @@
 @using Westwind.Globalization.AspNetCore.Extensions
 @using Westwind.Globalization.AspNetCore
 
-@inject IStringLocalizer<LocalizationController> localizer
+@*@inject IStringLocalizer<LocalizationController> localizer*@
+
+@inject IViewLocalizer localizer
+@inject IStringLocalizer<LocalizationController> stringLocalizer;
+@inject IHtmlLocalizer<LocalizationController> htmlLocalizer;
 
 @{
     Layout = null;
@@ -79,12 +83,12 @@
         <ul id="MenuButtons" class="nav navbar-nav pull-right navbar">
             <li>
                 <a href="localizationAdmin/">
-                    <i class="fa fa-gears"></i> @DbRes.T("ResourceEditor", "Pages.ResourceTestPage")
+                    <i class="fa fa-gears"></i> @localizer["ResourceEditor"]
                 </a>
             </li>            
             <li>
                 <a href="javascript:{}" id="EditResources">
-                    <i class="fa fa-flag"></i> @DbRes.T("EditResources", "Pages.ResourceTestPage")
+                    <i class="fa fa-flag"></i> @localizer["EditResources"]
                 </a>
             </li>
             <li>
@@ -147,13 +151,15 @@
         </div>
         
         <div class="container">
-            <h3>IStringLocalizer</h3>
-            <label>Using DbRes Direct Access Provider (default locale):</label>
-            <span data-resource-id="HelloWorld">@localizer["HelloWorld"]</span>
-            <span data-resource-id="HelloWorld2">@DbRes.T("HelloWorld","Controllers.LocalizationController")</span>
+            <h3>IViewLocalizer</h3>
+            <label>Using localizer["HelloWorld"]:</label>
+            <span data-resource-id="HelloWorld">@localizer["HelloWorld"]</span>            
 
-            <label>Using DbRes Force to German:</label>
-            @DbRes.T("HelloWorld", "Resources", "de")
+            <label>Using stringLocalizer["HelloWorld"] (LocalizationController):</label>
+            @stringLocalizer["HelloWorld"]
+            
+            <label>Using htmlLocalizer["HelloWorld"] (LocalizationController):</label>
+            @htmlLocalizer["HelloWorldHtml"]
 
             <label>Missing Resource:</label>
             <span data-resource-id="MissingResource">@DbRes.T("MissingResource", "Resources")</span>
@@ -202,7 +208,9 @@
 
 
     <!-- Generates a resources = { "HelloWorld": "Hello World", "Today": "Today" } style variable that contains all server side resources translated for this resource set-->
-    <script src="@JavaScriptLocalizationResourcesController.GetJavaScriptResourcesUrl("resources","Resources",localeId)"></script>
+    @*<script src="@JavaScriptLocalizationResourcesController.GetJavaScriptResourcesUrl("resources","Resources",localeId)"></script>*@
+    
+    <script src="~/api/JavaScriptLocalizationResources?ResourceSet=Resources&VarName=resources&localeId=auto&ResourceMode=ResDb"></script>
     <script>
         document.querySelector("#JavaScriptHelloWorld").innerText = resources.HelloWorld;
     </script>

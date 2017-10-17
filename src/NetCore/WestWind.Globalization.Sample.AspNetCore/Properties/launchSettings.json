@@ -19,7 +19,7 @@
     "WestWind.Globalization.Sample.AspNetCore": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:5000/LocalizationAdmin/",
+      "launchUrl": "http://localhost:5000/ResourceTest",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

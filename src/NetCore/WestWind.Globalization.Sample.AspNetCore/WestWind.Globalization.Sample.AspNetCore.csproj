@@ -25,10 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Properties\Pages.ResourceTestPage.Designer.cs">
+    <Compile Update="Properties\Pages.ResourceTest.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Pages.ResourceTestPage.resx</DependentUpon>
+      <DependentUpon>Pages.ResourceTest.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -42,9 +42,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Properties\Pages.ResourceTestPage.resx">
+    <EmbeddedResource Update="Properties\Pages.ResourceTest.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Pages.ResourceTestPage.Designer.cs</LastGenOutput>
+      <LastGenOutput>Pages.ResourceTest.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

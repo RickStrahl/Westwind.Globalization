@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Westwind.Utilities;
 
-namespace Westwind.Globalization.AspnetCore.StringLocalizer
+namespace Westwind.Globalization.AspnetCore
 {
     public class DbResHtmlLocalizerFactory : IHtmlLocalizerFactory
     {
@@ -22,6 +22,9 @@ namespace Westwind.Globalization.AspnetCore.StringLocalizer
 
         public IHtmlLocalizer Create(string baseName, string location)
         {
+            if (Config.ResourceAccessMode == ResourceAccessMode.Resx)            
+                baseName = location + "." + baseName;
+            
             return new DbResHtmlLocalizer(Config) { ResourceSet = baseName };
         }
 
@@ -31,10 +34,13 @@ namespace Westwind.Globalization.AspnetCore.StringLocalizer
             string appNameSpace = appAssembly.GetName().Name;
             string baseName = resourceSource.FullName;
 
-            if (baseName.StartsWith(appNameSpace))
-                baseName = baseName.Substring(appNameSpace.Length + 1);
+            if (Config.ResourceAccessMode == ResourceAccessMode.DbResourceManager)
+            {
+                if (baseName.StartsWith(appNameSpace))
+                    baseName = baseName.Substring(appNameSpace.Length + 1);
+            }
 
-            return Create(baseName, null);
+            return Create(baseName, appNameSpace);
         }
 
       

@@ -2,12 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>3.0.0-preview1-4</Version>
+    <Version>3.0.0-preview1-6</Version>
     <Authors>Rick Strahl</Authors>
     <Company>West Wind Technologies</Company>
     <Product>Westwind.Globalization</Product>
     <Title>Westwind Globalization ASP.NET Core</Title>
-    <Description>This library provides the ASP.NET Core specific components to the Westwind.Globalization library. It contains an database ILocalizer interface, JavaScript Resource handler and  the on-line Resource editor to allow editing of data resources in real time. 
+    <Description>This library provides the ASP.NET Core specific components to the Westwind.Globalization library. It contains an database ILocalizer interface, JavaScript Resource handler and  the on-line Resource editor to allow editing of data resources in real time.  
+
+ Note: In order to use the Localization Administration feature, please download the required project resources from: https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationAdministrationHtml_AspNetCore.zip
 
 This library is required for using Westwind.Globalization in most ASP.NET Web Projects. MVC Projects that don't require the Web Resource Editor interface, can use just the Core package.</Description>
     <Summary>not used</Summary>
@@ -20,7 +22,7 @@ This library is required for using Westwind.Globalization in most ASP.NET Web Pr
     <RepositoryType>Github</RepositoryType>
     <PackageTags>ASP.NET Core Localization Translation Globalization Resources</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <FileVersion>3.0.4.0</FileVersion>
+    <FileVersion>3.0.6.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -43,6 +45,12 @@ This library is required for using Westwind.Globalization in most ASP.NET Web Pr
   
   <ItemGroup>
     <ProjectReference Include="..\..\Westwind.Globalization\Westwind.Globalization.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Mvc.RazorPages">
+      <HintPath>..\..\..\..\..\..\Users\rstrahl\.nuget\packages\microsoft.aspnetcore.mvc.razorpages\2.0.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.RazorPages.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Westwind.Utilities;
 
-namespace Westwind.Globalization.AspnetCore.StringLocalizer
+namespace Westwind.Globalization.AspnetCore
 {
     public class DbResStringLocalizerFactory : IStringLocalizerFactory
     {
@@ -20,6 +20,9 @@ namespace Westwind.Globalization.AspnetCore.StringLocalizer
 
         public IStringLocalizer Create(string baseName, string location)
         {
+            if (Config.ResourceAccessMode == ResourceAccessMode.Resx)
+                baseName = location + "." + baseName;
+
             return new DbResStringLocalizer(Config) { ResourceSet = baseName };
         }
 
@@ -27,14 +30,15 @@ namespace Westwind.Globalization.AspnetCore.StringLocalizer
         {
             var appAssembly = Assembly.GetEntryAssembly();
             string appNameSpace = appAssembly.GetName().Name;
-            string baseName = resourceSource.FullName;            
+            string baseName = resourceSource.FullName;
 
-            if (baseName.StartsWith(appNameSpace))
-                baseName = baseName.Substring(appNameSpace.Length + 1);
 
-            // Implement the same behavior as ASP.NET Core/MVC that prefixes
-            // the base resource path. This is silly - but alas. 
-            //baseName = Config.StringLocalizerResourcePath + "." + baseName;
+            // strip off project prefix
+            if (Config.ResourceAccessMode == ResourceAccessMode.DbResourceManager)
+            {
+                if (baseName.StartsWith(appNameSpace))
+                    baseName = baseName.Substring(appNameSpace.Length + 1);
+            }       
 
             return Create(baseName, null);
         }        

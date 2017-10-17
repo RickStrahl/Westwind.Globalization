@@ -22,14 +22,14 @@ namespace WestWind.Globalization.Sample.AspNetCore.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Pages_ResourceTestPage {
+    public class Pages_ResourceTest {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Pages_ResourceTestPage() {
+        internal Pages_ResourceTest() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace WestWind.Globalization.Sample.AspNetCore.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WestWind.Globalization.Sample.AspNetCore.Properties.Pages.ResourceTestPage", typeof(Pages_ResourceTestPage).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WestWind.Globalization.Sample.AspNetCore.Properties.Pages.ResourceTest", typeof(Pages_ResourceTest).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -66,6 +66,24 @@ namespace WestWind.Globalization.Sample.AspNetCore.Properties {
         public static string EditResources {
             get {
                 return ResourceManager.GetString("EditResources", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hello World from Pages/ViewController.
+        /// </summary>
+        public static string HelloWorld {
+            get {
+                return ResourceManager.GetString("HelloWorld", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hello HTML World from Pages/ViewController.
+        /// </summary>
+        public static string HelloWorldHtml {
+            get {
+                return ResourceManager.GetString("HelloWorldHtml", resourceCulture);
             }
         }
         

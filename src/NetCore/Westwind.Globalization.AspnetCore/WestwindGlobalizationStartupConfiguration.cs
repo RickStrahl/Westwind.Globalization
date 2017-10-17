@@ -1,13 +1,13 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Configuration;
 
 
-namespace Westwind.Globalization.AspNetCore
+
+namespace Westwind.Globalization.AspnetCore
 {
     public static class ApplicationBuilderExtensions
     {
@@ -51,6 +51,16 @@ namespace Westwind.Globalization.AspNetCore
             services.AddSingleton(config);
 
             return services;
+        }
+    }
+
+    public static class DbResourceConfigurationExtensions
+    {
+        public static void ConfigureAuthorizeLocalizationAdministration(
+            this DbResourceConfiguration config,
+            Func<ActionContext, bool> onAuthorizeLocalizationAdministration)
+        {
+            config.OnAuthorizeLocalizationAdministration = onAuthorizeLocalizationAdministration;
         }
     }
 }
