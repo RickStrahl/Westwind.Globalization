@@ -476,7 +476,7 @@ namespace Westwind.Globalization
 
                 string resourceSetFilter = "";
                 if (!string.IsNullOrEmpty(resourceSet))
-                    resourceSetFilter = " WHERE resourceset = @ResourceSet2 ";
+                    resourceSetFilter = " AND resourceset = @ResourceSet2 ";
 
                 string sql = "select ResourceId,Value,LocaleId,ResourceSet,Type,TextFile,BinFile,FileName,Comment,ValueType,Updated " +
                              "from " + Configuration.ResourceTableName + " " +
