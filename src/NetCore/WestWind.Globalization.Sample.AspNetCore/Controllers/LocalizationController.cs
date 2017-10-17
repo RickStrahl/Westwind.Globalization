@@ -84,6 +84,13 @@ namespace WestWind.Globalization.Sample.AspNetCore.Controllers
             return AppResources.Resources.HelloWorld;
         }
 
+        [HttpGet]
+        [Route("Test")]
+        public ActionResult Test()
+        {
+            return View("Test","Testing");
+        }
+
         /// <summary>
         /// Sets the culture and UI culture to a specific culture. Allows overriding of currency
         /// and optionally disallows setting the UI culture.
