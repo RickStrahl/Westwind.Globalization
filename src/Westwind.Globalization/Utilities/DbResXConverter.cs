@@ -663,6 +663,8 @@ namespace Westwind.Globalization
                 relativePath = "";
 
             string[] Files = Directory.GetFiles(path, "*.resx");
+
+            var cultureIds = CultureInfo.GetCultures(CultureTypes.AllCultures).Select(c => c.IetfLanguageTag).ToArray();
          
             foreach (string CurFile in Files)
             {
@@ -670,7 +672,9 @@ namespace Westwind.Globalization
                 
                 //string[] tokens = file.Replace(".resx","").Split('.');                
                 string[] tokens = Path.GetFileName(file).Replace(".resx", "").Split('.');
-                
+
+                if (tokens.Length == 0)
+                    continue;
 
                 // ResName: admin/default.aspx or default.aspx or resources (global or assembly resources)
                 string localeId = "";
@@ -683,19 +687,32 @@ namespace Westwind.Globalization
                     resName = resName.Replace("App_GlobalResources/", "");
 
 
-                if (tokens.Length > 1)
+                if (tokens.Length == 1)
                 {
-                    string extension = tokens[1];
-                    if ("aspx|ascx|master|sitemap|".Contains(extension.ToLower() + "|") )
-                        resName += "." + extension;
+                    localeId = "";
+                    resName = tokens[0];
+                }
+                else
+                {
+                    resName = "";
+                    var lastToken = tokens[tokens.Length - 1];
+                    if (cultureIds.Any( ci=> ci.ToLower() == lastToken.ToLower()))
+                    {
+                        localeId = lastToken;
+                        
+                        for (int i = 0; i < tokens.Length - 1; i++)
+                            resName += tokens[i] + ".";
+                        resName=resName.TrimEnd('.');
+                    }
                     else
-                        localeId = extension;
+                    {
+                        localeId = "";
+                        for (int i = 0; i < tokens.Length; i++)
+                            resName += tokens[i] + ".";
+                        resName = resName.TrimEnd('.');
+                    }                    
                 }
-                if (tokens.Length > 2)
-                {
-                    localeId = tokens[2];
-                }
-
+                
                 ImportResourceFile(file, resName, localeId);
             }
 
