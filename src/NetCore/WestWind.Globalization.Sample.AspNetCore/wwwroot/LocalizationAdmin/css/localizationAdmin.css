@@ -13,6 +13,9 @@ div {
     font-size: 1.8em;
     font-weight: bold;
     color: steelblue;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 7px;
+    margin-bottom: 20px;
 }
 h2,h3,h4 {
     font-family: 'Trebuchet','Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;    

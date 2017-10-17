@@ -61,6 +61,9 @@
    <data name="EditResources" xml:space="preserve">
       <value>Ressourcen bearbeiten</value>
    </data>
+   <data name="HelloWorld" xml:space="preserve">
+      <value>Hallo Welt von ResourceTest (view localizer) und DevIntersection</value>
+   </data>
    <data name="RazorTestPage" xml:space="preserve">
       <value>Razor Test Seite</value>
    </data>
