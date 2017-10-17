@@ -1,48 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Localization;
-using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Westwind.Utilities;
 
 namespace Westwind.Globalization.AspnetCore
 {
     public class DbResHtmlLocalizerFactory : IHtmlLocalizerFactory
     {
+        private IHostingEnvironment _host;
+        private DbResourceConfiguration _config;
 
-        private DbResourceConfiguration Config;
-
-        public DbResHtmlLocalizerFactory(DbResourceConfiguration config)
+        public DbResHtmlLocalizerFactory(DbResourceConfiguration config, IHostingEnvironment env)
         {
-            Config = config;
+            _config = config;
+            _host = env;
         }
 
         public IHtmlLocalizer Create(string baseName, string location)
         {
-            if (Config.ResourceAccessMode == ResourceAccessMode.Resx)            
+            if (_config.ResourceAccessMode == ResourceAccessMode.Resx)
                 baseName = location + "." + baseName;
-            
-            return new DbResHtmlLocalizer(Config) { ResourceSet = baseName };
+
+            return new DbResHtmlLocalizer(_config) { ResourceSet = baseName };
         }
+
 
         public IHtmlLocalizer Create(Type resourceSource)
         {
-            var appAssembly = Assembly.GetEntryAssembly();
-            string appNameSpace = appAssembly.GetName().Name;
+            string appNameSpace = _host.ApplicationName;
             string baseName = resourceSource.FullName;
 
-            if (Config.ResourceAccessMode == ResourceAccessMode.DbResourceManager)
-            {
-                if (baseName.StartsWith(appNameSpace))
-                    baseName = baseName.Substring(appNameSpace.Length + 1);
-            }
+            // strip off project prefix - we just use the relative path
+            if (baseName.StartsWith(appNameSpace))
+                baseName = baseName.Substring(appNameSpace.Length + 1);
 
             return Create(baseName, appNameSpace);
         }
 
-      
+
     }
 }

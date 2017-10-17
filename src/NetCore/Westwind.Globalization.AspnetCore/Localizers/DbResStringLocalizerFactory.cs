@@ -1,46 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Westwind.Utilities;
 
 namespace Westwind.Globalization.AspnetCore
 {
     public class DbResStringLocalizerFactory : IStringLocalizerFactory
     {
-        private DbResourceConfiguration Config;
+        private DbResourceConfiguration _config;
+        private IHostingEnvironment _host;
 
-        public DbResStringLocalizerFactory(DbResourceConfiguration config)            
+        public DbResStringLocalizerFactory(DbResourceConfiguration config, IHostingEnvironment host)            
         {
-            Config = config;
+            _config = config;
+            _host = host;
         }
+        
 
         public IStringLocalizer Create(string baseName, string location)
         {
-            if (Config.ResourceAccessMode == ResourceAccessMode.Resx)
-                baseName = location + "." + baseName;
+            // strip off application base (location) if it's provided
+            if (baseName.StartsWith(_host.ApplicationName))
+                baseName = baseName.Substring(_host.ApplicationName.Length + 1);
 
-            return new DbResStringLocalizer(Config) { ResourceSet = baseName };
+            return new DbResStringLocalizer(_config) { ResourceSet = baseName };
         }
 
         public IStringLocalizer Create(Type resourceSource)
-        {
-            var appAssembly = Assembly.GetEntryAssembly();
-            string appNameSpace = appAssembly.GetName().Name;
+        {                        
             string baseName = resourceSource.FullName;
 
-
-            // strip off project prefix
-            if (Config.ResourceAccessMode == ResourceAccessMode.DbResourceManager)
-            {
-                if (baseName.StartsWith(appNameSpace))
-                    baseName = baseName.Substring(appNameSpace.Length + 1);
-            }       
-
-            return Create(baseName, null);
+            // strip off project prefix - we just use the relative path
+            if (baseName.StartsWith(_host.ApplicationName))
+                    baseName = baseName.Substring(_host.ApplicationName.Length + 1);
+                  
+            return Create(baseName, _host.ApplicationName);
         }        
     }
 }

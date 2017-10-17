@@ -126,7 +126,6 @@ namespace Westwind.Globalization.AspnetCore
 
             builder.Replace('/', '.').Replace('\\', '.');
 
-
             // Prepend the application name
             //builder.Insert(0, '.');
             //builder.Insert(0, _applicationName);
