@@ -22,19 +22,23 @@ namespace Westwind.Globalization.AspNetCore
         public static IServiceCollection AddWestwindGlobalization(this IServiceCollection services,
             Action<DbResourceConfiguration> setOptionsAction = null)
         {
-            // we allow configuration via AppSettings so make sure that's loaded
-            services.AddOptions();
-
             // initialize the static instance from DbResourceConfiguration.json if it exists 
             // But you can override with a new customized instance if desired
             DbResourceConfiguration.Current.Initialize();
             var config = DbResourceConfiguration.Current;
 
+            // we allow configuration via AppSettings so make sure that's loaded
+            services.AddOptions();
+
             var provider = services.BuildServiceProvider();
             var serviceConfiguration = provider.GetService<IConfiguration>();
 
+            var section = serviceConfiguration.GetSection("DbResourceConfiguration");
             // read settings from DbResourceConfiguration in Appsettings.json
-            services.Configure<DbResourceConfiguration>(serviceConfiguration.GetSection("DbResourceConfiguration"));           
+            services.Configure<DbResourceConfiguration>(section);
+
+            // HAVE TO rebuild or else the added config isn't available
+            provider = services.BuildServiceProvider();
             var configData = provider.GetRequiredService<IOptions<DbResourceConfiguration>>();
             if (configData != null && configData.Value != null && !configData.Value.ConnectionString.StartsWith("***"))
             {
