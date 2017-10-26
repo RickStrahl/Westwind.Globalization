@@ -20,6 +20,13 @@ To set up the Localization Admin UI is a two step process:
 * Download [LocalizationAdministration_AspNetCore.zip](https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)
 * Unzip the package into the **root folder** of your ASP.NET Core MVC application
 * Recompile your project
+* Setup your Configuration  
+Set the `ConnectionString` and `ResourceTableName` to an existing database and a tablename that you want to create, either in `DbResourceConfiguration.json` or `appsettings.json` (see docs)
+* Open the Admin Page at `localizationAdmin/`
+* Click on **Create Table**
+* You should see some sample resources in the admin interface
+* Click **Import
+
 
 ### What the Zip File Contains
 The zip file provides the Administration UI client side assests and .NET Resources required to run the Admin form.

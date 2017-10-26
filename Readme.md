@@ -1,17 +1,27 @@
 # West Wind Globalization
 ### Database Resource Localization for .NET
 
-This library and tooling provides easy to use database resource managers and providers that allow you to use a database for storing localization resources. Unlike static Resx resources, database resources are dynamic and can be changed at runtime and are editable by multiple users at the same time. The custom resource managers and providers use the standard .NET resource infrastructure, so other than startup configuration there are no code changes when switching from using traditional Resx resources - and you can always switch back just as easily. 
+This library and tooling provides easy to use database resource managers and providers that allow you to use a database for storing localization resources. Unlike static Resx resources, database resources are dynamic, can be changed at runtime and are editable by multiple users at the same time. The custom resource managers, providers and ASP.NET Core StringLocalizer  use the standard .NET resource infrastructure, so other than startup configuration there are no code changes when switching from using traditional Resx resources. 
+
+It's also possible to import resources into a database, edit them dynamically, and then export them back out into Resx and optionally strongly typed classes so your deployed applications can run with Resx resources, while you use dynamic Database resources during development.
 
 A rich, Web based resource editor is also provided that makes it easy to create resource content and translate it interactively in a running application where you can see resource changes immediately applied without recompilation. You can import and export Resx resources, generate strongly typed classes and serve resources to JavaScript applications using the database resources. 
+![Web Resource Editor](WebResourceLocalizationForm.png)
+
+### Quick Links
+
+* [Nuget Packages](#nuget)
+* [Features](#features)
+* [Installation and Configuration for .NET Core](#installation-netcore)
+* [Installation and Configuration for .NET 4.5+](#installation-fullframework)
+* [Using Resources in your Application](#resource-usage)
+* [The Web Resource Editor](#web-resource-editor)
 
 ### Requirements:
-* .NET Core 2.0
-* .NET 4.5 or later
-* SQL Server 2008-2014, SQL Server Express, SQL Compact 4, MySql, SqLite
+* .NET Core 2.0 or .NET 4.5 or later
+* SQL Server 2008-2016, SQL Server Express, SQL Compact 4, MySql, SqLite
 
 ### .NET Version Support
-
 Version 3.0 adds support for the 2.0 versions of .NET Standard, .NET Core and ASP.NET Core. The following versions are provided:
 
 * Westwind.Globalization <small>*(net45 and netstandard2.0)*</small>
@@ -23,11 +33,12 @@ Version 3.0 adds support for the 2.0 versions of .NET Standard, .NET Core and AS
 > Version 3.0 is Pre-Release
 > Version 3.0 is currently in pre-release and the documentation is still under construction. Bear with us.
 
+<a name="nuget"></a>
 ### Installation
-Installation is different depending on which version of .NET you are running under. .NET Core and Full Framework use different project types and NuGet Packages for the Web support.
+Installation is different depending on which version of .NET you are running under. **.NET Core** and **Full Framework** use different project types and NuGet Packages for the Web support.
 
 > #### Limited non-Windows Support for Admin Features
-> The admin features of this package have not been fully ported to non-Windows platforms. Specifically, any of the RESX and Import Export features will not work on non-windows platforms currently. However database access and resource editing should work ell.
+> The admin features of this package have not been fully ported to non-Windows platforms. Specifically, any of the RESX and Import Export features will not work on non-windows platforms currently. However runtime database access is fully functional.
 
 For installation use NuGet.
 
@@ -45,8 +56,8 @@ PM> Install-Package Westwind.Globalization
 
 If you want to use the Administration Web UI, you have to download and add the HTML components to your application. Download from:
 
-* [Localization Admin  Html Assets](https://github.com/RickStrahl/Westwind.Globalization/blob/Master/LocalizationAdminHtml/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)
-* [Documentation for installing Localization Admin Files](DownloadableAssets/Readme.md)
+* [Localization Admin  Html Assets](https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)
+* [Documentation for installing Localization Admin Files](https://github.com/RickStrahl/Westwind.Globalization/tree/master/DownloadableAssets)
 
 #### To Install on .NET Framework
 Please read the Installation Section below or watch the [Getting Started Video](https://youtu.be/ABR7ISppB1k), which describes how to install the packages, configure the project, import existing re
@@ -76,8 +87,10 @@ PM> Install-Package Westwind.Globalization
 * [License](#license)
 
 
+<a name="Features"></a>
 ### Features
 * .NET Resources in Sql Server, SqlCe, MySql and SqLite   
+* Injectable .NET Core StringLocalizers (ASP.NET Core)
 * ASP.NET Database ResourceProviders (ASP.NET/WebForms) 
 * .NET  ResourceManager (ASP.NET MVC,non-Web apps)
 * Uses standard .NET Resource infrastructure and caching
@@ -101,6 +114,7 @@ Because this library uses the standard .NET resource infrastructure using the Db
 > Resource Managers, so database access and usage is minimal. You can use these 
 > Providers/Manager in MVC, WebForms and even in non Web applications.
 
+<a name="web-resource-editor"></a>
 ### Web Resource Editor
 One of the main reasons people want to use Database resources rather
 than Resx resources is that it allows for dynamic updates of resources. Resx
@@ -178,6 +192,7 @@ To run the sample application you have to set up a database to provide the resou
 ## Installation and Configuration
 The easiest way to use this library in your own applications is to install the NuGet package into an ASP.NET application.
 
+<a name="installation-netcore"></a>
 ### ASP.NET Core Packages
 ```
 pm> Install-Package Westwind.Globalization.AspNetCore
@@ -352,6 +367,7 @@ services.AddSingleton(typeof(IStringLocalizerFactory), typeof(DbResStringLocaliz
 > #### Use of IStringLocalizer is optional. 
 > You can use `DbRes.T()` or strongly typed resources directly if you prefer. However, for `DataAnnotation` localization `IStringLocalizer` is required in ASP.NET Core (shrug), so generally you'll want to add `DbResStringLocalizer` in `ConfigureServices()`.
 
+<a name="installation-fullframework"></a>
 ### Full Framework Configuration
 ```txt
 pm> Install-Package Westwind.Globalization.Web
@@ -365,6 +381,7 @@ pm> Install-Package Westwind.Globalization
 which doesn't install the web related components and HTML resources. 
 
 The .Web version installs the required assemblies, adds a few configuration entries in web.config and enables the resource provider by default. The Starter package adds sample resources and a couple of test pages. I recommend you use the .Starter package so you can ensure the provider is working and serving resources - once up and running you can remove the starter package, leaving the dependent assemblies in place.
+
 
 ### Full Framework Configuration
 ASP.NET Classic uses the web.config Configuration file for configuration
@@ -496,6 +513,7 @@ By default a `Resources` ResourceSet has been provided for you the resources of 
 I also recommend that you first perform an *Import Resx* step to pull any existing Resx resources from the `~/Properties/` folder (or whereever) into your project. This will also import the Localization form's resources into your database so that the localization form properly localizes when running with the DbResource Provider.
 
 
+<a name="resource-usage"></a>
 ## Using Resources in your Application
 There are a number of different ways to access resources from this provider.
 
