@@ -52,7 +52,7 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 opt.ResourceAccessMode = ResourceAccessMode.DbResourceManager;  // ResourceAccessMode.Resx
 
                 opt.ConnectionString = "server=.;database=localizations;integrated security=true;";
-                opt.ResourceTableName = "localizations_DEVINTERSECTION10";
+                opt.ResourceTableName = "localizations";
                 opt.AddMissingResources = false;
                 opt.ResxBaseFolder = "~/Properties/";
 
