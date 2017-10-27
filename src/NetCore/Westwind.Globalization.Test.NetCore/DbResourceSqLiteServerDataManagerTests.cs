@@ -13,6 +13,7 @@ namespace Westwind.Globalization.Test
 
         private IDbResourceDataManager GetManager()
         {
+            var instance = Microsoft.Data.Sqlite.SqliteFactory.Instance;
             var manager = new DbResourceSqLiteDataManager();
             manager.Configuration.ConnectionString = "SqLiteLocalizations";
             //manager.Configuration.ResourceTableName = "Localizations";
@@ -25,6 +26,8 @@ namespace Westwind.Globalization.Test
         [Test]
         public void CreateTable()
         {
+
+
             var manager = GetManager();
 
             bool result = manager.CreateLocalizationTable();

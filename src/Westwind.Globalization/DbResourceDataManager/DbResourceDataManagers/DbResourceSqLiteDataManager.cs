@@ -1,7 +1,9 @@
-
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using Westwind.Globalization.Properties;
+using Westwind.Utilities;
+using Westwind.Utilities.Data;
 
 namespace Westwind.Globalization
 {
@@ -57,7 +59,7 @@ namespace Westwind.Globalization
             using (var data = GetDb())
             {
                 var tables = data.ExecuteTable("TTables", sql, tableName);
-
+                
                 if (tables == null || tables.Rows.Count < 1)
                 {
                     SetError(data.ErrorMessage);
@@ -66,6 +68,23 @@ namespace Westwind.Globalization
             }
 
             return true;            
+        }
+
+        /// <summary>
+        /// Creates an instance of the DataAccess Data provider
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
+        public override DataAccessBase GetDb(string connectionString = null)
+        {
+            if (connectionString == null)
+                connectionString = Configuration.ConnectionString;
+
+            var provider = ReflectionUtils.GetStaticProperty("Microsoft.Data.Sqlite.SqliteFactory", "Instance");
+            if (provider == null)
+                throw new System.ArgumentException("Unable to load SqLite Data Provider. Make sure you have a reference to Microsoft.Data.Sqlite and you've referenced a type out of this assembly during application startup.");
+
+            return new SqlDataAccess(connectionString, provider as DbProviderFactory);
         }
 
         public override bool CreateLocalizationTable(string tableName = null)
@@ -108,7 +127,7 @@ namespace Westwind.Globalization
             {
                 return
                     @"CREATE TABLE [{0}] (
- [Pk] INTEGER PRIMARY KEY AUTOINCREMENT 
+ [Pk] INTEGER PRIMARY KEY 
 , [ResourceId] nvarchar(1024) COLLATE NOCASE NOT NULL
 , [Value] ntext  NULL
 , [LocaleId] nvarchar(10) COLLATE NOCASE DEFAULT '' NULL
