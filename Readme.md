@@ -777,7 +777,9 @@ DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqL
 ###### Connection String Example:
 
 ```xml
-<add name="SqLiteLocalizations" connectionString="Data Source=|DataDirectory|\SqLiteLocalizations.db;Version=3" providerName="System.Data.SQLite" />
+<add name="SqLiteLocalizations"
+     connectionString="Data Source=|DataDirectory|\SqLiteLocalizations.db;Version=3"
+     providerName="System.Data.SQLite" />
 ```
 
 ### Global Data Manager Configuration
