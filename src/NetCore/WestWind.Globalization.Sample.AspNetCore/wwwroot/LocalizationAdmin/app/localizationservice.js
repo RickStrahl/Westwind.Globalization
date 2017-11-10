@@ -33,6 +33,7 @@
             renameResourceSet: renameResourceSet,
             reloadResources: reloadResources,
             isRtl: isRtl,
+            fromCamelCase: fromCamelCase,
             backup: backup,
             createTable: createTable,
             createClass: createClass,
@@ -61,6 +62,10 @@
 
         function isLocalizationTable() {
             return $http.get(service.baseUrl + "IsLocalizationTable");
+        }
+
+        function fromCamelCase(camelCaseText) {                    
+            return $http.post(service.baseUrl + "FromCamelCase", '"' + camelCaseText + '"');
         }
 
         function getAllLocaleIds(resourceSet) {

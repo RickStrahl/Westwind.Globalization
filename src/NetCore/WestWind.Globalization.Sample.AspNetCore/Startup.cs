@@ -51,7 +51,13 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 // Resource Mode - Resx or DbResourceManager                
                 opt.ResourceAccessMode = ResourceAccessMode.DbResourceManager;  // ResourceAccessMode.Resx
 
+                // Sql Server
                 opt.ConnectionString = "server=.;database=localizations;integrated security=true;";
+
+                // SqLite
+                //opt.ConnectionString = "Data Source=./Data/SqLiteLocalizations.db";
+                //opt.DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);                
+                
                 opt.ResourceTableName = "localizations";
                 opt.AddMissingResources = false;
                 opt.ResxBaseFolder = "~/Properties/";

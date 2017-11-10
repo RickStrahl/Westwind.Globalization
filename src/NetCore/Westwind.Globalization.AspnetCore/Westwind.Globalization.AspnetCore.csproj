@@ -37,6 +37,7 @@ This library is required for using Westwind.Globalization in most ASP.NET Web Pr
   
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Localization" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.RazorPages" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
@@ -45,12 +46,6 @@ This library is required for using Westwind.Globalization in most ASP.NET Web Pr
   
   <ItemGroup>
     <ProjectReference Include="..\..\Westwind.Globalization\Westwind.Globalization.csproj" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Reference Include="Microsoft.AspNetCore.Mvc.RazorPages">
-      <HintPath>..\..\..\..\..\..\Users\rstrahl\.nuget\packages\microsoft.aspnetcore.mvc.razorpages\2.0.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.RazorPages.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>

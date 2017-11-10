@@ -36,7 +36,7 @@ If you want to use ASP.NET ResourceProviders, JavaScript resources from .NET Res
 
   <ItemGroup>    
     <PackageReference Include="CommonMark.NET" Version="0.15.1" />    
-    <PackageReference Include="Westwind.Utilities" Version="3.0.2" />
+    <PackageReference Include="Westwind.Utilities" Version="3.0.3" />
   </ItemGroup>
 
   <ItemGroup> 

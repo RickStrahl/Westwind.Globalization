@@ -745,6 +745,17 @@ namespace Westwind.Globalization.Administration
         }
 
         /// <summary>
+        /// Small helper that turns a camel case string into
+        /// space separated string.
+        /// </summary>
+        /// <param name="camelCaseString"></param>
+        /// <returns></returns>
+        [Route("FromCamelCase")]
+        public string FromCamelCase([FromBody] string camelCaseString)
+        {
+            return StringUtils.FromCamelCase(camelCaseString);
+        }
+        /// <summary>
         /// Returns configuration information so the UI can display this info on the configuration
         /// page.
         /// </summary>

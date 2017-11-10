@@ -10,7 +10,7 @@
 
     listController.$inject = ['$scope', '$timeout', '$upload', 'localizationService'];
 
-    function listController($scope, $timeout, $upload, localizationService) {
+    function listController($scope, $timeout, $upload,  localizationService) {
         console.log('list controller');
 
         var vm = this;
@@ -246,8 +246,15 @@
         });
 
         vm.onResourceIdBlur = function() {
-                if (!vm.activeResource.Value)
-                    vm.activeResource.Value = vm.activeResource.ResourceId;
+            if (!vm.activeResource.Value) {                
+                localizationService.fromCamelCase(vm.activeResource.ResourceId)
+                    .success(function(text) {
+                        vm.activeResource.Value = text;
+                    })
+                    .error(function() {
+                        vm.activeResource.Value = vm.activeResource.ResourceId;
+                    });                
+            }
 
             },
             vm.onLocaleIdBlur = function(localeId) {

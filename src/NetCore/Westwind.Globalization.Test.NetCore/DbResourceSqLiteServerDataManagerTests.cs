@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using NUnit.Framework;
-using Westwind.Utilities.Data;
+
 
 
 
@@ -25,8 +25,8 @@ namespace Westwind.Globalization.Test
         public DbResourceSqLiteDataManagerTests()
         {
 
-            if (File.Exists("./Data/SqLiteLocalizations.db"))
-                File.Delete("./Data/SqLiteLocalizations.db");
+            //if (File.Exists("./Data/SqLiteLocalizations.db"))
+            //    File.Delete("./Data/SqLiteLocalizations.db");
 
             CreateTable();
         }

@@ -162,10 +162,10 @@ namespace Westwind.Globalization
                 DbDataReader reader;
 
                 if (string.IsNullOrEmpty(cultureName))
-                    reader = data.ExecuteReader("select ResourceId,Value,Type,BinFile,TextFile,FileName,ValueType from " + Configuration.ResourceTableName + " where " + resourceFilter + " and (LocaleId is null OR LocaleId = '') order by ResourceId",
+                    reader = data.ExecuteReader("select ResourceId,Value,Type,BinFile,TextFile,Filename,ValueType from " + Configuration.ResourceTableName + " where " + resourceFilter + " and (LocaleId is null OR LocaleId = '') order by ResourceId",
                         data.CreateParameter("@ResourceSet", resourceSet));
                 else
-                    reader = data.ExecuteReader("select ResourceId,Value,Type,BinFile,TextFile,FileName,ValueType from " + Configuration.ResourceTableName + " where " + resourceFilter + " and LocaleId=@LocaleId order by ResourceId",
+                    reader = data.ExecuteReader("select ResourceId,Value,Type,BinFile,TextFile,Filename,ValueType from " + Configuration.ResourceTableName + " where " + resourceFilter + " and LocaleId=@LocaleId order by ResourceId",
                         data.CreateParameter("@ResourceSet", resourceSet),
                         data.CreateParameter("@LocaleId", cultureName));
 
@@ -478,7 +478,7 @@ namespace Westwind.Globalization
                 if (!string.IsNullOrEmpty(resourceSet))
                     resourceSetFilter = " AND resourceset = @ResourceSet2 ";
 
-                string sql = "select ResourceId,Value,LocaleId,ResourceSet,Type,TextFile,BinFile,FileName,Comment,ValueType,Updated " +
+                string sql = "select ResourceId,Value,LocaleId,ResourceSet,Type,TextFile,BinFile,Filename,Comment,ValueType,Updated " +
                              "from " + Configuration.ResourceTableName + " " +
                              "where ResourceSet Is Not Null " +
                              
@@ -1092,7 +1092,7 @@ namespace Westwind.Globalization
                 DbParameter TextFileParm = data.CreateParameter("@TextFile", resource.TextFile);
 
                 string Sql = "insert into " + Configuration.ResourceTableName +
-                             " (ResourceId,Value,LocaleId,Type,Resourceset,BinFile,TextFile,Filename,Comment,ValueType,Updated) Values (@ResourceID,@Value,@LocaleId,@Type,@ResourceSet,@BinFile,@TextFile,@FileName,@Comment,@ValueType,@Updated)";
+                             " (ResourceId,Value,LocaleId,Type,ResourceSet,BinFile,TextFile,Filename,Comment,ValueType,Updated) Values (@ResourceId,@Value,@LocaleId,@Type,@ResourceSet,@BinFile,@TextFile,@FileName,@Comment,@ValueType,@Updated)";
                 if (data.ExecuteNonQuery(Sql,
                     data.CreateParameter("@ResourceId", resource.ResourceId),
                     data.CreateParameter("@Value", resource.Value),
@@ -1313,7 +1313,7 @@ namespace Westwind.Globalization
                 var textFileParm = data.CreateParameter("@TextFile", TextFile);
 
                 string sql = "update " + Configuration.ResourceTableName +
-                             " set Value=@Value, Type=@Type, BinFile=@BinFile,TextFile=@TextFile,FileName=@FileName, Comment=@Comment, ValueType=@ValueType, updated=@Updated " +
+                             " set Value=@Value, Type=@Type, BinFile=@BinFile,TextFile=@TextFile,Filename=@FileName, Comment=@Comment, ValueType=@ValueType, Updated=@Updated " +
                              "where LocaleId=@LocaleId AND ResourceSet=@ResourceSet and ResourceId=@ResourceId";
                 result = data.ExecuteNonQuery(sql,
                     data.CreateParameter("@ResourceId", resourceId),
@@ -1396,7 +1396,7 @@ namespace Westwind.Globalization
                 var textFileParm = data.CreateParameter("@TextFile", resource.TextFile);
 
                 string sql = "update " + Configuration.ResourceTableName +
-                             " set Value=@Value, Type=@Type, BinFile=@BinFile,TextFile=@TextFile,FileName=@FileName, Comment=@Comment, ValueType=@ValueType, updated=@Updated " +
+                             " set Value=@Value, Type=@Type, BinFile=@BinFile,TextFile=@TextFile,Filename=@FileName, Comment=@Comment, ValueType=@ValueType, Updated=@Updated " +
                              "where LocaleId=@LocaleId AND ResourceSet=@ResourceSet and ResourceId=@ResourceId";
                 result = data.ExecuteNonQuery(sql,
                     data.CreateParameter("@ResourceId", resource.ResourceId),
