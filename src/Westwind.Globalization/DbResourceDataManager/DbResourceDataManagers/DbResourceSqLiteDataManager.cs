@@ -84,7 +84,12 @@ namespace Westwind.Globalization
             if (provider == null)
                 throw new System.ArgumentException("Unable to load SqLite Data Provider. Make sure you have a reference to Microsoft.Data.Sqlite (.NET Core) or System.Data.SQLite (.NET 4.5) and you've referenced a type out of this assembly during application startup.");
 
-            return new SqlDataAccess(connectionString, provider);
+            var db = new SqlDataAccess(connectionString, provider);
+            
+            db?.ExecuteNonQuery("PRAGMA journal_mode=WAL;");
+
+            return db;
+
         }
 
         public override bool CreateLocalizationTable(string tableName = null)
