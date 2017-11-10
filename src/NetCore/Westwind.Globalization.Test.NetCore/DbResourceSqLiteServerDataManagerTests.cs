@@ -1,35 +1,41 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using NUnit.Framework;
 using Westwind.Utilities.Data;
+
 
 
 namespace Westwind.Globalization.Test
 {
     [TestFixture]
-    public class DbResourceSqLiteDataManagerTests
+    public class DbResourceSqLiteDataManagerTests 
     {
-
+        
         private IDbResourceDataManager GetManager()
         {
-            var instance = Microsoft.Data.Sqlite.SqliteFactory.Instance;
             var manager = new DbResourceSqLiteDataManager();
-            manager.Configuration.ConnectionString = "SqLiteLocalizations";
+            manager.Configuration.ConnectionString = "Data Source=./data/SqLiteLocalizations.db";
             //manager.Configuration.ResourceTableName = "Localizations";
             return manager;
         }
 
+        public DbResourceSqLiteDataManagerTests()
+        {
 
-  
+            if (File.Exists("./Data/SqLiteLocalizations.db"))
+                File.Delete("./Data/SqLiteLocalizations.db");
+
+            CreateTable();
+        }
 
         [Test]
         public void CreateTable()
         {
-
-
             var manager = GetManager();
-
+            
             bool result = manager.CreateLocalizationTable();
 
             // no assertions as table can exist - to test explicitly remove the table
@@ -43,7 +49,7 @@ namespace Westwind.Globalization.Test
         [Test]
         public void IsLocalizationTable()
         {
-            var manager = GetManager();
+            var manager = GetManager();            
             Assert.IsTrue(manager.IsLocalizationTable("Localizations"), manager.ErrorMessage);
         }
 
@@ -105,7 +111,7 @@ namespace Westwind.Globalization.Test
 
             foreach (var item in items)
             {
-                Console.WriteLine(item.Value + ": " + item.Text + " " + (item.Selected ? "* " : "") );
+                Console.WriteLine(item.ResourceId + ": " + item.Text + " " + (item.Selected ? "* " : "") );
             }
         }
         
@@ -182,6 +188,7 @@ namespace Westwind.Globalization.Test
 
             Assert.IsNotNull(item);
             Assert.IsTrue(item == "Heute");
+            Console.WriteLine(item);
         }
 
         [Test]

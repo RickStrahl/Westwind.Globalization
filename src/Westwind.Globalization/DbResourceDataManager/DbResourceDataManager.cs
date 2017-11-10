@@ -480,7 +480,7 @@ namespace Westwind.Globalization
 
                 string sql = "select ResourceId,Value,LocaleId,ResourceSet,Type,TextFile,BinFile,FileName,Comment,ValueType,Updated " +
                              "from " + Configuration.ResourceTableName + " " +
-                             "where IsNull(ResourceSet,'') != '' " +
+                             "where ResourceSet Is Not Null " +
                              
 //#if NETFULL  // allow for local resource filtering
 //                             " AND ResourceSet " + 
@@ -696,7 +696,7 @@ namespace Westwind.Globalization
             if (cultureName == null)
                 cultureName = string.Empty;
 
-            using (var data = new SqlDataAccess(Configuration.ConnectionString))
+            using (var data = GetDb())
             {
                 var reader = 
                     data.ExecuteReader(
@@ -1194,7 +1194,8 @@ namespace Westwind.Globalization
                 DbParameter TextFileParm = data.CreateParameter("@TextFile", TextFile);
 
                 string Sql = "insert into " + Configuration.ResourceTableName +
-                             " (ResourceId,Value,LocaleId,Type,Resourceset,BinFile,TextFile,Filename,Comment,ValueType,Updated) Values (@ResourceID,@Value,@LocaleId,@Type,@ResourceSet,@BinFile,@TextFile,@FileName,@Comment,@ValueType,@Updated)";
+                             " (ResourceId,Value,LocaleId,Type,ResourceSet,BinFile,TextFile,Filename,Comment,ValueType,Updated) " +
+                             "Values (@ResourceId,@Value,@LocaleId,@Type,@ResourceSet,@BinFile,@TextFile,@Filename,@Comment,@ValueType,@Updated)";
                 if (data.ExecuteNonQuery(Sql,
                     data.CreateParameter("@ResourceId", resourceId),
                     data.CreateParameter("@Value", value),
@@ -1202,7 +1203,7 @@ namespace Westwind.Globalization
                     data.CreateParameter("@Type", Type),
                     data.CreateParameter("@ResourceSet", resourceSet),
                     BinFileParm, TextFileParm,
-                    data.CreateParameter("@FileName", FileName),
+                    data.CreateParameter("@Filename", FileName),
                     data.CreateParameter("@Comment", comment),
                     data.CreateParameter("@ValueType",valueType),
                     data.CreateParameter("@Updated", DateTime.UtcNow)) == -1)
@@ -1830,13 +1831,13 @@ namespace Westwind.Globalization
         
             using (var data = GetDb())
             {
-                var tables = data.ExecuteTable("TTables",sql, tableName);
+                var tables = data.ExecuteTable("TTables", sql, tableName);
 
                 if (tables == null || tables.Rows.Count < 1)
                 {
                     SetError(data.ErrorMessage);
                     return false;
-                }             
+                }
             }
 
             return true;
@@ -2020,12 +2021,16 @@ namespace Westwind.Globalization
 
     /// <summary>
     /// Short form ResourceItem for passing Ids
-    /// </summary>
+    /// </summary>    
     public class ResourceIdItem
     {
         public string ResourceId { get; set; }
         public bool HasValue { get; set; }
-        public object Value { get; set; }        
+        public object Value { get; set; }
+        public override string ToString()
+        {
+            return ResourceId + " - " + Value;
+        }
     }
 
     public class BasicResourceItem

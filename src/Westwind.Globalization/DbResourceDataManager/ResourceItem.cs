@@ -188,7 +188,7 @@ namespace Westwind.Globalization
             ResourceSet = reader["ResourceSet"] as string;
             LocaleId = reader["LocaleId"] as string;
             Type = reader["Type"] as string;
-            FileName = reader["FileName"] as string;
+            FileName = reader["Filename"] as string;
             TextFile = reader["TextFile"] as string;
             BinFile = reader["BinFile"] as byte[];
             Comment = reader["Comment"] as string;

@@ -58,9 +58,9 @@ namespace Westwind.Globalization
 
             using (var data = GetDb())
             {
-                var tables = data.ExecuteTable("TTables", sql, tableName);
+                var reader = data.ExecuteReader(sql, tableName);
                 
-                if (tables == null || tables.Rows.Count < 1)
+                if (reader == null || !reader.HasRows)
                 {
                     SetError(data.ErrorMessage);
                     return false;
@@ -80,11 +80,11 @@ namespace Westwind.Globalization
             if (connectionString == null)
                 connectionString = Configuration.ConnectionString;
 
-            var provider = ReflectionUtils.GetStaticProperty("Microsoft.Data.Sqlite.SqliteFactory", "Instance");
+            var provider = DataUtils.GetSqlProviderFactory(DataAccessProviderTypes.SqLite);
             if (provider == null)
-                throw new System.ArgumentException("Unable to load SqLite Data Provider. Make sure you have a reference to Microsoft.Data.Sqlite and you've referenced a type out of this assembly during application startup.");
+                throw new System.ArgumentException("Unable to load SqLite Data Provider. Make sure you have a reference to Microsoft.Data.Sqlite (.NET Core) or System.Data.SQLite (.NET 4.5) and you've referenced a type out of this assembly during application startup.");
 
-            return new SqlDataAccess(connectionString, provider as DbProviderFactory);
+            return new SqlDataAccess(connectionString, provider);
         }
 
         public override bool CreateLocalizationTable(string tableName = null)
@@ -117,9 +117,6 @@ namespace Westwind.Globalization
 
             return true;
         }
-
-
-    
         
         protected override string TableCreationSql
         {
@@ -141,24 +138,23 @@ namespace Westwind.Globalization
 , [Updated] datetime NULL
 );
 
-INSERT INTO [Localizations] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Hello Cruel World (SqlLite)','','Resources');
-INSERT INTO [Localizations] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Hallo schnöde Welt (SqlLite)','de','Resources');
-INSERT INTO [Localizations] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Bonjour tout le monde (SqlLite)','fr','Resources');
-INSERT INTO [Localizations] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Yesterday','Yesterday (invariant)','','Resources');
-INSERT INTO [Localizations] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Yesterday','Gestern','de','Resources');
-INSERT INTO [Localizations] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Yesterday','Hier','fr','Resources');
-INSERT INTO [Localizations] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Today','Today (invariant)','','Resources');
-INSERT INTO [Localizations] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Today','Heute','de','Resources');
-INSERT INTO [Localizations] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Today','Aujourd''hui','fr','Resources');
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Hello Cruel World (SqlLite)','','Resources');
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Hallo schnöde Welt (SqlLite)','de','Resources');
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Bonjour tout le monde (SqlLite)','fr','Resources');
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Yesterday','Yesterday (invariant)','','Resources');
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Yesterday','Gestern','de','Resources');
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Yesterday','Hier','fr','Resources');
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Today','Today (invariant)','','Resources');
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Today','Heute','de','Resources');
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Today','Aujourd''hui','fr','Resources');
 
-INSERT INTO [Localizations] (ResourceId,Value,LocaleId,ResourceSet,ValueType) VALUES ('MarkdownText','This is **MarkDown** formatted *HTML Text*','','Resources',2);
-INSERT INTO [Localizations] (ResourceId,Value,LocaleId,ResourceSet,ValueType) VALUES ('MarkdownText','Hier ist **MarkDown** formatierter *HTML Text*','de','Resources',2);
-INSERT INTO [Localizations] (ResourceId,Value,LocaleId,ResourceSet,ValueType) VALUES ('MarkdownText','Ceci est **MarkDown** formaté *HTML Texte*','fr','Resources',2);
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet,ValueType) VALUES ('MarkdownText','This is **MarkDown** formatted *HTML Text*','','Resources',2);
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet,ValueType) VALUES ('MarkdownText','Hier ist **MarkDown** formatierter *HTML Text*','de','Resources',2);
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet,ValueType) VALUES ('MarkdownText','Ceci est **MarkDown** formaté *HTML Texte*','fr','Resources',2);
 
-INSERT INTO [Localizations] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('lblHelloWorldLabel.Text','Hello Cruel World (local)','','ResourceTest.aspx');
-INSERT INTO [Localizations] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('lblHelloWorldLabel.Text','Hallo Welt (lokal)','de','ResourceTest.aspx');
-INSERT INTO [Localizations] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('lblHelloWorldLabel.Text','Bonjour monde (local)','fr','ResourceTest.aspx');
-
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('lblHelloWorldLabel.Text','Hello Cruel World (local)','','ResourceTest.aspx');
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('lblHelloWorldLabel.Text','Hallo Welt (lokal)','de','ResourceTest.aspx');
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('lblHelloWorldLabel.Text','Bonjour monde (local)','fr','ResourceTest.aspx');
 ";
             }
 
