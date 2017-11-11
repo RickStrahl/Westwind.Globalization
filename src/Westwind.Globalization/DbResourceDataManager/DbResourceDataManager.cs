@@ -135,7 +135,7 @@ namespace Westwind.Globalization
             if (connectionString == null)
                 connectionString = Configuration.ConnectionString;
 
-            return new SqlDataAccess(connectionString);
+            return new SqlDataAccess(connectionString,DataAccessProviderTypes.MySql);
         }
 
         /// <summary>
@@ -497,6 +497,8 @@ namespace Westwind.Globalization
 
                 items = data.Query<ResourceItem>(sql, parms.ToArray());
 
+
+                
                 if (items == null)
                 {
                     ErrorMessage = data.ErrorMessage;

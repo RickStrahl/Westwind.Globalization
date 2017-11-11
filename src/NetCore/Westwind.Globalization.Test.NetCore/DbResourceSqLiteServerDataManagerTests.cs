@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using NUnit.Framework;
-
-
+using Westwind.Utilities;
+using Westwind.Utilities.Data;
 
 
 namespace Westwind.Globalization.Test
@@ -13,27 +13,39 @@ namespace Westwind.Globalization.Test
     [TestFixture]
     public class DbResourceSqLiteDataManagerTests 
     {
-        
+        string DataPath
+        {
+            get => FileUtils.NormalizePath(Path.Combine(TestContext.CurrentContext.TestDirectory,
+                "data/SqLiteLocalizations.db"));
+        }
+
         private IDbResourceDataManager GetManager()
         {
             var manager = new DbResourceSqLiteDataManager();
-            manager.Configuration.ConnectionString = "Data Source=./data/SqLiteLocalizations.db";
+           
+            manager.Configuration.ConnectionString = "Data Source=" + DataPath;
+
             //manager.Configuration.ResourceTableName = "Localizations";
             return manager;
         }
 
+
+
         public DbResourceSqLiteDataManagerTests()
         {
 
-            //if (File.Exists("./Data/SqLiteLocalizations.db"))
-            //    File.Delete("./Data/SqLiteLocalizations.db");
+            //if (File.Exists(DataPath))
+            //    File.Delete(DataPath);
 
-            CreateTable();
+           //CreateTable();
         }
 
         [Test]
         public void CreateTable()
         {
+            if (File.Exists(DataPath))
+                File.Delete(DataPath);
+
             var manager = GetManager();
             
             bool result = manager.CreateLocalizationTable();
@@ -45,6 +57,21 @@ namespace Westwind.Globalization.Test
                 Console.WriteLine(manager.ErrorMessage);
         }
 
+        [Test]
+        public void ReadData()
+        {
+            var db = new SqlDataAccess("Data Source=" + DataPath, DataAccessProviderTypes.SqLite);
+            using (var reader = db.ExecuteReader("select * from Localizations"))
+            {
+                while (reader.Read())
+                {
+                    var updated = reader["Updated"];
+                    Console.WriteLine(updated);
+                    Assert.IsTrue(updated != null, "Updated shouldn't be null");
+                    Assert.IsTrue(updated.GetType() == typeof(DateTime),"Invalid updated type: " + updated.GetType());
+                }
+            }
+        }
 
         [Test]
         public void IsLocalizationTable()
@@ -53,13 +80,15 @@ namespace Westwind.Globalization.Test
             Assert.IsTrue(manager.IsLocalizationTable("Localizations"), manager.ErrorMessage);
         }
 
+        
+
         [Test]
         public void GetAllResources()
         {
             var manager = GetManager();
 
             var items = manager.GetAllResources(false);
-            Assert.IsNotNull(items);
+            Assert.IsNotNull(items,manager.ErrorMessage);
             Assert.IsTrue(items.Count > 0);
 
             ShowResources(items);    
@@ -153,8 +182,9 @@ namespace Westwind.Globalization.Test
         {
             var manager = GetManager();
 
+            
             var items = manager.GetAllLocaleIds("Resources");
-            Assert.IsNotNull(items);
+            Assert.IsNotNull(items, manager.ErrorMessage);
             Assert.IsTrue(items.Count > 0);
 
             foreach (var localeId in items)

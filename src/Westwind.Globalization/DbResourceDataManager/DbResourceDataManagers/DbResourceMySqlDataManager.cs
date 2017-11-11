@@ -1,5 +1,7 @@
 
 using System.Collections.Generic;
+using Westwind.Utilities;
+using Westwind.Utilities.Data;
 
 namespace Westwind.Globalization
 {
@@ -100,9 +102,9 @@ namespace Westwind.Globalization
 
             using (var data = GetDb())
             {
-                var tables = data.ExecuteTable("TTables", sql, tableName);
+                var tables = data.ExecuteReader(sql, tableName);
 
-                if (tables == null || tables.Rows.Count < 1)
+                if (tables == null || !tables.HasRows)
                 {
                     SetError(data.ErrorMessage);
                     return false;
@@ -143,9 +145,28 @@ namespace Westwind.Globalization
             return true;
         }
 
+        /// <summary>
+        /// Creates an instance of the DataAccess Data provider
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
+        public override DataAccessBase GetDb(string connectionString = null)
+        {
+            if (connectionString == null)
+                connectionString = Configuration.ConnectionString;
 
-    
-        
+            var provider = DataUtils.GetSqlProviderFactory(DataAccessProviderTypes.MySql);
+            if (provider == null)
+                throw new System.ArgumentException("Unable to load MySQL Data Provider. Make sure you have a reference to MySql.Data and you've referenced a type out of this assembly during application startup.");
+
+            var db = new SqlDataAccess(connectionString, provider);
+            return db;
+
+        }
+
+
+
+
         protected override string TableCreationSql
         {
             get

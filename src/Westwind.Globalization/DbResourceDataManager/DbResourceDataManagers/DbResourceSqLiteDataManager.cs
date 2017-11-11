@@ -140,10 +140,10 @@ namespace Westwind.Globalization
 , [Filename] nvarchar(128) NULL
 , [Comment] nvarchar(512) NULL
 , [ValueType] unsigned integer(2) DEFAULT 0
-, [Updated] datetime NULL
+, [Updated] datetime  DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Hello Cruel World (SqlLite)','','Resources');
+INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Hello Cruel World (SqlLite) 1','','Resources');
 INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Hallo schnöde Welt (SqlLite)','de','Resources');
 INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Bonjour tout le monde (SqlLite)','fr','Resources');
 INSERT INTO [{0}] (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Yesterday','Yesterday (invariant)','','Resources');

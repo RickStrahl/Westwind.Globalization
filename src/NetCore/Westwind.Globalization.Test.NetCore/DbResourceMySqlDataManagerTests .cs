@@ -11,11 +11,14 @@ namespace Westwind.Globalization.Test
     [TestFixture]
     public class DbResourceMySqlDataManagerTests
     {
+        private  const string STR_ConnectionString = "server=localhost;uid=testuser;pwd=super10seekrit;database=Localizations";
 
         private Westwind.Globalization.DbResourceMySqlDataManager GetManager()
         {
             var manager = new DbResourceMySqlDataManager();
-            manager.Configuration.ConnectionString = "MySqlLocalizations";
+            manager.Configuration.ConnectionString = STR_ConnectionString;
+            
+        
             //manager.Configuration.ResourceTableName = "Localizations";
             return manager;
         }
