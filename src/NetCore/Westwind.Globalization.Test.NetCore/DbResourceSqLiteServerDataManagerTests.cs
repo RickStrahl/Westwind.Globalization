@@ -57,21 +57,23 @@ namespace Westwind.Globalization.Test
                 Console.WriteLine(manager.ErrorMessage);
         }
 
-        [Test]
-        public void ReadData()
-        {
-            var db = new SqlDataAccess("Data Source=" + DataPath, DataAccessProviderTypes.SqLite);
-            using (var reader = db.ExecuteReader("select * from Localizations"))
-            {
-                while (reader.Read())
-                {
-                    var updated = reader["Updated"];
-                    Console.WriteLine(updated);
-                    Assert.IsTrue(updated != null, "Updated shouldn't be null");
-                    Assert.IsTrue(updated.GetType() == typeof(DateTime),"Invalid updated type: " + updated.GetType());
-                }
-            }
-        }
+        // Demonstrate Microsoft.Data.SqLite returns dates as strings
+        //[Test]
+        //public void ReadData()
+        //{
+        //    var db = new SqlDataAccess("Data Source=" + DataPath, DataAccessProviderTypes.SqLite);
+        //    using (var reader = db.ExecuteReader("select * from Localizations"))
+        //    {
+        //        while (reader.Read())
+        //        {
+        //            var updated = reader["Updated"];
+        //            Console.WriteLine(updated);
+        //            Assert.IsTrue(updated != null, "Updated shouldn't be null");
+        //            Assert.IsTrue(updated.GetType() == typeof(DateTime),"Invalid updated type: " + updated.GetType());
+        //        }
+        //    }
+        //}
+        
 
         [Test]
         public void IsLocalizationTable()

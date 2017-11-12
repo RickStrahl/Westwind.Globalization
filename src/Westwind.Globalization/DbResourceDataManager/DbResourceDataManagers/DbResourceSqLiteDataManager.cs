@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Linq;
 using Westwind.Globalization.Properties;
@@ -47,6 +49,97 @@ namespace Westwind.Globalization
             }
         }
 
+        /// <summary>
+        /// Returns a list of all the resources for all locales. The result is in a 
+        /// table called TResources that contains all fields of the table. The table is
+        /// ordered by LocaleId.
+        /// 
+        /// This version returns either local or global resources in a Web app
+        /// 
+        /// Fields:
+        /// ResourceId,Value,LocaleId,ResourceSet,Type
+        /// </summary>
+        /// <param name="localResources">return local resources if true</param>        
+        /// <returns></returns>
+        public override List<ResourceItem> GetAllResources(bool localResources = false, bool applyValueConverters = false, string resourceSet = null)
+        {
+            List<ResourceItem> items;
+            using (var data = GetDb())
+            {
+
+                string resourceSetFilter = "";
+                if (!string.IsNullOrEmpty(resourceSet))
+                    resourceSetFilter = " AND resourceset = @ResourceSet2 ";
+
+                string sql = "select ResourceId,Value,LocaleId,ResourceSet,Type,TextFile,BinFile,Filename,Comment,ValueType,Updated " +
+                             "from " + Configuration.ResourceTableName + " " +
+                             "where ResourceSet Is Not Null " +
+                              resourceSetFilter +
+                             " ORDER BY ResourceSet,LocaleId, ResourceId";
+
+                //var parms = new List<IDbDataParameter> { data.CreateParameter("@ResourceSet", "%.%") };
+
+                var parms = new List<IDbDataParameter>();
+                if (!string.IsNullOrEmpty(resourceSetFilter))
+                    parms.Add(data.CreateParameter("@ResourceSet2", resourceSet));
+
+
+                using (var reader = data.ExecuteReader(sql, parms.ToArray()))
+                {
+                    if (reader == null)
+                    {
+                        SetError(data.ErrorMessage);
+                        return null;                        
+                    }
+
+                    items = new List<ResourceItem>();
+                    while (reader.Read())
+                    {
+                        var item = new ResourceItem();
+                        item.ResourceId = reader["ResourceId"] as string;
+                        item.ResourceSet = reader["ResourceSet"] as string;
+                        item.Value = reader["Value"];
+                        item.LocaleId = reader["LocaleId"] as string;
+                        item.Type = reader["Type"] as string;
+                        item.TextFile = reader["TextFile"] as string;
+                        item.BinFile = reader["BinFile"] as byte[];
+                        item.Comment = reader["Comment"] as string;
+
+                        var number = reader["ValueType"];  // int64 returned from Microsoft.Data.SqLite
+                        if (number is int)
+                            item.ValueType = (int) number;
+                        else
+                            item.ValueType = Convert.ToInt32(number);                        
+
+                        var time = reader["Updated"];     // string return from Microsoft.Data.SqLite               
+                        if (time == null)
+                            item.Updated = DateTime.MinValue;
+                        
+                        if (time is DateTime)
+                            item.Updated = (DateTime) time;
+                        else
+                            item.Updated = Convert.ToDateTime(time);
+
+                        items.Add(item);
+                    }
+                }
+                
+                if (applyValueConverters && DbResourceConfiguration.Current.ResourceSetValueConverters.Count > 0)
+                {
+                    foreach (var resourceItem in items)
+                    {
+                        foreach (var convert in DbResourceConfiguration.Current.ResourceSetValueConverters)
+                        {
+                            if (resourceItem.ValueType == convert.ValueType)
+                                resourceItem.Value = convert.Convert(resourceItem.Value, resourceItem.ResourceId);
+                        }
+                    }
+                }
+
+                return items;
+            }
+        }
+
         public override bool IsLocalizationTable(string tableName = null)
         {
             if (tableName == null)
@@ -58,8 +151,12 @@ namespace Westwind.Globalization
 
             using (var data = GetDb())
             {
-                var reader = data.ExecuteReader(sql, tableName);
                 
+                var reader = data.ExecuteReader(sql, tableName);
+
+                if (reader == null)
+                    throw new InvalidOperationException(Resources.ConnectionFailed + ": " + data.ErrorMessage);
+
                 if (reader == null || !reader.HasRows)
                 {
                     SetError(data.ErrorMessage);

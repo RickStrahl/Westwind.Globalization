@@ -481,11 +481,6 @@ namespace Westwind.Globalization
                 string sql = "select ResourceId,Value,LocaleId,ResourceSet,Type,TextFile,BinFile,Filename,Comment,ValueType,Updated " +
                              "from " + Configuration.ResourceTableName + " " +
                              "where ResourceSet Is Not Null " +
-                             
-//#if NETFULL  // allow for local resource filtering
-//                             " AND ResourceSet " + 
-//                            (!localResources ? "not" : string.Empty) + " like @ResourceSet " + 
-//#endif
                               resourceSetFilter +
                              " ORDER BY ResourceSet,LocaleId, ResourceId";
 
@@ -522,7 +517,6 @@ namespace Westwind.Globalization
                 return itemList;
             }
         }
-
 
         
         /// <summary>
