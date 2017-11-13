@@ -24,9 +24,7 @@ namespace Westwind.Globalization.Test
 
         [Test]
         public void DbResSimpleValues()
-        {
-
-
+        {            
             string val = DbRes.T("HelloWorld", "Resources", "en-US");
             Assert.AreNotEqual(val, "HelloWorld","Helloworld was not translated");
             Console.WriteLine(val);

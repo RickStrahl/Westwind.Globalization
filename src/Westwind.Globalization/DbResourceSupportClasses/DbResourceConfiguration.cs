@@ -187,12 +187,17 @@ namespace Westwind.Globalization
         /// <summary>
         /// API key for Bing Translate API in the 
         /// Administration API.
+        /// https://www.microsoft.com/en-us/translator/getstarted.aspx
         /// </summary>
         public string BingClientId { get; set; }
 
         /// <summary>
         /// Bing Secret Key for Bing Translate API Access
+        /// 
         /// </summary>
+        [Obsolete("Bing Client Secret is no longer used. Use just the BingClientId")]
+        [JsonIgnore]
+        [XmlIgnore]
         public string BingClientSecret { get; set; }
 
         /// <summary>

@@ -789,8 +789,7 @@ namespace Westwind.Globalization.Administration
                 config.ResourceBaseNamespace,
                 config.StronglyTypedGlobalResource,
                 config.GoogleApiKey,
-                config.BingClientId,
-                config.BingClientSecret,
+                config.BingClientId,                
                 config.AddMissingResources
             },jsonSettings);
         }

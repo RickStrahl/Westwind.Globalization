@@ -13,7 +13,10 @@ namespace Westwind.Globalization.Test
 
         public TranslationServiceTests()
         {            
-            BingKey = "873e008fcc7f4ed1945e0c27813c9b28";
+            //BingKey = "";
+            
+            // value from DbResourceConfiguration.json or appsettings.json
+            BingKey = DbResourceConfiguration.Current.BingClientId;
         }
 
         [Test]

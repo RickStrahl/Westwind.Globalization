@@ -9,7 +9,6 @@
   "AddMissingResources": true,
   "ActiveConfiguration": null,
   "LocalizationFormWebPath": "~/LocalizationAdmin/",
-  "BingClientId": "",
-  "BingClientSecret": "",
+  "BingClientId": "",  
   "GoogleApiKey": ""
 }

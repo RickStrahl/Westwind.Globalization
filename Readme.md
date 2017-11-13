@@ -234,9 +234,8 @@ ASP.NET Core uses a `DbResourceConfiguration.json` file for configuration:
   "ResourceBaseNamespace": "AppResources",
   "AddMissingResources": true,
   "LocalizationFormWebPath": "~/LocalizationAdmin/",
-  "BingClientId": "12345-4b99-47ed-be7e-caf733526020",
-  "BingClientSecret": "Screaming.Til.Your.Hoarse.SKTY",
-  "GoogleApiKey": "XXXfaSyDcvmGhGN7FlynP9QUZOLF8_4K8iF9ChWo"
+  "GoogleApiKey": "XXXfaSyDcvmGhGN7FlynP9QUZOLF8_4K8iF9ChWo",
+  "BingClientId": "12345-4b99-47ed-be7e-caf733526020"
 }
 ```
 If this file exists configuration values are read from it.
@@ -264,7 +263,6 @@ You can store configuration settings in `appsettings.json` like this:
     "AddMissingResources": true,
     "LocalizationFormWebPath": "~/LocalizationAdmin/",
     "BingClientId": "12345-4b99-47ed-be7e-caf733526020",
-    "BingClientSecret": "Screaming.Til.Your.Hoarse.SKTY",
     "GoogleApiKey": "XXXfaSyDcvmGhGN7FlynP9QUZOLF8_4K8iF9ChWo"
   }
 }
@@ -415,7 +413,6 @@ ASP.NET Classic uses the web.config Configuration file for configuration
 
     <!-- Bing Translation -->
     <add key="BingClientId" value="" />
-    <add key="BingClientSecret" value="" />    
   </DbResourceConfiguration>
 
   <!-- Enable ASP.NET Resource Provider  -->
@@ -511,7 +508,6 @@ By default a `Resources` ResourceSet has been provided for you the resources of 
 
 #### Import Existing Resources
 I also recommend that you first perform an *Import Resx* step to pull any existing Resx resources from the `~/Properties/` folder (or whereever) into your project. This will also import the Localization form's resources into your database so that the localization form properly localizes when running with the DbResource Provider.
-
 
 <a name="resource-usage"></a>
 ## Using Resources in your Application
