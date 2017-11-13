@@ -10,7 +10,7 @@
   
   <PropertyGroup>
     <!-- <TargetFrameworks>netstandard2.0;net45</TargetFrameworks> -->
-    <Version>3.0.0-preview1-7</Version>
+    <Version>3.0.0-beta1-0</Version>
     <Authors>Rick Strahl</Authors>
     <Company>West Wind Technologies</Company>
     <Description>West Wind Globalization provides custom data driven .NET ResourceManagers and ResourceProviders for both plain .NET and ASP.NET applications as well as serving JavaScript resources from .NET resources. There's also a a rich real time Web Resource editor that can update resources live but you'll need the Web NuGet package for that feature to light up. 
@@ -31,7 +31,7 @@ If you want to use ASP.NET ResourceProviders, JavaScript resources from .NET Res
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageReleaseNotes>.NET Standard 2.0 and .NET Core Support</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <FileVersion>3.0.7.0</FileVersion>
+    <FileVersion>3.0.10.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>    
