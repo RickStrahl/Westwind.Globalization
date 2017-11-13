@@ -1,6 +1,9 @@
 # West Wind Globalization
 ### Database Resource Localization for .NET
 
+> ### Version 3.0 status is: Beta1
+> Version 3.0 is currently in beta stage and the documentation is still under construction. We're feature complete and fully operational and getting close to a final release. Please bear with us.
+
 This library and tooling provides easy to use database resource managers and providers that allow you to use a database for storing localization resources. Unlike static Resx resources, database resources are dynamic, can be changed at runtime and are editable by multiple users at the same time. The custom resource managers, providers and ASP.NET Core StringLocalizer  use the standard .NET resource infrastructure, so other than startup configuration there are no code changes when switching from using traditional Resx resources. 
 
 It's also possible to import resources into a database, edit them dynamically, and then export them back out into Resx and optionally strongly typed classes so your deployed applications can run with Resx resources, while you use dynamic Database resources during development.
@@ -30,8 +33,7 @@ Version 3.0 adds support for the 2.0 versions of .NET Standard, .NET Core and AS
 * Westwind.Globalization.Sample <small>*(net45)*</small>
 * Westwind.Globalization.Sample.AspNetCore <small>*(netcore2.0)*</small>
 
-> Version 3.0 is Pre-Release
-> Version 3.0 is currently in pre-release and the documentation is still under construction. Bear with us.
+
 
 <a name="nuget"></a>
 ### Installation
@@ -56,8 +58,8 @@ PM> Install-Package Westwind.Globalization
 
 If you want to use the Administration Web UI, you have to download and add the HTML components to your application. Download from:
 
-* [Localization Admin  Html Assets](https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)
 * [Documentation for installing Localization Admin Files](https://github.com/RickStrahl/Westwind.Globalization/tree/master/DownloadableAssets)
+* [Localization Admin  Html Assets Download](https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)
 
 #### To Install on .NET Framework
 Please read the Installation Section below or watch the [Getting Started Video](https://youtu.be/ABR7ISppB1k), which describes how to install the packages, configure the project, import existing re
