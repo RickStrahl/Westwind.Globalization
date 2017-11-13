@@ -184,7 +184,7 @@ namespace Westwind.Globalization
   Filename varchar(128) DEFAULT NULL,
   Comment varchar(512) DEFAULT NULL,
   ValueType int(2) DEFAULT 0,
-  Updated datetime NULL,
+  Updated datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`pk`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 

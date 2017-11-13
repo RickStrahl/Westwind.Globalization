@@ -43,11 +43,8 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 // 1. DbResourceConfiguration.json if exists
                 // 2. AspNetCore Configuration Manager (IConfiguration/appsettings etc.)
                 //    (appsettings.json, environment, user secrets - overrides entire object if set)
-                // 3. Settings can be overridden in AddWestwindGlobalization here
+                // 3. Settings can be overridden in AddWestwindGlobalization(opt) here
                 
-                // you can override settings here - possibly with standard config settings
-                // Note: this example overrides settings with these values - these are used
-
                 // Resource Mode - Resx or DbResourceManager                
                 opt.ResourceAccessMode = ResourceAccessMode.DbResourceManager;  // ResourceAccessMode.Resx
 
@@ -57,7 +54,11 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 // SqLite
                 //opt.ConnectionString = "Data Source=./Data/SqLiteLocalizations.db";
                 //opt.DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);                
-                
+
+                // MySql
+                //opt.ConnectionString = "server=localhost;uid=testuser;pwd=super10seekrit;database=Localizations;charset=utf8";
+                //opt.DbResourceDataManagerType = typeof(DbResourceMySqlDataManager);                
+
                 opt.ResourceTableName = "localizations";
                 opt.AddMissingResources = false;
                 opt.ResxBaseFolder = "~/Properties/";
@@ -68,7 +69,6 @@ namespace WestWind.Globalization.Sample.AspNetCore
                     // return true or false whether this request is authorized
                     return true;   //actionContext.HttpContext.User.Identity.IsAuthenticated;
                 });
-
             });
 
             services.AddMvc()

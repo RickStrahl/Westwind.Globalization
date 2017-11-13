@@ -35,7 +35,8 @@ If you want to use ASP.NET ResourceProviders, JavaScript resources from .NET Res
   </PropertyGroup>
 
   <ItemGroup>    
-    <PackageReference Include="CommonMark.NET" Version="0.15.1" />
+    <PackageReference Include="CommonMark.NET" Version="0.15.1" />    
+    <PackageReference Include="Westwind.Utilities" Version="3.0.4" />
   </ItemGroup>
 
   <ItemGroup> 
@@ -61,9 +62,6 @@ If you want to use ASP.NET ResourceProviders, JavaScript resources from .NET Res
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net45'">
     <DefineConstants>NET45;NETFULL</DefineConstants>
   </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Westwind.Utilities\Westwind.Utilities\Westwind.Utilities.csproj" />
-  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="System.Design">

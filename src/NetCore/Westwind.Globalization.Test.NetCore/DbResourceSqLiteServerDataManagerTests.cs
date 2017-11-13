@@ -28,12 +28,9 @@ namespace Westwind.Globalization.Test
             //manager.Configuration.ResourceTableName = "Localizations";
             return manager;
         }
-
-
-
+        
         public DbResourceSqLiteDataManagerTests()
         {
-
             //if (File.Exists(DataPath))
             //    File.Delete(DataPath);
 
