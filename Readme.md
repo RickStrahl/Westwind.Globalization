@@ -720,66 +720,117 @@ The type will be your exported class or generated Resx class and the name is the
 ASP.NET MVC uses a completely different model for Model validation based on `IStringLocalizer`. In this initial .NET Core release we don't have support for this yet, but we're working on it. It's coming in an update soon.
 
 
-## Non Sql Server Database Providers
-By default the resource providers and manager use **SQL Server** to hold the database resources. If you don't do any custom configuration in code to specify the Configuration.DbResourceDataManagerType you'll get the Sql Server provider/manager. 
+## Switching Database Providers
+By default the resource providers and manager use **SQL Server** to hold the database resources. If you don't do any custom configuration in code to specify the `DbResourceConfiguration.DbResourceDataManagerType` you'll get the Sql Server provider/manager. 
 
-However, all of the following providers are supported:
+The following providers are supported:
 
-* Sql Server (2008, 2012, Express, Azure(?))
-* Sql Server Compact
+* Sql Server (2008-2016, Sql Azure)
 * MySql
 * SqLite
+* Sql Server Compact (no .NET Core support)
 
-As mentioned previously there is very little database access that actually happens when running the application, so even local databases like SqLite or Sql Compact can be used.
+To use a specific provider, assign the `DbResourceConfiguration.DbResourceDataManagerType` to the appropriate engine you want to use during startup configuration.
 
-To use a provider other than Sql Server you need to do the following:
+* typeof(DbResourceSqlServerDataManager)
+* typeof(DbResourceMySqlDataManager)
+* typeof(DbResourceSqLiteDataManager)
+* typeof(DbResourceSqlCompactDataManager)
 
-* Add the appropriate Westwind.Globalization.<DataBase> assembly/NuGet Package
-* Specify the Configuration.DbResourceDbD
+In .NET Core you set the value in the `AddDbResourceLocalization(opt)` configuration:
+
+```cs
+services.AddWestwindGlobalization(opt =>
+    ...
+    opt.DbResourceDataManagerType = typeof(DbResourceMySqlDataManager);
+    opt.ConnectionString = "server=localhost;uid=testuser;pwd=super10seekrit;" + 
+                           "database=Localizations;charset=utf8"
+```
+
+For full framework you can set the value in the `Application_Start` handler and set the singleton configuration value:
+
+```cs
+DbResourceConfiguration.Current.DbResourceDataManagerType =
+                  typeof(DbResourceSqLiteDataManager);
+DbResourceConfiguration.Current.ConnectionString = 
+    "server=localhost;database=Localizations;" +
+    "uid=testuser;pwd=super10seekrit;charset=utf8" 
+```                  
+
+Note that the connection string can be set in configuration files (`app/web.config` in full framework, `DbResourceConfiguration.json` or `appsettings.json` in .NET Core), but the provider configuration has to be set in code.
+
+Here's a little more info on how to specify each provider and the dependencies that are required.
 
 ### Sql Server
 *no additional package needed*
+
+.NET Core:
+```
+opt.ConnectionString = "server=.;database=localizations;integrated security=true";
+// not required since it's the default
+opt.DbResourceManagerType = typeof(DbResourceSqlServerManager);
+```
+
+web.config file connection String Example:
+
+```xml
+<add name="SqlServerLocalizations"
+    connectionString="server=.;database=localizations;integrated security=true;"
+    providerName="System.Data.SqlClient" />
+```
+
+### MySql
+
+*add NuGet Package: **MySql.Data***
+
+Code Configuration:
 ```c#
-// not required - use only if you need to reset provider in code
-DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerDataManager);
+opt.ConnectionString = "server=localhost;uid=testuser;pwd=super10seekrit;database=Localizations;charset=utf8";
+opt.DbResourceDataManagerType = typeof(DbResourceMySqlDataManager);                
+```
+
+web.config file connection String Example:
+
+```xml
+<add name="MySqlLocalizations"
+    connectionString="server=localhost;uid=testuser;pwd=super10seekrit;database=Localizations;charset=utf8" 
+    providerName="MySql.Data.MySqlClient" />
+```
+
+### SqLite
+*.NET Core add Nuget Package: **Microsoft.Data.SqLite**
+
+*Full Framework add NuGet Package: **System.Data.SQLite*** 
+
+Code Configuration:
+```c#
+opt.ConnectionString = "Data Source=./data/SqLiteLocalizations.db";
+opt.DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);
 ```  
 
-###### Connection String Example:
-	<add name="SqlServerLocalizations" connectionString="server=.;database=localizations;integrated security=true;" providerName="System.Data.SqlClient" />
+> Make sure to use a valid path where the database file can be found and used.
 
+web.config file connection String Example:
+```xml
+<add name="SqLiteLocalizations"
+    connectionString="Data Source=|DataDirectory|\SqLiteLocalizations.db"
+    providerName="System.Data.SQLite" />
+```
 
 ### Sql Server Compact
 *add NuGet Package: **Microsoft.SqlServer.Compact***
 
+**not supported on .NET Core**
+
 ```c#
 DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerCeDataManager);
 ```
-###### Connection String Example:
-	<add name="SqlServerCeLocalizations" connectionString="Data Source=|DataDirectory|\Localizations.sdf;Persist Security Info=False;" providerName="System.Data.SqlServerCe.4.0" />
-	<add name="Localizations" connectionString="server=.;database=localizations;integrated security=true;" providerName="System.Data.SqlClient" />
-
-### MySql
-*add NuGet Package: **MySql.Data***
-```c#
-DbResourceConfiguration.Current.DbResourceDataManagerType = typeof (DbResourceMySqlDataManager);
-```
-
-###### Connection String Example:
-	<add name="MySqlLocalizations" connectionString="server=localhost;uid=testuser;pwd=super10seekrit;database=Localizations" providerName="MySql.Data.MySqlClient" />
-
-
-### SqLite
-*add NuGet Package: **System.Data.SQLite.Core*** 
-```c#
-DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);
-```  
-
-###### Connection String Example:
+web.config connection string example:
 
 ```xml
-<add name="SqLiteLocalizations"
-     connectionString="Data Source=|DataDirectory|\SqLiteLocalizations.db;Version=3"
-     providerName="System.Data.SQLite" />
+<add name="SqlServerCeLocalizations" 
+     connectionString="Data Source=|DataDirectory|\Localizations.sdf;Persist Security Info=False;" 
+     providerName="System.Data.SqlServerCe.4.0" />
 ```
 
 ### Global Data Manager Configuration
