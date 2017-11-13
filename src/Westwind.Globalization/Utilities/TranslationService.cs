@@ -250,7 +250,6 @@ namespace Westwind.Globalization
         public string TranslateBing(string text, string fromCulture, string toCulture,
             string accessToken = null)
         {
-            string serviceUrl = "http://api.microsofttranslator.com/V2/Http.svc/Translate";
 
             if (accessToken == null)
             {
@@ -259,20 +258,17 @@ namespace Westwind.Globalization
                     return null;
             }
 
+            string serviceUrl = "https://api.microsofttranslator.com/v2/Http.svc/Translate?" +                                
+                                "&text=" + text +
+                                "&from=" + fromCulture +
+                                "&to=" + toCulture +
+                                "&contentType=text/plain";
             string res;
-
             try
-            {
+            {                
                 var web = new WebClient();
                 web.Headers.Add("Authorization", "Bearer " + accessToken);
-                string ct = "text/plain";
-                string postData = string.Format("?text={0}&from={1}&to={2}&contentType={3}",
-                    StringUtils.UrlEncode(text),
-                    fromCulture, toCulture,
-                    StringUtils.UrlEncode(ct));
-
-                web.Encoding = Encoding.UTF8;
-                res = web.DownloadString(serviceUrl + postData);
+                res = web.DownloadString(serviceUrl);
             }
             catch (Exception e)
             {
@@ -294,53 +290,39 @@ namespace Westwind.Globalization
         /// You can find client ID and Secret (or register a new one) at:
         /// https://datamarket.azure.com/developer/applications/
         /// </summary>
-        /// <param name="clientId">The client ID of your application</param>
-        /// <param name="clientSecret">The client secret or password</param>
+        /// <param name="apiKey">The client ID of your application</param>        
         /// <returns></returns>
-        public string GetBingAuthToken(string clientId = null, string clientSecret = null)
+        public string GetBingAuthToken(string apiKey = null, string ignored = null)
         {
-            string authBaseUrl = "https://datamarket.accesscontrol.windows.net/v2/OAuth2-13";
 
-            if (string.IsNullOrEmpty(clientId))
-                clientId = DbResourceConfiguration.Current.BingClientId;
-            if (string.IsNullOrEmpty(clientSecret))
-                clientSecret = DbResourceConfiguration.Current.BingClientSecret;
+            string authBaseUrl = "https://api.cognitive.microsoft.com/sts/v1.0/issueToken";
 
-            if (string.IsNullOrEmpty(clientId) || string.IsNullOrEmpty(clientSecret))
+            if (string.IsNullOrEmpty(apiKey))
+                apiKey = DbResourceConfiguration.Current.BingClientId;
+
+            if (string.IsNullOrEmpty(apiKey))
             {
-                ErrorMessage = Resources.Client_Id_and_Client_Secret_must_be_provided;
+                ErrorMessage = "Subscription key must be provided";
                 return null;
             }
-
-            var postData = string.Format("grant_type=client_credentials&client_id={0}" +
-                                         "&client_secret={1}" +
-                                         "&scope=http://api.microsofttranslator.com",
-                StringUtils.UrlEncode(clientId),
-                StringUtils.UrlEncode(clientSecret));
-
             // POST Auth data to the oauth API
-            string res, token;
-
+            string res;
             try
             {
-                var web = new WebClient();
-                web.Encoding = Encoding.UTF8;
-                res = web.UploadString(authBaseUrl, postData);
+                var web = new HttpUtilsWebClient(new HttpRequestSettings()
+                {
+                    HttpVerb = "POST"
+                });
+                web.Encoding = Encoding.UTF8;                
+                web.Headers.Add("Ocp-Apim-Subscription-Key", apiKey);
+                res = web.UploadString(authBaseUrl, "");
             }
             catch (Exception ex)
             {
                 ErrorMessage = ex.GetBaseException().Message;
                 return null;
             }
-
-
-            var auth = JsonConvert.DeserializeObject(res, typeof (BingAuth)) as BingAuth;
-            if (auth == null)
-                return null;
-
-            token = auth.access_token;
-
-            return token;
+            return res;
         }
 
         private class BingAuth

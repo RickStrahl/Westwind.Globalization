@@ -9,6 +9,12 @@ namespace Westwind.Globalization.Test
     [TestFixture]
     public class TranslationServiceTests
     {
+        private string BingKey;
+
+        public TranslationServiceTests()
+        {            
+            BingKey = "873e008fcc7f4ed1945e0c27813c9b28";
+        }
 
         [Test]
         public void TranslateGoogleTest()
@@ -57,12 +63,14 @@ namespace Westwind.Globalization.Test
         {
             TranslationServices service = new TranslationServices();
 
+            Assert.IsNotEmpty(BingKey, "Bing Client Id is empty. Set in dbResourceConfiguration.json or explictitly in CTOR");
+
             // use app.config clientid and clientsecret
-            string token = service.GetBingAuthToken();
-            Assert.IsNotNull(token);
+            string token = service.GetBingAuthToken(BingKey);
+            Assert.IsNotNull(token,"Authentication failed" + DbResourceConfiguration.Current.BingClientId);
 
             string result = service.TranslateBing("Life is one big wave with a giant bottom turn!", "en",
-                "de", token);
+                "de",token);
             Console.WriteLine(result);
 
             string result2 = service.TranslateBing(result, "de", "en", token);
