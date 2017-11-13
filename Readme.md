@@ -798,9 +798,9 @@ web.config file connection String Example:
 ```
 
 ### SqLite
-*.NET Core add Nuget Package: **Microsoft.Data.SqLite**
+*.NET Core add Nuget Package:* **Microsoft.Data.SqLite**
 
-*Full Framework add NuGet Package: **System.Data.SQLite*** 
+*Full Framework add NuGet Package:* **System.Data.SQLite**
 
 Code Configuration:
 ```c#

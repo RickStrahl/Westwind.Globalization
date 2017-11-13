@@ -135,7 +135,7 @@ namespace Westwind.Globalization
             if (connectionString == null)
                 connectionString = Configuration.ConnectionString;
 
-            return new SqlDataAccess(connectionString,DataAccessProviderTypes.MySql);
+            return new SqlDataAccess(connectionString,DataAccessProviderTypes.SqlServer);
         }
 
         /// <summary>
