@@ -13,12 +13,8 @@
 		<add namespace="Westwind.Globalization" />
       </namespaces> 
     </pages>
-    <httpHandlers>
-      <add verb="GET" path="JavaScriptResourceHandler.axd" type="Westwind.Globalization.JavaScriptResourceHandler,Westwind.Globalization.Web"/>
-    </httpHandlers>
   </system.web>
-  <system.webServer>
-    <validation validateIntegratedModeConfiguration="false" />
+  <system.webServer>    
     <handlers>
       <add name="JavaScriptResourceHandler" verb="GET" path="JavascriptResourceHandler.axd" type="Westwind.Globalization.JavaScriptResourceHandler,Westwind.Globalization.Web"/>
     </handlers>
@@ -33,8 +29,7 @@
     <add key="ResxBaseFolder" value="~/Properties/" />
     <add key="AddMissingResources" value="False" />
     <add key="LocalizationFormWebPath" value="~/LocalizationAdmin/" />
-    <add key="BingClientId" value="" />
-    <add key="BingClientSecret" value="" />    
+    <add key="BingClientId" value="" />    
   </DbResourceConfiguration>
 
 </configuration>

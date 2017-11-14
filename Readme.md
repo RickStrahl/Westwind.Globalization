@@ -33,8 +33,6 @@ Version 3.0 adds support for the 2.0 versions of .NET Standard, .NET Core and AS
 * Westwind.Globalization.Sample <small>*(net45)*</small>
 * Westwind.Globalization.Sample.AspNetCore <small>*(netcore2.0)*</small>
 
-
-
 <a name="nuget"></a>
 ### Installation
 Installation is different depending on which version of .NET you are running under. **.NET Core** and **Full Framework** use different project types and NuGet Packages for the Web support.
