@@ -38,7 +38,7 @@ namespace WestWind.Globalization.Sample.AspNetCore
             //services.AddWestwindGlobalization();
             services.AddWestwindGlobalization(opt =>
             {
-                // the defaults are loaded in this order:
+                // the defaults are loaded in this order with later providers overwriting earlier values:
                 // 0. Default DbResourceConfiguration values
                 // 1. DbResourceConfiguration.json if exists
                 // 2. AspNetCore Configuration Manager (IConfiguration/appsettings etc.)
@@ -57,7 +57,7 @@ namespace WestWind.Globalization.Sample.AspNetCore
 
                 // MySql
                 //opt.ConnectionString = "server=localhost;uid=testuser;pwd=super10seekrit;database=Localizations;charset=utf8";
-                //opt.DbResourceDataManagerType = typeof(DbResourceMySqlDataManager);                
+                //opt.DbResourceDataManagerType = typeof(DbResourceMySqlDataManager);
 
                 opt.ResourceTableName = "localizations";
                 opt.AddMissingResources = false;
