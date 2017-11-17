@@ -2,7 +2,7 @@
 /*
  **************************************************************
  *  Author: Rick Strahl 
- *          © West Wind Technologies, 2009-2015
+ *          Â© West Wind Technologies, 2009-2015
  *          http://www.west-wind.com/
  * 
  *
@@ -772,7 +772,7 @@ namespace Westwind.Globalization
 
             if (string.IsNullOrEmpty(Type))
             {
-                if (data.UpdateOrAddResource(Name, Value, LocaleId, ResourceSetName, Comment) == -1)
+                if (data.UpdateOrAddResource(LocaleId, Value, Name, ResourceSetName, Comment) == -1)
                 {
                     ErrorMessage = data.ErrorMessage;
                     return false;
@@ -787,7 +787,7 @@ namespace Westwind.Globalization
                     string ResFileName = filePath + tokens[0];
                     if (File.Exists(ResFileName))
                         // DataManager knows about file resources and can figure type info
-                        if (data.UpdateOrAddResource(Name, ResFileName, LocaleId, ResourceSetName, Comment, true) ==
+                        if (data.UpdateOrAddResource(LocaleId, ResFileName, Name, ResourceSetName, Comment, true) ==
                             -1)
                         {
                             ErrorMessage = data.ErrorMessage;
