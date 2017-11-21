@@ -22,8 +22,8 @@
 
     <title>Localization Administration</title>
 
-    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="scripts/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="scripts/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link href="css/localizationAdmin.css" rel="stylesheet"/>
 </head>
 <body ng-app="app" ng-controller="listController as view"
@@ -106,16 +106,16 @@
 <div ng-include src="'partials/ResourceGrid.html'"></div>
 <div ng-include src="'partials/CommentDialog.html'"></div>
 
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="scripts/vendor/jquery.min.js"></script>
 <script src="scripts/ww.jquery.min.js"></script>
-<script src="bower_components/lodash/lodash.min.js"></script>
+<script src="scripts/vendor/lodash.min.js"></script>
 <!--<script src="../api/JavaScriptLocalizationResources?ResourceSet=LocalizationForm&VarName=resources&localeId=auto&ResourceMode=Resx"></script>-->
 <script src="../api/JavaScriptLocalizationResources?ResourceSet=LocalizationForm&VarName=resources&localeId=auto&ResourceMode=ResDb"></script>
-<script src="bower_components/angular/angular.min.js"></script>
-<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="scripts/vendor/angular.min.js"></script>
+<script src="scripts/vendor/angular-sanitize.min.js"></script>
 <script src="scripts/ww.angular.js"></script>
-<script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="scripts/vendor/ng-file-upload/angular-file-upload.min.js"></script>
+<script src="scripts/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
 
 <!-- combined app scripts - build with gulp -->
 <!--<script src="js/app.min.js"></script>-->

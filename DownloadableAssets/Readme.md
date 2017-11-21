@@ -110,7 +110,3 @@ In order to use these:
 * Import Export Resx
 * Import Resources
 * Navigate to /ResourceTest
-
-
-### Using the Sample
-The best way to check this out is to navigate to the `/ResourceTest` in your application.
