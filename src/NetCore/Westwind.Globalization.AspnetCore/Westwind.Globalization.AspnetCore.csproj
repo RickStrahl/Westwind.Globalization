@@ -7,12 +7,11 @@
     <Company>West Wind Technologies</Company>
     <Product>Westwind.Globalization</Product>
     <Title>Westwind Globalization ASP.NET Core</Title>
-    <Description>This library provides the ASP.NET Core specific components to the Westwind.Globalization library. It contains an database ILocalizer interface, JavaScript Resource handler and  the on-line Resource editor to allow editing of data resources in real time.  
+    <Description>Provides ASP.NET Core specific features to the Westwind.Globalization library, including IStringLocalizer interfaces, JavaScript Resource handler and an on-line Resource editor to allow real-time editing of data resources.  
 
  Note: In order to use the Localization Administration feature, please download the required project resources from: https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationAdministrationHtml_AspNetCore.zip
-
-This library is required for using Westwind.Globalization in most ASP.NET Web Projects. MVC Projects that don't require the Web Resource Editor interface, can use just the Core package.</Description>
-    <Summary>not used</Summary>
+</Description>
+    <Summary>Database driven localization ASP.NET and ASP.NET Core. Includes a localization Administration Interface.</Summary>
     <Copyright>West Wind Technologies, 2010-2017</Copyright>
     <PackageLicenseUrl>https://github.com/RickStrahl/Westwind.Globalization#license</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/RickStrahl/Westwind.Globalization</PackageProjectUrl>
@@ -63,5 +62,5 @@ This library is required for using Westwind.Globalization in most ASP.NET Web Pr
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
-
+  
 </Project>

@@ -1,20 +1,20 @@
-# Localization Admin UI and Sample Support Files
+# Localization Admin UI and Sample Downloads
 .NET Core no longer allows content as part of NuGet packages, and these zip files provide the additional content files you can add to your project.
 
 This folder contains two sets of support files in zipped format:
 
-* **Localization Administration UI for .NET Core**  
+* **Localization Administration UI for ASP.NET Core**  
 This Zip file contains the HTML, CSS, Scripts and Images to run the Localization Administration UI for ASP.NET Core. 
 <small>[Download](https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)</small>
 
-* **Sample Page and Resources**   
+* **Sample Page and Resources for ASP.NET Core**   
 This zip file contains a sample page and resources you can play with when first setting up Westwind.Globalization in a ASP.NET Core site.  <small>[Download](https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationSample_AspNetCore.zip?raw=true)</small>
 
 > #### Requires ASP.NET Core MVC
 > Both of these addons rely on features of **ASP.NET MVC** in order to run. Make sure your ASP.NET Core app has ` app.UseMvc()` as part of its startup code. Note: It's only these addons that require MVC - **running** `Westwind.Globalization` and `Westwind.Globalization.AspNetCore` in a .NET Core or ASP.NET Core application doesn't require MVC - it's only the Admin UI and sample that do.
 
 
-## Setting up the Localization Admin UI
+## Setting up the Localization Admin UI for ASP.NET Core
 To set up the Localization Admin UI is a two step process:
 
 * Download [LocalizationAdministration_AspNetCore.zip](https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)
@@ -31,8 +31,8 @@ Set the `ConnectionString` and `ResourceTableName` to an existing database and a
 ### What the Zip File Contains
 The zip file provides the Administration UI client side assests and .NET Resources required to run the Admin form.
 
-* **Copies Admin UI HTML and Resources**  
-Copies files into `wwwroot/LocalizationAdmin`, which contains the client side Localization Admin UI HTML and assets into your application. **You can move this folder** to any location you want. If you generate your `wwwroot` folder as part of a client side build, you can move the `LocalizationAdmin` folder into the client side build directory.
+* **Copies Admin UI into wwwroot/LocalizationAdmin**  
+Copies files into `wwwroot/LocalizationAdmin`, which contains the **static** client side Localization Admin UI HTML and assets into your application. **You can move this folder** to any location you want. If you generate your `wwwroot` folder as part of a client side build, you can move the `LocalizationAdmin` folder into the client side build directory.
 
 * **Copies Localization Admin Resources into Properties**   
 Copies `Properties\LocalizationAdminForm.resx` and `Properties\LocalizationAdminForm.de.resx` files into the `Properties` folder of your project, these are the resources required for the LocalizationAdmin backend application which serves JavaScript resources to the client.
