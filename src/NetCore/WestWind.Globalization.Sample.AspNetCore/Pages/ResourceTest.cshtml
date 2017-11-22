@@ -18,7 +18,7 @@
 
 @{
     Layout = null;
-    string localeId = Request.Params("localeId");
+    string localeId = Context.Request.Params("localeId");
     if (string.IsNullOrEmpty(localeId))
     {
         localeId = CultureInfo.CurrentUICulture.IetfLanguageTag;

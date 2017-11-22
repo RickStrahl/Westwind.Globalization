@@ -264,7 +264,7 @@ namespace Westwind.Globalization
 
                             // Write out the file to disk
                             
-                            File.WriteAllText(resourcePath + "\\" + FileName, TextFile, Encode);
+                            File.WriteAllText(resourcePath + Path.DirectorySeparatorChar + FileName, TextFile, Encode);
                         }
                         catch(Exception ex)
                         {
@@ -477,12 +477,12 @@ namespace Westwind.Globalization
                if (LocalResources)
                {
                    // Inject App_LocalResource
-                   ResourceSet = ResourceSet.Insert(ResourceSet.LastIndexOf('\\')+1, "App_LocalResources\\");
+                   ResourceSet = ResourceSet.Insert(ResourceSet.LastIndexOf(Path.DirectorySeparatorChar)+1, "App_LocalResources" + Path.DirectorySeparatorChar);
                    ResourceSet = BasePhysicalPath + ResourceSet;
                }
                else
                {
-                   ResourceSet = BasePhysicalPath + "App_GlobalResources\\" + ResourceSet;
+                   ResourceSet = BasePhysicalPath + "App_GlobalResources" + Path.DirectorySeparatorChar  + ResourceSet;
                }
 
                FileInfo fi = new FileInfo(ResourceSet);
@@ -536,7 +536,7 @@ namespace Westwind.Globalization
                 string pathOnly = Path.GetDirectoryName(resourceSet);
                 string fileOnly = Path.GetFileName(resourceSet);
 
-                resourceSet = pathOnly + "\\App_LocalResources\\" + fileOnly;
+                resourceSet = Path.Combine(pathOnly,"App_LocalResources",fileOnly);
             }
 
             FileInfo fi = new FileInfo(resourceSet);
@@ -562,8 +562,8 @@ namespace Westwind.Globalization
                 webPath = BasePhysicalPath;
 
             webPath = webPath.ToLower();
-            if (!webPath.EndsWith("\\"))
-                webPath += "\\";
+            if (!webPath.EndsWith(Path.DirectorySeparatorChar.ToString()))
+                webPath += Path.DirectorySeparatorChar;
 
             string[] directories;
             try
@@ -586,14 +586,14 @@ namespace Westwind.Globalization
                     string RelPath = webPath.Replace(BasePhysicalPath.ToLower(), "");
                     RelPath = RelPath.Replace("\\","/");
 
-                    ImportDirectoryResources(webPath + dir + "\\",RelPath) ;
+                    ImportDirectoryResources(webPath + dir + Path.DirectorySeparatorChar,RelPath) ;
                 }
                 else if (string.Compare(dir,"app_globalresources",StringComparison.OrdinalIgnoreCase) == 0)
-                    ImportDirectoryResources(webPath + dir + "\\","");
+                    ImportDirectoryResources(webPath + dir + Path.DirectorySeparatorChar,"");
 
                 else if (!("bin|obj|app_code|app_themes|app_data|.git|.svn|_svn|app_data|migrations|node_modules|bower_components|".Contains(dir.ToLower() + "|")))
                     // Recurse through child directories
-                    ImportWebResources(webPath + dir + "\\"); 
+                    ImportWebResources(webPath + dir + Path.DirectorySeparatorChar); 
             }
 
             return true;
@@ -611,8 +611,8 @@ namespace Westwind.Globalization
                 basePhysicalPath = BasePhysicalPath;
 
             // basePhysicalPath = basePhysicalPath.ToLower();
-            if (!basePhysicalPath.EndsWith("\\"))
-                basePhysicalPath += "\\";
+            if (!basePhysicalPath.EndsWith(Path.DirectorySeparatorChar.ToString()))
+                basePhysicalPath += Path.DirectorySeparatorChar;
 
             // We need to create a Web relative path (ie. admin/myresources.resx)
             string relPath = basePhysicalPath.Replace(BasePhysicalPath, "");
@@ -641,7 +641,7 @@ namespace Westwind.Globalization
                 if (dir == "" || ("|bin|obj|.git|.svn|_svn|app_code|app_themes|app_data|migrations|node_modules|bower_components|".Contains("|" + dir.ToLower() + "|")))
                     continue;
 
-                ImportWinResources(basePhysicalPath + dir + "\\");
+                ImportWinResources(basePhysicalPath + dir + Path.DirectorySeparatorChar);
             }
 
             return true;
@@ -729,7 +729,7 @@ namespace Westwind.Globalization
     /// <returns></returns>
     public bool ImportResourceFile(string FileName,string ResourceSetName,string LocaleId)
     {
-        string filePath = Path.GetDirectoryName(FileName) + "\\";
+        string filePath = Path.GetDirectoryName(FileName) + Path.DirectorySeparatorChar;
 
         var data = DbResourceDataManager.CreateDbResourceDataManager();
 
@@ -811,7 +811,7 @@ namespace Westwind.Globalization
     /// <returns></returns>
     internal List<ResxItem> GetResXResources(string FileName)
     {
-        string FilePath = Path.GetDirectoryName(FileName) + "\\";
+        string FilePath = Path.GetDirectoryName(FileName) + Path.DirectorySeparatorChar;
 
         XmlDocument Dom = new XmlDocument();
 
