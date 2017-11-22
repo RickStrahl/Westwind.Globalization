@@ -11,6 +11,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using Westwind.Globalization.AspNetCore.Extensions;
 using Westwind.Globalization.Errors;
+using Westwind.Globalization.Utilities;
 using Westwind.Utilities;
 
 namespace Westwind.Globalization.Administration
@@ -844,7 +845,7 @@ namespace Westwind.Globalization.Administration
             else if (filename.StartsWith("~"))
                 filename = Request.MapPath(filename, basePath: Host.ContentRootPath);
 
-            filename = filename.Replace("/", "\\").Replace("\\\\", "\\");
+            filename = filename.Replace("/", Path.DirectorySeparatorChar.ToString()).Replace( (Path.DirectorySeparatorChar + Path.DirectorySeparatorChar).ToString(), Path.DirectorySeparatorChar.ToString());
 
             if (string.IsNullOrEmpty(nameSpace))
                 nameSpace = config.ResourceBaseNamespace;
@@ -947,7 +948,7 @@ namespace Westwind.Globalization.Administration
             if (inputBasePath.Contains("~"))
                 inputBasePath = Request.MapPath(inputBasePath,basePath: Host.ContentRootPath);
 
-            inputBasePath = inputBasePath.Replace("/", "\\").Replace("\\\\", "\\");
+            inputBasePath = DbResourceUtils.NormalizePath(inputBasePath);
 
             DbResXConverter converter = new DbResXConverter(inputBasePath);
 
