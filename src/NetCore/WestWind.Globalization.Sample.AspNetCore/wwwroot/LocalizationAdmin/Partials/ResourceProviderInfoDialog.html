@@ -16,6 +16,7 @@
                             <td style="width: 25%">Connection String:</td>
                             <td>
                                 <input ng-model="view.info.ConnectionString"  class="form-control input-sm"/>
+                                <div style="margin-top: 5px; font-size: 0.875em">{{view.info.DataProvider}}</div>
                             </td>
                         </tr>
                         <tr class="warning">
@@ -33,7 +34,7 @@
                             <td><input ng-model="view.info.ResourceBaseNamespace" class="form-control input-sm" /></td>
                         </tr>
                         <tr class="info">
-                            <td>Strongly Typed Class File:</td>
+                            <td>Strong-type File:</td>
                             <td><input ng-model="view.info.StronglyTypedGlobalResource" class="form-control input-sm"/></td>
                         </tr>
 
@@ -46,18 +47,7 @@
                             <td>Bing Client Id:</td>
                             <td><input ng-model="view.info.BingClientId" class="form-control input-sm" /></td>
                         </tr>
-                    </table>
-
-
-                    <div class="form-group">
-                        <label>ASP.NET Resource Provider in use:</label>
-                        <div>{{view.info.ProviderFactory }}</div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>DbResourceProvider Type in use:</label>
-                        <div>{{view.info.DbResourceProviderType }}</div>
-                    </div>
+                    </table>                  
 
                 </div>
                 <div class="modal-footer">

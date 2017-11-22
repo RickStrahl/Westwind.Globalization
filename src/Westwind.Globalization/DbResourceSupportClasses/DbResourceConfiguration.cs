@@ -213,16 +213,7 @@ namespace Westwind.Globalization
         /// https://www.microsoft.com/en-us/translator/getstarted.aspx
         /// </summary>
         public string BingClientId { get; set; }
-
-        /// <summary>
-        /// Bing Secret Key for Bing Translate API Access
-        /// 
-        /// </summary>
-        [Obsolete("Bing Client Secret is no longer used. Use just the BingClientId")]
-        [JsonIgnore]
-        [XmlIgnore]
-        public string BingClientSecret { get; set; }
-
+        
         /// <summary>
         /// Google Translate API Key used to access Translate API.
         /// Note this is a for pay API!
@@ -230,9 +221,6 @@ namespace Westwind.Globalization
         public string GoogleApiKey { get; set; }
 
      
-
-
-
         [JsonIgnore]
         public List<IResourceSetValueConverter> ResourceSetValueConverters = new List<IResourceSetValueConverter>();              
 

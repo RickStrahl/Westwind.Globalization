@@ -2061,12 +2061,20 @@ namespace Westwind.Globalization
         Binary
     }
 
+    /// <summary>
+    /// Sets the DbResourceProviderType based on a simple enum value. Provided
+    /// merely as a proxy for setting the actual type.
+    /// 
+    /// Use **Custom** if you want to use a custom provider that you created
+    /// and that's not listed here.
+    /// </summary>
     public enum DbResourceProviderTypes
     {
         SqlServer,
         MySql,
         SqLite,
         SqlServerCompact,
+        Custom,
         NotSet        
     }
 

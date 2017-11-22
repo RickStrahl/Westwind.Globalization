@@ -48,7 +48,6 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 // Resource Mode - Resx or DbResourceManager                
                 opt.ResourceAccessMode = ResourceAccessMode.DbResourceManager;  // ResourceAccessMode.Resx
 
-
                 // *** override provider configuration
                 // *** use ConnectionString + DataProvider (or DbResourceManagerType)
 
@@ -59,7 +58,7 @@ namespace WestWind.Globalization.Sample.AspNetCore
 
                 // SqLite
                 //opt.ConnectionString = "Data Source=./Data/SqLiteLocalizations.db";
-                // // opt.DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);                
+                // // opt.DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);    // use this with custom providers            
                 //opt.DataProvider = DbResourceProviderTypes.SqLite;
 
                 // MySql

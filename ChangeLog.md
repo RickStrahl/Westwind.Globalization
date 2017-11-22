@@ -1,7 +1,23 @@
 # West Wind Globalization Changelog
 
+### Version 3.0
+<small>not released yet - Beta 1 currently</small>
+
+* **.NET Core and ASP.NET Core Support**  
+Westwind.Globalization now works on .NET Core and ASP.NET Core. We now provide full framework and .NET Standard 2.0 assemblies for the core package and separate ASP.NET and ASP.NET Core Web packages. .NET Core support includes standard `ILocalizer` support, `IOptions` configuration support as well as full compatibility with v2.0 `dbRes` and strongly typed resource syntax.
+
+* **Updated Localization Admin UI for ASP.NET Core**   
+The Localization Admin application has been updated to work with a ASP.NET Core MVC controller on the backend. The ASP.NET 4.5+ continues to use `[CallbackHandler]` for compactness and doesn't have a dependency on MVC or WebAPI. The .NET Core version has a number of small UI updates.
+
+
+* **DataProvider Configuration Switch**   
+You can now set the database provider used as part of configuration using the `DataProvider` configuration option. Specify `SqlServer`, `SqLite`, `MySql` or `SqlCompact` (full framework only) as part of configuration. This setting can now be set via configuration switch rather than requiring explicitly setting the `DbResourceManagerType` property in code. The new setting simply delegates to `DbResourceManagerType` so you can still set that manually to change providers as well.
+
+* **Fix: Bing Translation**   
+Fixed Bing Translation for new Azure Translation APIs and using new logon mechanism. You'll need a new key when updating.
+
 ### Version 2.15
-<small>not released yet</small>
+<small>October 1st, 2017</small>
 
 * **Added .NET Core 2.0 ASP.NET Core 2.0 Support to WestWind.Globaliztion**   
 Updated `Westwind.Globalization` project to work as a .NET Standard 2.0 project usable in .NET Core and ASP.NET Core. Existing code should run as is, except that configuration for .NET Core applications has to use a JSON configuration file (for static configuration) or configure using the new ASP.NET Core `.AddWestwindGlobalization()` configuration in `ConfigureServices()`.

@@ -1,6 +1,7 @@
 ﻿{
   "ResourceAccessMode": "DbResourceManager",
   "ConnectionString": "server=.;database=localizations;integrated security=true",
+  "DataProvider": "SqlServer",  
   "ResourceTableName": "Localizations_DbResourceConfigurationJson",
   "StronglyTypedGlobalResource": "~/Properties/Resources.cs",
   "ResourceBaseNamespace": "AppResources",
@@ -9,6 +10,6 @@
   "AddMissingResources": true,
   "ActiveConfiguration": null,
   "LocalizationFormWebPath": "~/LocalizationAdmin/",
-  "BingClientId": "",  
+  "BingClientId": "",
   "GoogleApiKey": ""
 }

@@ -784,13 +784,15 @@ namespace Westwind.Globalization.Administration
                 config.ConnectionString,
                 config.ResourceTableName,
                 DbResourceProviderType = config.DbResourceDataManagerType.Name,
+                DataProvider = config.DataProvider.ToString(),
                 config.ResxExportProjectType,
                 config.ResxBaseFolder,
                 config.ResourceBaseNamespace,
                 config.StronglyTypedGlobalResource,
                 config.GoogleApiKey,
                 config.BingClientId,                
-                config.AddMissingResources
+                config.AddMissingResources,
+                ResourceAccessMode = config.ResourceAccessMode.ToString()
             },jsonSettings);
         }
 
