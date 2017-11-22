@@ -10,22 +10,30 @@ This Zip file contains the HTML, CSS, Scripts and Images to run the Localization
 * **Sample Page and Resources for ASP.NET Core**   
 This zip file contains a sample page and resources you can play with when first setting up Westwind.Globalization in a ASP.NET Core site.  <small>[Download](https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationSample_AspNetCore.zip?raw=true)</small>
 
-> #### Requires ASP.NET Core MVC
-> Both of these addons rely on features of **ASP.NET MVC** in order to run. Make sure your ASP.NET Core app has ` app.UseMvc()` as part of its startup code. Note: It's only these addons that require MVC - **running** `Westwind.Globalization` and `Westwind.Globalization.AspNetCore` in a .NET Core or ASP.NET Core application doesn't require MVC - it's only the Admin UI and sample that do.
-
+> #### The Admin UI requires ASP.NET Core MVC
+> Both of these HTML support addons rely on features of **ASP.NET MVC** in order to run. Make sure your ASP.NET Core app has `app.UseMvc()` and `app.UseStaticFiles()` as part of its startup code in order for the Admin UI to work.
 
 ## Setting up the Localization Admin UI for ASP.NET Core
-To set up the Localization Admin UI is a two step process:
+To set up the Localization Admin UI a few steps are required:
+
+* Download the additional assets
+* Unzip and copy them into the root folder of the project
+* Recompile your Project
+* Import the localization resources for the examples
+
+Here are the detailed steps:
 
 * Download [LocalizationAdministration_AspNetCore.zip](https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)
 * Unzip the package into the **root folder** of your ASP.NET Core MVC application
 * Recompile your project
-* Setup your Configuration  
-Set the `ConnectionString` and `ResourceTableName` to an existing database and a tablename that you want to create, either in `DbResourceConfiguration.json` or `appsettings.json` (see docs)
-* Open the Admin Page at `localizationAdmin/`
+* Set up your Configuration  
+  *Set the `ConnectionString` to an existing database, and set `ResourceTableName` to a table that you want to create. Use either `DbResourceConfiguration.json`, `appsettings.json`, or via Startup code configuration (see [main docs](https://github.com/RickStrahl/Westwind.Globalization#aspnet-core-configuration))*
+* Open the Admin Page at `localizationAdmin/index.html`
 * Click on **Create Table**
 * You should see some sample resources in the admin interface
-* Click **Import
+* Click **Import or Export Resx**
+* Select **Import Resources** from **~/Properties/**
+* Click **Import** - you should now see the LocalizationAdmin ResourceSet
 
 
 ### What the Zip File Contains
@@ -77,8 +85,6 @@ The code you run here can be anything at all, but typically you will check acces
 > Note: In ASP.NET Core Authentication features only work if you have actually hooked up an Authentication mechanism as part of the application in `Startup` with `app.AddAuthentication()`.
 More info can be on the [ASP.NET Docs Authentication Topics](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/)
 
-### Loading Admin UI Resources into the Database
-The zip file contains the Resx resources for the admin UI and adds them to your Properties folder. In order to use those resources you have to import them into 
 
 
 ## Setting up ResourceTest Sample Page
@@ -93,9 +99,18 @@ To install:
 ### What it Does
 The zip file copies a sample page and resources:
 
-* `Pages/ResourceTest.aspx`
+* `Pages/ResourceTest.cshtml`
 * Copies several Resource files into `Properties` folder
+
+In order to use these:
+
+* Unzip the files into the project root
+* Recompile your project
+* Start the Localization UI
+* Import Export Resx
+* Import Resources
+* Navigate to /ResourceTest
 
 
 ### Using the Sample
-The best way to check this out is to 
+The best way to check this out is to navigate to the `/ResourceTest` in your application.
