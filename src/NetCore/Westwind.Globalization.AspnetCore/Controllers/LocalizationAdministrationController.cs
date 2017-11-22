@@ -1,4 +1,5 @@
 ﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -793,7 +794,8 @@ namespace Westwind.Globalization.Administration
                 config.GoogleApiKey,
                 config.BingClientId,                
                 config.AddMissingResources,
-                ResourceAccessMode = config.ResourceAccessMode.ToString()
+                ResourceAccessMode = config.ResourceAccessMode.ToString(),
+                Os = System.Runtime.InteropServices.RuntimeInformation.OSDescription                                
             },jsonSettings);
         }
 
@@ -845,7 +847,7 @@ namespace Westwind.Globalization.Administration
             else if (filename.StartsWith("~"))
                 filename = Request.MapPath(filename, basePath: Host.ContentRootPath);
 
-            filename = filename.Replace("/", Path.DirectorySeparatorChar.ToString()).Replace( (Path.DirectorySeparatorChar + Path.DirectorySeparatorChar).ToString(), Path.DirectorySeparatorChar.ToString());
+            filename = DbResourceUtils.NormalizePath(filename);
 
             if (string.IsNullOrEmpty(nameSpace))
                 nameSpace = config.ResourceBaseNamespace;

@@ -264,7 +264,7 @@ namespace Westwind.Globalization
 
                             // Write out the file to disk
                             
-                            File.WriteAllText(resourcePath + Path.DirectorySeparatorChar + FileName, TextFile, Encode);
+                            File.WriteAllText(Path.Combine(resourcePath,FileName), TextFile, Encode);
                         }
                         catch(Exception ex)
                         {
@@ -277,7 +277,7 @@ namespace Westwind.Globalization
                     }
 
                     //<data name="Scratch" type="System.Resources.ResXFileRef, System.Windows.Forms">
-                    //  <value>Scratch.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+                    //  <value>Scratch.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
                     //</data>
                     xWriter.WriteStartElement("data");
                     xWriter.WriteAttributeString("name", ResourceId);
@@ -435,7 +435,7 @@ namespace Westwind.Globalization
                     }
 
                     //<data name="Scratch" type="System.Resources.ResXFileRef, System.Windows.Forms">
-                    //  <value>Scratch.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+                    //  <value>Scratch.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
                     //</data>
                     xWriter.WriteStartElement("data");
                     xWriter.WriteAttributeString("name", res.ResourceId);
@@ -482,7 +482,7 @@ namespace Westwind.Globalization
                }
                else
                {
-                   ResourceSet = BasePhysicalPath + "App_GlobalResources" + Path.DirectorySeparatorChar  + ResourceSet;
+                   ResourceSet = Path.Combine( BasePhysicalPath, "App_GlobalResources",ResourceSet);
                }
 
                FileInfo fi = new FileInfo(ResourceSet);
@@ -616,7 +616,7 @@ namespace Westwind.Globalization
 
             // We need to create a Web relative path (ie. admin/myresources.resx)
             string relPath = basePhysicalPath.Replace(BasePhysicalPath, "");
-            relPath = relPath.Replace("\\", "/");
+            relPath = DbResourceUtils.NormalizePath(relPath);
 
             // Import the base path first
             ImportDirectoryResources(basePhysicalPath, relPath);
@@ -1024,10 +1024,10 @@ namespace Westwind.Globalization
     <value>2.0</value>
   </resheader>
   <resheader name=""reader"">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name=""writer"">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
 </root>";
 
