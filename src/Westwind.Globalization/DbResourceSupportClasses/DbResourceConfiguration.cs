@@ -100,6 +100,29 @@ namespace Westwind.Globalization
         public string ConnectionString { get; set; } = "*** ENTER A CONNECTION STRING OR connectionStrings ENTRY HERE ***";
 
         /// <summary>
+        /// Determines which database provider is used. internally sets the DbResourceDataManagerType
+        /// when set.
+        /// </summary>
+        public DbResourceProviderTypes DataProvider
+        {
+            get { return _dataAcessProviderType; }
+            set
+            {
+                if (value == DbResourceProviderTypes.SqlServer)
+                    DbResourceDataManagerType = typeof(DbResourceSqlServerDataManager);
+                else if (value == DbResourceProviderTypes.MySql)
+                    DbResourceDataManagerType = typeof(DbResourceMySqlDataManager);
+                else if (value == DbResourceProviderTypes.SqLite)
+                    DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);
+                else if (value == DbResourceProviderTypes.SqlServerCompact)
+                    DbResourceDataManagerType = typeof(DbResourceSqlServerCeDataManager);
+
+                _dataAcessProviderType = value;
+            }
+        }
+        private DbResourceProviderTypes _dataAcessProviderType = DbResourceProviderTypes.SqlServer;
+
+        /// <summary>
         /// Database table name used in the database
         /// </summary>
         public string ResourceTableName { get; set; } = "Localizations";
@@ -211,8 +234,7 @@ namespace Westwind.Globalization
 
 
         [JsonIgnore]
-        public List<IResourceSetValueConverter> ResourceSetValueConverters = new List<IResourceSetValueConverter>();
-
+        public List<IResourceSetValueConverter> ResourceSetValueConverters = new List<IResourceSetValueConverter>();              
 
         /// <summary>
         /// Allows you to override the data provider used to access resources.
@@ -224,7 +246,7 @@ namespace Westwind.Globalization
         [XmlIgnore]
         [JsonIgnore]
         [NonSerialized]
-        public Type DbResourceDataManagerType = typeof(DbResourceSqlServerDataManager);
+        public Type DbResourceDataManagerType = typeof(DbResourceSqlServerDataManager); 
 
         /// <summary>
         /// Internally used handler that is generically set to execute authorization
@@ -462,4 +484,6 @@ namespace Westwind.Globalization
         CSharp,
         Vb
     }
+
+    
 }

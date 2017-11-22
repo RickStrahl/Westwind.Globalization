@@ -48,16 +48,23 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 // Resource Mode - Resx or DbResourceManager                
                 opt.ResourceAccessMode = ResourceAccessMode.DbResourceManager;  // ResourceAccessMode.Resx
 
+
+                // *** override provider configuration
+                // *** use ConnectionString + DataProvider (or DbResourceManagerType)
+
                 // Sql Server
-                opt.ConnectionString = "server=.;database=localizations;integrated security=true;";
+                // opt.ConnectionString = "server=.;database=localizations;integrated security=true;";
+                // opt.ConnectionString = "server=.;database=localizations;uid=localizations;pwd=local;";
+                // opt.DataProvider = DbResourceProviderTypes.SqlServer;
 
                 // SqLite
                 //opt.ConnectionString = "Data Source=./Data/SqLiteLocalizations.db";
-                //opt.DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);                
+                // // opt.DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);                
+                //opt.DataProvider = DbResourceProviderTypes.SqLite;
 
                 // MySql
                 //opt.ConnectionString = "server=localhost;uid=testuser;pwd=super10seekrit;database=Localizations;charset=utf8";
-                //opt.DbResourceDataManagerType = typeof(DbResourceMySqlDataManager);
+                //opt.DataProvider = DbResourceProviderTypes.MySql;
 
                 opt.ResourceTableName = "localizations";
                 opt.AddMissingResources = false;

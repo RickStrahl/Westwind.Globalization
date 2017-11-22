@@ -2065,7 +2065,9 @@ namespace Westwind.Globalization
     {
         SqlServer,
         MySql,
-        SqLite
+        SqLite,
+        SqlServerCompact,
+        NotSet        
     }
 
     /// <summary>
