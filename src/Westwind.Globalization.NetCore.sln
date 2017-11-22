@@ -5,19 +5,19 @@ VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{7FC6C7F0-A67A-41EC-A2B1-43CF095726D4}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\ChangeLog.md = ..\..\ChangeLog.md
-		..\..\Readme.md = ..\..\Readme.md
+		..\ChangeLog.md = ..\ChangeLog.md
+		..\Readme.md = ..\Readme.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Westwind.Globalization", "..\Westwind.Globalization\Westwind.Globalization.csproj", "{51DECE39-764C-4C32-A57A-D93A5FD9BD6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Westwind.Globalization", "Westwind.Globalization\Westwind.Globalization.csproj", "{51DECE39-764C-4C32-A57A-D93A5FD9BD6A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample and Tests", "Sample and Tests", "{0BA85EAE-8A25-4B4A-8ACF-553D14C3BAE1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WestWind.Globalization.Sample.AspNetCore", "WestWind.Globalization.Sample.AspNetCore\WestWind.Globalization.Sample.AspNetCore.csproj", "{83736D05-955E-4C4E-8C0E-41FE87F11F27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WestWind.Globalization.Sample.AspNetCore", "NetCore\WestWind.Globalization.Sample.AspNetCore\WestWind.Globalization.Sample.AspNetCore.csproj", "{83736D05-955E-4C4E-8C0E-41FE87F11F27}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Westwind.Globalization.AspnetCore", "Westwind.Globalization.AspnetCore\Westwind.Globalization.AspnetCore.csproj", "{8AA6A3DE-B7DE-449B-8E2B-59997032F829}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Westwind.Globalization.AspnetCore", "NetCore\Westwind.Globalization.AspnetCore\Westwind.Globalization.AspnetCore.csproj", "{8AA6A3DE-B7DE-449B-8E2B-59997032F829}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Westwind.Globalization.Test.NetCore", "Westwind.Globalization.Test.NetCore\Westwind.Globalization.Test.NetCore.csproj", "{36254AF1-086A-4786-8B92-6653C15EB22F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Westwind.Globalization.Test.NetCore", "NetCore\Westwind.Globalization.Test.NetCore\Westwind.Globalization.Test.NetCore.csproj", "{36254AF1-086A-4786-8B92-6653C15EB22F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
