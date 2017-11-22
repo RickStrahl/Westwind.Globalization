@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -780,6 +781,13 @@ namespace Westwind.Globalization.Administration
 
             var config = DbResourceConfiguration.Current;
 
+
+            var rt = typeof(IHostingEnvironment)
+                .GetTypeInfo()
+                .Assembly
+                .GetCustomAttribute<AssemblyFileVersionAttribute>();
+            var v = new Version(rt.Version);
+
             return Json(new
             {
                 //ProviderFactory = providerFactory,
@@ -792,10 +800,13 @@ namespace Westwind.Globalization.Administration
                 config.ResourceBaseNamespace,
                 config.StronglyTypedGlobalResource,
                 config.GoogleApiKey,
-                config.BingClientId,                
+                config.BingClientId,
                 config.AddMissingResources,
                 ResourceAccessMode = config.ResourceAccessMode.ToString(),
-                Os = System.Runtime.InteropServices.RuntimeInformation.OSDescription                                
+
+                Os = System.Runtime.InteropServices.RuntimeInformation.OSDescription,
+                AspNetVersion = v.ToString()
+                
             },jsonSettings);
         }
 
