@@ -35,7 +35,7 @@ Version 3.0 adds support for the 2.0 versions of .NET Standard, .NET Core and AS
 
 <a name="nuget"></a>
 ### Installation
-Installation is different depending on which version of .NET you are running under. **.NET Core** and **Full Framework** use different project types and NuGet Packages for the Web support.
+Installation is different depending on which version of .NET you are running under **.NET Core** and **Full Framework** use different project types and NuGet Packages for the Web support.
 
 > #### Limited non-Windows Support for Admin Features
 > The admin features of this package have not been fully ported to non-Windows platforms. Specifically, any of the RESX and Import Export features will not work on non-windows platforms currently. However runtime database access is fully functional.
@@ -48,16 +48,19 @@ Please read the installation instructions below to configure once you've install
 ```
 PM> Install-Package Westwind.Globalization.AspNetCore
 ```
-If you're not using a Web Project you can just use the core package:
+If you're not using a Web Project you can just use the base package:
 
 ```
 PM> Install-Package Westwind.Globalization
 ```
 
-If you want to use the Administration Web UI, you have to download and add the HTML components to your application. Download from:
-
-* [Documentation for installing Localization Admin Files](https://github.com/RickStrahl/Westwind.Globalization/tree/master/DownloadableAssets)
-* [Localization Admin  Html Assets Download](https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)
+> #### Administration Web UI: Separate Download
+> Due to a change in NuGet support in .NET Core we can no longer package content as part of NuGet packages. As a result a separate download is required to add the Localization Admin UI. You can download it from:
+> 
+> * [Documentation for installing Localization Admin Files](https://github.com/RickStrahl/Westwind.Globalization/tree/master/DownloadableAssets)
+> * [Localization Admin  Html Assets Download](https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)
+>
+> Unzip the contents of the Zip file into your project folder root, which creates the `./wwwroot/LocalizationAdmin` Web folder and adds related resources to `./Properties`.
 
 #### To Install on .NET Framework
 Please read the Installation Section below or watch the [Getting Started Video](https://youtu.be/ABR7ISppB1k), which describes how to install the packages, configure the project, import existing re
@@ -216,17 +219,21 @@ ASP.NET Core integration works in combination with ASP.NET Core new Localization
 ### ASP.NET Core Configuration
 Configuration can be accomplished in 3 ways:
 
-1. Using a `dbResourceConfiguration.json` file
-2. Using ASP.NET Core `IConfiguration` functionality
-(which includes `appsettings.json support, Environment and User Secrets store)
-3. Explicit configuration via `AddWestwindGlobalization(opt => return true)`
+1. Using a standalone `dbResourceConfiguration.json` file
+2. Using `appsettings.json` in a `DbResourceProvider` object
+3. Additional ASP.NET Core `IConfiguration` functionality configured
+(ie. Environment variables, user secrets)
+4. Explicit configuration via `AddWestwindGlobalization(opt => return true)`
+
+Configuration values are applied in the order listed, with later assignments over-writing earlier settings.
 
 #### DbResourceConfiguration
-ASP.NET Core uses a `DbResourceConfiguration.json` file for configuration:
+You can create a standalone `DbResourceConfiguration.json` file for configuration that works both in full framework and .NET Core:
 ```json
 {
   "ResourceAccessMode": "DbResourceManager",
   "ConnectionString": "server=.;database=localizations;integrated security=true;",
+  "DataProvider": "SqlServer",
   "ResourceTableName": "Localizations",
   "ResxExportProjectType": "Project",
   "ResxBaseFolder": "~/Properties/",
@@ -241,9 +248,11 @@ ASP.NET Core uses a `DbResourceConfiguration.json` file for configuration:
 If this file exists configuration values are read from it.
 
 #### ASP.NET Core IConfiguration
-Westwind.Globalization also registers the `DbResourceConfiguration` instance as an `IOptions<DbResourceConfiguration>` instance which allows strongly typed access to the configuration and allows configuration via:
+For ASP.NET Core operation Westwind.Globalization also registers the `DbResourceConfiguration` instance as `IOptions<DbResourceConfiguration>` which gives strongly typed access to the configuration via depedency injection. 
 
-* appsettings.json
+This means you can use any configured configuration providers - most commonly:
+
+* appsettings.json using a `DbResourceConfiguration` object
 * Environment variables
 * User Secrets store
 
@@ -255,6 +264,7 @@ You can store configuration settings in `appsettings.json` like this:
   "DbResourceConfiguration": {
     "ResourceAccessMode": "DbResourceManager",
     "ConnectionString": "server=.;database=localizations;integrated security=true;",
+    "DataProvider": "SqlServer",
     "ResourceTableName": "Localizations",
     "StronglyTypedGlobalResource": "~/Properties/Resources.cs",
     "ResourceBaseNamespace": "AppResources",
@@ -267,9 +277,12 @@ You can store configuration settings in `appsettings.json` like this:
   }
 }
 ```
-If provided the `appsettings.json file overrides `DbResourceConfiguration.json`. We recommend you only use one of these.
+If provided the `appsettings.json` file overrides `DbResourceConfiguration.json`. 
 
-You also need to explicitly enable localization features in ASP.NET Core using the following code in the `Startup.cs` `ConfigureServices()` method:
+We recommend you only use one of the files to avoid confusion. For ASP.NET Core projects we recommend you store settings in `appsettings.json` since that gives you dependency injection for `IOptions<DbResourceConfiguration>` as well as putting configuration settings into a well-known location.
+
+### Enabling West Wind Globalization in ASP.NET Core
+You also need to explicitly enable localization features in ASP.NET Core using the following code in the `Startup.cs` file's `ConfigureServices()` method:
 
 ```cs
 public void ConfigureServices(IServiceCollection services)
