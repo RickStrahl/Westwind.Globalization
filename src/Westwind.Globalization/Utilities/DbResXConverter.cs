@@ -2,7 +2,7 @@
 /*
  **************************************************************
  *  Author: Rick Strahl 
- *          © West Wind Technologies, 2009-2015
+ *          ï¿½ West Wind Technologies, 2009-2015
  *          http://www.west-wind.com/
  * 
  *
@@ -28,7 +28,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  **************************************************************  
 */
-#endregion
+#endregion 
 
 using System;
 using System.Collections;
@@ -100,8 +100,9 @@ namespace Westwind.Globalization
             get { return _basePhysicalPath; }
             set 
             {
-                if (value != null && !value.EndsWith("\\"))
-                    value += "\\";
+                
+                if (value != null && !value.EndsWith(Path.DirectorySeparatorChar.ToString()))
+                    value += Path.DirectorySeparatorChar;
 
                 _basePhysicalPath = value; 
             }
