@@ -1,16 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup Condition=" '$(OS)' != 'Windows_NT' ">
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(OS)' == 'Windows_NT' "> 
-    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+  <PropertyGroup>
+   <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
   </PropertyGroup>
   
   <PropertyGroup>
     <!-- <TargetFrameworks>netstandard2.0;net45</TargetFrameworks> -->
-    <Version>3.0.0-preview2-11</Version>
+    <Version>3.0.0-rc1</Version>
     <Authors>Rick Strahl</Authors>
     <Company>West Wind Technologies</Company>
     <Description>West Wind Globalization provides database localization providers for .NET 4.5+ and .NET Core 2+. This package also contains a number of Localization helpers to import and convert Resx resources, provide easy locale switching. Supported Db providers: Sql Server, SqLite, MySql.
@@ -29,7 +25,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageReleaseNotes>.NET Standard 2.0 and .NET Core Support</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <FileVersion>3.0.11.0</FileVersion>
+    <FileVersion>3.0.15.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>    
@@ -45,6 +41,10 @@
     <DefineConstants>NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45'">
+    <DefineConstants>NET45;NETFULL</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <Reference Include="mscorlib" />
     <Reference Include="System" />
@@ -56,31 +56,7 @@
     <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
-  </ItemGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45'">
-    <DefineConstants>NET45;NETFULL</DefineConstants>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <Reference Include="System.Design">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Design.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
+    <Reference Include="System.Design" />
   </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  
 </Project>

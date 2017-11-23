@@ -36,10 +36,5 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>    
-    
-  </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452'">
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.106" />
-  </ItemGroup>
+
 </Project>

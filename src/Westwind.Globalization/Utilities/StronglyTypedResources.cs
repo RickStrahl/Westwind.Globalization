@@ -46,8 +46,6 @@ using System.Linq;
 
 #if NETFULL
 using System.Resources.Tools;
-using System.Web;
-//using System.Resources.Tools;
 using Microsoft.CSharp;
 using Microsoft.VisualBasic;
 #endif
