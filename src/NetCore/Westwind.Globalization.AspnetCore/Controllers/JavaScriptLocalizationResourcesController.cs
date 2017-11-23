@@ -9,7 +9,9 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using Westwind.Globalization;
@@ -37,10 +39,13 @@ namespace WestWind.Globalization.AspNetCore.Controllers
 
         protected IHostingEnvironment Host { get; }
 
-        public JavaScriptLocalizationResourcesController(IHostingEnvironment host, DbResourceConfiguration config)
+        protected IStringLocalizer Localizer { get;  }
+
+        public JavaScriptLocalizationResourcesController(IHostingEnvironment host, DbResourceConfiguration config, IStringLocalizer<JavaScriptLocalizationResourcesController> localizer)
         {
             Config = config;
             Host = host;
+            Localizer = localizer;
         }
 
         // http://localhost:5000/JavaScriptResourceHandler.axd?ResourceSet=LocalizationForm&LocaleId=auto&VarName=resources&ResourceMode=resdb
@@ -55,6 +60,7 @@ namespace WestWind.Globalization.AspNetCore.Controllers
 
         public ActionResult ProcessRequest()
         {
+
             var Request = HttpContext.Request;
            
             string resourceSet = Request.Query["ResourceSet"];
@@ -81,7 +87,21 @@ namespace WestWind.Globalization.AspNetCore.Controllers
 
             // pick current UI Culture
             if (localeId == "auto")
-                localeId = Thread.CurrentThread.CurrentUICulture.IetfLanguageTag;
+            {
+                try
+                {
+                    // Use ASP.NET Core RequestLocalization Mapping
+                    var cultureProvider = HttpContext.Features.Get<IRequestCultureFeature>();
+                    if(cultureProvider != null)
+                        localeId = cultureProvider.RequestCulture.UICulture.IetfLanguageTag;
+                    else
+                        localeId = Thread.CurrentThread.CurrentUICulture.IetfLanguageTag;
+                }
+                catch
+                {
+                    localeId = Thread.CurrentThread.CurrentUICulture.IetfLanguageTag;
+                }
+            }            
 
             Dictionary<string, object> resDict = null;
 

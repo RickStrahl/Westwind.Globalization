@@ -4,6 +4,8 @@
 @using AppResources
 @using Controllers
 @using Globalization.AspNetCore.Controllers
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Localization
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Microsoft.Extensions.Localization
 @using Westwind.Globalization
@@ -18,13 +20,16 @@
 
 @{
     Layout = null;
-    string localeId = this.HttpContext.Request.Params("localeId");
+
+    // Manually setting threads is no longer supported
+    string localeId = HttpContext.Request.Params("culture");
     if (string.IsNullOrEmpty(localeId))
     {
-        localeId = CultureInfo.CurrentUICulture.IetfLanguageTag;
+        // Retrieve from RequestCultureProvider - Accept-header, Query, Cookie
+        var cultureProvider = HttpContext.Features.Get<IRequestCultureFeature>();
+        localeId = cultureProvider.RequestCulture.UICulture.IetfLanguageTag;
     }
-    CultureInfo.CurrentUICulture = new CultureInfo(localeId);
-    CultureInfo.CurrentCulture = new CultureInfo(localeId);
+
 }
 
 <!DOCTYPE html>
@@ -111,7 +116,7 @@
             </div>
             <div>
                 <form id="form1" name="form1" action="ResourceTest" method="GET">
-                    <select id="localeId" name="localeId"
+                    <select id="culture" name="culture"
                             onchange=" document.forms['form1'].submit(); "
                             class="form-control">
                         <option value="">Browser Default</option>
@@ -122,7 +127,7 @@
                     <script>
                     var localeId = '@localeId';
                     if (localeId) {
-                        var el = document.getElementById("localeId");
+                        var el = document.getElementById("culture");
                         for (var i = 0; i < el.options.length; i++) {
                             var opt = el.options[i];
                             if (opt.value === localeId)
@@ -210,7 +215,7 @@
     <!-- Generates a resources = { "HelloWorld": "Hello World", "Today": "Today" } style variable that contains all server side resources translated for this resource set-->
     @*<script src="@JavaScriptLocalizationResourcesController.GetJavaScriptResourcesUrl("resources","Resources",localeId)"></script>*@
     
-    <script src="~/api/JavaScriptLocalizationResources?ResourceSet=Resources&VarName=resources&localeId=auto&ResourceMode=ResDb"></script>
+    <script src="~/api/JavaScriptLocalizationResources?ResourceSet=Resources&VarName=resources&localeId=@localeId&ResourceMode=ResDb"></script>
     <script>
         document.querySelector("#JavaScriptHelloWorld").innerText = resources.HelloWorld;
     </script>
