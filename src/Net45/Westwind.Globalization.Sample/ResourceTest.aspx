@@ -4,7 +4,6 @@
 <%@ Import Namespace="System.Globalization" %>
 <%@ Import Namespace="System.Resources" %>
 <%@ Import Namespace="System.Threading" %>
-
 <%--Import the strongly typed resource namespace - if this fails strongly typed resources don't exist--%>
 <%@ Import Namespace="Westwind.Globalization.Sample.Properties" %>
 
@@ -23,7 +22,6 @@
     }
     
 </script>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,12 +40,10 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
      <![endif]-->
 
-    <title>DbResourceManager Test Page</title>
+    <title>DbResourceManager Test Page (WebForms)</title>
 
-    <link href="localizationAdmin/bower_components/bootstrap/dist/css/bootstrap.min.css"
-        rel="stylesheet" />
-    <link href="localizationAdmin/bower_components/fontawesome/css/font-awesome.min.css"
-        rel="stylesheet" />
+    <link href="localizationAdmin/scripts/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="localizationAdmin/scripts/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 
     <link href="localizationAdmin/css/localizationAdmin.css" rel="stylesheet" />
     <style>
@@ -64,48 +60,50 @@
 </head>
 
 <body data-resource-set="Resources">
-    <form runat="server" id="form1">
-    <div class="banner">
-        <div id="TitleBar">
-            <a href="./">
-                <img src="localizationAdmin/images/Westwind.Localization_128.png"
-                    style="height: 35px; float: left" />
-                <div style="float: left; margin-left: 5px; line-height: 1.2">
-                    <i style="color: steelblue; font-size: 0.8em; font-weight: bold;">West Wind Globalization</i><br />
-                    <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;">WebForms DbResourceManager
-                        Test</i>
-                </div>
-            </a>
-        </div>
-    </div>
-
-    <nav class="menubar " style="background: #727272;">
-        <ul id="MenuButtons" class="nav navbar-nav pull-right navbar">
-            <li>
-                <a href="localizationAdmin/">
-                    <i class="fa fa-gears"></i> Resource Editor
-                </a>                
-            </li>        
-            <li>
-                <a href="resourcetest.cshtml">
-                    <i class="fa fa-check-circle"></i> Razor Test Page
-                </a>
-            </li>       
-            <li>
-                <a href="javascript:{}" id="EditResources">
-                    <i class="fa fa-flag"></i> Edit Resources
-                </a>
-            </li>      
-            <li>
+   
+        <div class="banner">
+            <div id="TitleBar">
                 <a href="./">
-                    <i class="fa fa-home"></i>
+                    <img src="localizationAdmin/images/Westwind.Localization_128.png"
+                         style="height: 35px; float: left" />
+                    <div style="float: left; margin-left: 5px; line-height: 1.2">
+                        <i style="color: steelblue; font-size: 0.8em; font-weight: bold;">West Wind Globalization</i><br />
+                        <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;">
+                            Web Forms DbResourceManager Test
+                        </i>
+                    </div>
                 </a>
-            </li> 
-        </ul>
-        <div class="clearfix"></div>
-    </nav>
+            </div>
+        </div>
 
+        <nav class="menubar " style="background: #727272;">
+            <ul id="MenuButtons" class="nav navbar-nav pull-right navbar">
+                <li>
+                    <a href="localizationAdmin/">
+                        <i class="fa fa-gears"></i> Resource Editor
+                    </a>
+                </li>
+                <li>
+                    <a href="resourcetest.aspx">
+                        <i class="fa fa-check-circle"></i> WebForms Test Page
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:{}" id="EditResources">
+                        <i class="fa fa-flag"></i> Edit Resources
+                    </a>
+                </li>  
+                <li>
+                    <a href="~/">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </li>         
+            </ul>
+            <div class="clearfix"></div>
+        </nav>
 
+    
+<form runat="server" id="form2" style="height: 0; padding: 0; margin: 0;">
 
 
     <div class="well container" style="margin-top: 30px;">
@@ -252,7 +250,7 @@
     <!-- Enable Resource Editing --> 
 
 
-    <script src="LocalizationAdmin/bower_components/jquery/dist/jquery.min.js"></script>   
+    <script src="LocalizationAdmin/scripts/vendor/jquery.min.js"></script>   
     <script src="LocalizationAdmin/scripts/ww.resourceEditor.js"></script>
     <script>
         var toggleEditMode = false;

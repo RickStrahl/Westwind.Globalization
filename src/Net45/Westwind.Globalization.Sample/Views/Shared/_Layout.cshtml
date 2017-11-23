@@ -9,7 +9,7 @@
 
     @RenderSection("headertop", required: false)
 
-    <link rel="shortcut icon" href="localizationAdmin\favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="~/LocalizationAdmin/favicon.ico" type="image/x-icon" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 
@@ -23,12 +23,12 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
      <![endif]-->    
 
-    <link href="~/localizationAdmin/bower_components/bootstrap/dist/css/bootstrap.min.css"
+    <link href="~/LocalizationAdmin/scripts/vendor/bootstrap/dist/css/bootstrap.min.css"
           rel="stylesheet" />
-    <link href="~/localizationAdmin/bower_components/fontawesome/css/font-awesome.min.css"
+    <link href="~/LocalizationAdmin/scripts/vendor/font-awesome/css/font-awesome.min.css"
           rel="stylesheet" />
 
-    <link href="~/localizationAdmin/css/localizationAdmin.css" rel="stylesheet" />
+    <link href="~/LocalizationAdmin/css/localizationAdmin.css" rel="stylesheet" />
     <style>
         label {
             display: block;
@@ -36,7 +36,7 @@
             margin-bottom: 0;
         }
     </style>
-    <script src="~/LocalizationAdmin/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="~/LocalizationAdmin/scripts/vendor/jquery.min.js"></script>
     @RenderSection("header", required: false)
 </head>
 <body>
@@ -86,7 +86,7 @@
             </footer>
         </div>
 
-        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script src="~/LocalizationAdmin/scripts/vendor/jquery.min.js"></script>
         <script src="~/Scripts/bootstrap.min.js"></script>
         @RenderSection("scripts", required: false)
     </body>
