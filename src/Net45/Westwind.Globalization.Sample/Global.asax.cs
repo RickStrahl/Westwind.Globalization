@@ -31,12 +31,15 @@ namespace Westwind.Globalization.Sample
             // this is the default and doesn't need to be explicitly set
             //DbResourceConfiguration.Current.ConnectionString = "SqlServerLocalizations";
             //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqlServerDataManager);
+            // DbResourceConfiguration.Current.DataProvider = DbResourceProviderTypes.SqlServer;
 
             //DbResourceConfiguration.Current.ConnectionString = "MySqlLocalizations";
             //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceMySqlDataManager);
 
-            //DbResourceConfiguration.Current.ConnectionString = "SqLiteLocalizations";
-            //DbResourceConfiguration.Current.DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);            
+            DbResourceConfiguration.Current.ConnectionString = "SqLiteLocalizations";
+            //DbResourceConfiguration.Current.ConnectionString = "Data Source=.\\App_Data\\SqLiteLocalizations.db";
+            DbResourceConfiguration.Current.DataProvider = DbResourceProviderTypes.SqLite;
+            DbResourceConfiguration.Current.ResourceTableName = "TestData";
 
             // for all other providers explicitly override the DbResourceDataManagerType
             //DbResourceConfiguration.Current.ConnectionString = "SqlServerCeLocalizations";

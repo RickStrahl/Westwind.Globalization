@@ -1,0 +1,16 @@
+﻿{
+  "ConnectionString": "*** ENTER A CONNECTION STRING OR connectionStrings ENTRY HERE ***",
+  "DataProvider": "SqlServer",
+  "ResourceTableName": "Localizations",
+  "ActiveConfiguration": null,
+  "StronglyTypedGlobalResource": "~/Properties/Resources.cs",
+  "ResourceBaseNamespace": "AppResources",
+  "ResxExportProjectType": "Project",
+  "ResxBaseFolder": "~/Properties/",
+  "StringLocalizerResourcePath": "Properties",
+  "AddMissingResources": true,
+  "ResourceAccessMode": "DbResourceManager",
+  "LocalizationFormWebPath": "~/LocalizationAdmin/",
+  "BingClientId": null,
+  "GoogleApiKey": null
+}
