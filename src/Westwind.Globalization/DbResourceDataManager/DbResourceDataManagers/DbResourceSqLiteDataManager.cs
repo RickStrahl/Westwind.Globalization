@@ -157,7 +157,7 @@ namespace Westwind.Globalization
                 if (reader == null)
                     throw new InvalidOperationException(Resources.ConnectionFailed + ": " + data.ErrorMessage);
 
-                if (reader == null || !reader.HasRows)
+                if (!reader.HasRows)
                 {
                     SetError(data.ErrorMessage);
                     return false;
@@ -177,16 +177,20 @@ namespace Westwind.Globalization
             if (connectionString == null)
                 connectionString = Configuration.ConnectionString;
 
-            var provider = DataUtils.GetSqlProviderFactory(DataAccessProviderTypes.SqLite);
-            if (provider == null)
-                throw new System.ArgumentException("Unable to load SqLite Data Provider. Make sure you have a reference to Microsoft.Data.Sqlite (.NET Core) or System.Data.SQLite (.NET 4.5) and you've referenced a type out of this assembly during application startup.");
+            DbProviderFactory provider = null;
+            try
+            {
+                provider = DataUtils.GetDbProviderFactory(DataAccessProviderTypes.SqLite);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Unable to load SqLite Data Provider. Make sure you have a reference to Microsoft.Data.Sqlite (.NET Core) or System.Data.SQLite (.NET 4.5).");
+            }
 
-            var db = new SqlDataAccess(connectionString, provider);
-            
+            var db = new SqlDataAccess(connectionString, provider);            
             db?.ExecuteNonQuery("PRAGMA journal_mode=WAL;");
 
             return db;
-
         }
 
         public override bool CreateLocalizationTable(string tableName = null)

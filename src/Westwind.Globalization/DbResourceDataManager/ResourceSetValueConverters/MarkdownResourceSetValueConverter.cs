@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommonMark;
+﻿using CommonMark;
 
 namespace Westwind.Globalization
 {
@@ -40,7 +35,7 @@ namespace Westwind.Globalization
 
         string ConvertMarkDown(string resourceValue)
         {
-            string html = CommonMark.CommonMarkConverter.Convert(resourceValue);
+            string html = CommonMarkConverter.Convert(resourceValue);
             return html;
         }
 

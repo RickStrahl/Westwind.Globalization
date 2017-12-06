@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using System.Data.Common;
 using Westwind.Utilities;
 using Westwind.Utilities.Data;
 
@@ -155,13 +156,19 @@ namespace Westwind.Globalization
             if (connectionString == null)
                 connectionString = Configuration.ConnectionString;
 
-            var provider = DataUtils.GetSqlProviderFactory(DataAccessProviderTypes.MySql);
-            if (provider == null)
-                throw new System.ArgumentException("Unable to load MySQL Data Provider. Make sure you have a reference to MySql.Data and you've referenced a type out of this assembly during application startup.");
+            DbProviderFactory provider = null;
+            try
+            {
+                provider = DataUtils.GetDbProviderFactory(DataAccessProviderTypes.MySql);
+            }
+            catch
+            {
+                   throw new System.InvalidOperationException(
+                          "Unable to load MySQL Data Provider. Make sure you have a reference to MySql.Data.");
+            }
 
             var db = new SqlDataAccess(connectionString, provider);
             return db;
-
         }
 
 
