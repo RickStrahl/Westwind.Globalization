@@ -704,9 +704,13 @@ namespace Westwind.Globalization.Administration
                 if (string.IsNullOrEmpty(DbResourceConfiguration.Current.BingClientId))
                     result = ""; // don't do anything -  just return blank 
                 else
-                    result = translate.TranslateBing(text, @from, to);
+                    result = translate.TranslateBing(text, from, to);
             }
-
+            else if (service == "deepl")
+            {
+                result = translate.TranslateDeepL(text, from, to);
+            }
+            
             if (result == null)
                 result = translate.ErrorMessage;
 

@@ -21,11 +21,12 @@
         vm.inputText = "";
         vm.googleTranslation = "";
         vm.bingTranslation = "";
+        vm.deeplTranslation = "";
         vm.fromLang = "en";
         vm.toLang = "de";
         vm.callingId = null;
         vm.resource = null;
-        vm.baseUrl = "../api/LocalizationAdministration/";
+        vm.baseUrl = "/api/LocalizationAdministration/";
 
         vm.error = {
             message: null,
@@ -50,6 +51,7 @@
         vm.onTranslateClick = function () {            
             vm.translate("google");
             vm.translate("bing");
+            vm.translate("deepl");
         };
 
 
@@ -63,6 +65,8 @@
             var val = vm.googleTranslation;
             if (type == "bing") 
                 val = vm.bingTranslation;
+           if (type == "deepl")
+               val = vm.deeplTranslation;
             
             // notify caller
             $scope.$root.$emit("translateComplete", lang, val);
@@ -81,8 +85,10 @@
                 .success(function (result) {
                     if (type == "google")
                         vm.googleTranslation = result;
-                    else
+                    else if(type == "bing")
                         vm.bingTranslation = result;
+                    else if (type == "deepl")
+                        vm.deeplTranslation = result;
                 })
                 .error(function() {
                     var err = ww.angular.parseHttpError(arguments);

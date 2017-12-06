@@ -230,6 +230,55 @@ namespace Westwind.Globalization
             return result;
         }
 
+        public string TranslateDeepL(string text, string fromCulture, string toCulture)
+        {
+
+            fromCulture = fromCulture.ToUpper();
+            toCulture = toCulture.ToUpper();
+
+            string url = "https://www.deepl.com/jsonrpc";
+            string res;
+            try
+            {
+                var json = @"{
+    ""jsonrpc"": ""2.0"",
+    ""method"": ""LMT_handle_jobs"",
+    ""params"": {
+        ""jobs"": [
+            {
+                ""kind"":""default"",
+                ""raw_en_sentence"": ##jsonText##
+            }
+        ],
+        ""lang"": {
+            ""user_preferred_langs"": [
+                ##fromLanguage##,
+                ##toLanguage##
+            ],
+            ""source_lang_user_selected"": ##fromLanguage##,
+            ""target_lang"": ##toLanguage##
+        },
+        ""priority"": -1,
+        ""id"": 1
+    }
+}"
+                    .Replace("##jsonText##", JsonConvert.SerializeObject(text))
+                    .Replace("##fromLanguage##", JsonConvert.SerializeObject(fromCulture))
+                    .Replace("##toLanguage##", JsonConvert.SerializeObject(toCulture));
+
+                var web = new WebClient();
+                var jsonResult = web.UploadString(url, json);
+
+                dynamic jval = JValue.Parse(jsonResult);
+                string translatedText = jval.result.translations[0].beams[0].postprocessed_sentence;
+                return translatedText;
+            }
+            catch (Exception e)
+            {
+                ErrorMessage = e.GetBaseException().Message;
+                return null;
+            }            
+        }
 
         /// <summary>
         /// Uses the Bing API service to perform translation
@@ -258,14 +307,14 @@ namespace Westwind.Globalization
                     return null;
             }
 
-            string serviceUrl = "https://api.microsofttranslator.com/v2/Http.svc/Translate?" +                                
+            string serviceUrl = "https://api.microsofttranslator.com/v2/Http.svc/Translate?" +
                                 "&text=" + text +
                                 "&from=" + fromCulture +
                                 "&to=" + toCulture +
                                 "&contentType=text/plain";
             string res;
             try
-            {                
+            {
                 var web = new WebClient();
                 web.Headers.Add("Authorization", "Bearer " + accessToken);
                 res = web.DownloadString(serviceUrl);
@@ -313,7 +362,7 @@ namespace Westwind.Globalization
                 {
                     HttpVerb = "POST"
                 });
-                web.Encoding = Encoding.UTF8;                
+                web.Encoding = Encoding.UTF8;
                 web.Headers.Add("Ocp-Apim-Subscription-Key", apiKey);
                 res = web.UploadString(authBaseUrl, "");
             }
