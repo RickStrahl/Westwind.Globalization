@@ -800,6 +800,12 @@ using Westwind.Globalization;
             return IsVb;
         }
 
+
+        /// <summary>
+        /// Creates a safe variable name
+        /// </summary>
+        /// <param name="phrase"></param>
+        /// <returns></returns>
         public static string SafeVarName(string phrase)
         {
             if (phrase == null)
@@ -807,13 +813,13 @@ using Westwind.Globalization;
 
             StringBuilder sb = new StringBuilder(phrase.Length);
 
-            // First letter is always upper case
+            // First letter is always upper case alpha char
             bool nextUpper = false;
             bool isFirst = true;
 
             foreach (char ch in phrase)
             {
-                if (isFirst && char.IsDigit(ch))
+                if (isFirst && !char.IsLetter(ch))
                     sb.Append("_"); // prefix
                 
 
