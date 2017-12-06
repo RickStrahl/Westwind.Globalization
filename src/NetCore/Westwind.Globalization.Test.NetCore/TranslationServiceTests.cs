@@ -62,6 +62,36 @@ namespace Westwind.Globalization.Test
 
 
         [Test]
+        public void DeepLTest()
+        {
+            TranslationServices service = new TranslationServices();
+
+            
+            // use app.config clientid and clientsecret
+            
+            string result = service.TranslateDeepL("Life is one big wave with a giant bottom turn!", "en",
+                "de");
+            Assert.IsNotNull(result);
+
+            Console.WriteLine(result);
+
+            string result2 = service.TranslateDeepL(result, "de", "en");
+            Console.WriteLine(result2);
+
+            string result3 = service.TranslateDeepL("Here's some text \"in quotes\" that needs to encode properly", "en",
+                "de");
+            Console.WriteLine(result3);
+
+            string ttext =
+                "Here's some text \"in quotes\" that needs to encode properly Really, where do I go, what do I do, how do I do it and when can it be done, who said it, where is it and whatever happened to Jim, what happened to Helmut when he came home I thought he might have been dead";
+            Console.WriteLine(ttext);
+            string result4 = service.TranslateDeepL(ttext, "en", "de");
+
+            Console.WriteLine(result4);
+        }
+
+
+        [Test]
         public void BingTest()
         {
             TranslationServices service = new TranslationServices();
