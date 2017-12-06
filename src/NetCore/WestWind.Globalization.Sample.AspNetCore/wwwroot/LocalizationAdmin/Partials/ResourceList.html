@@ -8,31 +8,26 @@
          ng-repeat="resource in view.resourceItems">
 
         <div class="input-group" style="margin-top: 2px;">
-            <span class="input-group-addon active" style="cursor: pointer"
+            <span class="input-group-addon active " style="cursor: pointer"
                   ng-click="view.onLocaleIdChanged(resource)">
-                <div class="locale-id">
+                <span class="locale-id">
                     {{resource.LocaleId ? resource.LocaleId : 'Invariant'}}
-                </div>
+                </span>
             </span>
+            <!--ng-change="view.onStringUpdate(resource)"-->
+            
             <form name="resourceForm" id="form1">
                 <textarea id="value_{{$index}}" name="value_{{$index}}"
-                            class="form-control"
-                            ng-focus="view.onLocaleIdChanged(resource)"
-                            data-localeid="{{resource.LocaleId}}"
-                            ng-model="resource.Value"
-                            ww-rtl="resource.IsRtl"
-                            ng-dblclick="view.onResourceFullscreenEdit($event, resource, resourceForm)"
-                            ng-keydown="view.onResourceKeyDown($event,resource,resourceForm)">                    
+                          class="form-control"
+                          ng-focus="view.onLocaleIdChanged(resource)"
+                          data-localeid="{{resource.LocaleId}}"
+                          ng-model="resource.Value"
+                          ng-blur="view.onStringUpdate(resource,$event)"
+                          ww-rtl="resource.IsRtl"
+                          ng-dblclick="view.onResourceFullscreenEdit($event, resource, resourceForm)"
+                >                    
                 </textarea>
             </form>
-            <span class="input-group-addon"
-                  title="{{::view.dbRes('SaveResource')}}"
-                  aria-label="{{::view.dbRes('SaveResource')}}"
-                  tabindex="0" role="button"
-                  ng-class="{'color-check': resourceForm.$dirty, 'color-disabled': !resourceForm.$dirty }"
-                  ng-enabled="resourceForm.$dirty"
-                  ng-click="view.onStringUpdate(resource)"
-                  data-resource-id="SaveResource"><i class="fa fa-check"></i></span>
             <span class="input-group-addon"
                   tabindex="-1"
                   aria-label="{{::view.dbRes('TranslateResource')}}"
