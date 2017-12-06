@@ -1,7 +1,7 @@
 # West Wind Globalization
 ### Database Resource Localization for .NET
 
-> ### Version 3.0 status is:RC1
+> ### Version 3.0 status is: RC1
 > Version 3.0 is currently in RC stage and the documentation is still under construction. We're feature complete and fully operational and getting close to a final release. Please bear with us.
 
 This library and tooling provides easy to use database resource managers and providers that allow you to use a database for storing localization resources. Unlike static Resx resources, database resources are dynamic, can be changed at runtime and are editable by multiple users at the same time. The custom resource managers, providers and ASP.NET Core StringLocalizer  use the standard .NET resource infrastructure, so other than startup configuration there are no code changes when switching from using traditional Resx resources. 
@@ -288,6 +288,7 @@ You also need to explicitly enable localization features in ASP.NET Core using t
 public void ConfigureServices(IServiceCollection services)
 {
     // Standard ASP.NET Localization features are recommended
+    // Make sure this is done FIRST!
     services.AddLocalization(options =>
     {
         // I prefer Properties over the default `Resources` folder
@@ -295,14 +296,17 @@ public void ConfigureServices(IServiceCollection services)
         // most people do for shared resources.
         options.ResourcesPath = "Properties";
     });
-
-
-    // Optional but recommended:  Override IStringLocalizer to use DbRes instances
-    services.AddSingleton(typeof(IStringLocalizerFactory), typeof(DbResStringLocalizerFactory));
-    services.AddSingleton(typeof(IHtmlLocalizerFactory), typeof(DbResHtmlLocalizerFactory));
     
-     
-    // Required: this enables West Wind Globalization
+
+    // Replace StringLocalizers with Db Resource Implementation
+    services.AddSingleton(typeof(IStringLocalizerFactory), 
+                          typeof(DbResStringLocalizerFactory));
+    services.AddSingleton(typeof(IHtmlLocalizerFactory),
+                          typeof(DbResHtmlLocalizerFactory));
+                          
+    
+    // Required: Enable Westwind.Globalization (opt parm is optional)
+    // shown here with optional manual configuration code
     services.AddWestwindGlobalization(opt =>
     {                
         // the default settings comme from DbResourceConfiguration.json if exists
@@ -310,11 +314,14 @@ public void ConfigureServices(IServiceCollection services)
         // to the DI system (DbResourceConfiguration)
 
         // Resource Mode - from Database (or Resx for serving from Resources)
-        opt.ResourceAccessMode = ResourceAccessMode.DbResourceManager;  // ResourceAccessMode.Resx
+        opt.ResourceAccessMode = ResourceAccessMode.DbResourceManager;  // .Resx
         
         // Make sure the database you connect to exists
-        opt.ConnectionString = "server=dev.west-wind.com;database=localizations;uid=localizations;pwd=local";
+        opt.ConnectionString = "server=.;database=localizations;uid=localizations;pwd=local";
         
+        // Database provider used - Sql Server is the default
+        opt.DataProvider = DbResourceProviderTypes.SqlServer;
+
         // The table in which resources are stored
         opt.ResourceTableName = "localizations";
         
@@ -330,6 +337,8 @@ public void ConfigureServices(IServiceCollection services)
 
     });
 
+    ...
+    
     services.AddMvc();
 }
 ```

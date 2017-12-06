@@ -1,10 +1,13 @@
 {
   "iisSettings": {
-    "windowsAuthentication": false,
+    "windowsAuthentication": true,
     "anonymousAuthentication": true,
-    "launchUrl": "http://localhost:5001/localizationadmin/index.html",
+    "iis": {
+      "applicationUrl": "http://localhost/WestWind.Globalization.Sample.AspNetCore",
+      "sslPort": 0
+    },
     "iisExpress": {
-      "applicationUrl": "http://0.0.0.0:5001/",
+      "applicationUrl": "http://localhost:5004/",
       "sslPort": 0
     }
   },
@@ -12,6 +15,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
+      "launchUrl": "http://localhost:5004/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
