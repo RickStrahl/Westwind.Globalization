@@ -10,7 +10,7 @@
 
     listController.$inject = ['$scope', '$timeout', '$upload', 'localizationService'];
 
-    function listController($scope, $timeout, $upload, localizationService) {
+    function listController($scope, $timeout, $upload,  localizationService) {
         console.log('list controller');
 
         var vm = this;
@@ -90,17 +90,19 @@
 
         vm.updateResource = function (resource) {            
             return localizationService.updateResource(resource)
-                .success(function() {
-                    vm.getResourceItems();
-                    showMessage(vm.dbRes('ResourceSaved'));
+                .success(function () {
+                     // reset the items and rebind
+                     vm.getResourceItems();
+                     showMessage(vm.dbRes('ResourceSaved'));                   
                 })
                 .error(parseError);
         };
 
-        vm.updateResourceString = function(value, localeId) {
+        vm.updateResourceString = function (value, localeId) {
             return localizationService.updateResourceString(value, vm.resourceId, vm.resourceSet, localeId, vm.activeResource.Comment)
-                .success(function() {
-                    vm.getResourceItems();
+                .success(function () {
+                    // reset the items and rebind                     
+
                     showMessage(vm.dbRes('ResourceSaved'));
                 })
                 .error(parseError);
@@ -128,19 +130,23 @@
 
         vm.getResourceItems = function getResourceItems() {            
             localizationService.getResourceItems(vm.resourceId, vm.resourceSet)
-                .success(function(resourceItems) {
-                    vm.resourceItems = resourceItems;
-                    if (vm.resourceItems.length > 0) {
-                        vm.activeResource = vm.resourceItems[0];
-                        for (var i = 0; i < vm.resourceItems.length; i++) {
-                            var resource = vm.resourceItems[i];
-                            if (!resource.Value) {
-                                resource.Value = !resource.Type
-                                    ? resource.Value
-                                    : 'binary: ' + resource.Type + ':' + resource.FileName;
+                .success(function (resourceItems) {
+                    //setTimeout(function() {
+                        vm.resourceItems = resourceItems;
+
+                        if (vm.resourceItems.length > 0) {
+                            vm.activeResource = vm.resourceItems[0];
+
+                            for (var i = 0; i < vm.resourceItems.length; i++) {
+                                var resource = vm.resourceItems[i];
+                                if (!resource.Value) {
+                                    resource.Value = !resource.Type
+                                        ? resource.Value
+                                        : 'binary: ' + resource.Type + ':' + resource.FileName;
+                                }
                             }
                         }
-                    }
+                    //},2000);
                 })
                 .error(parseError);
         };
@@ -159,27 +165,18 @@
                 vm.activeResource = resource;
             }
         };
-        vm.onStringUpdate = function onStringUpdate(resource) {
+        vm.onStringUpdate = function onStringUpdate(resource, event) {            
+            if (event) {                
+                var el = event.target;
+                // update only if empty                
+                if (el.className.indexOf("ng-dirty") < 0)
+                    return;
+            }
+
             vm.activeResource = resource;
             vm.editedResource = resource.Value;
-            vm.updateResourceString(resource.Value, resource.LocaleId);
-        };
-        vm.onResourceKeyDown = function onResourceKeyDown(ev, resource, form) {
-            // Ctrl-Enter - save and next field
-            if (ev.ctrlKey && ev.keyCode === 13) {
-                vm.onStringUpdate(resource);
-                $timeout(function() {
-                    // set focus to next field
-                    var el = $(ev.target);
-                    var id = el.prop("id").replace("value_", "") * 1;
-                    var $el = $("#value_" + (id + 1));
-                    if ($el.length < 1)
-                        $el = $("#value_0"); // loop around
-                    $el.focus();
-                }, 100);
-                $scope.resourceForm.$setPristine();
 
-            }
+            vm.updateResourceString(resource.Value, resource.LocaleId);
         };
         vm.onResourceFullscreenEdit = function(ev, resource) {
             $("#resource-editor").fullScreenEditor('show', {
@@ -246,8 +243,15 @@
         });
 
         vm.onResourceIdBlur = function() {
-                if (!vm.activeResource.Value)
-                    vm.activeResource.Value = vm.activeResource.ResourceId;
+            if (!vm.activeResource.Value) {                
+                localizationService.fromCamelCase(vm.activeResource.ResourceId)
+                    .success(function(text) {
+                        vm.activeResource.Value = text;
+                    })
+                    .error(function() {
+                        vm.activeResource.Value = vm.activeResource.ResourceId;
+                    });                
+            }
 
             },
             vm.onLocaleIdBlur = function(localeId) {

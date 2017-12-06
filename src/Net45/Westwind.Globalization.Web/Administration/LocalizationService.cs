@@ -584,6 +584,10 @@ namespace Westwind.Globalization.Web.Administration
                 else
                     result = translate.TranslateBing(text, @from, to);
             }
+            else if (service == "deepl")
+            {
+                result = translate.TranslateDeepL(text, from, to);
+            }
 
             if (result == null)
                 result = translate.ErrorMessage;

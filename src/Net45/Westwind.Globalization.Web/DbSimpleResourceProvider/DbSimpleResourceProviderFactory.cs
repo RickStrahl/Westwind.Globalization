@@ -41,7 +41,7 @@ namespace Westwind.Globalization
     /// For global resources it's the name of hte resource file, for local resources
     /// it's the full Web relative virtual path
     /// </summary>
-    [DesignTimeResourceProviderFactoryAttribute(typeof(DbDesignTimeResourceProviderFactory))]
+   // [DesignTimeResourceProviderFactoryAttribute(typeof(DbDesignTimeResourceProviderFactory))]
     public class DbSimpleResourceProviderFactory : ResourceProviderFactory
     {
         /// <summary>

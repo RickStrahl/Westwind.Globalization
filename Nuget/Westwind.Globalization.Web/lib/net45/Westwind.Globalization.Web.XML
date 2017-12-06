@@ -552,53 +552,6 @@
             is passed in the constructor.
             </summary>
         </member>
-        <member name="T:Westwind.Globalization.DbDesignTimeResourceProviderFactory">
-            <remarks>
-            Design-time resource provider to provide Generate Local Resources functionality.
-            </remarks>
-        </member>
-        <member name="T:Westwind.Globalization.DbDesignTimeResourceProviderFactory.DesignTimeGlobalResourceProvider">
-            <remarks>
-            Design-time resource provider for global resources.
-            </remarks>
-        </member>
-        <member name="T:Westwind.Globalization.DbDesignTimeResourceProviderFactory.DbDesignTimeLocalResourceProvider">
-            <remarks>
-            Design-time resource provider and writer for local resources.
-            </remarks>
-        </member>
-        <member name="M:Westwind.Globalization.DbDesignTimeResourceProviderFactory.DbDesignTimeLocalResourceProvider.GetFullPagePath">
-            <summary>
-            RAS Modified to read values from configiuration section
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.DbDesignTimeResourceProviderFactory.ResourceDictionary.Westwind#Globalization#DbDesignTimeResourceProviderFactory#IResourceDictionary#CreateResourceKey(System.Object)">
-            <summary>
-            Creates a new ResourceKey value. By default uses the
-            name of the control plus an incrementor.
-            </summary>
-            <param name="obj"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.DbDesignTimeResourceProviderFactory.ResourceDictionary.CreateKey(System.String)">
-            <summary>
-            Creates a string name key for a given meta:Resource attribute.
-            The key is the name of hte property with a 1,2,3 postfix if there's duplication
-            
-            NOTE: This is slightly different than the default behavior which will always
-            use a post fix value. This version only creates a postfix if there's dupes.
-            </summary>
-            <param name="key"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Westwind.Globalization.DbDesignTimeResourceProviderFactory.ResourceDictionary.IsUsedKey(System.String)">
-            <summary>
-            Checks to see if a resource key already exists
-            </summary>
-            <param name="key"></param>
-            <returns></returns>
-        </member>
         <member name="T:Westwind.Globalization.DbResourceControl">
             <summary>
             The DbResourceControl class provides Page level Resource Administration

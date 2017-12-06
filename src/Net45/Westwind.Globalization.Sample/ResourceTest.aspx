@@ -103,7 +103,8 @@
         </nav>
 
     
-<form runat="server" id="form2" style="height: 0; padding: 0; margin: 0;">
+<form runat="server" id="form1" method="GET" 
+     style="height: 0; padding: 0; margin: 0;" enableviewstate="false">
 
 
     <div class="well container" style="margin-top: 30px;">
@@ -115,10 +116,8 @@
                 Current UI Culture: <b><%= Thread.CurrentThread.CurrentUICulture.IetfLanguageTag %></b>
             </div>
             <div>
-                <form id="form1" name="form2" action="ResourceTest.aspx" method="GET">
                     <select id="localeId" name="localeId"
-                        value="<%= LocaleId %>"
-                        value
+                        value="<%= LocaleId %>"                        
                         onchange="document.forms['form1'].submit();"
                         class="form-control">
                         <option value="">Browser Default</option>
@@ -137,7 +136,7 @@
                                 opt.selected = false;
                         }
                     </script>
-                </form>
+               
                 
             </div>
         </section>

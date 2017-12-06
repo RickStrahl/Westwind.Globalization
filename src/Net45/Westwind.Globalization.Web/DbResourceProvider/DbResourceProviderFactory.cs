@@ -44,7 +44,7 @@ namespace Westwind.Globalization
     /// Provider Factory class that needs to be set in web.config in order for ASP.NET to instantiate
     /// this class for all resource related tasks.
     /// </summary>
-    [DesignTimeResourceProviderFactoryAttribute(typeof(DbDesignTimeResourceProviderFactory))]
+   // [DesignTimeResourceProviderFactoryAttribute(typeof(DbDesignTimeResourceProviderFactory))]
     public class DbResourceProviderFactory : ResourceProviderFactory
     {
         /// <summary>
