@@ -88,22 +88,27 @@
         };
 
 
-        vm.updateResource = function (resource) {            
+        vm.updateResource = function (resource) {
+
             return localizationService.updateResource(resource)
                 .success(function () {
                      // reset the items and rebind
                      vm.getResourceItems();
-                     showMessage(vm.dbRes('ResourceSaved'));                   
+                     showMessage(vm.dbRes('ResourceSaved') + " [" +
+                         resource.ResourceId +
+                         " (" + (resource.LocaleId ? resource.LocaleId : "invariant") + ")]");
                 })
                 .error(parseError);
         };
 
         vm.updateResourceString = function (value, localeId) {
+            console.log(vm);
             return localizationService.updateResourceString(value, vm.resourceId, vm.resourceSet, localeId, vm.activeResource.Comment)
                 .success(function () {
                     // reset the items and rebind                     
-
-                    showMessage(vm.dbRes('ResourceSaved'));
+                    showMessage(vm.dbRes('ResourceSaved') +
+                        " [" + vm.resourceId +
+                        " (" + (localeId ? localeId : "invariant") + ")]");
                 })
                 .error(parseError);
         };
@@ -238,7 +243,7 @@
                         .$setViewValue(value);
 
                     $el.focus();
-                    $timeout(function() { vm.onSaveResourceClick(); });
+                    
             },100);
         });
 
@@ -371,8 +376,10 @@
 
                             vm.resourceId = id;
                             vm.onResourceIdChange();
-
-                            showMessage(vm.dbRes('ResourceSaved'));
+                            
+                            showMessage(vm.dbRes('ResourceSaved') +
+                                " [" + vm.activeResource.ResourceId +
+                                "(" + (vm.activeResource.localeId ? vm.activeResource.localeId : "invariant") + ")]");
                             vm.uploadProgress = null;
                         })
                         .error(function() {
@@ -483,10 +490,12 @@
         
             $("#ResourceGrid").show();
         };
-        vm.saveGridResource = function(resource) {
+        vm.saveGridResource = function (resource) {            
             localizationService.updateResource(resource)
                 .success(function() {
-                    showMessage(vm.dbRes('ResourceSaved'));
+                    showMessage(vm.dbRes('ResourceSaved')
+                    + " [" +
+                        resource.ResourceId + " (" + (resource.LocaleId ? resource.LocaleId : "invariant") + ")]");
                 })
                 .error(parseError);
         };

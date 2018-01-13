@@ -23,6 +23,7 @@
                           data-localeid="{{resource.LocaleId}}"
                           ng-model="resource.Value"
                           ng-blur="view.onStringUpdate(resource,$event)"
+                          onfocus="this.select()"
                           ww-rtl="resource.IsRtl"
                           ng-dblclick="view.onResourceFullscreenEdit($event, resource, resourceForm)"
                 >                    
