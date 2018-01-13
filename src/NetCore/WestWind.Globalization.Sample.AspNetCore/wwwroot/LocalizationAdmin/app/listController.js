@@ -238,7 +238,7 @@
                         .$setViewValue(value);
 
                     $el.focus();
-                    vm.onSaveResourceClick();                
+                    $timeout(function() { vm.onSaveResourceClick(); });
             },100);
         });
 
