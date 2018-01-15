@@ -493,9 +493,9 @@
         vm.saveGridResource = function (resource) {            
             localizationService.updateResource(resource)
                 .success(function() {
-                    showMessage(vm.dbRes('ResourceSaved')
-                    + " [" +
-                        resource.ResourceId + " (" + (resource.LocaleId ? resource.LocaleId : "invariant") + ")]");
+                    showMessage(vm.dbRes('ResourceSaved') +
+                        + " [" + resource.ResourceId +
+                        " (" + (resource.LocaleId ? resource.LocaleId : "invariant") + ")]");
                 })
                 .error(parseError);
         };
