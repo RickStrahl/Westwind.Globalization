@@ -11,7 +11,7 @@ The Localization Admin application has been updated to work with a ASP.NET Core 
 
 
 * **DbResInstance Class**   
-Previous versions only had a static `DbRes` class to access content directly off the resource manager/provider. There's now an instance class that has an associated configuration that is more easily testable and supports multiple configurations. It's also a better fit for ASP.NET Core and the dynamic configuration which allows for injection of the DbResInstance class.
+Previous versions only had a static `DbRes` class to access content directly off the resource manager/provider. There's now an instance class that has an associated configuration that is more easily testable and supports multiple configurations. It's also a better fit for ASP.NET Core and the dynamic configuration which allows for injection of DbResInstance classes.
 
 * **dbRes.TDefault() to get resource with Default fallback**  
 New method that allows passing of a default string if a resources ID can't be found. 
