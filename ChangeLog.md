@@ -1,7 +1,7 @@
 # West Wind Globalization Changelog
 
 ### Version 3.0
-<small>not released yet - RC1 currently</small>
+<small>not released yet - RC2 currently</small>
 
 * **.NET Core and ASP.NET Core Support**  
 Westwind.Globalization now works on .NET Core and ASP.NET Core. We now provide full framework and .NET Standard 2.0 assemblies for the core package and separate ASP.NET and ASP.NET Core Web packages. .NET Core support includes standard `ILocalizer` support, `IOptions` configuration support as well as full compatibility with v2.0 `dbRes` and strongly typed resource syntax.
