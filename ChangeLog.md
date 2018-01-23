@@ -1,7 +1,7 @@
 # West Wind Globalization Changelog
 
 ### Version 3.0
-<small>not released yet - Beta 1 currently</small>
+<small>not released yet - RC1 currently</small>
 
 * **.NET Core and ASP.NET Core Support**  
 Westwind.Globalization now works on .NET Core and ASP.NET Core. We now provide full framework and .NET Standard 2.0 assemblies for the core package and separate ASP.NET and ASP.NET Core Web packages. .NET Core support includes standard `ILocalizer` support, `IOptions` configuration support as well as full compatibility with v2.0 `dbRes` and strongly typed resource syntax.
@@ -9,8 +9,15 @@ Westwind.Globalization now works on .NET Core and ASP.NET Core. We now provide f
 * **Updated Localization Admin UI for ASP.NET Core**   
 The Localization Admin application has been updated to work with a ASP.NET Core MVC controller on the backend. The ASP.NET 4.5+ continues to use `[CallbackHandler]` for compactness and doesn't have a dependency on MVC or WebAPI. The .NET Core version has a number of small UI updates.
 
+
+* **DbResInstance Class**   
+Previous versions only had a static `DbRes` class to access content directly off the resource manager/provider. There's now an instance class that has an associated configuration that is more easily testable and supports multiple configurations. It's also a better fit for ASP.NET Core and the dynamic configuration which allows for injection of the DbResInstance class.
+
+* **dbRes.TDefault() to get resource with Default fallback**  
+New method that allows passing of a default string if a resources ID can't be found. 
+
 * **Easier saving of Resources without explicit save operations**  
-Make resource entry easier by not requiring explicit saving of resources. Just tabbing across fields saves values now.
+Make Admin form resource entry easier by not requiring explicit saving of resources. Just tabbing across fields saves values now.
 
 * **Add DeepL Translation Service**   
 Added the [DeepL](https://www.deepl.com/translator) Translation service to the translation helpers.
@@ -21,17 +28,6 @@ You can now set the database provider used as part of configuration using the `D
 * **Fix: Bing Translation**   
 Fixed Bing Translation for new Azure Translation APIs and using new logon mechanism. You'll need a new key when updating.
 
-### Version 2.15
-<small>October 1st, 2017</small>
-
-* **Added .NET Core 2.0 ASP.NET Core 2.0 Support to WestWind.Globaliztion**   
-Updated `Westwind.Globalization` project to work as a .NET Standard 2.0 project usable in .NET Core and ASP.NET Core. Existing code should run as is, except that configuration for .NET Core applications has to use a JSON configuration file (for static configuration) or configure using the new ASP.NET Core `.AddWestwindGlobalization()` configuration in `ConfigureServices()`.
-
-* **DbResInstance Class**   
-Previous versions only had a static `DbRes` class to access content directly off the resource manager/provider. There's now an instance class that has an associated configuration that is more easily testable and supports multiple configurations. It's also a better fit for ASP.NET Core and the dynamic configuration through DI.
-
-* **dbRes.TDefault() to get resource with Default fallback**  
-New method that allows passing of a default string if a resources ID can't be found. 
 
 
 ### Version 2.12
