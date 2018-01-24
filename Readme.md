@@ -14,9 +14,9 @@
 ![](https://img.shields.io/nuget/dt/Westwind.Globalization.Web.svg)
 
 
-This library and tooling provides easy to use database resource managers and providers that allow you to use a database for storing localization resources. Unlike static Resx resources, database resources are dynamic, can be changed at runtime and are editable by multiple users at the same time. The custom resource managers, providers and ASP.NET Core StringLocalizer  use the standard .NET resource infrastructure, so other than startup configuration there are no code changes when switching from using traditional Resx resources. 
+This library and tooling provides easy to use database resource managers and providers that allow you to use a database for storing localization resources. Unlike static Resx resources, database resources are dynamic, can be changed at runtime and are editable by multiple users at the same time. The custom resource managers, providers and ASP.NET Core StringLocalizers use the standard .NET resource infrastructure, so other than startup configuration there are no code changes when switching from using traditional Resx resources. 
 
-It's also possible to import resources into a database, edit them dynamically, and then export them back out into Resx and optionally strongly typed classes so your deployed applications can run with Resx resources, while you use dynamic Database resources during development.
+It's also possible to import resources into a database, edit them dynamically, and then export them back out into Resx and optionally strongly typed classes so your deployed applications can run with Resx resources, while you can use dynamic Database resources during development.
 
 A rich, Web based resource editor is also provided that makes it easy to create resource content and translate it interactively in a running application where you can see resource changes immediately applied without recompilation. You can import and export Resx resources, generate strongly typed classes and serve resources to JavaScript applications using the database resources. 
 ![Web Resource Editor](WebResourceLocalizationForm.png)
