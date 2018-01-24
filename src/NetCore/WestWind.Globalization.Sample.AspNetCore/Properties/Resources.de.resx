@@ -53,10 +53,10 @@
       <value>2.0</value>
    </resheader>
    <resheader name="reader">
-      <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+      <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
    <resheader name="writer">
-      <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+      <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
    <data name="AddressIsRequired" xml:space="preserve">
       <value>Eine Addresse muss angegeben werden.</value>
@@ -74,9 +74,12 @@
       <value>Hallo schnöde Welt</value>
    </data>
    <data name="MarkdownText" xml:space="preserve">
-      <value>Dies ist ** Markdown-Text **, der automatisch konvertiert wird.
-* Und eins
-* Und zwei</value>
+      <value>&lt;p&gt;Dies ist ** Markdown-Text **, der automatisch konvertiert wird.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Und eins&lt;/li&gt;
+&lt;li&gt;Und zwei&lt;/li&gt;
+&lt;/ul&gt;
+</value>
    </data>
    <data name="NameIsRequired" xml:space="preserve">
       <value>Ein Name muss angegeben werden.</value>
@@ -85,7 +88,7 @@
       <value>Speichern</value>
    </data>
    <data name="Testing" xml:space="preserve">
-      <value>adsasdas dasda sd</value>
+      <value>Englisch testen</value>
    </data>
    <data name="Today" xml:space="preserve">
       <value>Heute</value>

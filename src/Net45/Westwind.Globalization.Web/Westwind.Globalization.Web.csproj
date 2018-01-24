@@ -51,8 +51,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Westwind.Utilities, Version=3.0.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Westwind.Utilities.3.0.8\lib\net45\Westwind.Utilities.dll</HintPath>
+    <Reference Include="Westwind.Utilities, Version=3.0.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Westwind.Utilities.3.0.10\lib\net45\Westwind.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Westwind.Web, Version=2.76.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Westwind.Web.2.76\lib\net45\Westwind.Web.dll</HintPath>
