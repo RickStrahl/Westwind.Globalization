@@ -37,9 +37,15 @@ A rich, Web based resource editor is also provided that makes it easy to create 
 ### .NET Version Support
 Version 3.0 adds support for the 2.0 versions of .NET Standard, .NET Core and ASP.NET Core. The following versions are provided:
 
-* Westwind.Globalization <small>*(net45 and netstandard2.0)*</small>
-* Westwind.Globalization.AspNetCore <small>*(netstandard2.0)*</small>
-* Westwind.Globalization.Web <small>*(net45)*</small>
+* Westwind.Globalization <small>*(net45 and netstandard2.0)*</small>  
+[![NuGet](https://img.shields.io/nuget/v/Westwind.Globalization.svg)](https://www.nuget.org/packages/Westwind.Globalization/)
+![](https://img.shields.io/nuget/dt/Westwind.Globalization.svg)
+* Westwind.Globalization.AspNetCore <small>*(netstandard2.0)*</small>  
+[![NuGet](https://img.shields.io/nuget/v/Westwind.Globalization.AspNetCore.svg)](https://www.nuget.org/packages/Westwind.Globalization.AspNetCore/)
+![](https://img.shields.io/nuget/dt/Westwind.Globalization.AspNetCore.svg)
+* Westwind.Globalization.Web <small>*(net45)*</small>  
+[![NuGet](https://img.shields.io/nuget/v/Westwind.Globalization.Web.svg)](https://www.nuget.org/packages/Westwind.Globalization.Web/)
+![](https://img.shields.io/nuget/dt/Westwind.Globalization.Web.svg)
 * Westwind.Globalization.Sample <small>*(net45)*</small>
 * Westwind.Globalization.Sample.AspNetCore <small>*(netcore2.0)*</small>
 
@@ -64,8 +70,8 @@ If you're not using a Web Project you can just use the base package:
 PM> Install-Package Westwind.Globalization
 ```
 
-> #### Administration Web UI: Separate Download
-> Due to a change in NuGet support in .NET Core we can no longer package content as part of NuGet packages. As a result a separate download is required to add the Localization Admin UI. You can download it from:
+> #### ASP.NET Core Administration Web UI: Separate Download
+> Due to changes in NuGet support in .NET Core we can no longer package static HTML, CSS and JS as part of NuGet packages. As a result a **separate download is required** to add the Localization Admin UI. You can download it from:
 > 
 > * [Documentation for installing Localization Admin Files](https://github.com/RickStrahl/Westwind.Globalization/tree/master/DownloadableAssets)
 > * [Localization Admin  Html Assets Download](https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)
