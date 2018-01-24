@@ -9,7 +9,7 @@
 [![NuGet](https://img.shields.io/nuget/v/Westwind.Globalization.AspNetCore.svg)](https://www.nuget.org/packages/Westwind.Globalization.AspNetCore/)
 ![](https://img.shields.io/nuget/dt/Westwind.Globalization.AspNetCore.svg)
 
-**Westwind.Globalization.Web (Full Framework):**  
+**Westwind.Globalization.Web (.NET 4.5+):**  
 [![NuGet](https://img.shields.io/nuget/v/Westwind.Globalization.Web.svg)](https://www.nuget.org/packages/Westwind.Globalization.Web/)
 ![](https://img.shields.io/nuget/dt/Westwind.Globalization.Web.svg)
 
