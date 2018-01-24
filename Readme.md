@@ -1,8 +1,18 @@
 # West Wind Globalization
 ### Database Resource Localization for .NET
 
-> ### Version 3.0 status is: RC1
-> Version 3.0 is currently in RC stage and the documentation is still under construction. We're feature complete and fully operational and getting close to a final release. Please bear with us.
+**Westwind.Globalization (.NET Standard, .NET 4.5+):**   
+[![NuGet](https://img.shields.io/nuget/v/Westwind.Globalization.svg)](https://www.nuget.org/packages/Westwind.Globalization/)
+![](https://img.shields.io/nuget/dt/Westwind.Globalization.svg)
+
+**Westwind.Globalization.AspNetCore (.NET Core):**  
+[![NuGet](https://img.shields.io/nuget/v/Westwind.Globalization.AspNetCore.svg)](https://www.nuget.org/packages/Westwind.Globalization.AspNetCore/)
+![](https://img.shields.io/nuget/dt/Westwind.Globalization.AspNetCore.svg)
+
+**Westwind.Globalization.Web (Full Framework):**  
+[![NuGet](https://img.shields.io/nuget/v/Westwind.Globalization.Web.svg)](https://www.nuget.org/packages/Westwind.Globalization.Web/)
+![](https://img.shields.io/nuget/dt/Westwind.Globalization.Web.svg)
+
 
 This library and tooling provides easy to use database resource managers and providers that allow you to use a database for storing localization resources. Unlike static Resx resources, database resources are dynamic, can be changed at runtime and are editable by multiple users at the same time. The custom resource managers, providers and ASP.NET Core StringLocalizer  use the standard .NET resource infrastructure, so other than startup configuration there are no code changes when switching from using traditional Resx resources. 
 
@@ -44,7 +54,7 @@ For installation use NuGet.
 
 #### To Install for .NET Core
 Please read the installation instructions below to configure once you've installed the project. You will need to configure startup settings in order for the Db Providers to run.
-
+ 
 ```
 PM> Install-Package Westwind.Globalization.AspNetCore
 ```
