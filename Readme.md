@@ -263,6 +263,11 @@ You can create a standalone `DbResourceConfiguration.json` file for configuratio
 ```
 If this file exists configuration values are read from it.
 
+> #### @icon-warning Copy to Output Directory
+> If you want to use `DbResourceConfiguration.json` for configuration storage make sure you set the **Copy to Output Directory** option to **Copy if newer** or **Copy always** to ensure the file is copied into the published output folder.
+>
+> ![](images/DbResourceConfigurationJsonCopy.png)
+
 #### ASP.NET Core IConfiguration
 For ASP.NET Core operation Westwind.Globalization also registers the `DbResourceConfiguration` instance as `IOptions<DbResourceConfiguration>` which gives strongly typed access to the configuration via depedency injection. 
 
