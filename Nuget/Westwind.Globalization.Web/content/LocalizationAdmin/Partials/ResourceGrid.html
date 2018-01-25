@@ -19,6 +19,7 @@
             <td ng-repeat="res in resource.Resources">
                 <textarea ng-model="res.Value"
                           ng-blur="view.saveGridResource(res)"
+                          onfocus="this.select()"
                           style="min-width: 300px"></textarea>
             </td>
 

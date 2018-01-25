@@ -18,19 +18,21 @@ To set up the Localization Admin UI a few steps are required:
 
 * Download the additional assets
 * Unzip and copy them into the **root folder of the project**
-* Setup configuration in `appsettings.json` or `DbResourceConfiguration.json`
+* Setup provider configuration via code or configuration files
 * Recompile your Project
 * Import the localization resources for the examples
 
-Here are the detailed steps:
+### Detailed Setup Steps
+Here are the detailed steps: 
 
 * Download [LocalizationAdministration_AspNetCore.zip](https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)
 * Unzip the package into the **root folder** of your ASP.NET Core MVC application
+* [Hook up Configuration for Westwind.Globalization](https://github.com/RickStrahl/Westwind.Globalization#enabling-west-wind-globalization-in-aspnet-core)
 * Recompile your project
 * Set up your Configuration  
   *Set the `ConnectionString` to an existing database, and set `ResourceTableName` to a table that you want to create. Use either `DbResourceConfiguration.json`, `appsettings.json`, or via Startup code configuration (see [main docs](https://github.com/RickStrahl/Westwind.Globalization#aspnet-core-configuration))*
     * If you use `DbResourceConfiguration.json`:  
-    Set **Copy to Output Folder** to  **Copy if newer**
+    Set **Copy to Output Folder** to **Copy if newer**
 * Open the Admin Page at `localizationAdmin/index.html`
 * Click on **Create Table**
 * You should see some sample resources in the admin interface

@@ -1,6 +1,7 @@
 ﻿{
   "ResourceAccessMode": "DbResourceManager",
   "ConnectionString": "*** ENTER A CONNECTION STRING ***",
+  "DataProvider": "SqlServer",  
   "ResourceTableName": "Localizations",
   "StronglyTypedGlobalResource": "~/Properties/Resources.cs",
   "ResourceBaseNamespace": "AppResources",
@@ -12,3 +13,4 @@
   "BingClientId": "",
   "GoogleApiKey": ""
 }
+

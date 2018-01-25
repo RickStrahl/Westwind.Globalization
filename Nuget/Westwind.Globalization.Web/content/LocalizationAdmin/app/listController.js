@@ -93,7 +93,9 @@
                 .success(function () {
                      // reset the items and rebind
                      vm.getResourceItems();
-                     showMessage(vm.dbRes('ResourceSaved'));                   
+                     showMessage(vm.dbRes('ResourceSaved') + " [" +
+                        resource.ResourceId +
+                        " (" + (resource.LocaleId ? resource.LocaleId : "invariant") + ")]");                 
                 })
                 .error(parseError);
         };
@@ -103,7 +105,10 @@
                 .success(function () {
                     // reset the items and rebind                     
 
-                    showMessage(vm.dbRes('ResourceSaved'));
+                    showMessage(vm.dbRes('ResourceSaved') +
+                        " [" + vm.resourceId +
+                        " (" + (localeId ? localeId : "invariant") + ")]");
+
                 })
                 .error(parseError);
         };
@@ -238,7 +243,7 @@
                         .$setViewValue(value);
 
                     $el.focus();
-                    vm.onSaveResourceClick();                
+                    $timeout(function() { vm.onSaveResourceClick(); });
             },100);
         });
 
@@ -372,7 +377,9 @@
                             vm.resourceId = id;
                             vm.onResourceIdChange();
 
-                            showMessage(vm.dbRes('ResourceSaved'));
+                            showMessage(vm.dbRes('ResourceSaved') +
+                                " [" + vm.activeResource.ResourceId +
+                                "(" + (vm.activeResource.localeId ? vm.activeResource.localeId : "invariant") + ")]");
                             vm.uploadProgress = null;
                         })
                         .error(function() {
@@ -485,8 +492,10 @@
         };
         vm.saveGridResource = function(resource) {
             localizationService.updateResource(resource)
-                .success(function() {
-                    showMessage(vm.dbRes('ResourceSaved'));
+                .success(function() { 
+                    showMessage(vm.dbRes('ResourceSaved') +
+                     " [" + resource.ResourceId + 
+                     " (" + (resource.LocaleId ? resource.LocaleId : "invariant") + ")]");                     
                 })
                 .error(parseError);
         };

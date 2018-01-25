@@ -57,9 +57,9 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 // opt.DataProvider = DbResourceProviderTypes.SqlServer;
 
                 // SqLite
-                opt.ConnectionString = "Data Source=./Data/SqLiteLocalizations.db";
+                //opt.ConnectionString = "Data Source=./Data/SqLiteLocalizations.db";
                 // // opt.DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);    // use this with custom providers            
-                opt.DataProvider = DbResourceProviderTypes.SqLite;
+                //opt.DataProvider = DbResourceProviderTypes.SqLite;
 
                 // MySql
                 //opt.ConnectionString = "server=localhost;uid=testuser;pwd=super10seekrit;database=Localizations;charset=utf8";
