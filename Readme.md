@@ -217,10 +217,14 @@ The easiest way to use this library in your own applications is to install the N
 pm> Install-Package Westwind.Globalization.AspNetCore
 ```
 
-You also need to download the resources for the Localization Administration interface if you want to integrate the Localization interface into your application.
+> #### @icon-info-circle Download the Localization Admin UI Files
+> Nuget no longer allows distribution of static content, so in order to use the Localization Admin UI you also need to download the resources for the Localization Admin UI if you want to integrate the Localization interface into your application.
+> 
+> * [Localization Admin Html Assets](https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)
+> * [Documentation for installing Localization Admin Files](DownloadableAssets/Readme.md) 
+>
+> Once you've downloaded the Localization Admin UI zip file, unzip the entire content into the project's root folder.
 
-* [Localization Admin Html Assets](https://github.com/RickStrahl/Westwind.Globalization/blob/Master/LocalizationAdminHtml/LocalizationAdministrationHtml_AspNetCore.zip?raw=true)
-* [Documentation for installing Localization Admin Files](DownloadableAssets/Readme.md)* 
 
 For non-Web applications or if you use only the DbRes based localization features, you can just install the base package.
 
