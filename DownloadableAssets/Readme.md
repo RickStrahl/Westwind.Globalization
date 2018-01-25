@@ -17,7 +17,8 @@ This zip file contains a sample page and resources you can play with when first 
 To set up the Localization Admin UI a few steps are required:
 
 * Download the additional assets
-* Unzip and copy them into the root folder of the project
+* Unzip and copy them into the **root folder of the project**
+* Setup configuration in `appsettings.json` or `DbResourceConfiguration.json`
 * Recompile your Project
 * Import the localization resources for the examples
 
@@ -28,6 +29,8 @@ Here are the detailed steps:
 * Recompile your project
 * Set up your Configuration  
   *Set the `ConnectionString` to an existing database, and set `ResourceTableName` to a table that you want to create. Use either `DbResourceConfiguration.json`, `appsettings.json`, or via Startup code configuration (see [main docs](https://github.com/RickStrahl/Westwind.Globalization#aspnet-core-configuration))*
+    * If you use `DbResourceConfiguration.json`:  
+    Set **Copy to Output Folder** to  **Copy if newer**
 * Open the Admin Page at `localizationAdmin/index.html`
 * Click on **Create Table**
 * You should see some sample resources in the admin interface
