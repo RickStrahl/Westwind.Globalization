@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>3.0.0</Version>
+    <Version>3.0.1</Version>
     <Authors>Rick Strahl</Authors>
     <Company>West Wind Technologies</Company>
     <Product>Westwind.Globalization</Product>
@@ -12,7 +12,7 @@
  Note: In order to use the Localization Administration feature, please download the required project resources from: https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationAdministrationHtml_AspNetCore.zip
 </Description>
     <Summary>Database driven localization ASP.NET and ASP.NET Core. Includes a localization Administration Interface.</Summary>
-    <Copyright>West Wind Technologies, 2010-2017</Copyright>
+    <Copyright>West Wind Technologies, 2010-2018</Copyright>
     <PackageLicenseUrl>https://github.com/RickStrahl/Westwind.Globalization#license</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/RickStrahl/Westwind.Globalization</PackageProjectUrl>
     <RepositoryUrl>https://github.com/RickStrahl/Westwind.Globalization</RepositoryUrl>
@@ -21,7 +21,7 @@
     <RepositoryType>Github</RepositoryType>
     <PackageTags>ASP.NET Core Localization Translation Globalization Resources</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <FileVersion>3.0.20.0</FileVersion>
+    <FileVersion>3.0.21.0</FileVersion>
     <AssemblyVersion>3.0.0.0</AssemblyVersion>
   </PropertyGroup>
 
@@ -29,7 +29,6 @@
     <DocumentationFile>bin\Release\netstandard2.0\Westwind.Globalization.AspnetCore.xml</DocumentationFile>
   </PropertyGroup>
 
- 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Localization" Version="2.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.RazorPages" Version="2.0.2" />
@@ -39,6 +38,10 @@
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.0.0" />    
   </ItemGroup>
   
+  <ItemGroup>
+    <None Include="readme.txt" Pack="true" PackagePath="." />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\Westwind.Globalization\Westwind.Globalization.csproj" />
   </ItemGroup>
