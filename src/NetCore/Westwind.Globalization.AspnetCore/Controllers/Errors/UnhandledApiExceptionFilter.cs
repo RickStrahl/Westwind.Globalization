@@ -11,6 +11,7 @@ namespace Westwind.Globalization.Errors
     /// Unhandled Exception filter attribute for API controllers.
     /// Fires back a common JSON response of type ApiErrorResponse
     /// </summary>
+    [AttributeUsage(AttributeTargets.Class)]
     public class UnhandledApiExceptionFilter : ExceptionFilterAttribute
     {
 
