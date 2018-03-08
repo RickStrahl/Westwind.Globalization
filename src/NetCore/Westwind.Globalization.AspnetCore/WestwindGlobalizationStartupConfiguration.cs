@@ -50,6 +50,8 @@ namespace Westwind.Globalization.AspnetCore
             // register with DI
             services.AddSingleton(config);
 
+            services.AddSingleton<IResourceReaderFactory, DBResourceReaderFactory>();
+
             return services;
         }
     }
