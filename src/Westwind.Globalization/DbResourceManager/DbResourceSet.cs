@@ -49,8 +49,9 @@ namespace Westwind.Globalization
     /// calls into the database to retrieve the resources for the ResourceSet.
     /// </summary>
     public class DbResourceSet : ResourceSet
-    {        
-        
+    {
+		private readonly Type _readerType;
+
         /// <summary>
         /// Core constructor. Gets passed a baseName (which is the ResourceSet Id - 
         /// either a local or global resource group) and a culture. 
@@ -64,7 +65,13 @@ namespace Westwind.Globalization
         /// <param name="configuration"></param>
         public DbResourceSet(string baseName, CultureInfo culture, DbResourceConfiguration configuration) 
             : base(new DbResourceReader(baseName, culture, configuration))
-        {            
+        {
+            _readerType = typeof(DbResourceReader);
+		}
+
+        public DbResourceSet(IResourceReader resourceReader) : base(resourceReader)
+        {
+            _readerType = resourceReader.GetType();
         }
 
         /// <summary>
@@ -74,7 +81,7 @@ namespace Westwind.Globalization
         /// <returns></returns>
         public override Type GetDefaultReader()
         {
-            return typeof(DbResourceReader);
+            return _readerType;
         }
 
         /// <summary>

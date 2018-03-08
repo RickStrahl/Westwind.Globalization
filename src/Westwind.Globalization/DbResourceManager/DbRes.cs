@@ -65,7 +65,7 @@ namespace Westwind.Globalization
 
         static DbRes()
         {
-            Instance = new DbResInstance(DbResourceConfiguration.Current);
+            Instance = new DbResInstance(new DBResourceReaderFactory(), DbResourceConfiguration.Current);
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 /*
  **************************************************************
  *  Author: Rick Strahl 
@@ -36,6 +36,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Resources;
 using System.Web;
+using System.Reflection;
 
 namespace Westwind.Globalization
 {
@@ -65,6 +66,8 @@ namespace Westwind.Globalization
         protected static Dictionary<string, DbResourceManager> ResourceManagers =
             new Dictionary<string, DbResourceManager>();
 
+        public IResourceReaderFactory ResourceReaderFactory { get; }
+
         /// <summary>
         /// Determines whether resources that fail in a lookup are automatically
         /// added to the resource table
@@ -73,13 +76,20 @@ namespace Westwind.Globalization
 
         public DbResourceConfiguration Configuration { get; set; }
 
-        public DbResInstance(DbResourceConfiguration configuration = null)
+        private DbResInstance(DbResourceConfiguration configuration = null)
         {
             AutoAddResources = DbResourceConfiguration.Current.AddMissingResources;
             if (Configuration != null)
                 Configuration = configuration;
             else
                 Configuration = DbResourceConfiguration.Current;
+
+            ResourceReaderFactory = new DBResourceReaderFactory();
+        }
+
+        public DbResInstance(IResourceReaderFactory resourceReaderFactory, DbResourceConfiguration configuration = null) : this(configuration)
+        {
+            ResourceReaderFactory = resourceReaderFactory ?? throw new ArgumentNullException(nameof(resourceReaderFactory));
         }
 
         /// <summary>
@@ -345,7 +355,7 @@ namespace Westwind.Globalization
                     ResourceManagers.TryGetValue(resourceSet, out manager);
                     if (manager == null)
                     {
-                        manager = new DbResourceManager(resourceSet);
+                        manager = new DbResourceManager(resourceSet, ResourceReaderFactory);
                         ResourceManagers.Add(resourceSet, manager);
                     }
                 }

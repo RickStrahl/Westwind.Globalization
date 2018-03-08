@@ -12,16 +12,15 @@ namespace Westwind.Globalization.AspnetCore
     {
         DbResInstance DbRes { get; }
 
-        DbResourceConfiguration Config { get; }
-
         public string ResourceSet { get; set; } = "Resources";
 
-        public DbResHtmlLocalizer(DbResourceConfiguration config)
-        {
-            DbRes = new DbResInstance(config);
-            Config = config;
-        }
+        private IHtmlLocalizerFactory HtmlLocalizerFactory { get; }
 
+        public DbResHtmlLocalizer(DbResInstance dbRes, IHtmlLocalizerFactory htmlLocalizerFactory)
+        {
+            DbRes = dbRes ?? throw new System.ArgumentNullException(nameof(dbRes));
+            HtmlLocalizerFactory = htmlLocalizerFactory ?? throw new System.ArgumentNullException(nameof(htmlLocalizerFactory));
+        }
 
         public LocalizedString GetString(string name)
         {
@@ -48,7 +47,6 @@ namespace Westwind.Globalization.AspnetCore
 
                     var localizedString = new LocalizedString(key, value);
                     yield return localizedString;
-
                 }
             }
         }
@@ -56,7 +54,7 @@ namespace Westwind.Globalization.AspnetCore
         public IHtmlLocalizer WithCulture(CultureInfo culture)
         {
             CultureInfo.DefaultThreadCurrentUICulture = culture;
-            return new DbResHtmlLocalizer(Config);
+            return HtmlLocalizerFactory.Create(ResourceSet, null);
         }
 
         LocalizedHtmlString IHtmlLocalizer.this[string name]

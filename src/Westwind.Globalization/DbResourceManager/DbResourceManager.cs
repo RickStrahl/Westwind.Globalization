@@ -83,6 +83,7 @@ namespace Westwind.Globalization
         /// </summary>
         private static readonly object SyncLock = new object();
         private static readonly object AddSyncLock = new object();
+        private readonly IResourceReaderFactory _resourceReaderFactory;
 
         /// <summary>
         /// If true causes any entries that aren't found to be added
@@ -130,6 +131,17 @@ namespace Westwind.Globalization
         public DbResourceManager(string baseName, Assembly assembly, Type resourceType)  
         {
             Initialize(baseName, assembly);
+        }
+
+        /// <summary>
+        /// Creates an instance of a DbResourceManager. Allows to specify a <see cref="IResourceReaderFactory"/> to change
+        /// the default ResourceReader.
+        /// </summary>
+        /// <param name="baseName"></param>
+        /// <param name="resourceReaderFactory"></param>
+        internal DbResourceManager(string baseName, IResourceReaderFactory resourceReaderFactory) : this(baseName)
+        {
+            _resourceReaderFactory = resourceReaderFactory ?? throw new ArgumentNullException(nameof(resourceReaderFactory));
         }
 
         /// <summary>
@@ -182,7 +194,8 @@ namespace Westwind.Globalization
                     return InternalResourceSets[culture.Name];
             
                 // Otherwise create a new instance, load it and return it
-                DbResourceSet rs = new DbResourceSet(ResourceSetName, culture, Configuration);
+                IResourceReader reader = _resourceReaderFactory.Create(ResourceSetName, culture, Configuration);
+                DbResourceSet rs = new DbResourceSet(reader);
                 
                 // Add the resource set to the cached set
                 InternalResourceSets.Add(culture.Name, rs);

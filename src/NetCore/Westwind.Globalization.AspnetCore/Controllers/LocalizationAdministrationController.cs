@@ -1,4 +1,3 @@
-﻿using System;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -45,7 +44,7 @@ namespace Westwind.Globalization.Administration
         {
             Host = host;
             Config = config;
-            DbIRes = new DbResInstance(config);
+            DbIRes = new DbResInstance(new DBResourceReaderFactory(), config);
             Manager = DbResourceDataManager.CreateDbResourceDataManager(config.DbResourceDataManagerType);
         }
 
