@@ -83,7 +83,8 @@ namespace Westwind.Globalization
         /// </summary>
         private static readonly object SyncLock = new object();
         private static readonly object AddSyncLock = new object();
-        private readonly IResourceReaderFactory _resourceReaderFactory;
+
+        private IResourceReaderFactory _resourceReaderFactory;
 
         /// <summary>
         /// If true causes any entries that aren't found to be added
@@ -167,8 +168,11 @@ namespace Westwind.Globalization
             AutoAddMissingEntries = DbResourceConfiguration.Current.AddMissingResources;
             
             // InternalResourceSets contains a set of resources for each locale
-            InternalResourceSets = new Dictionary<string, ResourceSet>();            
-        }
+            InternalResourceSets = new Dictionary<string, ResourceSet>();
+
+			// Default to the DBResourceReaderFactory
+			_resourceReaderFactory = new DBResourceReaderFactory();
+		}
                 
         
 
