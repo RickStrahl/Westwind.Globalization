@@ -8,13 +8,14 @@ namespace Westwind.Globalization.AspnetCore
     {
         private DbResourceConfiguration _config;
         private IHostingEnvironment _host;
+        private readonly IResourceReaderFactory _resourceReaderFactory;
 
-        public DbResStringLocalizerFactory(DbResourceConfiguration config, IHostingEnvironment host)            
+        public DbResStringLocalizerFactory(DbResourceConfiguration config, IHostingEnvironment host, IResourceReaderFactory resourceReaderFactory)
         {
             _config = config;
             _host = host;
+            _resourceReaderFactory = resourceReaderFactory ?? throw new ArgumentNullException(nameof(resourceReaderFactory));
         }
-        
 
         public IStringLocalizer Create(string baseName, string location)
         {
@@ -22,13 +23,14 @@ namespace Westwind.Globalization.AspnetCore
             if (baseName != null && baseName.StartsWith(location))
                 baseName = baseName.Substring(location.Length + 1);
 
-            return new DbResStringLocalizer(_config) { ResourceSet = baseName };
+            var dbResInstance = new DbResInstance(_resourceReaderFactory, _config);
+            return new DbResStringLocalizer(_config, dbResInstance, this) { ResourceSet = baseName };
         }
 
         public IStringLocalizer Create(Type resourceSource)
-        {                        
+        {            
             string baseName = resourceSource.FullName;                             
             return Create(baseName, _host.ApplicationName);
-        }        
+        }
     }
 }

@@ -6,13 +6,15 @@ namespace Westwind.Globalization.AspnetCore
 {
     public class DbResHtmlLocalizerFactory : IHtmlLocalizerFactory
     {
-        private IHostingEnvironment _host;
+        private readonly IResourceReaderFactory _resourceReaderFactory;
+		private IHostingEnvironment _host;
         private DbResourceConfiguration _config;
 
-        public DbResHtmlLocalizerFactory(DbResourceConfiguration config, IHostingEnvironment env)
+        public DbResHtmlLocalizerFactory(DbResourceConfiguration config, IHostingEnvironment env, IResourceReaderFactory resourceReaderFactory)
         {
             _config = config;
             _host = env;
+            _resourceReaderFactory = resourceReaderFactory ?? throw new ArgumentNullException(nameof(resourceReaderFactory));
         }
 
 
@@ -23,12 +25,13 @@ namespace Westwind.Globalization.AspnetCore
         /// <param name="location"></param>
         /// <returns></returns>
         public IHtmlLocalizer Create(string baseName, string location)
-        {           
+        {       
             // strip off application base (location) if it's provided
             if (baseName != null && baseName.StartsWith(location))
                 baseName = baseName.Substring(location.Length + 1);
-            
-            return new DbResHtmlLocalizer(_config) { ResourceSet = baseName };
+
+            var resInstance = new DbResInstance(_resourceReaderFactory, _config);
+            return new DbResHtmlLocalizer(resInstance, this) { ResourceSet = baseName };
         }
 
 

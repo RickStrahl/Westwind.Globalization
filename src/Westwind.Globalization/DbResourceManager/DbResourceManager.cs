@@ -84,6 +84,8 @@ namespace Westwind.Globalization
         private static readonly object SyncLock = new object();
         private static readonly object AddSyncLock = new object();
 
+        private IResourceReaderFactory _resourceReaderFactory;
+
         /// <summary>
         /// If true causes any entries that aren't found to be added
         /// </summary>
@@ -133,6 +135,17 @@ namespace Westwind.Globalization
         }
 
         /// <summary>
+        /// Creates an instance of a DbResourceManager. Allows to specify a <see cref="IResourceReaderFactory"/> to change
+        /// the default ResourceReader.
+        /// </summary>
+        /// <param name="baseName"></param>
+        /// <param name="resourceReaderFactory"></param>
+        internal DbResourceManager(string baseName, IResourceReaderFactory resourceReaderFactory) : this(baseName)
+        {
+            _resourceReaderFactory = resourceReaderFactory ?? throw new ArgumentNullException(nameof(resourceReaderFactory));
+        }
+
+        /// <summary>
         /// Core Configuration method that sets up the ResourceManager. For this 
         /// implementation we only need the baseName which is the ResourceSet id
         /// (ie. the local or global resource set name) and the assembly name is
@@ -155,8 +168,11 @@ namespace Westwind.Globalization
             AutoAddMissingEntries = DbResourceConfiguration.Current.AddMissingResources;
             
             // InternalResourceSets contains a set of resources for each locale
-            InternalResourceSets = new Dictionary<string, ResourceSet>();            
-        }
+            InternalResourceSets = new Dictionary<string, ResourceSet>();
+
+			// Default to the DBResourceReaderFactory
+			_resourceReaderFactory = new DBResourceReaderFactory();
+		}
                 
         
 
@@ -182,7 +198,8 @@ namespace Westwind.Globalization
                     return InternalResourceSets[culture.Name];
             
                 // Otherwise create a new instance, load it and return it
-                DbResourceSet rs = new DbResourceSet(ResourceSetName, culture, Configuration);
+                IResourceReader reader = _resourceReaderFactory.Create(ResourceSetName, culture, Configuration);
+                DbResourceSet rs = new DbResourceSet(reader);
                 
                 // Add the resource set to the cached set
                 InternalResourceSets.Add(culture.Name, rs);

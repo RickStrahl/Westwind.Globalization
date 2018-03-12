@@ -16,21 +16,21 @@ namespace Westwind.Globalization.AspnetCore
     {        
         DbResInstance DbRes { get;   }
 
-        DbResourceConfiguration Config { get;  }
-
         /// <summary>
         /// Default ResourceSetName if no Template type is provided
         /// </summary>
         public string ResourceSet { get; set; }
 
-        public DbResStringLocalizer(DbResourceConfiguration config)
+        public IStringLocalizerFactory StringLocalizerFactory { get; }
+
+        public DbResStringLocalizer(DbResourceConfiguration config, DbResInstance dbRes, IStringLocalizerFactory stringLocalizerFactory)
         {
-            DbRes = new DbResInstance(config);
-            Config = config;
-            
+            DbRes = dbRes;
+
             // default
-            ResourceSet = Config.StringLocalizerResourcePath + ".CommonResources";
-        }
+            ResourceSet = config.StringLocalizerResourcePath + ".CommonResources";
+            StringLocalizerFactory = stringLocalizerFactory ?? throw new System.ArgumentNullException(nameof(stringLocalizerFactory));
+		}
 
 
         public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
@@ -53,7 +53,7 @@ namespace Westwind.Globalization.AspnetCore
         public IStringLocalizer WithCulture(CultureInfo culture)
         {
             CultureInfo.DefaultThreadCurrentUICulture = culture;
-            return new DbResStringLocalizer(Config);            
+            return StringLocalizerFactory.Create(ResourceSet, null);
         }
 
         LocalizedString IStringLocalizer.this[string name]
