@@ -110,6 +110,11 @@ namespace Westwind.Globalization
         private string _basePhysicalPath = "";
 
 
+        /// <summary>
+        /// A property to indicate whether or not to clear the entire resource set when importing a resx file
+        /// </summary>
+        private bool ClearResourceSetOnImport { get; set; } = true;
+
 
         /// <summary>
         /// Error message if an operation fails
@@ -733,9 +738,12 @@ namespace Westwind.Globalization
 
         var data = DbResourceDataManager.CreateDbResourceDataManager();
 
+        if (ClearResourceSetOnImport) 
+        {
         // clear out resources first
         data.DeleteResourceSet(ResourceSetName, LocaleId);
-        
+        }
+
         XmlDocument dom = new XmlDocument();
 
         try
