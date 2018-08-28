@@ -113,7 +113,7 @@ namespace Westwind.Globalization
         /// <summary>
         /// A property to indicate whether or not to clear the entire resource set when importing a resx file
         /// </summary>
-        private bool ClearResourceSetOnImport { get; set; } = true;
+        public bool ClearResourceSetOnImport { get; set; } = true;
 
 
         /// <summary>
