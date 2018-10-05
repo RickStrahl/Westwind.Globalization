@@ -22,6 +22,7 @@ namespace Westwind.Globalization.Administration
     /// Form. This service is self contained.
     /// </summary>
     [Route("api/LocalizationAdministration")]
+    [IgnoreAntiforgeryToken]
     [UnhandledApiExceptionFilter]        
     public class LocalizationAdministrationController : Controller
     {
