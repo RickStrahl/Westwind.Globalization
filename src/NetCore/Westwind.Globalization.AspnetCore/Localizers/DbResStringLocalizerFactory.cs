@@ -9,26 +9,25 @@ namespace Westwind.Globalization.AspnetCore
         private DbResourceConfiguration _config;
         private IHostingEnvironment _host;
 
-        public DbResStringLocalizerFactory(DbResourceConfiguration config, IHostingEnvironment host)            
+        public DbResStringLocalizerFactory(DbResourceConfiguration config, IHostingEnvironment host)
         {
             _config = config;
             _host = host;
         }
-        
 
         public IStringLocalizer Create(string baseName, string location)
         {
             // strip off application base(location) if it's provided
-            if (baseName != null && baseName.StartsWith(location))
+            if (baseName != null && !string.IsNullOrEmpty(location) && baseName.StartsWith(location))
                 baseName = baseName.Substring(location.Length + 1);
 
             return new DbResStringLocalizer(_config) { ResourceSet = baseName };
         }
 
         public IStringLocalizer Create(Type resourceSource)
-        {                        
-            string baseName = resourceSource.FullName;                             
+        {
+            string baseName = resourceSource.FullName;
             return Create(baseName, _host.ApplicationName);
-        }        
+        }
     }
 }

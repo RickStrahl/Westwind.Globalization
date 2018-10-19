@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{7FC6C7F0-A67A-41EC-A2B1-43CF095726D4}"
 	ProjectSection(SolutionItems) = preProject
@@ -18,6 +18,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Westwind.Globalization.AspnetCore", "NetCore\Westwind.Globalization.AspnetCore\Westwind.Globalization.AspnetCore.csproj", "{8AA6A3DE-B7DE-449B-8E2B-59997032F829}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Westwind.Globalization.Test.NetCore", "NetCore\Westwind.Globalization.Test.NetCore\Westwind.Globalization.Test.NetCore.csproj", "{36254AF1-086A-4786-8B92-6653C15EB22F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Westwind.Globalization.Test.AspnetCore", "NetCore\Westwind.Globalization.Test.AspnetCore\Westwind.Globalization.Test.AspnetCore.csproj", "{16C36D0B-821F-41BC-9818-362B1C608162}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{36254AF1-086A-4786-8B92-6653C15EB22F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36254AF1-086A-4786-8B92-6653C15EB22F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36254AF1-086A-4786-8B92-6653C15EB22F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16C36D0B-821F-41BC-9818-362B1C608162}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16C36D0B-821F-41BC-9818-362B1C608162}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16C36D0B-821F-41BC-9818-362B1C608162}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16C36D0B-821F-41BC-9818-362B1C608162}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +54,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{83736D05-955E-4C4E-8C0E-41FE87F11F27} = {0BA85EAE-8A25-4B4A-8ACF-553D14C3BAE1}
 		{36254AF1-086A-4786-8B92-6653C15EB22F} = {0BA85EAE-8A25-4B4A-8ACF-553D14C3BAE1}
+		{16C36D0B-821F-41BC-9818-362B1C608162} = {0BA85EAE-8A25-4B4A-8ACF-553D14C3BAE1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C151A76C-1C52-4B8D-940B-229C2ABB203E}
