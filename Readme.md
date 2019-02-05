@@ -401,7 +401,7 @@ You can get access to DbResourceConfiguration in a number of ways:
 * Static `DbResourceConfiguration.Current` 
 
 #### Dependency Injection for IDbResStringLocalizer
-One of the base features of ASP.NET Core's Localization is `IStringLocalizer` which provides the provides an interface to map type signatures to instances of Resx resources. `DbResStringLocalizer` uses the `DbResourceManager` (which supports switchable Db or Resx resource access).
+One of the base features of ASP.NET Core's Localization is `IStringLocalizer` which provides an interface to map type signatures to instances of Resx resources. `DbResStringLocalizer` uses the `DbResourceManager` (which supports switchable Db or Resx resource access).
 
 To use the DbRes localizer, override the default `IStringLocalizer` with:
 
