@@ -76,6 +76,12 @@ namespace Westwind.Globalization
 #else
         public static ConfigurationModes ConfigurationMode = ConfigurationModes.JsonFile;
 #endif
+        /// <summary>
+        /// The base directory from which to read configuration from. In an Azure Function
+        /// environment, you will want to set this to the FunctionAppDirectory property
+        /// of the ExecutionContext.
+        /// </summary>
+        public static string BaseDirectory { get; set; } = AppDomain.CurrentDomain.BaseDirectory;
 
         /// <summary>
         /// Static constructor for the Current property - guarantees this
@@ -274,7 +280,7 @@ namespace Westwind.Globalization
                 provider = new JsonFileConfigurationProvider<DbResourceConfiguration>()
                 {
                     JsonConfigurationFile =
-                        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DbResourceConfiguration.json")
+                        Path.Combine(BaseDirectory, "DbResourceConfiguration.json")
                 };
             }
             else if (ConfigurationMode == ConfigurationModes.XmlFile)
@@ -282,7 +288,7 @@ namespace Westwind.Globalization
                 provider = new XmlFileConfigurationProvider<DbResourceConfiguration>()
                 {
                     XmlConfigurationFile =
-                        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DbResourceConfiguration.xml")
+                        Path.Combine(BaseDirectory, "DbResourceConfiguration.xml")
                 };
             }
 #if NETFULL
@@ -299,7 +305,7 @@ namespace Westwind.Globalization
              provider = new JsonFileConfigurationProvider<DbResourceConfiguration>()
                 {
                     JsonConfigurationFile =
-                        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DbResourceConfiguration.json")
+                        Path.Combine(BaseDirectory, "DbResourceConfiguration.json")
                 };
             }
 #endif
