@@ -1018,6 +1018,7 @@ namespace Westwind.Globalization.Administration
             BinFile = item.BinFile;
             Comment = item.Comment;
             ValueType = item.ValueType;
+            Updated = item.Updated;
         }
 
         public bool IsRtl
