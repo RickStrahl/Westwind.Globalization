@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -14,32 +14,48 @@ namespace Westwind.Globalization
     /// </summary>
     /// <remarks>
     /// IMPORTANT: Make sure you add the System.Data.SQLite.Core
-    /// NuGet Package to your project in order to have access 
+    /// NuGet Package to your project in order to have access
     /// SqlLite
     /// </remarks>
     public class DbResourceSqLiteDataManager : DbResourceDataManager
     {
 
         /// <summary>
-        /// Returns all available resource ids for a given resource set in all languages.
-        /// 
-        /// Returns a ResourceIdItem object with ResourecId and HasValue fields.
+        /// Returns all available resource ids for the invariant.
+        ///
+        /// Returns a ResourceIdItem object with ResourceId, HasValue and NeedsUpdate fields.
         /// HasValue returns whether there are any entries in any culture for this
         /// resourceId
+        /// NeedsUpdate returns whether the target locale translation is missing
+        /// or older than the invariant if the targetLocaleId is specified.
+        ///
         /// </summary>
         /// <param name="resourceSet"></param>
+        /// <param name="targetLocaleId"></param>
         /// <returns></returns>
-        public override List<ResourceIdItem> GetAllResourceIds(string resourceSet)
+        public override List<ResourceIdItem> GetAllResourceIds(string resourceSet, string targetLocaleId)
         {
             using (var data = GetDb())
             {
                 string sql = string.Format(
-                    @"select ResourceId, CAST( MAX(length(Value)) > 0 as bit )   as HasValue 
-	  	            from {0}
-                    where ResourceSet=@ResourceSet 
-		            group by 1", Configuration.ResourceTableName);
+                    @"select ResourceId,
+                    CAST( MAX(length(l.Value)) > 0 as bit ) as HasValue,
+                    case
+                        WHEN l2.Updated is null THEN 1
+                        WHEN l2.Updated <= l.Updated THEN 1
+                        ELSE 0
+                    end
+                    from {0} l
+                    left join {0} l2
+                    on l2.ResourceId=l.ResourceId
+                    and l2.ResourceSet=l.ResourceSet
+                    and l2.LocaleId=@TargetLocaleId
+                    where ResourceSet=@ResourceSet
+                    and l.LocaleId = ''", Configuration.ResourceTableName);
 
-                var list = data.Query<ResourceIdItem>(sql, data.CreateParameter("@ResourceSet", resourceSet));
+                var list = data.Query<ResourceIdItem>(sql,
+                    data.CreateParameter("@ResourceSet", resourceSet),
+                    data.CreateParameter("@TargetLocaleId", targetLocaleId));
                 if (list == null)
                 {
                     SetError(data.ErrorMessage);
@@ -50,16 +66,16 @@ namespace Westwind.Globalization
         }
 
         /// <summary>
-        /// Returns a list of all the resources for all locales. The result is in a 
+        /// Returns a list of all the resources for all locales. The result is in a
         /// table called TResources that contains all fields of the table. The table is
         /// ordered by LocaleId.
-        /// 
+        ///
         /// This version returns either local or global resources in a Web app
-        /// 
+        ///
         /// Fields:
         /// ResourceId,Value,LocaleId,ResourceSet,Type
         /// </summary>
-        /// <param name="localResources">return local resources if true</param>        
+        /// <param name="localResources">return local resources if true</param>
         /// <returns></returns>
         public override List<ResourceItem> GetAllResources(bool localResources = false, bool applyValueConverters = false, string resourceSet = null)
         {
@@ -89,7 +105,7 @@ namespace Westwind.Globalization
                     if (reader == null)
                     {
                         SetError(data.ErrorMessage);
-                        return null;                        
+                        return null;
                     }
 
                     items = new List<ResourceItem>();
@@ -109,12 +125,12 @@ namespace Westwind.Globalization
                         if (number is int)
                             item.ValueType = (int) number;
                         else
-                            item.ValueType = Convert.ToInt32(number);                        
+                            item.ValueType = Convert.ToInt32(number);
 
-                        var time = reader["Updated"];     // string return from Microsoft.Data.SqLite               
+                        var time = reader["Updated"];     // string return from Microsoft.Data.SqLite
                         if (time == null)
                             item.Updated = DateTime.MinValue;
-                        
+
                         if (time is DateTime)
                             item.Updated = (DateTime) time;
                         else
@@ -123,7 +139,7 @@ namespace Westwind.Globalization
                         items.Add(item);
                     }
                 }
-                
+
                 if (applyValueConverters && DbResourceConfiguration.Current.ResourceSetValueConverters.Count > 0)
                 {
                     foreach (var resourceItem in items)
@@ -147,11 +163,11 @@ namespace Westwind.Globalization
             if (string.IsNullOrEmpty(tableName))
                 tableName = "Localizations";
 
-            string sql = "SELECT name FROM sqlite_master WHERE type = 'table' AND name='" + tableName + "'";            
+            string sql = "SELECT name FROM sqlite_master WHERE type = 'table' AND name='" + tableName + "'";
 
             using (var data = GetDb())
             {
-                
+
                 var reader = data.ExecuteReader(sql, tableName);
 
                 if (reader == null)
@@ -164,7 +180,7 @@ namespace Westwind.Globalization
                 }
             }
 
-            return true;            
+            return true;
         }
 
         /// <summary>
@@ -187,7 +203,7 @@ namespace Westwind.Globalization
                 throw new InvalidOperationException("Unable to load SqLite Data Provider. Make sure you have a reference to Microsoft.Data.Sqlite (.NET Core) or System.Data.SQLite (.NET 4.5).");
             }
 
-            var db = new SqlDataAccess(connectionString, provider);            
+            var db = new SqlDataAccess(connectionString, provider);
             db?.ExecuteNonQuery("PRAGMA journal_mode=WAL;");
 
             return db;
@@ -215,22 +231,22 @@ namespace Westwind.Globalization
             {
 
                 if (!data.RunSqlScript(sql, false, false))
-                {       
+                {
                     SetError(data.ErrorMessage);
-                    return false;                    
+                    return false;
                 }
             }
 
             return true;
         }
-        
+
         protected override string TableCreationSql
         {
             get
             {
                 return
                     @"CREATE TABLE [{0}] (
- [Pk] INTEGER PRIMARY KEY 
+ [Pk] INTEGER PRIMARY KEY
 , [ResourceId] nvarchar(1024) COLLATE NOCASE NOT NULL
 , [Value] ntext  NULL
 , [LocaleId] nvarchar(10) COLLATE NOCASE DEFAULT '' NULL

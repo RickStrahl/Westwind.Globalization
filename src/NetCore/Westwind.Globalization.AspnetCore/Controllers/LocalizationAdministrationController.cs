@@ -22,7 +22,7 @@ namespace Westwind.Globalization.Administration
     /// Form. This service is self contained.
     /// </summary>
     [Route("api/LocalizationAdministration")]
-    [UnhandledApiExceptionFilter]        
+    [UnhandledApiExceptionFilter]
     public class LocalizationAdministrationController : Controller
     {
         public const string STR_RESOURCESET = "LocalizationForm";
@@ -55,14 +55,14 @@ namespace Westwind.Globalization.Administration
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             base.OnActionExecuting(context);
-            
+
             if (DbIRes.Configuration.OnAuthorizeLocalizationAdministration != null)
             {
                 var func = Config.OnAuthorizeLocalizationAdministration as Func<ActionExecutingContext, bool>;
                 if  (func != null)
-                {                                     
-                    if (!func.Invoke(context))                    
-                        throw new UnauthorizedAccessException();                    
+                {
+                    if (!func.Invoke(context))
+                        throw new UnauthorizedAccessException();
                 }
             }
         }
@@ -74,22 +74,22 @@ namespace Westwind.Globalization.Administration
         //public IEnumerable<ResourceIdItem> GetResourceList(string resourceSet)
         public ActionResult GetResourceList(string resourceSet)
         {
-            var ids = Manager.GetAllResourceIds(resourceSet);
+            var ids = Manager.GetAllResourceIds(resourceSet, "");
             if (ids == null)
                 throw new ApplicationException(DbIRes.T("ResourceSetLoadingFailed", STR_RESOURCESET) + ":" +
                                                Manager.ErrorMessage);
 
-            
+
             //return ids;
             return Json(ids, jsonSettings);
         }
 
 
-   
+
         /// <summary>
         /// Returns a shaped objects that can be displayed in an editable grid the grid view for locale ids
         /// of resources.
-        /// 
+        ///
         //{
         //  "Locales": [
         //    "",
@@ -163,7 +163,7 @@ namespace Westwind.Globalization.Administration
                             {
                                 ResourceId = resid,
                                 LocaleId = locale,
-                                ResourceSet = resourceSet                                
+                                ResourceSet = resourceSet
                             });
                         }
                     }
@@ -193,16 +193,17 @@ namespace Westwind.Globalization.Administration
                 Resources = resultList
             };
 
-            return Json(result, jsonSettings);            
+            return Json(result, jsonSettings);
         }
 
 
         [HttpGet]
         [Route("GetResourceListHtml")]
-        public JsonResult GetResourceListHtml(string resourceSet)
+        public JsonResult GetResourceListHtml(string resourceSet, string localeId)
         //public IEnumerable<ResourceIdListItem> GetResourceListHtml(string resourceSet)
         {
-            var ids = Manager.GetAllResourceIdListItems(resourceSet);
+            localeId = localeId == null ? "" : localeId;
+            var ids = Manager.GetAllResourceIdListItems(resourceSet, localeId);
             if (ids == null)
                 throw new ApplicationException(DbIRes.T("ResourceSetLoadingFailed", STR_RESOURCESET) + ":" +
                                                Manager.ErrorMessage);
@@ -228,7 +229,7 @@ namespace Westwind.Globalization.Administration
         /// Returns a list of the all the LocaleIds used in a given resource set
         /// </summary>
         /// <param name="resourceSet"></param>
-        /// <returns></returns>        
+        /// <returns></returns>
         [Route("GetLocaleIds")]
         public JsonResult GetAllLocaleIds(string resourceSet)
         // public IEnumerable<object> GetAllLocaleIds(string resourceSet)
@@ -288,8 +289,8 @@ namespace Westwind.Globalization.Administration
         //public IEnumerable<ResourceItemEx> GetResourceItems([FromBody] dynamic  parm)
         {
             string resourceSet = parm.ResourceSet;
-            string resourceId = parm.ResourceId;            
-            
+            string resourceId = parm.ResourceId;
+
             var items = Manager.GetResourceItems(resourceId, resourceSet, true).ToList();
             var itemList = new List<ResourceItemEx>();
 
@@ -346,7 +347,7 @@ namespace Westwind.Globalization.Administration
         }
 
 
-        protected IEnumerable<ResourceString> GetResourceStringsInternal(string resourceId, string resourceSet)        
+        protected IEnumerable<ResourceString> GetResourceStringsInternal(string resourceId, string resourceSet)
         {
             Dictionary<string, string> resources = Manager.GetResourceStrings(resourceId, resourceSet, true);
 
@@ -478,7 +479,7 @@ namespace Westwind.Globalization.Administration
             var resourceSet = Request.Form["ResourceSet"];
             var localeId = Request.Form["LocaleId"];
 
-            
+
 
             if (string.IsNullOrEmpty(resourceId) || string.IsNullOrEmpty(resourceSet))
                 throw new ApplicationException("Resourceset or ResourceId are not provided for upload.");
@@ -498,14 +499,14 @@ namespace Westwind.Globalization.Administration
             using (var fs = file.OpenReadStream())
             using (var ms = new MemoryStream())
             {
-                fs.CopyTo(ms);                
+                fs.CopyTo(ms);
                 ms.Flush();
 
                 if (DbResourceDataManager.SetFileDataOnResourceItem(item, ms.ToArray(), file.FileName) == null)
                     return false;
 
                 int res = Manager.UpdateOrAddResource(item);
-                if (res < 0)                    
+                if (res < 0)
                     return false;
             }
 
@@ -533,7 +534,7 @@ namespace Westwind.Globalization.Administration
         }
 
         /// <summary>
-        /// Delete an individual resource. Pass resourceId, resourceSet and localeId 
+        /// Delete an individual resource. Pass resourceId, resourceSet and localeId
         /// as a map. If localeId is null all the resources are deleted.
         /// </summary>
         /// <param name="parm"></param>
@@ -567,12 +568,12 @@ namespace Westwind.Globalization.Administration
 
         /// <summary>
         /// Renames a resource key to a new name.
-        /// 
+        ///
         /// Requires a JSON object with the following properties:
         /// {
         /// }
-        /// 
-        /// 
+        ///
+        ///
         /// </summary>
         /// <param name="parms"></param>
         /// <returns></returns>
@@ -682,7 +683,7 @@ namespace Westwind.Globalization.Administration
 
         #region Miscellaneous helpers
         [HttpPost]
-        [Route("Translate")]        
+        [Route("Translate")]
         public string Translate([FromBody] dynamic parm)
         {
             string text = parm.text;
@@ -701,7 +702,7 @@ namespace Westwind.Globalization.Administration
             else if (service == "bing")
             {
                 if (string.IsNullOrEmpty(DbResourceConfiguration.Current.BingClientId))
-                    result = ""; // don't do anything -  just return blank 
+                    result = ""; // don't do anything -  just return blank
                 else
                     result = translate.TranslateBing(text, from, to);
             }
@@ -709,7 +710,7 @@ namespace Westwind.Globalization.Administration
             {
                 result = translate.TranslateDeepL(text, from, to);
             }
-            
+
             if (result == null)
                 result = translate.ErrorMessage;
 
@@ -809,7 +810,7 @@ namespace Westwind.Globalization.Administration
 
                 Os = System.Runtime.InteropServices.RuntimeInformation.OSDescription,
                 AspNetVersion = v.ToString()
-                
+
             },jsonSettings);
         }
 
@@ -865,13 +866,13 @@ namespace Westwind.Globalization.Administration
 
             if (string.IsNullOrEmpty(nameSpace))
                 nameSpace = config.ResourceBaseNamespace;
-            
+
             if (!string.IsNullOrEmpty(strongTypes.ErrorMessage))
                 throw new ApplicationException(DbIRes.T("StronglyTypedGlobalResourcesFailed", STR_RESOURCESET));
 
             if (classType != "Resx")
                 strongTypes.CreateClassFromAllDatabaseResources(nameSpace, filename, resourceSets);
-            else             
+            else
             {
                 string outputBasePath = filename;
 
@@ -889,7 +890,7 @@ namespace Westwind.Globalization.Administration
 #if NETFULL
                     // Use automated generation
                     str.CreateResxDesignerClassFromResxFile(file, resource, nameSpace, false);
-#else                    
+#else
                     // Manual code generation
                     str.CreateResxDesignerClassFromResourceSet(resource, nameSpace,resource, file);
 #endif
@@ -930,17 +931,17 @@ namespace Westwind.Globalization.Administration
 
             if (outputBasePath.StartsWith("~"))
                 outputBasePath = Request.MapPath(outputBasePath, basePath: Host.ContentRootPath );
-            
+
             outputBasePath = FileUtils.NormalizePath(outputBasePath);
-                                           
+
             DbResXConverter exporter = new DbResXConverter(outputBasePath);
-                      
+
 
 
             // if resourceSets is null all resources are generated
             if (!exporter.GenerateResXFiles(resourceSets))
                 throw new ApplicationException(DbIRes.T("ResourceGenerationFailed", STR_RESOURCESET));
-          
+
             return true;
         }
 

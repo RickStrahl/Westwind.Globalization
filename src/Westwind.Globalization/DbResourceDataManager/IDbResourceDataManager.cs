@@ -1,8 +1,8 @@
-#region License
+﻿#region License
 /*
  **************************************************************
  *  Author: Rick Strahl 
- *          � West Wind Technologies, 2009-2015
+ *          © West Wind Technologies, 2009-2015
  *          http://www.west-wind.com/
  * 
  *
@@ -94,23 +94,28 @@ namespace Westwind.Globalization
         List<ResourceItem> GetAllResources(bool localResources = false, bool applyValueConverters = false, string resourceSet = null);
 
         /// <summary>
-        /// Returns all available resource ids for a given resource set in all languages.
-        /// 
-        /// Returns a ResourceIdItem object with ResourecId and HasValue fields.
+        /// Returns all available resource ids for the invariant.
+        ///
+        /// Returns a ResourceIdItem object with ResourceId, HasValue and NeedsUpdate fields.
         /// HasValue returns whether there are any entries in any culture for this
         /// resourceId
+        /// NeedsUpdate returns whether the target locale translation is missing
+        /// or older than the invariant if the targetLocaleId is specified.
+        /// 
         /// </summary>
         /// <param name="resourceSet"></param>
+        /// <param name="targetLocaleId"></param>
         /// <returns></returns>
-        List<ResourceIdItem> GetAllResourceIds(string resourceSet);
+        List<ResourceIdItem> GetAllResourceIds(string resourceSet, string targetLocaleId);
 
         /// <summary>
-        /// Returns an DataTable called TResourceIds with ResourceId and HasValues fields
+        /// Returns an DataTable called TResourceIds with ResourceId, HasValue and NeedsUpdate fields
         /// where the ResourceId is formatted for HTML display.
         /// </summary>
         /// <param name="resourceSet"></param>
+        /// <param name="targetLocaleId"></param>
         /// <returns></returns>
-        List<ResourceIdListItem> GetAllResourceIdListItems(string resourceSet);
+        List<ResourceIdListItem> GetAllResourceIdListItems(string resourceSet, string targetLocaleId);
 
         /// <summary>
         /// Returns all available resource sets

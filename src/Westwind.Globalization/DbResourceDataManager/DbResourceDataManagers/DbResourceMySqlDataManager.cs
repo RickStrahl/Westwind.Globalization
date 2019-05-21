@@ -1,4 +1,4 @@
-
+ï»¿
 using System.Collections.Generic;
 using System.Data.Common;
 using Westwind.Utilities;
@@ -17,27 +17,43 @@ namespace Westwind.Globalization
     {
 
         /// <summary>
-        /// Returns all available resource ids for a given resource set in all languages.
-        /// 
-        /// Returns a ResourceIdItem object with ResourecId and HasValue fields.
+        /// Returns all available resource ids for the invariant.
+        ///
+        /// Returns a ResourceIdItem object with ResourceId, HasValue and NeedsUpdate fields.
         /// HasValue returns whether there are any entries in any culture for this
         /// resourceId
+        /// NeedsUpdate returns whether the target locale translation is missing
+        /// or older than the invariant if the targetLocaleId is specified.
+        ///
         /// </summary>
         /// <param name="resourceSet"></param>
+        /// <param name="targetLocaleId"></param>
         /// <returns></returns>
-        public override List<ResourceIdItem> GetAllResourceIds(string resourceSet)
+        public override List<ResourceIdItem> GetAllResourceIds(string resourceSet, string targetLocaleId)
         {
             using (var data = GetDb())
             {
                 string sql = string.Format(
-                    @"select ResourceId, if(MAX(length(Value)) > 0,true,false) as HasValue
-	  	            from {0}
-                    where ResourceSet=@ResourceSet 
-		            group by 1", Configuration.ResourceTableName);
+                    @"select l.ResourceId,
+                    if(length(l.Value) > 0,1,0) as HasValue,
+                    case
+                        WHEN l2.Updated is null THEN 1
+                        WHEN l2.Updated < l.Updated THEN 1
+                        ELSE 0
+                    end as NeedsUpdate
+                    from {0} l
+                    left join {0} l2
+                    on l2.ResourceId=l.ResourceId
+                    and l2.ResourceSet=l.ResourceSet
+                    and l2.LocaleId=@TargetLocaleId
+                    where l.ResourceSet=@ResourceSet
+                    and l.LocaleId=''", Configuration.ResourceTableName);
 
-                // have to use a reader as bool values are coming back as longs that 
+                // have to use a reader as bool values are coming back as longs that
                 // aren't automatically parsed into bool
-                var reader = data.ExecuteReader(sql, data.CreateParameter("@ResourceSet", resourceSet));               
+                var reader = data.ExecuteReader(sql,
+                    data.CreateParameter("@ResourceSet", resourceSet),
+                    data.CreateParameter("@TargetLocaleId", targetLocaleId));
                 if (reader == null)
                 {
                     SetError(data.ErrorMessage);
@@ -47,22 +63,24 @@ namespace Westwind.Globalization
                 var list = new List<ResourceIdItem>();
                 while (reader.Read())
                 {
-                    bool val = ((long) reader["HasValue"]) == 1 ? true : false;
+                    bool hasVal = ((long) reader["HasValue"]) == 1 ? true : false;
+                    bool needsUpdate = ((long) reader["NeedsUpdate"]) == 1 ? true : false;
 
                     list.Add(new ResourceIdItem()
                     {
                         ResourceId = reader["ResourceId"] as string,
-                        HasValue = val
+                        HasValue = hasVal,
+                        NeedsUpdate = needsUpdate,
                     });
                 }
-                
+
                 return list;
             }
         }
 
         /// <summary>
         /// Create a backup of the localization database.
-        /// 
+        ///
         /// Note the table used is the one specified in the Configuration.ResourceTableName
         /// </summary>
         /// <param name="BackupTableName">Table of the backup table. Null creates a _Backup table.</param>
@@ -137,9 +155,9 @@ namespace Westwind.Globalization
             {
 
                 if (!data.RunSqlScript(sql, false, false))
-                {       
+                {
                     SetError(data.ErrorMessage);
-                    return false;                    
+                    return false;
                 }
             }
 
@@ -196,7 +214,7 @@ namespace Westwind.Globalization
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Hello Cruel World (MySql)','','Resources');
-INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Hallo schnöde Welt (MySql)','de','Resources');
+INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Hallo schnÃ¶de Welt (MySql)','de','Resources');
 INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Bonjour tout le monde','fr','Resources');
 INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Yesterday','Yesterday (invariant)','','Resources');
 INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Yesterday','Gestern','de','Resources');
@@ -207,7 +225,7 @@ INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Today','Aujou
 
 INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet,ValueType) VALUES ('MarkdownText','This is **MarkDown** formatted *HTML Text*','','Resources',2);
 INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet,ValueType) VALUES ('MarkdownText','Hier ist **MarkDown** formatierter *HTML Text*','de','Resources',2);
-INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet,ValueType) VALUES ('MarkdownText','Ceci est **MarkDown** formaté *HTML Texte*','fr','Resources',2);
+INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet,ValueType) VALUES ('MarkdownText','Ceci est **MarkDown** formatÃ© *HTML Texte*','fr','Resources',2);
 
 INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('lblHelloWorldLabel.Text','Hello Cruel World (local)','','ResourceTest.aspx');
 INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('lblHelloWorldLabel.Text','Hallo Welt (lokal)','de','ResourceTest.aspx');

@@ -59,7 +59,7 @@ namespace Westwind.Globalization.Test
         {
             var manager = GetManager();
 
-            var items = manager.GetAllResourceIds("Resources");
+            var items = manager.GetAllResourceIds("Resources", "");
             Assert.IsNotNull(items);
             Assert.IsTrue(items.Count > 0);
         }
@@ -69,7 +69,7 @@ namespace Westwind.Globalization.Test
         public void GetAllResourceIdsForHtmlDisplay()
         {
             var manager = GetManager();
-            var items = manager.GetAllResourceIdListItems("Resources");
+            var items = manager.GetAllResourceIdListItems("Resources", "");
 
             Assert.IsNotNull(items);
             Assert.IsTrue(items.Count > 0);
