@@ -276,7 +276,7 @@ namespace Westwind.Globalization
             {
                 ErrorMessage = e.GetBaseException().Message;
                 return null;
-            }            
+            }
         }
 
         /// <summary>
