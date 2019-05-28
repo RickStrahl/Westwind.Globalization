@@ -37,3 +37,4 @@ node_modules/
 /Westwind.ApplicationConfiguration.WebSample/Properties/PublishProfiles/*.pubxml
 .vs/config/applicationhost.config
 LocalizationAdminHtml/content/
+src/NetCore/Westwind.Globalization.Test.NetCore/data/localizations.sdf

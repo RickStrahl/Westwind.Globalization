@@ -25,14 +25,16 @@ A rich, Web based resource editor is also provided that makes it easy to create 
 
 * [Nuget Packages](#nuget)
 * [Features](#features)
+* [Documentation](https://west-wind.com/westwind.globalization/docs)
 * [Installation and Configuration for .NET Core](#installation-netcore)
 * [Installation and Configuration for .NET 4.5+](#installation-fullframework)
 * [Using Resources in your Application](#resource-usage)
 * [The Web Resource Editor](#web-resource-editor)
 
 ### Requirements:
-* .NET Core 2.0 or .NET 4.5 or later
-* SQL Server 2008-2016, SQL Server Express, SQL Compact 4, MySql, SqLite
+* works .NET Standard 2.0/.NET Core 2.0 or .NET 4.5 or later
+* SQL Server 2008-2019, SQL Server Express, SQL Compact 4, MySql, SqLite
+* .NET Core Sample Project uses .NET Core 2.2 and needs VS 2019
 
 ### .NET Version Support
 Version 3.0 adds support for the 2.0 versions of .NET Standard, .NET Core and ASP.NET Core. The following versions are provided:

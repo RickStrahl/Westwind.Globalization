@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
+using Westwind.AspNetCore.LiveReload;
 using Westwind.Globalization;
 using Westwind.Globalization.AspnetCore;
     
@@ -77,6 +78,9 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 });
             });
 
+            // Optional - Live Reload Middleware
+            services.AddLiveReload();
+
             services.AddMvc()
                 .AddViewLocalization()
                 .AddDataAnnotationsLocalization();
@@ -92,7 +96,6 @@ namespace WestWind.Globalization.Sample.AspNetCore
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
             }
             else
             {
@@ -121,6 +124,10 @@ namespace WestWind.Globalization.Sample.AspNetCore
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // Optional - Live Reload Middleware
+            // best when run with `dotnet watch run`
+            app.UseLiveReload();
 
             app.UseDefaultFiles();
             app.UseStaticFiles();

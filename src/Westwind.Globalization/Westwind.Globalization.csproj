@@ -1,12 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>
-    <!-- <TargetFrameworks>netstandard2.0;net45</TargetFrameworks> -->
-    <Version>3.0.0</Version>
+    <Version>3.0.5</Version>
     <Authors>Rick Strahl</Authors>
     <Company>West Wind Technologies</Company>
     <Description>
@@ -16,7 +15,7 @@
     </Description>
     <Summary>Database driven localization library for .NET Core and .NET 4.5+. Also includes many utilities for converting and loading Resx resource to and from Db Resources.</Summary>
     <Title>West Wind Globalization Database ResourceManager</Title>
-    <Copyright>© West Wind Technologies, 2014-2018</Copyright>
+    <Copyright>© West Wind Technologies, 2014-2019</Copyright>
     <PackageLicenseUrl>https://github.com/RickStrahl/Westwind.Globalization#license</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/RickStrahl/Westwind.Globalization</PackageProjectUrl>
     <PackageIconUrl>http://west-wind.com/westwind.globalization/images/Westwind.Localization_128.png</PackageIconUrl>
@@ -32,7 +31,8 @@
 
   <ItemGroup>
     <PackageReference Include="CommonMark.NET" Version="0.15.1" />
-    <PackageReference Include="Westwind.Utilities" Version="3.0.10" />
+    <PackageReference Include="Westwind.Utilities" Version="3.0.27" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -64,7 +64,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Design" />
   </ItemGroup>
-
+  
 
 
 </Project>

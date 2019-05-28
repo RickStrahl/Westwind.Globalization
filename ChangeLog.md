@@ -1,5 +1,14 @@
 # West Wind Globalization Changelog
 
+### Version 3.1 
+<small>not released yet</small>
+
+* **Update samples for .NET Core 2.2**
+Move up dependencies of all projects and the sample projects to .NET Core 2.2.
+
+* **Add Live Reload to .NET Core Sample Project**  
+Added live reload middleware to the project to make it quicker to see any changes made with resources in the project.
+
 ### Version 3.0
 <small>January 24th, 2018</small>
 

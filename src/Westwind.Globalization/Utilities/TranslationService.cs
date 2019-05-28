@@ -237,7 +237,6 @@ namespace Westwind.Globalization
             toCulture = toCulture.ToUpper();
 
             string url = "https://www.deepl.com/jsonrpc";
-            string res;
             try
             {
                 var json = @"{
