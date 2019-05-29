@@ -1,8 +1,8 @@
-#region License
+﻿#region License
 /*
  **************************************************************
  *  Author: Rick Strahl 
- *          � West Wind Technologies, 2009-2015
+ *          © West Wind Technologies, 2009-2015
  *          http://www.west-wind.com/
  * 
  *
@@ -34,12 +34,9 @@
 using System;
 using System.IO;
 using System.Text;
-using System.Web;
 using Westwind.Utilities;
 using System.Net;
-using System.Text.RegularExpressions;
 using System.Xml;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Westwind.Globalization.Properties;
 
@@ -246,7 +243,7 @@ namespace Westwind.Globalization
 
             if (authToken == null)
                 authToken = DbResourceConfiguration.Current.DeepLApiKey;
-            
+
 
             fromCulture = fromCulture.ToUpper();
             toCulture = toCulture.ToUpper();
@@ -254,13 +251,13 @@ namespace Westwind.Globalization
             //            HTTP/1.0 Host: api.deepl.com User-Agent: YourApp Accept: */* Content-Length: 54 Content-Type: application/x-www-form-urlencoded auth_key=your_auth_key&text=Hello, world&target_lang=DE
 
             string url = "https://api.deepl.com/v2/translate?";
-            string body = 
+            string body =
                 $"auth_key={WebUtility.UrlEncode(authToken)}&" +
                 $"text={WebUtility.UrlEncode(text)}&" +
                 $"target_lang={toCulture}&" +
                 $"source_lang={fromCulture}";
 
-            
+
             try
             {
                 var web = new WebClient();
@@ -320,7 +317,7 @@ namespace Westwind.Globalization
                 var web = new WebClient();
                 web.Headers.Add("Authorization", "Bearer " + accessToken);
 
-                
+
                 res = web.DownloadData(serviceUrl);
             }
             catch (Exception e)

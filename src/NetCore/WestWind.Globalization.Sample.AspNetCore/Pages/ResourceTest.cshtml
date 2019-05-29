@@ -154,22 +154,22 @@
             <label>Missing Resource:</label>
             <span data-resource-id="MissingResource">@DbRes.T("MissingResource", "Resources")</span>
         </div>
-        
+
         <div class="container">
             <h3>IViewLocalizer</h3>
             <label>Using localizer["HelloWorld"]:</label>
-            <span data-resource-id="HelloWorld">@localizer["HelloWorld"]</span>            
+            <span data-resource-id="HelloWorld">@localizer["HelloWorld"]</span>
 
             <label>Using stringLocalizer["HelloWorld"] (LocalizationController):</label>
             @stringLocalizer["HelloWorld"]
-            
+
             <label>Using htmlLocalizer["HelloWorld"] (LocalizationController):</label>
             @htmlLocalizer["HelloWorldHtml"]
 
             <label>Missing Resource:</label>
             <span data-resource-id="MissingResource">@DbRes.T("MissingResource", "Resources")</span>
         </div>
-       
+
 
         <div class="container">
             <h3>Strongly Typed Resource (generated)</h3>
@@ -180,13 +180,16 @@
             <label>Strongly typed image resource: <small>(if available)</small></label>
             <div data-resource-id="FlagPng">
                 @try
-            {
-                    @Html.Raw(GeneratedResourceHelper.BitmapToEmbeddedHtmlImage(Resources.FlagPng, "image/png",null))
-            }
-            catch { }
+                {
+                    @Html.Raw(GeneratedResourceHelper.BitmapToEmbeddedHtmlImage(Resources.FlagPng, "image/png", null))
+                }
+                catch { }
             </div>
 
         </div>
+
+
+        @DbRes.T("FooTime","Pages.ResourceTestPage")
 
         <div class="container">
             <h3>Expanded Markdown Text</h3>
@@ -200,11 +203,12 @@
         <div class="container">
             <h3>JavaScript Resource Handler</h3>
             <label>Localized JavaScript Variable</label>
-            <p><small>
-                The following variable is retrieved from the server as a JavaScript map of
-                localized values available as `resources.HelloWorld` or `resources.Today`
-                matching resource Id names.
-            </small>
+            <p>
+                <small>
+                    The following variable is retrieved from the server as a JavaScript map of
+                    localized values available as `resources.HelloWorld` or `resources.Today`
+                    matching resource Id names.
+                </small>
             </p>
             <div id="JavaScriptHelloWorld"></div>
         </div>

@@ -35,11 +35,11 @@ namespace WestWind.Globalization.AspNetCore.Controllers
     public class JavaScriptLocalizationResourcesController : Controller
     {
 
-        protected DbResourceConfiguration Config { get;  }
+        protected DbResourceConfiguration Config { get; }
 
         protected IHostingEnvironment Host { get; }
 
-        protected IStringLocalizer Localizer { get;  }
+        protected IStringLocalizer Localizer { get; }
 
         public JavaScriptLocalizationResourcesController(IHostingEnvironment host, DbResourceConfiguration config, IStringLocalizer<JavaScriptLocalizationResourcesController> localizer)
         {
@@ -54,7 +54,7 @@ namespace WestWind.Globalization.AspNetCore.Controllers
         [Route("JavaScriptResourceHandler.axd")]
         public ActionResult JavaScriptLocalizationResources()
         {
-            return ProcessRequest();            
+            return ProcessRequest();
         }
 
 
@@ -62,11 +62,11 @@ namespace WestWind.Globalization.AspNetCore.Controllers
         {
 
             var Request = HttpContext.Request;
-           
+
             string resourceSet = Request.Query["ResourceSet"];
 
 
-                string localeId = Request.Query["LocaleId"];
+            string localeId = Request.Query["LocaleId"];
             if (string.IsNullOrEmpty(localeId))
                 localeId = "auto";
             string resourceMode = Request.Query["ResourceMode"];
@@ -76,14 +76,14 @@ namespace WestWind.Globalization.AspNetCore.Controllers
             if (string.IsNullOrEmpty(varname))
                 varname = "resources";
 
-                // varname is embedded into script so validate to avoid script injection
-                // it's gotta be a valid C# and valid JavaScript name
-                Match match = Regex.Match(varname, @"^[\w|\d|_|$|@|\.]*$");
+            // varname is embedded into script so validate to avoid script injection
+            // it's gotta be a valid C# and valid JavaScript name
+            Match match = Regex.Match(varname, @"^[\w|\d|_|$|@|\.]*$");
             if (match.Length < 1 || match.Groups[0].Value != varname)
-               SendErrorResponse("Invalid variable name passed.");
+                SendErrorResponse("Invalid variable name passed.");
 
             if (string.IsNullOrEmpty(resourceSet))
-               SendErrorResponse("Invalid ResourceSet specified.");
+                SendErrorResponse("Invalid ResourceSet specified.");
 
             // pick current UI Culture
             if (localeId == "auto")
@@ -92,7 +92,7 @@ namespace WestWind.Globalization.AspNetCore.Controllers
                 {
                     // Use ASP.NET Core RequestLocalization Mapping
                     var cultureProvider = HttpContext.Features.Get<IRequestCultureFeature>();
-                    if(cultureProvider != null)
+                    if (cultureProvider != null)
                         localeId = cultureProvider.RequestCulture.UICulture.IetfLanguageTag;
                     else
                         localeId = Thread.CurrentThread.CurrentUICulture.IetfLanguageTag;
@@ -101,7 +101,7 @@ namespace WestWind.Globalization.AspNetCore.Controllers
                 {
                     localeId = Thread.CurrentThread.CurrentUICulture.IetfLanguageTag;
                 }
-            }            
+            }
 
             Dictionary<string, object> resDict = null;
 
@@ -112,12 +112,12 @@ namespace WestWind.Globalization.AspNetCore.Controllers
                 mode = ResourceAccessMode.DbResourceManager;
             else if (resourceMode == "auto")
                 mode = DbResourceConfiguration.Current.ResourceAccessMode;
-            
+
 
             if (mode == ResourceAccessMode.DbResourceManager)
-            { 
+            {
                 var resManager = DbResourceDataManager.CreateDbResourceDataManager(
-                 Config.DbResourceDataManagerType);   
+                 Config.DbResourceDataManagerType);
                 resDict = resManager.GetResourceSetNormalizedForLocaleId(localeId, resourceSet);
                 if (resDict == null || resDict.Count == 0)
                     mode = ResourceAccessMode.Resx; // try Resx resources from disk instead
@@ -140,14 +140,14 @@ namespace WestWind.Globalization.AspNetCore.Controllers
                 else
                     resDict = resDict.OrderBy(kv => kv.Key).ToDictionary(k => k.Key, v => v.Value);
             }
-            
+
             // return all resource strings
             resDict = resDict.Where(res => res.Value is string)
                     .ToDictionary(dict => dict.Key, dict => dict.Value);
-            
+
             string javaScript = SerializeResourceDictionary(resDict, varname);
 
-            
+
 
 #if NETFULL // client cache
             if (!HttpContext.Current.IsDebuggingEnabled)
@@ -200,8 +200,8 @@ namespace WestWind.Globalization.AspNetCore.Controllers
 
                     while (enumerator.MoveNext())
                     {
-                        var resItem = (DictionaryEntry) enumerator.Current;
-                        resDict.Add((string) resItem.Key, resItem.Value);
+                        var resItem = (DictionaryEntry)enumerator.Current;
+                        resDict.Add((string)resItem.Key, resItem.Value);
                     }
                 }
             }
@@ -287,7 +287,7 @@ namespace WestWind.Globalization.AspNetCore.Controllers
             //if (text.Length > 2000)
             //    WebUtils.GZipEncodePage();
 
-            return Content(text, new MediaTypeHeaderValue("text/javascript") { Charset = "utf-8"});
+            return Content(text, new MediaTypeHeaderValue("text/javascript") { Charset = "utf-8" });
         }
 
 
@@ -310,14 +310,14 @@ namespace WestWind.Globalization.AspNetCore.Controllers
         {
             if (resourceMode == ResourceAccessMode.AutoConfiguration)
                 resourceMode = DbResourceConfiguration.Current.ResourceAccessMode;
-            
-            
+
+
             StringBuilder sb = new StringBuilder(512);
             string resType = resourceMode == ResourceAccessMode.DbResourceManager ? "resdb" : "resx";
 
             sb.Append("/api/JavaScriptLocalizationResources");
             sb.Append($"?ResourceSet={resourceSet}&LocaleId={localeId}&VarName={varName}&ResourceMode={resType}");
-            
+
 
             return sb.ToString();
         }

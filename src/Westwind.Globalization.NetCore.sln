@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Westwind.Globalization.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Westwind.Globalization.Test.AspnetCore", "NetCore\Westwind.Globalization.Test.AspnetCore\Westwind.Globalization.Test.AspnetCore.csproj", "{5776B94D-6646-4C26-9012-798FDBE35B36}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1B0802AB-4A8D-483B-A5AA-6C79E89C104B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
