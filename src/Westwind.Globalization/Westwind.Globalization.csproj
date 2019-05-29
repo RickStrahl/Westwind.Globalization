@@ -16,7 +16,8 @@
     <Summary>Database driven localization library for .NET Core and .NET 4.5+. Also includes many utilities for converting and loading Resx resource to and from Db Resources.</Summary>
     <Title>West Wind Globalization Database ResourceManager</Title>
     <Copyright>© West Wind Technologies, 2014-2019</Copyright>
-    <PackageLicenseUrl>https://github.com/RickStrahl/Westwind.Globalization#license</PackageLicenseUrl>
+    <!--<PackageLicenseUrl>https://github.com/RickStrahl/Westwind.Globalization#license</PackageLicenseUrl>-->
+    <PackageLicense>https://github.com/RickStrahl/Westwind.Globalization#license</PackageLicense>
     <PackageProjectUrl>https://github.com/RickStrahl/Westwind.Globalization</PackageProjectUrl>
     <PackageIconUrl>http://west-wind.com/westwind.globalization/images/Westwind.Localization_128.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/RickStrahl/Westwind.Globalization</RepositoryUrl>

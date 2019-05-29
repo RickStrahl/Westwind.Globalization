@@ -1,10 +1,10 @@
 ﻿/// <reference path="../bower_components/jquery/dist/jquery.js" />
 /*
 ww.jQuery.js  
-Version 1.26 - 2/2/2016
+Version 1.28 - 8/26/2018
 West Wind jQuery plug-ins and utilities
 
-(c) 2008-2015 Rick Strahl, West Wind Technologies 
+(c) 2008-2018 Rick Strahl, West Wind Technologies 
 www.west-wind.com
 
 Licensed under MIT License
@@ -1593,6 +1593,7 @@ http://en.wikipedia.org/wiki/MIT_License
                         $(document).on('touchend.' + opt.instanceId, stopDragging);
                     }
                     $(document).on('selectstart.' + opt.instanceId, noop); // disable selection
+                    $("iframe").css("pointer-events", "none");
                 }
     
                 function doDrag(e) {
@@ -1629,7 +1630,8 @@ http://en.wikipedia.org/wiki/MIT_License
                         $(document).off('touchmove.' + opt.instanceId);
                         $(document).off('touchend.' + opt.instanceId);
                     }
-                    $(document).off('selectstart.' + opt.instanceId, noop);                
+                    $(document).off('selectstart.' + opt.instanceId, noop);     
+                    $("iframe").css("pointer-events", "auto");
     
                     // reset changed values
                     $el.css("transition", startTransition);
@@ -2004,6 +2006,14 @@ http://en.wikipedia.org/wiki/MIT_License
             return sub.toLowerCase() === this.toLowerCase().substr(0, sub.length);
 
         return sub === this.substr(0, sub.length);
+    }
+    String.prototype.endsWith = function (sub, nocase) {
+        if (!this || this.length === 0) return false;
+
+        if (sub && nocase)
+            return sub.toLowerCase() === this.toLowerCase().substr(this.length - sub.length, sub.length);
+
+        return sub === this.substr(this.length - sub.length, sub.length);
     }
     String.prototype.extract = function(startDelim, endDelim, allowMissingEndDelim, returnDelims) {
         var str = this;
