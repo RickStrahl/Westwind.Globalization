@@ -28,23 +28,17 @@ namespace Westwind.Globalization.AspnetCore
             var config = DbResourceConfiguration.Current;
 
             // we allow configuration via AppSettings so make sure that's loaded
-            services.AddOptions();
-
             var provider = services.BuildServiceProvider();
-            var serviceConfiguration = provider.GetService<IConfiguration>();
+            var configuration = provider.GetService<IConfiguration>();
+            
 
-            var section = serviceConfiguration.GetSection("DbResourceConfiguration");
-            // read settings from DbResourceConfiguration in Appsettings.json
-            services.Configure<DbResourceConfiguration>(section);
+            //var section = serviceConfiguration.GetSection("DbResourceConfiguration");
+            // read settings from DbResourceConfiguration in config stores
+            configuration.Bind("DbResourceConfiguration", config);
 
-            // HAVE TO rebuild or else the added config isn't available
-            provider = services.BuildServiceProvider();
-            var configData = provider.GetRequiredService<IOptions<DbResourceConfiguration>>();
-            if (configData != null && configData.Value != null && !configData.Value.ConnectionString.StartsWith("***"))
-            {
-                config = configData.Value;
+            if (config != null)
                 DbResourceConfiguration.Current = config;
-            }
+
             setOptionsAction?.Invoke(config);
 
             // register with DI
