@@ -67,7 +67,7 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 //opt.DataProvider = DbResourceProviderTypes.MySql;
 
                 opt.ResourceTableName = "localizations";
-                opt.AddMissingResources = false;
+                //opt.AddMissingResources = false;
                 opt.ResxBaseFolder = "~/Properties/";
 
                 // Set up security for Localization Administration form

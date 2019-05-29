@@ -55,7 +55,7 @@ namespace Westwind.Globalization
     /// in memory. Data access occurs only on intial access of
     /// each resource set/locale.
     /// </summary>
-    public class DbRes
+    public static class DbRes
     {
         /// <summary>
         /// Call through instance that handles all actual access
