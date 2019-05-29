@@ -1,8 +1,8 @@
-#region License
+﻿#region License
 /*
  **************************************************************
  *  Author: Rick Strahl 
- *          � West Wind Technologies, 2009-2015
+ *          © West Wind Technologies, 2009-2015
  *          http://www.west-wind.com/
  * 
  *
@@ -34,7 +34,6 @@
 #define IncludeWebFormsControls
 
 using System;
-using System.Configuration;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
@@ -184,7 +183,7 @@ namespace Westwind.Globalization
         /// 
         /// Note only applies to the Invariant culture.
         /// </summary>
-        public bool AddMissingResources { get; set; } = true;
+        public bool AddMissingResources { get; set; } = false;
 
 
         /// <summary>
@@ -197,7 +196,7 @@ namespace Westwind.Globalization
         /// </summary>
         public ResourceAccessMode ResourceAccessMode { get; set; } = ResourceAccessMode.DbResourceManager;
 
-    
+
 
         /// <summary>
         /// Determines the location of the Localization form in a Web relative path.
@@ -213,7 +212,7 @@ namespace Westwind.Globalization
         /// https://www.microsoft.com/en-us/translator/getstarted.aspx
         /// </summary>
         public string BingClientId { get; set; }
-        
+
         /// <summary>
         /// Google Translate API Key used to access Translate API.
         /// Note this is a for pay API!
@@ -226,9 +225,9 @@ namespace Westwind.Globalization
         /// </summary>
         public string DeepLApiKey { get; set; }
 
-     
+
         [JsonIgnore]
-        public List<IResourceSetValueConverter> ResourceSetValueConverters = new List<IResourceSetValueConverter>();              
+        public List<IResourceSetValueConverter> ResourceSetValueConverters = new List<IResourceSetValueConverter>();
 
         /// <summary>
         /// Allows you to override the data provider used to access resources.
@@ -240,7 +239,7 @@ namespace Westwind.Globalization
         [XmlIgnore]
         [JsonIgnore]
         [NonSerialized]
-        public Type DbResourceDataManagerType = typeof(DbResourceSqlServerDataManager); 
+        public Type DbResourceDataManagerType = typeof(DbResourceSqlServerDataManager);
 
         /// <summary>
         /// Internally used handler that is generically set to execute authorization
@@ -250,7 +249,7 @@ namespace Westwind.Globalization
         [JsonIgnore]
         [NonSerialized]
         public object OnAuthorizeLocalizationAdministration = null;
-        
+
         /// <summary>
         /// Base constructor that doesn't do anything to the default values.
         /// </summary>
@@ -262,7 +261,7 @@ namespace Westwind.Globalization
         public void AddResourceSetValueConverter(IResourceSetValueConverter converter)
         {
             ResourceSetValueConverters.Add(converter);
-        }        
+        }
 
         /// <summary>
         /// Override this method to create the custom default provider. Here we allow for different 
@@ -300,12 +299,12 @@ namespace Westwind.Globalization
                 };
             }
 #else
-            else 
+            else
             {
-             provider = new JsonFileConfigurationProvider<DbResourceConfiguration>()
+                provider = new JsonFileConfigurationProvider<DbResourceConfiguration>()
                 {
                     JsonConfigurationFile =
-                        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DbResourceConfiguration.json")
+                           Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DbResourceConfiguration.json")
                 };
             }
 #endif
@@ -377,7 +376,7 @@ namespace Westwind.Globalization
         //        }
         //        catch { }                
         //    }
-                
+
         //    return true;
         //}
 
@@ -456,8 +455,8 @@ namespace Westwind.Globalization
     /// Project types for Resx Exports. Either WebForms using 
     /// local and global resources files, or project
     /// </summary>
-    public enum GlobalizationResxExportProjectTypes 
-    {        
+    public enum GlobalizationResxExportProjectTypes
+    {
         /// <summary>
         /// WebForms project that use App_LocalResource/App_GlobalResources
         /// to store local and global resources
@@ -479,5 +478,5 @@ namespace Westwind.Globalization
         Vb
     }
 
-    
+
 }
