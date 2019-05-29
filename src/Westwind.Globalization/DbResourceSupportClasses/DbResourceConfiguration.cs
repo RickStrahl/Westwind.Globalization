@@ -220,6 +220,12 @@ namespace Westwind.Globalization
         /// </summary>
         public string GoogleApiKey { get; set; }
 
+
+        /// <summary>
+        /// DeepL APi key for translations
+        /// </summary>
+        public string DeepLApiKey { get; set; }
+
      
         [JsonIgnore]
         public List<IResourceSetValueConverter> ResourceSetValueConverters = new List<IResourceSetValueConverter>();              

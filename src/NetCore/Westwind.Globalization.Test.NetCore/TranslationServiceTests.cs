@@ -100,7 +100,7 @@ namespace Westwind.Globalization.Test
 
             // use app.config clientid and clientsecret
             string token = service.GetBingAuthToken(BingKey);
-            Assert.IsNotNull(token,"Authentication failed" + DbResourceConfiguration.Current.BingClientId);
+            Assert.IsNotNull(token,"Authentication failed " + DbResourceConfiguration.Current.BingClientId);
 
             string result = service.TranslateBing("Life is one big wave with a giant bottom turn!", "en",
                 "de",token);

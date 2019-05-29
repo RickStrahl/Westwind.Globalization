@@ -11,5 +11,6 @@
   "ActiveConfiguration": null,
   "LocalizationFormWebPath": "~/LocalizationAdmin/",
   "BingClientId": "",
-  "GoogleApiKey": ""
+  "GoogleApiKey": "",
+  "DeepLApiKey":  "" 
 }

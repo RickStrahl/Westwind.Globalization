@@ -32,6 +32,7 @@
 
 
 using System;
+using System.IO;
 using System.Text;
 using System.Web;
 using Westwind.Utilities;
@@ -230,46 +231,48 @@ namespace Westwind.Globalization
             return result;
         }
 
-        public string TranslateDeepL(string text, string fromCulture, string toCulture)
+        /// <summary>
+        /// Translate with DeepL
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="fromCulture"></param>
+        /// <param name="toCulture"></param>
+        /// <param name="authToken"></param>
+        /// <returns></returns>
+        public string TranslateDeepL(string text, string fromCulture, string toCulture, string authToken = null)
         {
+
+            // TODO: Unable to test this as I can't get an account - reqiures EU Credit Card. Lame!
+
+            if (authToken == null)
+                authToken = DbResourceConfiguration.Current.DeepLApiKey;
+            
 
             fromCulture = fromCulture.ToUpper();
             toCulture = toCulture.ToUpper();
 
-            string url = "https://www.deepl.com/jsonrpc";
+            //            HTTP/1.0 Host: api.deepl.com User-Agent: YourApp Accept: */* Content-Length: 54 Content-Type: application/x-www-form-urlencoded auth_key=your_auth_key&text=Hello, world&target_lang=DE
+
+            string url = "https://api.deepl.com/v2/translate?";
+            string body = 
+                $"auth_key={WebUtility.UrlEncode(authToken)}&" +
+                $"text={WebUtility.UrlEncode(text)}&" +
+                $"target_lang={toCulture}&" +
+                $"source_lang={fromCulture}";
+
+            
             try
             {
-                var json = @"{
-    ""jsonrpc"": ""2.0"",
-    ""method"": ""LMT_handle_jobs"",
-    ""params"": {
-        ""jobs"": [
-            {
-                ""kind"":""default"",
-                ""raw_en_sentence"": ##jsonText##
-            }
-        ],
-        ""lang"": {
-            ""user_preferred_langs"": [
-                ##fromLanguage##,
-                ##toLanguage##
-            ],
-            ""source_lang_user_selected"": ##fromLanguage##,
-            ""target_lang"": ##toLanguage##
-        },
-        ""priority"": -1,
-        ""id"": 1
-    }
-}"
-                    .Replace("##jsonText##", JsonConvert.SerializeObject(text))
-                    .Replace("##fromLanguage##", JsonConvert.SerializeObject(fromCulture))
-                    .Replace("##toLanguage##", JsonConvert.SerializeObject(toCulture));
-
                 var web = new WebClient();
-                var jsonResult = web.UploadString(url, json);
+                web.Headers.Add(HttpRequestHeader.AcceptCharset, "UTF-8");
+                web.Headers.Add("User-Agent", "");
+                web.Headers.Add("Accept", "*.*");
+                web.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+
+                var jsonResult = web.UploadString(url, body);
 
                 dynamic jval = JValue.Parse(jsonResult);
-                string translatedText = jval.result.translations[0].beams[0].postprocessed_sentence;
+                string translatedText = jval.translations[0].text;
                 return translatedText;
             }
             catch (Exception e)
@@ -311,12 +314,14 @@ namespace Westwind.Globalization
                                 "&from=" + fromCulture +
                                 "&to=" + toCulture +
                                 "&contentType=text/plain";
-            string res;
+            byte[] res;
             try
             {
                 var web = new WebClient();
                 web.Headers.Add("Authorization", "Bearer " + accessToken);
-                res = web.DownloadString(serviceUrl);
+
+                
+                res = web.DownloadData(serviceUrl);
             }
             catch (Exception e)
             {
@@ -326,8 +331,11 @@ namespace Westwind.Globalization
 
             // result is a single XML Element fragment
             var doc = new XmlDocument();
-            doc.LoadXml(res);
-            return doc.DocumentElement.InnerText;
+            doc.Load(new MemoryStream(res));
+
+            string translatedText = doc.DocumentElement.InnerText;
+
+            return translatedText;
         }
 
         /// <summary>
