@@ -570,35 +570,12 @@ namespace Westwind.Globalization
             if (resourceIds == null)
                 return null;
 
-            var listItems = resourceIds.Select(id => new ResourceIdListItem
+            return resourceIds.Select(id => new ResourceIdListItem
             {
                  ResourceId = id.ResourceId,
                  HasValue = id.HasValue,
                  Value = id.Value as string
             }).ToList();
-            
-            string lastId = "xx";
-            foreach (var resId in listItems)
-            {
-                string resourceId = resId.ResourceId;
-               
-                string[] tokens = resourceId.Split('.');
-                if (tokens.Length == 1)
-                {
-                    lastId = tokens[0];
-                }
-                else
-                {
-                    if (lastId == tokens[0])
-                    {
-                        resId.Style = "color: maroon; margin-left: 20px;";                        
-                    }
-                    lastId = tokens[0];
-                }
-                
-            }
-
-            return listItems;
         }
 
         /// <summary>
