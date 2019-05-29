@@ -179,7 +179,7 @@
                  .error(parseHttpError);
         }
         function reloadResources() {
-            return $http.get(service.baseUrl + "ReloadResources")
+            return $http.get(service.baseUrl + "ReloadResources?&t=" + new Date().getTime)
                  .error(parseHttpError);
         }
         function backup() {
