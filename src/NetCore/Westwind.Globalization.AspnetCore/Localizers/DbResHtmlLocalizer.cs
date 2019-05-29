@@ -56,7 +56,7 @@ namespace Westwind.Globalization.AspnetCore
         public IHtmlLocalizer WithCulture(CultureInfo culture)
         {
             CultureInfo.DefaultThreadCurrentUICulture = culture;
-            return new DbResHtmlLocalizer(Config);
+            return new DbResHtmlLocalizer(Config) { ResourceSet = ResourceSet};
         }
 
         LocalizedHtmlString IHtmlLocalizer.this[string name]
