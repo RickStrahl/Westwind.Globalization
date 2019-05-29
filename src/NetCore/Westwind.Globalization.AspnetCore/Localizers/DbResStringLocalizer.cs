@@ -53,7 +53,7 @@ namespace Westwind.Globalization.AspnetCore
         public IStringLocalizer WithCulture(CultureInfo culture)
         {
             CultureInfo.DefaultThreadCurrentUICulture = culture;
-            return new DbResStringLocalizer(Config);            
+            return new DbResStringLocalizer(Config) { ResourceSet = ResourceSet };            
         }
 
         LocalizedString IStringLocalizer.this[string name]
