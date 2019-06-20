@@ -1,8 +1,8 @@
-#region License
+﻿#region License
 /*
  **************************************************************
  *  Author: Rick Strahl 
- *          � West Wind Technologies, 2009-2015
+ *          © West Wind Technologies, 2009-2015
  *          http://www.west-wind.com/
  * 
  *
