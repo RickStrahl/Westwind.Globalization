@@ -512,13 +512,13 @@ protected void Application_BeginRequest()
 {
     // Automatically set the user's locale to what the browser returns
     // and optionally only allow certain locales/locale-prefixes
-    WebUtils.SetUserLocale(allowLocales: "en,de");
+    WebUtils.SetUserLocale(allowedLocales: "en,de");
 }
 ```
 
 This forces the user's Culture and UI Culture to whatever the browser is using,
 and explicitly. Now when a page is rendered it will use the UiCulture of the browser.
-The optional allowLocales enforces that only certain locales can be set - anything
+The optional allowedLocales enforces that only certain locales can be set - anything
 not matched is defaulted to the server's default locale.
 
 The way .NET resource managers work, if there's no match for the locale the user
