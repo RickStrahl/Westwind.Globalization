@@ -184,7 +184,7 @@ namespace Westwind.Globalization
             }
             catch
             {
-                throw new InvalidOperationException("Unable to load SqLite Data Provider. Make sure you have a reference to Microsoft.Data.Sqlite (.NET Core) or System.Data.SQLite (.NET 4.5).");
+                throw new InvalidOperationException("Unable to load SqLite Data Provider. Make sure you have a reference to System.Data.SQLite.");
             }
 
             var db = new SqlDataAccess(connectionString, provider);            

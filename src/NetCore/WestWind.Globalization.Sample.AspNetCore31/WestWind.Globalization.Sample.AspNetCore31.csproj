@@ -13,10 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Data.SQLite" Version="3.1.2" />
     <PackageReference Include="Westwind.AspnetCore.LiveReload" Version="0.1.12" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.2" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.112" />
   </ItemGroup>
 
   <ItemGroup>

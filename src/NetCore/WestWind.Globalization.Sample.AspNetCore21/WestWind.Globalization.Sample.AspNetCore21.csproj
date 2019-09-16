@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App"  />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.112" />
   </ItemGroup>
   
   <ItemGroup>
