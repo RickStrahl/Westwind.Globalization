@@ -1,0 +1,118 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+<root>
+   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+      <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+      <xsd:element name="root" msdata:IsDataSet="true">
+         <xsd:complexType>
+            <xsd:choice maxOccurs="unbounded">
+               <xsd:element name="metadata">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                     </xsd:sequence>
+                     <xsd:attribute name="name" use="required" type="xsd:string" />
+                     <xsd:attribute name="type" type="xsd:string" />
+                     <xsd:attribute name="mimetype" type="xsd:string" />
+                     <xsd:attribute ref="xml:space" />
+                  </xsd:complexType>
+               </xsd:element>
+               <xsd:element name="assembly">
+                  <xsd:complexType>
+                     <xsd:attribute name="alias" type="xsd:string" />
+                     <xsd:attribute name="name" type="xsd:string" />
+                  </xsd:complexType>
+               </xsd:element>
+               <xsd:element name="data">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                        <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                     </xsd:sequence>
+                     <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+                     <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+                     <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+                     <xsd:attribute ref="xml:space" />
+                  </xsd:complexType>
+               </xsd:element>
+               <xsd:element name="resheader">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                     </xsd:sequence>
+                     <xsd:attribute name="name" type="xsd:string" use="required" />
+                  </xsd:complexType>
+               </xsd:element>
+            </xsd:choice>
+         </xsd:complexType>
+      </xsd:element>
+   </xsd:schema>
+   <resheader name="resmimetype">
+      <value>text/microsoft-resx</value>
+   </resheader>
+   <resheader name="version">
+      <value>2.0</value>
+   </resheader>
+   <resheader name="reader">
+      <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+   </resheader>
+   <resheader name="writer">
+      <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+   </resheader>
+   <data name="AddAlbum" xml:space="preserve">
+      <value>Add  New Albums</value>
+   </data>
+   <data name="AddSong" xml:space="preserve">
+      <value>Add Songs</value>
+   </data>
+   <data name="AlbumDescription" xml:space="preserve">
+      <value>Description</value>
+   </data>
+   <data name="AlbumDescription.Placeholder" xml:space="preserve">
+      <value>Detailed description for this album</value>
+   </data>
+   <data name="AlbumName" xml:space="preserve">
+      <value>Album Name</value>
+   </data>
+   <data name="Albums" xml:space="preserve">
+      <value>Albums</value>
+   </data>
+   <data name="AlbumViewer" xml:space="preserve">
+      <value>AlbumViewer</value>
+   </data>
+   <data name="ArtistName" xml:space="preserve">
+      <value>Band Name</value>
+   </data>
+   <data name="Artists" xml:space="preserve">
+      <value>Artists</value>
+   </data>
+   <data name="Buy" xml:space="preserve">
+      <value>Buy</value>
+   </data>
+   <data name="By" xml:space="preserve">
+      <value>by</value>
+   </data>
+   <data name="Edit" xml:space="preserve">
+      <value>Edit</value>
+   </data>
+   <data name="EditResources" xml:space="preserve">
+      <value>Edit Resources</value>
+   </data>
+   <data name="MoreFrom" xml:space="preserve">
+      <value>More From</value>
+   </data>
+   <data name="NewResource" xml:space="preserve">
+      <value>New Resource</value>
+   </data>
+   <data name="Remove" xml:space="preserve">
+      <value>Remove</value>
+   </data>
+   <data name="Show" xml:space="preserve">
+      <value>Show</value>
+   </data>
+   <data name="Test" xml:space="preserve">
+      <value>Test</value>
+   </data>
+   <data name="YearReleased" xml:space="preserve">
+      <value>Year released</value>
+   </data>
+</root>

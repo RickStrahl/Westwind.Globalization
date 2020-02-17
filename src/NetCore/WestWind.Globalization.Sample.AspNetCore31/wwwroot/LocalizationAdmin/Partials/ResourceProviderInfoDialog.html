@@ -1,0 +1,74 @@
+﻿<div id="ResourceProviderInfoDialog"
+     class="modal fade"
+     tabindex="-1" role="dialog"
+     ng-controller="resourceProviderInfoController as view"
+     aria-labelledby="myModal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form name="renameResourceForm" id="renameResourceForm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 class="modal-title" id="ResourceProviderInfoTitle">{{view.dbRes('ResourceProviderInfo')}}</h3>
+                </div>
+                <div class="modal-body">                                       
+                    <table class="table table-condensed" style="font-size: 0.9em;">
+                        <tr class="warning">
+                            <td style="width: 25%">Connection String:</td>
+                            <td>
+                                <input ng-model="view.info.ConnectionString"  class="form-control input-sm"/>
+                                <div style="margin-top: 5px; font-size: 0.875em">{{view.info.DataProvider}}</div>
+                            </td>
+                        </tr>
+                        <tr class="warning">
+                            <td>Tablename:</td>
+                            <td>
+                                <input ng-model="view.info.ResourceTableName" class="form-control input-sm" />
+                            </td>
+                        </tr>
+                        <tr class="info">
+                            <td>Resx Folder:</td>
+                            <td><input ng-model="view.info.ResxBaseFolder" class="form-control input-sm" /></td>
+                        </tr>
+                        <tr class="info">
+                            <td>Resx Namespace:</td>
+                            <td><input ng-model="view.info.ResourceBaseNamespace" class="form-control input-sm" /></td>
+                        </tr>
+                        <tr class="info">
+                            <td>Strong-type File:</td>
+                            <td><input ng-model="view.info.StronglyTypedGlobalResource" class="form-control input-sm"/></td>
+                        </tr>
+
+                        <tr class="success">
+                            <td>Google API Key:</td>
+                            <td><input ng-model="view.info.GoogleApiKey" class="form-control input-sm" /></td>
+                        </tr>
+
+                        <tr class="success">
+                            <td>Bing Client Id:</td>
+                            <td><input ng-model="view.info.BingClientId" class="form-control input-sm" /></td>
+                        </tr>
+                        
+                        <tr class="info">
+                            <td>Server:</td>
+                            <td>{{view.info.Os}}</td>
+                        </tr>
+                        <tr class="info">
+                            <td>ASP.NET Version:</td>
+                            <td>{{view.info.AspNetVersion}}</td>
+                        </tr>
+                    </table>          
+                    
+                    
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit"
+                            class="btn btn-primary" 
+                            data-dismiss="modal">
+                        <i class="fa fa-check"></i> OK
+                    </button>
+                </div>
+            </form>   
+        </div>
+    </div>
+</div>

@@ -1,15 +1,19 @@
 ﻿using System;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Localization;
+#if NETCOREAPP3_1
+using HostEnvironment = Microsoft.AspNetCore.Hosting.IWebHostEnvironment;
+#else
+using HostEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+#endif
 
 namespace Westwind.Globalization.AspnetCore
 {
     public class DbResHtmlLocalizerFactory : IHtmlLocalizerFactory
     {
-        private IHostingEnvironment _host;
+        private HostEnvironment _host;
         private DbResourceConfiguration _config;
 
-        public DbResHtmlLocalizerFactory(DbResourceConfiguration config, IHostingEnvironment env)
+        public DbResHtmlLocalizerFactory(DbResourceConfiguration config, HostEnvironment env)
         {
             _config = config;
             _host = env;

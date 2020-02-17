@@ -4,16 +4,24 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Microsoft.AspNetCore.Hosting;
+#if NETCOREAPP3_1
+using System.Text.Json;
+#else
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+#endif
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
+using Westwind.Globalization.AspnetCore.Models;
 using Westwind.Globalization.AspNetCore.Extensions;
 using Westwind.Globalization.Errors;
 using Westwind.Globalization.Utilities;
 using Westwind.Utilities;
+#if NETCOREAPP3_1
+using HostEnvironment = Microsoft.AspNetCore.Hosting.IWebHostEnvironment;
+#else
+using HostEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+#endif
 
 namespace Westwind.Globalization.Administration
 {
@@ -28,19 +36,27 @@ namespace Westwind.Globalization.Administration
         public const string STR_RESOURCESET = "LocalizationForm";
 
         protected DbResourceDataManager Manager;
-        protected Formatting EnsureJsonNet = Formatting.Indented;
-        protected IHostingEnvironment Host;
+        protected HostEnvironment Host;
         protected DbResourceConfiguration Config;
+
+#if NETCOREAPP3_1
+        private static JsonSerializerOptions jsonSettings = new System.Text.Json.JsonSerializerOptions()
+        {
+            PropertyNameCaseInsensitive = true // no proper case Results for backwards compatibilty
+        };
+#else
+        protected Formatting EnsureJsonNet = Formatting.Indented;
 
         private static JsonSerializerSettings jsonSettings = new JsonSerializerSettings()
         {
             ContractResolver = new DefaultContractResolver()  // no proper case Results for backwards compatibilty
         };
+#endif
 
         DbResInstance DbIRes { get; }
 
 
-        public LocalizationAdministrationController(IHostingEnvironment host, DbResourceConfiguration config)
+        public LocalizationAdministrationController(HostEnvironment host, DbResourceConfiguration config)
         {
             Host = host;
             Config = config;
@@ -89,7 +105,7 @@ namespace Westwind.Globalization.Administration
         /// <summary>
         /// Returns a shaped objects that can be displayed in an editable grid the grid view for locale ids
         /// of resources.
-        /// 
+        ///
         //{
         //  "Locales": [
         //    "",
@@ -228,7 +244,7 @@ namespace Westwind.Globalization.Administration
         /// Returns a list of the all the LocaleIds used in a given resource set
         /// </summary>
         /// <param name="resourceSet"></param>
-        /// <returns></returns>        
+        /// <returns></returns>
         [Route("GetLocaleIds")]
         public JsonResult GetAllLocaleIds(string resourceSet)
         // public IEnumerable<object> GetAllLocaleIds(string resourceSet)
@@ -261,13 +277,10 @@ namespace Westwind.Globalization.Administration
         /// <returns></returns>
         [HttpPost]
         [Route("GetResourceString")]
-        public string GetResourceString(dynamic parm)
+        public string GetResourceString(ResourceItemModel parm)
         {
-            string resourceId = parm.ResourceId;
-            string resourceSet = parm.ResourceSet;
-            string cultureName = parm.CultureName;
-            string value = Manager.GetResourceString(resourceId,
-                resourceSet, cultureName);
+            string value = Manager.GetResourceString(parm.ResourceId,
+                parm.ResourceSet, parm.CultureName);
 
 
             if (value == null && !string.IsNullOrEmpty(Manager.ErrorMessage))
@@ -275,6 +288,8 @@ namespace Westwind.Globalization.Administration
 
             return value;
         }
+
+
 
         /// <summary>
         /// Returns all resources for a given Resource ID. Pass resourceId, and resourceSet
@@ -284,13 +299,9 @@ namespace Westwind.Globalization.Administration
         /// <returns></returns>
         [HttpPost]
         [Route("GetResourceItems")]
-        public JsonResult GetResourceItems([FromBody] dynamic parm)
-        //public IEnumerable<ResourceItemEx> GetResourceItems([FromBody] dynamic  parm)
+        public JsonResult GetResourceItems([FromBody] ResourceItemModel parm)
         {
-            string resourceSet = parm.ResourceSet;
-            string resourceId = parm.ResourceId;
-
-            var items = Manager.GetResourceItems(resourceId, resourceSet, true).ToList();
+            var items = Manager.GetResourceItems(parm.ResourceId, parm.ResourceSet, true).ToList();
             var itemList = new List<ResourceItemEx>();
 
             // strip file data for size
@@ -313,19 +324,14 @@ namespace Westwind.Globalization.Administration
         /// <returns></returns>
         [HttpPost]
         [Route("GetResourceItem")]
-        public JsonResult GetResourceItem([FromBody] dynamic parm)
-        //public ResourceItemEx GetResourceItem([FromBody] dynamic parm)
+        public JsonResult GetResourceItem([FromBody] ResourceItemModel parm)
         {
-            string resourceId = parm.ResourceId;
-            string resourceSet = parm.ResourceSet;
-            string cultureName = parm.CultureName;
-
-            var item = Manager.GetResourceItem(resourceId, resourceSet, "");
+            var item = Manager.GetResourceItem(parm.ResourceId, parm.ResourceSet, "");
             if (item == null)
                 throw new ArgumentException(Manager.ErrorMessage);
 
             var itemEx = new ResourceItemEx(item);
-            itemEx.ResourceList = GetResourceStringsInternal(resourceId, resourceSet).ToList();
+            itemEx.ResourceList = GetResourceStringsInternal(parm.ResourceId, parm.ResourceSet).ToList();
 
             return Json(itemEx, jsonSettings);
         }
@@ -372,30 +378,24 @@ namespace Westwind.Globalization.Administration
         /// <returns></returns>
         [HttpPost]
         [Route("UpdateResourceString")]
-        public bool UpdateResourceString([FromBody] dynamic parm)
+        public bool UpdateResourceString([FromBody] UpdateResourceItemModel parm)
         {
-            string value = parm.value;
-            string resourceId = parm.resourceId;
-            string resourceSet = parm.resourceSet;
-            string localeId = parm.localeId;
-            string comment = parm.comment;
-
-            var item = Manager.GetResourceItem(resourceId, resourceSet, localeId);
+            var item = Manager.GetResourceItem(parm.ResourceId, parm.ResourceSet, parm.LocaleId);
             if (item == null)
             {
                 item = new ResourceItem()
                 {
-                    ResourceId = resourceId,
-                    LocaleId = localeId,
-                    ResourceSet = resourceSet,
-                    Comment = comment
+                    ResourceId = parm.ResourceId,
+                    LocaleId = parm.LocaleId,
+                    ResourceSet = parm.ResourceSet,
+                    Comment = parm.Comment
                 };
             }
 
-            if (string.IsNullOrEmpty(value))
-                return Manager.DeleteResource(resourceId, resourceSet: resourceSet, cultureName: localeId);
+            if (string.IsNullOrEmpty(parm.Value))
+                return Manager.DeleteResource(parm.ResourceId, resourceSet: parm.ResourceSet, cultureName: parm.LocaleId);
 
-            item.Value = value;
+            item.Value = parm.Value;
             item.Type = null;
             item.FileName = null;
             item.BinFile = null;
@@ -415,20 +415,15 @@ namespace Westwind.Globalization.Administration
         /// <returns></returns>
         [HttpPost]
         [Route("UpdateComment")]
-        public bool UpdateComment([FromBody] dynamic parm)
+        public bool UpdateComment([FromBody] UpdateCommentModel parm)
         {
-            string comment = parm.comment;
-            string resourceId = parm.resourceId;
-            string resourceSet = parm.resourceSet;
-            string localeId = parm.localeId;
-
-            var item = Manager.GetResourceItem(resourceId, resourceSet, localeId);
+            var item = Manager.GetResourceItem(parm.ResourceId, parm.ResourceSet, parm.LocaleId);
             if (item == null)
             {
                 // can't update a comment on non-existing resource
                 return false;
             }
-            item.Comment = comment;
+            item.Comment = parm.Comment;
 
             if (Manager.UpdateOrAddResource(item) < 0)
                 return false;
@@ -533,32 +528,21 @@ namespace Westwind.Globalization.Administration
         }
 
         /// <summary>
-        /// Delete an individual resource. Pass resourceId, resourceSet and localeId 
+        /// Delete an individual resource. Pass resourceId, resourceSet and localeId
         /// as a map. If localeId is null all the resources are deleted.
         /// </summary>
         /// <param name="parm"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("DeleteResource")]
-        public bool DeleteResource([FromBody] dynamic parm)
+        public bool DeleteResource([FromBody] DeleteResourceModel parm)
         {
 
 #if OnlineDemo
         throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
 #endif
-            string resourceId = parm.resourceId;
-            string resourceSet = parm.resourceSet;
-            string localeId = null;
-            try
-            {
-                // localeId is optional
-                localeId = parm.LocaleId;
-            }
-            catch
-            {
-            }
 
-            if (!Manager.DeleteResource(resourceId, resourceSet, localeId))
+            if (!Manager.DeleteResource(parm.ResourceId, parm.ResourceSet, parm.LocaleId))
                 throw new ApplicationException(DbIRes.T("ResourceUpdateFailed", STR_RESOURCESET) + ": " +
                                                Manager.ErrorMessage);
 
@@ -567,28 +551,24 @@ namespace Westwind.Globalization.Administration
 
         /// <summary>
         /// Renames a resource key to a new name.
-        /// 
+        ///
         /// Requires a JSON object with the following properties:
         /// {
         /// }
-        /// 
-        /// 
+        ///
+        ///
         /// </summary>
         /// <param name="parms"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("RenameResource")]
-        public bool RenameResource([FromBody] dynamic parms)
+        public bool RenameResource([FromBody] RenameResourceModel parms)
         {
 #if OnlineDemo
         throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
 #endif
-            string resourceId = parms["resourceId"];
-            string newResourceId = parms["newResourceId"];
-            string resourceSet = parms["resourceSet"];
 
-
-            if (!Manager.RenameResource(resourceId, newResourceId, resourceSet))
+            if (!Manager.RenameResource(parms.ResourceId, parms.NewResourceId, parms.ResourceSet))
                 throw new ApplicationException(DbIRes.T("InvalidResourceId", STR_RESOURCESET));
 
             return true;
@@ -683,12 +663,12 @@ namespace Westwind.Globalization.Administration
         #region Miscellaneous helpers
         [HttpPost]
         [Route("Translate")]
-        public string Translate([FromBody] dynamic parm)
+        public string Translate([FromBody] TranslateModel parm)
         {
-            string text = parm.text;
-            string from = parm.from;
-            string to = parm.to;
-            string service = parm.service;
+            string text = parm.Text;
+            string from = parm.From;
+            string to = parm.To;
+            string service = parm.Service;
 
             service = service.ToLower();
 
@@ -701,7 +681,7 @@ namespace Westwind.Globalization.Administration
             else if (service == "bing")
             {
                 if (string.IsNullOrEmpty(DbResourceConfiguration.Current.BingClientId))
-                    result = ""; // don't do anything -  just return blank 
+                    result = ""; // don't do anything -  just return blank
                 else
                     result = translate.TranslateBing(text, from, to);
             }
@@ -785,7 +765,7 @@ namespace Westwind.Globalization.Administration
             var config = DbResourceConfiguration.Current;
 
 
-            var rt = typeof(IHostingEnvironment)
+            var rt = typeof(HostEnvironment)
                 .GetTypeInfo()
                 .Assembly
                 .GetCustomAttribute<AssemblyFileVersionAttribute>();
@@ -830,7 +810,7 @@ namespace Westwind.Globalization.Administration
         /// <returns></returns>
         [HttpPost]
         [Route("CreateClass")]
-        public bool CreateClass([FromBody] dynamic parms)
+        public bool CreateClass([FromBody] CreateClassModel parms)
         {
 #if OnlineDemo
             throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
@@ -838,15 +818,13 @@ namespace Westwind.Globalization.Administration
             var config = DbResourceConfiguration.Current;
 
             // { filename: "~/properties/resources.cs, nameSpace: "WebApp1", resourceSets: ["rs1","rs2"],classType: "DbRes|Resx"]
-            string filename = parms["fileName"];
-            string nameSpace = parms["namespace"];
-            string classType = parms["classType"];
-            JArray rs = parms["resourceSets"] as JArray;
+            string filename = parms.Filename;
+            string nameSpace = parms.Namespace;
+            string classType = parms.ClassType;
 
-            string[] resourceSets = null;
-            if (rs != null)
+            string[] resourceSets = parms.ResourceSets;
+            if (resourceSets != null)
             {
-                resourceSets = rs.ToObject<string[]>();
                 if (resourceSets != null && resourceSets.Length == 1 && string.IsNullOrEmpty(resourceSets[0]))
                     resourceSets = null;
             }
@@ -889,7 +867,7 @@ namespace Westwind.Globalization.Administration
 #if NETFULL
                     // Use automated generation
                     str.CreateResxDesignerClassFromResxFile(file, resource, nameSpace, false);
-#else                    
+#else
                     // Manual code generation
                     str.CreateResxDesignerClassFromResourceSet(resource, nameSpace, resource, file);
 #endif
@@ -908,19 +886,17 @@ namespace Westwind.Globalization.Administration
         /// <returns></returns>
         [HttpPost]
         [Route("ExportResxResources")]
-        public bool ExportResxResources([FromBody] dynamic parms)
+        public bool ExportResxResources([FromBody] ExportResourcesModel parms)
         {
 #if OnlineDemo
             throw new ApplicationException(WebUtils.GRes("FeatureDisabled"));
 #endif
             // Post:  {outputBasePath: "~\Properties", resourceSets: ["rs1","rs2"] }
-            string outputBasePath = parms["outputBasePath"];
+            string outputBasePath = parms.OutputBasePath;
 
-            string[] resourceSets = null;
-            JArray t = parms["resourceSets"] as JArray;
-            if (t != null)
+            string[] resourceSets = parms.ResourceSets;
+            if (resourceSets != null)
             {
-                resourceSets = t.ToObject<string[]>();
                 if (resourceSets != null && resourceSets.Length == 1 && string.IsNullOrEmpty(resourceSets[0]))
                     resourceSets = null;
             }

@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Westwind.Globalization.Test
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1B0802AB-4A8D-483B-A5AA-6C79E89C104B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WestWind.Globalization.Sample.AspNetCore31", "NetCore\WestWind.Globalization.Sample.AspNetCore31\WestWind.Globalization.Sample.AspNetCore31.csproj", "{EA58B623-3B24-4DAA-A1B2-C131860ABFBA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{5776B94D-6646-4C26-9012-798FDBE35B36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5776B94D-6646-4C26-9012-798FDBE35B36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5776B94D-6646-4C26-9012-798FDBE35B36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA58B623-3B24-4DAA-A1B2-C131860ABFBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA58B623-3B24-4DAA-A1B2-C131860ABFBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA58B623-3B24-4DAA-A1B2-C131860ABFBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA58B623-3B24-4DAA-A1B2-C131860ABFBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{83736D05-955E-4C4E-8C0E-41FE87F11F27} = {0BA85EAE-8A25-4B4A-8ACF-553D14C3BAE1}
 		{36254AF1-086A-4786-8B92-6653C15EB22F} = {0BA85EAE-8A25-4B4A-8ACF-553D14C3BAE1}
 		{5776B94D-6646-4C26-9012-798FDBE35B36} = {0BA85EAE-8A25-4B4A-8ACF-553D14C3BAE1}
+		{EA58B623-3B24-4DAA-A1B2-C131860ABFBA} = {0BA85EAE-8A25-4B4A-8ACF-553D14C3BAE1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C151A76C-1C52-4B8D-940B-229C2ABB203E}

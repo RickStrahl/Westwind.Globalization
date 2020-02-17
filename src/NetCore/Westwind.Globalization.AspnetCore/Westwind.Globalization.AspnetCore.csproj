@@ -1,16 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>3.0.5</Version>
+    <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
+    <Version>3.0.6</Version>
     <Authors>Rick Strahl</Authors>
     <Company>West Wind Technologies</Company>
     <Product>Westwind.Globalization</Product>
     <Title>Westwind Globalization ASP.NET Core</Title>
-    <Description>Provides ASP.NET Core specific features to the Westwind.Globalization library, including IStringLocalizer interfaces, JavaScript Resource handler and an on-line Resource editor to allow real-time editing of data resources.  
+    <Description>
+      Provides ASP.NET Core specific features to the Westwind.Globalization library, including IStringLocalizer interfaces, JavaScript Resource handler and an on-line Resource editor to allow real-time editing of data resources.
 
- Note: In order to use the Localization Administration feature, please download the required project resources from: https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationAdministrationHtml_AspNetCore.zip
-</Description>
+      Note: In order to use the Localization Administration feature, please download the required project resources from: https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationAdministrationHtml_AspNetCore.zip
+    </Description>
     <Summary>Database driven localization ASP.NET and ASP.NET Core. Includes a localization Administration Interface.</Summary>
     <Copyright>West Wind Technologies, 2010-2019</Copyright>
     <!--<PackageLicenseUrl>https://github.com/RickStrahl/Westwind.Globalization#license</PackageLicenseUrl>-->
@@ -18,7 +19,7 @@
     <PackageProjectUrl>https://github.com/RickStrahl/Westwind.Globalization</PackageProjectUrl>
     <RepositoryUrl>https://github.com/RickStrahl/Westwind.Globalization</RepositoryUrl>
     <PackageIconUrl>http://west-wind.com/westwind.globalization/images/Westwind.Localization_128.png</PackageIconUrl>
-    
+
     <RepositoryType>Github</RepositoryType>
     <PackageTags>ASP.NET Core Localization Translation Globalization Resources</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -28,15 +29,19 @@
     <DocumentationFile>bin\Release\netstandard2.0\Westwind.Globalization.AspnetCore.xml</DocumentationFile>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Localization" Version="2.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.RazorPages" Version="2.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.0.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.0.0" />    
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.0.0" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <None Include="readme.txt" Pack="true" PackagePath="." />
   </ItemGroup>
@@ -44,5 +49,5 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Westwind.Globalization\Westwind.Globalization.csproj" />
   </ItemGroup>
-  
+
 </Project>

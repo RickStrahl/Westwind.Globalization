@@ -1,0 +1,29 @@
+﻿<div id="ResourceGrid"
+     tabindex="-1" role="dialog">
+
+    <a href="" class="close pull-right" ng-click="view.onGridClose()"
+       style="padding: 5px"><i class="fa fa-close"></i></a>
+
+    <h3 style="padding-left: 10px;padding-top: 5px">{{view.resourceGridResources.ResourceSet}}</h3>
+
+
+    <table class="table">
+        <tr>
+            <th>Resource Id</th>
+            <th ng-repeat="locale in view.resourceGridResources.Locales">
+                {{locale ? locale : "invariant" }}
+            </th>
+        </tr>
+        <tr ng-repeat="resource in view.resourceGridResources.Resources">
+            <td>{{resource.ResourceId}}</td>
+            <td ng-repeat="res in resource.Resources">
+                <textarea ng-model="res.Value"
+                          ng-blur="view.saveGridResource(res)"
+                          onfocus="this.select()"
+                          style="min-width: 300px"></textarea>
+            </td>
+
+        </tr>
+    </table>
+
+</div>
