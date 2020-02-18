@@ -1,0 +1,27 @@
+{
+  "name": "localization-admin",
+  "version": "3.0.5",
+  "homepage": "https://github.com/RickStrahl/Westwind.Globalization",
+  "authors": [
+    "Rick Strahl <rstrahl@west-wind.com>"
+  ],
+  "description": "Westwind.Globalization Localization Administration",
+  "main": "index.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.4.6",
+    "angular-sanitize": "1.4.6",
+    "bootstrap": "~3.3.2",
+    "font-awesome": "~4.4.0",
+    "lodash": "~3.0.1",
+    "ng-file-upload": "~3.2.4",
+    "jquery": "~2.1.3"
+  }
+}

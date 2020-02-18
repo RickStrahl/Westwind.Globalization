@@ -1,0 +1,68 @@
+﻿@page
+@{
+    ViewBag.Title = "Localization Samples (.NET Core)";
+}
+@section header{
+    <style>
+        html, body {
+            font-family: 'Trebuchet', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+        }
+
+        .header {
+            font-size: 220%;
+            line-height: 1.3em;
+        }
+
+        .btn {
+            min-width: 130px;
+        }
+    </style>
+}
+<div class="jumbotron">
+
+    <h2 class="headers">Westwind.Globalization Samples (.NET Core)</h2>
+
+    <img src="~/LocalizationAdmin/images/Westwind.Localization.png" style="margin-right: 10px;" class="pull-left" />
+
+    <p class="lead">
+        The Westwind.Globalization ASP.NET components provide the abillity to easily create
+        database hosted resources, that are easily and dynamically modifiable while still using
+        an efficient architecture to cache resources in memory - load once, read many.
+    </p>
+    <p>
+        These components work with ASP.NET Web Forms using a standard ASP.NET Resource Provider
+        as well as ASP.NET MVC using either strongly typed pre-compiled resources or a simplified
+        custom resource manager that efficiently caches resources and provides simplified syntax.
+    </p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h3>Documentation</h3>
+        <p>
+            Check out the documentation to understand how to setup the provider and get it
+            up and running in your ASP.NET projects.
+        </p>
+        <p>
+            <a class="btn btn-default" href="https://github.com/RickStrahl/Westwind.Globalization">Getting started &raquo;</a>
+        </p>
+        <p>
+            <a class="btn btn-default" href="https://github.com/RickStrahl/Westwind.Globalization/wiki">Documentation &raquo;</a>
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h3>Verify Provider</h3>
+        <p>
+            This page ensures that the Localization provider and database are working. If this page comes up
+            and properly displays text the provider is running and translating values properly.
+        </p>
+        <p>
+            <a class="btn btn-default" href="~/ResourceTest">Try it (Razor Page) &raquo;</a>
+        </p>        
+    </div>
+    <div class="col-md-4">
+        <h3>Resource Administration</h3>
+        <p>Hit the localization admin page to dynamically modify your Database Resources while the application is running.</p>
+        <p><a class="btn btn-default" href="~/LocalizationAdmin/index.html">Edit &raquo;</a></p>
+    </div>
+</div>

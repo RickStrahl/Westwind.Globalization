@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>@ViewBag.Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Localization Administration Form">
+
+    @RenderSection("headertop", required: false)
+
+    <link rel="shortcut icon" href="localizationAdmin\favicon.ico" type="image/x-icon" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+     <![endif]-->
+
+    <link href="~/LocalizationAdmin/scripts/vendor/bootstrap/dist/css/bootstrap.min.css"
+          rel="stylesheet" />
+    <link href="~/LocalizationAdmin/scripts/vendor/font-awesome/css/font-awesome.min.css"
+          rel="stylesheet" />
+
+    <link href="~/localizationAdmin/css/localizationAdmin.css" rel="stylesheet" />
+    <style>
+        label {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 0;
+        }
+    </style>
+    <script src="~/LocalizationAdmin/bower_components/jquery/dist/jquery.min.js"></script>
+    @RenderSection("header", required: false)
+</head>
+<body>
+    <div class="banner">
+        <div id="TitleBar">
+            <a href="./">
+                <img src="~/LocalizationAdmin/images/Westwind.Localization_128.png"
+                     style="height: 35px; float: left" />
+                <div style="float: left; margin-left: 5px; line-height: 1.2">
+                    <i style="color: steelblue; font-size: 0.8em; font-weight: bold;">West Wind Globalization</i><br />
+                    <i style="color: whitesmoke; font-size: 1.25em; font-weight: bold;">
+                        @ViewBag.Title
+                    </i>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <nav class="menubar " style="background: #727272;">
+        <ul id="MenuButtons" class="nav navbar-nav pull-right navbar">
+            <li>
+                <a href="~/LocalizationAdmin">
+                    <i class="fa fa-gears"></i> Resource Editor
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/RickStrahl/Westwind.Globalization">
+                    <i class="fa fa-github"></i> GitHub
+                </a>
+            </li>
+            <li>
+                <a href="~/">
+                    <i class="fa fa-home"></i>
+                </a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </nav>
+
+    <div class="container body-content">
+        @RenderBody()
+
+
+        <hr />
+
+        <footer>
+            <p>&copy; @DateTime.Now.Year, <a href="http://weblog.west-wind.com">Rick Strahl, West Wind Technologies</a></p>
+        </footer>
+    </div>
+    
+    <script src="~/LocalizationAdmin/scripts/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

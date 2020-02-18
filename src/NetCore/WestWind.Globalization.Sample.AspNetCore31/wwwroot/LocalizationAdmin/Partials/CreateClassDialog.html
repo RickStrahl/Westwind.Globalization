@@ -1,0 +1,78 @@
+﻿<div id="CreateClassDialog" data-resourceset-id="LocalizationForm"
+     class="modal fade"
+     tabindex="-1" role="dialog"
+     aria-labelledby="myModal-label"
+     aria-hidden="true"
+     ng-controller="createClassController as view">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form name="createClassForm" id="createClassForm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 class="modal-title" id="TranslateTitle" data-resource-id="ImportOrExportResxResources">
+                        {{::view.resources.CreateStronglyTypedClasses}}
+                    </h3>
+                </div>
+                <div class="modal-body">
+
+                    <div class="alert alert-info">
+                        <i class="fa fa-info-circle fa-2x pull-left;"></i>
+                        <div style="margin-left: 40px; margin-top: -30px;">
+                            <p data-resource-id="CreateClassInfo">
+                                {{::view.resources.CreateClassInfo}}
+                            </p>                                                   
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="font-weight: bold">
+                        <label class="radio-inline" title="Custom generated single file that contains all resource classes. Can use Db Resources or Resx resources interactively using ResourceManager, ResourceProvider or Resx resources depending on a static flag value.">
+                            <input type="radio" ng-model="view.classType" value="DbRes" data-resource-id="DynamicClasses">{{::view.resources.DynamicClasses}}
+                        </label>
+                        &nbsp;&nbsp;
+                        <label class="radio-inline" title="Classic Resx Designer classes - only works for Resx resources and produces same output Visual Studio does.">
+                            <input type="radio" ng-model="view.classType" value="Resx" name="optradio" data-resource-id="ResxDesignerClasses">{{::view.resources.ResxDesignerClasses}}
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label>{{::view.resources.ResourceSetsToExport}}:</label>
+                        <select id="typeResourceSet" class="form-control"
+                                multiple                                
+                                ng-model="view.selectedResourceSets">
+                            <option value="">*** {{::view.resources.AllResourceSets}}</option>
+                            <option ng-repeat="resourceSet in view.resourceSets" value="{{resourceSet}}">{{resourceSet}}</option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-group ">
+                        <label ng-show="view.classType=='DbRes'">Export {{::view.resources.Filename}}:</label>
+                        <label ng-show="view.classType=='Resx'">Export Folder:</label>
+                        <input ng-model="view.info.StronglyTypedGlobalResource" class="form-control" />
+                    </div>
+
+
+                    <div class="form-group ">
+                        <label>Export Namespace:</label>
+                        <input ng-model="view.info.ResourceBaseNamespace" class="form-control"/>
+                    </div>         
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <i class="fa fa-remove"></i> {{::view.resources.Cancel}}
+                    </button>
+                    <button type="submit"
+                            ng-click="view.onCreateClassClick()"
+                            class="btn btn-primary">
+                        <i class="fa fa-check"></i> {{::view.resources.CreateClass}}
+                    </button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

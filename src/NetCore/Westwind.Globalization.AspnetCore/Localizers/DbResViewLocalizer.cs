@@ -1,18 +1,20 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
+using System.Text;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Localization;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+#if NETCOREAPP3_1
+using HostEnvironment = Microsoft.AspNetCore.Hosting.IWebHostEnvironment;
+#else
+using HostEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+#endif
 
 namespace Westwind.Globalization.AspnetCore
 {
@@ -30,8 +32,8 @@ namespace Westwind.Globalization.AspnetCore
         /// Creates a new <see cref="Microsoft.AspNetCore.Mvc.Localization.ViewLocalizer"/>.
         /// </summary>
         /// <param name="localizerFactory">The <see cref="IHtmlLocalizerFactory"/>.</param>
-        /// <param name="hostingEnvironment">The <see cref="IHostingEnvironment"/>.</param>
-        public DbResViewLocalizer(IHtmlLocalizerFactory localizerFactory, IHostingEnvironment hostingEnvironment)
+        /// <param name="hostingEnvironment">The <see cref="IWebHostEnvironment"/>.</param>
+        public DbResViewLocalizer(IHtmlLocalizerFactory localizerFactory, HostEnvironment hostingEnvironment)
         {
             if (localizerFactory == null)
                 throw new ArgumentNullException(nameof(localizerFactory));

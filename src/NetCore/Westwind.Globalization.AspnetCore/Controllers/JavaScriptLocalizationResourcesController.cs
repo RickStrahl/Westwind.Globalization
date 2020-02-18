@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Resources;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,9 +12,13 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using Westwind.Globalization;
-using Westwind.Globalization.AspnetCore;
 using Westwind.Globalization.AspNetCore.Extensions;
 using Westwind.Utilities;
+#if NETCOREAPP3_1
+using HostEnvironment = Microsoft.AspNetCore.Hosting.IWebHostEnvironment;
+#else
+using HostEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+#endif
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,9 +27,9 @@ namespace WestWind.Globalization.AspNetCore.Controllers
 
     /// <summary>
     /// Controller that serves JavaScript resources to client side applications in the format of:
-    /// 
+    ///
     /// http://localhost:5000/api/JavaScriptLocalizationResources?ResourceSet=LocalizationForm&LocaleId=auto&VarName=resources&ResourceMode=resdb
-    /// 
+    ///
     /// Also supports legacy syntax:
     /// http://localhost:5000/JavaScriptResourceHandler.axd?ResourceSet=LocalizationForm&LocaleId=auto&VarName=resources&ResourceMode=resdb
     /// </summary>
@@ -37,11 +38,11 @@ namespace WestWind.Globalization.AspNetCore.Controllers
 
         protected DbResourceConfiguration Config { get; }
 
-        protected IHostingEnvironment Host { get; }
+        protected HostEnvironment Host { get; }
 
         protected IStringLocalizer Localizer { get; }
 
-        public JavaScriptLocalizationResourcesController(IHostingEnvironment host, DbResourceConfiguration config, IStringLocalizer<JavaScriptLocalizationResourcesController> localizer)
+        public JavaScriptLocalizationResourcesController(HostEnvironment host, DbResourceConfiguration config, IStringLocalizer<JavaScriptLocalizationResourcesController> localizer)
         {
             Config = config;
             Host = host;
@@ -71,7 +72,7 @@ namespace WestWind.Globalization.AspNetCore.Controllers
                 localeId = "auto";
             string resourceMode = Request.Query["ResourceMode"];
             if (string.IsNullOrEmpty(resourceMode))
-                resourceMode = "Resx"; // Resx/ResDb/Auto          
+                resourceMode = "Resx"; // Resx/ResDb/Auto
             string varname = Request.Query["VarName"];
             if (string.IsNullOrEmpty(varname))
                 varname = "resources";
@@ -248,7 +249,7 @@ namespace WestWind.Globalization.AspNetCore.Controllers
 
             // add dbRes function
             sb.AppendFormat(
-                "\t" + @"""dbRes"": function dbRes(resId) {{ return {0}[resId] || resId; }}      
+                "\t" + @"""dbRes"": function dbRes(resId) {{ return {0}[resId] || resId; }}
 }}
 ", varname);
 
@@ -295,7 +296,7 @@ namespace WestWind.Globalization.AspNetCore.Controllers
         /// Returns a URL to the JavaScriptResourceHandler.axd handler that retrieves
         /// normalized resources for a given resource set and localeId and creates
         /// a JavaScript object with the name specified.
-        /// 
+        ///
         /// This function returns only the URL - you're responsible for embedding
         /// the URL into the page as a script tag to actually load the resources.
         /// </summary>
@@ -323,7 +324,7 @@ namespace WestWind.Globalization.AspNetCore.Controllers
         }
 
         /// <summary>
-        /// normalized SCRIPT tag to reference localized resources for a specific 
+        /// normalized SCRIPT tag to reference localized resources for a specific
         /// ResourceSet.
         /// </summary>
         /// <param name="varName"></param>

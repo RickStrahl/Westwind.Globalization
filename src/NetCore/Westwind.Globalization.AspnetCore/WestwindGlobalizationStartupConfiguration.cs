@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 
 
@@ -22,7 +22,7 @@ namespace Westwind.Globalization.AspnetCore
         public static IServiceCollection AddWestwindGlobalization(this IServiceCollection services,
             Action<DbResourceConfiguration> setOptionsAction = null)
         {
-            // initialize the static instance from DbResourceConfiguration.json if it exists 
+            // initialize the static instance from DbResourceConfiguration.json if it exists
             // But you can override with a new customized instance if desired
             DbResourceConfiguration.Current.Initialize();
             var config = DbResourceConfiguration.Current;
@@ -30,7 +30,7 @@ namespace Westwind.Globalization.AspnetCore
             // we allow configuration via AppSettings so make sure that's loaded
             var provider = services.BuildServiceProvider();
             var configuration = provider.GetService<IConfiguration>();
-            
+
 
             //var section = serviceConfiguration.GetSection("DbResourceConfiguration");
             // read settings from DbResourceConfiguration in config stores
@@ -55,6 +55,13 @@ namespace Westwind.Globalization.AspnetCore
             Func<ActionContext, bool> onAuthorizeLocalizationAdministration)
         {
             config.OnAuthorizeLocalizationAdministration = onAuthorizeLocalizationAdministration;
+        }
+
+        public static void ConfigureAuthorizeLocalizationAdministrationAsync(
+           this DbResourceConfiguration config,
+           Func<ActionContext, Task<bool>> onAuthorizeLocalizationAdministration)
+        {
+            config.OnAuthorizeLocalizationAdministrationAsync = onAuthorizeLocalizationAdministration;
         }
     }
 }

@@ -1,10 +1,12 @@
-﻿using System.Globalization;
-using System.IO;
+﻿using System.IO;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+#if NETCOREAPP3_1
+using HostEnvironment = Microsoft.AspNetCore.Hosting.IWebHostEnvironment;
+#else
+using HostEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+#endif
 
 namespace Westwind.Globalization.AspNetCore.Extensions
 {
@@ -63,7 +65,7 @@ namespace Westwind.Globalization.AspNetCore.Extensions
         /// <param name="host">Optional - IHostingEnvironment instance. If not passed retrieved from RequestServices DI</param>
         /// <param name="basePath">Optional - Optional physical base path. By default host.WebRootPath</param>
         /// <returns></returns>
-        public static string MapPath(this HttpRequest request, string relativePath, IHostingEnvironment host = null,
+        public static string MapPath(this HttpRequest request, string relativePath, HostEnvironment host = null,
             string basePath = null)
         {
             if (string.IsNullOrEmpty(relativePath))
@@ -75,8 +77,8 @@ namespace Westwind.Globalization.AspNetCore.Extensions
                 {
                     if (host == null)
                         host =
-                            request.HttpContext.RequestServices.GetService(typeof(IHostingEnvironment)) as
-                                IHostingEnvironment;
+                            request.HttpContext.RequestServices.GetService(typeof(HostEnvironment)) as
+                                HostEnvironment;
                     WebRootPath = host.WebRootPath;
                 }
 
@@ -107,7 +109,7 @@ namespace Westwind.Globalization.AspNetCore.Extensions
 
         /// <summary>
         /// Returns a single value as a string from:
-        /// Form, Query, Session        
+        /// Form, Query, Session
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -122,7 +124,7 @@ namespace Westwind.Globalization.AspNetCore.Extensions
                 result = request.Query[id];
 
 
-            //if (result == null)            
+            //if (result == null)
             //    result = request.HttpContext.Session.GetString("id");
 
             return result;

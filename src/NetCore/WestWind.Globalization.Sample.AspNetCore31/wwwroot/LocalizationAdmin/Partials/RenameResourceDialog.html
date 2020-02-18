@@ -1,0 +1,52 @@
+﻿<div id="RenameResourceDialog"
+     class="modal fade"
+     tabindex="-1" role="dialog"
+     aria-labelledby="myModal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form name="renameResourceForm" id="renameResourceForm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 class="modal-title" id="TranslateTitle">Rename Resource</h3>
+                </div>
+                <div class="modal-body">
+
+
+                    <div class="form-group">
+                        <label>Original Resource Id:</label>
+                        <input type="text" class="form-control" id="ResourceId" name="ResourceId"
+                               disabled="disabled"
+                               ng-model="view.activeResource.ResourceId" placeholder="Original Resource Id" />
+                    </div>
+                    <div class="form-group">
+                        <label>New Resource ID:</label>
+                        <input type="text" id="NewResourceId" name="NewResourceId" class="form-control"
+                               ng-model="view.newResourceId"
+                               ng-match="ResourceId"
+                               required
+                               placeholder="New Resource Id to change to" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Resource Set:</label>
+                        <input type="text" class="form-control"
+                               disabled="disabled"
+                               ng-focus="true"
+                               ng-model="view.activeResource.ResourceSet"></input>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-remove"></i> Cancel</button>
+                    <button type="submit"
+                            ng-disabled="!renameResourceForm.$dirty || !renameResourceForm.$valid || renameResourceForm.NewResourceId.$error.match"
+                            ng-click="view.onRenameResourceDialogClick()"
+                            class="btn btn-primary">                        
+                        <i class="fa fa-check"></i>Save
+                    </button>
+                    {{renameResourceForm.NewResourceId.$error.match}}
+                </div>
+            </form>   
+        </div>
+    </div>
+</div>
