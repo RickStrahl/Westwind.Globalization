@@ -2,11 +2,12 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
-    <Version>3.0.6</Version>
+    <Version>3.0.8</Version>
     <Authors>Rick Strahl</Authors>
     <Company>West Wind Technologies</Company>
     <Product>Westwind.Globalization</Product>
     <Title>Westwind Globalization ASP.NET Core</Title>
+    <PackageId>Westwind.Globalization.AspnetCore31</PackageId>
     <Description>
       Provides ASP.NET Core specific features to the Westwind.Globalization library, including IStringLocalizer interfaces, JavaScript Resource handler and an on-line Resource editor to allow real-time editing of data resources.
 

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Globalization;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
@@ -71,11 +73,14 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 opt.ResxBaseFolder = "~/Properties/";
 
                 // Set up security for Localization Administration form
-                opt.ConfigureAuthorizeLocalizationAdministration(actionContext =>
-                {
-                    // return true or false whether this request is authorized
-                    return true;   //actionContext.HttpContext.User.Identity.IsAuthenticated;
-                });
+                opt.ConfigureAuthorizeLocalizationAdministrationAsync(async actionContext =>
+               {
+                   var authService = actionContext.HttpContext.RequestServices.GetRequiredService<IAuthorizationService>();
+
+                   var authResult = await authService.AuthorizeAsync(actionContext.HttpContext.User, null, new ClaimsAuthorizationRequirement("role", new[] { "localizationmanager" }));
+
+                   return authResult.Succeeded;
+               });
             });
 
             services.AddMvc()

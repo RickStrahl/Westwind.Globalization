@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 #if NETCOREAPP3_1
 using System.Text.Json;
 #else
@@ -81,6 +82,26 @@ namespace Westwind.Globalization.Administration
                         throw new UnauthorizedAccessException();
                 }
             }
+        }
+
+        /// <summary>
+        /// Handle custom authorization and hook into Config.OnAuthorizeLocalizationAdministration
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="next"></param>
+        /// <returns></returns>
+        public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        {
+            if (DbIRes.Configuration.OnAuthorizeLocalizationAdministrationAsync != null)
+            {
+                if (Config.OnAuthorizeLocalizationAdministrationAsync is Func<ActionExecutingContext, Task<bool>> func)
+                {
+                    if (!await func(context))
+                        throw new UnauthorizedAccessException();
+                }
+            }
+
+            await base.OnActionExecutionAsync(context, next);
         }
 
         #region Retrieve Resources
