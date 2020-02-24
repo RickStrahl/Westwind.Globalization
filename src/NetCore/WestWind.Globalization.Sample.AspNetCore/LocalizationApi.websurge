@@ -19,15 +19,22 @@ Websurge-Request-Name: DbRes
 
 ------------------------------------------------------------------
 
-GET http://localhost:5000/api/LocalizationAdmin/GetResourceList?resourceSet=Resources HTTP/1.1
+GET http://localhost:5000/api/LocalizationAdministration/GetResourceList?resourceSet=Resources HTTP/1.1
 Accept-Encoding: gzip,deflate
 Websurge-Request-Name: GetResourceList
 
 ------------------------------------------------------------------
 
-GET http://localhost:5000/api/LocalizationAdmin/GetAllResourcesForResourceGrid?resourceSet=Resources HTTP/1.1
+GET http://localhost:5000/api/LocalizationAdministration/GetAllResourcesForResourceGrid?resourceSet=Resources HTTP/1.1
 Accept-Encoding: gzip,deflate
 Websurge-Request-Name: GetAllResourcesForResourceGrid
+HTTP/1.1  
+Transfer-Encoding: chunked
+Content-Type: application/json; charset=utf-8
+Date: Mon, 24 Feb 2020 02:11:09 GMT
+Server: Kestrel
+
+{"ResourceSet":"Resources","Locales":["","de","fr","ar","zh-cn"],"Resources":[{"ResourceId":"AddressIsRequired","Resources":[{"ResourceId":"AddressIsRequired","LocaleId":"","ResourceSet":"Resources","Value":"An address is required"},{"ResourceId":"AddressIsRequired","LocaleId":"ar","ResourceSet":"Resources","Value":null},{"ResourceId":"AddressIsRequired","LocaleId":"de","ResourceSet":"Resources","Value":"Eine Addresse muss angegeben werden."},{"ResourceId":"AddressIsRequired","LocaleId":"fr","ResourceSet":"Resources","Value":"Une adresse doit être saisi."},{"ResourceId":"AddressIsRequired","LocaleId":"zh-cn","ResourceSet":"Resources","Value":null}]},{"ResourceId":"Cancel","Resources":[{"ResourceId":"Cancel","LocaleId":"","ResourceSet":"Resources","Value":"Cancel"},{"ResourceId":"Cancel","LocaleId":"ar","ResourceSet":"Resources","Value":null},{"ResourceId":"Cancel","LocaleId":"de","ResourceSet":"Resources","Value":"Abbrechen"},{"ResourceId":"Cancel","LocaleId":"fr","ResourceSet":"Resources","Value":null},{"ResourceId":"Cancel","LocaleId":"zh-cn","ResourceSet":"Resources","Value":null}]},{"ResourceId":"ErrorColon","Resources":[{"ResourceId":"ErrorColon","LocaleId":"","ResourceSet":"Resources","Value":"Error:"},{"ResourceId":"ErrorColon","LocaleId":"ar","ResourceSet":"Resources","Value":"Fehler:"},{"ResourceId":"ErrorColon","LocaleId":"de","ResourceSet":"Resources","Value":"Error: (French)"},{"ResourceId":"ErrorColon","LocaleId":"fr","ResourceSet":"Resources","Value":""},{"ResourceId":"ErrorColon","LocaleId":"zh-cn","ResourceSet":"Resources","Value":null}]},{"ResourceId":"FlagPng","Resources":[{"ResourceId":"FlagPng","LocaleId":"","ResourceSet":"Resources","Value":"AmericanFlag.png;System.Byte[]"},{"ResourceId":"FlagPng","LocaleId":"ar","ResourceSet":"Resources","Value":null},{"ResourceId":"FlagPng","LocaleId":"de","ResourceSet":"Resources","Value":"GermanFlag.png;System.Byte[]"},{"ResourceId":"FlagPng","LocaleId":"fr","ResourceSet":"Resources","Value":"FrenchFlag.png;System.Byte[]"},{"ResourceId":"FlagPng","LocaleId":"zh-cn","ResourceSet":"Resources","Value":null}]},{"ResourceId":"HelloWorld","Resources":[{"ResourceId":"HelloWorld","LocaleId":"","ResourceSet":"Resources","Value":"Hello grey World"},{"ResourceId":"HelloWorld","LocaleId":"ar","ResourceSet":"Resources","Value":"مرحبا العالم القاسي"},{"ResourceId":"HelloWorld","LocaleId":"de","ResourceSet":"Resources","Value":"Hallo schnöde Welt"},{"ResourceId":"HelloWorld","LocaleId":"fr","ResourceSet":"Resources","Value":"Bonjour tout le monde"},{"ResourceId":"HelloWorld","LocaleId":"zh-cn","ResourceSet":"Resources","Value":"你好残酷的世界"}]},{"ResourceId":"MarkdownText","Resources":[{"ResourceId":"MarkdownText","LocaleId":"","ResourceSet":"Resources","Value":"<p>This is <strong>Markdown Text</strong> that is auto converted.</p>\r\n<ul>\r\n<li>Item 1</li>\r\n<li>Item 2</li>\r\n</ul>\r\n"},{"ResourceId":"MarkdownText","LocaleId":"ar","ResourceSet":"Resources","Value":null},{"ResourceId":"MarkdownText","LocaleId":"de","ResourceSet":"Resources","Value":"<p>Dies ist ** Markdown-Text **, der automatisch konvertiert wird.</p>\r\n<ul>\r\n<li>Und eins</li>\r\n<li>Und zwei</li>\r\n</ul>\r\n"},{"ResourceId":"MarkdownText","LocaleId":"fr","ResourceSet":"Resources","Value":null},{"ResourceId":"MarkdownText","LocaleId":"zh-cn","ResourceSet":"Resources","Value":null}]},{"ResourceId":"MissingResource","Resources":[{"ResourceId":"MissingResource","LocaleId":"","ResourceSet":"Resources","Value":"MissingResource"},{"ResourceId":"MissingResource","LocaleId":"ar","ResourceSet":"Resources","Value":null},{"ResourceId":"MissingResource","LocaleId":"de","ResourceSet":"Resources","Value":null},{"ResourceId":"MissingResource","LocaleId":"fr","ResourceSet":"Resources","Value":null},{"ResourceId":"MissingResource","LocaleId":"zh-cn","ResourceSet":"Resources","Value":null}]},{"ResourceId":"NameIsRequired","Resources":[{"ResourceId":"NameIsRequired","LocaleId":"","ResourceSet":"Resources","Value":"Name is required"},{"ResourceId":"NameIsRequired","LocaleId":"ar","ResourceSet":"Resources","Value":null},{"ResourceId":"NameIsRequired","LocaleId":"de","ResourceSet":"Resources","Value":"Ein Name muss angegeben werden."},{"ResourceId":"NameIsRequired","LocaleId":"fr","ResourceSet":"Resources","Value":"Un nom doit être fourni."},{"ResourceId":"NameIsRequired","LocaleId":"zh-cn","ResourceSet":"Resources","Value":null}]},{"ResourceId":"Save","Resources":[{"ResourceId":"Save","LocaleId":"","ResourceSet":"Resources","Value":null},{"ResourceId":"Save","LocaleId":"ar","ResourceSet":"Resources","Value":null},{"ResourceId":"Save","LocaleId":"de","ResourceSet":"Resources","Value":"Speichern"},{"ResourceId":"Save","LocaleId":"fr","ResourceSet":"Resources","Value":"Sauvegarder"},{"ResourceId":"Save","LocaleId":"zh-cn","ResourceSet":"Resources","Value":null}]},{"ResourceId":"Testing","Resources":[{"ResourceId":"Testing","LocaleId":"","ResourceSet":"Resources","Value":"Testing English"},{"ResourceId":"Testing","LocaleId":"ar","ResourceSet":"Resources","Value":null},{"ResourceId":"Testing","LocaleId":"de","ResourceSet":"Resources","Value":"Englisch testen"},{"ResourceId":"Testing","LocaleId":"fr","ResourceSet":"Resources","Value":null},{"ResourceId":"Testing","LocaleId":"zh-cn","ResourceSet":"Resources","Value":null}]},{"ResourceId":"Today","Resources":[{"ResourceId":"Today","LocaleId":"","ResourceSet":"Resources","Value":"Today"},{"ResourceId":"Today","LocaleId":"ar","ResourceSet":"Resources","Value":null},{"ResourceId":"Today","LocaleId":"de","ResourceSet":"Resources","Value":"Heute"},{"ResourceId":"Today","LocaleId":"fr","ResourceSet":"Resources","Value":"Aujourd'hui"},{"ResourceId":"Today","LocaleId":"zh-cn","ResourceSet":"Resources","Value":null}]},{"ResourceId":"Yesterday","Resources":[{"ResourceId":"Yesterday","LocaleId":"","ResourceSet":"Resources","Value":"Yesterday"},{"ResourceId":"Yesterday","LocaleId":"ar","ResourceSet":"Resources","Value":null},{"ResourceId":"Yesterday","LocaleId":"de","ResourceSet":"Resources","Value":"Gestern"},{"ResourceId":"Yesterday","LocaleId":"fr","ResourceSet":"Resources","Value":"Hier"},{"ResourceId":"Yesterday","LocaleId":"zh-cn","ResourceSet":"Resources","Value":null}]}]}
 
 ------------------------------------------------------------------
 
@@ -35,6 +42,12 @@ GET http://localhost:5000/api/Localization/StrongDbResResources HTTP/1.1
 Accept-Encoding: gzip,deflate
 Accept-Language: de-DE,de;q=0.8,de;q=0.6
 Websurge-Request-Name: StronglyTypedDbRes
+
+------------------------------------------------------------------
+
+GET http://localhost:5000/api/LocalizationAdministration/GetResourceSets HTTP/1.1
+Accept-Encoding: gzip,deflate
+Accept: application/json
 
 ------------------------------------------------------------------
 
@@ -66,7 +79,7 @@ Websurge-Request-Name: StronglyTypedDbRes
 }
 
 // This file was generated by West Wind WebSurge
-// Get your free copy at http://websurge.west-wind.com
+// Get your free copy at https://websurge.west-wind.com
 // to easily test or load test the requests in this file.
 
 ----- End WebSurge Options -----

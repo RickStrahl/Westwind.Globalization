@@ -2,7 +2,9 @@
 using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,15 +27,12 @@ namespace WestWind.Globalization.Sample.AspNetCore
         }
 
         public void ConfigureServices(IServiceCollection services)
-        {                        
-            services.AddLocalization(options =>
-            {
-                options.ResourcesPath = "Properties";
-            });
+        {
+            services.AddLocalization(options => { options.ResourcesPath = "Properties"; });
 
             // Optionally enable IStringLocalizer to use DbRes objects instead of default ResourceManager
             services.AddSingleton<IStringLocalizerFactory, DbResStringLocalizerFactory>();
-            services.AddSingleton<IHtmlLocalizerFactory, DbResHtmlLocalizerFactory>();            
+            services.AddSingleton<IHtmlLocalizerFactory, DbResHtmlLocalizerFactory>();
 
             // Required for Westwind.Globalization to work!
             //services.AddWestwindGlobalization();
@@ -45,9 +44,9 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 // 2. AspNetCore Configuration Manager (IConfiguration/appsettings etc.)
                 //    (appsettings.json, environment, user secrets - overrides entire object if set)
                 // 3. Settings can be overridden in AddWestwindGlobalization(opt) here
-                
+
                 // Resource Mode - Resx or DbResourceManager                
-                opt.ResourceAccessMode = ResourceAccessMode.DbResourceManager;  // ResourceAccessMode.Resx
+                opt.ResourceAccessMode = ResourceAccessMode.DbResourceManager; // ResourceAccessMode.Resx
 
                 // *** override provider configuration
                 // *** use ConnectionString + DataProvider (or DbResourceManagerType)
@@ -74,16 +73,31 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 opt.ConfigureAuthorizeLocalizationAdministration(actionContext =>
                 {
                     // return true or false whether this request is authorized
-                    return true;   //actionContext.HttpContext.User.Identity.IsAuthenticated;
+                    return true; //actionContext.HttpContext.User.Identity.IsAuthenticated;
                 });
             });
 
             // Optional - Live Reload Middleware
             services.AddLiveReload();
 
-            services.AddMvc()
+            services.AddMvc(opt =>  // or AddControllers 
+                {
+                    // remove formatter that turns nulls into 204 - No Content responses
+                    // this formatter breaks Angular's Http response JSON parsing
+                    opt.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>();
+                })
+                .AddNewtonsoftJson(opt =>
+                {
+                    opt.SerializerSettings.MaxDepth = 5;
+                    //opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    //opt.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+
+                })
                 .AddViewLocalization()
                 .AddDataAnnotationsLocalization();
+
+            // Use classic JSON.NET instead of new JSON provider 
+                
 
             // this *has to go here*  after view localization have been initialized
             // so that Pages can localize - note required even if you're not using
@@ -91,17 +105,11 @@ namespace WestWind.Globalization.Sample.AspNetCore
             services.AddTransient<IViewLocalizer, DbResViewLocalizer>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IConfiguration configuration, IOptions<DbResourceConfiguration> localizationConfig)
+        public void Configure(IApplicationBuilder app,
+            IWebHostEnvironment env,
+            IConfiguration configuration, IOptions<DbResourceConfiguration> localizationConfig)
         {            
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-            }
-
+           
             
             var supportedCultures = new[]
             {
@@ -119,24 +127,31 @@ namespace WestWind.Globalization.Sample.AspNetCore
             });
 
 
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+            }
+
+
+            
+            app.UseRouting();
 
             // Optional - Live Reload Middleware
             // best when run with `dotnet watch run`
             app.UseLiveReload();
-
+            
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            app.UseMvc(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
+                endpoints.MapDefaultControllerRoute();
+
             });
 
             // print some environment information

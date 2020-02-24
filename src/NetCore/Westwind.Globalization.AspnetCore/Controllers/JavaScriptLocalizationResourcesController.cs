@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Resources;
 using System.Text;
@@ -15,7 +13,6 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using Westwind.Globalization;
-using Westwind.Globalization.AspnetCore;
 using Westwind.Globalization.AspNetCore.Extensions;
 using Westwind.Utilities;
 

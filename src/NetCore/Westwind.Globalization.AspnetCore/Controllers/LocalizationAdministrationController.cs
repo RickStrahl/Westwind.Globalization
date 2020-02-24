@@ -29,7 +29,7 @@ namespace Westwind.Globalization.Administration
 
         protected DbResourceDataManager Manager;
         protected Formatting EnsureJsonNet = Formatting.Indented;
-        protected IHostingEnvironment Host;
+        protected IWebHostEnvironment Host;
         protected DbResourceConfiguration Config;
 
         private static JsonSerializerSettings jsonSettings = new JsonSerializerSettings()
@@ -40,7 +40,7 @@ namespace Westwind.Globalization.Administration
         DbResInstance DbIRes { get; }
 
 
-        public LocalizationAdministrationController(IHostingEnvironment host, DbResourceConfiguration config)
+        public LocalizationAdministrationController(IWebHostEnvironment host, DbResourceConfiguration config)
         {
             Host = host;
             Config = config;

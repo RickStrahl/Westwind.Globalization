@@ -5,7 +5,7 @@
 [![NuGet](https://img.shields.io/nuget/v/Westwind.Globalization.svg)](https://www.nuget.org/packages/Westwind.Globalization/)
 ![](https://img.shields.io/nuget/dt/Westwind.Globalization.svg)
 
-**Westwind.Globalization.AspNetCore (.NET Core):**  
+**Westwind.Globalization.AspNetCore (.NET Core 2.1, 3.1):**  
 [![NuGet](https://img.shields.io/nuget/v/Westwind.Globalization.AspNetCore.svg)](https://www.nuget.org/packages/Westwind.Globalization.AspNetCore/)
 ![](https://img.shields.io/nuget/dt/Westwind.Globalization.AspNetCore.svg)
 
@@ -49,7 +49,7 @@ Version 3.0 adds support for the 2.0 versions of .NET Standard, .NET Core and AS
 [![NuGet](https://img.shields.io/nuget/v/Westwind.Globalization.Web.svg)](https://www.nuget.org/packages/Westwind.Globalization.Web/)
 ![](https://img.shields.io/nuget/dt/Westwind.Globalization.Web.svg)
 * Westwind.Globalization.Sample <small>*(net45)*</small>
-* Westwind.Globalization.Sample.AspNetCore <small>*(netcore2.0)*</small>
+* Westwind.Globalization.Sample.AspNetCore <small>*(netcore2.1, netcore3.1)*</small>
 
 <a name="nuget"></a>
 ### Installation
@@ -81,7 +81,7 @@ PM> Install-Package Westwind.Globalization
 > Unzip the contents of the Zip file into your project folder root, which creates the `./wwwroot/LocalizationAdmin` Web folder and adds related resources to `./Properties`.
 
 #### To Install on .NET Framework
-Please read the Installation Section below or watch the [Getting Started Video](https://youtu.be/ABR7ISppB1k), which describes how to install the packages, configure the project, import existing re
+Please read the Installation Section below or watch the [Getting Started Video](https://youtu.be/ABR7ISppB1k), which describes how to install the packages, configure the project, import existing resources.
 
 ```
 PM> Install-Package Westwind.Globalization.Web.Starter
