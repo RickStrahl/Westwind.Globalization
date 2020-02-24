@@ -5,7 +5,7 @@
 [![NuGet](https://img.shields.io/nuget/v/Westwind.Globalization.svg)](https://www.nuget.org/packages/Westwind.Globalization/)
 ![](https://img.shields.io/nuget/dt/Westwind.Globalization.svg)
 
-**Westwind.Globalization.AspNetCore (.NET Core 3.1, 2.1):**  
+**Westwind.Globalization.AspNetCore (.NET Core 2.1, 3.1):**  
 [![NuGet](https://img.shields.io/nuget/v/Westwind.Globalization.AspNetCore.svg)](https://www.nuget.org/packages/Westwind.Globalization.AspNetCore/)
 ![](https://img.shields.io/nuget/dt/Westwind.Globalization.AspNetCore.svg)
 
@@ -49,7 +49,7 @@ Version 3.0 adds support for the 2.0 versions of .NET Standard, .NET Core and AS
 [![NuGet](https://img.shields.io/nuget/v/Westwind.Globalization.Web.svg)](https://www.nuget.org/packages/Westwind.Globalization.Web/)
 ![](https://img.shields.io/nuget/dt/Westwind.Globalization.Web.svg)
 * Westwind.Globalization.Sample <small>*(net45)*</small>
-* Westwind.Globalization.Sample.AspNetCore <small>*(netcore3.1+, netcore2.1+)*</small>
+* Westwind.Globalization.Sample.AspNetCore <small>*(netcore2.1, netcore3.1)*</small>
 
 <a name="nuget"></a>
 ### Installation
@@ -242,14 +242,14 @@ ASP.NET Core integration works in combination with ASP.NET Core new Localization
 Configuration can be accomplished in 3 ways:
 
 1. Using a standalone `dbResourceConfiguration.json` file
-2. Using `appsettings.json` in a `DbResourceProvider` section
+2. Using `appsettings.json` in a `DbResourceProvider` object
 3. Additional ASP.NET Core `IConfiguration` functionality configured
 (ie. Environment variables, user secrets)
 4. Explicit configuration via `AddWestwindGlobalization(opt => return true)`
 
 Configuration values are applied in the order listed, with later assignments over-writing earlier settings.
 
-#### DbResourceConfiguration.json
+#### DbResourceConfiguration
 You can create a standalone `DbResourceConfiguration.json` file for configuration that works both in full framework and .NET Core:
 ```json
 {
@@ -366,24 +366,7 @@ public void ConfigureServices(IServiceCollection services)
 
     ...
     
-    // .NET Core 2.x
-    // services.AddMvc()
-    //         .AddViewLocalization()
-    //         .AddDataAnnotationsLocalization();
-    
-    // .NET Core 3.1
-    services.AddMvc(opt =>  
-        // required for the Administration interface as it does dynamic serialization
-        .AddNewtonsoftJson();
-        // for MVC/RazorPages localization
-        .AddViewLocalization()
-        // for ViewModel Error Annotation Localization
-        .AddDataAnnotationsLocalization();
-
-    // this *has to go here*  after view localization have been initialized
-    // so that Pages can localize - note required even if you're not using
-    // the DbResource manager.
-    services.AddTransient<IViewLocalizer, DbResViewLocalizer>();
+    services.AddMvc();
 }
 ```
 
@@ -410,29 +393,8 @@ public void Configure(IApplicationBuilder app)
         SupportedCultures = supportedCultures,
         SupportedUICultures = supportedCultures                 
     });
-    
-    ..
-    
-    // .NET Core 3.1
-    app.UseRouting();
-
-    app.UseDefaultFiles();
-    app.UseStaticFiles();
-
-    // .NET Core 3.1 required for Endpoints
-    app.UseEndpoints(endpoints =>
-    {
-        endpoints.MapRazorPages();
-        endpoints.MapDefaultControllerRoute();
-    });
-    
-    // .NET Core 2.x
-    app.UseMvc()
-
 }
-```   
-
-> Note
+```         
 #### Dependency Injection for DbResourceConfiguration
 You can get access to DbResourceConfiguration in a number of ways:
 
