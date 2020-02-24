@@ -34,11 +34,19 @@ namespace WestWind.Globalization.AspNetCore.Controllers
 
         protected DbResourceConfiguration Config { get; }
 
-        protected IHostingEnvironment Host { get; }
+#if NETCORE2
+        protected IHostingEnvironment Host;
+#else
+        protected IWebHostEnvironment Host;
+#endif
 
         protected IStringLocalizer Localizer { get; }
 
+#if NETCORE2
         public JavaScriptLocalizationResourcesController(IHostingEnvironment host, DbResourceConfiguration config, IStringLocalizer<JavaScriptLocalizationResourcesController> localizer)
+#else
+        public JavaScriptLocalizationResourcesController(IWebHostEnvironment host, DbResourceConfiguration config, IStringLocalizer<JavaScriptLocalizationResourcesController> localizer)
+#endif
         {
             Config = config;
             Host = host;

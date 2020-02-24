@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>3.0.5</Version>
+    <Version>3.1.0-preview1</Version>
     <Authors>Rick Strahl</Authors>
     <Company>West Wind Technologies</Company>
     <Description>
@@ -20,6 +20,7 @@
     <PackageLicense>https://github.com/RickStrahl/Westwind.Globalization#license</PackageLicense>
     <PackageProjectUrl>https://github.com/RickStrahl/Westwind.Globalization</PackageProjectUrl>
     <PackageIconUrl>http://west-wind.com/westwind.globalization/images/Westwind.Localization_128.png</PackageIconUrl>
+    <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/RickStrahl/Westwind.Globalization</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageTags>Localization Translation Globalization Resources</PackageTags>
@@ -66,6 +67,8 @@
     <Reference Include="System.Design" />
   </ItemGroup>
   
-
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="."/>
+  </ItemGroup>
 
 </Project>

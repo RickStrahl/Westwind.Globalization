@@ -6,13 +6,34 @@ using Westwind.Utilities;
 
 namespace Westwind.Globalization.Errors
 {
+
+    /// <summary>
+    /// An API error result model class that returns error information
+    /// </summary>
     public class ApiError
     {
+        /// <summary>
+        /// An error message to display
+        /// </summary>
         public string message { get; set; }
+
+        /// <summary>
+        /// Markder flag to allow client to identify this as an error object
+        /// </summary>
         public bool isError { get; set; }
+
+        /// <summary>
+        /// Additional error information
+        /// </summary>
         public string detail { get; set; }
+
+        /// <summary>
+        /// A collection of validation errors for holding model validation
+        /// and business object validation errors
+        /// </summary>
         public ValidationErrorCollection errors { get; set; }
 
+        
         public ApiError(string message)
         {
             this.message = message;

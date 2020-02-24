@@ -29,7 +29,13 @@ namespace Westwind.Globalization.Administration
 
         protected DbResourceDataManager Manager;
         protected Formatting EnsureJsonNet = Formatting.Indented;
+
+#if NETCORE2
+        protected IHostingEnvironment Host;
+#else
         protected IWebHostEnvironment Host;
+#endif
+
         protected DbResourceConfiguration Config;
 
         private static JsonSerializerSettings jsonSettings = new JsonSerializerSettings()
@@ -39,8 +45,17 @@ namespace Westwind.Globalization.Administration
 
         DbResInstance DbIRes { get; }
 
-
-        public LocalizationAdministrationController(IWebHostEnvironment host, DbResourceConfiguration config)
+        /// <summary>
+        /// API Controller that handles API service requests from the
+        /// Localization Admin form.
+        /// </summary>
+        /// <param name="host"></param>
+        /// <param name="config"></param>
+#if NETCORE2
+        public LocalizationAdministrationController(IHostingEnvironment host, DbResourceConfiguration config)
+#else
+        public LocalizationAdministrationController(IWebHostEnvironment host,DbResourceConfiguration config)
+#endif
         {
             Host = host;
             Config = config;
@@ -90,39 +105,39 @@ namespace Westwind.Globalization.Administration
         /// Returns a shaped objects that can be displayed in an editable grid the grid view for locale ids
         /// of resources.
         /// 
-        //{
-        //  "Locales": [
-        //    "",
-        //    "de",
-        //    "fr"
-        //  ],
-        //  "Resources": [
-        //    {
-        //      "ResourceId": "AddressIsRequired",
-        //      "Resources": [
-        //        {
-        //          "ResourceId": "AddressIsRequired",
-        //          "LocaleId": "",
-        //          "ResourceSet": "Resources",
-        //          "Value": "An address is required."
-        //        },
-        //        {
-        //          "ResourceId": "AddressIsRequired",
-        //          "LocaleId": "de",
-        //          "ResourceSet": "Resources",
-        //          "Value": "Eine Addresse muss angegeben werden."
-        //        },
-        //        {
-        //          "ResourceId": "AddressIsRequired",
-        //          "LocaleId": "fr",
-        //          "ResourceSet": "Resources",
-        //          "Value": "Une adresse doit Ãªtre saisi."
-        //        }
-        //      ]
-        //    },
-        //    {}
-        //]
-        //}
+        /// {
+        ///   "Locales": [
+        ///     "",
+        ///     "de",
+        ///     "fr"
+        ///   ],
+        ///   "Resources": [
+        ///     {
+        ///       "ResourceId": "AddressIsRequired",
+        ///       "Resources": [
+        ///         {
+        ///           "ResourceId": "AddressIsRequired",
+        ///           "LocaleId": "",
+        ///           "ResourceSet": "Resources",
+        ///           "Value": "An address is required."
+        ///         },
+        ///         {
+        ///           "ResourceId": "AddressIsRequired",
+        ///           "LocaleId": "de",
+        ///           "ResourceSet": "Resources",
+        ///           "Value": "Eine Addresse muss angegeben werden."
+        ///         },
+        ///         {
+        ///           "ResourceId": "AddressIsRequired",
+        ///           "LocaleId": "fr",
+        ///           "ResourceSet": "Resources",
+        ///           "Value": "Une adresse doit Ãªtre saisi."
+        ///         }
+        ///       ]
+        ///     },
+        ///     {}
+        ///   ]
+        /// }
         /// </summary>
         /// <param name="resourceSet"></param>
         /// <returns></returns>
@@ -785,7 +800,7 @@ namespace Westwind.Globalization.Administration
             var config = DbResourceConfiguration.Current;
 
 
-            var rt = typeof(IHostingEnvironment)
+            var rt = typeof(IWebHost)
                 .GetTypeInfo()
                 .Assembly
                 .GetCustomAttribute<AssemblyFileVersionAttribute>();

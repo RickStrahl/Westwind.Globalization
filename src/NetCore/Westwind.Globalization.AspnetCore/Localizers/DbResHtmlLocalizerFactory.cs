@@ -6,10 +6,17 @@ namespace Westwind.Globalization.AspnetCore
 {
     public class DbResHtmlLocalizerFactory : IHtmlLocalizerFactory
     {
-        private IHostingEnvironment _host;
         private DbResourceConfiguration _config;
 
+#if NETCORE2
+        private IHostingEnvironment _host;
+
         public DbResHtmlLocalizerFactory(DbResourceConfiguration config, IHostingEnvironment env)
+#else
+        private IWebHostEnvironment _host;
+
+        public DbResHtmlLocalizerFactory(DbResourceConfiguration config, IWebHostEnvironment env)
+#endif
         {
             _config = config;
             _host = env;
@@ -30,6 +37,12 @@ namespace Westwind.Globalization.AspnetCore
             return new DbResHtmlLocalizer(_config) { ResourceSet = baseName };
         }
 
+
+        /// <summary>
+        /// Creates a localizer from a given type's name
+        /// </summary>
+        /// <param name="resourceSource"></param>
+        /// <returns></returns>
         public IHtmlLocalizer Create(Type resourceSource)
         {
             string baseName = resourceSource.FullName;

@@ -1,0 +1,177 @@
+﻿<style>
+    .dialog {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;        
+        z-index: 1001;
+        border: 1px solid darkgrey;
+        border-top: none;
+        border-right: none;
+        box-shadow: 2px 2px 4px #535353;
+        background: white;
+        padding: 0;
+        margin: 0;       
+        transition: width 0.5s;
+        overflow-x: hidden;
+    }
+        .dialog.editor-hidden {
+            width: 0;
+            border: 0;
+        }
+
+    .dialog-header {
+        color: white;
+        background: #535353;
+        padding: 5px;
+    }
+
+    .dialog-content {
+        background: grey;
+        padding: 0;
+        margin: 0;                
+    }
+
+        .dialog-content textarea {
+            position: relative;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            margin: 0;
+            margin-bottom: 0;
+            padding-left: 5px;            
+            font-size: 11pt !important;
+            font-family: consolas, monospace;
+        }
+
+    .dialog-toolbar {
+        padding: 3px 5px;
+        background: linear-gradient(#f3f3f3, #eee);
+    }
+</style>
+<div id="resource-editor" class="dialog editor-hidden">
+    <div class="dialog-header">
+        Edit Text
+    </div>
+    <div class="dialog-toolbar">
+        <button class="btn btn-xs" id="editor-btn-save" title="Save edited text"><i class="fa fa-pencil"></i> Save</button>
+        <button class="btn btn-xs" id="editor-btn-cancel" title="Cancel any changes"><i class="fa fa-remove"></i> Cancel</button>
+        <button class="btn btn-xs" id="editor-btn-preview" title="Preview changes" style="display:none"><i class="fa fa-eye"></i> Preview</button>
+
+        <button class="btn btn-xs pull-right" id="editor-btn-close" title="Close window without saving"><i class="fa fa-remove"></i> Close</button>
+    </div>
+    <div class="dialog-content"><textarea id="editable-text"></textarea></div>
+</div>
+
+<script>
+    jQuery.fn.fullScreenEditor = function fullScreenEditor(action, options) {
+        if (typeof action === "object") {
+            options = action;           
+            action = '';
+        }
+
+        var opt = $.extend({            
+            onSave: null,
+            onClose: null,
+            onCancel: null,
+            onPreview: null,
+            value: null,
+            rtl: false
+        }, options);
+
+        var $editor = $("#resource-editor");
+        var $textbox = $("#editable-text");
+
+        var $el = $(this);
+        var bindControl = false;
+        if (opt.value == null) {
+            bindControl = true;
+            opt.value = $el.val();
+        }
+
+        if (action == 'attach') {
+            $el.dblclick(function() {
+                $("#resource-editor").fullScreenEditor('show', opt);
+            });
+            return;
+        }
+        if (action === "show") {
+            $textbox.val(opt.value);
+
+            if (opt.rtl)
+                $textbox.attr("dir", "rtl");
+            else
+                $textbox.attr("dir", "ltr");
+
+            $editor.removeClass("editor-hidden");
+            setTimeout(resizeEditWindow, 100);
+
+            $("#editor-btn-close").click(function() {
+                opt.value = $("#editable-text").val();
+                $editor.addClass("editor-hidden");
+            });
+            $("#editor-btn-cancel").click(function() {
+                if (opt.onCancel)
+                    opt.onCancel(opt.value);
+            });
+            $("#editor-btn-save").click(function() {
+                opt.value = $("#editable-text").val();
+                $editor.addClass("editor-hidden");
+                if (bindControl)
+                    $el.val(opt.value);
+                if (opt.onSave)
+                    opt.onSave(opt.value);
+            });
+            $("#editor-btn-cancel").click(function() {
+                $("#editable-text").val(opt.value);
+            });
+
+            if (opt.onPreview) {
+                $("#editor-btn-preview").show()
+                    .click(function() {
+                        if (opt.onPreview)
+                            opt.onPreview(opt.value);
+                    });
+            }
+
+            $textbox.keydown(function onResourceKeyDown(ev, resource) {
+                // Ctrl-Enter - save
+                if (ev.ctrlKey && ev.keyCode === 13) {
+                    $("#editor-btn-save").trigger("click", null, resource);
+                }
+                if (ev.keyCode === 27) {
+                    $("#editor-btn-close").trigger("click", null, resource);
+                }
+            });
+
+            $textbox.focus();
+            $(window).resize(resizeEditWindow);
+        } else if (action === "hide") {
+            $editor.addClass('editor-hidden');
+
+            opt.value = $("#editable-text").val();
+            if ($el != null)
+                $el.val(opt.value);
+
+            if (opt.onSave)
+                opt.onSave(opt.value);
+
+            if (opt.onClose)
+                opt.onClose(opt.value);
+        }
+
+
+        function resizeEditWindow() {
+            var $toolbar = $("#resource-editor .dialog-content");
+            var toolTop = $toolbar.position().top;
+
+            $("#editable-text").height($(window).outerHeight() - toolTop - 12);
+
+        }
+
+    }
+
+
+</script>

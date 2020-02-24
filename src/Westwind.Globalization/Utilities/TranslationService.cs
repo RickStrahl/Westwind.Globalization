@@ -153,11 +153,11 @@ namespace Westwind.Globalization
         /// Translates a string into another language using Google's translate API JSON calls.
         /// <seealso>Class TranslationServices</seealso>
         /// </summary>
-        /// <param name="Text">Text to translate. Should be a single word or sentence.</param>
-        /// <param name="FromCulture">
+        /// <param name="text">Text to translate. Should be a single word or sentence.</param>
+        /// <param name="fromCulture">
         /// Two letter culture (en of en-us, fr of fr-ca, de of de-ch)
         /// </param>
-        /// <param name="ToCulture">
+        /// <param name="toCulture">
         /// Two letter culture (as for FromCulture)
         /// </param>
         /// <param name="googleApiKey">Google Api key - if not specified it's read from the configuration</param>
@@ -343,7 +343,8 @@ namespace Westwind.Globalization
         /// You can find client ID and Secret (or register a new one) at:
         /// https://datamarket.azure.com/developer/applications/
         /// </summary>
-        /// <param name="apiKey">The client ID of your application</param>        
+        /// <param name="apiKey">The client ID of your application</param>
+        /// <param name="ignored">not used - provided for backwards compat</param>
         /// <returns></returns>
         public string GetBingAuthToken(string apiKey = null, string ignored = null)
         {

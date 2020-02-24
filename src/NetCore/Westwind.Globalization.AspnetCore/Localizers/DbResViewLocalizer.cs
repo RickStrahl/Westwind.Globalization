@@ -26,12 +26,17 @@ namespace Westwind.Globalization.AspnetCore
         private readonly string _applicationName;
         private IHtmlLocalizer _localizer;
 
+
         /// <summary>
         /// Creates a new <see cref="Microsoft.AspNetCore.Mvc.Localization.ViewLocalizer"/>.
         /// </summary>
         /// <param name="localizerFactory">The <see cref="IHtmlLocalizerFactory"/>.</param>
         /// <param name="hostingEnvironment">The <see cref="IHostingEnvironment"/>.</param>
+#if !NETCORE2
+        public DbResViewLocalizer(IHtmlLocalizerFactory localizerFactory, IWebHostEnvironment hostingEnvironment)
+#else
         public DbResViewLocalizer(IHtmlLocalizerFactory localizerFactory, IHostingEnvironment hostingEnvironment)
+#endif
         {
             if (localizerFactory == null)
                 throw new ArgumentNullException(nameof(localizerFactory));
@@ -43,7 +48,7 @@ namespace Westwind.Globalization.AspnetCore
             _localizerFactory = localizerFactory;
         }
 
-        /// <inheritdoc />
+
         public virtual LocalizedHtmlString this[string key]
         {
             get
@@ -78,6 +83,7 @@ namespace Westwind.Globalization.AspnetCore
         public LocalizedString GetString(string name, params object[] values) => _localizer.GetString(name, values);
 
         /// <inheritdoc />
+        [Obsolete]
         public IHtmlLocalizer WithCulture(CultureInfo culture) => _localizer.WithCulture(culture);
 
         /// <inheritdoc />

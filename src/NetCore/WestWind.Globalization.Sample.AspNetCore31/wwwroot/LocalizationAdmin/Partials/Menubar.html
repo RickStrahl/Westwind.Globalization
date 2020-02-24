@@ -1,0 +1,101 @@
+﻿<nav class="menubar">
+    <ul class="nav navbar-nav pull-left">
+        <li>
+            <a style="border: none;"
+               title="Collapse/expand resource list panel"
+               ng-click="view.collapseList()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </li>
+    </ul>
+
+    <style>
+        </style>
+    <ul id="MenuButtons" class="nav navbar-nav pull-right navbar">
+             <li>
+            <a ng-show="view.isLocalizationTable"
+                ng-click="view.onGridMenuClick()"
+                title="{{view.dbRes('GridView_Title')}}"
+                data-resource-id="GridView">
+                <i class="fa fa-list-alt"></i> {{view.dbRes('GridView')}}
+            </a>
+        </li>
+        <li>
+            <a ng-show="view.isLocalizationTable"
+               xng-click="view.onExportResxResourcesClick()"
+               data-toggle="modal" data-target="#ImportExportResxDialog"
+               title="{{::view.dbRes('ExportResx_Title')}}"
+               data-resource-id="ImportExportResx">
+                <i class="fa fa-download"></i> {{::view.dbRes('ImportExportResx')}}
+            </a>
+        </li>
+        <li>
+            <a ng-show="view.isLocalizationTable"
+               data-toggle="modal" data-target="#CreateClassDialog"
+               title="{{view.resources.CreateClass_Title}}"
+               data-resource-id="CreateClass">
+                <i class="fa fa-code" style="font-weight: bold;"></i> {{::view.dbRes('CreateClass')}}
+            </a>
+        </li>
+        <li>
+            <a ng-show="view.isLocalizationTable"
+               ng-click="view.onReloadResourcesClick()"
+               title="{{view.dbRes('ReloadResources_Title')}}"
+               data-resource-id="ReloadResources">
+                <i class="fa fa-refresh"></i> {{::view.dbRes('ReloadResources')}}
+            </a>
+        </li>
+        <li>
+
+            <a ng-show="!view.isLocalizationTable"
+               ng-click="view.onCreateTableClick()"
+               title=" {{::view.dbRes('CreateTable_Title')}} "
+               data-resource-id="CreateTable">
+                <i class="fa fa-plus-square">
+                </i> {{::view.dbRes('CreateTable')}}
+            </a>
+
+        </li>
+        <li>
+            <a ng-show="view.isLocalizationTable"
+               ng-click="view.onBackupClick()"
+               title="{{::view.dbRes('Backup_Title')}}"
+               data-resource-id="Backup">
+                <i class="fa fa-save"></i> {{::view.dbRes('Backup')}}
+            </a>
+        </li>
+        <li role="presentation" class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                <i class="fa fa-gear"></i> <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li class="dropdown-submenu pull-right">
+                    <a href="javascript:{}" data-toggle="modal" data-target="#ResourceProviderInfoDialog"
+                       data-resource-id="ResourceProviderInfo">
+                        <i class="fa fa-info-circle"></i> {{::view.dbRes('ResourceProviderInfo')}}
+                    </a>
+                    <a href="javascript:{}" ng-click="view.showResourceIcons()" ng-show="!view.resourceEditMode"
+                       data-resource-id="EnableResourceEditing">
+                        <i class="fa fa-flag"></i> {{::view.dbRes("EnableResourceEditing")}}
+                    </a>
+                    <a href="javascript:{}" ng-click="view.showResourceIcons()" ng-show="view.resourceEditMode"
+                       data-resource-id="DisableResourceEditing">
+                        <i class="fa fa-flag"></i> {{::view.dbRes("DisableResourceEditing")}}
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="../"
+               title="{{view.dbRes('Home_Title')}}"
+               data-resource-id="Home.Title">
+                <i class="fa fa-home"></i>
+            </a>
+        </li>
+
+    </ul>
+
+    <div class="clearfix"></div>
+</nav>
+

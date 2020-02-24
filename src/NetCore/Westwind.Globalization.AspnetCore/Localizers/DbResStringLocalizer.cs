@@ -23,6 +23,7 @@ namespace Westwind.Globalization.AspnetCore
         /// </summary>
         public string ResourceSet { get; set; }
 
+        
         public DbResStringLocalizer(DbResourceConfiguration config)
         {
             DbRes = new DbResInstance(config);
@@ -33,6 +34,11 @@ namespace Westwind.Globalization.AspnetCore
         }
 
 
+        /// <summary>
+        /// Returns all strings
+        /// </summary>
+        /// <param name="includeParentCultures"></param>
+        /// <returns></returns>
         public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
         {
             var resources = DbRes.GetResourceSet(ResourceSet);

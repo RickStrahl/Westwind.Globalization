@@ -1,0 +1,74 @@
+﻿<div class="modal fade" ng-controller="translateController as view"
+     id="TranslateDialog" tabindex="-1" role="dialog"
+     aria-labelledby="myModal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title" id="TranslateTitle">{{::view.dbRes('TranslateResource')}}</h3>
+            </div>
+            <div class="modal-body">
+
+                <div ng-show="view.error.message" class="alert alert-warning">
+                    {{view.error.message}}
+                </div>
+
+                <div class="form-inline form-group">
+                    <div class="form-group">
+                        <label>{{::view.dbRes('From')}}</label>
+                        <input type="text" class="form-control" ng-model="view.fromLang" placeholder="From"
+                               style="width: 60px;" />
+                    </div>
+                    <div class="form-group">
+                        <label> &nbsp;{{::view.dbRes('To')}}</label>
+                        <input style="width: 60px;" type="text" class="form-control" ng-model="view.toLang" placeholder="To">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="form-group-input">{{::view.dbRes('TextToTranslate')}}</label>
+                    <textarea class="form-control" ng-model="view.inputText" placeholder="Text to translate"></textarea>
+                </div>
+
+                <button class="btn btn-primary" ng-click="view.onTranslateClick()"><i class="fa fa-flag"></i> Translate</button>
+
+                <hr class="hrstyle" />
+
+                <div class="form-group">
+                    <a href="https://translate.google.com/" target="_blank" class="control-label" for="form-group-input">Google {{::view.dbRes('Translation')}}</a>
+                    <div class="input-group">
+
+                        <textarea class="form-control" ng-model="view.googleTranslation" placeholder="Text to translate"></textarea>
+                        <span class=" input-group-addon clickable"
+                              ng-click="view.useTranslateClick('google')"><i class="fa fa-check"></i>{{::view.dbRes('Use')}}</span>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <a href="https://www.deepl.com/translator" target="_blank" class="control-label" for="form-group-input">DeepL {{::view.dbRes('Translation')}}</a>
+                    <div class="input-group">
+
+                        <textarea class="form-control" ng-model="view.deeplTranslation" placeholder="Translated text"></textarea>
+                        <span class=" input-group-addon"
+                              ng-click="view.useTranslateClick('deepl')"><i class="fa fa-check"></i>{{::view.dbRes('Use')}}</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <a href="https://www.bing.com/translator/" class="control-label" for="form-group-input">Bing {{::view.dbRes('Translation')}}</a>
+                    <div class="input-group">
+
+                        <textarea class="form-control" ng-model="view.bingTranslation" placeholder="Translated text"></textarea>
+                        <span class=" input-group-addon"
+                              ng-click="view.useTranslateClick('bing')"><i class="fa fa-check"></i>{{::view.dbRes('Use')}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-remove"></i> {{::view.dbRes('Cancel')}}</button>                
+            </div>
+        </div>
+    </div>    
+</div>

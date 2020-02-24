@@ -10,6 +10,7 @@ namespace Westwind.Globalization.AspnetCore.Utilities
     public static class WebUtils
     {
 
+        /// <summary>
         /// You can also limit the locales that are allowed in order to minimize
         /// resource access for locales that aren't implemented at all.
         /// </summary>
