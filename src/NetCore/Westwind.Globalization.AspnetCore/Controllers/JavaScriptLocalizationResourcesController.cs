@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Resources;
@@ -31,32 +32,24 @@ namespace WestWind.Globalization.AspNetCore.Controllers
     /// </summary>
     public class JavaScriptLocalizationResourcesController : Controller
     {
-
         protected DbResourceConfiguration Config { get; }
-
-#if NETCORE2
-        protected IHostingEnvironment Host;
-#else
-        protected IWebHostEnvironment Host;
-#endif
-
         protected IStringLocalizer Localizer { get; }
+        protected IWebHostEnvironment Host { get; }
 
-#if NETCORE2
-        public JavaScriptLocalizationResourcesController(IHostingEnvironment host, DbResourceConfiguration config, IStringLocalizer<JavaScriptLocalizationResourcesController> localizer)
-#else
-        public JavaScriptLocalizationResourcesController(IWebHostEnvironment host, DbResourceConfiguration config, IStringLocalizer<JavaScriptLocalizationResourcesController> localizer)
-#endif
+        public JavaScriptLocalizationResourcesController(
+            IWebHostEnvironment host,
+            DbResourceConfiguration config,
+            IStringLocalizer<JavaScriptLocalizationResourcesController> localizer)
         {
             Config = config;
-            Host = host;
+            Host = host; // provider.GetService(typeof(IWebHostEnvironment)) as IWebHostEnvironment;
+            //Host = host;
             Localizer = localizer;
         }
 
-        // http://localhost:5000/JavaScriptResourceHandler.axd?ResourceSet=LocalizationForm&LocaleId=auto&VarName=resources&ResourceMode=resdb
-        // http://localhost:5000/api/JavaScriptLocalizationResources?ResourceSet=LocalizationForm&LocaleId=auto&VarName=resources&ResourceMode=resdb
-        [Route("api/JavaScriptLocalizationResources")]
-        [Route("JavaScriptResourceHandler.axd")]
+    // http://localhost:5000/api/JavaScriptLocalizationResources?ResourceSet=LocalizationForm&LocaleId=auto&VarName=resources&ResourceMode=resdb
+    [Route("api/JavaScriptLocalizationResources")]
+        //[Route("JavaScriptResourceHandler.axd")]
         public ActionResult JavaScriptLocalizationResources()
         {
             return ProcessRequest();
@@ -122,14 +115,16 @@ namespace WestWind.Globalization.AspNetCore.Controllers
             if (mode == ResourceAccessMode.DbResourceManager)
             {
                 var resManager = DbResourceDataManager.CreateDbResourceDataManager(
-                 Config.DbResourceDataManagerType);
+                    Config.DbResourceDataManagerType);
                 resDict = resManager.GetResourceSetNormalizedForLocaleId(localeId, resourceSet);
                 if (resDict == null || resDict.Count == 0)
                     mode = ResourceAccessMode.Resx; // try Resx resources from disk instead
             }
+
             if (mode != ResourceAccessMode.DbResourceManager) // Resx Resources loaded from disk
             {
-                string basePath = Request.MapPath(DbResourceConfiguration.Current.ResxBaseFolder, basePath: Host.ContentRootPath);
+                string basePath = Request.MapPath(DbResourceConfiguration.Current.ResxBaseFolder,
+                    basePath: Host.ContentRootPath);
                 DbResXConverter converter = new DbResXConverter(basePath);
 
                 resDict = converter.GetCompiledResourcesNormalizedForLocale(resourceSet,
@@ -148,7 +143,7 @@ namespace WestWind.Globalization.AspNetCore.Controllers
 
             // return all resource strings
             resDict = resDict.Where(res => res.Value is string)
-                    .ToDictionary(dict => dict.Key, dict => dict.Value);
+                .ToDictionary(dict => dict.Key, dict => dict.Value);
 
             string javaScript = SerializeResourceDictionary(resDict, varname);
 
@@ -205,8 +200,8 @@ namespace WestWind.Globalization.AspNetCore.Controllers
 
                     while (enumerator.MoveNext())
                     {
-                        var resItem = (DictionaryEntry)enumerator.Current;
-                        resDict.Add((string)resItem.Key, resItem.Value);
+                        var resItem = (DictionaryEntry) enumerator.Current;
+                        resDict.Add((string) resItem.Key, resItem.Value);
                     }
                 }
             }
@@ -292,7 +287,7 @@ namespace WestWind.Globalization.AspNetCore.Controllers
             //if (text.Length > 2000)
             //    WebUtils.GZipEncodePage();
 
-            return Content(text, new MediaTypeHeaderValue("text/javascript") { Charset = "utf-8" });
+            return Content(text, new MediaTypeHeaderValue("text/javascript") {Charset = "utf-8"});
         }
 
 

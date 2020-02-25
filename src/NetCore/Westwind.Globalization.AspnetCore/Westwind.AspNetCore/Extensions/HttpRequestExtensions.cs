@@ -56,7 +56,7 @@ namespace Westwind.Globalization.AspNetCore.Extensions
         #region Path Functions
 
 
-#if !NETCORE2
+
         /// <summary>
         /// Maps a virtual or relative path to a physical path in a Web site
         /// </summary>
@@ -101,53 +101,6 @@ namespace Westwind.Globalization.AspNetCore.Extensions
                 .Replace("\\", slash)
                 .Replace(slash + slash, slash);
         }
-#else
-        /// <summary>
-        /// Maps a virtual or relative path to a physical path in a Web site
-        /// </summary>
-        /// <param name="request"></param>
-        /// <param name="relativePath"></param>
-        /// <param name="host">Optional - IHostingEnvironment instance. If not passed retrieved from RequestServices DI</param>
-        /// <param name="basePath">Optional - Optional physical base path. By default host.WebRootPath</param>
-        /// <returns></returns>
-        public static string MapPath(this HttpRequest request, string relativePath, IHostingEnvironment host = null,
-            string basePath = null)
-        {
-            if (string.IsNullOrEmpty(relativePath))
-                return string.Empty;
-
-            if (basePath == null)
-            {
-                if (string.IsNullOrEmpty(WebRootPath))
-                {
-                    if (host == null)
-                        host =
-                            request.HttpContext.RequestServices.GetService(typeof(IHostingEnvironment)) as
-                                IHostingEnvironment;
-                    WebRootPath = host.WebRootPath;
-                }
-
-                if (string.IsNullOrEmpty(relativePath))
-                    return WebRootPath;
-
-                basePath = WebRootPath;
-            }
-
-            relativePath = relativePath.TrimStart('~').TrimStart('/', '\\');
-
-            if (relativePath.StartsWith("~"))
-                relativePath = relativePath.TrimStart('~');
-
-            string path = Path.Combine(basePath, relativePath);
-
-            string slash = Path.DirectorySeparatorChar.ToString();
-            return path
-                .Replace("/", slash)
-                .Replace("\\", slash)
-                .Replace(slash + slash, slash);
-        }
-
-#endif
         #endregion
 
 

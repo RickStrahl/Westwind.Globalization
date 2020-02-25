@@ -30,11 +30,7 @@ namespace Westwind.Globalization.Administration
         protected DbResourceDataManager Manager;
         protected Formatting EnsureJsonNet = Formatting.Indented;
 
-#if NETCORE2
-        protected IHostingEnvironment Host;
-#else
         protected IWebHostEnvironment Host;
-#endif
 
         protected DbResourceConfiguration Config;
 
@@ -51,11 +47,7 @@ namespace Westwind.Globalization.Administration
         /// </summary>
         /// <param name="host"></param>
         /// <param name="config"></param>
-#if NETCORE2
-        public LocalizationAdministrationController(IHostingEnvironment host, DbResourceConfiguration config)
-#else
         public LocalizationAdministrationController(IWebHostEnvironment host,DbResourceConfiguration config)
-#endif
         {
             Host = host;
             Config = config;
@@ -93,8 +85,6 @@ namespace Westwind.Globalization.Administration
             if (ids == null)
                 throw new ApplicationException(DbIRes.T("ResourceSetLoadingFailed", STR_RESOURCESET) + ":" +
                                                Manager.ErrorMessage);
-
-
             //return ids;
             return Json(ids, jsonSettings);
         }
@@ -136,7 +126,7 @@ namespace Westwind.Globalization.Administration
         ///       ]
         ///     },
         ///     {}
-        ///   ]
+        ///     ]
         /// }
         /// </summary>
         /// <param name="resourceSet"></param>

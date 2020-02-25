@@ -32,11 +32,7 @@ namespace Westwind.Globalization.AspnetCore
         /// </summary>
         /// <param name="localizerFactory">The <see cref="IHtmlLocalizerFactory"/>.</param>
         /// <param name="hostingEnvironment">The <see cref="IHostingEnvironment"/>.</param>
-#if !NETCORE2
         public DbResViewLocalizer(IHtmlLocalizerFactory localizerFactory, IWebHostEnvironment hostingEnvironment)
-#else
-        public DbResViewLocalizer(IHtmlLocalizerFactory localizerFactory, IHostingEnvironment hostingEnvironment)
-#endif
         {
             if (localizerFactory == null)
                 throw new ArgumentNullException(nameof(localizerFactory));

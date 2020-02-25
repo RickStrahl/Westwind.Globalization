@@ -370,17 +370,18 @@ public void ConfigureServices(IServiceCollection services)
     // services.AddMvc()
     //         .AddViewLocalization()
     //         .AddDataAnnotationsLocalization();
+    //         .AddApplicationPart(typeof(DbResViewLocalizer).Assembly);
     
     // .NET Core 3.1
     services.AddMvc(opt =>  
-        // required for the Administration interface as it does dynamic serialization
+        // required for the Administration interface for dynamic serialization
         .AddNewtonsoftJson();
         // for MVC/RazorPages localization
         .AddViewLocalization()
         // for ViewModel Error Annotation Localization
         .AddDataAnnotationsLocalization();
 
-    // this *has to go here*  after view localization have been initialized
+    // this *has to go here* after view localization has been initialized
     // so that Pages can localize - note required even if you're not using
     // the DbResource manager.
     services.AddTransient<IViewLocalizer, DbResViewLocalizer>();
@@ -389,7 +390,7 @@ public void ConfigureServices(IServiceCollection services)
 
 Any code changes made override any of the file values. You can also replace the entire `DbResourceConfiguration` object entirely in this handler.
 
-In addition you probably will want to add standard ASP.NET Core Localization features to the `Configure()` method in `Startup.cs`:
+In addition you probablywant to add standard ASP.NET Core Localization features to the `Configure()` method in `Startup.cs`:
 
 ```cs
 public void Configure(IApplicationBuilder app) 
@@ -426,9 +427,8 @@ public void Configure(IApplicationBuilder app)
         endpoints.MapDefaultControllerRoute();
     });
     
-    // .NET Core 2.x
-    app.UseMvc()
-
+    // .NET Core 2.x only needs this
+    //app.UseMvc()
 }
 ```   
 
@@ -448,6 +448,8 @@ To use the DbRes localizer, override the default `IStringLocalizer` with:
 ```cs
 services.AddSingleton(typeof(IStringLocalizerFactory), typeof(DbResStringLocalizerFactory));
 ```  
+
+Once this is done you can use standard ASP.NET localization to use data from the configured localization provider (Db or Resx typically).
 
 > #### Use of IStringLocalizer is optional. 
 > You can use `DbRes.T()` or strongly typed resources directly if you prefer. However, for `DataAnnotation` localization `IStringLocalizer` is required in ASP.NET Core (shrug), so generally you'll want to add `DbResStringLocalizer` in `ConfigureServices()`.

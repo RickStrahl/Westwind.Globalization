@@ -82,8 +82,8 @@ namespace WestWind.Globalization.Sample.AspNetCore
                     opt.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>();
                 })
                 .AddViewLocalization()
-                .AddDataAnnotationsLocalization();
-
+                .AddDataAnnotationsLocalization()
+                .AddApplicationPart(typeof(DbResViewLocalizer).Assembly);
 
             // this *has to go here*  after view localization have been initialized
             // so that Pages can localize - note required even if you're not using
@@ -119,11 +119,16 @@ namespace WestWind.Globalization.Sample.AspNetCore
             {
                 app.UseExceptionHandler("/Error");
             }
+
             
+
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            app.UseMvcWithDefaultRoute();
+
+            app.UseMvc();
+             
+            
 
             // print some environment information
             Console.WriteLine("\r\nPlatform: " + System.Runtime.InteropServices.RuntimeInformation.OSDescription);

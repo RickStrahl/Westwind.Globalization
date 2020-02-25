@@ -8,15 +8,10 @@ namespace Westwind.Globalization.AspnetCore
     {
         private DbResourceConfiguration _config;
 
-#if NETCORE2
-        private IHostingEnvironment _host;
 
-        public DbResStringLocalizerFactory(DbResourceConfiguration config, IHostingEnvironment host)
-#else
         private IWebHostEnvironment _host;
 
         public DbResStringLocalizerFactory(DbResourceConfiguration config, IWebHostEnvironment host)
-#endif
         {
             _config = config;
             _host = host;

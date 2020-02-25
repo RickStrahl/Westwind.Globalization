@@ -1,8 +1,10 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Westwind.Globalization.AspnetCore;
 
 namespace Westwind.Globalization.AspnetCore
 {
@@ -40,6 +42,13 @@ namespace Westwind.Globalization.AspnetCore
 
             // register with DI
             services.AddSingleton(config);
+
+            // Initialize the fake IWebHostingEnvironment  for .NET Core 2.x
+            #if NETCORE2
+                var ihHost = provider.GetService<IHostingEnvironment>();
+                var host = new LegacyHostEnvironment(ihHost);
+                services.AddSingleton<IWebHostEnvironment>(host);   
+            #endif
 
             return services;
         }

@@ -14,7 +14,6 @@ using Westwind.AspNetCore.LiveReload;
 using Westwind.Globalization;
 using Westwind.Globalization.AspnetCore;
 
-    
 
 namespace WestWind.Globalization.Sample.AspNetCore
 {
