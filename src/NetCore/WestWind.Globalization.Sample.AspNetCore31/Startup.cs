@@ -30,6 +30,7 @@ namespace WestWind.Globalization.Sample.AspNetCore
         {
             services.AddLocalization(options => { options.ResourcesPath = "Properties"; });
 
+
             // Optionally enable IStringLocalizer to use DbRes objects instead of default ResourceManager
             services.AddSingleton<IStringLocalizerFactory, DbResStringLocalizerFactory>();
             services.AddSingleton<IHtmlLocalizerFactory, DbResHtmlLocalizerFactory>();
@@ -102,6 +103,7 @@ namespace WestWind.Globalization.Sample.AspNetCore
             // so that Pages can localize - note required even if you're not using
             // the DbResource manager. 
             services.AddTransient<IViewLocalizer, DbResViewLocalizer>();
+
         }
 
         public void Configure(IApplicationBuilder app,
