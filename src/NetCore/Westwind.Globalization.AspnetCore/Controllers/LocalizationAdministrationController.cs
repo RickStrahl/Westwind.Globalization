@@ -399,7 +399,7 @@ namespace Westwind.Globalization.Administration
         /// <returns></returns>
         [HttpPost]
         [Route("UpdateResourceString")]
-        public bool UpdateResourceString([FromBody] UpdateResourceItemModel parm)
+        public bool UpdateResourceString([FromBody] UpdateResourceStringModel parm)
         {
             var item = Manager.GetResourceItem(parm.ResourceId, parm.ResourceSet, parm.LocaleId);
             if (item == null)
@@ -459,7 +459,7 @@ namespace Westwind.Globalization.Administration
         /// <returns></returns>
         [HttpPost]
         [Route("UpdateResource")]
-        public bool UpdateResource([FromBody] ResourceItem resource)
+        public bool UpdateResource([FromBody] UpdateResourceItemModel resource)
         {
             if (resource == null)
                 throw new ArgumentException("NoResourcePassedToAddOrUpdate");
@@ -470,7 +470,27 @@ namespace Westwind.Globalization.Administration
                     cultureName: resource.LocaleId);
             }
 
-            int result = Manager.UpdateOrAddResource(resource);
+            var item = Manager.GetResourceItem(resource.ResourceId, resource.ResourceSet, resource.LocaleId);
+            if (item == null)
+            {
+                item = new ResourceItem()
+                {
+                    ResourceId = resource.ResourceId,
+                    ResourceSet = resource.ResourceSet,
+                    LocaleId = resource.LocaleId,
+                    ValueType = (int)ValueTypes.Text
+                };
+            }
+
+            item.BinFile = resource.BinFile;
+            item.Comment = resource.Comment;
+            item.FileName = resource.FileName;
+            item.TextFile = resource.TextFile;
+            item.Type = resource.Type;
+            item.Value = resource.Value;
+            item.ValueType = resource.ValueType;
+
+            int result = Manager.UpdateOrAddResource(item);
             if (result == -1)
                 throw new InvalidOperationException(Manager.ErrorMessage);
 
