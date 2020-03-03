@@ -204,10 +204,10 @@ namespace Westwind.Globalization.Administration
 
         [HttpGet]
         [Route("GetResourceListHtml")]
-        public JsonResult GetResourceListHtml(string resourceSet)
+        public JsonResult GetResourceListHtml(string resourceSet, string localeId="")
         //public IEnumerable<ResourceIdListItem> GetResourceListHtml(string resourceSet)
         {
-            var ids = Manager.GetAllResourceIdListItems(resourceSet);
+            var ids = Manager.GetAllResourceIdListItems(resourceSet, localeId);
             if (ids == null)
                 throw new ApplicationException(DbIRes.T("ResourceSetLoadingFailed", STR_RESOURCESET) + ":" +
                                                Manager.ErrorMessage);

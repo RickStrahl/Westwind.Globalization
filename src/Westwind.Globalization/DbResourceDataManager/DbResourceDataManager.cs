@@ -520,34 +520,45 @@ namespace Westwind.Globalization
 
         
         /// <summary>
-        /// Returns all available resource ids for a given resource set in all languages.
+        /// Returns all available resource ids for the invariant.
         /// 
-        /// Returns a ResourceIdItem object with ResourecId and HasValue fields.
+        /// Returns a ResourceIdItem object with ResourecId, HasValue and NeedsUpdate fields.
         /// HasValue returns whether there are any entries in any culture for this
         /// resourceId
+        /// NeedsUpdate returns whether the target locale translation is missing
+        /// or older than the invariant when targetLocaleId is specified.
         /// </summary>
         /// <param name="resourceSet"></param>
+        /// <param name="targetLocaleId"></param>
         /// <returns></returns>
-        public virtual List<ResourceIdItem> GetAllResourceIds(string resourceSet)
+        public virtual List<ResourceIdItem> GetAllResourceIds(string resourceSet, string targetLocaleId = "")
         {                      
             using (var data = GetDb())
             {
                 string sql = string.Format(
-//                    @"select ResourceId, CAST(MAX(len(Value)) as bit)  as HasValue
-//	  	from {0}
-//        where ResourceSet=@ResourceSet
-//		group by ResourceId", Configuration.ResourceTableName);
-                @"select ResourceId,CAST( MAX( 
-	  case  
-		WHEN len( CAST(Value as nvarchar(10))) > 0 THEN 1
-		ELSE 0
-	  end ) as Bit) as HasValue
-	  	from {0}
-        where ResourceSet=@ResourceSet 
-	    group by ResourceId",Configuration.ResourceTableName);
+                @"select ResourceId,
+                CAST( MAX(
+                    case
+                        WHEN len( CAST(Value as nvarchar(10))) > 0 THEN 1
+                        ELSE 0
+                    end ) as Bit) as HasValue,
+                CAST( MAX(
+                    case
+                        WHEN l2.Updated IS NULL THEN 1
+                        WHEN l2.Updated <= l.Updated THEN 1
+                        ELSE 0
+                    end ) as BIT) as NeedsUpdate
+                from {0} l
+                left join {0} l2
+                on l2.ResourceId = l.ResourceId
+                and l2.ResourceSet = l.ResourceSet
+                and l2.LocaleId=@TargetLocaleId
+                where l.ResourceSet=@ResourceSet
+                and l.LocaleId=''", Configuration.ResourceTableName);
 
                 var items = data.Query<ResourceIdItem>(sql,
-                    data.CreateParameter("@ResourceSet", resourceSet));
+                    data.CreateParameter("@ResourceSet", resourceSet),
+                    data.CreateParameter("@TargetLocaleId", targetLocaleId));
                 if (items == null)
                 {
                     SetError(data.ErrorMessage);
@@ -559,14 +570,15 @@ namespace Westwind.Globalization
         }
 
         /// <summary>
-        /// Returns a list with ResourceId and HasValues fields
+        /// Returns a list with ResourceId, HasValue and NeedsUpdate fields
         /// where the ResourceId is formatted for HTML display.
         /// </summary>
         /// <param name="resourceSet"></param>
+        /// <param name="targetLocaleId"></param>
         /// <returns></returns>
-        public virtual List<ResourceIdListItem> GetAllResourceIdListItems(string resourceSet)
+        public virtual List<ResourceIdListItem> GetAllResourceIdListItems(string resourceSet, string targetLocaleId = "")
         {
-            var resourceIds = GetAllResourceIds(resourceSet);
+            var resourceIds = GetAllResourceIds(resourceSet, targetLocaleId);
             if (resourceIds == null)
                 return null;
 
@@ -574,6 +586,7 @@ namespace Westwind.Globalization
             {
                  ResourceId = id.ResourceId,
                  HasValue = id.HasValue,
+                 NeedsUpdate = id.NeedsUpdate,
                  Value = id.Value as string
             }).ToList();
         }
@@ -1999,6 +2012,8 @@ namespace Westwind.Globalization
     {
         public string ResourceId { get; set; }
         public bool HasValue { get; set; }
+
+        public bool NeedsUpdate { get; set; }
         public object Value { get; set; }
         public override string ToString()
         {
