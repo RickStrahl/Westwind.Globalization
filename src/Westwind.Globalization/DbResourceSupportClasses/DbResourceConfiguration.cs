@@ -115,6 +115,8 @@ namespace Westwind.Globalization
                     DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);
                 else if (value == DbResourceProviderTypes.SqlServerCompact)
                     DbResourceDataManagerType = typeof(DbResourceSqlServerCeDataManager);
+                else if (value == DbResourceProviderTypes.PostgreSql)
+                    DbResourceDataManagerType = typeof(DbResourcePostgreSqlDataManager);
 
                 _dataAcessProviderType = value;
             }

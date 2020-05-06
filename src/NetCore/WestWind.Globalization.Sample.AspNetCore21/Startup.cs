@@ -63,6 +63,10 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 //opt.ConnectionString = "server=localhost;uid=testuser;pwd=super10seekrit;database=Localizations;charset=utf8";
                 //opt.DataProvider = DbResourceProviderTypes.MySql;
 
+                // PostgreSql
+                //opt.ConnectionString = "Host=127.0.0.1;Port=5432;Database=Localizations;Username=postgres;Password=pass";
+                //opt.DataProvider = DbResourceProviderTypes.PostgreSql;
+
                 opt.ResourceTableName = "localizations";
                 //opt.AddMissingResources = false;
                 opt.ResxBaseFolder = "~/Properties/";
