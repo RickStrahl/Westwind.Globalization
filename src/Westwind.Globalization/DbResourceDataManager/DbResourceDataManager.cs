@@ -1,4 +1,4 @@
-#region License
+﻿#region License
 /*
  **************************************************************
  *  Author: Rick Strahl 
@@ -116,6 +116,8 @@ namespace Westwind.Globalization
                 manager = new DbResourceMySqlDataManager();
             else if (type == DbResourceProviderTypes.SqLite)
                 manager = new DbResourceSqLiteDataManager();
+            else if (type == DbResourceProviderTypes.PostgreSql)
+                manager = new DbResourcePostgreSqlDataManager();
             else
                 return null;
 
@@ -1989,7 +1991,8 @@ namespace Westwind.Globalization
         MySql,
         SqlLite,
         MongoDb, // not implemented yet
-        None
+        None,
+        PostgreSql
     }
 
     /// <summary>
@@ -2052,7 +2055,8 @@ namespace Westwind.Globalization
         SqLite,
         SqlServerCompact,
         Custom,
-        NotSet        
+        NotSet,
+        PostgreSql
     }
 
     /// <summary>

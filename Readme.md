@@ -33,7 +33,7 @@ A rich, Web based resource editor is also provided that makes it easy to create 
 
 ### Requirements:
 * works .NET Standard 2.0/.NET Core 2.0 or .NET 4.5 or later
-* SQL Server 2008-2019, SQL Server Express, SQL Compact 4, MySql, SqLite
+* SQL Server 2008-2019, SQL Server Express, SQL Compact 4, MySql, SqLite, PostgreSql
 * .NET Core Sample Project uses .NET Core 2.2 and needs VS 2019
 
 ### .NET Version Support
@@ -110,7 +110,7 @@ PM> Install-Package Westwind.Globalization
 
 <a name="Features"></a>
 ### Features
-* .NET Resources in Sql Server, SqlCe, MySql and SqLite   
+* .NET Resources in Sql Server, SqlCe, MySql, PostgreSql and SqLite   
 * Injectable .NET Core StringLocalizers (ASP.NET Core)
 * ASP.NET Database ResourceProviders (ASP.NET/WebForms) 
 * .NET  ResourceManager (ASP.NET MVC,non-Web apps)
@@ -814,6 +814,7 @@ The following providers are supported:
 * MySql
 * SqLite
 * Sql Server Compact (no .NET Core support)
+* PostgreSql
 
 To use a specific provider, assign the `DbResourceConfiguration.DbResourceDataManagerType` to the appropriate engine you want to use during startup configuration.
 
@@ -821,6 +822,7 @@ To use a specific provider, assign the `DbResourceConfiguration.DbResourceDataMa
 * typeof(DbResourceMySqlDataManager)
 * typeof(DbResourceSqLiteDataManager)
 * typeof(DbResourceSqlCompactDataManager)
+* typeof(DbResourcePostgreSqlDataManager)
 
 In .NET Core you set the value in the `AddDbResourceLocalization(opt)` configuration:
 
@@ -916,6 +918,24 @@ web.config connection string example:
 <add name="SqlServerCeLocalizations" 
      connectionString="Data Source=|DataDirectory|\Localizations.sdf;Persist Security Info=False;" 
      providerName="System.Data.SqlServerCe.4.0" />
+```
+
+### PostgreSql
+
+*add NuGet Package: **Npgsql***
+
+Code Configuration:
+```c#
+opt.ConnectionString = "Host=127.0.0.1;Port=5432;Database=Localizations;Username=postgres;Password=pass";
+opt.DbResourceDataManagerType = typeof(DbResourcePostgreSqlDataManager);                
+```
+
+web.config file connection String Example:
+
+```xml
+<add name="PostgreSqlLocalizations"
+    connectionString="Host=127.0.0.1;Port=5432;Database=Localizations;Username=postgres;Password=pass" 
+    providerName="Npgsql" />
 ```
 
 ### Global Data Manager Configuration
