@@ -26,9 +26,10 @@
     <PackageTags>Localization Translation Globalization Resources</PackageTags>
     <NeutralLanguage />
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageReleaseNotes>.NET Standard 2.0 and .NET Core Support</PackageReleaseNotes>
+    <PackageReleaseNotes>.NET Core 3.1 Support</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <FileVersion>3.0.20.0</FileVersion>
+    <NoWarn>1701;1702;1591;1573;1570;1572</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -68,7 +69,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <None Include="icon.png" Pack="true" PackagePath="."/>
+    <None Include="icon.png" Pack="true" PackagePath="." />
   </ItemGroup>
 
 </Project>

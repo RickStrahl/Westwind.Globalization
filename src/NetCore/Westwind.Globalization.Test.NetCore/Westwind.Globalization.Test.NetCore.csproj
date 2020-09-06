@@ -17,13 +17,14 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Data.SQLite" Version="2.0.0" />
-    <PackageReference Include="MySql.Data" Version="8.0.16" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.1.0" />    
+    <PackageReference Include="Microsoft.Data.SQLite" Version="3.1.7" />
+    <PackageReference Include="MySql.Data" Version="8.0.21" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    <PackageReference Include="Npgsql" Version="4.1.4" />    
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
-    <PackageReference Include="System.Data.SQLite" Version="1.0.110" />    
+    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.113.1" />    
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Westwind.Globalization\Westwind.Globalization.csproj" />
