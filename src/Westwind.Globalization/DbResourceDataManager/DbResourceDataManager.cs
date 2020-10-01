@@ -116,6 +116,8 @@ namespace Westwind.Globalization
                 manager = new DbResourceMySqlDataManager();
             else if (type == DbResourceProviderTypes.SqLite)
                 manager = new DbResourceSqLiteDataManager();
+            else if(type ==  DbResourceProviderTypes.PostgreSql)
+                return new DbResourcePostgreSqlDataManager();
             else
                 return null;
 

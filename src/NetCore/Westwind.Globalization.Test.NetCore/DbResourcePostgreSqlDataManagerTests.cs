@@ -20,8 +20,8 @@ namespace Westwind.Globalization.Test
         {
             var manager = new DbResourcePostgreSqlDataManager();
             manager.Configuration.ConnectionString = STR_ConnectionString;
-            
-        
+
+
             //manager.Configuration.ResourceTableName = "Localizations";
             return manager;
         }
@@ -34,7 +34,7 @@ namespace Westwind.Globalization.Test
             var db = new SqlDataAccess(STR_ConnectionString, Westwind.Utilities.DataAccessProviderTypes.PostgreSql);
             var dt = db.ExecuteTable("test","select * from localizations");
             Assert.IsNotNull(dt,db.ErrorMessage);
-            
+
             Console.WriteLine(dt.Rows[0]["ResourceId"].ToString());
         }
 
@@ -64,7 +64,7 @@ namespace Westwind.Globalization.Test
             Assert.IsNotNull(items, manager.ErrorMessage);
             Assert.IsTrue(items.Count > 0);
 
-            ShowResources(items);    
+            ShowResources(items);
         }
 
         [Test]
@@ -116,7 +116,8 @@ namespace Westwind.Globalization.Test
                 Console.WriteLine(item.ResourceId + ": " + item.Text + " " + (item.Selected ? "* " : "") );
             }
         }
-        
+
+
         [Test]
         public void GetAllResourceSets()
         {
@@ -132,7 +133,7 @@ namespace Westwind.Globalization.Test
             }
 
             items = manager.GetAllResourceSets(ResourceListingTypes.LocalResourcesOnly);
-            Assert.IsNotNull(items);            
+            Assert.IsNotNull(items);
 
             Console.WriteLine("--- Local ---");
             foreach (var item in items)
@@ -141,7 +142,7 @@ namespace Westwind.Globalization.Test
             }
 
             items = manager.GetAllResourceSets(ResourceListingTypes.GlobalResourcesOnly);
-            Assert.IsNotNull(items);            
+            Assert.IsNotNull(items);
 
             Console.WriteLine("--- Global ---");
             foreach (var item in items)
@@ -163,7 +164,7 @@ namespace Westwind.Globalization.Test
             {
                 Console.WriteLine(":" + localeId);
             }
-            
+
         }
 
         [Test]

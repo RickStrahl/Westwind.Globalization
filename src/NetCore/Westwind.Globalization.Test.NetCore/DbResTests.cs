@@ -11,7 +11,14 @@ namespace Westwind.Globalization.Test
     {
 
         private string STR_ConnectionString = DbResourceConfiguration.Current.ConnectionString;
-        
+
+        public DbResourceDataManagerWithSqlTests()
+        {
+            DbResourceConfiguration.Current.ConnectionString =
+                "host=localhost;database=Localizations;username=Localizations;password=local";
+            DbResourceConfiguration.Current.DataProvider = DbResourceProviderTypes.PostgreSql;
+        }
+
         [Test]
         public void CheckDataBase()
         {
@@ -20,11 +27,11 @@ namespace Westwind.Globalization.Test
             Assert.IsNotNull(tb, "Table is null. Invalid connection string most likely: " + STR_ConnectionString + "\r\n" + db.ErrorMessage);
             Console.WriteLine(tb.Rows.Count);
         }
-        
+
 
         [Test]
         public void DbResSimpleValues()
-        {            
+        {
             string val = DbRes.T("HelloWorld", "Resources", "en-US");
             Assert.AreNotEqual(val, "HelloWorld","Helloworld was not translated");
             Console.WriteLine(val);
@@ -55,7 +62,7 @@ namespace Westwind.Globalization.Test
 
             Console.WriteLine(DbRes.TFormat("#1 {0}", "Today", "Resources"));
             Console.WriteLine(DbRes.TFormat("#2 {0}", "Yesterday", "Resources"));
-            Console.WriteLine(DbRes.TFormat("#3 {0}", "Save", "Resources"));            
+            Console.WriteLine(DbRes.TFormat("#3 {0}", "Save", "Resources"));
         }
 
 
@@ -66,7 +73,7 @@ namespace Westwind.Globalization.Test
             for (int i = 0; i < 100; i++)
             {
                 var t = new Thread(threadedDbRes);
-                t.Start(dt);                
+                t.Start(dt);
             }
 
 
@@ -75,7 +82,7 @@ namespace Westwind.Globalization.Test
 
 
         void threadedDbRes(object dt)
-        {                                    
+        {
             try
             {
                 Console.WriteLine(DbRes.T("Today", "Resources", "de-de") + " - " + Thread.CurrentThread.ManagedThreadId + " - " + DateTime.Now.Ticks);

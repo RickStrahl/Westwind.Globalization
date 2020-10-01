@@ -1,10 +1,10 @@
 #region License
 /*
  **************************************************************
- *  Author: Rick Strahl 
- *          © West Wind Technologies, 2009-2015
+ *  Author: Rick Strahl
+ *          Â© West Wind Technologies, 2009-2015
  *          http://www.west-wind.com/
- * 
+ *
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -14,10 +14,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -26,7 +26,7 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- **************************************************************  
+ **************************************************************
 */
 #endregion
 
@@ -70,7 +70,7 @@ namespace Westwind.Globalization
         /// <summary>
         /// Returns a fully normalized list of resources that contains the most specific
         /// locale version for the culture provided.
-        ///                 
+        ///
         /// This means that this routine walks the resource hierarchy and returns
         /// the most specific value in this order: de-ch, de, invariant.
         /// </summary>
@@ -80,22 +80,22 @@ namespace Westwind.Globalization
         Dictionary<string, object> GetResourceSetNormalizedForLocaleId(string cultureName, string resourceSet);
 
         /// <summary>
-        /// Returns a data table of all the resources for all locales. The result is in a 
+        /// Returns a data table of all the resources for all locales. The result is in a
         /// table called TResources that contains all fields of the table. The table is
         /// ordered by LocaleId.
-        /// 
+        ///
         /// This version returns either local or global resources in a Web app
-        /// 
+        ///
         /// Fields:
         /// ResourceId,Value,LocaleId,ResourceSet,Type
         /// </summary>
-        /// <param name="localResources">return local resources if true</param>        
+        /// <param name="localResources">return local resources if true</param>
         /// <returns></returns>
         List<ResourceItem> GetAllResources(bool localResources = false, bool applyValueConverters = false, string resourceSet = null);
 
         /// <summary>
         /// Returns all available resource ids for a given resource set in all languages.
-        /// 
+        ///
         /// Returns a ResourceIdItem object with ResourecId and HasValue fields.
         /// HasValue returns whether there are any entries in any culture for this
         /// resourceId
@@ -120,7 +120,7 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Gets all the locales for a specific resource set.
-        /// 
+        ///
         /// Returns a table named TLocaleIds (LocaleId field)
         /// </summary>
         /// <param name="ResourceSet"></param>
@@ -129,7 +129,7 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Gets all the Resourecs and ResourceIds for a given resource set and Locale
-        /// 
+        ///
         /// returns a table "TResource" ResourceId, Value fields
         /// </summary>
         /// <param name="resourceSet"></param>
@@ -141,7 +141,7 @@ namespace Westwind.Globalization
         /// Returns an individual Resource String from the database
         /// </summary>
         /// <param name="resourceId"></param>
-        /// <param name="resourceSet"></param>       
+        /// <param name="resourceSet"></param>
         /// <param name="cultureName"></param>
         /// <returns></returns>
         string GetResourceString(string resourceId, string resourceSet, string cultureName);
@@ -150,7 +150,7 @@ namespace Westwind.Globalization
         /// Returns an object from the Resources. Attempts to convert the object to its
         /// original type.  Use this for any non-string  types. Useful for binary resources
         /// like images, icons etc.
-        /// 
+        ///
         /// While this method can be used with strings, GetResourceString()
         /// is much more efficient.
         /// </summary>
@@ -205,14 +205,14 @@ namespace Westwind.Globalization
         /// <param name="value"></param>
         /// <param name="cultureName"></param>
         /// <param name="resourceSet"></param>
-        /// <param name="Type"></param>        
+        /// <param name="Type"></param>
         int UpdateOrAddResource(string resourceId, object value, string cultureName, string resourceSet,
             string comment = null, bool valueIsFileName = false, int valueType = 0);
 
         /// <summary>
         /// Adds a resource to the Localization Table
         /// </summary>
-        /// <param name="resource">Resource to update</param>        
+        /// <param name="resource">Resource to update</param>
         int AddResource(ResourceItem resource);
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace Westwind.Globalization
         /// <param name="cultureName"></param>
         /// <param name="resourceSet"></param>
         /// <param name="Type"></param>
-        int UpdateResource(string resourceId, object value, 
+        int UpdateResource(string resourceId, object value,
             string cultureName, string resourceSet,
             string comment = null, bool valueIsFileName = false, int valueType=0);
 
@@ -287,10 +287,10 @@ namespace Westwind.Globalization
         /// <summary>
         /// Renames a resource set. Useful if you need to move a local page resource set
         /// to a new page. ResourceSet naming for local resources is application relative page path:
-        /// 
+        ///
         /// test.aspx
         /// subdir/test.aspx
-        /// 
+        ///
         /// Global resources have a simple name
         /// </summary>
         /// <param name="OldResourceSet">Name of the existing resource set</param>
@@ -325,9 +325,9 @@ namespace Westwind.Globalization
         bool GenerateResources(IDictionary resourceList, string cultureName, string resourceSet, bool deleteAllResourceFirst);
 
         /// <summary>
-        /// Creates an global JavaScript object object that holds all non-control 
+        /// Creates an global JavaScript object object that holds all non-control
         /// local string resources as property values.
-        /// 
+        ///
         /// All resources are returned in normalized fashion from most specifc
         /// to more generic (de-ch,de,invariant depending on availability)
         /// </summary>
@@ -345,7 +345,7 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Create a backup of the localization database.
-        /// 
+        ///
         /// Note the table used is the one specified in the Configuration.ResourceTableName
         /// </summary>
         /// <param name="BackupTableName">Table of the backup table. Null creates a _Backup table.</param>
@@ -353,7 +353,7 @@ namespace Westwind.Globalization
         bool CreateBackupTable(string BackupTableName);
 
         /// <summary>
-        /// Restores the localization table from a backup table by first wiping out 
+        /// Restores the localization table from a backup table by first wiping out
         /// </summary>
         /// <param name="backupTableName"></param>
         /// <returns></returns>

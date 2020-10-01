@@ -2,7 +2,7 @@
 <package> 
   <metadata> 
     <id>Westwind.Globalization.Web.Starter</id> 
-    <version>3.0.5</version>
+    <version>3.1.2</version>
     <authors>Rick Strahl, West Wind Technologies</authors>
     <title>West Wind Globalization Web for ASP.NET - Starter Package</title> 
     <summary>Database Resource Localization for ASP.NET Web applications Starter Web that includes sample resources and test pages.</summary>
@@ -20,7 +20,7 @@
     <copyright>West Wind Technologies</copyright>  
     <tags>Localization,Translation,Globalization,Resources</tags>
    	<dependencies>
-	  <dependency id="Westwind.Globalization.Web" version="3.0.5" />	  
+	  <dependency id="Westwind.Globalization.Web" version="3.1.2" />	  
 	</dependencies>
   </metadata> 
 </package>
