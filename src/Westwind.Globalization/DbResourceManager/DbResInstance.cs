@@ -106,10 +106,16 @@ namespace Westwind.Globalization
             if (resourceSet == null)
                 resourceSet = string.Empty;
 
+            CultureInfo ci;
+            if (string.IsNullOrEmpty(lang))
+                ci = CultureInfo.CurrentUICulture;
+            else
+                ci = new CultureInfo(lang);
+
 #if NETFULL
             if (DbResourceConfiguration.Current.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider && HttpContext.Current != null)
             {
-                var translated = HttpContext.GetGlobalResourceObject(resourceSet, resId) as string;
+                var translated = HttpContext.GetGlobalResourceObject(resourceSet, resId,ci) as string;
                 if (string.IsNullOrEmpty(translated))
                     return resId;
 
@@ -121,11 +127,6 @@ namespace Westwind.Globalization
             if (manager == null)
                 return resId;
 
-            CultureInfo ci;
-            if (string.IsNullOrEmpty(lang))
-                ci = CultureInfo.CurrentUICulture;
-            else
-                ci = new CultureInfo(lang);
 
             string result = manager.GetObject(resId, ci) as string;
 
@@ -159,10 +160,16 @@ namespace Westwind.Globalization
             if (resourceSet == null)
                 resourceSet = string.Empty;
 
+            CultureInfo ci;
+            if (string.IsNullOrEmpty(lang))
+                ci = CultureInfo.CurrentUICulture;
+            else
+                ci = new CultureInfo(lang);
+
 #if NETFULL
             if (DbResourceConfiguration.Current.ResourceAccessMode == ResourceAccessMode.AspNetResourceProvider && HttpContext.Current != null)
             {
-                var translated = HttpContext.GetGlobalResourceObject(resourceSet, resId) as string;
+                var translated = HttpContext.GetGlobalResourceObject(resourceSet, resId, ci) as string;
                 if (string.IsNullOrEmpty(translated))
                     return defaultText;
 
@@ -174,11 +181,6 @@ namespace Westwind.Globalization
             if (manager == null)
                 return defaultText;
 
-            CultureInfo ci;
-            if (string.IsNullOrEmpty(lang))
-                ci = CultureInfo.CurrentUICulture;
-            else
-                ci = new CultureInfo(lang);
 
             string result = manager.GetObject(resId, ci) as string;
 
