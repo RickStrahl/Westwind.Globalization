@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -61,6 +62,13 @@ namespace Westwind.Globalization.AspnetCore
             Func<ActionContext, bool> onAuthorizeLocalizationAdministration)
         {
             config.OnAuthorizeLocalizationAdministration = onAuthorizeLocalizationAdministration;
+        }
+		
+		 public static void ConfigureAuthorizeLocalizationAdministrationAsync(
+            this DbResourceConfiguration config,
+            Func<ActionContext, Task<bool>> onAuthorizeLocalizationAdministration)
+        {
+            config.OnAuthorizeLocalizationAdministrationAsync = onAuthorizeLocalizationAdministration;
         }
     }
 }
