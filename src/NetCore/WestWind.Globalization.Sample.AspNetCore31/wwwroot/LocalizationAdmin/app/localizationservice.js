@@ -47,6 +47,7 @@
         function getResourceList(resourceSet) {            
             return $http.get(service.baseUrl + "GetResourceListHtml?ResourceSet=" + resourceSet)
                 .success(function(resourceList) {
+                    resourceList = resourceList.sort((a, b) => a.ResourceId > b.ResourceId ? 1 : -1);
                     service.resourceList = resourceList;
                 })
                 .error(parseHttpError);
@@ -55,6 +56,7 @@
         function getResourceSets() {
             return $http.get(service.baseUrl + "GetResourceSets")
                 .success(function(resourceSets) {
+                    resourceSets = resourceSets.sort();
                     service.resourceSets = resourceSets;
                 })
                 .error(parseHttpError);
