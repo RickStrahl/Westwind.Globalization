@@ -1,9 +1,10 @@
-﻿<div id="ResourceList" class="well well-sm" >
+﻿<div id="ResourceList" class="well well-sm">
 
     <label style="font-size: 1.5em; color: darkred; font-weight: bold;margin-bottom: 7px;">
         {{view.resourceItems[0].ResourceId}}
     </label>
-    
+
+    {{view.resourceItems}}
     <div id="resourcegroup_{{$index + 1}}" class="resource-group"
          ng-repeat="resource in view.resourceItems">
 
@@ -15,7 +16,7 @@
                 </span>
             </span>
             <!--ng-change="view.onStringUpdate(resource)"-->
-            
+
             <form name="resourceForm" id="form1">
                 <textarea id="value_{{$index}}" name="value_{{$index}}"
                           class="form-control"
@@ -25,8 +26,7 @@
                           ng-blur="view.onStringUpdate(resource,$event)"
                           onfocus="this.select()"
                           ww-rtl="resource.IsRtl"
-                          ng-dblclick="view.onResourceFullscreenEdit($event, resource, resourceForm)"
-                >                    
+                          ng-dblclick="view.onResourceFullscreenEdit($event, resource, resourceForm)">                    
                 </textarea>
             </form>
             <span class="input-group-addon"
@@ -60,7 +60,7 @@
             <i class="fa fa-remove"></i> {{::view.dbRes('Delete')}}
         </button>
         <button class="btn btn-sm btn-default" title="{{::view.dbRes('Rename_Title')}}"
-                ng-click="view.onRenameResourceClick()" 
+                ng-click="view.onRenameResourceClick()"
                 data-resource-id="Rename">
             <i class="fa fa-exchange"></i> {{::view.dbRes('Rename')}}
         </button>
@@ -70,7 +70,7 @@
                 title="{{view.activeResource.Comment}}">
             <i ng-class="{ 'fa': true, 'fa-comment': view.activeResource.Comment, 'fa-comment-o': !view.activeResource.Comment}"></i>
             {{::view.dbRes('Comment')}}
-        </button>        
+        </button>
     </div>
 </div>
 

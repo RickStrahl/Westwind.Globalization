@@ -7,7 +7,9 @@
     <Company>West Wind Technologies</Company>
     <Product>Westwind.Globalization</Product>
     <Title>Westwind Globalization ASP.NET Core</Title>
-    <Description>Provides ASP.NET Core specific features to the Westwind.Globalization library, including IStringLocalizer interfaces, JavaScript Resource handler and an on-line Resource editor to allow real-time editing of data resources.  
+    <Description>key = key.Replace(".", "_"); line commented at JavaScriptLocalizationResourcesController.
+
+Provides ASP.NET Core specific features to the Westwind.Globalization library, including IStringLocalizer interfaces, JavaScript Resource handler and an on-line Resource editor to allow real-time editing of data resources.  
 
  Note: In order to use the Localization Administration feature, please download the required project resources from: https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationAdministrationHtml_AspNetCore.zip
 </Description>
@@ -40,6 +42,7 @@
 
   <PropertyGroup>
     <NoWarn>1701;1702;1591;1573;1570;1572</NoWarn>
+    <PackageId>Westwind.Globalization.AspnetCorePD</PackageId>
   </PropertyGroup>
 
 

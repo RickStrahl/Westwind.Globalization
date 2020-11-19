@@ -237,7 +237,7 @@ namespace WestWind.Globalization.AspNetCore.Controllers
                 if (string.IsNullOrEmpty(item.Key))
                     key = "__id" + anonymousIdCounter++.ToString();
 
-                key = key.Replace(".", "_");
+                //key = key.Replace(".", "_");
                 if (key.Contains(" "))
                     key = StringUtils.ToCamelCase(key);
 
