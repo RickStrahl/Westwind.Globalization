@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -17,6 +14,15 @@ namespace Westwind.Globalization.Errors
 
         public override void OnException(ExceptionContext context)
         {
+            // show all exceptions in the Visual Studio output window.
+            // Can also be redirected to the console with some configuration...
+            var baseException = context.Exception.GetBaseException();
+            System.Diagnostics.Trace.WriteLine(baseException.ToString());
+
+            // Inner exceptions don't always include the full stacktrace
+            if (baseException != context.Exception)
+                System.Diagnostics.Trace.WriteLine(context.Exception.StackTrace); 
+            
             ApiError apiError = null;
             if (context.Exception is ApiException)
             {
@@ -39,8 +45,8 @@ namespace Westwind.Globalization.Errors
             {
                 // Unhandled errors
 #if !DEBUG
-                    var msg = "An unhandled error occurred.";
-                    string stack = null;
+                var msg = "An unhandled error occurred.";
+                string stack = null;
 #else
                 var msg = context.Exception.GetBaseException().Message;
                 string stack = context.Exception.StackTrace;
