@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -789,6 +789,8 @@ namespace Westwind.Globalization.Administration
 
             var config = DbResourceConfiguration.Current;
 
+            // The connection string might contain secrets, don't expose it except in development
+            var connectionString = Host.IsDevelopment() ? config.ConnectionString : "********";
 
             var rt = typeof(IWebHost)
                 .GetTypeInfo()
@@ -799,7 +801,7 @@ namespace Westwind.Globalization.Administration
             return Json(new
             {
                 //ProviderFactory = providerFactory,
-                config.ConnectionString,
+                connectionString,
                 config.ResourceTableName,
                 DbResourceProviderType = config.DbResourceDataManagerType.Name,
                 DataProvider = config.DataProvider.ToString(),
