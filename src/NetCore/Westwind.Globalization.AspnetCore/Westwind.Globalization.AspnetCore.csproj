@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.1;netcoreapp2.1;</TargetFrameworks>
-    <Version>3.1.0-preview2</Version>
+    <Version>3.1.2</Version>
     <Authors>Rick Strahl</Authors>
     <Company>West Wind Technologies</Company>
     <Product>Westwind.Globalization</Product>
@@ -12,18 +12,22 @@
  Note: In order to use the Localization Administration feature, please download the required project resources from: https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationAdministrationHtml_AspNetCore.zip
 </Description>
     <Summary>Database driven localization ASP.NET and ASP.NET Core. Includes a localization Administration Interface.</Summary>
-    <Copyright>West Wind Technologies, 2010-2019</Copyright>
-    <!--<PackageLicenseUrl>https://github.com/RickStrahl/Westwind.Globalization#license</PackageLicenseUrl>-->
-    <PackageLicense>https://github.com/RickStrahl/Westwind.Globalization#license</PackageLicense>
-    <PackageProjectUrl>https://github.com/RickStrahl/Westwind.Globalization</PackageProjectUrl>
+    <Copyright>West Wind Technologies, 2010-2020</Copyright>
     <RepositoryUrl>https://github.com/RickStrahl/Westwind.Globalization</RepositoryUrl>
+    <RepositoryType>Github</RepositoryType>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IncludeSymbols>true</IncludeSymbols>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageOutputPath>./nupkg</PackageOutputPath>
+
+    <PackageTags>ASP.NET Core Localization Translation Globalization Resources</PackageTags>
     <PackageIconUrl>https://west-wind.com/westwind.globalization/images/Westwind.Localization_128.png</PackageIconUrl>
     <PackageIcon>icon.png</PackageIcon>
-
-    
-    <RepositoryType>Github</RepositoryType>
-    <PackageTags>ASP.NET Core Localization Translation Globalization Resources</PackageTags>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicense>https://github.com/RickStrahl/Westwind.Globalization#license</PackageLicense>
+    <PackageProjectUrl>https://github.com/RickStrahl/Westwind.Globalization</PackageProjectUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

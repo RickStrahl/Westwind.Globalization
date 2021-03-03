@@ -1,10 +1,10 @@
 #region License
 /*
  **************************************************************
- *  Author: Rick Strahl 
- *          © West Wind Technologies, 2009-2015
+ *  Author: Rick Strahl
+ *          Â© West Wind Technologies, 2009-2015
  *          http://www.west-wind.com/
- * 
+ *
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -14,10 +14,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -26,7 +26,7 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- **************************************************************  
+ **************************************************************
 */
 #endregion
 
@@ -39,15 +39,15 @@ namespace Westwind.Globalization
     /// <summary>
     /// DbResourceReader is an IResourceReader for reading resources from a database.
     /// The ResourceReader is the actual Resource component that accesses the underlying datasource
-    /// to retrieve the resource data. 
-    /// 
+    /// to retrieve the resource data.
+    ///
     /// This databased manager uses the DbResourceDataManager to query the database and retrieve
     /// a list of resources for a given baseName (ResourceSet) and Culture and returns that result
     /// as an IEnumerable list (via a HashTable). This process - other than the data access - results
     /// in the same structures as resources read from ResX files.
     /// </summary>
     public class DbResourceReader : IResourceReader
-    {        
+    {
         internal DbResourceConfiguration Configuration;
 
         /// <summary>
@@ -92,12 +92,12 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// This is the worker method responsible for actually retrieving resources from the resource
-        /// store. This method goes out queries the database by asking for a specific ResourceSet and 
+        /// store. This method goes out queries the database by asking for a specific ResourceSet and
         /// Culture and it returns a Hashtable (as IEnumerable) to use as a ResourceSet.
-        /// 
+        ///
         /// The ResourceSet manages access to resources via IEnumerable access which is ultimately used
         /// to return resources to the front end.
-        /// 
+        ///
         /// Resources are read once and cached into an internal Items field. A ResourceReader instance
         /// is specific to a ResourceSet and Culture combination so there should never be a need to
         /// reload this data, except when explicitly clearing the reader/resourceset (in which case
@@ -126,7 +126,7 @@ namespace Westwind.Globalization
 
 
         /// <summary>
-        /// Returns an IEnumerator of the resources for this reader. Simply returns 
+        /// Returns an IEnumerator of the resources for this reader. Simply returns
         /// the IDictionary enumerator from the overload.
         /// </summary>
         /// <returns>An IEnumerator of the resources for this reader</returns>
@@ -147,8 +147,8 @@ namespace Westwind.Globalization
         /// <summary>
         /// Releases all resources used by the object. Ultimately this is called
         /// by ResourceManager.ReleaseAllResources which calls on the ResourceSet
-        /// and then down into the reader to close its resources. 
-        /// 
+        /// and then down into the reader to close its resources.
+        ///
         /// This code cleans up the internally created dictionary which in turn
         /// comes from a Hashtable.
         /// </summary>

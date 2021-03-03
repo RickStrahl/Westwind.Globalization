@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>3.1.0-preview2</Version>
+    <Version>3.1.2</Version>
     <Authors>Rick Strahl</Authors>
     <Company>West Wind Technologies</Company>
     <Description>
@@ -15,25 +15,32 @@
     </Description>
     <Summary>Database driven localization library for .NET Core and .NET 4.5+. Also includes many utilities for converting and loading Resx resource to and from Db Resources.</Summary>
     <Title>West Wind Globalization Database ResourceManager</Title>
-    <Copyright>© West Wind Technologies, 2014-2019</Copyright>
+    <Copyright>© West Wind Technologies, 2014-2020</Copyright>
     <!--<PackageLicenseUrl>https://github.com/RickStrahl/Westwind.Globalization#license</PackageLicenseUrl>-->
-    <PackageLicense>https://github.com/RickStrahl/Westwind.Globalization#license</PackageLicense>
+
+    <RepositoryUrl>https://github.com/RickStrahl/Westwind.Globalization</RepositoryUrl>
+    <RepositoryType>Github</RepositoryType>
+    <NoWarn>1701;1702;1591;1573;1570;1572</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IncludeSymbols>true</IncludeSymbols>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageOutputPath>./nupkg</PackageOutputPath>
+
+    <PackageCopyright>Rick Strahl, West Wind Technologies 2014-2020</PackageCopyright>
+    <PackageTags>Localization Translation Globalization Resources</PackageTags>
     <PackageProjectUrl>https://github.com/RickStrahl/Westwind.Globalization</PackageProjectUrl>
     <PackageIconUrl>http://west-wind.com/westwind.globalization/images/Westwind.Localization_128.png</PackageIconUrl>
     <PackageIcon>icon.png</PackageIcon>
-    <RepositoryUrl>https://github.com/RickStrahl/Westwind.Globalization</RepositoryUrl>
-    <RepositoryType>Github</RepositoryType>
-    <PackageTags>Localization Translation Globalization Resources</PackageTags>
-    <NeutralLanguage />
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageReleaseNotes>.NET Standard 2.0 and .NET Core Support</PackageReleaseNotes>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <FileVersion>3.0.20.0</FileVersion>
+    <PackageLicense>https://github.com/RickStrahl/Westwind.Globalization#license</PackageLicense>
   </PropertyGroup>
+
 
   <ItemGroup>
     <PackageReference Include="CommonMark.NET" Version="0.15.1" />
-    <PackageReference Include="Westwind.Utilities" Version="3.0.35" />
+    <PackageReference Include="Westwind.Utilities" Version="3.0.47" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>
 
@@ -68,7 +75,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <None Include="icon.png" Pack="true" PackagePath="."/>
+    <None Include="icon.png" Pack="true" PackagePath="." />
   </ItemGroup>
 
 </Project>

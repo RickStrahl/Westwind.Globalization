@@ -1,6 +1,7 @@
 ﻿{
   "ActiveConfiguration": null,
-  "ConnectionString": "server=.;database=localizations;integrated security=yes;app=LocalizationSample",
+  "xConnectionString": "server=.;database=localizations;integrated security=yes;app=LocalizationSample",
+  "ConnectionString": "host=.;database=localizations;username=Localizations;password=local",
   "ResourceTableName": "Localizations",
   "StronglyTypedGlobalResource": "~/Properties/Resources.cs",
   "ResourceBaseNamespace": "AppResources",

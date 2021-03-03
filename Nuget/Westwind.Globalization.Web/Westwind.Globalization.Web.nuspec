@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>Westwind.Globalization.Web</id>
-        <version>3.0.5</version>
+        <version>3.1.2</version>
         <title>West Wind Globalization Web for ASP.NET</title>
         <authors>Rick Strahl,West Wind Technologies</authors>
         <licenseUrl>https://github.com/RickStrahl/Westwind.Globalization#license</licenseUrl>
@@ -17,8 +17,8 @@
         <language>en-US</language>
         <tags>Localization,Translation,Globalization,Resources</tags>
         <dependencies>
-            <dependency id="Westwind.Globalization" version="3.0.5" />
-            <dependency id="Westwind.Web" version="2.80" />
+            <dependency id="Westwind.Globalization" version="3.1.2" />
+            <dependency id="Westwind.Web" version="2.85" />
         </dependencies>
     </metadata>
 </package>

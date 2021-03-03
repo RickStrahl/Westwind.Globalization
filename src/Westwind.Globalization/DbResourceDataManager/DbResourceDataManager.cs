@@ -1,10 +1,10 @@
 #region License
 /*
  **************************************************************
- *  Author: Rick Strahl 
+ *  Author: Rick Strahl
  *          (c) West Wind Technologies, 2009-2015
  *          http://www.west-wind.com/
- * 
+ *
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -14,10 +14,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -26,7 +26,7 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- **************************************************************  
+ **************************************************************
 */
 #endregion
 
@@ -49,19 +49,19 @@ using Westwind.Utilities.Data;
 namespace Westwind.Globalization
 {
     public abstract class DbResourceDataManager : IDbResourceDataManager
-    {     
+    {
         /// <summary>
         /// Instance of the DbResourceConfiguration that can be overridden
         /// Defaults to the default instance - DbResourceConfiguration.Current
         /// </summary>
-        public DbResourceConfiguration Configuration { get; set;  }                        
+        public DbResourceConfiguration Configuration { get; set;  }
 
         /// <summary>
         /// Error message that can be checked after a method complets
         /// and returns a failure result.
         /// </summary>
         public string ErrorMessage { get; set;  }
-        
+
         /// <summary>
         /// Code used to create a database (if required) for the
         /// given data provider.
@@ -84,7 +84,7 @@ namespace Westwind.Globalization
         /// Creates an instance of the DbResourceDataManager based on configuration settings
         /// </summary>
         /// <returns></returns>
-        public static DbResourceDataManager CreateDbResourceDataManager(Type managerType = null, 
+        public static DbResourceDataManager CreateDbResourceDataManager(Type managerType = null,
                                                                         DbResourceConfiguration configuration = null)
         {
             if (managerType == null)
@@ -105,7 +105,7 @@ namespace Westwind.Globalization
         /// Create an instance of the provider based on the resource type
         /// </summary>
         /// <returns></returns>
-        public static DbResourceDataManager CreateDbResourceDataManager(DbResourceProviderTypes type, 
+        public static DbResourceDataManager CreateDbResourceDataManager(DbResourceProviderTypes type,
                                                                         DbResourceConfiguration configuration = null)
         {
             DbResourceDataManager manager;
@@ -116,6 +116,8 @@ namespace Westwind.Globalization
                 manager = new DbResourceMySqlDataManager();
             else if (type == DbResourceProviderTypes.SqLite)
                 manager = new DbResourceSqLiteDataManager();
+            else if(type ==  DbResourceProviderTypes.PostgreSql)
+                return new DbResourcePostgreSqlDataManager();
             else
                 return null;
 
@@ -151,7 +153,7 @@ namespace Westwind.Globalization
                 cultureName = string.Empty;
             if (resourceSet == null)
                 resourceSet = string.Empty;
-            
+
             string resourceFilter;
             resourceFilter = " ResourceSet=@ResourceSet";
 
@@ -182,9 +184,9 @@ namespace Westwind.Globalization
                         object resourceValue = reader["Value"] as string;
                         string resourceType = reader["Type"] as string;
                         int valueType = 0;
-                        
-                        valueType = Convert.ToInt32(reader["ValueType"]);                           
-                        
+
+                        valueType = Convert.ToInt32(reader["ValueType"]);
+
                         if (!string.IsNullOrWhiteSpace(resourceType))
                         {
                             try
@@ -228,7 +230,7 @@ namespace Westwind.Globalization
                 finally
                 {
                     // close reader and connection
-                    reader.Close(); 
+                    reader.Close();
                 }
             }
 
@@ -241,14 +243,14 @@ namespace Westwind.Globalization
             {
                 if (valueType == resourceSetValueConverter.ValueType)
                     resourceValue = resourceSetValueConverter.Convert(resourceValue, key);
-            }            
+            }
         }
 
 
         /// <summary>
         /// Returns a fully normalized list of resources that contains the most specific
         /// locale version for the culture provided.
-        ///                 
+        ///
         /// This means that this routine walks the resource hierarchy and returns
         /// the most specific value in this order: de-ch, de, invariant.
         /// </summary>
@@ -318,7 +320,7 @@ namespace Westwind.Globalization
                             continue;
                         lastResourceId = resourceId;
 
-                        // Read the value into this                        
+                        // Read the value into this
                         object resourceValue = reader["Value"] as string;
                         string resourceType = reader["Type"] as string;
 
@@ -364,9 +366,9 @@ namespace Westwind.Globalization
                 throw new ArgumentException(Resources.InvalidFileExtensionForFileResource);
 
             string type;
-            if ("txt,css,htm,html,xml,js".Contains(ext))            
+            if ("txt,css,htm,html,xml,js".Contains(ext))
                 type = typeof(string).AssemblyQualifiedName;
-            
+
 
 #if NETFULL
             else if ("jpg,jpeg,png,gif,bmp".Contains(ext))
@@ -398,7 +400,7 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Internal method used to parse the data in the database into a 'real' value.
-        /// 
+        ///
         /// Value field hold filename and type string
         /// TextFile,BinFile hold the actual file content
         /// </summary>
@@ -426,7 +428,7 @@ namespace Westwind.Globalization
                         // to use the Bitmap later. Let CLR worry about garbage collection
                         // Prefer: Don't store jpegs
                         var ms = new MemoryStream(reader["BinFile"] as byte[]);
-                        value = new Bitmap(ms);                        
+                        value = new Bitmap(ms);
                     }
                     else
                     {
@@ -438,7 +440,7 @@ namespace Westwind.Globalization
                 }
                 else if (TypeInfo.Contains("System.Drawing.Icon"))
                 {
-                    // IMPORTANT: don't release the mem stream 
+                    // IMPORTANT: don't release the mem stream
                     var ms = new MemoryStream(reader["BinFile"] as byte[]);
                     value = new Icon(ms);
                 }
@@ -457,16 +459,16 @@ namespace Westwind.Globalization
         }
 
         /// <summary>
-        /// Returns a list of all the resources for all locales. The result is in a 
+        /// Returns a list of all the resources for all locales. The result is in a
         /// table called TResources that contains all fields of the table. The table is
         /// ordered by LocaleId.
-        /// 
+        ///
         /// This version returns either local or global resources in a Web app
-        /// 
+        ///
         /// Fields:
         /// ResourceId,Value,LocaleId,ResourceSet,Type
         /// </summary>
-        /// <param name="localResources">return local resources if true</param>        
+        /// <param name="localResources">return local resources if true</param>
         /// <returns></returns>
         public virtual List<ResourceItem> GetAllResources(bool localResources = false, bool applyValueConverters = false, string resourceSet = null)
         {
@@ -493,7 +495,7 @@ namespace Westwind.Globalization
                 items = data.Query<ResourceItem>(sql, parms.ToArray());
 
 
-                
+
                 if (items == null)
                 {
                     ErrorMessage = data.ErrorMessage;
@@ -513,15 +515,15 @@ namespace Westwind.Globalization
                         }
                     }
                 }
-                
+
                 return itemList;
             }
         }
 
-        
+
         /// <summary>
         /// Returns all available resource ids for a given resource set in all languages.
-        /// 
+        ///
         /// Returns a ResourceIdItem object with ResourecId and HasValue fields.
         /// HasValue returns whether there are any entries in any culture for this
         /// resourceId
@@ -529,7 +531,7 @@ namespace Westwind.Globalization
         /// <param name="resourceSet"></param>
         /// <returns></returns>
         public virtual List<ResourceIdItem> GetAllResourceIds(string resourceSet)
-        {                      
+        {
             using (var data = GetDb())
             {
                 string sql = string.Format(
@@ -537,13 +539,13 @@ namespace Westwind.Globalization
 //	  	from {0}
 //        where ResourceSet=@ResourceSet
 //		group by ResourceId", Configuration.ResourceTableName);
-                @"select ResourceId,CAST( MAX( 
-	  case  
+                @"select ResourceId,CAST( MAX(
+	  case
 		WHEN len( CAST(Value as nvarchar(10))) > 0 THEN 1
 		ELSE 0
 	  end ) as Bit) as HasValue
 	  	from {0}
-        where ResourceSet=@ResourceSet 
+        where ResourceSet=@ResourceSet
 	    group by ResourceId",Configuration.ResourceTableName);
 
                 var items = data.Query<ResourceIdItem>(sql,
@@ -608,7 +610,7 @@ namespace Westwind.Globalization
                     return null;
                 }
 
-                var items = new List<string>();                
+                var items = new List<string>();
 
                 while (dt.Read())
                 {
@@ -623,7 +625,7 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Gets all the locales for a specific resource set.
-        /// 
+        ///
         /// Returns a table named TLocaleIds (LocaleId field)
         /// </summary>
         /// <param name="ResourceSet"></param>
@@ -643,7 +645,7 @@ namespace Westwind.Globalization
                     return null;
 
                 var ids = new List<string>();
-                
+
 
                 while (reader.Read())
                 {
@@ -658,7 +660,7 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Gets all the Resourecs and ResourceIds for a given resource set and Locale
-        /// 
+        ///
         /// returns a table "TResource" ResourceId, Value fields
         /// </summary>
         /// <param name="resourceSet"></param>
@@ -671,7 +673,7 @@ namespace Westwind.Globalization
 
             using (var data = GetDb())
             {
-                var reader = 
+                var reader =
                     data.ExecuteReader(
                         "select ResourceId, Value from " + Configuration.ResourceTableName + " where ResourceSet=@ResourceSet and LocaleId=@LocaleId",
                         data.CreateParameter("@ResourceSet", resourceSet),
@@ -681,7 +683,7 @@ namespace Westwind.Globalization
                     return null;
 
                 var ids = new List<ResourceIdItem>();
-                
+
                 while (reader.Read())
                 {
                     string id = reader["ResourceId"] as string;
@@ -702,7 +704,7 @@ namespace Westwind.Globalization
         /// Returns an individual Resource String from the database
         /// </summary>
         /// <param name="resourceId"></param>
-        /// <param name="resourceSet"></param>       
+        /// <param name="resourceSet"></param>
         /// <param name="cultureName"></param>
         /// <returns></returns>
         public virtual string GetResourceString(string resourceId, string resourceSet, string cultureName)
@@ -730,7 +732,7 @@ namespace Westwind.Globalization
         /// Returns an object from the Resources. Attempts to convert the object to its
         /// original type.  Use this for any non-string  types. Useful for binary resources
         /// like images, icons etc.
-        /// 
+        ///
         /// While this method can be used with strings, GetResourceString()
         /// is much more efficient.
         /// </summary>
@@ -812,7 +814,7 @@ namespace Westwind.Globalization
                     reader.Close();
                 }
             }
-            
+
             return item;
         }
 
@@ -830,7 +832,7 @@ namespace Westwind.Globalization
 
             if (resourceSet == null)
                 resourceSet = string.Empty;
-            
+
             List<ResourceItem> items = null;
 
             using (var data = GetDb())
@@ -848,7 +850,7 @@ namespace Westwind.Globalization
                         SetError(data.ErrorMessage);
                         return null;
                     }
-                        
+
 
                     items = new List<ResourceItem>();
                     while (reader.Read())
@@ -870,7 +872,7 @@ namespace Westwind.Globalization
                         var emptyLocales = locales.Where(s => !usedLocales.Contains(s));
                         foreach (var locale in emptyLocales)
                         {
-                            items.Add(new ResourceItem(){ 
+                            items.Add(new ResourceItem(){
                                  LocaleId = locale,
                                  Value = "",
                                  ResourceSet = resourceSet
@@ -928,7 +930,7 @@ namespace Westwind.Globalization
 
             }
 
-            
+
 
             return Resources;
         }
@@ -953,7 +955,7 @@ namespace Westwind.Globalization
                     return locales;
                 }
             }
-            
+
             return null;
         }
 
@@ -992,7 +994,7 @@ namespace Westwind.Globalization
         /// <param name="value"></param>
         /// <param name="cultureName"></param>
         /// <param name="resourceSet"></param>
-        /// <param name="Type"></param>        
+        /// <param name="Type"></param>
         public virtual int UpdateOrAddResource(string resourceId, object value, string cultureName, string resourceSet,
             string comment = null, bool valueIsFileName = false, int valueType = 0)
         {
@@ -1022,7 +1024,7 @@ namespace Westwind.Globalization
         /// <summary>
         /// Adds a resource to the Localization Table
         /// </summary>
-        /// <param name="resource">Resource to update</param>        
+        /// <param name="resource">Resource to update</param>
         public virtual int AddResource(ResourceItem resource)
         {
             string Type = string.Empty;
@@ -1098,7 +1100,7 @@ namespace Westwind.Globalization
         /// <param name="valueIsFileName">if true the Value property is a filename to import</param>
         public virtual int AddResource(string resourceId, object value,
                                        string cultureName, string resourceSet,
-                                       string comment = null, bool valueIsFileName = false, 
+                                       string comment = null, bool valueIsFileName = false,
                                        int valueType = 0)
         {
             string Type = string.Empty;
@@ -1117,7 +1119,7 @@ namespace Westwind.Globalization
                 Type = value.GetType().AssemblyQualifiedName;
                 try
                 {
-                    SerializeValue(value);                                        
+                    SerializeValue(value);
                 }
                 catch (Exception ex)
                 {
@@ -1212,7 +1214,7 @@ namespace Westwind.Globalization
         /// <param name="cultureName"></param>
         /// <param name="resourceSet"></param>
         /// <param name="Type"></param>
-        public virtual int UpdateResource(string resourceId, object value, 
+        public virtual int UpdateResource(string resourceId, object value,
                                           string cultureName, string resourceSet,
                                           string comment = null, bool valueIsFileName = false,
                                           int valueType = 0)
@@ -1352,7 +1354,7 @@ namespace Westwind.Globalization
             }
 
 
-          
+
             if (resource.Value == null)
                 resource.Value = string.Empty;
 
@@ -1393,7 +1395,7 @@ namespace Westwind.Globalization
             return result;
 
         }
-        
+
 
         /// <summary>
         /// Internal routine that looks at a file and based on its
@@ -1448,16 +1450,16 @@ namespace Westwind.Globalization
             else
             {
                 fileInfo.FileFormatType = FileFormatTypes.Binary;
-                fileInfo.Type = "FileResource"; 
+                fileInfo.Type = "FileResource";
                 if (!noPhysicalFile)
-                    fileInfo.BinContent = File.ReadAllBytes(fileName);                
+                    fileInfo.BinContent = File.ReadAllBytes(fileName);
                 fileInfo.ValueString = fileInfo.FileName + ";" + typeof(Byte[]).AssemblyQualifiedName;
             }
 
             return fileInfo;
         }
 
-    
+
 
 
         /// <summary>
@@ -1515,9 +1517,9 @@ namespace Westwind.Globalization
         {
             using (var data = GetDb())
             {
-                var result = data.ExecuteNonQuery("update " + Configuration.ResourceTableName + 
-                                                  " set ResourceId=@NewResourceId where ResourceId=@ResourceId AND ResourceSet=@ResourceSet", 
-                    data.CreateParameter("@ResourceId", ResourceId), 
+                var result = data.ExecuteNonQuery("update " + Configuration.ResourceTableName +
+                                                  " set ResourceId=@NewResourceId where ResourceId=@ResourceId AND ResourceSet=@ResourceSet",
+                    data.CreateParameter("@ResourceId", ResourceId),
                     data.CreateParameter("@NewResourceId", NewResourceId),
                     data.CreateParameter("@ResourceSet", ResourceSet));
                 if (result == -1)
@@ -1532,7 +1534,7 @@ namespace Westwind.Globalization
                 }
             }
 
-            
+
 
             return true;
         }
@@ -1582,7 +1584,7 @@ namespace Westwind.Globalization
             {
                 int result;
                 if (cultureName == null)
-                    result = data.ExecuteNonQuery("delete from " + Configuration.ResourceTableName + 
+                    result = data.ExecuteNonQuery("delete from " + Configuration.ResourceTableName +
                                                 " where ResourceSet=@ResourceSet",
                                                 data.CreateParameter("@ResourceSet", ResourceSet));
                 else
@@ -1608,10 +1610,10 @@ namespace Westwind.Globalization
         /// <summary>
         /// Renames a resource set. Useful if you need to move a local page resource set
         /// to a new page. ResourceSet naming for local resources is application relative page path:
-        /// 
+        ///
         /// test.aspx
         /// subdir/test.aspx
-        /// 
+        ///
         /// Global resources have a simple name
         /// </summary>
         /// <param name="OldResourceSet">Name of the existing resource set</param>
@@ -1654,7 +1656,7 @@ namespace Westwind.Globalization
 
             using (var Data = GetDb())
             {
-                var result = Data.ExecuteScalar("select ResourceId from " + Configuration.ResourceTableName + 
+                var result = Data.ExecuteScalar("select ResourceId from " + Configuration.ResourceTableName +
                                                 " where ResourceId=@ResourceId and LocaleID=@LocaleId and ResourceSet=@ResourceSet group by ResourceId",
                     Data.CreateParameter("@ResourceId", ResourceId),
                     Data.CreateParameter("@LocaleId", CultureName),
@@ -1755,9 +1757,9 @@ namespace Westwind.Globalization
 
 
         /// <summary>
-        /// Creates an global JavaScript object object that holds all non-control 
+        /// Creates an global JavaScript object object that holds all non-control
         /// local string resources as property values.
-        /// 
+        ///
         /// All resources are returned in normalized fashion from most specifc
         /// to more generic (de-ch,de,invariant depending on availability)
         /// </summary>
@@ -1774,16 +1776,16 @@ namespace Westwind.Globalization
             IDictionary resources = GetResourceSetNormalizedForLocaleId(
                 localeId, resourceSet);
 
-            // Filter the list to non-control resources 
+            // Filter the list to non-control resources
             Dictionary<string, string> localRes = new Dictionary<string, string>();
             foreach (string key in resources.Keys)
             {
-                // We're only interested in non control local resources 
+                // We're only interested in non control local resources
                 if (!key.Contains(".") && resources[key] is string)
                     localRes.Add(key, resources[key] as string);
             }
 
-            var json = JsonConvert.SerializeObject(localRes, Formatting.Indented);            
+            var json = JsonConvert.SerializeObject(localRes, Formatting.Indented);
             return "var " + javaScriptVarName + " = " + json + ";\r\n";
         }
 
@@ -1799,9 +1801,9 @@ namespace Westwind.Globalization
                 tableName = Configuration.ResourceTableName;
             if (string.IsNullOrEmpty(tableName))
                 tableName = "Localizations";
-            
+
             string sql = "SELECT * FROM INFORMATION_SCHEMA.TABLES where TABLE_NAME=@0";
-        
+
             using (var data = GetDb())
             {
                 var tables = data.ExecuteTable("TTables", sql, tableName);
@@ -1819,7 +1821,7 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Create a backup of the localization database.
-        /// 
+        ///
         /// Note the table used is the one specified in the Configuration.ResourceTableName
         /// </summary>
         /// <param name="BackupTableName">Table of the backup table. Null creates a _Backup table.</param>
@@ -1844,7 +1846,7 @@ namespace Westwind.Globalization
 
 
         /// <summary>
-        /// Restores the localization table from a backup table by first wiping out 
+        /// Restores the localization table from a backup table by first wiping out
         /// </summary>
         /// <param name="backupTableName"></param>
         /// <returns></returns>
@@ -1867,7 +1869,7 @@ namespace Westwind.Globalization
 
                 string sql =
                     @"insert into {0}
-  (ResourceId,Value,LocaleId,ResourceSet,Type,BinFile,TextFile,FileName,Comment) 
+  (ResourceId,Value,LocaleId,ResourceSet,Type,BinFile,TextFile,FileName,Comment)
    select ResourceId,Value,LocaleId,ResourceSet,Type,BinFile,TextFile,FileName,Comment from {1}";
 
                 sql = string.Format(sql, Configuration.ResourceTableName, backupTableName);
@@ -1901,7 +1903,7 @@ namespace Westwind.Globalization
 
             string Sql = string.Format(TableCreationSql, tableName);
 
-            
+
             // Check for table existing already
             if (IsLocalizationTable(tableName))
             {
@@ -1936,7 +1938,7 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Deserializes serialized data in JSON format based on a
-        /// type name provided in the resource type parameter.        
+        /// type name provided in the resource type parameter.
         /// </summary>
         /// <param name="serializedValue">JSON encoded string</param>
         /// <param name="resourceType">Type name to deserialize - type must be referenced by the app</param>
@@ -1949,7 +1951,7 @@ namespace Westwind.Globalization
 
             return JsonConvert.DeserializeObject(serializedValue,type);
         }
-       
+
         public void SetError()
         {
             SetError("CLEAR");
@@ -1994,7 +1996,7 @@ namespace Westwind.Globalization
 
     /// <summary>
     /// Short form ResourceItem for passing Ids
-    /// </summary>    
+    /// </summary>
     public class ResourceIdItem
     {
         public string ResourceId { get; set; }
@@ -2041,7 +2043,7 @@ namespace Westwind.Globalization
     /// <summary>
     /// Sets the DbResourceProviderType based on a simple enum value. Provided
     /// merely as a proxy for setting the actual type.
-    /// 
+    ///
     /// Use **Custom** if you want to use a custom provider that you created
     /// and that's not listed here.
     /// </summary>
@@ -2050,14 +2052,16 @@ namespace Westwind.Globalization
         SqlServer,
         MySql,
         SqLite,
+        PostgreSql,
         SqlServerCompact,
         Custom,
-        NotSet        
+        NotSet,
+
     }
 
     /// <summary>
     /// Internal structure that contains format information about a file
-    /// resource. Used internally to figure out how to write 
+    /// resource. Used internally to figure out how to write
     /// a resource into the database
     /// </summary>
     public class FileInfoFormat

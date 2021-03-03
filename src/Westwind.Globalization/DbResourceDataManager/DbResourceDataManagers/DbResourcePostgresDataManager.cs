@@ -1,6 +1,7 @@
-
+﻿
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Linq;
 using Westwind.Utilities;
 using Westwind.Utilities.Data;
 
@@ -13,7 +14,7 @@ namespace Westwind.Globalization
     /// IMPORTANT: In order to use this provider make sure you add
     /// the MySql.Data NuGet Package to your project.
     /// </remarks>
-    public class DbResourceMySqlDataManager : DbResourceDataManager
+    public class DbResourcePostgreSqlDataManager : DbResourceDataManager
     {
 
         /// <summary>
@@ -30,33 +31,20 @@ namespace Westwind.Globalization
             using (var data = GetDb())
             {
                 string sql = string.Format(
-                    @"select ResourceId, if(MAX(length(Value)) > 0,true,false) as HasValue
-	  	            from {0}
-                    where ResourceSet=@ResourceSet
-		            group by 1", Configuration.ResourceTableName);
+                 @"select ResourceId, (MAX(length(VALUE)) > 0) as HasValue
+	  	from {0}
+        where ResourceSet=@ResourceSet
+	    group by ResourceId",Configuration.ResourceTableName);
 
-                // have to use a reader as bool values are coming back as longs that
-                // aren't automatically parsed into bool
-                var reader = data.ExecuteReader(sql, data.CreateParameter("@ResourceSet", resourceSet));
-                if (reader == null)
+                var items = data.Query<ResourceIdItem>(sql,
+                    data.CreateParameter("@ResourceSet", resourceSet));
+                if (items == null)
                 {
                     SetError(data.ErrorMessage);
                     return null;
                 }
 
-                var list = new List<ResourceIdItem>();
-                while (reader.Read())
-                {
-                    bool val = ((long) reader["HasValue"]) == 1 ? true : false;
-
-                    list.Add(new ResourceIdItem()
-                    {
-                        ResourceId = reader["ResourceId"] as string,
-                        HasValue = val
-                    });
-                }
-
-                return list;
+                return items.ToList();
             }
         }
 
@@ -97,22 +85,36 @@ namespace Westwind.Globalization
             if (tableName == null)
                 tableName = Configuration.ResourceTableName;
             if (string.IsNullOrEmpty(tableName))
-                tableName = "Localizations";
+                tableName = "localizations";
 
-            string sql = "SHOW TABLES LIKE @0";
+            tableName = tableName.ToLower();
 
+            string sql = @"SELECT EXISTS(
+            SELECT * 
+                FROM information_schema.tables 
+            WHERE                 
+                table_name = @0
+            )";
+
+            object tableExists = false;
             using (var data = GetDb())
             {
-                var tables = data.ExecuteReader(sql, tableName);
+                tableExists = data.ExecuteScalar(sql,tableName);
 
-                if (tables == null || !tables.HasRows)
+                if (!string.IsNullOrEmpty(data.ErrorMessage))
                 {
                     SetError(data.ErrorMessage);
                     return false;
                 }
+
+                if (!(tableExists is bool))
+                {
+                    SetError("Table retrieval failed.");
+                    return false;
+                }
             }
 
-            return true;
+            return (bool) tableExists;
         }
 
         public override bool CreateLocalizationTable(string tableName = null)
@@ -120,7 +122,9 @@ namespace Westwind.Globalization
             if (tableName == null)
                 tableName = Configuration.ResourceTableName;
             if (string.IsNullOrEmpty(tableName))
-                tableName = "Localizations";
+                tableName = "localizations";
+
+            tableName = tableName.ToLower();
 
             string sql = string.Format(TableCreationSql, tableName);
 
@@ -159,12 +163,12 @@ namespace Westwind.Globalization
             DbProviderFactory provider = null;
             try
             {
-                provider = DataUtils.GetDbProviderFactory(DataAccessProviderTypes.MySql);
+                provider = DataUtils.GetDbProviderFactory(DataAccessProviderTypes.PostgreSql);
             }
             catch
             {
                    throw new System.InvalidOperationException(
-                          "Unable to load MySQL Data Provider. Make sure you have a reference to MySql.Data.");
+                          "Unable to load PostgreSql Data Provider. Make sure you have a reference to npgsql.");
             }
 
             var db = new SqlDataAccess(connectionString, provider);
@@ -177,39 +181,38 @@ namespace Westwind.Globalization
             get
             {
                 return
-                    @"CREATE TABLE `{0}` (
-  pk int(11) NOT NULL AUTO_INCREMENT,
-  ResourceId varchar(1024) DEFAULT NULL,
-  Value varchar(2048) DEFAULT NULL,
-  LocaleId varchar(10) DEFAULT NULL,
-  ResourceSet varchar(512) DEFAULT NULL,
-  Type varchar(512) DEFAULT NULL,
-  BinFile blob,
-  TextFile text,
-  Filename varchar(128) DEFAULT NULL,
-  Comment varchar(512) DEFAULT NULL,
-  ValueType int(2) DEFAULT 0,
-  Updated datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`pk`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+                    @"CREATE TABLE ""{0}"" (
+		pk SERIAL NOT NULL,
+		ResourceId VARCHAR(1024) NOT NULL,
+		Value TEXT,
+		LocaleId VARCHAR(10),
+		ResourceSet VARCHAR(512), 
+		Type VARCHAR(512),
+		BinFile BYTEA,
+		TextFile TEXT,
+		Filename VARCHAR(128), 
+		Comment VARCHAR(512),
+	   ValueType INTEGER DEFAULT 0,
+	   Updated TIMESTAMP DEFAULT NOW()
+);
+GO
 
-INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Hello Cruel World (MySql)','','Resources');
-INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Hallo schn�de Welt (MySql)','de','Resources');
-INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Bonjour tout le monde','fr','Resources');
-INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Yesterday','Yesterday (invariant)','','Resources');
-INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Yesterday','Gestern','de','Resources');
-INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Yesterday','Hier','fr','Resources');
-INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Today','Today (invariant)','','Resources');
-INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Today','Heute','de','Resources');
-INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Today','Aujourd''hui','fr','Resources');
-
-INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet,ValueType) VALUES ('MarkdownText','This is **MarkDown** formatted *HTML Text*','','Resources',2);
-INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet,ValueType) VALUES ('MarkdownText','Hier ist **MarkDown** formatierter *HTML Text*','de','Resources',2);
-INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet,ValueType) VALUES ('MarkdownText','Ceci est **MarkDown** format� *HTML Texte*','fr','Resources',2);
-
-INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('lblHelloWorldLabel.Text','Hello Cruel World (local)','','ResourceTest.aspx');
-INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('lblHelloWorldLabel.Text','Hallo Welt (lokal)','de','ResourceTest.aspx');
-INSERT INTO `{0}` (ResourceId,Value,LocaleId,ResourceSet) VALUES ('lblHelloWorldLabel.Text','Bonjour monde (local)','fr','ResourceTest.aspx');
+INSERT INTO ""{0}"" (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Hello Cruel World','','Resources');
+INSERT INTO ""{0}"" (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Hallo schnöde Welt','de','Resources');
+INSERT INTO ""{0}"" (ResourceId,Value,LocaleId,ResourceSet) VALUES ('HelloWorld','Bonjour tout le monde','fr','Resources');
+INSERT INTO ""{0}"" (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Yesterday','Yesterday (invariant)','','Resources');
+INSERT INTO ""{0}"" (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Yesterday','Gestern','de','Resources');
+INSERT INTO ""{0}"" (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Yesterday','Hier','fr','Resources');
+INSERT INTO ""{0}"" (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Today','Today (invariant)','','Resources');
+INSERT INTO ""{0}"" (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Today','Heute','de','Resources');
+INSERT INTO ""{0}"" (ResourceId,Value,LocaleId,ResourceSet) VALUES ('Today','Aujourd''hui','fr','Resources');
+INSERT INTO ""{0}"" (ResourceId,Value,LocaleId,ResourceSet,ValueType) VALUES ('MarkdownText','This is **MarkDown** formatted *HTML Text*','','Resources',2);
+INSERT INTO ""{0}"" (ResourceId,Value,LocaleId,ResourceSet,ValueType) VALUES ('MarkdownText','Hier ist **MarkDown** formatierter *HTML Text*','de','Resources',2);
+INSERT INTO ""{0}"" (ResourceId,Value,LocaleId,ResourceSet,ValueType) VALUES ('MarkdownText','Ceci est **MarkDown** formaté *HTML Texte*','fr','Resources',2);
+INSERT INTO ""{0}"" (ResourceId,Value,LocaleId,ResourceSet) VALUES ('lblHelloWorldLabel.Text','Hello Cruel World (local)','','ResourceTest.aspx');
+INSERT INTO ""{0}"" (ResourceId,Value,LocaleId,ResourceSet) VALUES ('lblHelloWorldLabel.Text','Hallo Welt (lokal)','de','ResourceTest.aspx');
+INSERT INTO ""{0}"" (ResourceId,Value,LocaleId,ResourceSet) VALUES ('lblHelloWorldLabel.Text','Bonjour monde (local)','fr','ResourceTest.aspx');
+GO
 ";
             }
 

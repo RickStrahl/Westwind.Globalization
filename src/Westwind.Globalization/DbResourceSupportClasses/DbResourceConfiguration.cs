@@ -1,10 +1,10 @@
 ﻿#region License
 /*
  **************************************************************
- *  Author: Rick Strahl 
+ *  Author: Rick Strahl
  *          © West Wind Technologies, 2009-2015
  *          http://www.west-wind.com/
- * 
+ *
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -14,10 +14,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -26,7 +26,7 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- **************************************************************  
+ **************************************************************
 */
 #endregion
 
@@ -47,7 +47,7 @@ namespace Westwind.Globalization
     /// The configuration class that is used to configure the Resource Provider.
     /// This class contains various configuration settings that the provider requires
     /// to operate both at design time and runtime.
-    /// 
+    ///
     /// The application uses the static Current property to access the actual
     /// configuration settings object. By default it reads the configuration settings
     /// from web.config (at runtime). You can override this behavior by creating your
@@ -58,8 +58,8 @@ namespace Westwind.Globalization
         /// <summary>
         /// A global instance of the current configuration. By default this instance reads its
         /// configuration values from web.config at runtime, but it can be overridden to
-        /// assign specific values or completely replace this object. 
-        /// 
+        /// assign specific values or completely replace this object.
+        ///
         /// NOTE: Any assignment made to this property should be made at Application_Start
         /// or other 'application initialization' event so that these settings are applied
         /// BEFORE the resource provider is used for the first time.
@@ -90,8 +90,8 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Database connection string to the resource data.
-        /// 
-        /// The string can either be a full connection string or an entry in the 
+        ///
+        /// The string can either be a full connection string or an entry in the
         /// ConnectionStrings section of web.config.
         /// <seealso>Class DbResource
         /// Compiling Your Applications with the Provider</seealso>
@@ -115,6 +115,8 @@ namespace Westwind.Globalization
                     DbResourceDataManagerType = typeof(DbResourceSqLiteDataManager);
                 else if (value == DbResourceProviderTypes.SqlServerCompact)
                     DbResourceDataManagerType = typeof(DbResourceSqlServerCeDataManager);
+                else if (value == DbResourceProviderTypes.PostgreSql)
+                    DbResourceDataManagerType = typeof(DbResourcePostgreSqlDataManager);
 
                 _dataAcessProviderType = value;
             }
@@ -130,7 +132,7 @@ namespace Westwind.Globalization
         /// <summary>
         /// Name of a LocalizationConfiguration entry that is loaded from the database
         /// if available. Defaults to null - if set reads these configuration settings
-        /// other than the database connection string from an entry in the 
+        /// other than the database connection string from an entry in the
         /// LocalizationConfigurations table.
         /// </summary>
         public string ActiveConfiguration { get; set; }
@@ -138,18 +140,18 @@ namespace Westwind.Globalization
         /// <summary>
         /// Path of an optionally generated strongly typed resource
         /// which is created when exporting to ResX resources.
-        /// 
+        ///
         /// Leave this value blank if you don't want a strongly typed resource class
         /// generated for you.
-        /// 
-        /// Otherwise format is: 
+        ///
+        /// Otherwise format is:
         /// ~/App_Code/Resources.cs
         /// </summary>
         public string StronglyTypedGlobalResource { get; set; } = "~/Properties/Resources.cs";
 
 
         /// <summary>
-        /// The namespace used for exporting and importing resources 
+        /// The namespace used for exporting and importing resources
         /// </summary>
         public string ResourceBaseNamespace { get; set; } = "AppResources";
 
@@ -180,19 +182,19 @@ namespace Westwind.Globalization
         /// <summary>
         /// Determines whether any resources that are not found are automatically
         /// added to the resource file.
-        /// 
+        ///
         /// Note only applies to the Invariant culture.
         /// </summary>
         public bool AddMissingResources { get; set; } = false;
 
 
         /// <summary>
-        /// Default mechanism used to access resources in DbRes.T().           
+        /// Default mechanism used to access resources in DbRes.T().
         /// This setting is global and used by all resources running through
         /// the DbResourceManage/Provider.
-        /// 
-        /// This doesn't not affect Generated REsources which have their own 
-        /// ResourceAccesssMode override that can be explicitly overridden.    
+        ///
+        /// This doesn't not affect Generated REsources which have their own
+        /// ResourceAccesssMode override that can be explicitly overridden.
         /// </summary>
         public ResourceAccessMode ResourceAccessMode { get; set; } = ResourceAccessMode.DbResourceManager;
 
@@ -200,14 +202,14 @@ namespace Westwind.Globalization
 
         /// <summary>
         /// Determines the location of the Localization form in a Web relative path.
-        /// This form is popped up when clicking on Edit Resources in the 
+        /// This form is popped up when clicking on Edit Resources in the
         /// DbResourceControl
-        /// </summary>        
+        /// </summary>
         public string LocalizationFormWebPath { get; set; } = "~/LocalizationAdmin/";
 
 
         /// <summary>
-        /// API key for Bing Translate API in the 
+        /// API key for Bing Translate API in the
         /// Administration API.
         /// https://www.microsoft.com/en-us/translator/getstarted.aspx
         /// </summary>
@@ -233,8 +235,8 @@ namespace Westwind.Globalization
         /// Allows you to override the data provider used to access resources.
         /// Defaults to Sql Server. To override set this value during application
         /// startup - typical on DbResourceConfiguration.Current.DbResourceDataManagerType
-        /// 
-        /// This type instance is used to instantiate the actual provider.       
+        ///
+        /// This type instance is used to instantiate the actual provider.
         /// </summary>
         [XmlIgnore]
         [JsonIgnore]
@@ -264,7 +266,7 @@ namespace Westwind.Globalization
         }
 
         /// <summary>
-        /// Override this method to create the custom default provider. Here we allow for different 
+        /// Override this method to create the custom default provider. Here we allow for different
         /// configuration providers so we don't have to rely on .NET configuration classed (for vNext)
         /// </summary>
         protected override IConfigurationProvider OnCreateDefaultProvider(string sectionName, object configData)
@@ -325,12 +327,12 @@ namespace Westwind.Globalization
 
 
         ///// <summary>
-        ///// Reads the DbResourceProvider Configuration Section and assigns the values 
+        ///// Reads the DbResourceProvider Configuration Section and assigns the values
         ///// to the properties of this class
         ///// </summary>
         ///// <returns></returns>
         //public bool ReadConfigurationSection()
-        //{            
+        //{
         //    //TSection = WebConfigurationManager.GetWebApplicationSection("DbResourceProvider");
         //    object TSection = ConfigurationManager.GetSection("DbResourceProvider");
         //    if (TSection == null)
@@ -343,7 +345,7 @@ namespace Westwind.Globalization
         //}
 
         ///// <summary>
-        ///// Handle design time access to the configuration settings - used for the 
+        ///// Handle design time access to the configuration settings - used for the
         ///// DbDesignTimeResourceProvider - when loaded we re-read the settings
         ///// </summary>
         ///// <param name="serviceHost"></param>
@@ -374,7 +376,7 @@ namespace Westwind.Globalization
         //            string conn = webApp.OpenWebConfiguration(true).ConnectionStrings.ConnectionStrings[ConnectionString].ConnectionString;
         //            ConnectionString = conn;
         //        }
-        //        catch { }                
+        //        catch { }
         //    }
 
         //    return true;
@@ -418,15 +420,15 @@ namespace Westwind.Globalization
         public static List<IWestWindResourceProvider> LoadedProviders = new List<IWestWindResourceProvider>();
 
         /// <summary>
-        /// This static method clears all resources from the loaded Resource Providers 
+        /// This static method clears all resources from the loaded Resource Providers
         /// and forces them to be reloaded the next time they are requested.
-        /// 
-        /// Use this method after you've edited resources in the database and you want 
+        ///
+        /// Use this method after you've edited resources in the database and you want
         /// to refresh the UI to show the newly changed values.
-        /// 
-        /// This method works by internally tracking all the loaded ResourceProvider 
-        /// instances and calling the IwwResourceProvider.ClearResourceCache() method 
-        /// on each of the provider instances. This method is called by the Resource 
+        ///
+        /// This method works by internally tracking all the loaded ResourceProvider
+        /// instances and calling the IwwResourceProvider.ClearResourceCache() method
+        /// on each of the provider instances. This method is called by the Resource
         /// Administration form when you explicitly click the Reload Resources button.
         /// <seealso>Class DbResourceConfiguration</seealso>
         /// </summary>
@@ -452,7 +454,7 @@ namespace Westwind.Globalization
     }
 
     /// <summary>
-    /// Project types for Resx Exports. Either WebForms using 
+    /// Project types for Resx Exports. Either WebForms using
     /// local and global resources files, or project
     /// </summary>
     public enum GlobalizationResxExportProjectTypes
@@ -464,8 +466,8 @@ namespace Westwind.Globalization
         WebForms,
 
         /// <summary>
-        /// Any .NET project other than WebForms that 
-        /// uses a single directory (Properties) for 
+        /// Any .NET project other than WebForms that
+        /// uses a single directory (Properties) for
         ///  Resx resources
         /// </summary>
         Project

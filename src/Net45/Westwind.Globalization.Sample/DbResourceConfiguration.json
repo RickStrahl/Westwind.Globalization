@@ -1,5 +1,5 @@
 ﻿{
-  "ConnectionString": "*** ENTER A CONNECTION STRING OR connectionStrings ENTRY HERE ***",
+  "ConnectionString": "server=.;database=Localizations;integrated security=true;",
   "DataProvider": "SqlServer",
   "ResourceTableName": "Localizations",
   "ActiveConfiguration": null,
