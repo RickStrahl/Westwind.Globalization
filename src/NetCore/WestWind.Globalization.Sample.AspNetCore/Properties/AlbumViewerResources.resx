@@ -59,57 +59,57 @@
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
    <data name="AddAlbum" xml:space="preserve">
-      <value>Neues Album</value>
+      <value>Add  New Album</value>
    </data>
    <data name="AddSong" xml:space="preserve">
-      <value>Song hinzufügen</value>
+      <value>Add Songs</value>
    </data>
    <data name="AlbumDescription" xml:space="preserve">
-      <value>Beschreibung</value>
+      <value>Description</value>
    </data>
    <data name="AlbumDescription.Placeholder" xml:space="preserve">
-      <value>Detaillierte Beschreibung für dieses album</value>
+      <value>Detailed description for this album</value>
    </data>
    <data name="AlbumName" xml:space="preserve">
-      <value>Name des Albums</value>
+      <value>Album Name</value>
    </data>
    <data name="Albums" xml:space="preserve">
-      <value>Alben</value>
+      <value>Albums</value>
    </data>
    <data name="AlbumViewer" xml:space="preserve">
-      <value>AlbenViewer</value>
+      <value>AlbumViewer</value>
    </data>
    <data name="ArtistName" xml:space="preserve">
-      <value>Name der Band</value>
+      <value>Band Name</value>
    </data>
    <data name="Artists" xml:space="preserve">
-      <value>Künstler</value>
+      <value>Artists</value>
    </data>
    <data name="Buy" xml:space="preserve">
-      <value>Kaufen</value>
+      <value>Buy</value>
    </data>
    <data name="By" xml:space="preserve">
-      <value>von</value>
+      <value>by</value>
    </data>
    <data name="Edit" xml:space="preserve">
-      <value>Bearbeiten</value>
+      <value>Edit</value>
    </data>
    <data name="EditResources" xml:space="preserve">
-      <value>Resourcen Bearbeiten</value>
+      <value>Edit Resources</value>
    </data>
    <data name="MoreFrom" xml:space="preserve">
-      <value>Mehr von</value>
+      <value>More From</value>
+   </data>
+   <data name="NewResource" xml:space="preserve">
+      <value>New Resource</value>
    </data>
    <data name="Remove" xml:space="preserve">
-      <value>Entfernen</value>
+      <value>Remove</value>
    </data>
    <data name="Show" xml:space="preserve">
-      <value>Anzeigen</value>
-   </data>
-   <data name="Test" xml:space="preserve">
-      <value>test (de)</value>
+      <value>Show</value>
    </data>
    <data name="YearReleased" xml:space="preserve">
-      <value>Erscheinungsjahr</value>
+      <value>Year released</value>
    </data>
 </root>

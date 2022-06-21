@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28922.388
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{7FC6C7F0-A67A-41EC-A2B1-43CF095726D4}"
 	ProjectSection(SolutionItems) = preProject
@@ -21,9 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Westwind.Globalization.Test
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1B0802AB-4A8D-483B-A5AA-6C79E89C104B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WestWind.Globalization.Sample.AspNetCore31", "NetCore\WestWind.Globalization.Sample.AspNetCore31\WestWind.Globalization.Sample.AspNetCore31.csproj", "{4903F55E-1546-4F4A-B51E-8635080473A4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WestWind.Globalization.Sample.AspNetCore21", "NetCore\WestWind.Globalization.Sample.AspNetCore21\WestWind.Globalization.Sample.AspNetCore21.csproj", "{D51B6C3D-C012-4B15-8416-6A48B66CDDEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WestWind.Globalization.Sample.AspNetCore", "NetCore\WestWind.Globalization.Sample.AspNetCore\WestWind.Globalization.Sample.AspNetCore.csproj", "{4903F55E-1546-4F4A-B51E-8635080473A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,10 +49,6 @@ Global
 		{4903F55E-1546-4F4A-B51E-8635080473A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4903F55E-1546-4F4A-B51E-8635080473A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4903F55E-1546-4F4A-B51E-8635080473A4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D51B6C3D-C012-4B15-8416-6A48B66CDDEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D51B6C3D-C012-4B15-8416-6A48B66CDDEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D51B6C3D-C012-4B15-8416-6A48B66CDDEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D51B6C3D-C012-4B15-8416-6A48B66CDDEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,7 +57,6 @@ Global
 		{36254AF1-086A-4786-8B92-6653C15EB22F} = {0BA85EAE-8A25-4B4A-8ACF-553D14C3BAE1}
 		{5776B94D-6646-4C26-9012-798FDBE35B36} = {0BA85EAE-8A25-4B4A-8ACF-553D14C3BAE1}
 		{4903F55E-1546-4F4A-B51E-8635080473A4} = {0BA85EAE-8A25-4B4A-8ACF-553D14C3BAE1}
-		{D51B6C3D-C012-4B15-8416-6A48B66CDDEE} = {0BA85EAE-8A25-4B4A-8ACF-553D14C3BAE1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C151A76C-1C52-4B8D-940B-229C2ABB203E}

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Localization;
 
-namespace WestWind.Globalization.Sample.AspNetCore31.Controllers
+namespace WestWind.Globalization.Sample.AspNetCore.Controllers
 {
     [Route("api/Localization")]
     public class LocalizationController : Controller

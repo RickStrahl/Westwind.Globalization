@@ -58,39 +58,10 @@
    <resheader name="writer">
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
-   <data name="AddressIsRequired" xml:space="preserve">
-      <value>An address is required</value>
-   </data>
-   <data name="Cancel" xml:space="preserve">
-      <value>Cancel</value>
-   </data>
-   <data name="ErrorColon" xml:space="preserve">
-      <value>Error:</value>
-   </data>
-   <data name="FlagPng" xml:space="preserve">
-      <value>AmericanFlag.png;System.Byte[]</value>
-   </data>
    <data name="HelloWorld" xml:space="preserve">
-      <value>Hello grey World</value>
+      <value>Bonjour le monde de IStringLocalization&lt;LocalizationController&gt;</value>
    </data>
-   <data name="MarkdownText" xml:space="preserve">
-      <value>&lt;p&gt;This is &lt;strong&gt;Markdown Text&lt;/strong&gt; that is auto converted.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Item 1&lt;/li&gt;
-&lt;li&gt;Item 2&lt;/li&gt;
-&lt;/ul&gt;
-</value>
-   </data>
-   <data name="NameIsRequired" xml:space="preserve">
-      <value>Name is required</value>
-   </data>
-   <data name="Testing" xml:space="preserve">
-      <value>Testing English</value>
-   </data>
-   <data name="Today" xml:space="preserve">
-      <value>Today</value>
-   </data>
-   <data name="Yesterday" xml:space="preserve">
-      <value>Yesterday</value>
+   <data name="HelloWorldHtml" xml:space="preserve">
+      <value>&lt;b&gt;Bonjour le monde&lt;/b&gt; de HtmlLocalizer&lt;LocalizationController&gt;</value>
    </data>
 </root>

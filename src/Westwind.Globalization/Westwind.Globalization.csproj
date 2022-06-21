@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>3.1.2</Version>
+    <Version>3.1.4.4</Version>
     <Authors>Rick Strahl</Authors>
     <Company>West Wind Technologies</Company>
     <Description>
@@ -24,24 +24,27 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <IncludeSymbols>true</IncludeSymbols>
+    <DebugType>embedded</DebugType>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageOutputPath>./nupkg</PackageOutputPath>
 
-    <PackageCopyright>Rick Strahl, West Wind Technologies 2014-2020</PackageCopyright>
+    <PackageCopyright>Rick Strahl, West Wind Technologies 2014-2022</PackageCopyright>
     <PackageTags>Localization Translation Globalization Resources</PackageTags>
     <PackageProjectUrl>https://github.com/RickStrahl/Westwind.Globalization</PackageProjectUrl>
     <PackageIconUrl>http://west-wind.com/westwind.globalization/images/Westwind.Localization_128.png</PackageIconUrl>
     <PackageIcon>icon.png</PackageIcon>
-    <PackageLicense>https://github.com/RickStrahl/Westwind.Globalization#license</PackageLicense>
+    <PackageLicense>LICENSE.md</PackageLicense>
   </PropertyGroup>
-
 
   <ItemGroup>
     <PackageReference Include="CommonMark.NET" Version="0.15.1" />
-    <PackageReference Include="Westwind.Utilities" Version="3.0.47" />
+    <PackageReference Include="Westwind.Utilities" Version="3.1.10" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net462" Version="1.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -52,7 +55,7 @@
     <DefineConstants>NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45'">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net462'">
     <DefineConstants>NET45;NETFULL</DefineConstants>
   </PropertyGroup>
 
@@ -60,7 +63,7 @@
     <DocumentationFile>bin\Release\netstandard2.0\Westwind.Globalization.xml</DocumentationFile>
   </PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -76,6 +79,7 @@
   
   <ItemGroup>
     <None Include="icon.png" Pack="true" PackagePath="." />
+    <None Include="LICENSE.md" Pack="true" PackagePath="." />
   </ItemGroup>
 
 </Project>

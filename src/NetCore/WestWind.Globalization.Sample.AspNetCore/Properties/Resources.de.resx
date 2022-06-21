@@ -58,61 +58,42 @@
    <resheader name="writer">
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
-   <data name="AddAlbum" xml:space="preserve">
-      <value>Add  New Albums</value>
+   <data name="AddressIsRequired" xml:space="preserve">
+      <value>Eine Addresse muss angegeben werden.</value>
    </data>
-   <data name="AddSong" xml:space="preserve">
-      <value>Add Songs</value>
+   <data name="Cancel" xml:space="preserve">
+      <value>Abbrechen</value>
    </data>
-   <data name="AlbumDescription" xml:space="preserve">
-      <value>Description</value>
+   <data name="ErrorColon" xml:space="preserve">
+      <value>Error: (French)</value>
    </data>
-   <data name="AlbumDescription.Placeholder" xml:space="preserve">
-      <value>Detailed description for this album</value>
+   <data name="FlagPng" xml:space="preserve">
+      <value>GermanFlag.png;System.Byte[]</value>
    </data>
-   <data name="AlbumName" xml:space="preserve">
-      <value>Album Name</value>
+   <data name="HelloWorld" xml:space="preserve">
+      <value>Hallo graue Welt</value>
    </data>
-   <data name="Albums" xml:space="preserve">
-      <value>Albums</value>
+   <data name="MarkdownText" xml:space="preserve">
+      <value>&lt;p&gt;Dies ist ** Markdown-Text **, der automatisch konvertiert wird.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Und eins&lt;/li&gt;
+&lt;li&gt;Und zwei&lt;/li&gt;
+&lt;/ul&gt;
+</value>
    </data>
-   <data name="AlbumViewer" xml:space="preserve">
-      <value>AlbumViewer</value>
+   <data name="NameIsRequired" xml:space="preserve">
+      <value>Ein Name muss angegeben werden.</value>
    </data>
-   <data name="ArtistName" xml:space="preserve">
-      <value>Band Name</value>
+   <data name="Save" xml:space="preserve">
+      <value>Speichern</value>
    </data>
-   <data name="Artists" xml:space="preserve">
-      <value>Artists</value>
+   <data name="Testing" xml:space="preserve">
+      <value>adsasdas dasda sd</value>
    </data>
-   <data name="Buy" xml:space="preserve">
-      <value>Buy</value>
+   <data name="Today" xml:space="preserve">
+      <value>Heute</value>
    </data>
-   <data name="By" xml:space="preserve">
-      <value>by</value>
-   </data>
-   <data name="Edit" xml:space="preserve">
-      <value>Edit</value>
-   </data>
-   <data name="EditResources" xml:space="preserve">
-      <value>Edit Resources</value>
-   </data>
-   <data name="MoreFrom" xml:space="preserve">
-      <value>More From</value>
-   </data>
-   <data name="NewResource" xml:space="preserve">
-      <value>New Resource</value>
-   </data>
-   <data name="Remove" xml:space="preserve">
-      <value>Remove</value>
-   </data>
-   <data name="Show" xml:space="preserve">
-      <value>Show</value>
-   </data>
-   <data name="Test" xml:space="preserve">
-      <value>Test</value>
-   </data>
-   <data name="YearReleased" xml:space="preserve">
-      <value>Year released</value>
+   <data name="Yesterday" xml:space="preserve">
+      <value>Gestern</value>
    </data>
 </root>

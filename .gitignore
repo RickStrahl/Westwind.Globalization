@@ -22,6 +22,7 @@ _*.htm*
 [Dd]ebug*/
 [Pp]ackages/
 App_Data*/
+nupkg/
 *.lib
 *.sbr
 obj/

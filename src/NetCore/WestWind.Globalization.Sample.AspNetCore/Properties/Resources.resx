@@ -59,41 +59,44 @@
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
    <data name="AddressIsRequired" xml:space="preserve">
-      <value>Eine Addresse muss angegeben werden.</value>
+      <value>An address is required</value>
    </data>
    <data name="Cancel" xml:space="preserve">
-      <value>Abbrechen</value>
+      <value>Cancel</value>
    </data>
    <data name="ErrorColon" xml:space="preserve">
-      <value>Error: (French)</value>
+      <value>Error:</value>
    </data>
    <data name="FlagPng" xml:space="preserve">
-      <value>GermanFlag.png;System.Byte[]</value>
+      <value>AmericanFlag.png;System.Byte[]</value>
    </data>
    <data name="HelloWorld" xml:space="preserve">
-      <value>Hallo schnöde Welt</value>
+      <value>Hello grey World</value>
+   </data>
+   <data name="LongResource" xml:space="preserve">
+      <value>A very long string of text that is translated into a readable resource.</value>
    </data>
    <data name="MarkdownText" xml:space="preserve">
-      <value>&lt;p&gt;Dies ist ** Markdown-Text **, der automatisch konvertiert wird.&lt;/p&gt;
+      <value>&lt;p&gt;This is &lt;strong&gt;Markdown Text&lt;/strong&gt; that is auto converted.&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Und eins&lt;/li&gt;
-&lt;li&gt;Und zwei&lt;/li&gt;
+&lt;li&gt;Item 1&lt;/li&gt;
+&lt;li&gt;Item 2&lt;/li&gt;
 &lt;/ul&gt;
 </value>
    </data>
    <data name="NameIsRequired" xml:space="preserve">
-      <value>Ein Name muss angegeben werden.</value>
+      <value>Name is required</value>
    </data>
    <data name="Save" xml:space="preserve">
-      <value>Speichern</value>
+      <value>Save</value>
    </data>
    <data name="Testing" xml:space="preserve">
-      <value>Englisch testen</value>
+      <value>Testing English</value>
    </data>
    <data name="Today" xml:space="preserve">
-      <value>Heute</value>
+      <value>Today</value>
    </data>
    <data name="Yesterday" xml:space="preserve">
-      <value>Gestern</value>
+      <value>Yesterday</value>
    </data>
 </root>

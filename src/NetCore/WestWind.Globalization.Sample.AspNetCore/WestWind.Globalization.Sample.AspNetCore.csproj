@@ -1,10 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net60</TargetFramework>
     <UserSecretsId>d7ace6f7-1323-4a6c-a7f0-016792c5ffb0</UserSecretsId>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Properties\FrenchFlag.png" />
+    <None Remove="Properties\GermanFlag.png" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Data\_data.txt">
@@ -13,14 +18,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Data.SQLite" Version="3.1.2" />
-    <PackageReference Include="Westwind.AspnetCore.LiveReload" Version="0.1.12" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.2" />
+    <PackageReference Include="Microsoft.Data.SQLite" Version="6.0.6" />
+    <PackageReference Include="Westwind.AspnetCore.LiveReload" Version="0.3.6" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.6" />
   </ItemGroup>
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\FrenchFlag.png" />
+    <EmbeddedResource Include="Properties\GermanFlag.png" />
   </ItemGroup>
 
   <ItemGroup>

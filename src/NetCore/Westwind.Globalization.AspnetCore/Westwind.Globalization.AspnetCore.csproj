@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;netcoreapp2.1;</TargetFrameworks>
-    <Version>3.1.2</Version>
+    <TargetFrameworks>net6.0;net5.0</TargetFrameworks>
+    <Version>3.1.4.4</Version>
     <Authors>Rick Strahl</Authors>
     <Company>West Wind Technologies</Company>
     <Product>Westwind.Globalization</Product>
@@ -12,51 +12,47 @@
  Note: In order to use the Localization Administration feature, please download the required project resources from: https://github.com/RickStrahl/Westwind.Globalization/blob/master/DownloadableAssets/LocalizationAdministrationHtml_AspNetCore.zip
 </Description>
     <Summary>Database driven localization ASP.NET and ASP.NET Core. Includes a localization Administration Interface.</Summary>
-    <Copyright>West Wind Technologies, 2010-2020</Copyright>
+    <Copyright>West Wind Technologies, 2010-2022</Copyright>
     <RepositoryUrl>https://github.com/RickStrahl/Westwind.Globalization</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup>
-    <IncludeSymbols>true</IncludeSymbols>
+    <DebugType>embedded</DebugType>    
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageOutputPath>./nupkg</PackageOutputPath>
 
     <PackageTags>ASP.NET Core Localization Translation Globalization Resources</PackageTags>
     <PackageIconUrl>https://west-wind.com/westwind.globalization/images/Westwind.Localization_128.png</PackageIconUrl>
     <PackageIcon>icon.png</PackageIcon>
     <PackageLicense>https://github.com/RickStrahl/Westwind.Globalization#license</PackageLicense>
-    <PackageProjectUrl>https://github.com/RickStrahl/Westwind.Globalization</PackageProjectUrl>
+    <PackageProjectUrl>LICENSE.MD</PackageProjectUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\netstandard2.0\Westwind.Globalization.AspnetCore.xml</DocumentationFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
-    <DefineConstants>NETCORE2</DefineConstants>
-  </PropertyGroup>
-
   <PropertyGroup>
     <NoWarn>1701;1702;1591;1573;1570;1572</NoWarn>
   </PropertyGroup>
 
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
+  <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
-    <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   
   <ItemGroup>
     <None Include="readme.txt" Pack="true" PackagePath="." />
     <None Include="icon.png" Pack="true" PackagePath="." />
+    <None Include="LICENSE.md" Pack="true" PackagePath="." />
   </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\..\Westwind.Globalization\Westwind.Globalization.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="nupkg\" />
   </ItemGroup>
   
 </Project>

@@ -1,10 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  
+  <PropertyGroup>
+    <TargetFramework>net60</TargetFramework>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(OS)' != 'Windows_NT' ">
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net60;</TargetFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(OS)' == 'Windows_NT' ">
-    <TargetFrameworks>netcoreapp3.1;net472</TargetFrameworks>
+    <TargetFrameworks>net60;net472</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0'">
@@ -17,14 +19,14 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Data.SQLite" Version="3.1.7" />
-    <PackageReference Include="MySql.Data" Version="8.0.21" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
-    <PackageReference Include="Npgsql" Version="4.1.4" />    
-    <PackageReference Include="NUnit" Version="3.12.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
-    <PackageReference Include="System.Data.SQLite" Version="1.0.113.1" />    
+    <PackageReference Include="Microsoft.Data.SQLite" Version="6.0.6" />
+    <PackageReference Include="MySql.Data" Version="8.0.29" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
+    <PackageReference Include="Npgsql" Version="6.0.5" />    
+    <PackageReference Include="NUnit" Version="3.13.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.116" />    
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Westwind.Globalization\Westwind.Globalization.csproj" />
