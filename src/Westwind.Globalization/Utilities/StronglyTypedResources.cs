@@ -1,8 +1,8 @@
-#region License
+﻿#region License
 /*
  **************************************************************
  *  Author: Rick Strahl 
- *          � West Wind Technologies, 2009-2015
+ *          © West Wind Technologies, 2009-2015
  *          http://www.west-wind.com/
  * 
  *
@@ -523,11 +523,18 @@ namespace Westwind.Globalization
                 if (item.Value == null)
                     item.Value = string.Empty;
 
+                string value = item.Value as string;
                 string typeName = item.Value.GetType().FullName;
                 string key = item.Key as string;
                 if (string.IsNullOrEmpty(key))
                     continue;
 
+
+                if (value?.Contains(";System.Byte[]") ?? false) // don't
+                {
+                    typeName = "System.Byte[]";
+                }
+                      
                 string varName = SafeVarName(key);
 
                 // It's a string
@@ -579,6 +586,8 @@ namespace Westwind.Globalization
         /// <param name="sbClass"></param>
         private void CreateClassHeader(string classname, string nameSpace, bool IsVb, StringBuilder sbClass)
         {
+            classname = SafeClassName(classname);
+
             if (classname.Contains("/") || classname.Contains("\\"))
             {
                 classname = classname.Replace("\\", "/");
@@ -822,9 +831,8 @@ using Westwind.Globalization;
                 if (isFirst && !char.IsLetter(ch))
                     sb.Append("_"); // prefix
                 
-
                 // skip
-                if (char.IsWhiteSpace(ch) || char.IsPunctuation(ch) || char.IsSeparator(ch) || char.IsControl(ch) || char.IsSymbol(ch) )
+                if (char.IsWhiteSpace(ch) || char.IsPunctuation(ch) || char.IsSeparator(ch) || char.IsControl(ch) || char.IsSymbol(ch))
                 {
                     sb.Append("_");
                     nextUpper = true;
@@ -847,7 +855,7 @@ using Westwind.Globalization;
 
             foreach (char c in classname)
             {
-                if (c == ' ' || c == '-')
+                if (c == ' ' || c == '-' || c == '.')
                     sb.Append('_');                    
                 else if ( (c >= 'A' && c <= 'Z') || ( c >= 'a' && c <= 'z') ||  (c >= '0' && c <= '9') )
                     sb.Append(c);

@@ -25,7 +25,7 @@ namespace Westwind.Globalization.Test
         [Test]
         public void GenerateStronglyTypedResourceClassFilteredTest()
         {
-            var str = new StronglyTypedResources(@"c:\temp");
+            var str = new StronglyTypedResources(@"c:\temp\ResourceExport");
             var res = str.CreateClassFromAllDatabaseResources("ResourceExport", @"resources.cs",new string[] { "Resources" });
 
             Console.WriteLine(res);
