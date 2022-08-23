@@ -10,7 +10,7 @@ namespace Westwind.Globalization.Errors
     /// <summary>
     /// An API error result model class that returns error information
     /// </summary>
-    public class ApiError
+    internal class ApiError
     {
         /// <summary>
         /// An error message to display
@@ -33,7 +33,7 @@ namespace Westwind.Globalization.Errors
         /// </summary>
         public ValidationErrorCollection errors { get; set; }
 
-        
+
         public ApiError(string message)
         {
             this.message = message;

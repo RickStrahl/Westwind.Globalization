@@ -12,7 +12,7 @@ namespace Westwind.Globalization.Errors
     /// Fires back a common JSON response of type ApiErrorResponse
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
-    public class UnhandledApiExceptionFilter : ExceptionFilterAttribute
+    internal class UnhandledApiExceptionFilter : ExceptionFilterAttribute
     {
 
         public override void OnException(ExceptionContext context)
