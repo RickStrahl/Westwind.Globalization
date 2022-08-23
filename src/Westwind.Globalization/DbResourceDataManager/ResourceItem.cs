@@ -1,10 +1,10 @@
 ﻿#region License
 /*
  **************************************************************
- *  Author: Rick Strahl 
+ *  Author: Rick Strahl
  *          © West Wind Technologies, 2009-2015
  *          http://www.west-wind.com/
- * 
+ *
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -14,10 +14,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -26,7 +26,7 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- **************************************************************  
+ **************************************************************
 */
 #endregion
 
@@ -92,7 +92,7 @@ namespace Westwind.Globalization
                 SendPropertyChanged("Comment");
             }
         }
-        private string _Comment = null;     
+        private string _Comment = null;
 
         /// <summary>
         /// Type of the data if not a string
@@ -118,7 +118,7 @@ namespace Westwind.Globalization
         /// <summary>
         /// Determines what type of value the Value field represents
         /// Mainly used to differentiate between text and Markdown text
-        /// </summary> 
+        /// </summary>
         public int ValueType
         {
 	        get { return _ValueType ; }
@@ -129,7 +129,7 @@ namespace Westwind.Globalization
             }
         }
         private int _ValueType = (int) ValueTypes.Text;
-        
+
 
         public DateTime Updated
         {
@@ -141,7 +141,7 @@ namespace Westwind.Globalization
             }
         }
 
-        private DateTime _Updated = DateTime.UtcNow;
+        private DateTime _Updated = DateTime.Now;
 
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace Westwind.Globalization
         public string FileName { get; set; }
 
 
-        
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -198,8 +198,8 @@ namespace Westwind.Globalization
                 Updated = (DateTime) reader["Updated"];
             }
             catch { }
-            
-        }    
+
+        }
     }
 
     public enum ValueTypes

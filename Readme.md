@@ -5,7 +5,7 @@
 [![NuGet](https://img.shields.io/nuget/v/Westwind.Globalization.svg)](https://www.nuget.org/packages/Westwind.Globalization/)
 ![](https://img.shields.io/nuget/dt/Westwind.Globalization.svg)
 
-**Westwind.Globalization.AspNetCore (.NET Core 3.1, 2.1):**  
+**Westwind.Globalization.AspNetCore (.NET Core 6.0, 5.0):**  
 [![NuGet](https://img.shields.io/nuget/v/Westwind.Globalization.AspNetCore.svg)](https://www.nuget.org/packages/Westwind.Globalization.AspNetCore/)
 ![](https://img.shields.io/nuget/dt/Westwind.Globalization.AspNetCore.svg)
 
@@ -42,7 +42,7 @@ Version 3.0 adds support for the 2.0 versions of .NET Standard, .NET Core and AS
 * Westwind.Globalization <small>*(net45 and netstandard2.0)*</small>  
 [![NuGet](https://img.shields.io/nuget/v/Westwind.Globalization.svg)](https://www.nuget.org/packages/Westwind.Globalization/)
 ![](https://img.shields.io/nuget/dt/Westwind.Globalization.svg)
-* Westwind.Globalization.AspNetCore <small>*(netstandard2.0)*</small>  
+* Westwind.Globalization.AspNetCore <small>*(net5.0, net6.0)*</small>  
 [![NuGet](https://img.shields.io/nuget/v/Westwind.Globalization.AspNetCore.svg)](https://www.nuget.org/packages/Westwind.Globalization.AspNetCore/)
 ![](https://img.shields.io/nuget/dt/Westwind.Globalization.AspNetCore.svg)
 * Westwind.Globalization.Web <small>*(net45)*</small>  
