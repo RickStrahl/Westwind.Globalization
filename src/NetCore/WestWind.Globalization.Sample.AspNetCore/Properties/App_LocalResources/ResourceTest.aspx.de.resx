@@ -58,42 +58,7 @@
    <resheader name="writer">
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
-   <data name="AddressIsRequired" xml:space="preserve">
-      <value>Eine Addresse muss angegeben werden.</value>
-   </data>
-   <data name="Cancel" xml:space="preserve">
-      <value>Abbrechen</value>
-   </data>
-   <data name="ErrorColon" xml:space="preserve">
-      <value>Error: (French)</value>
-   </data>
-   <data name="FlagPng" type="System.Resources.ResXFileRef, System.Windows.Forms">
-      <value>GermanFlag.png;System.Byte[], mscorlib, Version = 4.0.0.0, Culture = neutral, PublicKeyToken = b77a5c561934e089</value>
-   </data>
-   <data name="HelloWorld" xml:space="preserve">
-      <value>Hallo graue Welt</value>
-   </data>
-   <data name="MarkdownText" xml:space="preserve">
-      <value>&lt;p&gt;Dies ist ** Markdown-Text **, der automatisch konvertiert wird.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Und eins&lt;/li&gt;
-&lt;li&gt;Und zwei&lt;/li&gt;
-&lt;/ul&gt;
-</value>
-   </data>
-   <data name="NameIsRequired" xml:space="preserve">
-      <value>Ein Name muss angegeben werden.</value>
-   </data>
-   <data name="Save" xml:space="preserve">
-      <value>Speichern</value>
-   </data>
-   <data name="Testing" xml:space="preserve">
-      <value>adsasdas dasda sd</value>
-   </data>
-   <data name="Today" xml:space="preserve">
-      <value>Heute</value>
-   </data>
-   <data name="Yesterday" xml:space="preserve">
-      <value>Gestern</value>
+   <data name="lblHelloWorldLabel.Text" xml:space="preserve">
+      <value>Hallo Welt (lokal)</value>
    </data>
 </root>

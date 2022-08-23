@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using System.Threading;
-//using AppResources;
+using AppResources;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
@@ -40,7 +40,7 @@ namespace WestWind.Globalization.Sample.AspNetCore.Controllers
         [Route("StronglyTypedResource")]
         public string StronglyTypedResource(string languageId)
         {
-            return AppResources.Resources.HelloWorld;
+            return AppResources.GlobalResources.HelloWorld;
         }
 
         [HttpGet]
@@ -67,7 +67,7 @@ namespace WestWind.Globalization.Sample.AspNetCore.Controllers
         [Route("StrongDbResResources")]
         public string StrongDbResResources()
         {
-            return AppResources.Resources.HelloWorld;
+            return AppResources.GlobalResources.HelloWorld;
             //return WestWind.Globalization.Sample.AspNetCore.Properties.Resources.HelloWorld;
         }
 
@@ -81,7 +81,7 @@ namespace WestWind.Globalization.Sample.AspNetCore.Controllers
         [Route("StrongDesignerResources")]
         public string StrongDesignerResources()
         {
-            return AppResources.Resources.HelloWorld;
+            return AppResources.GlobalResources.HelloWorld;
         }
 
         [HttpGet]

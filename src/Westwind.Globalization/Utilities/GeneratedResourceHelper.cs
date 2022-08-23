@@ -73,8 +73,15 @@ namespace Westwind.Globalization
             if (resourceMode == ResourceAccessMode.AspNetResourceProvider)
                 return GetAspNetResourceProviderValue(resourceSet, resourceId) as string;
 #endif
-            if (resourceMode == ResourceAccessMode.Resx)
-                return manager.GetString(resourceId);
+            try
+            {
+                if (resourceMode == ResourceAccessMode.Resx)
+                    return manager.GetString(resourceId);
+            }
+            catch (Exception ex)
+            {
+                return resourceId;
+            }
 
             return DbRes.T(resourceId, resourceSet);
         }

@@ -58,28 +58,7 @@
    <resheader name="writer">
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
-   <data name="AddressIsRequired" xml:space="preserve">
-      <value>Une adresse doit être saisi.</value>
-   </data>
-   <data name="ErrorColon" xml:space="preserve">
-      <value />
-   </data>
-   <data name="FlagPng" type="System.Resources.ResXFileRef, System.Windows.Forms">
-      <value>FrenchFlag.png;System.Byte[], mscorlib, Version = 4.0.0.0, Culture = neutral, PublicKeyToken = b77a5c561934e089</value>
-   </data>
-   <data name="HelloWorld" xml:space="preserve">
-      <value>Bonjour tout le monde</value>
-   </data>
-   <data name="NameIsRequired" xml:space="preserve">
-      <value>Un nom doit être fourni.</value>
-   </data>
-   <data name="Save" xml:space="preserve">
-      <value>Sauvegarder</value>
-   </data>
-   <data name="Today" xml:space="preserve">
-      <value>Aujourd'hui</value>
-   </data>
-   <data name="Yesterday" xml:space="preserve">
-      <value>Hier</value>
+   <data name="lblHelloWorldLabel.Text" xml:space="preserve">
+      <value>Hello Cruel World (local)</value>
    </data>
 </root>

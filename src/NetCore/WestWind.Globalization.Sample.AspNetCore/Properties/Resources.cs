@@ -23,7 +23,9 @@ namespace AppResources
             {
                 if (object.ReferenceEquals(resourceMan, null))
                 {
-                    var temp = new ResourceManager("AppResources.AlbumViewerResources", typeof(AlbumViewerResources).Assembly);
+                    var asmbly = typeof(AlbumViewerResources).Assembly;
+                    var nameSpace = asmbly.GetName().Name + ".Properties.AlbumViewerResources";
+                    var temp = new ResourceManager(nameSpace, asmbly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -189,7 +191,9 @@ namespace AppResources
             {
                 if (object.ReferenceEquals(resourceMan, null))
                 {
-                    var temp = new ResourceManager("AppResources.Code_ViewModels_PersonModel", typeof(Code_ViewModels_PersonModel).Assembly);
+                    var asmbly = typeof(Code_ViewModels_PersonModel).Assembly;
+                    var nameSpace = asmbly.GetName().Name + ".Properties.Code_ViewModels_PersonModel";
+                    var temp = new ResourceManager(nameSpace, asmbly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -243,7 +247,9 @@ namespace AppResources
             {
                 if (object.ReferenceEquals(resourceMan, null))
                 {
-                    var temp = new ResourceManager("AppResources.Controllers_LocalizationController", typeof(Controllers_LocalizationController).Assembly);
+                    var asmbly = typeof(Controllers_LocalizationController).Assembly;
+                    var nameSpace = asmbly.GetName().Name + ".Properties.Controllers_LocalizationController";
+                    var temp = new ResourceManager(nameSpace, asmbly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -271,6 +277,125 @@ namespace AppResources
 
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Westwind.Globalization.StronglyTypedResources", "3.0")]
+
+    public class GlobalResources
+    {
+        public static ResourceManager ResourceManager
+        {
+            get
+            {
+                if (object.ReferenceEquals(resourceMan, null))
+                {
+                    var asmbly = typeof(GlobalResources).Assembly;
+                    var nameSpace = asmbly.GetName().Name + ".Properties.GlobalResources";
+                    var temp = new ResourceManager(nameSpace, asmbly);
+                    resourceMan = temp;
+                }
+                return resourceMan;
+            }
+        }
+        private static ResourceManager resourceMan = null;
+
+		public static System.String AddressIsRequired
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("GlobalResources","AddressIsRequired",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String Cancel
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("GlobalResources","Cancel",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String ErrorColon
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("GlobalResources","ErrorColon",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.Byte[] FlagPng
+		{
+			get
+			{
+				return (System.Byte[]) GeneratedResourceHelper.GetResourceObject("GlobalResources","FlagPng",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String HelloWorld
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("GlobalResources","HelloWorld",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String LongResource
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("GlobalResources","LongResource",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String MarkdownText
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("GlobalResources","MarkdownText",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String NameIsRequired
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("GlobalResources","NameIsRequired",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String Save
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("GlobalResources","Save",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String Testing
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("GlobalResources","Testing",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String Today
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("GlobalResources","Today",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String Yesterday
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("GlobalResources","Yesterday",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+	}
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Westwind.Globalization.StronglyTypedResources", "3.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class LocalizationForm
@@ -281,7 +406,9 @@ namespace AppResources
             {
                 if (object.ReferenceEquals(resourceMan, null))
                 {
-                    var temp = new ResourceManager("AppResources.LocalizationForm", typeof(LocalizationForm).Assembly);
+                    var asmbly = typeof(LocalizationForm).Assembly;
+                    var nameSpace = asmbly.GetName().Name + ".Properties.LocalizationForm";
+                    var temp = new ResourceManager(nameSpace, asmbly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -983,7 +1110,9 @@ namespace AppResources
             {
                 if (object.ReferenceEquals(resourceMan, null))
                 {
-                    var temp = new ResourceManager("AppResources.Pages_ResourceTest", typeof(Pages_ResourceTest).Assembly);
+                    var asmbly = typeof(Pages_ResourceTest).Assembly;
+                    var nameSpace = asmbly.GetName().Name + ".Properties.Pages_ResourceTest";
+                    var temp = new ResourceManager(nameSpace, asmbly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -1045,7 +1174,7 @@ namespace AppResources
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Westwind.Globalization.StronglyTypedResources", "3.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resources
+    public class Resources_zh_cn
     {
         public static ResourceManager ResourceManager
         {
@@ -1053,7 +1182,9 @@ namespace AppResources
             {
                 if (object.ReferenceEquals(resourceMan, null))
                 {
-                    var temp = new ResourceManager("AppResources.Resources", typeof(Resources).Assembly);
+                    var asmbly = typeof(Resources_zh_cn).Assembly;
+                    var nameSpace = asmbly.GetName().Name + ".Properties.Resources_zh_cn";
+                    var temp = new ResourceManager(nameSpace, asmbly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -1061,99 +1192,11 @@ namespace AppResources
         }
         private static ResourceManager resourceMan = null;
 
-		public static System.String AddressIsRequired
-		{
-			get
-			{
-				return GeneratedResourceHelper.GetResourceString("Resources","AddressIsRequired",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
-			}
-		}
-
-		public static System.String Cancel
-		{
-			get
-			{
-				return GeneratedResourceHelper.GetResourceString("Resources","Cancel",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
-			}
-		}
-
-		public static System.String ErrorColon
-		{
-			get
-			{
-				return GeneratedResourceHelper.GetResourceString("Resources","ErrorColon",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
-			}
-		}
-
-		public static System.Byte[] FlagPng
-		{
-			get
-			{
-				return (System.Byte[]) GeneratedResourceHelper.GetResourceObject("Resources","FlagPng",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
-			}
-		}
-
 		public static System.String HelloWorld
 		{
 			get
 			{
-				return GeneratedResourceHelper.GetResourceString("Resources","HelloWorld",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
-			}
-		}
-
-		public static System.String LongResource
-		{
-			get
-			{
-				return GeneratedResourceHelper.GetResourceString("Resources","LongResource",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
-			}
-		}
-
-		public static System.String MarkdownText
-		{
-			get
-			{
-				return GeneratedResourceHelper.GetResourceString("Resources","MarkdownText",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
-			}
-		}
-
-		public static System.String NameIsRequired
-		{
-			get
-			{
-				return GeneratedResourceHelper.GetResourceString("Resources","NameIsRequired",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
-			}
-		}
-
-		public static System.String Save
-		{
-			get
-			{
-				return GeneratedResourceHelper.GetResourceString("Resources","Save",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
-			}
-		}
-
-		public static System.String Testing
-		{
-			get
-			{
-				return GeneratedResourceHelper.GetResourceString("Resources","Testing",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
-			}
-		}
-
-		public static System.String Today
-		{
-			get
-			{
-				return GeneratedResourceHelper.GetResourceString("Resources","Today",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
-			}
-		}
-
-		public static System.String Yesterday
-		{
-			get
-			{
-				return GeneratedResourceHelper.GetResourceString("Resources","Yesterday",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+				return GeneratedResourceHelper.GetResourceString("Resources.zh-cn","HelloWorld",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
 			}
 		}
 
@@ -1171,7 +1214,9 @@ namespace AppResources
             {
                 if (object.ReferenceEquals(resourceMan, null))
                 {
-                    var temp = new ResourceManager("AppResources.Views_Home_Cultures", typeof(Views_Home_Cultures).Assembly);
+                    var asmbly = typeof(Views_Home_Cultures).Assembly;
+                    var nameSpace = asmbly.GetName().Name + ".Properties.Views_Home_Cultures";
+                    var temp = new ResourceManager(nameSpace, asmbly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -1305,6 +1350,46 @@ namespace AppResources
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Westwind.Globalization.StronglyTypedResources", "3.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    public class Views_Localization_Index
+    {
+        public static ResourceManager ResourceManager
+        {
+            get
+            {
+                if (object.ReferenceEquals(resourceMan, null))
+                {
+                    var asmbly = typeof(Views_Localization_Index).Assembly;
+                    var nameSpace = asmbly.GetName().Name + ".Properties.Views_Localization_Index";
+                    var temp = new ResourceManager(nameSpace, asmbly);
+                    resourceMan = temp;
+                }
+                return resourceMan;
+            }
+        }
+        private static ResourceManager resourceMan = null;
+
+		public static System.String HelloWorld
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("Views.Localization.Index","HelloWorld",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+		public static System.String HelloWorldHtml
+		{
+			get
+			{
+				return GeneratedResourceHelper.GetResourceString("Views.Localization.Index","HelloWorldHtml",ResourceManager,GeneratedResourceSettings.ResourceAccessMode);
+			}
+		}
+
+	}
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Westwind.Globalization.StronglyTypedResources", "3.0")]
+    [System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Views_Localization_Test
     {
         public static ResourceManager ResourceManager
@@ -1313,7 +1398,9 @@ namespace AppResources
             {
                 if (object.ReferenceEquals(resourceMan, null))
                 {
-                    var temp = new ResourceManager("AppResources.Views_Localization_Test", typeof(Views_Localization_Test).Assembly);
+                    var asmbly = typeof(Views_Localization_Test).Assembly;
+                    var nameSpace = asmbly.GetName().Name + ".Properties.Views_Localization_Test";
+                    var temp = new ResourceManager(nameSpace, asmbly);
                     resourceMan = temp;
                 }
                 return resourceMan;

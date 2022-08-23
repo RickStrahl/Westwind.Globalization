@@ -609,7 +609,9 @@ $@"
             {{
                 if (object.ReferenceEquals(resourceMan, null))
                 {{
-                    var temp = new ResourceManager(""{nameSpace}.{classname}"", typeof({classname}).Assembly);
+                    var asmbly = typeof({classname}).Assembly;
+                    var nameSpace = asmbly.GetName().Name + "".Properties.{classname}"";
+                    var temp = new ResourceManager(nameSpace, asmbly);
                     resourceMan = temp;
                 }}
                 return resourceMan;

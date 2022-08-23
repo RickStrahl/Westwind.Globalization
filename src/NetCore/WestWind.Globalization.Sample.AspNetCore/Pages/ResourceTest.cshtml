@@ -1,6 +1,6 @@
 ﻿@page
 @using System.Threading
-@using AppResources
+@using AppResources;
 @using Microsoft.AspNetCore.Localization
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Microsoft.Extensions.Localization
@@ -142,13 +142,13 @@
 
             <h3>DbRes</h3>
             <label>Using DbRes Direct (default locale):</label>
-            <span data-resource-id="HelloWorld">@DbRes.T("HelloWorld", "Resources")</span>
+            <span data-resource-id="HelloWorld">@DbRes.T("HelloWorld", "GlobalResources")</span>
 
             <label>Using DbRes Force to German:</label>
-            @DbRes.T("HelloWorld", "Resources", "de")
+            @DbRes.T("HelloWorld", "GlobalResources", "de")
 
             <label>Missing Resource:</label>
-            <span data-resource-id="MissingResource">@DbRes.T("MissingResource", "Resources")</span>
+            <span data-resource-id="MissingResource">@DbRes.T("MissingResource", "GlobalResources")</span>
         </div>
 
         <div class="container">
@@ -163,7 +163,7 @@
             @htmlLocalizer["HelloWorldHtml"]
 
             <label>Missing Resource:</label>
-            <span data-resource-id="MissingResource">@DbRes.T("MissingResource", "Resources")</span>
+            <span data-resource-id="MissingResource">@DbRes.T("MissingResource", "GlobalResources")</span>
         </div>
 
 
@@ -171,13 +171,13 @@
             <h3>Strongly Typed Resource (generated)</h3>
 
             <label>Strongly typed Resource Generated from Db (uses ASP.NET ResourceProvider)</label>
-            @Resources.HelloWorld
+            @GlobalResources.HelloWorld
 
             <label>Strongly typed image resource: <small>(if available)</small></label>
             <div data-resource-id="FlagPng">
                 @try
                 {
-                @Html.Raw(GeneratedResourceHelper.BitmapToEmbeddedHtmlImage(Resources.FlagPng, "image/png", null))
+                    @Html.Raw(GeneratedResourceHelper.BitmapToEmbeddedHtmlImage(GlobalResources.FlagPng, "image/png", null))
                 }
                 catch { }
             </div>
@@ -190,7 +190,7 @@
 
             <label>Auto Expanded Markdown text:</label>
             <div data-resource-id="MarkdownText">
-                @Html.Raw(DbRes.T("MarkdownText", "Resources"))
+                @Html.Raw(DbRes.T("MarkdownText", "GlobalResources"))
             </div>
         </div>
 
@@ -211,7 +211,7 @@
 
 
     <!-- Generates a resources = { "HelloWorld": "Hello World", "Today": "Today" } style variable that contains all server side resources translated for this resource set-->
-    @*<script src="@JavaScriptLocalizationResourcesController.GetJavaScriptResourcesUrl("resources","Resources",localeId)"></script>*@
+    @*<script src="@JavaScriptLocalizationResourcesController.GetJavaScriptResourcesUrl("GlobalResources","GlobalResources",localeId)"></script>*@
 
     <script src="~/api/JavaScriptLocalizationResources?ResourceSet=Resources&VarName=resources&localeId=@localeId&ResourceMode=ResDb"></script>
     <script>

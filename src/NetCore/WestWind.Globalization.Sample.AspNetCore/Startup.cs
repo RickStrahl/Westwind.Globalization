@@ -47,7 +47,7 @@ namespace WestWind.Globalization.Sample.AspNetCore
                 // 3. Settings can be overridden in AddWestwindGlobalization(opt) here
 
                 // Resource Mode - Resx or DbResourceManager                
-                opt.ResourceAccessMode = ResourceAccessMode.DbResourceManager; // ResourceAccessMode.Resx
+                //opt.ResourceAccessMode = ResourceAccessMode.DbResourceManager; // ResourceAccessMode.Resx
 
                 // *** override provider configuration
                 // *** use ConnectionString + DataProvider (or DbResourceManagerType)

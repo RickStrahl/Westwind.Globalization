@@ -59,44 +59,27 @@
       <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
    </resheader>
    <data name="AddressIsRequired" xml:space="preserve">
-      <value>An address is required</value>
-   </data>
-   <data name="Cancel" xml:space="preserve">
-      <value>Cancel</value>
+      <value>Une adresse doit être saisi.</value>
    </data>
    <data name="ErrorColon" xml:space="preserve">
-      <value>Error:</value>
+      <value />
    </data>
    <data name="FlagPng" type="System.Resources.ResXFileRef, System.Windows.Forms">
-      <value>AmericanFlag.png;System.Byte[], mscorlib, Version = 4.0.0.0, Culture = neutral, PublicKeyToken = b77a5c561934e089</value>
+      <value>FrenchFlag.png;System.Byte[], System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e</value>
    </data>
    <data name="HelloWorld" xml:space="preserve">
-      <value>Hello grey World</value>
-   </data>
-   <data name="LongResource" xml:space="preserve">
-      <value>A very long string of text that is translated into a readable resource.</value>
-   </data>
-   <data name="MarkdownText" xml:space="preserve">
-      <value>&lt;p&gt;This is &lt;strong&gt;Markdown Text&lt;/strong&gt; that is auto converted.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Item 1&lt;/li&gt;
-&lt;li&gt;Item 2&lt;/li&gt;
-&lt;/ul&gt;
-</value>
+      <value>Bonjour tout le monde</value>
    </data>
    <data name="NameIsRequired" xml:space="preserve">
-      <value>Name is required</value>
+      <value>Un nom doit être fourni.</value>
    </data>
    <data name="Save" xml:space="preserve">
-      <value>Save</value>
-   </data>
-   <data name="Testing" xml:space="preserve">
-      <value>Testing English</value>
+      <value>Sauvegarder</value>
    </data>
    <data name="Today" xml:space="preserve">
-      <value>Today</value>
+      <value>Aujourd'hui</value>
    </data>
    <data name="Yesterday" xml:space="preserve">
-      <value>Yesterday</value>
+      <value>Hier</value>
    </data>
 </root>
