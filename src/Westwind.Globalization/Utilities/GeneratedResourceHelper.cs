@@ -1,10 +1,10 @@
 ﻿#region License
 /*
  **************************************************************
- *  Author: Rick Strahl 
+ *  Author: Rick Strahl
  *          © West Wind Technologies, 2009-2015
  *          http://www.west-wind.com/
- * 
+ *
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -14,10 +14,10 @@
  * copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -26,7 +26,7 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- **************************************************************  
+ **************************************************************
 */
 #endregion
 
@@ -48,16 +48,16 @@ using Encoder = System.Drawing.Imaging.Encoder;
 namespace Westwind.Globalization
 {
     /// <summary>
-    /// Class that returns resources 
+    /// Class that returns resources
     /// </summary>
     public static class GeneratedResourceHelper
     {
 
         /// <summary>
-        /// Helper function called from strongly typed resources to retrieve 
+        /// Helper function called from strongly typed resources to retrieve
         /// string based resource values.
-        /// 
-        /// This method returns a resource string based on the active 
+        ///
+        /// This method returns a resource string based on the active
         /// Generated ResourceAccessMode.
         /// </summary>
         /// <param name="resourceSet"></param>
@@ -78,7 +78,7 @@ namespace Westwind.Globalization
                 if (resourceMode == ResourceAccessMode.Resx)
                     return manager.GetString(resourceId);
             }
-            catch (Exception ex)
+            catch
             {
                 return resourceId;
             }
@@ -87,10 +87,10 @@ namespace Westwind.Globalization
         }
 
         /// <summary>
-        /// Helper function called from strongly typed resources to retrieve 
+        /// Helper function called from strongly typed resources to retrieve
         /// non-string based resource values.
-        /// 
-        /// This method returns a resource value based on the active 
+        ///
+        /// This method returns a resource value based on the active
         /// Generated ResourceAccessMode.
         /// </summary>
         /// <param name="resourceSet"></param>
@@ -143,9 +143,9 @@ namespace Westwind.Globalization
             {
                 if (format == ImageFormat.Jpeg)
                 {
-                    EncoderParameter qualityParam = new EncoderParameter(Encoder.Quality, (long)85);
-                    ImageCodecInfo jpegCodec = ImageUtils.Encoders["image/jpeg"];
-                    EncoderParameters encoderParams = new EncoderParameters(1);
+                    var qualityParam = new EncoderParameter(Encoder.Quality, (long)85);
+                    var jpegCodec = ImageUtils.Encoders["image/jpeg"];
+                    var encoderParams = new EncoderParameters(1);
                     encoderParams.Param[0] = qualityParam;
                     bitmap.Save((MemoryStream)ms, jpegCodec, encoderParams);
                 }
@@ -167,9 +167,9 @@ namespace Westwind.Globalization
                 contentType = "image/vnd.microsoft.icon";
 
             return BitmapToEmbeddedHtmlImage(data, contentType, extraAttributes);
-        }        
+        }
 #endif
-        
+
         /// <summary>
         /// Renders an HTML IMG tag that contains a raw byte stream's image content
         /// inline of the HTML document. Userful for resources.
@@ -183,7 +183,7 @@ namespace Westwind.Globalization
             if(string.IsNullOrEmpty(contentType) || !contentType.StartsWith("image/"))
                 contentType =  "image/jpeg";
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("<img src=\"data:" + contentType + ";base64,");
             sb.Append(Convert.ToBase64String(data));
             sb.Append("\"");
@@ -194,6 +194,6 @@ namespace Westwind.Globalization
             sb.Append(" />");
             return sb.ToString();
         }
-        
+
     }
 }
