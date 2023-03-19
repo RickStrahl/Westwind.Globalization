@@ -1,4 +1,4 @@
-#region License
+﻿#region License
 /*
  **************************************************************
  *  Author: Rick Strahl
@@ -158,5 +158,9 @@ namespace Westwind.Globalization
             Items = null;
         }
 
+        public override string ToString()
+        {
+            return resourceSetName + " : " + cultureInfo;
+        }
     }
 }

@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>3.1.4.4</Version>
+    <Version>3.1.6</Version>
     <Authors>Rick Strahl</Authors>
     <Company>West Wind Technologies</Company>
     <Description>
@@ -28,7 +28,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageOutputPath>./nupkg</PackageOutputPath>
 
-    <PackageCopyright>Rick Strahl, West Wind Technologies 2014-2022</PackageCopyright>
+    <PackageCopyright>Rick Strahl, West Wind Technologies 2014-2023</PackageCopyright>
     <PackageTags>Localization Translation Globalization Resources</PackageTags>
     <PackageProjectUrl>https://github.com/RickStrahl/Westwind.Globalization</PackageProjectUrl>
     <PackageIconUrl>http://west-wind.com/westwind.globalization/images/Westwind.Localization_128.png</PackageIconUrl>
@@ -38,10 +38,10 @@
 
   <ItemGroup>
     <PackageReference Include="CommonMark.NET" Version="0.15.1" />
-    <PackageReference Include="Westwind.Utilities" Version="3.1.14" />
+    <PackageReference Include="Westwind.Utilities" Version="3.1.19" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net462" Version="1.0.2">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net462" Version="1.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

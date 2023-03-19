@@ -1,4 +1,4 @@
-/*
+﻿/*
  **************************************************************
  * DbResourceManager Class
  **************************************************************
@@ -269,7 +269,11 @@ namespace Westwind.Globalization
             }
         }
 
-        
+
+        public override string ToString()
+        {
+            return ResourceSetName ?? base.ToString();
+        }
     } 
 
 }

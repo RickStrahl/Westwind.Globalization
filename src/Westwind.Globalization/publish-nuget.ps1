@@ -13,6 +13,7 @@ if ($len -gt 0) {
     Write-Host "Signing... $filename"
     nuget sign  ".\nupkg\$filename"   -CertificateSubject "West Wind Technologies" -timestamper " http://timestamp.comodoca.com"
 
+     
+    nuget push  ".\nupkg\$filename" -source "https://nuget.org"
     
-    nuget push  ".\nupkg\$filename" -source nuget.org
 }

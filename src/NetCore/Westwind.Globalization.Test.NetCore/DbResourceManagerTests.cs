@@ -18,9 +18,9 @@ namespace Westwind.Globalization.Test
 
             Console.WriteLine(JsonConvert.SerializeObject(res.Configuration, Formatting.Indented));
 
-            string german = res.GetObject("Today", new CultureInfo("de-de")) as string;                       
+            string german = res.GetObject("Today", new CultureInfo("de")) as string;                       
             Assert.IsNotNull(german);
-            Assert.AreEqual(german, "Heute");
+            Assert.AreEqual("Heute", german);
 
             string english = res.GetObject("Today", new CultureInfo("en-us")) as string;
             Assert.IsNotNull(english);

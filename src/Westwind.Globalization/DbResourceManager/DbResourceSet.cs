@@ -1,4 +1,4 @@
-#region License
+﻿#region License
 /*
  **************************************************************
  *  Author: Rick Strahl
@@ -50,6 +50,7 @@ namespace Westwind.Globalization
     /// </summary>
     public class DbResourceSet : ResourceSet
     {
+        protected string _name = null;
 
         /// <summary>
         /// Core constructor. Gets passed a baseName (which is the ResourceSet Id -
@@ -65,6 +66,7 @@ namespace Westwind.Globalization
         public DbResourceSet(string baseName, CultureInfo culture, DbResourceConfiguration configuration)
             : base(new DbResourceReader(baseName, culture, configuration))
         {
+            _name = culture + " : " + baseName;
         }
 
         /// <summary>
@@ -90,6 +92,11 @@ namespace Westwind.Globalization
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
+        }
+
+        public override string ToString()
+        {
+            return _name ?? base.ToString();
         }
     }
 }
