@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net70;net60;net50</TargetFrameworks>
+    <TargetFrameworks>net70;net60</TargetFrameworks>
     <Version>3.1.6</Version>
     <Authors>Rick Strahl</Authors>
     <Company>West Wind Technologies</Company>
