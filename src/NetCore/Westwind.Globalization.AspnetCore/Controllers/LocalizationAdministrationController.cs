@@ -152,7 +152,7 @@ namespace Westwind.Globalization.Administration
                     Value = it.Value as string
                 }).ToList();
 
-            var totalLocales = itemList.GroupBy(it => it.LocaleId).Select(it => it.Key).ToList();
+            var totalLocales = itemList.GroupBy(it => it.LocaleId).OrderBy(it => it.Key).Select(it => it.Key).ToList();
 
             foreach (var item in itemList.GroupBy(it => it.ResourceId))
             {
