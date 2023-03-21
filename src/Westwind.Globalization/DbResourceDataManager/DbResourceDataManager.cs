@@ -273,7 +273,7 @@ namespace Westwind.Globalization
                   DbDataReader reader = null;
 
                 string sql =
-                    @"select resourceId, LocaleId, Value, Type, BinFile, TextFile, FileName
+                    @"select ResourceId, LocaleId, Value, Type, BinFile, TextFile, FileName
     from " + Configuration.ResourceTableName + @"
 	where ResourceSet=@ResourceSet and (LocaleId = '' {0} )
     order by ResourceId, LocaleId DESC";
