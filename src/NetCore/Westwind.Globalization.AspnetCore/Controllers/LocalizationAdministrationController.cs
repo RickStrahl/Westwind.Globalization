@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -47,7 +48,7 @@ namespace Westwind.Globalization.Administration
         /// </summary>
         /// <param name="host"></param>
         /// <param name="config"></param>
-        public LocalizationAdministrationController(IWebHostEnvironment host,DbResourceConfiguration config)
+        public LocalizationAdministrationController(IWebHostEnvironment host, DbResourceConfiguration config)
         {
             Host = host;
             Config = config;
@@ -72,6 +73,26 @@ namespace Westwind.Globalization.Administration
                         throw new UnauthorizedAccessException();
                 }
             }
+        }
+
+        /// <summary>
+        /// Handle custom authorization and hook into Config.OnAuthorizeLocalizationAdministration
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="next"></param>
+        /// <returns></returns>
+        public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        {
+            if (DbIRes.Configuration.OnAuthorizeLocalizationAdministrationAsync != null)
+            {
+                if (Config.OnAuthorizeLocalizationAdministrationAsync is Func<ActionExecutingContext, Task<bool>> func)
+                {
+                    if (!await func(context))
+                        throw new UnauthorizedAccessException();
+                }
+            }
+
+            await base.OnActionExecutionAsync(context, next);
         }
 
         #region Retrieve Resources
